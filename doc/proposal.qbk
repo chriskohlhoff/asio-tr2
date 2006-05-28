@@ -1,0 +1,12 @@
+[library C++ TR2 Networking Library Proposal
+    [copyright 2006 Christopher M. Kohlhoff]
+    [purpose Networking library]
+    [authors [Kohlhoff, Christopher]]
+    [category template]
+    [category generic]
+    [last-revision $Date: 2006/05/28 04:16:32 $]
+]
+
+[section:intro Introduction]
+
+[endsect]

@@ -1,0 +1,7 @@
+project asio-tr2-doc
+  : default-build onehtml
+  : build-dir ../bin
+  ;
+
+using quickbook ;
+boostbook proposal : proposal.qbk ;
