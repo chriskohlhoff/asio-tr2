@@ -1,0 +1,68 @@
+[section Header [^<buffer>]]
+
+  namespace std {
+    namespace tr2 {
+      namespace sys {
+
+        class mutable_buffer;
+        template <typename Pod_Ptr> Pod_Ptr buffer_cast(const mutable_buffer&);
+        size_t buffer_size(const mutable_buffer&);
+        mutable_buffer operator+(const mutable_buffer&, size_t);
+        mutable_buffer operator+(size_t, const mutable_buffer&);
+
+        class const_buffer;
+        template <typename Pod_Ptr> Pod_Ptr buffer_cast(const const_buffer&);
+        size_t buffer_size(const const_buffer&);
+        const_buffer operator+(const const_buffer&, size_t);
+        const_buffer operator+(size_t, const const_buffer&);
+
+        class mutable_buffers_1;
+        class const_buffers_1;
+
+        mutable_buffers_1 buffer(void*, size_t);
+        const_buffers_1 buffer(const void*, size_t);
+
+        mutable_buffers_1 buffer(const mutable_buffer&);
+        mutable_buffers_1 buffer(const mutable_buffer&, size_t);
+        const_buffers_1 buffer(const const_buffer&);
+        const_buffers_1 buffer(const const_buffer&, size_t);
+
+        template <typename Pod_Type, size_t N>
+          mutable_buffers_1 buffer(Pod_Type (&)[N]);
+        template <typename Pod_Type, size_t N>
+          mutable_buffers_1 buffer(Pod_Type (&)[N], size_t);
+        template <typename Pod_Type, size_t N>
+          const_buffers_1 buffer(const Pod_Type (&)[N]);
+        template <typename Pod_Type, size_t N>
+          const_buffers_1 buffer(const Pod_Type (&)[N], size_t);
+
+        template <typename Pod_Type, size_t N>
+          mutable_buffers_1 buffer(array<Pod_Type, N>&);
+        template <typename Pod_Type, size_t N>
+          mutable_buffers_1 buffer(array<Pod_Type, N>&, size_t);
+        template <typename Pod_Type, size_t N>
+          const_buffers_1 buffer(array<const Pod_Type, N>&);
+        template <typename Pod_Type, size_t N>
+          const_buffers_1 buffer(array<const Pod_Type, N>&, size_t);
+        template <typename Pod_Type, size_t N>
+          const_buffers_1 buffer(const array<Pod_Type, N>&);
+        template <typename Pod_Type, size_t N>
+          const_buffers_1 buffer(const array<Pod_Type, N>&, size_t);
+
+        template <typename Pod_Type, typename Allocator>
+          mutable_buffers_1 buffer(vector<Pod_Type, Allocator>&);
+        template <typename Pod_Type, typename Allocator>
+          mutable_buffers_1 buffer(vector<Pod_Type, Allocator>&, size_t);
+        template <typename Pod_Type, typename Allocator>
+          const_buffers_1 buffer(const vector<Pod_Type, Allocator>&);
+        template <typename Pod_Type, typename Allocator>
+          const_buffers_1 buffer(const vector<Pod_Type, Allocator>&, size_t);
+
+        const_buffers_1 buffer(const std::string&);
+        const_buffers_1 buffer(const std::string&, size_t);
+
+      } // namespace sys
+    } // namespace tr2
+  } // namespace std
+
+[endsect]

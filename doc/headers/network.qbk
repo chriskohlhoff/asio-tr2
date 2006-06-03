@@ -1,0 +1,60 @@
+[section Header [^<network>]]
+
+  namespace std {
+    namespace tr2 {
+      namespace sys {
+
+        template <class Protocol> class datagram_socket_service;
+
+        template <class Protocol> class stream_socket_service;
+
+        template <class Protocol> class socket_acceptor_service;
+
+        template <class Protocol> class resolver_service;
+
+        class socket_base;
+
+        template <class Service> class basic_socket;
+
+        template <class Service> class basic_datagram_socket;
+
+        template <class Service> class basic_stream_socket;
+
+        template <class Service> class basic_socket_acceptor;
+
+        template <class Service> class basic_resolver;
+
+        namespace ip {
+
+          class address;
+          class address_v4;
+          class address_v6;
+
+          template <class Protocol> basic_endpoint;
+
+          class resolver_query_base;
+          template <class Protocol> basic_resolver_query;
+          template <class Protocol> basic_resolver_entry;
+          template <class Protocol> basic_resolver_iterator;
+
+          std::string host_name();
+          std::string host_name(error_code&);
+
+          class tcp;
+          class udp;
+
+          namespace multicast {
+
+            class join_group;
+            class leave_group;
+            class outbound_interface;
+            class hops;
+            class enable_loopback;
+
+          } // namespace multicast
+        } // namespace ip
+      } // namespace sys
+    } // namespace tr2
+  } // namespace std
+
+[endsect]

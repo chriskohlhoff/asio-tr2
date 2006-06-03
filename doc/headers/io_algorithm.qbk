@@ -1,0 +1,13 @@
+[section Header [^<io_algorithm>]]
+
+  namespace std {
+    namespace tr2 {
+      namespace sys {
+
+        // TODO: read, async_read, write and async_write go here
+
+      } // namespace sys
+    } // namespace tr2
+  } // namespace std
+
+[endsect]

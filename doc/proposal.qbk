@@ -1,12 +1,21 @@
 [library C++ TR2 Networking Library Proposal
+    [quickbook 1.1]
     [copyright 2006 Christopher M. Kohlhoff]
     [purpose Networking library]
     [authors [Kohlhoff, Christopher]]
     [category template]
     [category generic]
-    [last-revision $Date: 2006/05/28 04:16:32 $]
+    [last-revision $Date: 2006/06/03 14:33:43 $]
 ]
 
 [section:intro Introduction]
+[endsect]
 
+[section:text Proposed Text for Technical Report 2]
+[include headers/io_service.qbk]
+[include headers/strand.qbk]
+[include headers/timer.qbk]
+[include headers/buffer.qbk]
+[include headers/network.qbk]
+[include headers/io_algorithm.qbk]
 [endsect]
