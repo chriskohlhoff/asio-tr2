@@ -1,0 +1,69 @@
+[section Class [^io_service]]
+
+  namespace std {
+    namespace tr2 {
+      namespace sys {
+
+        class io_service
+        {
+        public:
+          // types:
+          class service;
+          class id;
+          class work;
+          class strand;
+          enum run_exit_reason { out_of_work, interrupted, timed_out };
+
+          // construct/destroy:
+          io_service();
+          ~io_service(); // non-virtual
+
+          // operations:
+          run_exit_reason run();
+          run_exit_reason run(const date_time& until);
+          run_exit_reason run(const date_time::time_duration_type& duration);
+          void interrupt();
+          void reset();
+          template <typename Handler> void dispatch(Handler handler);
+          template <typename Handler> void post(Handler handler);
+          template <typename Handler> unspecified wrap(Handler handler);
+
+        private:
+          io_service(const io_service&);     // not defined
+          void operator=(const io_service&); // not defined
+        };
+
+        // service access:
+        template <typename Service> Service& use_service(io_service& ios);
+        template <typename Service> void add_service(io_service& ios, Service* svc);
+        template <typename Service> bool has_service(io_service& ios) const;
+        class service_already_exists : public logic_error { ... };
+        class invalid_service_owner : public logic_error { ... };
+
+      } // namespace sys
+    } // namespace tr2
+  } // namespace std
+
+Class `io_service` implements a type-safe polymorphic set of services, indexed
+by service /type/.
+
+Access to the services of an `io_service` is via three function templates,
+`use_service<>`, `add_service<>` and `has_service<>`.
+
+In a call to `use_service<Service>()`, the type argument chooses a service,
+making available all members of the named type. If `Service` is not present in
+an io_service, an object of type `Service` is created and added to the
+io_service. A C++ program can check if an io_service implements a particular
+service with the function template `has_service<Service>()`.
+
+Service objects may be explicitly added to an io_service using the function
+template `add_service<Service>()`, if the Service is not already present in the
+io_service. If the `Service` is already present, the `service_already_exists`
+exception is thrown. If the owner of the service is not the same object as the
+io_service parameter, the `invalid_service_owner` exception is thrown.
+
+Once a service reference is obtained from an io_service object by calling
+`use_service<>`, that reference remains usable as long as the owning io_service
+object exists.
+
+[endsect]

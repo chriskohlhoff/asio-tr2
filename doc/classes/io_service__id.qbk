@@ -1,0 +1,24 @@
+[section Class [^io_service::id]]
+
+  namespace std {
+    namespace tr2 {
+      namespace sys {
+
+        class io_service::id
+        {
+        public:
+          id();
+
+        private:
+          id(const id&);             // not defined
+          void operator=(const id&); // not defined
+        };
+
+      } // namespace sys
+    } // namespace tr2
+  } // namespace std
+
+The class `io_service::id` provides identification of services, and is used as
+an index for service lookup.
+
+[endsect]

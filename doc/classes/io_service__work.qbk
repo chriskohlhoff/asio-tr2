@@ -1,0 +1,22 @@
+[section Class [^io_service::work]]
+
+  namespace std {
+    namespace tr2 {
+      namespace sys {
+
+        class io_service::work
+        {
+        public:
+          explicit work(io_service& s);
+          work(const work& other);
+          ~work();
+
+        private:
+          void operator=(const work&); // not defined
+        };
+
+      } // namespace sys
+    } // namespace tr2
+  } // namespace std
+
+[endsect]

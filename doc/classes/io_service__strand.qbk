@@ -1,0 +1,28 @@
+[section Class [^io_service::strand]]
+
+  namespace std {
+    namespace tr2 {
+      namespace sys {
+
+        class io_service::strand
+        {
+        public:
+          // construct/destroy:
+          explicit strand(io_service& s);
+          ~strand();
+
+          // operations:
+          template <typename Handler> void dispatch(Handler handler);
+          template <typename Handler> void post(Handler handler);
+          template <typename Handler> unspecified wrap(Handler handler);
+
+        private:
+          strand(const strand&);         // not defined
+          void operator=(const strand&); // not defined
+        };
+
+      } // namespace sys
+    } // namespace tr2
+  } // namespace std
+
+[endsect]
