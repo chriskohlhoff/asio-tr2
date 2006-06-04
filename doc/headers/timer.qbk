@@ -1,4 +1,4 @@
-[section Header [^<timer>]]
+[section Header [^<timer>] synopsis]
 
   namespace std {
     namespace tr2 {
@@ -9,10 +9,11 @@
         template <typename Time, typename Traits = time_traits<Time> >
           class deadline_timer_service;
 
-        template <typename Service> class basic_deadline_timer;
+        template <typename Time, typename Traits = time_traits<Time>,
+          typename Service = deadline_timer_service<Time, Traits> >
+            class basic_deadline_timer;
 
-        typedef basic_deadline_timer<deadline_timer_service<date_time> >
-          deadline_timer;
+        typedef basic_deadline_timer<date_time> deadline_timer;
 
       } // namespace sys
     } // namespace tr2

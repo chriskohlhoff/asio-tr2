@@ -5,7 +5,7 @@
     [authors [Kohlhoff, Christopher]]
     [category template]
     [category generic]
-    [last-revision $Date: 2006/06/03 14:33:43 $]
+    [last-revision $Date: 2006/06/04 04:31:13 $]
 ]
 
 [section:intro Introduction]
@@ -13,7 +13,6 @@
 
 [section:text Proposed Text for Technical Report 2]
 [include headers/io_service.qbk]
-[include headers/strand.qbk]
 [include headers/timer.qbk]
 [include headers/buffer.qbk]
 [include headers/network.qbk]

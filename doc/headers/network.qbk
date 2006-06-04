@@ -1,54 +1,76 @@
-[section Header [^<network>]]
+[section Header [^<network>] synopsis]
 
   namespace std {
     namespace tr2 {
       namespace sys {
 
+        class socket_base;
+
+        template <class Protocol, class Service> class basic_socket;
+
         template <class Protocol> class datagram_socket_service;
+
+        template <class Protocol, class Service = datagram_socket_service<Protocol> >
+          class basic_datagram_socket;
 
         template <class Protocol> class stream_socket_service;
 
+        template <class Protocol, class Service = stream_socket_service<Protocol> >
+          class basic_stream_socket;
+
         template <class Protocol> class socket_acceptor_service;
+
+        template <clas Protocol, class Service = socket_acceptor_service<Protocol> >
+          class basic_socket_acceptor;
 
         template <class Protocol> class resolver_service;
 
-        class socket_base;
-
-        template <class Service> class basic_socket;
-
-        template <class Service> class basic_datagram_socket;
-
-        template <class Service> class basic_stream_socket;
-
-        template <class Service> class basic_socket_acceptor;
-
-        template <class Service> class basic_resolver;
+        template <class Protocol, class Service = resolver_service<Protocol> >
+          class basic_resolver;
 
         namespace ip {
 
           class address;
+
           class address_v4;
+
           class address_v6;
 
           template <class Protocol> basic_endpoint;
 
           class resolver_query_base;
+
           template <class Protocol> basic_resolver_query;
+
           template <class Protocol> basic_resolver_entry;
+
           template <class Protocol> basic_resolver_iterator;
 
           std::string host_name();
           std::string host_name(error_code&);
 
           class tcp;
+
           class udp;
+
+          class v6_only;
+
+          namespace unicast {
+
+            class hops;
+
+          } // namespace unicast
 
           namespace multicast {
 
             class join_group;
+
             class leave_group;
+
             class outbound_interface;
+
             class hops;
+
             class enable_loopback;
 
           } // namespace multicast

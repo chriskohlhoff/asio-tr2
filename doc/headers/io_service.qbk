@@ -1,4 +1,4 @@
-[section Header [^<io_service>]]
+[section Header [^<io_service>] synopsis]
 
   namespace std {
     namespace tr2 {

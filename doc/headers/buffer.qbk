@@ -1,4 +1,4 @@
-[section Header [^<buffer>]]
+[section Header [^<buffer>] synopsis]
 
   namespace std {
     namespace tr2 {
