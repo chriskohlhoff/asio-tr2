@@ -1,0 +1,21 @@
+[section:async_read_stream Asynchronous read streams]
+
+In the table below, `a` denotes an asynchronous read stream object, `mb`
+denotes an object satisfying mutable buffers requirements, and `h` denotes a
+function object ...
+
+[table Table--Asynchronous read stream requirements
+  [[operation] [type] [semantics, pre/post-conditions]]
+  [
+    [`a.io_service();`]
+    [`io_service&`]
+    [...]
+  ]
+  [
+    [`a.async_read_some(mb, h);`]
+    [`void`]
+    [...]
+  ]
+]
+
+[endsect]

@@ -5,44 +5,88 @@
       namespace sys {
 
         unspecified transfer_all();
+
         unspecified transfer_at_least(size_t);
 
+        // synchronous read operations:
         template <class Sync_Read_Stream, class Mutable_Buffers>
-          size_t read(Sync_Read_Stream&, const Mutable_Buffers&);
+          size_t read(Sync_Read_Stream& stream, const Mutable_Buffers& buffers);
         template <class Sync_Read_Stream, class Mutable_Buffers,
           class Completion_Condition>
-            size_t read(Sync_Read_Stream&, const Mutable_Buffers&,
-              Completion_Condition);
+            size_t read(Sync_Read_Stream& stream,
+                        const Mutable_Buffers& buffers,
+                        Completion_Condition completion_condition);
         template <class Sync_Read_Stream, class Mutable_Buffers,
           class Completion_Condition>
-            size_t read(Sync_Read_Stream&, const Mutable_Buffers&,
-              Completion_Condition, error_code&);
+            size_t read(Sync_Read_Stream& stream,
+                        const Mutable_Buffers& buffers,
+                        Completion_Condition completion_condition,
+                        error_code& ec);
+
+        // asynchronous read operations:
         template <class Async_Read_Stream, class Mutable_Buffers, class Handler>
-          size_t async_read(Async_Read_Stream&, const Mutable_Buffers&, Handler);
+          size_t async_read(Async_Read_Stream& stream,
+                            const Mutable_Buffers& buffers, Handler handler);
         template <class Async_Read_Stream, class Mutable_Buffers,
           class Completion_Condition, class Handler>
-            size_t async_read(Async_Read_Stream&, const Mutable_Buffers&,
-              Completion_Condition, Handler);
+            size_t async_read(Async_Read_Stream& stream,
+                              const Mutable_Buffers& buffers,
+                              Completion_Condition completion_condition,
+                              Handler handler);
 
+        // synchronous write operations:
         template <class Sync_Write_Stream, class Const_Buffers>
-          size_t write(Sync_Write_Stream&, const Const_Buffers&);
+          size_t write(Sync_Write_Stream& stream, const Const_Buffers& buffers);
         template <class Sync_Write_Stream, class Const_Buffers,
           class Completion_Condition>
-            size_t write(Sync_Write_Stream&, const Const_Buffers&,
-              Completion_Condition);
+            size_t write(Sync_Write_Stream& stream,
+                         const Const_Buffers& buffers,
+                         Completion_Condition completion_condition);
         template <class Sync_Write_Stream, class Const_Buffers,
           class Completion_Condition>
-            size_t write(Sync_Write_Stream&, const Const_Buffers&,
-              Completion_Condition, error_code&);
+            size_t write(Sync_Write_Stream& stream,
+                         const Const_Buffers& buffers,
+                         Completion_Condition completion_condition,
+                         error_code& ec);
+
+        // asynchronous write operations:
         template <class Async_Write_Stream, class Const_Buffers, class Handler>
-          size_t async_write(Async_Write_Stream&, const Const_Buffers&, Handler);
+          size_t async_write(Async_Write_Stream& stream,
+                             const Const_Buffers& buffers, Handler handler);
         template <class Async_Write_Stream, class Const_Buffers,
           class Completion_Condition, class Handler>
-            size_t async_write(Async_Write_Stream&, const Const_Buffers&,
-              Completion_Condition, Handler);
+            size_t async_write(Async_Write_Stream& stream,
+                               const Const_Buffers& buffers,
+                               Completion_Condition completion_condition,
+                               Handler handler);
 
       } // namespace sys
     } // namespace tr2
   } // namespace std
+
+Throughout this clause, the names of the template parameters are used to
+express type requirements. If an algorithm's template parameter is
+`Sync_Read_Stream`, the actual template argument shall satisfy the requirements
+of a [link requirements.sync_read_stream synchronous read stream]. If an
+algorithm's template parameter is `Async_Read_Stream`, the actual template
+argument shall satify the requirements of an [link
+requirements.async_read_stream asynchronous read stream]. If an algorithm's
+template parameter is `Sync_Write_Stream`, the actual template argument shall
+satisfy the requirements of a [link requirements.sync_write_stream synchronous
+write stream]. If an algorithm's template parameter is `Async_Write_Stream`,
+the actual template argument shall satisfy the requirements of an [link
+requirements.async_write_stream asynchronous write stream]. If an algorithm's
+template parameter is `Mutable_Buffers`, the actual template argument shall
+satisfy the requirements of a [link requirements.mutable_buffers mutable
+buffers] object. If an algorithm's template parameter is `Const_Buffers`, the
+actual template argument shall satisfy the requirements of a [link
+requirements.const_buffers constant buffers] object.
+
+The `Completion_Condition` parameter is used whenever an algorithm expects a
+function object that when applied to an `error_code` and number of bytes as a
+`size_t` returns a value testable as `true`. In other words, if an algorithm
+takes `Completion_Condition completion_condition` as its argument, it should
+work correctly in the construct `if (completion_condition(ec, bc)){...}`, where
+`ec` is of type `error_code` and `bc` is of type `size_t`.
 
 [endsect]

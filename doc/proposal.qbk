@@ -5,16 +5,129 @@
     [authors [Kohlhoff, Christopher]]
     [category template]
     [category generic]
-    [last-revision $Date: 2006/06/04 04:31:13 $]
+    [last-revision $Date: 2006/06/04 13:28:31 $]
 ]
 
-[section:intro Introduction]
+[section Overview]
+
+To give some idea of the flavour of the proposed library, consider the
+following sample code. This is part of a server program that echoes characters
+it receives back to the client in upper case:
+
+  namespace sys = std::tr2::sys;
+
+  template <typename Iterator>
+  void uppercase(Iterator begin, Iterator end)
+  {
+    std::locale loc("");
+    for (Iterator iter = begin; iter != end; ++iter)
+      *iter = std::toupper(*iter, loc);
+  }
+
+  void do_sync(
+      sys::ip::tcp::socket& socket,
+      std::vector<char>& buffer_space)
+  {
+    try
+    {
+      for (;;)
+      {
+        std::size_t count = socket.read_some(sys::buffer(buffer_space));
+        uppercase(buffer_space.begin(), buffer_space.begin() + count);
+        sys::write(socket, sys::buffer(buffer_space, count));
+      }
+    }
+    catch (sys::system_error& e)
+    {
+    }
+  }
+
+The synchronous approach used above is straightforward to understand and easy
+for programmers at any level of ability to write.
+
+Next, the equivalent code developed using asynchronous operations:
+
+  void do_async(
+      sys::ip::tcp::socket& socket,
+      std::vector<char>& buffer_space)
+  {
+    socket.async_read_some(sys::buffer(buffer_space),
+        std::tr1::bind(handle_read, _1, _2,
+          std::tr1::ref(socket), std::tr1::ref(buffer_space)));
+  }
+
+  void handle_read(
+      sys::error_code ec,
+      std::size_t count,
+      sys::ip::tcp::socket& socket,
+      std::vector<char>& buffer_space)
+  {
+    if (!ec)
+    {
+      uppercase(buffer_space.begin(), buffer_space.begin() + count);
+      sys::async_write(socket, sys::buffer(buffer_space, count),
+          std::tr1::bind(handle_write, _1,
+            std::tr1::ref(socket), std::tr1::ref(buffer_space)));
+    }
+  }
+
+  void handle_write(
+      sys::error_code ec,
+      sys::ip::tcp::socket& socket,
+      std::vector<char>& buffer_space)
+  {
+    if (!ec)
+    {
+      socket.async_read_some(sys::buffer(buffer_space),
+          std::tr1::bind(handle_read, _1, _2,
+            std::tr1::ref(socket), std::tr1::ref(buffer_space)));
+    }
+  }
+
+This code may appear more complex due to the inverted flow of control, but it
+allows a knowledgeable programmer to write code that will scale to a great many
+concurrent connections. The synchronous code requires one thread for each
+connection, and on most platforms threads are a limited resource. The
+asynchronous approach described in this proposal has been exercised in
+production HTTP servers to thousands of concurrent connections, and similar
+echo servers have been tested to tens of thousands, while using only one
+thread.
+
 [endsect]
 
-[section:text Proposed Text for Technical Report 2]
+[section Motivation and Scope]
+[endsect]
+
+[section Impact On the Standard]
+[endsect]
+
+[section Design Decisions]
+[endsect]
+
+[section Proposed Text for the Standard]
 [include headers/io_service.qbk]
+[include classes/io_service.qbk]
+[include classes/io_service__service.qbk]
+[include classes/io_service__id.qbk]
+[include classes/io_service__work.qbk]
+[include classes/io_service__strand.qbk]
 [include headers/timer.qbk]
 [include headers/buffer.qbk]
 [include headers/network.qbk]
 [include headers/io_algorithm.qbk]
+[include:requirements requirements/mutable_buffers.qbk]
+[include:requirements requirements/const_buffers.qbk]
+[include:requirements requirements/sync_read_stream.qbk]
+[include:requirements requirements/async_read_stream.qbk]
+[include:requirements requirements/sync_write_stream.qbk]
+[include:requirements requirements/async_write_stream.qbk]
+[endsect]
+
+[section Open Issues]
+[endsect]
+
+[section Acknowledgements]
+[endsect]
+
+[section References]
 [endsect]

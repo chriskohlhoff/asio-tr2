@@ -8,10 +8,13 @@
         {
         public:
           // construct/destroy:
-          explicit strand(io_service& s);
+          explicit strand(std::tr2::sys::io_service& ios);
           ~strand();
 
-          // operations:
+          // observers:
+          std::tr2::sys::io_service& io_service();
+
+          // strand operations:
           template <typename Handler> void dispatch(Handler handler);
           template <typename Handler> void post(Handler handler);
           template <typename Handler> unspecified wrap(Handler handler);

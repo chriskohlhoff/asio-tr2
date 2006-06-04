@@ -1,0 +1,21 @@
+[section:async_write_stream Asynchronous write streams]
+
+In the table below, `a` denotes an asynchronous write stream object, `cb`
+denotes an object satisfying constant buffers requirements, and `h` denotes a
+function object ...
+
+[table Table--Synchronous write stream requirements
+  [[operation] [type] [semantics, pre/post-conditions]]
+  [
+    [`a.io_service();`]
+    [`io_service&`]
+    [...]
+  ]
+  [
+    [`a.async_write_some(cb, h);`]
+    [`void`]
+    [...]
+  ]
+]
+
+[endsect]

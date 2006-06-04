@@ -33,10 +33,10 @@ follows:
 
   static io_service::id id;
 
-Templates parameters which are required to be services are those named
-`Service` in declarations. A program that passes a type that is /not/ a
-service, as an (explicit or deduced) template parameter to an io_service
-function expecting a service, is ill-formed.
+Template parameters which are required to be services are those named `Service`
+in declarations. A program that passes a type that is /not/ a service, as an
+(explicit or deduced) template parameter to an io_service function expecting a
+service, is ill-formed.
 
 All services define a one-argument constructor that takes a reference to the
 `io_service` object that owns the service. This constructor is /explicit/,

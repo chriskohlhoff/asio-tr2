@@ -1,0 +1,21 @@
+[section:sync_write_stream Synchronous write streams]
+
+In the table below, `a` denotes a synchronous write stream object, `cb` denotes
+an object satisfying constant buffers requirements, and `ec` denotes an object
+of type `error_code`.
+
+[table Table--Synchronous write stream requirements
+  [[operation] [type] [semantics, pre/post-conditions]]
+  [
+    [`a.write_some(cb);`]
+    [`size_t`]
+    [...]
+  ]
+  [
+    [`a.write_some(cb, ec);`]
+    [`size_t`]
+    [...]
+  ]
+]
+
+[endsect]

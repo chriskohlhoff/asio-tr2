@@ -1,0 +1,47 @@
+[section:const_buffers Constant buffers objects]
+
+The constant buffers requirements are a subset of the container requirements
+(C++ Std, 23.1, Container requirements \[lib.container.requirements\]), with
+the additional requirement that for a container type `X`, `X::value_type` must
+be a type that is convertible to `const_buffer`. Any class that meets the
+container requirements and this additonal requirement meets the constant
+buffers requirements.
+
+In the table below, `X` denotes a class containing objects of type `T`, `a`
+denotes a value of type `X` and `u` denotes an identifier.
+
+[table Table--Constant buffers requirements
+  [[operation] [type] [assertion/note\npre/post-condition]]
+  [
+    [`X::value_type`]
+    [`T`]
+    [See container requirements (23.1). `T` is convertible to `const_buffer`.]
+  ]
+  [
+    [`X::const_iterator`]
+    [`iterator type pointing to T`]
+    [See container requirements (23.1).]
+  ]
+  [
+    [`a.begin();`]
+    [`const_iterator` or convertible to `const_iterator`]
+    [See container requirements (23.1).]
+  ]
+  [
+    [`a.end();`]
+    [`const_iterator` or convertible to `const_iterator`]
+    [See container requirements (23.1).]
+  ]
+  [
+    [`X u(a);`]
+    []
+    [See container requirements (23.1).]
+  ]
+  [
+    [`(&a)->~X();`]
+    [`void`]
+    [See container requirements (23.1).]
+  ]
+]
+
+[endsect]

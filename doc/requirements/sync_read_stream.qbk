@@ -1,0 +1,21 @@
+[section:sync_read_stream Synchronous read streams]
+
+In the table below, `a` denotes a synchronous read stream object, `mb` denotes
+an object satisfying mutable buffers requirements, and `ec` denotes an object of
+type `error_code`.
+
+[table Table--Synchronous read stream requirements
+  [[operation] [type] [semantics, pre/post-conditions]]
+  [
+    [`a.read_some(mb);`]
+    [`size_t`]
+    [...]
+  ]
+  [
+    [`a.read_some(mb, ec);`]
+    [`size_t`]
+    [...]
+  ]
+]
+
+[endsect]
