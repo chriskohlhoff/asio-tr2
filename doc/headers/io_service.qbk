@@ -4,7 +4,7 @@
     namespace tr2 {
       namespace sys {
 
-        class io_service;
+        class ``[link classes.io_service io_service]``;
 
         class invalid_service_owner;
         class service_already_exists;

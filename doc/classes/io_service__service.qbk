@@ -1,4 +1,4 @@
-[section Class [^io_service::service]]
+[section:io_service__service Class [^io_service::service]]
 
   namespace std {
     namespace tr2 {
@@ -14,7 +14,7 @@
           virtual ~service();
 
         private:
-          friend class io_service; // exposition only
+          ``['[*friend class io_service; // exposition only]]``
 
           virtual void shutdown_service() = 0;
 

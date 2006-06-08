@@ -1,4 +1,4 @@
-[section Class [^io_service::strand]]
+[section:io_service__strand Class [^io_service::strand]]
 
   namespace std {
     namespace tr2 {

@@ -1,4 +1,4 @@
-[section Class [^io_service::work]]
+[section:io_service__work Class [^io_service::work]]
 
   namespace std {
     namespace tr2 {
