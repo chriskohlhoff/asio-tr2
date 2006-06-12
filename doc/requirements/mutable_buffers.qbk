@@ -1,46 +1,46 @@
 [section:mutable_buffers Mutable buffers objects]
 
-The mutable buffers requirements are a subset of the container requirements
-(C++ Std, 23.1, Container requirements \[lib.container.requirements\]), with
-the additional requirement that for a container type `X`, `X::value_type` must
-be a type that is convertible to `mutable_buffer`. Any class that meets the
-container requirements and this additonal requirement meets the mutable buffers
-requirements.
-
 In the table below, `X` denotes a class containing objects of type `T`, `a`
 denotes a value of type `X` and `u` denotes an identifier.
 
 [table Table--Constant buffers requirements
-  [[operation] [type] [assertion/note\npre/post-condition]]
+  [[expression] [return type] [assertion/note\npre/post-condition]]
   [
     [`X::value_type`]
     [`T`]
-    [See container requirements (23.1). `T` is convertible to `mutable_buffer`.]
+    [`T` is `Assignable`. `T` is convertible to `mutable_buffer`.]
   ]
   [
     [`X::const_iterator`]
     [`iterator type pointing to T`]
-    [See container requirements (23.1).]
+    [`const_iterator` meets the requirements for bidirectional iterators
+     (C++ Std, 24.1.4).]
   ]
   [
-    [`a.begin();`]
-    [`const_iterator` or convertible to `const_iterator`]
-    [See container requirements (23.1).]
-  ]
-  [
-    [`a.end();`]
-    [`const_iterator` or convertible to `const_iterator`]
-    [See container requirements (23.1).]
+    [`X(a);`]
+    []
+    [post: *TODO* contents are same as a]
   ]
   [
     [`X u(a);`]
     []
-    [See container requirements (23.1).]
+    [post: *TODO* contents are same as a]
   ]
   [
     [`(&a)->~X();`]
     [`void`]
-    [See container requirements (23.1).]
+    [note: the destructor is applied to every element of `a`; all the memory
+     is deallocated.]
+  ]
+  [
+    [`a.begin();`]
+    [`const_iterator` or convertible to `const_iterator`]
+    []
+  ]
+  [
+    [`a.end();`]
+    [`const_iterator` or convertible to `const_iterator`]
+    []
   ]
 ]
 
