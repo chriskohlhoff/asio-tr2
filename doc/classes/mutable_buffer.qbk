@@ -1,0 +1,27 @@
+[section:mutable_buffer Class [^mutable_buffer]]
+
+  namespace std {
+    namespace tr2 {
+      namespace sys {
+
+        class mutable_buffer
+        {
+        public:
+          mutable_buffer();
+          mutable_buffer(void* data, size_t size);
+        };
+
+        template <typename PodTypePtr>
+          PodTypePtr buffer_cast(const mutable_buffer& b);
+
+        size_t buffer_size(const mutable_buffer& b);
+
+        mutable_buffer operator+(const mutable_buffer& b, size_t size);
+
+        mutable_buffer operator+(size_t b, const mutable_buffer& size);
+
+      } // namespace sys
+    } // namespace tr2
+  } // namespace std
+
+[endsect]

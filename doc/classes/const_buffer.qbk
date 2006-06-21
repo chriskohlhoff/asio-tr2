@@ -1,0 +1,28 @@
+[section:const_buffer Class [^const_buffer]]
+
+  namespace std {
+    namespace tr2 {
+      namespace sys {
+
+        class const_buffer
+        {
+        public:
+          const_buffer();
+          const_buffer(void* data, size_t size);
+          const_buffer(const mutable_buffer& b);
+        };
+
+        template <typename PodTypePtr>
+          PodTypePtr buffer_cast(const const_buffer& b);
+
+        size_t buffer_size(const const_buffer& b);
+
+        const_buffer operator+(const const_buffer& b, size_t size);
+
+        const_buffer operator+(size_t b, const const_buffer& size);
+
+      } // namespace sys
+    } // namespace tr2
+  } // namespace std
+
+[endsect]

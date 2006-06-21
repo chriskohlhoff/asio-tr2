@@ -4,14 +4,16 @@
     namespace tr2 {
       namespace sys {
 
-        class mutable_buffer;
-        template <typename Pod_Ptr> Pod_Ptr buffer_cast(const mutable_buffer&);
+        class ``[link classes.mutable_buffer mutable_buffer]``;
+        template <typename PodTypePtr>
+          PodTypePtr buffer_cast(const mutable_buffer&);
         size_t buffer_size(const mutable_buffer&);
         mutable_buffer operator+(const mutable_buffer&, size_t);
         mutable_buffer operator+(size_t, const mutable_buffer&);
 
-        class const_buffer;
-        template <typename Pod_Ptr> Pod_Ptr buffer_cast(const const_buffer&);
+        class ``[link classes.const_buffer const_buffer]``;
+        template <typename PodTypePtr>
+          PodTypePtr buffer_cast(const const_buffer&);
         size_t buffer_size(const const_buffer&);
         const_buffer operator+(const const_buffer&, size_t);
         const_buffer operator+(size_t, const const_buffer&);
