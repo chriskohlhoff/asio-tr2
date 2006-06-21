@@ -27,36 +27,36 @@
         const_buffers_1 buffer(const const_buffer&);
         const_buffers_1 buffer(const const_buffer&, size_t);
 
-        template <typename Pod_Type, size_t N>
-          mutable_buffers_1 buffer(Pod_Type (&)[N]);
-        template <typename Pod_Type, size_t N>
-          mutable_buffers_1 buffer(Pod_Type (&)[N], size_t);
-        template <typename Pod_Type, size_t N>
-          const_buffers_1 buffer(const Pod_Type (&)[N]);
-        template <typename Pod_Type, size_t N>
-          const_buffers_1 buffer(const Pod_Type (&)[N], size_t);
+        template <typename PodType, size_t N>
+          mutable_buffers_1 buffer(PodType (&)[N]);
+        template <typename PodType, size_t N>
+          mutable_buffers_1 buffer(PodType (&)[N], size_t);
+        template <typename PodType, size_t N>
+          const_buffers_1 buffer(const PodType (&)[N]);
+        template <typename PodType, size_t N>
+          const_buffers_1 buffer(const PodType (&)[N], size_t);
 
-        template <typename Pod_Type, size_t N>
-          mutable_buffers_1 buffer(array<Pod_Type, N>&);
-        template <typename Pod_Type, size_t N>
-          mutable_buffers_1 buffer(array<Pod_Type, N>&, size_t);
-        template <typename Pod_Type, size_t N>
-          const_buffers_1 buffer(array<const Pod_Type, N>&);
-        template <typename Pod_Type, size_t N>
-          const_buffers_1 buffer(array<const Pod_Type, N>&, size_t);
-        template <typename Pod_Type, size_t N>
-          const_buffers_1 buffer(const array<Pod_Type, N>&);
-        template <typename Pod_Type, size_t N>
-          const_buffers_1 buffer(const array<Pod_Type, N>&, size_t);
+        template <typename PodType, size_t N>
+          mutable_buffers_1 buffer(array<PodType, N>&);
+        template <typename PodType, size_t N>
+          mutable_buffers_1 buffer(array<PodType, N>&, size_t);
+        template <typename PodType, size_t N>
+          const_buffers_1 buffer(array<const PodType, N>&);
+        template <typename PodType, size_t N>
+          const_buffers_1 buffer(array<const PodType, N>&, size_t);
+        template <typename PodType, size_t N>
+          const_buffers_1 buffer(const array<PodType, N>&);
+        template <typename PodType, size_t N>
+          const_buffers_1 buffer(const array<PodType, N>&, size_t);
 
-        template <typename Pod_Type, typename Allocator>
-          mutable_buffers_1 buffer(vector<Pod_Type, Allocator>&);
-        template <typename Pod_Type, typename Allocator>
-          mutable_buffers_1 buffer(vector<Pod_Type, Allocator>&, size_t);
-        template <typename Pod_Type, typename Allocator>
-          const_buffers_1 buffer(const vector<Pod_Type, Allocator>&);
-        template <typename Pod_Type, typename Allocator>
-          const_buffers_1 buffer(const vector<Pod_Type, Allocator>&, size_t);
+        template <typename PodType, typename Allocator>
+          mutable_buffers_1 buffer(vector<PodType, Allocator>&);
+        template <typename PodType, typename Allocator>
+          mutable_buffers_1 buffer(vector<PodType, Allocator>&, size_t);
+        template <typename PodType, typename Allocator>
+          const_buffers_1 buffer(const vector<PodType, Allocator>&);
+        template <typename PodType, typename Allocator>
+          const_buffers_1 buffer(const vector<PodType, Allocator>&, size_t);
 
         const_buffers_1 buffer(const std::string&);
         const_buffers_1 buffer(const std::string&, size_t);

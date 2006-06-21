@@ -1,0 +1,9 @@
+[section:endpoint Endpoints]
+
+In the table below, `X` denotes an endpoint class, and `a` denotes a value of `X`.
+
+[table Table--Endpoint requirements
+  [[expression] [type] [assertion/note\npre/post-conditions]]
+]
+
+[endsect]

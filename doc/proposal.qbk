@@ -5,7 +5,7 @@
     [authors [Kohlhoff, Christopher]]
     [category template]
     [category generic]
-    [last-revision $Date: 2006/06/08 12:42:37 $]
+    [last-revision $Date: 2006/06/21 07:27:40 $]
 ]
 
 [section Overview]
@@ -121,6 +121,9 @@ thread.
 [include:requirements requirements/async_read_stream.qbk]
 [include:requirements requirements/sync_write_stream.qbk]
 [include:requirements requirements/async_write_stream.qbk]
+[include:requirements requirements/endpoint.qbk]
+[include:requirements requirements/protocol.qbk]
+[include:requirements requirements/acceptor_protocol.qbk]
 [endsect]
 
 [section Open Issues]

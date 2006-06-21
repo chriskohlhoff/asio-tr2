@@ -20,16 +20,16 @@
           class Service = stream_socket_service<Protocol> >
             class basic_stream_socket;
 
-        template <class Protocol> class socket_acceptor_service;
+        template <class AcceptorProtocol> class socket_acceptor_service;
 
-        template <class Protocol,
-          class Service = socket_acceptor_service<Protocol> >
+        template <class AcceptorProtocol,
+          class Service = socket_acceptor_service<AcceptorProtocol> >
             class basic_socket_acceptor;
 
-        template <class Protocol> class resolver_service;
+        template <class ResolverProtocol> class resolver_service;
 
-        template <class Protocol,
-          class Service = resolver_service<Protocol> >
+        template <class ResolverProtocol,
+          class Service = resolver_service<ResolverProtocol> >
             class basic_resolver;
 
         namespace ip {
