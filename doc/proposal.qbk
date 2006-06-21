@@ -5,8 +5,10 @@
     [authors [Kohlhoff, Christopher]]
     [category template]
     [category generic]
-    [last-revision $Date: 2006/06/21 07:27:40 $]
+    [last-revision $Date: 2006/06/21 08:59:53 $]
 ]
+
+[/-----------------------------------------------------------------------------]
 
 [section Overview]
 
@@ -95,14 +97,67 @@ thread.
 
 [endsect]
 
+[/-----------------------------------------------------------------------------]
+
 [section Motivation and Scope]
 [endsect]
 
+[/-----------------------------------------------------------------------------]
+
 [section Impact On the Standard]
+
+This is a pure library proposal. It does not add any new language features, nor
+does it alter any existing standard library headers.
+
+This library can be implemented using compilers that conform to the C++03
+standard. An implementation of this library requires operating system-specific
+functions that lie outside the C++03 standard.
+
+[section Relationship to TR1]
 [endsect]
+
+[section Relationship to Threading and Memory Model Proposals]
+[endsect]
+
+This proposal does not require, and would not be coupled to, hypothetical
+standard library support for threading. The interface is intended to support
+implementations on platforms where threads are not available.
+
+However, the library interface is designed to allow the effective utilisation
+of threading if available, and its behaviour with respect to threads is clearly
+defined. In particular, the proposal will attempt to address:
+
+* Thread safety of classes and functions defined in the interface.
+
+* The threads from which an implementation is permitted to call user code, and
+  when.
+
+* The relationship between asynchronous operation initiation, completion, and
+  inter-thread memory visibility.
+
+[section Relationship to Date-Time Library Proposal]
+
+This proposal uses classes defined in the Proposal to Add Date-Time to the C++
+Standard Library (N1900).
+
+[endsect]
+
+[section Relationship to Filesystem Library Proposal]
+
+The classes defined in the Diagnostics Library chapter of the Filesystem
+Library Proposal (N1975) are used in this proposal. ['Note: some modification
+of these classes may be required.]
+
+[endsect]
+
+[endsect]
+
+[/-----------------------------------------------------------------------------]
 
 [section Design Decisions]
 [endsect]
+
+[/-----------------------------------------------------------------------------]
 
 [section Proposed Text for the Standard]
 [include:headers headers/io_service.qbk]
@@ -126,11 +181,17 @@ thread.
 [include:requirements requirements/acceptor_protocol.qbk]
 [endsect]
 
+[/-----------------------------------------------------------------------------]
+
 [section Open Issues]
 [endsect]
 
+[/-----------------------------------------------------------------------------]
+
 [section Acknowledgements]
 [endsect]
+
+[/-----------------------------------------------------------------------------]
 
 [section References]
 [endsect]
