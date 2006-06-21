@@ -14,7 +14,7 @@
           virtual ~service();
 
         private:
-          ``['[*friend class io_service; // exposition only]]``
+  ``//      friend class io_service;  ['[*exposition only]]``
 
           virtual void shutdown_service() = 0;
 
