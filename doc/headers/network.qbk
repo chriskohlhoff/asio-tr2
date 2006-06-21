@@ -20,6 +20,14 @@
           class Service = stream_socket_service<Protocol> >
             class basic_stream_socket;
 
+        template <class Protocol,
+          class Service = stream_socket_service<Protocol> >
+            class basic_socket_streambuf;
+
+        template <class Protocol,
+          class Service = stream_socket_service<Protocol> >
+            class basic_socket_iostream;
+
         template <class AcceptorProtocol> class socket_acceptor_service;
 
         template <class AcceptorProtocol,
