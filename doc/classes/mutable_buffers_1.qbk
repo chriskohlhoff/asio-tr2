@@ -1,0 +1,28 @@
+[section:mutable_buffers_1 Class [^mutable_buffers_1]]
+
+  namespace std {
+    namespace tr2 {
+      namespace sys {
+
+        class mutable_buffers_1
+          : public mutable_buffer
+        {
+        public:
+          // types:
+          typedef mutable_buffer value_type;
+          typedef ``[*implementation defined]`` const_iterator;
+
+          // construct:
+          mutable_buffers_1(void* data, size_t size);
+          explicit mutable_buffers_1(const mutable_buffer& b);
+
+          // iterators:
+          const_iterator begin() const;
+          const_iterator end() const;
+        };
+
+      } // namespace sys
+    } // namespace tr2
+  } // namespace std
+
+[endsect]

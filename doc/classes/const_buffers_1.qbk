@@ -1,0 +1,28 @@
+[section:const_buffers_1 Class [^const_buffers_1]]
+
+  namespace std {
+    namespace tr2 {
+      namespace sys {
+
+        class const_buffers_1
+          : public const_buffer
+        {
+        public:
+          // types:
+          typedef const_buffer value_type;
+          typedef ``[*implementation defined]`` const_iterator;
+
+          // construct:
+          const_buffers_1(const void* data, size_t size);
+          explicit const_buffers_1(const const_buffer& b);
+
+          // iterators:
+          const_iterator begin() const;
+          const_iterator end() const;
+        };
+
+      } // namespace sys
+    } // namespace tr2
+  } // namespace std
+
+[endsect]

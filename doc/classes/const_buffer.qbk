@@ -8,7 +8,7 @@
         {
         public:
           const_buffer();
-          const_buffer(void* data, size_t size);
+          const_buffer(const void* data, size_t size);
           const_buffer(const mutable_buffer& b);
         };
 

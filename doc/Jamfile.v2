@@ -4,4 +4,15 @@ project asio-tr2-doc
   ;
 
 using quickbook ;
-boostbook proposal : proposal.qbk ;
+
+xml proposal
+  :
+    proposal.qbk
+  ;
+
+boostbook standalone
+  :
+    proposal
+  ;
+
+# install html : design/membar.png ;
