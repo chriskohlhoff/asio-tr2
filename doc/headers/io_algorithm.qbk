@@ -1,4 +1,4 @@
-[section Header [^<io_algorithm>] synopsis]
+[section Header [^<?>] synopsis]
 
   namespace std {
     namespace tr2 {
