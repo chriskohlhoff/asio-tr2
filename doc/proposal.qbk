@@ -5,8 +5,13 @@
     [authors [Kohlhoff, Christopher]]
     [category template]
     [category generic]
-    [last-revision $Date: 2006/06/22 13:53:09 $]
+    [last-revision $Date: 2006/07/02 07:54:17 $]
 ]
+
+[def __POSIX__ /POSIX/]
+[def __getsockopt__ [@http://www.opengroup.org/onlinepubs/000095399/functions/getsockopt.html `getsockopt`]]
+[def __setsockopt__ [@http://www.opengroup.org/onlinepubs/000095399/functions/setsockopt.html `setsockopt`]]
+[def __socket__ [@http://www.opengroup.org/onlinepubs/000095399/functions/socket.html `socket`]]
 
 [/-----------------------------------------------------------------------------]
 
@@ -155,7 +160,20 @@ of these classes may be required.]
 [/-----------------------------------------------------------------------------]
 
 [section Design Decisions]
+
 [include:design design/threads.qbk]
+
+* Should acceptor set reuse_address or not
+* Buffers
+* Services
+* Signals
+* Strands
+* Two-tier concept requirements for portability
+* Why read/async_read/write/async_write are needed
+* Why eof is an error
+* Custom memory allocation
+* Protocol independence
+
 [endsect]
 
 [/-----------------------------------------------------------------------------]
@@ -185,6 +203,7 @@ of these classes may be required.]
 [include:requirements requirements/endpoint.qbk]
 [include:requirements requirements/protocol.qbk]
 [include:requirements requirements/acceptor_protocol.qbk]
+[include:requirements requirements/socket_option.qbk]
 [endsect]
 
 [/-----------------------------------------------------------------------------]

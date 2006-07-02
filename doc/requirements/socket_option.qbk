@@ -1,0 +1,149 @@
+[section:socket_option Socket options]
+
+[section:ro_socket_option Read-only socket options]
+
+In the table below, `X` denotes a socket option class, `a` denotes a value of
+`X`, `p` denotes a value that meets the [link requirements.protocol protocol]
+requirements, and `u` denotes an identifier.
+
+[table Table--Read-only socket option requirements
+  [[expression] [type] [assertion/note\npre/post-conditions]]
+  [
+    [`a.level(p);`]
+    [`int`]
+    [
+      note: returns a value suitable for passing as the /level/ argument to the
+      __POSIX__ function __getsockopt__ (or equivalent).
+    ]
+  ]
+  [
+    [`a.name(p);`]
+    [`int`]
+    [
+      note: returns a value suitable for passing as the /option_name/ argument
+      to the __POSIX__ function __getsockopt__ (or equivalent).
+    ]
+  ]
+  [
+    [`a.data(p);`]
+    [a pointer, convertible to `void*`]
+    [
+      note: returns a pointer suitable for passing as the /option_value/
+      argument to the __POSIX__ function __getsockopt__ (or equivalent).
+    ]
+  ]
+  [
+    [`a.size(p);`]
+    [`size_t`]
+    [
+      note: returns a value suitable for passing as the /option_len/ argument
+      to the __POSIX__ function __getsockopt__ (or equivalent), after
+      appropriate integer conversion has been performed.
+    ]
+  ]
+]
+
+[endsect]
+
+[section:wo_socket_option Write-only socket options]
+
+In the table below, `X` denotes a socket option class, `a` denotes a value of
+`X`, `p` denotes a value that meets the [link requirements.protocol protocol]
+requirements, and `u` denotes an identifier.
+
+[table Table--Write-only socket option requirements
+  [[expression] [type] [assertion/note\npre/post-conditions]]
+  [
+    [`a.level(p);`]
+    [`int`]
+    [
+      note: returns a value suitable for passing as the /level/ argument to the
+      __POSIX__ function __setsockopt__ (or equivalent).
+    ]
+  ]
+  [
+    [`a.name(p);`]
+    [`int`]
+    [
+      note: returns a value suitable for passing as the /option_name/ argument
+      to the __POSIX__ function __setsockopt__ (or equivalent).
+    ]
+  ]
+  [
+    [`const X& u = a;
+      u.data(p);`]
+    [a pointer, convertible to `const void*`]
+    [
+      note: returns a pointer suitable for passing as the /option_value/
+      argument to the __POSIX__ function __setsockopt__ (or equivalent).
+    ]
+  ]
+  [
+    [`a.size(p);`]
+    [`size_t`]
+    [
+      note: returns a value suitable for passing as the /option_len/ argument
+      to the __POSIX__ function __setsockopt__ (or equivalent), after
+      appropriate integer conversion has been performed.
+    ]
+  ]
+]
+
+[endsect]
+
+[section:rw_socket_option Read-write socket options]
+
+In the table below, `X` denotes a socket option class, `a` denotes a value of
+`X`, `p` denotes a value that meets the [link requirements.protocol protocol]
+requirements, and `u` denotes an identifier.
+
+[table Table--Read-write socket option requirements
+  [[expression] [type] [assertion/note\npre/post-conditions]]
+  [
+    [`a.level(p);`]
+    [`int`]
+    [
+      note: returns a value suitable for passing as the /level/ argument to the
+      __POSIX__ functions __setsockopt__ and __getsockopt__ (or equivalent).
+    ]
+  ]
+  [
+    [`a.name(p);`]
+    [`int`]
+    [
+      note: returns a value suitable for passing as the /option_name/ argument
+      to the __POSIX__ functions __setsockopt__ and __getsockopt__ (or
+      equivalent).
+    ]
+  ]
+  [
+    [`a.data(p);`]
+    [a pointer, convertible to `void*`]
+    [
+      note: returns a pointer suitable for passing as the /option_value/
+      argument to the __POSIX__ function __getsockopt__ (or equivalent).
+    ]
+  ]
+  [
+    [`const X& u = a;
+      u.data(p);`]
+    [a pointer, convertible to `const void*`]
+    [
+      note: returns a pointer suitable for passing as the /option_value/
+      argument to the __POSIX__ function __setsockopt__ (or equivalent).
+    ]
+  ]
+  [
+    [`a.size(p);`]
+    [`size_t`]
+    [
+      note: returns a value suitable for passing as the /option_len/ argument
+      to the __POSIX__ functions __setsockopt__ and __getsockopt__ (or
+      equivalent), after appropriate integer conversion has been performed.
+    ]
+  ]
+]
+
+[endsect]
+
+[endsect]

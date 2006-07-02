@@ -5,29 +5,40 @@ A protocol must meet the requirements of `CopyConstructible` types (C++ Std,
 
 In the table below, `X` denotes a protocol class, and `a` denotes a value of `X`.
 
-TODO - split into general requirements and requirements for POSIX/Windows.
-
-[table Table--Protocol requirements
+[table Table--Protocol requirements (all platforms)
   [[expression] [return type] [assertion/note\npre/post-conditions]]
   [
     [`X::endpoint`]
     [type meeting [link requirements.endpoint endpoint] requirements]
     []
   ]
+]
+
+[table Table--Protocol requirements (POSIX)
+  [[expression] [return type] [assertion/note\npre/post-conditions]]
+  [
+    [`a.family()`]
+    [`int`]
+    [
+      note: returns a value suitable for passing as the /domain/ argument to
+      the __POSIX__ function __socket__ (or equivalent).
+    ]
+  ]
   [
     [`a.type()`]
-    [['[*implementation defined]]]
-    []
+    [`int`]
+    [
+      note: returns a value suitable for passing as the /type/ argument to the
+      __POSIX__ function __socket__ (or equivalent).
+    ]
   ]
   [
     [`a.protocol()`]
-    [['[*implementation defined]]]
-    []
-  ]
-  [
-    [`a.family()`]
-    [['[*implementation defined]]]
-    []
+    [`int`]
+    [
+      note: returns a value suitable for passing as the /protocol/ argument to
+      the __POSIX__ function __socket__ (or equivalent).
+    ]
   ]
 ]
 
