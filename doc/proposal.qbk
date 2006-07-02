@@ -5,11 +5,17 @@
     [authors [Kohlhoff, Christopher]]
     [category template]
     [category generic]
-    [last-revision $Date: 2006/07/02 07:54:17 $]
+    [last-revision $Date: 2006/07/02 14:15:25 $]
 ]
 
 [def __POSIX__ /POSIX/]
+[def __accept__ [@http://www.opengroup.org/onlinepubs/000095399/functions/connect.html `accept`]]
+[def __connect__ [@http://www.opengroup.org/onlinepubs/000095399/functions/connect.html `connect`]]
+[def __getpeername__ [@http://www.opengroup.org/onlinepubs/000095399/functions/getpeername.html `getpeername`]]
+[def __getsockname__ [@http://www.opengroup.org/onlinepubs/000095399/functions/getsockname.html `getsockname`]]
 [def __getsockopt__ [@http://www.opengroup.org/onlinepubs/000095399/functions/getsockopt.html `getsockopt`]]
+[def __recvfrom__ [@http://www.opengroup.org/onlinepubs/000095399/functions/recvfrom.html `recvfrom`]]
+[def __sendto__ [@http://www.opengroup.org/onlinepubs/000095399/functions/sendto.html `sendto`]]
 [def __setsockopt__ [@http://www.opengroup.org/onlinepubs/000095399/functions/setsockopt.html `setsockopt`]]
 [def __socket__ [@http://www.opengroup.org/onlinepubs/000095399/functions/socket.html `socket`]]
 
