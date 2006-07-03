@@ -1,0 +1,70 @@
+[section:ip__basic_endpoint Class [^ip::basic_endpoint]]
+
+  namespace std {
+    namespace tr2 {
+      namespace sys {
+        namespace ip {
+
+          template <class Protocol>
+          class basic_endpoint
+          {
+          public:
+            // types:
+            typedef Protocol protocol_type;
+
+            // construct/copy/destroy:
+            basic_endpoint();
+            basic_endpoint(const Protocol& proto, unsigned short port_num);
+            basic_endpoint(const ip::address& addr, unsigned short port_num);
+            basic_endpoint(const basic_endpoint& rhs);
+            basic_endpoint& operator=(const basic_endpoint& rhs);
+
+            // observers:
+            Protocol protocol() const;
+            ip::address address() const;
+            unsigned short port();
+
+            // modifiers:
+            void address(const ip::address& addr);
+            void port(unsigned short port_num);
+
+            // POSIX endpoint requirements:
+            implementation_defined data();
+            implementation_defined data() const;
+            std::size_t size() const;
+            void resize(std::size_t size);
+            std::size_t capacity() const;
+          };
+
+          template <class Protocol>
+            bool operator==(const basic_endpoint<Protocol>& lhs,
+              const basic_endpoint<Protocol>& rhs);
+          template <class Protocol>
+            bool operator!=(const basic_endpoint<Protocol>& lhs,
+              const basic_endpoint<Protocol>& rhs);
+          template <class Protocol>
+            bool operator<(const basic_endpoint<Protocol>& lhs,
+              const basic_endpoint<Protocol>& rhs);
+
+          // TODO iostreams
+          // TODO hash_value
+
+        } // namespace ip
+      } // namespace sys
+    } // namespace tr2
+  } // namespace std
+
+`socket_base` defines several member types:
+
+- socket option classes `broadcast`, `do_not_route`, `keep_alive`,
+  `send_buffer_size`, `send_low_watermark`, `receive_buffer_size`,
+  `receive_low_watermark`, `reuse_address`, `linger`, and
+  `enable_connection_aborted`;
+
+- I/O command classes `non_blocking_io` and `bytes_readable`;
+
+- an enumerated type, `shutdown_type`;
+
+- a bitmask type, `message_flags`.
+
+[endsect]
