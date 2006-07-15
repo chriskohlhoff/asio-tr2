@@ -9,11 +9,11 @@
         class invalid_service_owner;
         class service_already_exists;
 
-        template <typename Service> Service& use_service(io_service&);
-        template <typename Service> void add_service(io_service&, Service*);
-        template <typename Service> bool has_service(io_service&);
+        template<class Service> Service& use_service(io_service&);
+        template<class Service> void add_service(io_service&, Service*);
+        template<class Service> bool has_service(io_service&);
 
-        template <typename Service> class basic_io_object;
+        template<class Service> class basic_io_object;
 
       } // namespace sys
     } // namespace tr2

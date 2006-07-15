@@ -4,13 +4,13 @@
     namespace tr2 {
       namespace sys {
 
-        template <typename Time> struct time_traits;
+        template<class Time> struct time_traits;
 
-        template <typename Time, typename Traits = time_traits<Time> >
+        template<class Time, class Traits = time_traits<Time> >
           class deadline_timer_service;
 
-        template <typename Time, typename Traits = time_traits<Time>,
-          typename Service = deadline_timer_service<Time, Traits> >
+        template<class Time, class Traits = time_traits<Time>,
+          class Service = deadline_timer_service<Time, Traits> >
             class basic_deadline_timer;
 
         typedef basic_deadline_timer<date_time> deadline_timer;

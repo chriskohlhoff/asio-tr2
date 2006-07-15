@@ -6,44 +6,45 @@
 
         class socket_base;
 
-        template <class Protocol, class Service> class basic_socket;
+        template<class Protocol, class Service> class basic_socket;
 
-        template <class Protocol> class datagram_socket_service;
+        template<class Protocol> class datagram_socket_service;
 
-        template <class Protocol,
+        template<class Protocol,
           class Service = datagram_socket_service<Protocol> >
             class basic_datagram_socket;
 
-        template <class Protocol> class stream_socket_service;
+        template<class Protocol> class stream_socket_service;
 
-        template <class Protocol,
+        template<class Protocol,
           class Service = stream_socket_service<Protocol> >
             class basic_stream_socket;
 
-        template <class Protocol,
+        template<class Protocol,
           class Service = stream_socket_service<Protocol> >
             class basic_socket_streambuf;
 
-        template <class Protocol,
+        template<class Protocol,
           class Service = stream_socket_service<Protocol> >
             class basic_socket_iostream;
 
-        template <class AcceptorProtocol> class socket_acceptor_service;
+        template<class AcceptorProtocol> class socket_acceptor_service;
 
-        template <class AcceptorProtocol,
+        template<class AcceptorProtocol,
           class Service = socket_acceptor_service<AcceptorProtocol> >
             class basic_socket_acceptor;
 
-        template <class ResolverProtocol> class resolver_service;
+        template<class ResolverProtocol> class resolver_service;
 
-        template <class ResolverProtocol,
+        template<class ResolverProtocol,
           class Service = resolver_service<ResolverProtocol> >
             class basic_resolver;
 
         namespace ip {
 
-          class address;
+          class ``[link classes.ip__address address]``;
 
+          // address comparisons:
           bool operator==(const address&, const address&);
           bool operator!=(const address&, const address&);
           bool operator<(const address&, const address&);
@@ -51,8 +52,14 @@
           bool operator<=(const address&, const address&);
           bool operator>=(const address&, const address&);
 
+          // address I/O:
+          template<class CharT, class Traits>
+            basic_ostream<CharT, Traits>& operator<<(
+              basic_ostream<CharT, Traits>&, const address&);
+
           class ``[link classes.ip__address_v4 address_v4]``;
 
+          // address_v4 comparisons:
           bool operator==(const address_v4&, const address_v4&);
           bool operator!=(const address_v4&, const address_v4&);
           bool operator<(const address_v4&, const address_v4&);
@@ -60,8 +67,14 @@
           bool operator<=(const address_v4&, const address_v4&);
           bool operator>=(const address_v4&, const address_v4&);
 
+          // address_v4 I/O:
+          template<class CharT, class Traits>
+            basic_ostream<CharT, Traits>& operator<<(
+              basic_ostream<CharT, Traits>&, const address_v4&);
+
           class ``[link classes.ip__address_v6 address_v6]``;
 
+          // address_v6 comparisons:
           bool operator==(const address_v6&, const address_v6&);
           bool operator!=(const address_v6&, const address_v6&);
           bool operator<(const address_v6&, const address_v6&);
@@ -69,34 +82,45 @@
           bool operator<=(const address_v6&, const address_v6&);
           bool operator>=(const address_v6&, const address_v6&);
 
-          template <class Protocol> basic_endpoint;
+          // address_v6 I/O:
+          template<class CharT, class Traits>
+            basic_ostream<CharT, Traits>& operator<<(
+              basic_ostream<CharT, Traits>&, const address_v6&);
 
-          template <class Protocol>
+          template<class Protocol> class ``[link classes.ip__basic_endpoint basic_endpoint]``;
+
+          // basic_endpoint comparisons:
+          template<class Protocol>
             bool operator==(const basic_endpoint<Protocol>&,
-              const basic_endpoint<Protocol>&);
-          template <class Protocol>
+                            const basic_endpoint<Protocol>&);
+          template<class Protocol>
             bool operator!=(const basic_endpoint<Protocol>&,
-              const basic_endpoint<Protocol>&);
-          template <class Protocol>
+                            const basic_endpoint<Protocol>&);
+          template<class Protocol>
             bool operator<(const basic_endpoint<Protocol>&,
-              const basic_endpoint<Protocol>&);
-          template <class Protocol>
+                           const basic_endpoint<Protocol>&);
+          template<class Protocol>
             bool operator>(const basic_endpoint<Protocol>&,
-              const basic_endpoint<Protocol>&);
-          template <class Protocol>
+                           const basic_endpoint<Protocol>&);
+          template<class Protocol>
             bool operator<=(const basic_endpoint<Protocol>&,
-              const basic_endpoint<Protocol>&);
-          template <class Protocol>
+                            const basic_endpoint<Protocol>&);
+          template<class Protocol>
             bool operator>=(const basic_endpoint<Protocol>&,
-              const basic_endpoint<Protocol>&);
+                            const basic_endpoint<Protocol>&);
+
+          // basic_endpoint I/O:
+          template<class CharT, class Traits, class Protocol>
+            basic_ostream<CharT, Traits>& operator<<(
+              basic_ostream<CharT, Traits>&, const basic_endpoint<Protocol>&);
 
           class resolver_query_base;
 
-          template <class Protocol> basic_resolver_query;
+          template<class Protocol> basic_resolver_query;
 
-          template <class Protocol> basic_resolver_entry;
+          template<class Protocol> basic_resolver_entry;
 
-          template <class Protocol> basic_resolver_iterator;
+          template<class Protocol> basic_resolver_iterator;
 
           string host_name();
           string host_name(error_code&);

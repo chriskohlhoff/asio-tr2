@@ -46,6 +46,19 @@
             static address_v6 v4_compatible(const address_v4& addr);
           };
 
+          // address_v6 comparions:
+          bool operator==(const address_v6& a, const address_v6& b);
+          bool operator!=(const address_v6& a, const address_v6& b);
+          bool operator<(const address_v6& a, const address_v6& b);
+          bool operator>(const address_v6& a, const address_v6& b);
+          bool operator<=(const address_v6& a, const address_v6& b);
+          bool operator>=(const address_v6& a, const address_v6& b);
+
+          // address_v6 I/O:
+          template<class CharT, class Traits>
+            basic_ostream<CharT, Traits>& operator<<(
+              basic_ostream<CharT, Traits>& os, const address_v6& addr);
+
         } // namespace ip
       } // namespace sys
     } // namespace tr2

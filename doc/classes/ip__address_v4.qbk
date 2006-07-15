@@ -36,6 +36,19 @@
             static address_v4 netmask(const address_v4& addr);
           };
 
+          ``// address\_v4 [link classes.ip__address_v4_comparisons comparisons]:``
+          bool operator==(const address_v4& a, const address_v4& b);
+          bool operator!=(const address_v4& a, const address_v4& b);
+          bool operator<(const address_v4& a, const address_v4& b);
+          bool operator>(const address_v4& a, const address_v4& b);
+          bool operator<=(const address_v4& a, const address_v4& b);
+          bool operator>=(const address_v4& a, const address_v4& b);
+
+          // address_v4 I/O:
+          template<class CharT, class Traits>
+            basic_ostream<CharT, Traits>& operator<<(
+              basic_ostream<CharT, Traits>& os, const address_v4& addr);
+
         } // namespace ip
       } // namespace sys
     } // namespace tr2
@@ -174,6 +187,10 @@ If `addr.is_class_a()` is true, returns `address_v4(0xFF000000)`.
 If `addr.is_class_b()` is true, returns `address_v4(0xFFFF0000)`.
 If `addr.is_class_c()` is true, returns `address_v4(0xFFFFFF00)`.
 Otherwise returns `address_v4(0xFFFFFFFF)`.
+
+[endsect]
+
+[section:ip__address_v4_comparisons [^ip::address_v4] comparisons]
 
 [endsect]
 

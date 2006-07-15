@@ -5,20 +5,21 @@
       namespace sys {
 
         class ``[link classes.mutable_buffer mutable_buffer]``;
-        template <typename PodTypePtr>
-          PodTypePtr buffer_cast(const mutable_buffer&);
+
+        template<class T> T buffer_cast(const mutable_buffer&);
         size_t buffer_size(const mutable_buffer&);
         mutable_buffer operator+(const mutable_buffer&, size_t);
         mutable_buffer operator+(size_t, const mutable_buffer&);
 
         class ``[link classes.const_buffer const_buffer]``;
-        template <typename PodTypePtr>
-          PodTypePtr buffer_cast(const const_buffer&);
+
+        template<class T> T buffer_cast(const const_buffer&);
         size_t buffer_size(const const_buffer&);
         const_buffer operator+(const const_buffer&, size_t);
         const_buffer operator+(size_t, const const_buffer&);
 
         class mutable_buffers_1;
+
         class const_buffers_1;
 
         mutable_buffers_1 buffer(void*, size_t);
@@ -29,39 +30,42 @@
         const_buffers_1 buffer(const const_buffer&);
         const_buffers_1 buffer(const const_buffer&, size_t);
 
-        template <typename PodType, size_t N>
-          mutable_buffers_1 buffer(PodType (&)[N]);
-        template <typename PodType, size_t N>
-          mutable_buffers_1 buffer(PodType (&)[N], size_t);
-        template <typename PodType, size_t N>
-          const_buffers_1 buffer(const PodType (&)[N]);
-        template <typename PodType, size_t N>
-          const_buffers_1 buffer(const PodType (&)[N], size_t);
+        template<class T, size_t N>
+          mutable_buffers_1 buffer(T (&)[N]);
+        template<class T, size_t N>
+          mutable_buffers_1 buffer(T (&)[N], size_t);
+        template<class T, size_t N>
+          const_buffers_1 buffer(const T (&)[N]);
+        template<class T, size_t N>
+          const_buffers_1 buffer(const T (&)[N], size_t);
 
-        template <typename PodType, size_t N>
-          mutable_buffers_1 buffer(array<PodType, N>&);
-        template <typename PodType, size_t N>
-          mutable_buffers_1 buffer(array<PodType, N>&, size_t);
-        template <typename PodType, size_t N>
-          const_buffers_1 buffer(array<const PodType, N>&);
-        template <typename PodType, size_t N>
-          const_buffers_1 buffer(array<const PodType, N>&, size_t);
-        template <typename PodType, size_t N>
-          const_buffers_1 buffer(const array<PodType, N>&);
-        template <typename PodType, size_t N>
-          const_buffers_1 buffer(const array<PodType, N>&, size_t);
+        template<class T, size_t N>
+          mutable_buffers_1 buffer(array<T, N>&);
+        template<class T, size_t N>
+          mutable_buffers_1 buffer(array<T, N>&, size_t);
+        template<class T, size_t N>
+          const_buffers_1 buffer(array<const T, N>&);
+        template<class T, size_t N>
+          const_buffers_1 buffer(array<const T, N>&, size_t);
+        template<class T, size_t N>
+          const_buffers_1 buffer(const array<T, N>&);
+        template<class T, size_t N>
+          const_buffers_1 buffer(const array<T, N>&, size_t);
 
-        template <typename PodType, typename Allocator>
-          mutable_buffers_1 buffer(vector<PodType, Allocator>&);
-        template <typename PodType, typename Allocator>
-          mutable_buffers_1 buffer(vector<PodType, Allocator>&, size_t);
-        template <typename PodType, typename Allocator>
-          const_buffers_1 buffer(const vector<PodType, Allocator>&);
-        template <typename PodType, typename Allocator>
-          const_buffers_1 buffer(const vector<PodType, Allocator>&, size_t);
+        template<class T, class Allocator>
+          mutable_buffers_1 buffer(vector<T, Allocator>&);
+        template<class T, class Allocator>
+          mutable_buffers_1 buffer(vector<T, Allocator>&, size_t);
+        template<class T, class Allocator>
+          const_buffers_1 buffer(const vector<T, Allocator>&);
+        template<class T, class Allocator>
+          const_buffers_1 buffer(const vector<T, Allocator>&, size_t);
 
-        const_buffers_1 buffer(const std::string&);
-        const_buffers_1 buffer(const std::string&, size_t);
+        template<class CharT, class Traits, class Allocator>
+          const_buffers_1 buffer(const basic_string<CharT, Traits, Allocator>&);
+        template<class CharT, class Traits, class Allocator>
+          const_buffers_1 buffer(const basic_string<CharT, Traits, Allocator>&,
+                                 size_t);
 
       } // namespace sys
     } // namespace tr2

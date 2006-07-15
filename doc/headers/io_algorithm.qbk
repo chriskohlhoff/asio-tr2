@@ -9,14 +9,14 @@
         unspecified transfer_at_least(size_t);
 
         // synchronous read operations:
-        template <class SyncReadStream, class MutableBuffers>
+        template<class SyncReadStream, class MutableBuffers>
           size_t read(SyncReadStream& stream, const MutableBuffers& buffers);
-        template <class SyncReadStream, class MutableBuffers,
+        template<class SyncReadStream, class MutableBuffers,
           class CompletionCondition>
             size_t read(SyncReadStream& stream,
                         const MutableBuffers& buffers,
                         CompletionCondition completion_condition);
-        template <class SyncReadStream, class MutableBuffers,
+        template<class SyncReadStream, class MutableBuffers,
           class CompletionCondition>
             size_t read(SyncReadStream& stream,
                         const MutableBuffers& buffers,
@@ -24,10 +24,10 @@
                         error_code& ec);
 
         // asynchronous read operations:
-        template <class AsyncReadStream, class MutableBuffers, class Handler>
+        template<class AsyncReadStream, class MutableBuffers, class Handler>
           size_t async_read(AsyncReadStream& stream,
                             const MutableBuffers& buffers, Handler handler);
-        template <class AsyncReadStream, class MutableBuffers,
+        template<class AsyncReadStream, class MutableBuffers,
           class CompletionCondition, class Handler>
             size_t async_read(AsyncReadStream& stream,
                               const MutableBuffers& buffers,
@@ -35,14 +35,14 @@
                               Handler handler);
 
         // synchronous write operations:
-        template <class SyncWriteStream, class ConstBuffers>
+        template<class SyncWriteStream, class ConstBuffers>
           size_t write(SyncWriteStream& stream, const ConstBuffers& buffers);
-        template <class SyncWriteStream, class ConstBuffers,
+        template<class SyncWriteStream, class ConstBuffers,
           class CompletionCondition>
             size_t write(SyncWriteStream& stream,
                          const ConstBuffers& buffers,
                          CompletionCondition completion_condition);
-        template <class SyncWriteStream, class ConstBuffers,
+        template<class SyncWriteStream, class ConstBuffers,
           class CompletionCondition>
             size_t write(SyncWriteStream& stream,
                          const ConstBuffers& buffers,
@@ -50,10 +50,10 @@
                          error_code& ec);
 
         // asynchronous write operations:
-        template <class AsyncWriteStream, class ConstBuffers, class Handler>
+        template<class AsyncWriteStream, class ConstBuffers, class Handler>
           size_t async_write(AsyncWriteStream& stream,
                              const ConstBuffers& buffers, Handler handler);
-        template <class AsyncWriteStream, class ConstBuffers,
+        template<class AsyncWriteStream, class ConstBuffers,
           class CompletionCondition, class Handler>
             size_t async_write(AsyncWriteStream& stream,
                                const ConstBuffers& buffers,
