@@ -5,7 +5,7 @@
     [authors [Kohlhoff, Christopher]]
     [category template]
     [category generic]
-    [last-revision $Date: 2006/07/03 14:18:12 $]
+    [last-revision $Date: 2006/07/15 13:04:32 $]
 ]
 
 [def __POSIX__ /POSIX/]
@@ -14,6 +14,8 @@
 [def __getpeername__ [@http://www.opengroup.org/onlinepubs/000095399/functions/getpeername.html `getpeername`]]
 [def __getsockname__ [@http://www.opengroup.org/onlinepubs/000095399/functions/getsockname.html `getsockname`]]
 [def __getsockopt__ [@http://www.opengroup.org/onlinepubs/000095399/functions/getsockopt.html `getsockopt`]]
+[def __inet_ntop__ [@http://www.opengroup.org/onlinepubs/000095399/functions/inet_ntop.html `inet_ntop`]]
+[def __inet_pton__ [@http://www.opengroup.org/onlinepubs/000095399/functions/inet_pton.html `inet_pton`]]
 [def __recvfrom__ [@http://www.opengroup.org/onlinepubs/000095399/functions/recvfrom.html `recvfrom`]]
 [def __sendto__ [@http://www.opengroup.org/onlinepubs/000095399/functions/sendto.html `sendto`]]
 [def __setsockopt__ [@http://www.opengroup.org/onlinepubs/000095399/functions/setsockopt.html `setsockopt`]]
@@ -179,6 +181,7 @@ of these classes may be required.]
 * Why eof is an error
 * Custom memory allocation
 * Protocol independence
+* No string constructors for IP address classes
 
 [endsect]
 
@@ -199,6 +202,8 @@ of these classes may be required.]
 [include:classes classes/const_buffers_1.qbk]
 [include:headers headers/network.qbk]
 [include:classes classes/socket_base.qbk]
+[include:classes classes/ip__address_v4.qbk]
+[include:classes classes/ip__address_v6.qbk]
 [include:classes classes/ip__basic_endpoint.qbk]
 [include:headers headers/io_algorithm.qbk]
 [include:requirements requirements/mutable_buffers.qbk]
@@ -216,6 +221,9 @@ of these classes may be required.]
 [/-----------------------------------------------------------------------------]
 
 [section Open Issues]
+
+* Impact of trapping signed char implementations on streambuf and iostream support.
+
 [endsect]
 
 [/-----------------------------------------------------------------------------]

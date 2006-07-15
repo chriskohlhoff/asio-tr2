@@ -44,11 +44,51 @@
 
           class address;
 
-          class address_v4;
+          bool operator==(const address&, const address&);
+          bool operator!=(const address&, const address&);
+          bool operator<(const address&, const address&);
+          bool operator>(const address&, const address&);
+          bool operator<=(const address&, const address&);
+          bool operator>=(const address&, const address&);
 
-          class address_v6;
+          class ``[link classes.ip__address_v4 address_v4]``;
+
+          bool operator==(const address_v4&, const address_v4&);
+          bool operator!=(const address_v4&, const address_v4&);
+          bool operator<(const address_v4&, const address_v4&);
+          bool operator>(const address_v4&, const address_v4&);
+          bool operator<=(const address_v4&, const address_v4&);
+          bool operator>=(const address_v4&, const address_v4&);
+
+          class ``[link classes.ip__address_v6 address_v6]``;
+
+          bool operator==(const address_v6&, const address_v6&);
+          bool operator!=(const address_v6&, const address_v6&);
+          bool operator<(const address_v6&, const address_v6&);
+          bool operator>(const address_v6&, const address_v6&);
+          bool operator<=(const address_v6&, const address_v6&);
+          bool operator>=(const address_v6&, const address_v6&);
 
           template <class Protocol> basic_endpoint;
+
+          template <class Protocol>
+            bool operator==(const basic_endpoint<Protocol>&,
+              const basic_endpoint<Protocol>&);
+          template <class Protocol>
+            bool operator!=(const basic_endpoint<Protocol>&,
+              const basic_endpoint<Protocol>&);
+          template <class Protocol>
+            bool operator<(const basic_endpoint<Protocol>&,
+              const basic_endpoint<Protocol>&);
+          template <class Protocol>
+            bool operator>(const basic_endpoint<Protocol>&,
+              const basic_endpoint<Protocol>&);
+          template <class Protocol>
+            bool operator<=(const basic_endpoint<Protocol>&,
+              const basic_endpoint<Protocol>&);
+          template <class Protocol>
+            bool operator>=(const basic_endpoint<Protocol>&,
+              const basic_endpoint<Protocol>&);
 
           class resolver_query_base;
 
@@ -58,8 +98,8 @@
 
           template <class Protocol> basic_resolver_iterator;
 
-          std::string host_name();
-          std::string host_name(error_code&);
+          string host_name();
+          string host_name(error_code&);
 
           class tcp;
 
