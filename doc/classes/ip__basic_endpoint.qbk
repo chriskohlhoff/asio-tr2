@@ -1,4 +1,4 @@
-[section:ip__basic_endpoint Class [^ip::basic_endpoint]]
+[section:ip__basic_endpoint Class template [^ip::basic_endpoint]]
 
   namespace std {
     namespace tr2 {
@@ -20,18 +20,11 @@
             // observers:
             Protocol protocol() const;
             ip::address address() const;
-            unsigned short port();
+            unsigned short port() const;
 
             // modifiers:
             void address(const ip::address& addr);
             void port(unsigned short port_num);
-
-            // POSIX endpoint requirements:
-            implementation_defined data();
-            implementation_defined data() const;
-            std::size_t size() const;
-            void resize(std::size_t size);
-            std::size_t capacity() const;
           };
 
           // basic_endpoint comparisons:
@@ -60,7 +53,29 @@
               basic_ostream<CharT, Traits>& os,
               const basic_endpoint<Protocol>& ep);
 
-          // TODO hash_value
+        } // namespace ip
+      } // namespace sys
+    } // namespace tr2
+  } // namespace std
+
+A __POSIX__ implementation must provide the following member functions:
+
+  namespace std {
+    namespace tr2 {
+      namespace sys {
+        namespace ip {
+
+          template<class Protocol>
+          class basic_endpoint
+          {
+          public:
+            sockaddr* data();
+            const sockaddr* data() const;
+            std::size_t size() const;
+            void resize(std::size_t size);
+            std::size_t capacity() const;
+            ``['[*// remainder unchanged]]``
+          };
 
         } // namespace ip
       } // namespace sys
