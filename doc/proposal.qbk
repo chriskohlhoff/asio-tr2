@@ -5,7 +5,7 @@
     [authors [Kohlhoff, Christopher]]
     [category template]
     [category generic]
-    [last-revision $Date: 2006/07/15 14:39:40 $]
+    [last-revision $Date: 2006/07/16 04:08:31 $]
 ]
 
 [def __POSIX__ /POSIX/]
@@ -20,6 +20,8 @@
 [def __sendto__ [@http://www.opengroup.org/onlinepubs/000095399/functions/sendto.html `sendto`]]
 [def __setsockopt__ [@http://www.opengroup.org/onlinepubs/000095399/functions/setsockopt.html `setsockopt`]]
 [def __socket__ [@http://www.opengroup.org/onlinepubs/000095399/functions/socket.html `socket`]]
+[def __sys_socket_h__ [@http://www.opengroup.org/onlinepubs/000095399/basedefs/sys/socket.h.html `sys/socket.h`]]
+[def __netinet_in_h__ [@http://www.opengroup.org/onlinepubs/000095399/basedefs/netinet/in.h.html `netinet/in.h`]]
 
 [/-----------------------------------------------------------------------------]
 
@@ -206,6 +208,8 @@ of these classes may be required.]
 [include:classes classes/ip__address_v4.qbk]
 [include:classes classes/ip__address_v6.qbk]
 [include:classes classes/ip__basic_endpoint.qbk]
+[include:classes classes/ip__tcp.qbk]
+[include:classes classes/ip__udp.qbk]
 [include:headers headers/io_algorithm.qbk]
 [include:requirements requirements/mutable_buffers.qbk]
 [include:requirements requirements/const_buffers.qbk]

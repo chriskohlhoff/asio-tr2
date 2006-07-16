@@ -1,0 +1,85 @@
+[section:ip__udp Class [^ip::udp]]
+
+  namespace std {
+    namespace tr2 {
+      namespace sys {
+        namespace ip {
+
+          class udp
+          {
+          public:
+            // types:
+            typedef basic_endpoint<udp> endpoint;
+            typedef basic_resolver_query<udp> resolver_query;
+            typedef basic_resolver_iterator<udp> resolver_iterator;
+            typedef basic_resolver<udp> resolver;
+            typedef basic_datagram_socket<udp> socket;
+
+            // members:
+            static udp v4();
+            static udp v6();
+
+          private:
+            udp(); // not defined
+          };
+
+        } // namespace ip
+      } // namespace sys
+    } // namespace tr2
+  } // namespace std
+
+A __POSIX__ implementation must provide the following member functions:
+
+  namespace std {
+    namespace tr2 {
+      namespace sys {
+        namespace ip {
+
+          class udp
+          {
+          public:
+            int family() const;
+            int type() const;
+            int protocol() const;
+            ``['[*// remainder unchanged]]``
+          };
+
+        } // namespace ip
+      } // namespace sys
+    } // namespace tr2
+  } // namespace std
+
+In the table below, `u` denotes an identifier. The constants `AF_INET`,
+`AF_INET6` and `SOCK_DGRAM` are defined in the __POSIX__ header file
+__sys_socket_h__. The constant `IPPROTO_UDP` is defined in the __POSIX__ header
+file __netinet_in_h__.
+
+[table Table--POSIX values
+  [[expression] [value]]
+  [
+    [`udp u(udp::v4()); u.family();`]
+    [`AF_INET`]
+  ]
+  [
+    [`udp u(udp::v4()); u.type();`]
+    [`SOCK_DGRAM`]
+  ]
+  [
+    [`udp u(udp::v4()); u.protocol();`]
+    [`IPPROTO_UDP`]
+  ]
+  [
+    [`udp u(udp::v6()); u.family();`]
+    [`AF_INET6`]
+  ]
+  [
+    [`udp u(udp::v6()); u.type();`]
+    [`SOCK_DGRAM`]
+  ]
+  [
+    [`udp u(udp::v6()); u.protocol();`]
+    [`IPPROTO_UDP`]
+  ]
+]
+
+[endsect]

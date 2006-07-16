@@ -125,9 +125,9 @@
           string host_name();
           string host_name(error_code&);
 
-          class tcp;
+          class ``[link classes.ip__tcp tcp]``;
 
-          class udp;
+          class ``[link classes.ip__udp udp]``;
 
           class v6_only;
 
