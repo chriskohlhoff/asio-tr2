@@ -12,8 +12,8 @@
           const_buffer(const mutable_buffer& b);
         };
 
-        template <typename PodTypePtr>
-          PodTypePtr buffer_cast(const const_buffer& b);
+        template<typename T>
+          T buffer_cast(const const_buffer& b);
 
         size_t buffer_size(const const_buffer& b);
 

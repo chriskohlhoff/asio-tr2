@@ -24,9 +24,9 @@
           run_exit_reason run(const date_time::time_duration_type& duration);
           void interrupt();
           void reset();
-          template <typename Handler> void dispatch(Handler handler);
-          template <typename Handler> void post(Handler handler);
-          template <typename Handler> unspecified wrap(Handler handler);
+          template<typename Handler> void dispatch(Handler handler);
+          template<typename Handler> void post(Handler handler);
+          template<typename Handler> unspecified wrap(Handler handler);
 
         private:
           io_service(const io_service&);     // not defined
@@ -34,9 +34,9 @@
         };
 
         // service access:
-        template <typename Service> Service& use_service(io_service& ios);
-        template <typename Service> void add_service(io_service& ios, Service* svc);
-        template <typename Service> bool has_service(io_service& ios) const;
+        template<typename Service> Service& use_service(io_service& ios);
+        template<typename Service> void add_service(io_service& ios, Service* svc);
+        template<typename Service> bool has_service(io_service& ios) const;
         class service_already_exists : public logic_error { ... };
         class invalid_service_owner : public logic_error { ... };
 

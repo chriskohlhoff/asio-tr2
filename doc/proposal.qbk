@@ -5,7 +5,7 @@
     [authors [Kohlhoff, Christopher]]
     [category template]
     [category generic]
-    [last-revision $Date: 2006/07/16 04:08:31 $]
+    [last-revision $Date: 2006/07/16 22:44:44 $]
 ]
 
 [def __POSIX__ /POSIX/]
@@ -173,6 +173,8 @@ of these classes may be required.]
 
 [include:design design/threads.qbk]
 
+* Why the BSD sockets API
+* Flaws in BSD socket API - type safety
 * Should acceptor set reuse_address or not
 * Buffers
 * Services
@@ -180,6 +182,7 @@ of these classes may be required.]
 * Strands
 * Two-tier concept requirements for portability
 * Why read/async_read/write/async_write are needed
+* Thread safety
 * Why eof is an error
 * Custom memory allocation
 * Protocol independence
@@ -208,6 +211,10 @@ of these classes may be required.]
 [include:classes classes/ip__address_v4.qbk]
 [include:classes classes/ip__address_v6.qbk]
 [include:classes classes/ip__basic_endpoint.qbk]
+[include:classes classes/ip__resolver_query_base.qbk]
+[include:classes classes/ip__basic_resolver_entry.qbk]
+[include:classes classes/ip__basic_resolver_iterator.qbk]
+[include:classes classes/ip__basic_resolver_query.qbk]
 [include:classes classes/ip__tcp.qbk]
 [include:classes classes/ip__udp.qbk]
 [include:headers headers/io_algorithm.qbk]

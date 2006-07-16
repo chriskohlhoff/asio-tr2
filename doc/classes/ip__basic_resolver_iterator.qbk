@@ -1,0 +1,60 @@
+[section:ip__basic_resolver_iterator Class template [^ip::basic_resolver_iterator]]
+
+  namespace std {
+    namespace tr2 {
+      namespace sys {
+        namespace ip {
+
+          template<class ResolverProtocol>
+          class basic_resolver_iterator :
+            public iterator<forward_iterator_tag,
+              basic_resolver_entry<ResolverProtocol> >
+          {
+          public:
+            // types:
+            typedef ResolverProtocol protocol_type;
+            typedef typename ResolverProtocol::endpoint endpoint_type;
+
+            // constructors:
+            basic_resolver_iterator();
+
+            // other members as required by
+            //   C++ Std, 24.1.3 Forward iterators [lib.forward.iterators]
+          };
+
+        } // namespace ip
+      } // namespace sys
+    } // namespace tr2
+  } // namespace std
+
+A __POSIX__ implementation must provide the following member functions:
+
+  namespace std {
+    namespace tr2 {
+      namespace sys {
+        namespace ip {
+
+          template<class ResolverProtocol>
+          class basic_resolver_iterator :
+            public iterator<forward_iterator_tag,
+              basic_resolver_entry<ResolverProtocol> >
+          {
+          public:
+            basic_resolver_iterator(addrinfo* ai, const string& h,
+                                    const string& s);
+            basic_resolver_iterator(const endpoint_type& ep, const string& h,
+                                    const string& s);
+            ``['[*// remainder unchanged]]``
+
+          private:
+  ``//        shared\_ptr<addrinfo> ai; ['[*exposition only]]``
+  ``//        string host;             ['[*exposition only]]``
+  ``//        string service;          ['[*exposition only]]``
+          };
+
+        } // namespace ip
+      } // namespace sys
+    } // namespace tr2
+  } // namespace std
+
+[endsect]

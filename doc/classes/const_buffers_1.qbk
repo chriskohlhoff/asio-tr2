@@ -4,8 +4,8 @@
     namespace tr2 {
       namespace sys {
 
-        class const_buffers_1
-          : public const_buffer
+        class const_buffers_1 :
+          public const_buffer
         {
         public:
           // types:

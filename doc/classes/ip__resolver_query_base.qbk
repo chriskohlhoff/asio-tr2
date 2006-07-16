@@ -1,0 +1,78 @@
+[section:ip__resolver_query_base Class [^ip::resolver_query_base]]
+
+  namespace std {
+    namespace tr2 {
+      namespace sys {
+        namespace ip {
+
+          class resolver_query_base
+          {
+          public:
+            typedef ``['[*T1]]`` flags;
+            static const flags passive;
+            static const flags canonical_name;
+            static const flags numeric_host;
+            static const flags numeric_service;
+            static const flags v4_mapped;
+            static const flags all_matching;
+            static const flags address_configured;
+
+          protected:
+            resolver_query_base();
+            ~resolver_query_base();
+          };
+
+        } // namespace ip
+      } // namespace sys
+    } // namespace tr2
+  } // namespace std
+
+`resolver_query_base` defines a bitmask type, `flags`. The flags constants have
+bitwise-distinct values. The meanings and __POSIX__ equivalents for each flag
+are defined in the table below.
+
+[table Table--resolver flags
+  [[flag] [meaning] [POSIX equivalent]]
+  [
+    [`passive`]
+    [Returned endpoints are intended for use as locally bound socket endpoints.]
+    [`AI_PASSIVE`]
+  ]
+  [
+    [`canonical_name`]
+    [Determine the canonical name of the host specified in the query.]
+    [`AI_CANONNAME`]
+  ]
+  [
+    [`numeric_host`]
+    [Host name should be treated as a numeric string defining an IPv4 or IPv6
+     address and no host name resolution should be attempted.]
+    [`AI_NUMERICHOST`]
+  ]
+  [
+    [`numeric_service`]
+    [Service name should be treated as a numeric string defining a port number
+     and no service name resolution should be attempted.]
+    [`AI_NUMERICSERV`]
+  ]
+  [
+    [`v4_mapped`]
+    [If the query protocol is specified as an IPv6 protocol, return IPv4-mapped
+     IPv6 addresses on finding no IPv6 addresses.]
+    [`AI_V4MAPPED`]
+  ]
+  [
+    [`all_matching`]
+    [If used with `v4_mapped`, return all matching IPv6 and IPv4 addresses.]
+    [`AI_ALL`]
+  ]
+  [
+    [`address_configured`]
+    [Only return IPv4 addresses if a non-loopback IPv4 address is configured for
+     the system. Only return IPv6 addresses if a non-loopback IPv6 address is
+     configured for the system.]
+    [`AI_ADDRCONFIG`]
+  ]
+]
+
+[endsect]

@@ -4,8 +4,8 @@
     namespace tr2 {
       namespace sys {
 
-        class mutable_buffers_1
-          : public mutable_buffer
+        class mutable_buffers_1 :
+          public mutable_buffer
         {
         public:
           // types:

@@ -1,0 +1,33 @@
+[section:ip__basic_resolver_entry Class template [^ip::basic_resolver_entry]]
+
+  namespace std {
+    namespace tr2 {
+      namespace sys {
+        namespace ip {
+
+          template<class ResolverProtocol>
+          class basic_resolver_entry
+          {
+          public:
+            // types:
+            typedef ResolverProtocol protocol_type;
+            typedef typename ResolverProtocol::endpoint endpoint_type;
+
+            // constructors:
+            basic_resolver_entry();
+            basic_resolver_entry(const endpoint_type& ep, const string& h,
+                                 const string& s);
+
+            // observers:
+            endpoint_type endpoint() const;
+            operator endpoint_type() const;
+            string host_name() const;
+            string service_name() const;
+          };
+
+        } // namespace ip
+      } // namespace sys
+    } // namespace tr2
+  } // namespace std
+
+[endsect]

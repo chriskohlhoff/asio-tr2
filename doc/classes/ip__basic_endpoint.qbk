@@ -71,9 +71,9 @@ A __POSIX__ implementation must provide the following member functions:
           public:
             sockaddr* data();
             const sockaddr* data() const;
-            std::size_t size() const;
-            void resize(std::size_t size);
-            std::size_t capacity() const;
+            size_t size() const;
+            void resize(size_t size);
+            size_t capacity() const;
             ``['[*// remainder unchanged]]``
           };
 

@@ -114,7 +114,7 @@
             basic_ostream<CharT, Traits>& operator<<(
               basic_ostream<CharT, Traits>&, const basic_endpoint<Protocol>&);
 
-          class resolver_query_base;
+          class ``[link classes.ip__resolver_query_base resolver_query_base]``;
 
           template<class Protocol> basic_resolver_query;
 

@@ -1,0 +1,60 @@
+[section:ip__basic_resolver_query Class template [^ip::basic_resolver_query]]
+
+  namespace std {
+    namespace tr2 {
+      namespace sys {
+        namespace ip {
+
+          template<class ResolverProtocol>
+          class basic_resolver_query :
+            public resolver_query_base
+          {
+          public:
+            // types:
+            typedef ResolverProtocol protocol_type;
+
+            // constructors:
+            basic_resolver_query();
+            basic_resolver_query(const string& service_name,
+                                 flags f = passive | address_configured);
+            basic_resolver_query(const Protocol& proto,
+                                 const string& service_name,
+                                 flags f = passive | address_configured);
+            basic_resolver_query(const string& host_name, 
+                                 const string& service_name,
+                                 flags f = address_configured);
+            basic_resolver_query(const Protocol& proto,
+                                 const string& host_name, 
+                                 const string& service_name,
+                                 flags f = address_configured);
+          };
+
+        } // namespace ip
+      } // namespace sys
+    } // namespace tr2
+  } // namespace std
+
+A __POSIX__ implementation must provide the following member functions:
+
+  namespace std {
+    namespace tr2 {
+      namespace sys {
+        namespace ip {
+
+          template<class ResolverProtocol>
+          class basic_resolver_query :
+            public resolver_query_base
+          {
+          public:
+            const addrinfo* hints() const;
+            const char* host() const;
+            const char* service() const;
+            ``['[*// remainder unchanged]]``
+          };
+
+        } // namespace ip
+      } // namespace sys
+    } // namespace tr2
+  } // namespace std
+
+[endsect]
