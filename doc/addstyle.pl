@@ -10,7 +10,8 @@ if (@ARGV != 1)
 
 my $style =
 "<style>" .
-"div.section pre.programlisting { margin-left: 2em; }" .
+"blockquote pre.programlisting { margin-left: 2em; }\n" .
+"div.informaltable { text-align: center; }" .
 "</style>";
 
 my @lines = ();

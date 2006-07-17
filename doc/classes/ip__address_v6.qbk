@@ -49,8 +49,8 @@
           // address_v6 comparions:
           bool operator==(const address_v6& a, const address_v6& b);
           bool operator!=(const address_v6& a, const address_v6& b);
-          bool operator<(const address_v6& a, const address_v6& b);
-          bool operator>(const address_v6& a, const address_v6& b);
+          bool operator< (const address_v6& a, const address_v6& b);
+          bool operator> (const address_v6& a, const address_v6& b);
           bool operator<=(const address_v6& a, const address_v6& b);
           bool operator>=(const address_v6& a, const address_v6& b);
 

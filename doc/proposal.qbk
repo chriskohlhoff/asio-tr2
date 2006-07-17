@@ -5,8 +5,60 @@
     [authors [Kohlhoff, Christopher]]
     [category template]
     [category generic]
-    [last-revision $Date: 2006/07/16 22:44:44 $]
+    [last-revision $Date: 2006/07/17 14:18:09 $]
 ]
+
+[/-----------------------------------------------------------------------------]
+
+[template std_note[text]
+\[['Note:] [text] --['end note]\]
+]
+
+[template std_example[text code]
+\[['Example:] [text]
+[code]
+--['end example]\]
+]
+
+[template function_block[text]
+[:[text]]
+]
+
+[template function_requires[text]
+[:['Requires:] [text]]
+]
+
+[template function_effects[text]
+[:['Effects:] [text]]
+]
+
+[template function_returns[text]
+[:['Returns:] [text]]
+]
+
+[template function_throws[text]
+[:['Throws:] [text]]
+]
+
+[template function_postconditions[text]
+[:['Postconditions:] [text]]
+]
+
+[template function_notes[text]
+[:['Notes:] [text]]
+]
+
+[template function_note[text]
+[:\[['Note:] [text] --['end note]\]]
+]
+
+[template function_example[text code]
+[:\[['Example:] [text]
+[code]
+--['end example]\]]
+]
+
+[/-----------------------------------------------------------------------------]
 
 [def __POSIX__ /POSIX/]
 [def __accept__ [@http://www.opengroup.org/onlinepubs/000095399/functions/connect.html `accept`]]

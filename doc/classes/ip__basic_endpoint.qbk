@@ -35,11 +35,11 @@
             bool operator!=(const basic_endpoint<Protocol>& a,
                             const basic_endpoint<Protocol>& b);
           template<class Protocol>
-            bool operator<(const basic_endpoint<Protocol>& a,
-                           const basic_endpoint<Protocol>& b);
+            bool operator< (const basic_endpoint<Protocol>& a,
+                            const basic_endpoint<Protocol>& b);
           template<class Protocol>
-            bool operator>(const basic_endpoint<Protocol>& a,
-                           const basic_endpoint<Protocol>& b);
+            bool operator> (const basic_endpoint<Protocol>& a,
+                            const basic_endpoint<Protocol>& b);
           template<class Protocol>
             bool operator<=(const basic_endpoint<Protocol>& a,
                             const basic_endpoint<Protocol>& b);

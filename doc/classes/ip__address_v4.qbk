@@ -39,8 +39,8 @@
           ``// address\_v4 [link classes.ip__address_v4_comparisons comparisons]:``
           bool operator==(const address_v4& a, const address_v4& b);
           bool operator!=(const address_v4& a, const address_v4& b);
-          bool operator<(const address_v4& a, const address_v4& b);
-          bool operator>(const address_v4& a, const address_v4& b);
+          bool operator< (const address_v4& a, const address_v4& b);
+          bool operator> (const address_v4& a, const address_v4& b);
           bool operator<=(const address_v4& a, const address_v4& b);
           bool operator>=(const address_v4& a, const address_v4& b);
 
@@ -58,7 +58,10 @@
 
   address_v4();
 
-[table Postconditions:
+[function_postconditions The postconditions of this function are indicated in
+the table below.]
+
+[table Table--address_v4::address_v4() effects
   [[Expression][Value]]
   [[`to_bytes()`][`{0, 0, 0, 0}`]]
   [[`to_ulong()`][0]]
@@ -66,12 +69,16 @@
 
   address_v4(const bytes_type& bytes);
 
-[*Requires:] Each element of the array `bytes` is in the range `[0, 0xFF]`.
+[function_requires Each element of the array `bytes` is in the range
+`[0, 0xFF]`.]
 
-[*Throws:] `out_of_range` if any element of the array `bytes` is not in the
-range `[0, 0xFF]`.
+[function_throws `out_of_range` if any element of the array `bytes` is not in
+the range `[0, 0xFF]`.]
 
-[table Postconditions:
+[function_postconditions The postconditions of this function are indicated in
+the table below.]
+
+[table Table--address_v4::address_v4(const bytes_type&) effects
   [[Expression][Value]]
   [
     [`to_bytes()`]
@@ -91,11 +98,14 @@ range `[0, 0xFF]`.
 
   address_v4(unsigned long val);
 
-[*Requires:] `val` is in the range `[0, 0xFFFFFFFF]`.
+[function_requires `val` is in the range `[0, 0xFFFFFFFF]`.]
 
-[*Throws:] `out_of_range` if `val` is not in the range `[0, 0xFFFFFFFF]`.
+[function_throws `out_of_range` if `val` is not in the range `[0, 0xFFFFFFFF]`.]
 
-[table Postconditions:
+[function_postconditions The postconditions of this function are indicated in
+the table below.]
+
+[table Table--address_v4::address_v4(unsigned long) effects
   [[Expression][Value]]
   [
     [`to_bytes()`]
@@ -116,19 +126,19 @@ range `[0, 0xFF]`.
 
   bool is_class_a() const;
 
-[*Returns:] `(to_ulong() & 0x80000000) == 0`.
+[function_returns `(to_ulong() & 0x80000000) == 0`.]
 
   bool is_class_b() const;
 
-[*Returns:] `(to_ulong() & 0xC0000000) == 0x80000000`.
+[function_returns `(to_ulong() & 0xC0000000) == 0x80000000`.]
 
   bool is_class_c() const;
 
-[*Returns:] `(to_ulong() & 0xE0000000) == 0xC0000000`.
+[function_returns `(to_ulong() & 0xE0000000) == 0xC0000000`.]
 
   bool is_multicast() const;
 
-[*Returns:] `(to_ulong() & 0xF0000000) == 0xE0000000`.
+[function_returns `(to_ulong() & 0xF0000000) == 0xE0000000`.]
 
 [endsect]
 
@@ -140,53 +150,56 @@ range `[0, 0xFF]`.
 
   string to_string() const;
 
-Returns a string representation of the address. The format is specified by the
-__POSIX__ function __inet_ntop__ when invoked with address family `AF_INET`.
+[function_block Returns a string representation of the address. The format is
+specified by the __POSIX__ function __inet_ntop__ when invoked with address
+family `AF_INET`.]
 
-[*Throws:] `system_error` if the implementation is unable to convert the
+[function_throws `system_error` if the implementation is unable to convert the
 address to a string. If conversion to string fails due to lack of support for
 IP version 4, the implementation shall throw a `system_error` constructed with
-the `error_code` value `error::address_family_not_supported`.
+the `error_code` value `error::address_family_not_supported`.]
 
   string to_string(error_code& ec) const;
 
-Returns a string representation of the address. The format is specified by the
-__POSIX__ function __inet_ntop__ when invoked with address family `AF_INET`.
+[function_block Returns a string representation of the address. The format is
+specified by the __POSIX__ function __inet_ntop__ when invoked with address
+family `AF_INET`.]
 
-If conversion to string succeeds, `ec` shall be set to a value used to
-represent not-an-error. If conversion to string fails due to lack of support
-for IP version 4, `ec` shall be set to `error::address_family_not_supported`.
+[function_block If conversion to string succeeds, `ec` shall be set to a value
+used to represent not-an-error. If conversion to string fails due to lack of
+support for IP version 4, `ec` shall be set to
+`error::address_family_not_supported`.]
 
   static address_v4 from_string(const string& str);
 
-See inet_pton.
+[function_block See inet_pton.]
 
   static address_v4 from_string(const string& str, error_code& ec);
 
-See inet_pton.
+[function_block See inet_pton.]
 
   static address_v4 any();
 
-[*Returns:] `address_v4()`.
+[function_returns `address_v4()`.]
 
   static address_v4 loopback();
 
-[*Returns:] `address_v4(0x7F000001)`.
+[function_returns `address_v4(0x7F000001)`.]
 
   static address_v4 broadcast();
 
-[*Returns:] `address_v4(0xFFFFFFFF)`.
+[function_returns `address_v4(0xFFFFFFFF)`.]
 
   static address_v4 broadcast(const address_v4& addr, const address_v4& mask);
 
-[*Returns:] `address_v4(addr.to_ulong() | ~mask.to_ulong())`.
+[function_returns `address_v4(addr.to_ulong() | ~mask.to_ulong())`.]
 
   static address_v4 netmask(const address_v4& addr);
 
-If `addr.is_class_a()` is true, returns `address_v4(0xFF000000)`.
-If `addr.is_class_b()` is true, returns `address_v4(0xFFFF0000)`.
-If `addr.is_class_c()` is true, returns `address_v4(0xFFFFFF00)`.
-Otherwise returns `address_v4(0xFFFFFFFF)`.
+[function_block If `addr.is_class_a()` is true, returns
+`address_v4(0xFF000000)`. If `addr.is_class_b()` is true, returns
+`address_v4(0xFFFF0000)`. If `addr.is_class_c()` is true, returns
+`address_v4(0xFFFFFF00)`. Otherwise returns `address_v4(0xFFFFFFFF)`.]
 
 [endsect]
 

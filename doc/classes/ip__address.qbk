@@ -33,8 +33,8 @@
           // address comparisons:
           bool operator==(const address& a, const address& b);
           bool operator!=(const address& a, const address& b);
-          bool operator<(const address& a, const address& b);
-          bool operator>(const address& a, const address& b);
+          bool operator< (const address& a, const address& b);
+          bool operator> (const address& a, const address& b);
           bool operator<=(const address& a, const address& b);
           bool operator>=(const address& a, const address& b);
 
