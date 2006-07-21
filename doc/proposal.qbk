@@ -5,7 +5,7 @@
     [authors [Kohlhoff, Christopher]]
     [category template]
     [category generic]
-    [last-revision $Date: 2006/07/17 14:18:09 $]
+    [last-revision $Date: 2006/07/21 13:48:39 $]
 ]
 
 [/-----------------------------------------------------------------------------]
@@ -239,6 +239,7 @@ of these classes may be required.]
 * Custom memory allocation
 * Protocol independence
 * No string constructors for IP address classes
+* Timers, monotonic time
 
 [endsect]
 
@@ -268,6 +269,7 @@ of these classes may be required.]
 [include:classes classes/ip__basic_resolver_iterator.qbk]
 [include:classes classes/ip__basic_resolver_query.qbk]
 [include:classes classes/ip__tcp.qbk]
+[include:classes classes/ip__tcp__no_delay.qbk]
 [include:classes classes/ip__udp.qbk]
 [include:headers headers/io_algorithm.qbk]
 [include:requirements requirements/mutable_buffers.qbk]

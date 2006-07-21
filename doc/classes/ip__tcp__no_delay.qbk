@@ -1,0 +1,80 @@
+[section:ip__tcp__no_delay Class [^ip::tcp::no_delay]]
+
+  namespace std {
+    namespace tr2 {
+      namespace sys {
+        namespace ip {
+
+          class tcp::no_delay
+          {
+          public:
+            ``// [link classes.ip__tcp__no_delay_constructors constructors]:``
+            explicit no_delay(bool b);
+
+            ``// [link classes.ip__tcp__no_delay_observers observers]:``
+            operator bool() const;
+            bool operator!() const;
+          };
+
+        } // namespace ip
+      } // namespace sys
+    } // namespace tr2
+  } // namespace std
+
+A __POSIX__ implementation must provide the following member functions:
+
+  namespace std {
+    namespace tr2 {
+      namespace sys {
+        namespace ip {
+
+          class tcp::no_delay
+          {
+          public:
+            template<class Protocol> int level(const Protocol& p) const;
+            template<class Protocol> int name(const Protocol& p) const;
+            template<class Protocol> int* data(const Protocol& p) const;
+            template<class Protocol> const int* data(const Protocol& p) const;
+            template<class Protocol> size_t size(const Protocol& p) const;
+            template<class Protocol> void resize(const Protocol& p, size_t s);
+            ``['[*// remainder unchanged]]``
+          private:
+  ``//        int value_;  ['[*exposition only]]``
+          };
+
+        } // namespace ip
+      } // namespace sys
+    } // namespace tr2
+  } // namespace std
+
+[section:ip__tcp__no_delay_constructors [^ip::tcp::no_delay] constructors]
+
+  explicit no_delay(bool b);
+
+[endsect]
+
+[section:ip__tcp__no_delay_observers [^ip::tcp::no_delay] observers]
+
+  operator bool() const;
+
+  bool operator!() const;
+
+[endsect]
+
+[section:ip__tcp__no_delay_posix [^ip::tcp::no_delay] __POSIX__ members]
+
+  template<class Protocol> int level(const Protocol& p) const;
+
+  template<class Protocol> int name(const Protocol& p) const;
+
+  template<class Protocol> int* data(const Protocol& p) const;
+
+  template<class Protocol> const int* data(const Protocol& p) const;
+
+  template<class Protocol> size_t size(const Protocol& p) const;
+
+  template<class Protocol> void resize(const Protocol& p, size_t s);
+  
+[endsect]
+
+[endsect]

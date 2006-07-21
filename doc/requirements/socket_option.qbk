@@ -41,6 +41,17 @@ requirements, and `u` denotes an identifier.
       appropriate integer conversion has been performed.
     ]
   ]
+  [
+    [`a.resize(p, s);`]
+    []
+    [
+      post: `a.size() == s`\n
+      note: passed the value contained in the /option_len/ argument to
+      the __POSIX__ function __getsockopt__ (or equivalent) after a successful
+      completion of the function. Permitted to throw an exception if the
+      socket option object `a` does not support the specified size.
+    ]
+  ]
 ]
 
 [endsect]
@@ -140,6 +151,17 @@ requirements, and `u` denotes an identifier.
       note: returns a value suitable for passing as the /option_len/ argument
       to the __POSIX__ functions __setsockopt__ and __getsockopt__ (or
       equivalent), after appropriate integer conversion has been performed.
+    ]
+  ]
+  [
+    [`a.resize(p, s);`]
+    []
+    [
+      post: `a.size() == s`\n
+      note: passed the value contained in the /option_len/ argument to
+      the __POSIX__ function __getsockopt__ (or equivalent) after a successful
+      completion of the function. Permitted to throw an exception if the
+      socket option object `a` does not support the specified size.
     ]
   ]
 ]
