@@ -42,8 +42,8 @@ __POSIX__ implementations must provide the following member functions:
           public:
             template<class Protocol> int level(const Protocol& p) const;
             template<class Protocol> int name(const Protocol& p) const;
-            template<class Protocol> int* data(const Protocol& p) const;
-            template<class Protocol> const int* data(const Protocol& p) const;
+            template<class Protocol> ``['unspecified]``* data(const Protocol& p);
+            template<class Protocol> const ``['unspecified]``* data(const Protocol& p) const;
             template<class Protocol> size_t size(const Protocol& p) const;
             template<class Protocol> void resize(const Protocol& p, size_t s);
             ``['[*// remainder unchanged]]``
@@ -113,11 +113,11 @@ file __netinet_tcp_h__.]
 
   template<class Protocol> size_t size(const Protocol& p) const;
 
-[function_returns `sizeof(int)`.]
+[function_returns `sizeof(value_)`.]
 
   template<class Protocol> void resize(const Protocol& p, size_t s);
 
-[function_throws `length_error` if `s != sizeof(int)`.]
+[function_throws `length_error` if `s != sizeof(value_)`.]
   
 [endsect]
 

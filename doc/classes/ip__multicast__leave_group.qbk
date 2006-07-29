@@ -1,0 +1,125 @@
+[section:ip__multicast__leave_group Class [^ip::multicast::leave_group]]
+
+The `leave_group` class represents a socket option used to leave a multicast
+group.
+
+`leave_group` satisfies the requirements for `CopyConstructible`, `Assignable`,
+and [link requirements.settable_socket_option `SettableSocketOption`].
+
+  namespace std {
+    namespace tr2 {
+      namespace sys {
+        namespace ip {
+          namespace multicast {
+
+            class leave_group
+            {
+            public:
+              leave_group();
+              explicit leave_group(const address& multicast_group);
+              leave_group(const address_v4& multicast_group,
+                const address_v4& network_interface = address_v4::any());
+              leave_group(const address_v6& multicast_group,
+                unsigned int network_interface = 0);
+            };
+
+          } // namespace multicast
+        } // namespace ip
+      } // namespace sys
+    } // namespace tr2
+  } // namespace std
+
+__POSIX__ implementations must provide the following member functions:
+
+  namespace std {
+    namespace tr2 {
+      namespace sys {
+        namespace ip {
+          namespace multicast {
+
+            class leave_group
+            {
+            public:
+              template<class Protocol> int level(const Protocol& p) const;
+              template<class Protocol> int name(const Protocol& p) const;
+              template<class Protocol> const ``['unspecified]``* data(const Protocol& p) const;
+              template<class Protocol> size_t size(const Protocol& p) const;
+              ``['[*// remainder unchanged]]``
+            private:
+  ``//          ip_mreq v4\_value\_;    ['[*exposition only]]``
+  ``//          ipv6_mreq v6\_value\_;  ['[*exposition only]]``
+            };
+
+          } // namespace multicast
+        } // namespace ip
+      } // namespace sys
+    } // namespace tr2
+  } // namespace std
+
+[section [^ip::multicast::leave_group] members]
+
+  leave_group();
+
+[function_effects For __POSIX__ implementations, both `v4_value_` and
+`v6_value_` are zero-initialised.]
+
+  explicit leave_group(const address& multicast_group);
+
+[function_effects For __POSIX__ implementations, if `multicast_group.is_v6()`
+is true then `v6_value_.ipv6mr_multiaddr` is initialised to correspond to the
+IPv6 address returned by `multicast_group.to_v6()`,
+`v6_value_.ipv6mr_interface` is set to `0`, and `v4_value_` is
+zero-initialised; otherwise, `v4_value_.imr_multiaddr` is initialised to
+correspond to the IPv4 address returned by `multicast_group.to_v4()`,
+`v4_value_.imr_interface` is zero-initialised, and `v6_value_` is
+zero-initialised.]
+
+  leave_group(const address_v4& multicast_group,
+    const address_v4& network_interface = address_v4::any());
+
+[function_effects For __POSIX__ implementations, `v4_value_.imr_multiaddr` is
+initialised to correspond to the address `multicast_group`,
+`v4_value_.imr_interface` is initialised to correspond to address
+`network_interface`, and `v6_value_` is zero-initialised.]
+
+  leave_group(const address_v6& multicast_group,
+    unsigned int network_interface = 0);
+
+[function_effects For __POSIX__ implementations, `v6_value_.ipv6mr_multiaddr`
+is initialised to correspond to the address `multicast_group`,
+`v6_value_.ipv6mr_interface` is initialised to `network_interface`, and
+`v4_value_` is zero-initialised.]
+
+[endsect]
+
+[section [^ip::multicast::leave_group] __POSIX__ members]
+
+  template<class Protocol> int level(const Protocol& p) const;
+
+[function_returns `IPPROTO_IPV6` if `p.family() == AF_INET6`, otherwise
+`IPPROTO_IP`.]
+
+[function_note The constants `IPPROTO_IP` and `IPPROTO_IPV6` are defined in the
+__POSIX__ header file __netinet_in_h__.]
+
+  template<class Protocol> int name(const Protocol& p) const;
+
+[function_returns `IPV6_LEAVE_GROUP` if `p.family() == AF_INET6`, otherwise
+`IP_DROP_MEMBERSHIP`.]
+
+[function_note The constant `IPV6_LEAVE_GROUP` is defined in the __POSIX__
+header file __netinet_in_h__. [*Where is `IP_DROP_MEMBERSHIP` in __POSIX__?]]
+
+  template<class Protocol> const int* data(const Protocol& p) const;
+
+[function_returns `&v6_value_` if `p.family() == AF_INET6`, otherwise
+`&v4_value_`.]
+
+  template<class Protocol> size_t size(const Protocol& p) const;
+
+[function_returns `sizeof(v6_value_)` if `p.family() == AF_INET6`, otherwise
+`sizeof(v4_value_)`.]
+
+[endsect]
+
+[endsect]

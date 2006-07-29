@@ -133,21 +133,21 @@
 
           namespace unicast {
 
-            class hops;
+            class ``[link classes.ip__unicast__hops hops]``;
 
           } // namespace unicast
 
           namespace multicast {
 
-            class join_group;
+            class ``[link classes.ip__multicast__join_group join_group]``;
 
-            class leave_group;
+            class ``[link classes.ip__multicast__leave_group leave_group]``;
 
             class outbound_interface;
 
-            class hops;
+            class ``[link classes.ip__multicast__hops hops]``;
 
-            class enable_loopback;
+            class ``[link classes.ip__multicast__enable_loopback enable_loopback]``;
 
           } // namespace multicast
         } // namespace ip
