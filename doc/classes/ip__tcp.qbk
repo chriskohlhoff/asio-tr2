@@ -16,9 +16,9 @@
             typedef basic_stream_socket<tcp> socket;
             typedef basic_socket_acceptor<tcp> acceptor;
             typedef basic_socket_iostream<tcp> iostream;
-            class no_delay;
+            class ``[link classes.ip__tcp__no_delay no\_delay]``;
 
-            // members:
+            // static members:
             static tcp v4();
             static tcp v6();
 
@@ -31,7 +31,7 @@
     } // namespace tr2
   } // namespace std
 
-A __POSIX__ implementation must provide the following member functions:
+__POSIX__ implementations must provide the following member functions:
 
   namespace std {
     namespace tr2 {

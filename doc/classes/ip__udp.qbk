@@ -15,7 +15,7 @@
             typedef basic_resolver<udp> resolver;
             typedef basic_datagram_socket<udp> socket;
 
-            // members:
+            // static members:
             static udp v4();
             static udp v6();
 
@@ -28,7 +28,7 @@
     } // namespace tr2
   } // namespace std
 
-A __POSIX__ implementation must provide the following member functions:
+__POSIX__ implementations must provide the following member functions:
 
   namespace std {
     namespace tr2 {

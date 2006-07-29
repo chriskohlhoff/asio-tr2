@@ -46,7 +46,7 @@
             static address_v6 v4_compatible(const address_v4& addr);
           };
 
-          // address_v6 comparions:
+          // address_v6 comparisons:
           bool operator==(const address_v6& a, const address_v6& b);
           bool operator!=(const address_v6& a, const address_v6& b);
           bool operator< (const address_v6& a, const address_v6& b);

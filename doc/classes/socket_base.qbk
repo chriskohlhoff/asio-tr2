@@ -44,12 +44,12 @@
 
 `socket_base` defines several member types:
 
-- socket option classes `broadcast`, `do_not_route`, `keep_alive`,
-  `send_buffer_size`, `send_low_watermark`, `receive_buffer_size`,
-  `receive_low_watermark`, `reuse_address`, `linger`, and
-  `enable_connection_aborted`;
+- socket option classes `broadcast`, `debug`, `do_not_route`,
+  `enable_connection_aborted`, `keep_alive`, `linger`, `out_of_band_inline`,
+  `receive_buffer_size`, `receive_low_watermark`, `reuse_address`,
+  `send_buffer_size`, and `send_low_watermark`;
 
-- I/O command classes `non_blocking_io` and `bytes_readable`;
+- I/O command classes `at_mark`, `bytes_readable`, and `non_blocking_io`;
 
 - an enumerated type, `shutdown_type`;
 

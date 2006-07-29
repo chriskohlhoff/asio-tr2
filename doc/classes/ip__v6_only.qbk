@@ -1,9 +1,9 @@
-[section:ip__tcp__no_delay Class [^ip::tcp::no_delay]]
+[section:ip__v6_only Class [^ip::v6_only]]
 
-The `no_delay` class represents a socket option for disabling the Nagle
-algorithm for coalescing small segments.
+The `v6_only` class represents a socket option for determining whether a socket
+created for an IPv6 protocol is restricted to IPv6 communications only.
 
-`no_delay` satisfies the requirements for `CopyConstructible`, `Assignable`,
+`v6_only` satisfies the requirements for `CopyConstructible`, `Assignable`,
 [link requirements.gettable_socket_option `GettableSocketOption`], and [link
 requirements.settable_socket_option `SettableSocketOption`].
 
@@ -12,12 +12,12 @@ requirements.settable_socket_option `SettableSocketOption`].
       namespace sys {
         namespace ip {
 
-          class tcp::no_delay
+          class v6_only
           {
           public:
-            no_delay();
-            explicit no_delay(bool v);
-            no_delay& operator=(bool v);
+            v6_only();
+            explicit v6_only(bool v);
+            v6_only& operator=(bool v);
 
             bool value() const;
 
@@ -37,7 +37,7 @@ __POSIX__ implementations must provide the following member functions:
       namespace sys {
         namespace ip {
 
-          class tcp::no_delay
+          class v6_only
           {
           public:
             template<class Protocol> int level(const Protocol& p) const;
@@ -56,17 +56,17 @@ __POSIX__ implementations must provide the following member functions:
     } // namespace tr2
   } // namespace std
 
-[section [^ip::tcp::no_delay] members]
+[section [^ip::v6_only] members]
 
-  no_delay();
+  v6_only();
 
 [function_postconditions `!value()`.]
 
-  explicit no_delay(bool v);
+  explicit v6_only(bool v);
 
 [function_postconditions `value() == v`.]
 
-  no_delay& operator=(bool v);
+  v6_only& operator=(bool v);
 
 [function_returns `*this`.]
 
@@ -87,21 +87,21 @@ implementations, returns `value_ != 0`.]
 
 [endsect]
 
-[section [^ip::tcp::no_delay] __POSIX__ members]
+[section [^ip::v6_only] __POSIX__ members]
 
   template<class Protocol> int level(const Protocol& p) const;
 
-[function_returns `IPPROTO_TCP`.]
+[function_returns `IPPROTO_IPV6`.]
 
-[function_note The constant `IPPROTO_TCP` is defined in the __POSIX__ header
+[function_note The constant `IPPROTO_IPV6` is defined in the __POSIX__ header
 file __netinet_in_h__.]
 
   template<class Protocol> int name(const Protocol& p) const;
 
-[function_returns `TCP_NODELAY`.]
+[function_returns `IPV6_V6ONLY`.]
 
-[function_note The constant `TCP_NODELAY` is defined in the __POSIX__ header
-file __netinet_tcp_h__.]
+[function_note The constant `IPV6_V6ONLY` is defined in the __POSIX__ header
+file __netinet_in_h__.]
 
   template<class Protocol> int* data(const Protocol& p) const;
 

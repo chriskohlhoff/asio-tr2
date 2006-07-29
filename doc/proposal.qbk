@@ -5,7 +5,7 @@
     [authors [Kohlhoff, Christopher]]
     [category template]
     [category generic]
-    [last-revision $Date: 2006/07/21 13:48:39 $]
+    [last-revision $Date: 2006/07/29 07:51:51 $]
 ]
 
 [/-----------------------------------------------------------------------------]
@@ -74,6 +74,7 @@
 [def __socket__ [@http://www.opengroup.org/onlinepubs/000095399/functions/socket.html `socket`]]
 [def __sys_socket_h__ [@http://www.opengroup.org/onlinepubs/000095399/basedefs/sys/socket.h.html `sys/socket.h`]]
 [def __netinet_in_h__ [@http://www.opengroup.org/onlinepubs/000095399/basedefs/netinet/in.h.html `netinet/in.h`]]
+[def __netinet_tcp_h__ [@http://www.opengroup.org/onlinepubs/000095399/basedefs/netinet/tcp.h.html `netinet/tcp.h`]]
 
 [/-----------------------------------------------------------------------------]
 
@@ -240,6 +241,7 @@ of these classes may be required.]
 * Protocol independence
 * No string constructors for IP address classes
 * Timers, monotonic time
+* Rationale for read_until - HTTP example
 
 [endsect]
 
@@ -271,6 +273,8 @@ of these classes may be required.]
 [include:classes classes/ip__tcp.qbk]
 [include:classes classes/ip__tcp__no_delay.qbk]
 [include:classes classes/ip__udp.qbk]
+[include:classes classes/ip__v6_only.qbk]
+[include:classes classes/ip__unicast__hops.qbk]
 [include:headers headers/io_algorithm.qbk]
 [include:requirements requirements/mutable_buffers.qbk]
 [include:requirements requirements/const_buffers.qbk]

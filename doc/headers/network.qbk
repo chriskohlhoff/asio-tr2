@@ -129,7 +129,7 @@
 
           class ``[link classes.ip__udp udp]``;
 
-          class v6_only;
+          class ``[link classes.ip__v6_only v6_only]``;
 
           namespace unicast {
 

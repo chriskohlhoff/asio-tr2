@@ -58,7 +58,7 @@
     } // namespace tr2
   } // namespace std
 
-A __POSIX__ implementation must provide the following member functions:
+__POSIX__ implementations must provide the following member functions:
 
   namespace std {
     namespace tr2 {

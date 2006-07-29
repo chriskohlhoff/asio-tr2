@@ -1,0 +1,143 @@
+[section:ip__unicast__hops Class [^ip::unicast::hops]]
+
+The `hops` class represents a socket option for specifying the default number
+of hops (also known as time-to-live or TTL) on outbound datagrams.
+
+`hops` satisfies the requirements for `CopyConstructible`, `Assignable`,
+[link requirements.gettable_socket_option `GettableSocketOption`], and [link
+requirements.settable_socket_option `SettableSocketOption`].
+
+  namespace std {
+    namespace tr2 {
+      namespace sys {
+        namespace ip {
+
+          class unicast::hops
+          {
+          public:
+            hops();
+            explicit hops(int v);
+            hops& operator=(int v);
+
+            int value() const;
+          };
+
+        } // namespace ip
+      } // namespace sys
+    } // namespace tr2
+  } // namespace std
+
+__POSIX__ implementations must provide the following member functions:
+
+  namespace std {
+    namespace tr2 {
+      namespace sys {
+        namespace ip {
+
+          class unicast::hops
+          {
+          public:
+            template<class Protocol> int level(const Protocol& p) const;
+            template<class Protocol> int name(const Protocol& p) const;
+            template<class Protocol> ``['unspecified]``* data(const Protocol& p) const;
+            template<class Protocol> const ``['unspecified]``* data(const Protocol& p) const;
+            template<class Protocol> size_t size(const Protocol& p) const;
+            template<class Protocol> void resize(const Protocol& p, size_t s);
+            ``['[*// remainder unchanged]]``
+          private:
+  ``//        int value_;               ['[*exposition only]]``
+  ``//        unsigned char v4\_value\_;  ['[*exposition only]]``
+  ``//        unsigned int v6\_value\_;   ['[*exposition only]]``
+          };
+
+        } // namespace ip
+      } // namespace sys
+    } // namespace tr2
+  } // namespace std
+
+[std_note The underlying types of the `IP_TTL` and `IPV6_UNICAST_HOPS` socket
+options are not specified by __POSIX__. For example, the former may be
+`unsigned char` and the latter `unsigned int`. Consequently, the `data()`
+function return type is left unspecified.]
+
+[section [^ip::unicast::hops] members]
+
+  hops();
+
+[function_effects For __POSIX__ implementations, sets `value_` to `0`,
+`v4_value_` to `0`, and `v6_value_` to `0`.]
+
+[function_postconditions `value() == 0`.]
+
+  explicit hops(int v);
+
+[function_effects For __POSIX__ implementations, sets `value_` to `v`,
+`v4_value_` to `v`, and `v6_value_` to `v`.]
+
+[function_throws `out_of_range` if `v` is not in the range `[0, 255]`.]
+
+[function_postconditions `value() == v`.]
+
+  hops& operator=(int v);
+
+[function_effects For __POSIX__ implementations, sets `value_` to `v`,
+`v4_value_` to `v`, and `v6_value_` to `v`.]
+
+[function_returns `*this`.]
+
+[function_throws `out_of_range` if `v` is not in the range `[0, 255]`.]
+
+[function_postconditions `value() == v`.]
+
+  int value() const;
+
+[function_returns The stored socket option value. For __POSIX__
+implementations, returns `value_`.]
+
+[endsect]
+
+[section [^ip::unicast::hops] __POSIX__ members]
+
+  template<class Protocol> int level(const Protocol& p) const;
+
+[function_returns `IPPROTO_IPV6` if `p.family() == AF_INET6`, otherwise
+`IPPROTO_IP`.]
+
+[function_note The constants `IPPROTO_IP` and `IPPROTO_IPV6` are defined in the
+__POSIX__ header file __netinet_in_h__.]
+
+  template<class Protocol> int name(const Protocol& p) const;
+
+[function_returns `IPV6_UNICAST_HOPS` if `p.family() == AF_INET6`, otherwise
+`IP_TTL`.]
+
+[function_note The constant `IPV6_UNICAST_HOPS` is defined in the __POSIX__
+header file __netinet_in_h__. [*Where is `IP_TTL` in __POSIX__?]]
+
+  template<class Protocol> int* data(const Protocol& p) const;
+
+[function_returns `&v6_value_` if `p.family() == AF_INET6`, otherwise
+`&v4_value_`.]
+
+  template<class Protocol> const int* data(const Protocol& p) const;
+
+[function_returns `&v6_value_` if `p.family() == AF_INET6`, otherwise
+`&v4_value_`.]
+
+  template<class Protocol> size_t size(const Protocol& p) const;
+
+[function_returns `sizeof(v6_value_)` if `p.family() == AF_INET6`, otherwise
+`sizeof(v4_value_)`.]
+
+  template<class Protocol> void resize(const Protocol& p, size_t s);
+
+[function_effects Sets `value_` to `v6_value_` if `p.family() == AF_INET6`,
+otherwise sets `value_` to `v4_value_`.]
+
+[function_throws `length_error` if the condition `p.family() == AF_INET6 && s
+!= sizeof(v6_value_) || p.family() != AF_INET6 && s != sizeof(v4_value_)` is
+true.]
+  
+[endsect]
+
+[endsect]
