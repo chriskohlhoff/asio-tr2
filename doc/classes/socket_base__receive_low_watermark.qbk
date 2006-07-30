@@ -1,0 +1,110 @@
+[section:socket_base__receive_low_watermark Class [^socket_base::receive_low_watermark]]
+
+The `receive_low_watermark` class represents a socket option for specifying the
+minimum number of bytes to process for socket input operations.
+
+`receive_low_watermark` satisfies the requirements for `CopyConstructible`,
+`Assignable`, [link requirements.gettable_socket_option
+`GettableSocketOption`], and [link requirements.settable_socket_option
+`SettableSocketOption`].
+
+  namespace std {
+    namespace tr2 {
+      namespace sys {
+
+        class socket_base::receive_low_watermark
+        {
+        public:
+          receive_low_watermark();
+          explicit receive_low_watermark(int v);
+          receive_low_watermark& operator=(int v);
+
+          int value() const;
+        };
+
+      } // namespace sys
+    } // namespace tr2
+  } // namespace std
+
+__POSIX__ implementations must provide the following member functions:
+
+  namespace std {
+    namespace tr2 {
+      namespace sys {
+
+        class receive_low_watermark
+        {
+        public:
+          template<class Protocol> int level(const Protocol& p) const;
+          template<class Protocol> int name(const Protocol& p) const;
+          template<class Protocol> ``['unspecified]``* data(const Protocol& p);
+          template<class Protocol> const ``['unspecified]``* data(const Protocol& p) const;
+          template<class Protocol> size_t size(const Protocol& p) const;
+          template<class Protocol> void resize(const Protocol& p, size_t s);
+          ``['[*// remainder unchanged]]``
+        private:
+  ``//      int value_;  ['[*exposition only]]``
+        };
+
+      } // namespace sys
+    } // namespace tr2
+  } // namespace std
+
+[section [^socket_base::receive_low_watermark] members]
+
+  receive_low_watermark();
+
+[function_postconditions `value() == 0`.]
+
+  explicit receive_low_watermark(int v);
+
+[function_postconditions `value() == v`.]
+
+  receive_low_watermark& operator=(int v);
+
+[function_returns `*this`.]
+
+[function_postconditions `value() == v`.]
+
+  int value() const;
+
+[function_returns The stored socket option value. For __POSIX__
+implementations, returns `value_`.]
+
+[endsect]
+
+[section [^socket_base::receive_low_watermark] __POSIX__ members]
+
+  template<class Protocol> int level(const Protocol& p) const;
+
+[function_returns `SOL_SOCKET`.]
+
+[function_note The constant `SOL_SOCKET` is defined in the __POSIX__ header
+file __sys_socket_h__.]
+
+  template<class Protocol> int name(const Protocol& p) const;
+
+[function_returns `SO_RCVLOWAT`.]
+
+[function_note The constant `SO_RCVLOWAT` is defined in the __POSIX__ header
+file __sys_socket_h__.]
+
+  template<class Protocol> int* data(const Protocol& p) const;
+
+[function_returns `&value_`.]
+
+  template<class Protocol> const int* data(const Protocol& p) const;
+
+[function_returns `&value_`.]
+
+  template<class Protocol> size_t size(const Protocol& p) const;
+
+[function_returns `sizeof(value_)`.]
+
+  template<class Protocol> void resize(const Protocol& p, size_t s);
+
+[function_throws `length_error` if `s != sizeof(value_)`.]
+  
+[endsect]
+
+[endsect]

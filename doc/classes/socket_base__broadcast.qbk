@@ -1,0 +1,120 @@
+[section:socket_base__broadcast Class [^socket_base::broadcast]]
+
+The `broadcast` class represents a socket option for determining whether a
+socket permits sending of broadcast messages, if supported by the protocol.
+
+`broadcast` satisfies the requirements for `CopyConstructible`, `Assignable`,
+[link requirements.gettable_socket_option `GettableSocketOption`], and [link
+requirements.settable_socket_option `SettableSocketOption`].
+
+  namespace std {
+    namespace tr2 {
+      namespace sys {
+
+        class socket_base::broadcast
+        {
+        public:
+          broadcast();
+          explicit broadcast(bool v);
+          broadcast& operator=(bool v);
+
+          bool value() const;
+
+          operator bool() const;
+          bool operator!() const;
+        };
+
+      } // namespace sys
+    } // namespace tr2
+  } // namespace std
+
+__POSIX__ implementations must provide the following member functions:
+
+  namespace std {
+    namespace tr2 {
+      namespace sys {
+
+        class socket_base::broadcast
+        {
+        public:
+          template<class Protocol> int level(const Protocol& p) const;
+          template<class Protocol> int name(const Protocol& p) const;
+          template<class Protocol> ``['unspecified]``* data(const Protocol& p);
+          template<class Protocol> const ``['unspecified]``* data(const Protocol& p) const;
+          template<class Protocol> size_t size(const Protocol& p) const;
+          template<class Protocol> void resize(const Protocol& p, size_t s);
+          ``['[*// remainder unchanged]]``
+        private:
+  ``//      int value_;  ['[*exposition only]]``
+        };
+
+      } // namespace sys
+    } // namespace tr2
+  } // namespace std
+
+[section [^socket_base::broadcast] members]
+
+  broadcast();
+
+[function_postconditions `!value()`.]
+
+  explicit broadcast(bool v);
+
+[function_postconditions `value() == v`.]
+
+  broadcast& operator=(bool v);
+
+[function_returns `*this`.]
+
+[function_postconditions `value() == v`.]
+
+  bool value() const;
+
+[function_returns The stored socket option value. For __POSIX__
+implementations, returns `value_ != 0`.]
+
+  operator bool() const;
+
+[function_returns `value()`.]
+
+  bool operator!() const;
+
+[function_returns `!value()`.]
+
+[endsect]
+
+[section [^socket_base::broadcast] __POSIX__ members]
+
+  template<class Protocol> int level(const Protocol& p) const;
+
+[function_returns `SOL_SOCKET`.]
+
+[function_note The constant `SOL_SOCKET` is defined in the __POSIX__ header
+file __sys_socket_h__.]
+
+  template<class Protocol> int name(const Protocol& p) const;
+
+[function_returns `SO_BROADCAST`.]
+
+[function_note The constant `SO_BROADCAST` is defined in the __POSIX__ header
+file __sys_socket_h__.]
+
+  template<class Protocol> int* data(const Protocol& p) const;
+
+[function_returns `&value_`.]
+
+  template<class Protocol> const int* data(const Protocol& p) const;
+
+[function_returns `&value_`.]
+
+  template<class Protocol> size_t size(const Protocol& p) const;
+
+[function_returns `sizeof(value_)`.]
+
+  template<class Protocol> void resize(const Protocol& p, size_t s);
+
+[function_throws `length_error` if `s != sizeof(value_)`.]
+  
+[endsect]
+
+[endsect]
