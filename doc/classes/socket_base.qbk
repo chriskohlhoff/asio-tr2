@@ -18,9 +18,6 @@
           class ``[link classes.socket_base__reuse_address reuse_address]``;
           class ``[link classes.socket_base__send_buffer_size send_buffer_size]``;
           class ``[link classes.socket_base__send_low_watermark send_low_watermark]``;
-          class at_mark;
-          class bytes_readable;
-          class non_blocking_io;
 
           typedef ``['[*T1]]`` shutdown_type;
           static const shutdown_type shutdown_receive;
@@ -31,6 +28,8 @@
           static const message_flags message_peek;
           static const message_flags message_out_of_band;
           static const message_flags message_do_not_route;
+          static const message_flags message_truncated;
+          static const message_flags message_control_truncated;
 
         protected:
           socket_base();
@@ -47,8 +46,6 @@
   `linger`, `out_of_band_inline`, `receive_buffer_size`,
   `receive_low_watermark`, `reuse_address`, `send_buffer_size`, and
   `send_low_watermark`;
-
-- I/O command classes `at_mark`, `bytes_readable`, and `non_blocking_io`;
 
 - an enumerated type, `shutdown_type`;
 

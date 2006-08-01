@@ -109,11 +109,11 @@ __POSIX__ header file __netinet_in_h__.]
 [function_note The constant `IPV6_MULTICAST_LOOP` is defined in the __POSIX__
 header file __netinet_in_h__. [*Where is `IP_MULTICAST_LOOP` in __POSIX__?]]
 
-  template<class Protocol> int* data(const Protocol& p) const;
+  template<class Protocol> ``['unspecified]``* data(const Protocol& p) const;
 
 [function_returns `&value_`.]
 
-  template<class Protocol> const int* data(const Protocol& p) const;
+  template<class Protocol> const ``['unspecified]``* data(const Protocol& p) const;
 
 [function_returns `&value_`.]
 

@@ -110,7 +110,7 @@ __POSIX__ header file __netinet_in_h__.]
 [function_note The constant `IPV6_LEAVE_GROUP` is defined in the __POSIX__
 header file __netinet_in_h__. [*Where is `IP_DROP_MEMBERSHIP` in __POSIX__?]]
 
-  template<class Protocol> const int* data(const Protocol& p) const;
+  template<class Protocol> const ``['unspecified]``* data(const Protocol& p) const;
 
 [function_returns `&v6_value_` if `p.family() == AF_INET6`, otherwise
 `&v4_value_`.]

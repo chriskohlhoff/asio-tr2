@@ -89,11 +89,11 @@ file __sys_socket_h__.]
 [function_note The constant `SO_RCVLOWAT` is defined in the __POSIX__ header
 file __sys_socket_h__.]
 
-  template<class Protocol> int* data(const Protocol& p) const;
+  template<class Protocol> ``['unspecified]``* data(const Protocol& p) const;
 
 [function_returns `&value_`.]
 
-  template<class Protocol> const int* data(const Protocol& p) const;
+  template<class Protocol> const ``['unspecified]``* data(const Protocol& p) const;
 
 [function_returns `&value_`.]
 
