@@ -6,7 +6,7 @@
 
         class ``[link classes.socket_base socket_base]``;
 
-        template<class Protocol, class Service> class basic_socket;
+        template<class Protocol, class Service> class ``[link classes.basic_socket basic_socket]``;
 
         template<class Protocol> class datagram_socket_service;
 

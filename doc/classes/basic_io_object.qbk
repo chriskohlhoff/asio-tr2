@@ -1,0 +1,48 @@
+[section:basic_io_object Class template [^basic_io_object]]
+
+  namespace std {
+    namespace tr2 {
+      namespace sys {
+
+        template<class Service>
+        class basic_io_object
+        {
+        public:
+          typedef Service service_type;
+          typedef typename Service::implementation_type implementation_type;
+
+          std::tr2::sys::io_service& io_service();
+
+        protected:
+          explicit basic_io_object(std::tr2::sys::io_service& io_service);
+          ~basic_io_object();
+
+          service_type& service;
+          implementation_type implementation;
+
+        private:
+          basic_io_object(const basic_io_object&); // not defined
+          void operator=(const basic_io_object&);  // not defined
+        };
+
+      } // namespace sys
+    } // namespace tr2
+  } // namespace std
+
+[section [^basic_io_object] members]
+
+  explicit basic_io_object(std::tr2::sys::io_service& io_service);
+
+[function_effects Calls `service.construct(implementation)`.]
+
+  ~basic_io_object();
+
+[function_effects Calls `service.destroy(implementation)`.]
+
+  std::tr2::sys::io_service& io_service();
+
+[function_returns `service.owner()`.]
+
+[endsect]
+
+[endsect]

@@ -5,7 +5,7 @@
     [authors [Kohlhoff, Christopher]]
     [category template]
     [category generic]
-    [last-revision $Date: 2006/07/30 11:52:27 $]
+    [last-revision $Date: 2006/08/01 12:59:52 $]
 ]
 
 [/-----------------------------------------------------------------------------]
@@ -242,6 +242,10 @@ of these classes may be required.]
 * Timers, monotonic time
 * Rationale for read_until - HTTP example
 * Suppression of connection aborted error for accept operation
+* Socket option requirements to allow extensibility
+* ioctl provided for platform specific use, e.g. QoS settings
+* Non-blocking flag is simulated
+* WSAEMSGSIZE mapping on Windows to no error, set message_truncated
 
 [endsect]
 
@@ -254,6 +258,7 @@ of these classes may be required.]
 [include:classes classes/io_service__id.qbk]
 [include:classes classes/io_service__work.qbk]
 [include:classes classes/io_service__strand.qbk]
+[include:classes classes/basic_io_object.qbk]
 [include:headers headers/timer.qbk]
 [include:headers headers/buffer.qbk]
 [include:classes classes/mutable_buffer.qbk]
@@ -273,6 +278,7 @@ of these classes may be required.]
 [include:classes classes/socket_base__reuse_address.qbk]
 [include:classes classes/socket_base__send_buffer_size.qbk]
 [include:classes classes/socket_base__send_low_watermark.qbk]
+[include:classes classes/basic_socket.qbk]
 [include:classes classes/ip__address.qbk]
 [include:classes classes/ip__address_v4.qbk]
 [include:classes classes/ip__address_v6.qbk]

@@ -1,0 +1,368 @@
+[section:basic_socket Class template [^basic_socket]]
+
+  namespace std {
+    namespace tr2 {
+      namespace sys {
+
+        template<class Protocol, class Service>
+        class basic_socket :
+          public basic_io_object<Service>,
+          public socket_base
+        {
+        public:
+          // types:
+          typedef typename Service::native_type native_type;
+          typedef Protocol protocol_type;
+          typedef typename Protocol::endpoint endpoint_type;
+
+          // constructors:
+          explicit basic_socket(std::tr2::sys::io_service& io_service);
+          basic_socket(std::tr2::sys::io_service& io_service,
+            const protocol_type& protocol);
+          basic_socket(std::tr2::sys::io_service& io_service,
+            const endpoint_type& endpoint);
+          basic_socket(std::tr2::sys::io_service& io_service,
+            const protocol_type& protocol, const native_type& native_socket);
+
+          // members:
+          void open(const protocol_type& protocol = protocol_type());
+          error_code open(const protocol_type& protocol, error_code& ec);
+
+          void assign(const protocol_type& protocol,
+            const native_type& native_socket);
+          error_code assign(const protocol_type& protocol,
+            const native_type& native_socket, error_code& ec);
+
+          void close();
+          error_code close(error_code& ec);
+
+          native_type native();
+
+          template<class SettableSocketOption>
+            void set_option(const SettableSocketOption& option);
+          template<class SettableSocketOption>
+            error_code set_option(const SettableSocketOption& option,
+              error_code& ec);
+
+          template<class GettableSocketOption>
+            void get_option(GettableSocketOption& option);
+          template<class GettableSocketOption>
+            error_code get_option(GettableSocketOption& option, error_code& ec);
+
+          template<class IoControlCommand>
+            void io_control(IoControlCommand& command);
+          template<class IoControlCommand>
+            error_code io_control(IoControlCommand& command, error_code& ec);
+
+          bool blocking() const;
+          bool blocking(error_code& ec) const;
+
+          void blocking(bool block);
+          error_code blocking(bool block, error_code& ec);
+
+          bool at_mark() const;
+          bool at_mark(error_code& ec) const;
+
+          size_t available() const;
+          size_t available(error_code& ec) const;
+
+          void bind(const endpoint_type& endpoint);
+          error_code bind(const endpoint_type& endpoint, error_code& ec);
+
+          void connect(const endpoint_type& endpoint);
+          error_code connect(const endpoint_type& endpoint, error_code& ec);
+          template<class Handler>
+            void async_connect(const endpoint_type& endpoint, Handler handler);
+
+          endpoint_type local_endpoint() const;
+          endpoint_type local_endpoint(error_code& ec) const;
+
+          endpoint_type remote_endpoint() const;
+          endpoint_type remote_endpoint(error_code& ec) const;
+
+          void shutdown(shutdown_type what);
+          error_code shutdown(shutdown_type what, error_code& ec);
+        };
+
+      } // namespace sys
+    } // namespace tr2
+  } // namespace std
+
+[section [^basic_socket] constructors]
+
+  explicit basic_socket(std::tr2::sys::io_service& io_service);
+
+[function_effects Constructs an object of class `basic_socket<Protocol,
+Service>`, initialising the base class with `basic_io_object(io_service)`.]
+
+  basic_socket(std::tr2::sys::io_service& io_service,
+    const protocol_type& protocol);
+
+[function_effects Constructs an object of class `basic_socket<Protocol,
+Service>`, initialising the base class with `basic_io_object(io_service)`,
+then opening the socket as if by calling:
+``
+  error_code ec;
+  this->service.open(this->implementation, protocol, ec);
+  if (ec) throw system_error(ec);
+``]
+
+  basic_socket(std::tr2::sys::io_service& io_service,
+    const endpoint_type& endpoint);
+
+[function_effects Constructs an object of class `basic_socket<Protocol,
+Service>`, initialising the base class with `basic_io_object(io_service)`,
+then opening and binding the socket as if by calling:
+``
+  error_code ec;
+  this->service.open(this->implementation, endpoint.protocol(), ec);
+  if (ec) throw system_error(ec);
+  this->service.bind(this->implementation, endpoint, ec);
+  if (ec) throw system_error(ec);
+``]
+
+  basic_socket(std::tr2::sys::io_service& io_service,
+    const protocol_type& protocol, const native_type& native_socket);
+
+[function_effects Constructs an object of class `basic_socket<Protocol,
+Service>`, initialising the base class with `basic_io_object(io_service)`,
+then assigning the existing native socket into the object as if by calling:
+``
+  error_code ec;
+  this->service.assign(this->implementation, protocol, native_socket, ec);
+  if (ec) throw system_error(ec);
+``]
+
+[endsect]
+
+[section [^basic_socket] member functions]
+
+  void open(const protocol_type& protocol);
+
+[function_effects Calls:
+``
+  error_code ec;
+  this->service.open(this->implementation, protocol, ec);
+  if (ec) throw system_error(ec);
+``]
+
+  error_code open(const protocol_type& protocol, error_code& ec);
+
+[function_returns `this->service.open(this->implementation, protocol, ec)`.]
+
+  void assign(const protocol_type& protocol,
+    const native_type& native_socket);
+
+[function_effects Calls:
+``
+  error_code ec;
+  this->service.assign(this->implementation, protocol, native_socket, ec);
+  if (ec) throw system_error(ec);
+``]
+
+  error_code assign(const protocol_type& protocol,
+    const native_type& native_socket, error_code& ec);
+
+[function_returns `this->service.assign(this->implementation, protocol,
+native_socket, ec)`.]
+
+  void close();
+
+[function_effects Calls:
+``
+  error_code ec;
+  this->service.close(this->implementation, ec);
+  if (ec) throw system_error(ec);
+``]
+
+  error_code close(error_code& ec);
+
+[function_returns `this->service.close(this->implementation, ec)`.]
+
+  native_type native();
+
+[function_returns `this->service.native(this->implementation)`.]
+
+  template<class SettableSocketOption>
+    void set_option(const SettableSocketOption& option);
+
+[function_effects Calls:
+``
+  error_code ec;
+  this->service.set_option(this->implementation, option, ec);
+  if (ec) throw system_error(ec);
+``]
+
+  template<class SettableSocketOption>
+    error_code set_option(const SettableSocketOption& option,
+      error_code& ec);
+
+[function_returns `this->service.set_option(this->implementation, option, ec)`.]
+
+  template<class GettableSocketOption>
+    void get_option(GettableSocketOption& option);
+
+[function_effects Calls:
+``
+  error_code ec;
+  this->service.get_option(this->implementation, option, ec);
+  if (ec) throw system_error(ec);
+``]
+
+  template<class GettableSocketOption>
+    error_code get_option(GettableSocketOption& option, error_code& ec);
+
+[function_returns `this->service.get_option(this->implementation, option, ec)`.]
+
+  template<class IoControlCommand>
+    void io_control(IoControlCommand& command);
+
+[function_effects Calls:
+``
+  error_code ec;
+  this->service.io_control(this->implementation, command, ec);
+  if (ec) throw system_error(ec);
+``]
+
+  template<class IoControlCommand>
+    error_code io_control(IoControlCommand& command, error_code& ec);
+
+[function_returns `this->service.io_control(this->implementation, command,
+ec)`.]
+
+  bool blocking() const;
+
+[function_effects Calls:
+``
+  error_code ec;
+  bool b = this->service.blocking(this->implementation, ec);
+  if (ec) throw system_error(ec);
+``]
+
+[function_returns `b`.]
+
+  bool blocking(error_code& ec) const;
+
+[function_returns `this->service.blocking(this->implementation, ec)`.]
+
+  void blocking(bool block);
+
+[function_effects Calls:
+``
+  error_code ec;
+  this->service.blocking(this->implementation, block, ec);
+  if (ec) throw system_error(ec);
+``]
+
+  error_code blocking(bool block, error_code& ec);
+
+[function_returns `this->service.blocking(this->implementation, block, ec)`.]
+
+  bool at_mark() const;
+
+[function_effects Calls:
+``
+  error_code ec;
+  bool b = this->service.at_mark(this->implementation, ec);
+  if (ec) throw system_error(ec);
+``]
+
+[function_returns `b`.]
+
+  bool at_mark(error_code& ec) const;
+
+[function_returns `this->service.at_mark(this->implementation, ec)`.]
+
+  size_t available() const;
+
+[function_effects Calls:
+``
+  error_code ec;
+  size_t s = this->service.available(this->implementation, ec);
+  if (ec) throw system_error(ec);
+``]
+
+[function_returns `s`.]
+
+  size_t available(error_code& ec) const;
+
+[function_returns `this->service.available(this->implementation, ec)`.]
+
+  void bind(const endpoint_type& endpoint);
+
+[function_effects Calls:
+``
+  error_code ec;
+  this->service.bind(this->implementation, endpoint, ec);
+  if (ec) throw system_error(ec);
+``]
+
+  error_code bind(const endpoint_type& endpoint, error_code& ec);
+
+[function_returns `this->service.bind(this->implementation, endpoint, ec)`.]
+
+  void connect(const endpoint_type& endpoint);
+
+[function_effects Calls:
+``
+  error_code ec;
+  this->service.connect(this->implementation, endpoint, ec);
+  if (ec) throw system_error(ec);
+``]
+
+  error_code connect(const endpoint_type& endpoint, error_code& ec);
+
+[function_returns `this->service.connect(this->implementation, endpoint, ec)`.]
+
+  template<class Handler>
+    void async_connect(const endpoint_type& endpoint, Handler handler);
+
+[function_effects Calls `this->service.async_connect(this->implementation,
+endpoint, handler)`.]
+
+  endpoint_type local_endpoint() const;
+
+[function_effects Calls:
+``
+  error_code ec;
+  endpoint_type e = this->service.local_endpoint(this->implementation, ec);
+  if (ec) throw system_error(ec);
+``]
+
+[function_returns `e`.]
+
+  endpoint_type local_endpoint(error_code& ec) const;
+
+[function_returns `this->service.local_endpoint(this->implementation, ec)`.]
+
+  endpoint_type remote_endpoint() const;
+
+[function_effects Calls:
+``
+  error_code ec;
+  endpoint_type e = this->service.remote_endpoint(this->implementation, ec);
+  if (ec) throw system_error(ec);
+``]
+
+[function_returns `e`.]
+
+  endpoint_type remote_endpoint(error_code& ec) const;
+
+[function_returns `this->service.remote_endpoint(this->implementation, ec)`.]
+
+  void shutdown(shutdown_type what);
+
+[function_effects Calls:
+``
+  error_code ec;
+  this->service.shutdown(this->implementation, what, ec);
+  if (ec) throw system_error(ec);
+``]
+
+  error_code shutdown(shutdown_type what, error_code& ec);
+
+[function_returns `this->service.shutdown(this->implementation, what, ec)`.]
+
+[endsect]
+
+[endsect]
