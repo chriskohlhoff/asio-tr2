@@ -5,7 +5,7 @@
     [authors [Kohlhoff, Christopher]]
     [category template]
     [category generic]
-    [last-revision $Date: 2006/08/02 12:41:49 $]
+    [last-revision $Date: 2006/08/02 13:58:25 $]
 ]
 
 [/-----------------------------------------------------------------------------]
@@ -421,6 +421,7 @@ express type requirements:
 [include:classes classes/socket_base__send_low_watermark.qbk]
 [include:classes classes/basic_socket.qbk]
 [include:classes classes/basic_socket_acceptor.qbk]
+[include:classes classes/basic_datagram_socket.qbk]
 [include:classes classes/basic_stream_socket.qbk]
 [include:classes classes/ip__address.qbk]
 [include:classes classes/ip__address_v4.qbk]
