@@ -1,11 +1,11 @@
-[section:basic_socket Class template [^basic_socket]]
+[section:basic_socket_acceptor Class template [^basic_socket_acceptor]]
 
   namespace std {
     namespace tr2 {
       namespace sys {
 
         template<class Protocol, class Service>
-        class basic_socket :
+        class basic_socket_acceptor :
           public basic_io_object<Service>,
           public socket_base
         {
@@ -16,22 +16,22 @@
           typedef typename Protocol::endpoint endpoint_type;
 
           // constructors:
-          explicit basic_socket(std::tr2::sys::io_service& io_service);
-          basic_socket(std::tr2::sys::io_service& io_service,
+          explicit basic_socket_acceptor(std::tr2::sys::io_service& io_service);
+          basic_socket_acceptor(std::tr2::sys::io_service& io_service,
             const protocol_type& protocol);
-          basic_socket(std::tr2::sys::io_service& io_service,
-            const endpoint_type& endpoint);
-          basic_socket(std::tr2::sys::io_service& io_service,
-            const protocol_type& protocol, const native_type& native_socket);
+          basic_socket_acceptor(std::tr2::sys::io_service& io_service,
+            const endpoint_type& endpoint, int listen_backlog = 0);
+          basic_socket_acceptor(std::tr2::sys::io_service& io_service,
+            const protocol_type& protocol, const native_type& native_acceptor);
 
           // members:
           void open(const protocol_type& protocol = protocol_type());
           error_code open(const protocol_type& protocol, error_code& ec);
 
           void assign(const protocol_type& protocol,
-            const native_type& native_socket);
+            const native_type& native_acceptor);
           error_code assign(const protocol_type& protocol,
-            const native_type& native_socket, error_code& ec);
+            const native_type& native_acceptor, error_code& ec);
 
           void close();
           error_code close(error_code& ec);
@@ -60,82 +60,89 @@
           void blocking(bool block);
           error_code blocking(bool block, error_code& ec);
 
-          bool at_mark() const;
-          bool at_mark(error_code& ec) const;
-
-          size_t available() const;
-          size_t available(error_code& ec) const;
-
           void bind(const endpoint_type& endpoint);
           error_code bind(const endpoint_type& endpoint, error_code& ec);
 
-          void connect(const endpoint_type& endpoint);
-          error_code connect(const endpoint_type& endpoint, error_code& ec);
-          template<class Handler>
-            void async_connect(const endpoint_type& endpoint, Handler handler);
+          void listen(int backlog = 0);
+          error_code listen(int backlog, error_code& ec);
 
           endpoint_type local_endpoint() const;
           endpoint_type local_endpoint(error_code& ec) const;
 
-          endpoint_type remote_endpoint() const;
-          endpoint_type remote_endpoint(error_code& ec) const;
-
-          void shutdown(shutdown_type what);
-          error_code shutdown(shutdown_type what, error_code& ec);
+          template<class SocketService>
+            void accept(basic_socket<Protocol, SocketService>& socket);
+          template<class SocketService>
+            error_code accept(basic_socket<Protocol, SocketService>& socket,
+              error_code& ec);
+          template<class SocketService, class Handler>
+            void async_accept(basic_socket<Protocol, SocketService>& socket,
+              Handler handler);
+          template<class SocketService>
+            void accept(basic_socket<Protocol, SocketService>& socket,
+              endpoint_type& endpoint);
+          template<class SocketService>
+            error_code accept(basic_socket<Protocol, SocketService>& socket,
+              endpoint_type& endpoint, error_code& ec);
+          template<class SocketService, class Handler>
+            void async_accept(basic_socket<Protocol, SocketService>& socket,
+              endpoint_type& endpoint, Handler handler);
         };
 
       } // namespace sys
     } // namespace tr2
   } // namespace std
 
-[section [^basic_socket] constructors]
+[section [^basic_socket_acceptor] constructors]
 
-  explicit basic_socket(std::tr2::sys::io_service& io_service);
+  explicit basic_socket_acceptor(std::tr2::sys::io_service& io_service);
 
-[function_effects Constructs an object of class `basic_socket<Protocol,
+[function_effects Constructs an object of class `basic_socket_acceptor<Protocol,
 Service>`, initialising the base class with `basic_io_object(io_service)`.]
 
-  basic_socket(std::tr2::sys::io_service& io_service,
+  basic_socket_acceptor(std::tr2::sys::io_service& io_service,
     const protocol_type& protocol);
 
-[function_effects Constructs an object of class `basic_socket<Protocol,
+[function_effects Constructs an object of class `basic_socket_acceptor<Protocol,
 Service>`, initialising the base class with `basic_io_object(io_service)`,
-then opening the socket as if by calling:
+then opening the acceptor as if by calling:
 ``
   error_code ec;
   this->service.open(this->implementation, protocol, ec);
   if (ec) throw system_error(ec);
 ``]
 
-  basic_socket(std::tr2::sys::io_service& io_service,
-    const endpoint_type& endpoint);
+  basic_socket_acceptor(std::tr2::sys::io_service& io_service,
+    const endpoint_type& endpoint, int listen_backlog);
 
-[function_effects Constructs an object of class `basic_socket<Protocol,
+[function_effects Constructs an object of class `basic_socket_acceptor<Protocol,
 Service>`, initialising the base class with `basic_io_object(io_service)`,
-then opening and binding the socket as if by calling:
+then opening, binding and making the acceptor ready to accept connections as if
+by calling:
 ``
   error_code ec;
   this->service.open(this->implementation, endpoint.protocol(), ec);
   if (ec) throw system_error(ec);
   this->service.bind(this->implementation, endpoint, ec);
   if (ec) throw system_error(ec);
+  this->service.listen(this->implementation, listen_backlog, ec);
+  if (ec) throw system_error(ec);
 ``]
 
-  basic_socket(std::tr2::sys::io_service& io_service,
-    const protocol_type& protocol, const native_type& native_socket);
+  basic_socket_acceptor(std::tr2::sys::io_service& io_service,
+    const protocol_type& protocol, const native_type& native_acceptor);
 
-[function_effects Constructs an object of class `basic_socket<Protocol,
+[function_effects Constructs an object of class `basic_socket_acceptor<Protocol,
 Service>`, initialising the base class with `basic_io_object(io_service)`,
-then assigning the existing native socket into the object as if by calling:
+then assigning the existing native acceptor into the object as if by calling:
 ``
   error_code ec;
-  this->service.assign(this->implementation, protocol, native_socket, ec);
+  this->service.assign(this->implementation, protocol, native_acceptor, ec);
   if (ec) throw system_error(ec);
 ``]
 
 [endsect]
 
-[section [^basic_socket] members]
+[section [^basic_socket_acceptor] members]
 
   void open(const protocol_type& protocol);
 
@@ -151,20 +158,20 @@ then assigning the existing native socket into the object as if by calling:
 [function_returns `this->service.open(this->implementation, protocol, ec)`.]
 
   void assign(const protocol_type& protocol,
-    const native_type& native_socket);
+    const native_type& native_acceptor);
 
 [function_effects Calls:
 ``
   error_code ec;
-  this->service.assign(this->implementation, protocol, native_socket, ec);
+  this->service.assign(this->implementation, protocol, native_acceptor, ec);
   if (ec) throw system_error(ec);
 ``]
 
   error_code assign(const protocol_type& protocol,
-    const native_type& native_socket, error_code& ec);
+    const native_type& native_acceptor, error_code& ec);
 
 [function_returns `this->service.assign(this->implementation, protocol,
-native_socket, ec)`.]
+native_acceptor, ec)`.]
 
   void close();
 
@@ -258,36 +265,6 @@ ec)`.]
 
 [function_returns `this->service.blocking(this->implementation, block, ec)`.]
 
-  bool at_mark() const;
-
-[function_effects Calls:
-``
-  error_code ec;
-  bool b = this->service.at_mark(this->implementation, ec);
-  if (ec) throw system_error(ec);
-``]
-
-[function_returns `b`.]
-
-  bool at_mark(error_code& ec) const;
-
-[function_returns `this->service.at_mark(this->implementation, ec)`.]
-
-  size_t available() const;
-
-[function_effects Calls:
-``
-  error_code ec;
-  size_t s = this->service.available(this->implementation, ec);
-  if (ec) throw system_error(ec);
-``]
-
-[function_returns `s`.]
-
-  size_t available(error_code& ec) const;
-
-[function_returns `this->service.available(this->implementation, ec)`.]
-
   void bind(const endpoint_type& endpoint);
 
 [function_effects Calls:
@@ -301,24 +278,18 @@ ec)`.]
 
 [function_returns `this->service.bind(this->implementation, endpoint, ec)`.]
 
-  void connect(const endpoint_type& endpoint);
+  void listen(int backlog);
 
 [function_effects Calls:
 ``
   error_code ec;
-  this->service.connect(this->implementation, endpoint, ec);
+  this->service.listen(this->implementation, backlog, ec);
   if (ec) throw system_error(ec);
 ``]
 
-  error_code connect(const endpoint_type& endpoint, error_code& ec);
+  error_code listen (int backlog, error_code& ec);
 
-[function_returns `this->service.connect(this->implementation, endpoint, ec)`.]
-
-  template<class Handler>
-    void async_connect(const endpoint_type& endpoint, Handler handler);
-
-[function_effects Calls `this->service.async_connect(this->implementation,
-endpoint, handler)`.]
+[function_returns `this->service.listen(this->implementation, backlog, ec)`.]
 
   endpoint_type local_endpoint() const;
 
@@ -335,33 +306,53 @@ endpoint, handler)`.]
 
 [function_returns `this->service.local_endpoint(this->implementation, ec)`.]
 
-  endpoint_type remote_endpoint() const;
+  template<class SocketService>
+    void accept(basic_socket<Protocol, SocketService>& socket);
 
 [function_effects Calls:
 ``
   error_code ec;
-  endpoint_type e = this->service.remote_endpoint(this->implementation, ec);
+  this->service.accept(this->implementation, socket, 0, ec);
   if (ec) throw system_error(ec);
 ``]
 
-[function_returns `e`.]
+  template<class SocketService>
+    error_code accept(basic_socket<Protocol, SocketService>& socket,
+      error_code& ec);
 
-  endpoint_type remote_endpoint(error_code& ec) const;
+[function_returns `this->service.accept(this->implementation, socket, 0, ec)`.]
 
-[function_returns `this->service.remote_endpoint(this->implementation, ec)`.]
+  template<class SocketService, class Handler>
+    void async_accept(basic_socket<Protocol, SocketService>& socket,
+      Handler handler);
 
-  void shutdown(shutdown_type what);
+[function_effects Calls `this->service.async_accept(this->implementation,
+socket, 0, handler)`.]
+
+  template<class SocketService>
+    void accept(basic_socket<Protocol, SocketService>& socket,
+      endpoint_type& endpoint);
 
 [function_effects Calls:
 ``
   error_code ec;
-  this->service.shutdown(this->implementation, what, ec);
+  this->service.accept(this->implementation, socket, &endpoint, ec);
   if (ec) throw system_error(ec);
 ``]
 
-  error_code shutdown(shutdown_type what, error_code& ec);
+  template<class SocketService>
+    error_code accept(basic_socket<Protocol, SocketService>& socket,
+      endpoint_type& endpoint, error_code& ec);
 
-[function_returns `this->service.shutdown(this->implementation, what, ec)`.]
+[function_returns `this->service.accept(this->implementation, socket, &endpoint,
+ec)`.]
+
+  template<class SocketService, class Handler>
+    void async_accept(basic_socket<Protocol, SocketService>& socket,
+      endpoint_type& endpoint, Handler handler);
+
+[function_effects Calls `this->service.async_accept(this->implementation,
+socket, &endpoint, handler)`.]
 
 [endsect]
 
