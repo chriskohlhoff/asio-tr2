@@ -4,14 +4,14 @@
     namespace tr2 {
       namespace sys {
 
-        template<class Protocol, class Service>
+        template<class Protocol, class SocketService>
         class basic_socket :
-          public basic_io_object<Service>,
+          public basic_io_object<SocketService>,
           public socket_base
         {
         public:
           // types:
-          typedef typename Service::native_type native_type;
+          typedef typename SocketService::native_type native_type;
           typedef Protocol protocol_type;
           typedef typename Protocol::endpoint endpoint_type;
 
@@ -71,8 +71,9 @@
 
           void connect(const endpoint_type& endpoint);
           error_code connect(const endpoint_type& endpoint, error_code& ec);
-          template<class Handler>
-            void async_connect(const endpoint_type& endpoint, Handler handler);
+          template<class ConnectHandler>
+            void async_connect(const endpoint_type& endpoint,
+              ConnectHandler handler);
 
           endpoint_type local_endpoint() const;
           endpoint_type local_endpoint(error_code& ec) const;
@@ -93,13 +94,14 @@
   explicit basic_socket(std::tr2::sys::io_service& io_service);
 
 [function_effects Constructs an object of class `basic_socket<Protocol,
-Service>`, initialising the base class with `basic_io_object(io_service)`.]
+SocketService>`, initialising the base class with
+`basic_io_object(io_service)`.]
 
   basic_socket(std::tr2::sys::io_service& io_service,
     const protocol_type& protocol);
 
 [function_effects Constructs an object of class `basic_socket<Protocol,
-Service>`, initialising the base class with `basic_io_object(io_service)`,
+SocketService>`, initialising the base class with `basic_io_object(io_service)`,
 then opening the socket as if by calling:
 ``
   error_code ec;
@@ -111,7 +113,7 @@ then opening the socket as if by calling:
     const endpoint_type& endpoint);
 
 [function_effects Constructs an object of class `basic_socket<Protocol,
-Service>`, initialising the base class with `basic_io_object(io_service)`,
+SocketService>`, initialising the base class with `basic_io_object(io_service)`,
 then opening and binding the socket as if by calling:
 ``
   error_code ec;
@@ -125,7 +127,7 @@ then opening and binding the socket as if by calling:
     const protocol_type& protocol, const native_type& native_socket);
 
 [function_effects Constructs an object of class `basic_socket<Protocol,
-Service>`, initialising the base class with `basic_io_object(io_service)`,
+SocketService>`, initialising the base class with `basic_io_object(io_service)`,
 then assigning the existing native socket into the object as if by calling:
 ``
   error_code ec;
@@ -314,8 +316,8 @@ ec)`.]
 
 [function_returns `this->service.connect(this->implementation, endpoint, ec)`.]
 
-  template<class Handler>
-    void async_connect(const endpoint_type& endpoint, Handler handler);
+  template<class ConnectHandler>
+    void async_connect(const endpoint_type& endpoint, ConnectHandler handler);
 
 [function_effects Calls `this->service.async_connect(this->implementation,
 endpoint, handler)`.]

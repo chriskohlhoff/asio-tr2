@@ -1,0 +1,89 @@
+[section:convertible_to_const_buffer Convertible to [^const_buffer]]
+
+A type that meets the requirements for convertibility to `const_buffer` must
+meet the requirements of `CopyConstructible` types (C++ Std, 20.1.3), and the
+requirements of `Assignable` types (C++ Std, 23.1).
+
+In the table below, `X` denotes a class, `a` and `b` denote values of type `X`,
+and `u`, `v` and `w` denote identifiers.
+
+[table Table--ConvertibleToConstBuffer requirements
+  [[expression][postcondition]]
+  [
+    [``
+      const_buffer u(a);
+      const_buffer v(a);
+    ``]
+    [``
+      buffer_cast<const void*>(u) == buffer_cast<const void*>(v)
+        && buffer_size(u) == buffer_size(v)
+    ``]
+  ]
+  [
+    [``
+      const_buffer u(a);
+      const_buffer v = a;
+    ``]
+    [``
+      buffer_cast<const void*>(u) == buffer_cast<const void*>(v)
+        && buffer_size(u) == buffer_size(v)
+    ``]
+  ]
+  [
+    [``
+      const_buffer u(a);
+      const_buffer v; v = a;
+    ``]
+    [``
+      buffer_cast<const void*>(u) == buffer_cast<const void*>(v)
+        && buffer_size(u) == buffer_size(v)
+    ``]
+  ]
+  [
+    [``
+      const_buffer u(a);
+      const X& v = a;
+      const_buffer w(v);
+    ``]
+    [``
+      buffer_cast<const void*>(u) == buffer_cast<const void*>(w)
+        && buffer_size(u) == buffer_size(w)
+    ``]
+  ]
+  [
+    [``
+      const_buffer u(a);
+      X v(a);
+      const_buffer w(v);
+    ``]
+    [``
+      buffer_cast<const void*>(u) == buffer_cast<const void*>(w)
+        && buffer_size(u) == buffer_size(w)
+    ``]
+  ]
+  [
+    [``
+      const_buffer u(a);
+      X v = a;
+      const_buffer w(v);
+    ``]
+    [``
+      buffer_cast<const void*>(u) == buffer_cast<const void*>(w)
+        && buffer_size(u) == buffer_size(w)
+    ``]
+  ]
+  [
+    [``
+      const_buffer u(a);
+      X v(b);
+      v = a;
+      const_buffer w(v);
+    ``]
+    [``
+      buffer_cast<const void*>(u) == buffer_cast<const void*>(w)
+        && buffer_size(u) == buffer_size(w)
+    ``]
+  ]
+]
+
+[endsect]

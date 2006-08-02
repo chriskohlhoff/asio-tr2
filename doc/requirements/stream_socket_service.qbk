@@ -1,0 +1,7 @@
+[section:stream_socket_service Stream socket services]
+
+A stream socket service must meet the requirements for a [link
+requirements.socket_service socket service], as well as the additional
+requirements listed below.
+
+[endsect]

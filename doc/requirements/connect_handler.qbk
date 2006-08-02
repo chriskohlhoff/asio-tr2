@@ -1,0 +1,6 @@
+[section:connect_handler Connect handlers]
+
+A connect handler must meet the requirements for a [link requirements.handler
+handler], as well as the additional requirements listed below.
+
+[endsect]

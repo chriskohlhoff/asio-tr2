@@ -1,0 +1,6 @@
+[section:write_handler Write handlers]
+
+A write handler must meet the requirements for a [link requirements.handler
+handler], as well as the additional requirements listed below.
+
+[endsect]

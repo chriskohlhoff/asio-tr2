@@ -4,12 +4,13 @@
     namespace tr2 {
       namespace sys {
 
-        template<class Service>
+        template<class IoObjectService>
         class basic_io_object
         {
         public:
-          typedef Service service_type;
-          typedef typename Service::implementation_type implementation_type;
+          typedef IoObjectService service_type;
+          typedef typename IoObjectService::implementation_type
+            implementation_type;
 
           std::tr2::sys::io_service& io_service();
 

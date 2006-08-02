@@ -1,0 +1,36 @@
+[section:io_control_command I/O control commands]
+
+In the table below, `X` denotes an I/O control command class, `a` denotes a
+value of `X`, and `u` denotes an identifier.
+
+[table Table--IoControlCommand requirements
+  [[expression] [type] [assertion/note\npre/post-conditions]]
+  [
+    [`a.name();`]
+    [`int`]
+    [
+      note: returns a value suitable for passing as the /request/ argument to
+      the __POSIX__ function __ioctl__ (or equivalent).
+    ]
+  ]
+  [
+    [`a.data();`]
+    [a pointer, convertible to `void*`]
+    [
+    ]
+  ]
+  [
+    [`a.size();`]
+    [`size_t`]
+    [
+    ]
+  ]
+  [
+    [`a.resize(s);`]
+    []
+    [
+    ]
+  ]
+]
+
+[endsect]

@@ -1,0 +1,6 @@
+[section:wait_handler Wait handlers]
+
+A wait handler must meet the requirements for a [link requirements.handler
+handler], as well as the additional requirements listed below.
+
+[endsect]

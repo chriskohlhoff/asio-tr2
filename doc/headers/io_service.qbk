@@ -15,9 +15,11 @@
 
         void* io_handler_allocate(size_t s, ...);
         void io_handler_deallocate(void* p, size_t s, ...);
-        template<class Handler> void io_handler_dispatch(Handler h, ...);
+        template<class CompletionHandler>
+          void io_handler_dispatch(CompletionHandler h, ...);
 
-        template<class Service> class ``[link classes.basic_io_object basic_io_object]``;
+        template<class IoObjectService>
+          class ``[link classes.basic_io_object basic_io_object]``;
 
       } // namespace sys
     } // namespace tr2

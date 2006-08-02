@@ -24,15 +24,15 @@
                         error_code& ec);
 
         // asynchronous read operations:
-        template<class AsyncReadStream, class MutableBuffers, class Handler>
+        template<class AsyncReadStream, class MutableBuffers, class ReadHandler>
           size_t async_read(AsyncReadStream& stream,
-                            const MutableBuffers& buffers, Handler handler);
+                            const MutableBuffers& buffers, ReadHandler handler);
         template<class AsyncReadStream, class MutableBuffers,
-          class CompletionCondition, class Handler>
+          class CompletionCondition, class ReadHandler>
             size_t async_read(AsyncReadStream& stream,
                               const MutableBuffers& buffers,
                               CompletionCondition completion_condition,
-                              Handler handler);
+                              ReadHandler handler);
 
         // synchronous write operations:
         template<class SyncWriteStream, class ConstBuffers>
@@ -50,37 +50,19 @@
                          error_code& ec);
 
         // asynchronous write operations:
-        template<class AsyncWriteStream, class ConstBuffers, class Handler>
+        template<class AsyncWriteStream, class ConstBuffers, class WriteHandler>
           size_t async_write(AsyncWriteStream& stream,
-                             const ConstBuffers& buffers, Handler handler);
+                             const ConstBuffers& buffers, WriteHandler handler);
         template<class AsyncWriteStream, class ConstBuffers,
-          class CompletionCondition, class Handler>
+          class CompletionCondition, class WriteHandler>
             size_t async_write(AsyncWriteStream& stream,
                                const ConstBuffers& buffers,
                                CompletionCondition completion_condition,
-                               Handler handler);
+                               WriteHandler handler);
 
       } // namespace sys
     } // namespace tr2
   } // namespace std
-
-Throughout this clause, the names of the template parameters are used to
-express type requirements. If an algorithm's template parameter is
-`SyncReadStream`, the actual template argument shall satisfy the requirements
-of a [link requirements.sync_read_stream synchronous read stream]. If an
-algorithm's template parameter is `AsyncReadStream`, the actual template
-argument shall satify the requirements of an [link
-requirements.async_read_stream asynchronous read stream]. If an algorithm's
-template parameter is `SyncWriteStream`, the actual template argument shall
-satisfy the requirements of a [link requirements.sync_write_stream synchronous
-write stream]. If an algorithm's template parameter is `AsyncWriteStream`, the
-actual template argument shall satisfy the requirements of an [link
-requirements.async_write_stream asynchronous write stream]. If an algorithm's
-template parameter is `MutableBuffers`, the actual template argument shall
-satisfy the requirements of a [link requirements.mutable_buffers mutable
-buffers] object. If an algorithm's template parameter is `ConstBuffers`, the
-actual template argument shall satisfy the requirements of a [link
-requirements.const_buffers constant buffers] object.
 
 The `CompletionCondition` parameter is used whenever an algorithm expects a
 function object that when applied to an `error_code` and number of bytes as a

@@ -6,38 +6,39 @@
 
         class ``[link classes.socket_base socket_base]``;
 
-        template<class Protocol, class Service> class ``[link classes.basic_socket basic_socket]``;
+        template<class Protocol, class SocketService>
+          class ``[link classes.basic_socket basic_socket]``;
 
         template<class Protocol> class datagram_socket_service;
 
         template<class Protocol,
-          class Service = datagram_socket_service<Protocol> >
+          class DatagramSocketService = datagram_socket_service<Protocol> >
             class basic_datagram_socket;
 
         template<class Protocol> class stream_socket_service;
 
         template<class Protocol,
-          class Service = stream_socket_service<Protocol> >
+          class StreamSocketService = stream_socket_service<Protocol> >
             class basic_stream_socket;
 
         template<class Protocol,
-          class Service = stream_socket_service<Protocol> >
+          class StreamSocketService = stream_socket_service<Protocol> >
             class basic_socket_streambuf;
 
         template<class Protocol,
-          class Service = stream_socket_service<Protocol> >
+          class StreamSocketService = stream_socket_service<Protocol> >
             class basic_socket_iostream;
 
         template<class Protocol> class socket_acceptor_service;
 
         template<class Protocol,
-          class Service = socket_acceptor_service<Protocol> >
+          class AcceptorService = socket_acceptor_service<Protocol> >
             class ``[link classes.basic_socket_acceptor basic_socket_acceptor]``;
 
         template<class ResolverProtocol> class resolver_service;
 
         template<class ResolverProtocol,
-          class Service = resolver_service<ResolverProtocol> >
+          class ResolverService = resolver_service<ResolverProtocol> >
             class basic_resolver;
 
         namespace ip {

@@ -4,14 +4,14 @@
     namespace tr2 {
       namespace sys {
 
-        template<class Protocol, class Service>
+        template<class Protocol, class AcceptorService>
         class basic_socket_acceptor :
-          public basic_io_object<Service>,
+          public basic_io_object<AcceptorService>,
           public socket_base
         {
         public:
           // types:
-          typedef typename Service::native_type native_type;
+          typedef typename AcceptorService::native_type native_type;
           typedef Protocol protocol_type;
           typedef typename Protocol::endpoint endpoint_type;
 
@@ -74,18 +74,18 @@
           template<class SocketService>
             error_code accept(basic_socket<Protocol, SocketService>& socket,
               error_code& ec);
-          template<class SocketService, class Handler>
+          template<class SocketService, class AcceptHandler>
             void async_accept(basic_socket<Protocol, SocketService>& socket,
-              Handler handler);
+              AcceptHandler handler);
           template<class SocketService>
             void accept(basic_socket<Protocol, SocketService>& socket,
               endpoint_type& endpoint);
           template<class SocketService>
             error_code accept(basic_socket<Protocol, SocketService>& socket,
               endpoint_type& endpoint, error_code& ec);
-          template<class SocketService, class Handler>
+          template<class SocketService, class AcceptHandler>
             void async_accept(basic_socket<Protocol, SocketService>& socket,
-              endpoint_type& endpoint, Handler handler);
+              endpoint_type& endpoint, AcceptHandler handler);
         };
 
       } // namespace sys
@@ -97,14 +97,15 @@
   explicit basic_socket_acceptor(std::tr2::sys::io_service& io_service);
 
 [function_effects Constructs an object of class `basic_socket_acceptor<Protocol,
-Service>`, initialising the base class with `basic_io_object(io_service)`.]
+AcceptorService>`, initialising the base class with
+`basic_io_object(io_service)`.]
 
   basic_socket_acceptor(std::tr2::sys::io_service& io_service,
     const protocol_type& protocol);
 
 [function_effects Constructs an object of class `basic_socket_acceptor<Protocol,
-Service>`, initialising the base class with `basic_io_object(io_service)`,
-then opening the acceptor as if by calling:
+AcceptorService>`, initialising the base class with
+`basic_io_object(io_service)`, then opening the acceptor as if by calling:
 ``
   error_code ec;
   this->service.open(this->implementation, protocol, ec);
@@ -115,9 +116,9 @@ then opening the acceptor as if by calling:
     const endpoint_type& endpoint, int listen_backlog);
 
 [function_effects Constructs an object of class `basic_socket_acceptor<Protocol,
-Service>`, initialising the base class with `basic_io_object(io_service)`,
-then opening, binding and making the acceptor ready to accept connections as if
-by calling:
+AcceptorService>`, initialising the base class with
+`basic_io_object(io_service)`, then opening, binding and making the acceptor
+ready to accept connections as if by calling:
 ``
   error_code ec;
   this->service.open(this->implementation, endpoint.protocol(), ec);
@@ -132,8 +133,9 @@ by calling:
     const protocol_type& protocol, const native_type& native_acceptor);
 
 [function_effects Constructs an object of class `basic_socket_acceptor<Protocol,
-Service>`, initialising the base class with `basic_io_object(io_service)`,
-then assigning the existing native acceptor into the object as if by calling:
+AcceptorService>`, initialising the base class with
+`basic_io_object(io_service)`, then assigning the existing native acceptor into
+the object as if by calling:
 ``
   error_code ec;
   this->service.assign(this->implementation, protocol, native_acceptor, ec);
@@ -322,9 +324,9 @@ ec)`.]
 
 [function_returns `this->service.accept(this->implementation, socket, 0, ec)`.]
 
-  template<class SocketService, class Handler>
+  template<class SocketService, class AcceptHandler>
     void async_accept(basic_socket<Protocol, SocketService>& socket,
-      Handler handler);
+      AcceptHandler handler);
 
 [function_effects Calls `this->service.async_accept(this->implementation,
 socket, 0, handler)`.]
@@ -347,9 +349,9 @@ socket, 0, handler)`.]
 [function_returns `this->service.accept(this->implementation, socket, &endpoint,
 ec)`.]
 
-  template<class SocketService, class Handler>
+  template<class SocketService, class AcceptHandler>
     void async_accept(basic_socket<Protocol, SocketService>& socket,
-      endpoint_type& endpoint, Handler handler);
+      endpoint_type& endpoint, AcceptHandler handler);
 
 [function_effects Calls `this->service.async_accept(this->implementation,
 socket, &endpoint, handler)`.]
