@@ -39,7 +39,7 @@
 
         template<class ResolverProtocol,
           class ResolverService = resolver_service<ResolverProtocol> >
-            class basic_resolver;
+            class ``[link classes.basic_resolver basic_resolver]``;
 
         namespace ip {
 
