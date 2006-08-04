@@ -1,0 +1,122 @@
+[section:basic_deadline_timer Class template [^basic_deadline_timer]]
+
+  namespace std {
+    namespace tr2 {
+      namespace sys {
+
+        template<class Time, class TimeTraits, class TimerService>
+        class basic_deadline_timer :
+          public basic_io_object<ResolverService>
+        {
+        public:
+          // types:
+          typedef TimeTraits traits_type;
+          typedef Time time_type;
+          typedef typename TimeTraits::duration_type duration_type;
+
+          // constructors:
+          explicit basic_deadline_timer(std::tr2::sys::io_service& io_service);
+          basic_deadline_timer(std::tr2::sys::io_service& io_service,
+                               const time_type& t);
+          basic_deadline_timer(std::tr2::sys::io_service& io_service,
+                               const duration_type& d);
+
+          // members:
+          size_t cancel();
+
+          time_type expires_at() const;
+          size_t expires_at(const time_type& t);
+
+          duration_type expires_from_now() const;
+          size_t expires_from_now(const duration_type& d);
+
+          void wait();
+          error_code wait(error_code& ec);
+          template <class WaitHandler>
+            void async_wait(WaitHandler handler);
+        };
+
+      } // namespace sys
+    } // namespace tr2
+  } // namespace std
+
+[section [^basic_deadline_timer] constructors]
+
+  explicit basic_deadline_timer(std::tr2::sys::io_service& io_service);
+
+[function_effects Constructs an object of class `basic_deadline_timer<Time,
+TimeTraits, TimerService>`, initialising the base class with
+`basic_io_object(io_service)`.]
+
+  basic_deadline_timer(std::tr2::sys::io_service& io_service,
+                       const time_type& t);
+
+[function_effects Constructs an object of class `basic_deadline_timer<Time,
+TimeTraits, TimerService>`, initialising the base class with
+`basic_io_object(io_service)`, then setting the expiry time as if by calling:
+``
+  error_code ec;
+  this->service.expires_at(this->implementation, t, ec);
+  if (ec) throw system_error(ec);
+``]
+
+  basic_deadline_timer(std::tr2::sys::io_service& io_service,
+                       const duration_type& d);
+
+[function_effects Constructs an object of class `basic_deadline_timer<Time,
+TimeTraits, TimerService>`, initialising the base class with
+`basic_io_object(io_service)`, then setting the expiry time as if by calling:
+``
+  error_code ec;
+  this->service.expires_from_now(this->implementation, d, ec);
+  if (ec) throw system_error(ec);
+``]
+
+[endsect]
+
+[section [^basic_deadline_timer] members]
+
+  size_t cancel();
+
+[function_returns Returns `this->service.cancel(this->implementation)`.]
+
+  time_type expires_at() const;
+
+[function_returns Returns `this->service.expires_at(this->implementation)`.]
+
+  size_t expires_at(const time_type& t);
+
+[function_returns Returns `this->service.expires_at(this->implementation, t)`.]
+
+  duration_type expires_from_now() const;
+
+[function_returns Returns
+`this->service.expires_from_now(this->implementation)`.]
+
+  size_t expires_from_now(const duration_type& d);
+
+[function_returns Returns
+`this->service.expires_from_now(this->implementation, d)`.]
+
+  void wait();
+
+[function_effects Calls:
+``
+  error_code ec;
+  this->service.wait(this->implementation, ec);
+  if (ec) throw system_error(ec);
+``]
+
+  error_code wait(error_code& ec);
+
+[function_returns Returns `this->service.wait(this->implementation, ec)`.]
+
+  template <class WaitHandler>
+    void async_wait(WaitHandler handler);
+
+[function_effects Calls `this->service.async_wait(this->implementation,
+handler)`.]
+
+[endsect]
+
+[endsect]

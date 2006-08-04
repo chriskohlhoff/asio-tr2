@@ -20,7 +20,6 @@
 
           ``// [link classes.io_service__operations operations]:``
           run_exit_reason run();
-          run_exit_reason run(const date_time& until);
           run_exit_reason run(const date_time::time_duration_type& duration);
           void interrupt();
           void reset();

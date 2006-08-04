@@ -5,7 +5,7 @@
     [authors [Kohlhoff, Christopher]]
     [category template]
     [category generic]
-    [last-revision $Date: 2006/08/03 12:58:17 $]
+    [last-revision $Date: 2006/08/04 12:37:28 $]
 ]
 
 [/-----------------------------------------------------------------------------]
@@ -288,6 +288,10 @@ express type requirements:
   shall satisfy the requirements of a [link requirements.resolver_service
   resolver service].
 
+* If a template parameter is `TimerService`, the actual template argument
+  shall satisfy the requirements of a [link requirements.timer_service timer
+  service].
+
 * If a template parameter is `ConvertibleToMutableBuffer`, the actual template
   argument shall satisfy the requirements for [link
   requirements.convertible_to_mutable_buffer convertibility to
@@ -373,6 +377,7 @@ express type requirements:
 [include:requirements requirements/datagram_socket_service.qbk]
 [include:requirements requirements/acceptor_service.qbk]
 [include:requirements requirements/resolver_service.qbk]
+[include:requirements requirements/timer_service.qbk]
 [include:requirements requirements/convertible_to_mutable_buffer.qbk]
 [include:requirements requirements/mutable_buffers.qbk]
 [include:requirements requirements/convertible_to_const_buffer.qbk]
@@ -401,6 +406,7 @@ express type requirements:
 [include:classes classes/io_service__strand.qbk]
 [include:classes classes/basic_io_object.qbk]
 [include:headers headers/timer.qbk]
+[include:classes classes/basic_deadline_timer.qbk]
 [include:headers headers/buffer.qbk]
 [include:classes classes/mutable_buffer.qbk]
 [include:classes classes/const_buffer.qbk]
