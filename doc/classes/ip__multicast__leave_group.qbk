@@ -15,6 +15,7 @@ and [link requirements.settable_socket_option `SettableSocketOption`].
             class leave_group
             {
             public:
+              // constructors:
               leave_group();
               explicit leave_group(const address& multicast_group);
               leave_group(const address_v4& multicast_group,
@@ -56,7 +57,7 @@ __POSIX__ implementations must provide the following member functions:
     } // namespace tr2
   } // namespace std
 
-[section [^ip::multicast::leave_group] members]
+[section [^ip::multicast::leave_group] constructors]
 
   leave_group();
 

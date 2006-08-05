@@ -16,8 +16,11 @@ requirements.settable_socket_option `SettableSocketOption`].
             class hops
             {
             public:
+              // constructors:
               hops();
               explicit hops(int v);
+
+              // members:
               hops& operator=(int v);
 
               int value() const;
@@ -59,7 +62,7 @@ __POSIX__ implementations must provide the following member functions:
     } // namespace tr2
   } // namespace std
 
-[section [^ip::multicast::hops] members]
+[section [^ip::multicast::hops] constructors]
 
   hops();
 
@@ -76,6 +79,10 @@ __POSIX__ implementations must provide the following member functions:
 [function_throws `out_of_range` if `v` is not in the range `[0, 255]`.]
 
 [function_postconditions `value() == v`.]
+
+[endsect]
+
+[section [^ip::multicast::hops] members]
 
   hops& operator=(int v);
 

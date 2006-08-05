@@ -15,8 +15,11 @@ requirements.settable_socket_option `SettableSocketOption`].
         class socket_base::reuse_address
         {
         public:
+          // constructors:
           reuse_address();
           explicit reuse_address(bool v);
+
+          // members:
           reuse_address& operator=(bool v);
 
           bool value() const;
@@ -53,7 +56,7 @@ __POSIX__ implementations must provide the following member functions:
     } // namespace tr2
   } // namespace std
 
-[section [^socket_base::reuse_address] members]
+[section [^socket_base::reuse_address] constructors]
 
   reuse_address();
 
@@ -62,6 +65,10 @@ __POSIX__ implementations must provide the following member functions:
   explicit reuse_address(bool v);
 
 [function_postconditions `value() == v`.]
+
+[endsect]
+
+[section [^socket_base::reuse_address] members]
 
   reuse_address& operator=(bool v);
 

@@ -15,8 +15,11 @@ outgoing messages bypass standard routing facilities.
         class socket_base::do_not_route
         {
         public:
+          // constructors:
           do_not_route();
           explicit do_not_route(bool v);
+
+          // members:
           do_not_route& operator=(bool v);
 
           bool value() const;
@@ -53,7 +56,7 @@ __POSIX__ implementations must provide the following member functions:
     } // namespace tr2
   } // namespace std
 
-[section [^socket_base::do_not_route] members]
+[section [^socket_base::do_not_route] constructors]
 
   do_not_route();
 
@@ -62,6 +65,10 @@ __POSIX__ implementations must provide the following member functions:
   explicit do_not_route(bool v);
 
 [function_postconditions `value() == v`.]
+
+[endsect]
+
+[section [^socket_base::do_not_route] members]
 
   do_not_route& operator=(bool v);
 

@@ -14,8 +14,11 @@ requirements.settable_socket_option `SettableSocketOption`].
         class socket_base::debug
         {
         public:
+          // constructors:
           debug();
           explicit debug(bool v);
+
+          // members:
           debug& operator=(bool v);
 
           bool value() const;
@@ -52,7 +55,7 @@ __POSIX__ implementations must provide the following member functions:
     } // namespace tr2
   } // namespace std
 
-[section [^socket_base::debug] members]
+[section [^socket_base::debug] constructors]
 
   debug();
 
@@ -61,6 +64,10 @@ __POSIX__ implementations must provide the following member functions:
   explicit debug(bool v);
 
 [function_postconditions `value() == v`.]
+
+[endsect]
+
+[section [^socket_base::debug] members]
 
   debug& operator=(bool v);
 

@@ -15,8 +15,11 @@ size of the receive buffer associated with a socket.
         class socket_base::receive_buffer_size
         {
         public:
+          // constructors:
           receive_buffer_size();
           explicit receive_buffer_size(int v);
+
+          // members:
           receive_buffer_size& operator=(int v);
 
           int value() const;
@@ -50,7 +53,7 @@ __POSIX__ implementations must provide the following member functions:
     } // namespace tr2
   } // namespace std
 
-[section [^socket_base::receive_buffer_size] members]
+[section [^socket_base::receive_buffer_size] constructors]
 
   receive_buffer_size();
 
@@ -59,6 +62,10 @@ __POSIX__ implementations must provide the following member functions:
   explicit receive_buffer_size(int v);
 
 [function_postconditions `value() == v`.]
+
+[endsect]
+
+[section [^socket_base::receive_buffer_size] members]
 
   receive_buffer_size& operator=(int v);
 

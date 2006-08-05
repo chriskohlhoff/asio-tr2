@@ -14,8 +14,11 @@ requirements.settable_socket_option `SettableSocketOption`].
         class socket_base::keep_alive
         {
         public:
+          // constructors:
           keep_alive();
           explicit keep_alive(bool v);
+
+          // members:
           keep_alive& operator=(bool v);
 
           bool value() const;
@@ -52,7 +55,7 @@ __POSIX__ implementations must provide the following member functions:
     } // namespace tr2
   } // namespace std
 
-[section [^socket_base::keep_alive] members]
+[section [^socket_base::keep_alive] constructors]
 
   keep_alive();
 
@@ -61,6 +64,10 @@ __POSIX__ implementations must provide the following member functions:
   explicit keep_alive(bool v);
 
 [function_postconditions `value() == v`.]
+
+[endsect]
+
+[section [^socket_base::keep_alive] members]
 
   keep_alive& operator=(bool v);
 

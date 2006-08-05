@@ -15,8 +15,11 @@ requirements.settable_socket_option `SettableSocketOption`].
           class v6_only
           {
           public:
+            // constructors:
             v6_only();
             explicit v6_only(bool v);
+
+            // members:
             v6_only& operator=(bool v);
 
             bool value() const;
@@ -56,7 +59,7 @@ __POSIX__ implementations must provide the following member functions:
     } // namespace tr2
   } // namespace std
 
-[section [^ip::v6_only] members]
+[section [^ip::v6_only] constructors]
 
   v6_only();
 
@@ -65,6 +68,10 @@ __POSIX__ implementations must provide the following member functions:
   explicit v6_only(bool v);
 
 [function_postconditions `value() == v`.]
+
+[endsect] 
+
+[section [^ip::v6_only] members]
 
   v6_only& operator=(bool v);
 

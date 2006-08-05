@@ -14,9 +14,11 @@ requirements.settable_socket_option `SettableSocketOption`].
         class socket_base::linger
         {
         public:
+          // constructors:
           linger();
           linger(bool e, int t);
 
+          // members:
           bool enabled() const;
           void enabled(bool e);
 
@@ -52,15 +54,19 @@ __POSIX__ implementations must provide the following member functions:
     } // namespace tr2
   } // namespace std
 
-[section [^socket_base::linger] members]
+[section [^socket_base::linger] constructors]
 
   linger();
 
 [function_postconditions `!enabled() && timeout() == 0`.]
 
-  explicit linger(bool e, int t);
+  linger(bool e, int t);
 
 [function_postconditions `enabled() == e && timeout() == t`.]
+
+[endsect]
+
+[section [^socket_base::linger] members]
 
   bool enabled() const;
 

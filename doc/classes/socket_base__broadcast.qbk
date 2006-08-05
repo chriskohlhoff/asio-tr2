@@ -14,8 +14,11 @@ requirements.settable_socket_option `SettableSocketOption`].
         class socket_base::broadcast
         {
         public:
+          // constructors:
           broadcast();
           explicit broadcast(bool v);
+
+          // members:
           broadcast& operator=(bool v);
 
           bool value() const;
@@ -52,7 +55,7 @@ __POSIX__ implementations must provide the following member functions:
     } // namespace tr2
   } // namespace std
 
-[section [^socket_base::broadcast] members]
+[section [^socket_base::broadcast] constructors]
 
   broadcast();
 
@@ -61,6 +64,10 @@ __POSIX__ implementations must provide the following member functions:
   explicit broadcast(bool v);
 
 [function_postconditions `value() == v`.]
+
+[endsect]
+
+[section [^socket_base::broadcast] members]
 
   broadcast& operator=(bool v);
 

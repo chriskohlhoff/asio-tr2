@@ -15,8 +15,11 @@ minimum number of bytes to process for socket input operations.
         class socket_base::receive_low_watermark
         {
         public:
+          // constructors:
           receive_low_watermark();
           explicit receive_low_watermark(int v);
+
+          // members:
           receive_low_watermark& operator=(int v);
 
           int value() const;
@@ -50,7 +53,7 @@ __POSIX__ implementations must provide the following member functions:
     } // namespace tr2
   } // namespace std
 
-[section [^socket_base::receive_low_watermark] members]
+[section [^socket_base::receive_low_watermark] constructors]
 
   receive_low_watermark();
 
@@ -59,6 +62,10 @@ __POSIX__ implementations must provide the following member functions:
   explicit receive_low_watermark(int v);
 
 [function_postconditions `value() == v`.]
+
+[endsect]
+
+[section [^socket_base::receive_low_watermark] members]
 
   receive_low_watermark& operator=(int v);
 

@@ -16,8 +16,11 @@ requirements.settable_socket_option `SettableSocketOption`].
             class enable_loopback
             {
             public:
+              // constructors:
               enable_loopback();
               explicit enable_loopback(bool v);
+
+              // members:
               enable_loopback& operator=(bool v);
 
               bool value() const;
@@ -60,7 +63,7 @@ __POSIX__ implementations must provide the following member functions:
     } // namespace tr2
   } // namespace std
 
-[section [^ip::multicast::enable_loopback] members]
+[section [^ip::multicast::enable_loopback] constructors]
 
   enable_loopback();
 
@@ -69,6 +72,10 @@ __POSIX__ implementations must provide the following member functions:
   explicit enable_loopback(bool v);
 
 [function_postconditions `value() == v`.]
+
+[endsect]
+
+[section [^ip::multicast::enable_loopback] members]
 
   enable_loopback& operator=(bool v);
 
