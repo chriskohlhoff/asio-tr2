@@ -5,7 +5,7 @@
     [authors [Kohlhoff, Christopher]]
     [category template]
     [category generic]
-    [last-revision $Date: 2006/08/05 12:21:24 $]
+    [last-revision $Date: 2006/08/05 12:58:46 $]
 ]
 
 [/-----------------------------------------------------------------------------]
@@ -398,6 +398,7 @@ express type requirements:
 [include:classes classes/io_service__work.qbk]
 [include:classes classes/io_service__strand.qbk]
 [include:classes classes/basic_io_object.qbk]
+[include:headers headers/system_error.qbk]
 [include:headers headers/timer.qbk]
 [include:classes classes/basic_deadline_timer.qbk]
 [include:headers headers/buffer.qbk]

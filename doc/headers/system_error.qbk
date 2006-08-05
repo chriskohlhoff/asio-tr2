@@ -1,0 +1,16 @@
+[section Header [^<system_error>] additions]
+
+  namespace std {
+    namespace tr2 {
+      namespace sys {
+        namespace error {
+
+          extern const error_code eof;
+          ... TODO ...
+
+        } // namespace error
+      } // namespace sys
+    } // namespace tr2
+  } // namespace std
+
+[endsect]
