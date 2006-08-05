@@ -1,0 +1,7 @@
+[section:bound_completion_handler Bound completion handlers]
+
+A bound completion handler must meet the requirements for a [link
+requirements.completion_handler completion handler], as well as the additional
+requirements listed below.
+
+[endsect]

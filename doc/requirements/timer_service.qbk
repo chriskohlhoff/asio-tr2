@@ -4,4 +4,95 @@ A timer service must meet the requirements for an [link
 requirements.io_object_service I/O object service], as well as the additional
 requirements listed below.
 
+In the table below, `X` denotes a timer service class for time type `Time` and
+traits type `TimeTraits`, `a` denotes a value of type `X`, `b` denotes a value
+of type `X::implementation_type`, `t` denotes a value of type `Time`, `d`
+denotes a value of type `TimeTraits::duration_type`, `h` denotes a value
+meeting [link requirements.wait_handler `WaitHandler`] requirements, and `u`
+denotes an identifier.
+
+[table Table--TimerService requirements
+  [[expression] [return type] [assertion/note\npre/post-condition]]
+  [
+    [`a.destroy(b);`]
+    []
+    [
+      From [link requirements.io_object_service IoObjectService] requirements.
+      Implicitly cancels asynchronous wait operations, as if by calling
+      `a.cancel(b)`.
+    ]
+  ]
+  [
+    [`a.cancel(b);`]
+    [`size_t`]
+    [
+      Causes any outstanding asynchronous wait operations to complete as soon as
+      possible. Handlers for cancelled operations shall be passed the error code
+      `error::operation_aborted`. Returns the number of operations that were
+      cancelled.
+    ]
+  ]
+  [
+    [`a.expires_at(b);`]
+    [`Time`]
+    []
+  ]
+  [
+    [`a.expires_at(b, t);`]
+    [`size_t`]
+    [
+      Implicitly cancels asynchronous wait operations, as if by calling
+      `a.cancel(b)`. Returns the number of operations that were cancelled.\n
+      post: `a.expires_at(b) == t`.
+    ]
+  ]
+  [
+    [`a.expires_from_now(b);`]
+    [`TimeTraits::duration_type`]
+    [
+      Returns a value equivalent to `TimeTraits::subtract(a.expires_at(b),
+      TimeTraits::now())`.
+    ]
+  ]
+  [
+    [`a.expires_from_now(b, d);`]
+    [`size_t`]
+    [
+      Equivalent to `a.expires_at(b, TimeTraits::add(TimeTraits::now(), d))`.
+    ]
+  ]
+  [
+    [``
+      error_code u;
+      a.wait(b, u);
+    ``]
+    [`error_code`]
+    [
+      Sets `u` to indicate success or failure. Returns `u`.\n
+      post: `!!u || !TimeTraits::lt(TimeTraits::now(), a.expires_at(b))`.
+    ]
+  ]
+  [
+    [``
+      a.async_wait(b, h);
+    ``]
+    []
+    [Starts an asynchronous wait operation. When the operation is complete, a
+      copy of the handler object `h` will be posted for execution as if by:\n\n
+      1. Constructing an object `bch` meeting
+         [link requirements.completion_handler `BoundCompletionHandler`]
+         requirements, such that the expression `bch()` calls `h1(ec)`, where
+         `h1` is a copy of `h` and `ec` is a value of type `const error_code`
+         that indicates whether the wait operation succeeded or failed; then\n\n
+      2. Calling `a.owner().post(bch)`.
+      [std_note This implies that the handler `h` must not be called directly
+      from within the `a.async_wait(b, h)` call, even if the asynchronous wait
+      operation completes immediately.]
+      The handler shall be posted for execution only if the condition
+      `!!ec || !TimeTraits::lt(TimeTraits::now(), a.expires_at(b))`
+      holds, where `ec` is the error code to be passed to the handler.
+    ]
+  ]
+]
+
 [endsect]

@@ -1,3 +1,68 @@
 [section:handler Handlers]
 
+A handler must meet the requirements of `CopyConstructible` types (C++ Std,
+20.1.3).
+
+In the table below, `X` denotes a handler class, `h` denotes a value of `X`,
+`p` denotes a pointer to a block of allocated memory of type `void*`, `s`
+denotes the size for a block of allocated memory, and `ch` denotes a handler
+object meeting [link requirements.completion_handler `CompletionHandler`]
+requirements.
+
+[table Table--Handler requirements
+  [[expression] [return type] [assertion/note\npre/post-conditions]]
+  [
+    [``
+      using namespace std::tr2::sys;
+      io_handler_allocate(s, &h);
+    ``]
+    [`void*`]
+    [
+      Returns a pointer to a block of memory of size `s`. The pointer must
+      satisfy the same alignment requirements as a pointer returned by
+      `::operator new()`. Throws `bad_alloc` on failure.\n\n The
+      `io_handler_allocate()` function is located using argument-dependent
+      lookup. The function `std::tr2::sys::io_handler_allocate()` serves as a
+      default if no user-supplied function is available.
+    ]
+  ]
+  [
+    [``
+      using namespace std::tr2::sys;
+      io_handler_deallocate(p, s, &h);
+    ``]
+    []
+    [
+      Frees a block of memory associated with a pointer `p`, of at least size
+      `s`, that was previously allocated using `io_handler_allocate()`.\n\n The
+      `io_handler_deallocate()` function is located using argument-dependent
+      lookup. The function `std::tr2::sys::io_handler_deallocate()` serves as a
+      default if no user-supplied function is available.
+    ]
+  ]
+  [
+    [``
+      using namespace std::tr2::sys;
+      io_handler_dispatch(ch, &h);
+    ``]
+    []
+    [
+      Causes the completion handler `ch` to be executed as if by calling
+      `ch()`.\n\n The `io_handler_dispatch()` function is located using
+      argument-dependent lookup. The function
+      `std::tr2::sys::io_handler_dispatch()` serves as a default if no
+      user-supplied function is available.
+    ]
+  ]
+]
+
+[include:requirements completion_handler.qbk]
+[include:requirements bound_completion_handler.qbk]
+[include:requirements read_handler.qbk]
+[include:requirements write_handler.qbk]
+[include:requirements accept_handler.qbk]
+[include:requirements connect_handler.qbk]
+[include:requirements resolve_handler.qbk]
+[include:requirements wait_handler.qbk]
+
 [endsect]

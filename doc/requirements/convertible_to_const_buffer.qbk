@@ -4,8 +4,9 @@ A type that meets the requirements for convertibility to `const_buffer` must
 meet the requirements of `CopyConstructible` types (C++ Std, 20.1.3), and the
 requirements of `Assignable` types (C++ Std, 23.1).
 
-In the table below, `X` denotes a class, `a` and `b` denote values of type `X`,
-and `u`, `v` and `w` denote identifiers.
+In the table below, `X` denotes a class meeting the requirements for
+convertibility to `const_buffer`, `a` and `b` denote values of type `X`, and
+`u`, `v` and `w` denote identifiers.
 
 [table Table--ConvertibleToConstBuffer requirements
   [[expression][postcondition]]

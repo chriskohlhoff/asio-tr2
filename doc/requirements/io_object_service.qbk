@@ -2,4 +2,38 @@
 
 An I/O object service must meet the requirements listed below.
 
+In the table below, `X` denotes an I/O object service class, `a` denotes a
+value of type `X`, `b` denotes a value of type `X::implementation_type`, and
+`u` denotes an identifier.
+
+[table Table--IoObjectService requirements
+  [[expression] [return type] [assertion/note\npre/post-condition]]
+  [
+    [`X::implementation_type`]
+    []
+    []
+  ]
+  [
+    [`X::implementation_type u;`]
+    []
+    [note: `X::implementation_type` has a public default constructor and
+     destructor.]
+  ]
+  [
+    [``
+      a.construct(b);
+    ``]
+    []
+    []
+  ]
+  [
+    [``
+      a.destroy(b);
+    ``]
+    []
+    [note: `destroy()` will only be called on a value that has previously been
+     initialised with `construct()`.]
+  ]
+]
+
 [endsect]

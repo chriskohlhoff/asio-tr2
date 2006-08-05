@@ -5,7 +5,7 @@
     [authors [Kohlhoff, Christopher]]
     [category template]
     [category generic]
-    [last-revision $Date: 2006/08/04 12:37:28 $]
+    [last-revision $Date: 2006/08/05 12:21:24 $]
 ]
 
 [/-----------------------------------------------------------------------------]
@@ -60,18 +60,18 @@
 [/-----------------------------------------------------------------------------]
 
 [def __POSIX__ /POSIX/]
-[def __accept__ [@http://www.opengroup.org/onlinepubs/000095399/functions/connect.html `accept`]]
-[def __connect__ [@http://www.opengroup.org/onlinepubs/000095399/functions/connect.html `connect`]]
-[def __getpeername__ [@http://www.opengroup.org/onlinepubs/000095399/functions/getpeername.html `getpeername`]]
-[def __getsockname__ [@http://www.opengroup.org/onlinepubs/000095399/functions/getsockname.html `getsockname`]]
-[def __getsockopt__ [@http://www.opengroup.org/onlinepubs/000095399/functions/getsockopt.html `getsockopt`]]
-[def __inet_ntop__ [@http://www.opengroup.org/onlinepubs/000095399/functions/inet_ntop.html `inet_ntop`]]
-[def __inet_pton__ [@http://www.opengroup.org/onlinepubs/000095399/functions/inet_pton.html `inet_pton`]]
-[def __ioctl__ [@http://www.opengroup.org/onlinepubs/000095399/functions/ioctl.html `ioctl`]]
-[def __recvfrom__ [@http://www.opengroup.org/onlinepubs/000095399/functions/recvfrom.html `recvfrom`]]
-[def __sendto__ [@http://www.opengroup.org/onlinepubs/000095399/functions/sendto.html `sendto`]]
-[def __setsockopt__ [@http://www.opengroup.org/onlinepubs/000095399/functions/setsockopt.html `setsockopt`]]
-[def __socket__ [@http://www.opengroup.org/onlinepubs/000095399/functions/socket.html `socket`]]
+[def __accept__ [@http://www.opengroup.org/onlinepubs/000095399/functions/connect.html `accept()`]]
+[def __connect__ [@http://www.opengroup.org/onlinepubs/000095399/functions/connect.html `connect()`]]
+[def __getpeername__ [@http://www.opengroup.org/onlinepubs/000095399/functions/getpeername.html `getpeername()`]]
+[def __getsockname__ [@http://www.opengroup.org/onlinepubs/000095399/functions/getsockname.html `getsockname()`]]
+[def __getsockopt__ [@http://www.opengroup.org/onlinepubs/000095399/functions/getsockopt.html `getsockopt()`]]
+[def __inet_ntop__ [@http://www.opengroup.org/onlinepubs/000095399/functions/inet_ntop.html `inet_ntop()`]]
+[def __inet_pton__ [@http://www.opengroup.org/onlinepubs/000095399/functions/inet_pton.html `inet_pton()`]]
+[def __ioctl__ [@http://www.opengroup.org/onlinepubs/000095399/functions/ioctl.html `ioctl()`]]
+[def __recvfrom__ [@http://www.opengroup.org/onlinepubs/000095399/functions/recvfrom.html `recvfrom()`]]
+[def __sendto__ [@http://www.opengroup.org/onlinepubs/000095399/functions/sendto.html `sendto()`]]
+[def __setsockopt__ [@http://www.opengroup.org/onlinepubs/000095399/functions/setsockopt.html `setsockopt()`]]
+[def __socket__ [@http://www.opengroup.org/onlinepubs/000095399/functions/socket.html `socket()`]]
 [def __sys_socket_h__ [@http://www.opengroup.org/onlinepubs/000095399/basedefs/sys/socket.h.html `sys/socket.h`]]
 [def __netinet_in_h__ [@http://www.opengroup.org/onlinepubs/000095399/basedefs/netinet/in.h.html `netinet/in.h`]]
 [def __netinet_tcp_h__ [@http://www.opengroup.org/onlinepubs/000095399/basedefs/netinet/tcp.h.html `netinet/tcp.h`]]
@@ -236,7 +236,7 @@ of these classes may be required.]
 * Two-tier concept requirements for portability
 * Why read/async_read/write/async_write are needed
 * Thread safety
-* Why eof is an error
+* Why eof is an error (function contracts, 0 noop for read/write).
 * Custom memory allocation
 * Protocol independence
 * No string constructors for IP address classes
@@ -386,13 +386,6 @@ express type requirements:
 [include:requirements requirements/settable_socket_option.qbk]
 [include:requirements requirements/io_control_command.qbk]
 [include:requirements requirements/handler.qbk]
-[include:requirements requirements/completion_handler.qbk]
-[include:requirements requirements/read_handler.qbk]
-[include:requirements requirements/write_handler.qbk]
-[include:requirements requirements/accept_handler.qbk]
-[include:requirements requirements/connect_handler.qbk]
-[include:requirements requirements/resolve_handler.qbk]
-[include:requirements requirements/wait_handler.qbk]
 [include:requirements requirements/sync_read_stream.qbk]
 [include:requirements requirements/async_read_stream.qbk]
 [include:requirements requirements/sync_write_stream.qbk]
