@@ -35,7 +35,7 @@
           class AcceptorService = socket_acceptor_service<Protocol> >
             class ``[link classes.basic_socket_acceptor basic_socket_acceptor]``;
 
-        template<class ResolverProtocol> class resolver_service;
+        template<class ResolverProtocol> class ``[link classes.resolver_service resolver_service]``;
 
         template<class ResolverProtocol,
           class ResolverService = resolver_service<ResolverProtocol> >
