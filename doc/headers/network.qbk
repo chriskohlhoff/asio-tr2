@@ -23,11 +23,11 @@
 
         template<class Protocol,
           class StreamSocketService = stream_socket_service<Protocol> >
-            class basic_socket_streambuf;
+            class ``[link classes.basic_socket_streambuf basic_socket_streambuf]``;
 
         template<class Protocol,
           class StreamSocketService = stream_socket_service<Protocol> >
-            class basic_socket_iostream;
+            class ``[link classes.basic_socket_iostream basic_socket_iostream]``;
 
         template<class Protocol> class ``[link classes.socket_acceptor_service socket_acceptor_service]``;
 

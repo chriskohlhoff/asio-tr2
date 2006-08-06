@@ -1,0 +1,30 @@
+[section:basic_socket_iostream Class template [^basic_socket_iostream]]
+
+  namespace std {
+    namespace tr2 {
+      namespace sys {
+
+        template<class Protocol, class StreamSocketService>
+        class basic_socket_iostream :
+          public basic_iostream<char>
+        {
+        public:
+          // constructors:
+          basic_socket_iostream();
+          template <class T1, ..., class TN>
+            explicit basic_socket_iostream(T1 t1, ..., TN tn);
+
+          // members:
+          template <class T1, ..., class TN>
+            void connect(T1 t1, ..., TN tn);
+
+          void close();
+
+          basic_socket_streambuf<Protocol, StreamSocketService>* rdbuf() const;
+        };
+
+      } // namespace sys
+    } // namespace tr2
+  } // namespace std
+
+[endsect]

@@ -1,0 +1,40 @@
+[section:basic_socket_streambuf Class template [^basic_socket_streambuf]]
+
+  namespace std {
+    namespace tr2 {
+      namespace sys {
+
+        template<class Protocol, class StreamSocketService>
+        class basic_socket_streambuf :
+          public streambuf,
+          public basic_socket<Protocol, StreamSocketService>
+        {
+        public:
+          // types:
+          typedef typename Protocol::endpoint endpoint_type;
+
+          // constructors/destructor:
+          basic_socket_streambuf();
+          explicit basic_socket_streambuf(const endpoint_type& e);
+          template <class T1, ..., class TN>
+            explicit basic_socket_streambuf(T1 t1, ..., TN tn);
+          ~basic_socket_streambuf();
+
+          // members:
+          void connect(const endpoint_type& e);
+          template <class T1, ..., class TN>
+            void connect(T1 t1, ..., TN tn);
+
+          void close();
+
+        protected:
+          int_type underflow();
+          int_type overflow();
+          int sync();
+        };
+
+      } // namespace sys
+    } // namespace tr2
+  } // namespace std
+
+[endsect]

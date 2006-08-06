@@ -5,7 +5,7 @@
     [authors [Kohlhoff, Christopher]]
     [category template]
     [category generic]
-    [last-revision $Date: 2006/08/06 11:09:10 $]
+    [last-revision $Date: 2006/08/06 11:36:50 $]
 ]
 
 [/-----------------------------------------------------------------------------]
@@ -463,6 +463,8 @@ express type requirements, as listed in the table below.
 [include:classes classes/basic_datagram_socket.qbk]
 [include:classes classes/stream_socket_service.qbk]
 [include:classes classes/basic_stream_socket.qbk]
+[include:classes classes/basic_socket_streambuf.qbk]
+[include:classes classes/basic_socket_iostream.qbk]
 [include:classes classes/socket_acceptor_service.qbk]
 [include:classes classes/basic_socket_acceptor.qbk]
 [include:classes classes/resolver_service.qbk]
