@@ -1,0 +1,166 @@
+[section:deadline_timer_service Class template [^deadline_timer_service]]
+
+Instances of the `deadline_timer_service` class template meet the requirements
+of a [link requirements.timer_service `TimerService`].
+
+  namespace std {
+    namespace tr2 {
+      namespace sys {
+
+        template<class Time, class TimeTraits>
+        class deadline_timer_service :
+          public io_service::service
+        {
+        public:
+          // types:
+          typedef TimeTraits traits_type;
+          typedef Time time_type;
+          typedef typename TimeTraits::duration_type duration_type;
+          typedef ``['[*unspecified]]`` implementation_type;
+
+          // constructors:
+          explicit deadline_timer_service(io_service& ios);
+
+          // members:
+          void shutdown_service();
+
+          void construct(implementation_type& impl);
+
+          void destroy(implementation_type& impl);
+
+          void cancel(implementation_type& impl);
+
+          time_type expires_at(const implementation_type& impl);
+          size_t expires_at(implementation_type& impl, const time_type& t);
+
+          duration_type expires_from_now(const implementation_type& impl);
+          size_t expires_from_now(implementation_type& impl,
+                                  const duration_type& d);
+
+          error_code wait(implementation_type& impl, error_code& ec);
+          template<class WaitHandler>
+            void async_wait(implementation_type& impl, WaitHandler handler);
+        };
+
+      } // namespace sys
+    } // namespace tr2
+  } // namespace std
+
+[section [^deadline_timer_service] constructors]
+
+  explicit deadline_timer_service(io_service& ios);
+
+[function_effects Constructs an object of class `deadline_timer_service<Time,
+TimeTraits>`, initialising the base class with `io_service::service(ios)`.]
+
+[endsect]
+
+[section [^deadline_timer_service] members]
+
+  void shutdown_service();
+
+[function_effects Destroys all copies of user-defined handler objects owned by
+the service.]
+
+  void construct(implementation_type& impl);
+
+[function_effects Initialises the timer implementation `impl`.]
+
+  void destroy(implementation_type& impl);
+
+[function_effects Cleans up resources owned by the timer implementation `impl`.
+Implicitly cancels asynchronous wait operations associated with `impl` as if by
+calling `cancel(impl)`.]
+
+  void cancel(implementation_type& impl);
+
+[function_effects Causes any outstanding asynchronous wait operations to
+complete as soon as possible. Handlers for cancelled operations shall be passed
+the error code `error::operation_aborted`. Returns the number of operations
+that were cancelled.]
+
+  time_type expires_at(const implementation_type& impl);
+
+[function_returns The expiry time associated with the timer implementation
+`impl`, as previously set using `expires_at()` or `expires_from_now`.]
+
+  size_t expires_at(implementation_type& impl, const time_type& t);
+
+[function_effects Sets the expiry time associated with the timer implementation
+`impl`. Implicitly cancels asynchronous wait operations, as if by calling
+`cancel(impl)`. Returns the number of operations that were cancelled.]
+
+[function_postconditions `expires_at(impl) == t`.]
+
+  duration_type expires_from_now(const implementation_type& impl);
+
+[function_returns A value equivalent to `TimeTraits::subtract(a.expires_at(b),
+TimeTraits::now())`.]
+
+  size_t expires_from_now(implementation_type& impl,
+                          const duration_type& d);
+
+[function_effects Equivalent to `a.expires_at(b,
+TimeTraits::add(TimeTraits::now(), d))`.]
+
+  error_code wait(implementation_type& impl, error_code& ec);
+  
+[function_effects Performs a synchronous wait operation associated with the
+timer implementation `impl`. On success, sets `ec` such that the expression
+`!ec` is true. On failure, an implementation shall set `ec` to the `error_code`
+value corresponding to the failure condition, as shown in the table below. For
+failure conditions not listed, an implementation is permitted to set `ec` to
+any other value such that the expression `!ec` is false.]
+
+[table Table--wait() failure conditions
+  [[failure condition][error code]]
+  [
+    [Operation interrupted by signal.]
+    [`error::interrupted`]
+  ]
+]
+
+[function_returns `ec`.]
+
+[function_postconditions `!!ec || !TimeTraits::lt(TimeTraits::now(),
+a.expires_at(b))`.]
+
+  template<class WaitHandler>
+    void async_wait(implementation_type& impl, WaitHandler handler);
+
+[function_effects Starts an asynchronous wait operation associated with the
+timer implementation `impl`. When the operation is complete, a copy of the
+handler object `handler` will be posted for execution as if by:\n\n
+
+1. Constructing an object `bch` meeting [link requirements.completion_handler
+`BoundCompletionHandler`] requirements, such that the expression `bch()` calls
+`handler1(ec)`, where `handler1` is a copy of `handler` and `ec` is a value of
+type `const error_code` that indicates whether the wait operation succeeded or
+failed; then\n\n
+
+2. Calling `owner().post(bch)`.\n
+
+[std_note This implies that the handler `h` must not be called directly from
+within the `async_wait()` call, even if the asynchronous wait operation
+completes immediately.]
+
+The handler shall be posted for execution only if the condition `!!ec ||
+!TimeTraits::lt(TimeTraits::now(), expires_at(impl))` holds, where `ec` is the
+error code to be passed to the handler. On success, `ec` shall contain a value
+such that the expression `!ec` is true. On failure, an implementation shall
+pass as `ec` the `error_code` value corresponding to the failure condition, as
+shown in the table below. For failure conditions not listed, an implementation
+is permitted to pass as `ec` any other value such that the expression `!ec` is
+false.]
+
+[table Table--async_wait() failure conditions
+  [[failure condition][error code]]
+  [
+    [Operation was cancelled.]
+    [`error::operation_aborted`]
+  ]
+]
+
+[endsect]
+
+[endsect]

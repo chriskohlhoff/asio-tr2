@@ -6,6 +6,8 @@
         namespace error {
 
           extern const error_code eof;
+          extern const error_code operation_aborted;
+          extern const error_code interrupted;
           ... TODO ...
 
         } // namespace error

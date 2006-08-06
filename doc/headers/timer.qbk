@@ -7,7 +7,7 @@
         template<class Time> struct time_traits;
 
         template<class Time, class TimeTraits = time_traits<Time> >
-          class deadline_timer_service;
+          class ``[link classes.deadline_timer_service deadline_timer_service]``;
 
         template<class Time, class TimeTraits = time_traits<Time>,
           class TimerService = deadline_timer_service<Time, TimeTraits> >

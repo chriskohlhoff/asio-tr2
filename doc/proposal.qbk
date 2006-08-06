@@ -5,7 +5,7 @@
     [authors [Kohlhoff, Christopher]]
     [category template]
     [category generic]
-    [last-revision $Date: 2006/08/05 12:58:46 $]
+    [last-revision $Date: 2006/08/06 05:01:39 $]
 ]
 
 [/-----------------------------------------------------------------------------]
@@ -42,6 +42,10 @@
 
 [template function_postconditions[text]
 [:['Postconditions:] [text]]
+]
+
+[template function_complexity[text]
+[:['Complexity:] [text]]
 ]
 
 [template function_notes[text]
@@ -400,6 +404,7 @@ express type requirements:
 [include:classes classes/basic_io_object.qbk]
 [include:headers headers/system_error.qbk]
 [include:headers headers/timer.qbk]
+[include:classes classes/deadline_timer_service.qbk]
 [include:classes classes/basic_deadline_timer.qbk]
 [include:headers headers/buffer.qbk]
 [include:classes classes/mutable_buffer.qbk]
