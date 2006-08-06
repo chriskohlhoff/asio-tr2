@@ -1,0 +1,155 @@
+[section:datagram_socket_service Class template [^datagram_socket_service]]
+
+Instances of the `datagram_socket_service` class template meet the requirements
+of a [link requirements.datagram_socket_service `DatagramSocketService`].
+
+  namespace std {
+    namespace tr2 {
+      namespace sys {
+
+        template<class Protocol>
+        class datagram_socket_service :
+          public io_service::service
+        {
+        public:
+          // types:
+          typedef Protocol protocol_type;
+          typedef typename Protocol::endpoint endpoint_type;
+          typedef ``['[*unspecified]]`` implementation_type;
+          typedef ``['[*unspecified]]`` native_type;
+
+          // constructors:
+          explicit datagram_socket_service(io_service& ios);
+
+          // members:
+          void shutdown_service();
+
+          void construct(implementation_type& impl);
+
+          void destroy(implementation_type& impl);
+
+          error_code open(implementation_type& impl,
+                          const protocol_type& protocol, error_code& ec);
+
+          error_code assign(implementation_type& impl,
+                            const protocol_type& protocol,
+                            const native_type& native_socket, error_code& ec);
+
+          error_code close(implementation_type& impl, error_code& ec);
+
+          native_type native(implementation_type& impl);
+
+          template<class SettableSocketOption>
+            error_code set_option(implementation_type& impl,
+                                  const SettableSocketOption& option,
+                                  error_code& ec);
+
+          template<class GettableSocketOption>
+            error_code get_option(const implementation_type& impl,
+                                  GettableSocketOption& option,
+                                  error_code& ec) const;
+
+          template<class IoControlCommand>
+            error_code io_control(implementation_type& impl,
+                                  IoControlCommand& command, error_code& ec);
+
+          bool blocking(const implementation_type& impl, error_code& ec) const;
+
+          error_code blocking(implementation_type& impl, bool block,
+                              error_code& ec);
+
+          bool at_mark(const implementation_type& impl, error_code& ec) const;
+
+          size_t available(const implementation_type& impl,
+                           error_code& ec) const;
+
+          error_code bind(implementation_type& impl,
+                          const endpoint_type& endpoint, error_code& ec);
+
+          error_code connect(implementation_type& impl,
+                             const endpoint_type& endpoint, error_code& ec);
+          template<class ConnectHandler>
+            void async_connect(implementation_type& impl,
+                               const endpoint_type& endpoint,
+                               ConnectHandler handler);
+
+          endpoint_type local_endpoint(const implementation_type& impl,
+                                       error_code& ec) const;
+
+          endpoint_type remote_endpoint(const implementation_type& impl,
+                                        error_code& ec) const;
+
+          error_code shutdown(implementation_type& impl, shutdown_type what,
+                              error_code& ec);
+
+          template<class MutableBuffers, class ConvertibleToMutableBuffer>
+            size_t receive(implementation_type& impl,
+                           const MutableBuffers& buffers,
+                           socket_base::message_flags flags,
+                           socket_base::message_flags& out_flags,
+                           const ConvertibleToMutableBuffer& control_data,
+                           error_code& ec);
+          template<class MutableBuffers, class ConvertibleToMutableBuffer,
+            class ReadHandler>
+              void async_receive(implementation_type& impl,
+                                 const MutableBuffers& buffers,
+                                 socket_base::message_flags flags,
+                                 socket_base::message_flags& out_flags,
+                                 const ConvertibleToMutableBuffer& control_data,
+                                 ReadHandler handler);
+
+          template<class MutableBuffers, class ConvertibleToMutableBuffer>
+            size_t receive_from(implementation_type& impl,
+                                const MutableBuffers& buffers,
+                                endpoint_type& sender,
+                                socket_base::message_flags flags,
+                                socket_base::message_flags& out_flags,
+                                const ConvertibleToMutableBuffer& control_data,
+                                error_code& ec);
+          template<class MutableBuffers, class ConvertibleToMutableBuffer,
+            class ReadHandler>
+              void async_receive_from(implementation_type& impl,
+                                      const MutableBuffers& buffers,
+                                      endpoint_type& sender,
+                                      socket_base::message_flags flags,
+                                      socket_base::message_flags& out_flags,
+                                      const ConvertibleToMutableBuffer&
+                                        control_data,
+                                      ReadHandler handler);
+
+          template<class ConstBuffers, class ConvertibleToConstBuffer>
+            size_t send(implementation_type& impl,
+                        const ConstBuffers& buffers,
+                        socket_base::message_flags flags,
+                        const ConvertibleToConstBuffer& control_data,
+                        error_code& ec);
+          template<class ConstBuffers, class ConvertibleToConstBuffer,
+            class WriteHandler>
+              void async_send(implementation_type& impl,
+                              const ConstBuffers& buffers,
+                              socket_base::message_flags flags,
+                              const ConvertibleToConstBuffer& control_data,
+                              WriteHandler handler);
+
+          template<class ConstBuffers, class ConvertibleToConstBuffer>
+            size_t send_to(implementation_type& impl,
+                           const ConstBuffers& buffers,
+                           const endpoint_type& destination,
+                           socket_base::message_flags flags,
+                           const ConvertibleToConstBuffer& control_data,
+                           error_code& ec);
+          template<class ConstBuffers, class ConvertibleToConstBuffer,
+            class WriteHandler>
+              void async_send_to(implementation_type& impl,
+                                 const ConstBuffers& buffers,
+                                 const endpoint_type& destination,
+                                 socket_base::message_flags flags,
+                                 const ConvertibleToConstBuffer& control_data,
+                                 WriteHandler handler);
+        };
+
+      } // namespace sys
+    } // namespace tr2
+  } // namespace std
+
+[endsect]

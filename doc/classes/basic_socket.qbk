@@ -46,9 +46,10 @@
                                   error_code& ec);
 
           template<class GettableSocketOption>
-            void get_option(GettableSocketOption& option);
+            void get_option(GettableSocketOption& option) const;
           template<class GettableSocketOption>
-            error_code get_option(GettableSocketOption& option, error_code& ec);
+            error_code get_option(GettableSocketOption& option,
+                                  error_code& ec) const;
 
           template<class IoControlCommand>
             void io_control(IoControlCommand& command);
