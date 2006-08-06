@@ -17,11 +17,10 @@
             address& operator=(const address_v4& addr);
             address& operator=(const address_v6& addr);
 
-            // observers:
+            // members:
             bool is_multicast() const;
             bool is_v4() const;
             bool is_v6() const;
-
             address_v4 to_v4() const;
             address_v6 to_v6() const;
             string to_string() const;

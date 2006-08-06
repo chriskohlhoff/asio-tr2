@@ -18,7 +18,7 @@
             basic_resolver_entry(const endpoint_type& ep, const string& h,
                                  const string& s);
 
-            // observers:
+            // members:
             endpoint_type endpoint() const;
             operator endpoint_type() const;
             string host_name() const;

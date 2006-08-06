@@ -11,21 +11,22 @@
             // types:
             typedef array<unsigned char, 4> bytes_type;
 
-            ``// [link classes.ip__address_v4_constructors constructors]:``
+            // constructors:
             address_v4();
             explicit address_v4(const bytes_type& bytes);
             explicit address_v4(unsigned long val);
 
-            ``// [link classes.ip__address_v4_observers observers]:``
+            // members:
             bool is_class_a() const;
             bool is_class_b() const;
             bool is_class_c() const;
             bool is_multicast() const;
-
             bytes_type to_bytes() const;
             unsigned long to_ulong() const;
             string to_string() const;
             string to_string(error_code& ec) const;
+
+            // static members:
             static address_v4 from_string(const string& str);
             static address_v4 from_string(const string& str, error_code& ec);
             static address_v4 any();
@@ -36,7 +37,7 @@
             static address_v4 netmask(const address_v4& addr);
           };
 
-          ``// address\_v4 [link classes.ip__address_v4_comparisons comparisons]:``
+          // address_v4 comparisons:
           bool operator==(const address_v4& a, const address_v4& b);
           bool operator!=(const address_v4& a, const address_v4& b);
           bool operator< (const address_v4& a, const address_v4& b);
@@ -54,7 +55,7 @@
     } // namespace tr2
   } // namespace std
 
-[section:ip__address_v4_constructors [^ip::address_v4] constructors]
+[section [^ip::address_v4] constructors]
 
   address_v4();
 
@@ -122,7 +123,7 @@ the table below.]
 
 [endsect]
 
-[section:ip__address_v4_observers [^ip::address_v4] observers]
+[section [^ip::address_v4] members]
 
   bool is_class_a() const;
 
@@ -140,24 +141,20 @@ the table below.]
 
 [function_returns `(to_ulong() & 0xF0000000) == 0xE0000000`.]
 
-[endsect]
-
-[section:ip__address_v4_members [^ip::address_v4] members]
-
   bytes_type to_bytes() const;
 
   unsigned long to_ulong() const;
 
   string to_string() const;
 
-[function_block Returns a string representation of the address. The format is
-specified by the __POSIX__ function __inet_ntop__ when invoked with address
-family `AF_INET`.]
+[function_effects Calls:
+``
+  error_code ec;
+  string s = to_string(ec);
+  if (ec) throw system_error(ec);
+``]
 
-[function_throws `system_error` if the implementation is unable to convert the
-address to a string. If conversion to string fails due to lack of support for
-IP version 4, the implementation shall throw a `system_error` constructed with
-the `error_code` value `error::address_family_not_supported`.]
+[function_returns `s`.]
 
   string to_string(error_code& ec) const;
 
@@ -169,6 +166,10 @@ family `AF_INET`.]
 used to represent not-an-error. If conversion to string fails due to lack of
 support for IP version 4, `ec` shall be set to
 `error::address_family_not_supported`.]
+
+[endsect]
+
+[section [^ip::address_v4] static members]
 
   static address_v4 from_string(const string& str);
 
@@ -203,7 +204,7 @@ support for IP version 4, `ec` shall be set to
 
 [endsect]
 
-[section:ip__address_v4_comparisons [^ip::address_v4] comparisons]
+[section [^ip::address_v4] comparisons]
 
 [endsect]
 

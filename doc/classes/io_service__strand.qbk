@@ -7,16 +7,16 @@
         class io_service::strand
         {
         public:
-          // construct/destroy:
+          // constructors/destructor:
           explicit strand(std::tr2::sys::io_service& ios);
           ~strand();
 
-          // observers:
+          // members:
           std::tr2::sys::io_service& io_service();
-
-          // strand operations:
-          template<typename Handler> void dispatch(Handler handler);
-          template<typename Handler> void post(Handler handler);
+          template<typename CompletionHandler>
+            void dispatch(CompletionHandler handler);
+          template<typename CompletionHandler>
+            void post(CompletionHandler handler);
           template<typename Handler> unspecified wrap(Handler handler);
 
         private:

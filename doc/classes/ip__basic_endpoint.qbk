@@ -17,13 +17,11 @@
             basic_endpoint(const Protocol& proto, unsigned short port_num);
             basic_endpoint(const ip::address& addr, unsigned short port_num);
 
-            // observers:
+            // members:
             Protocol protocol() const;
             ip::address address() const;
-            unsigned short port() const;
-
-            // modifiers:
             void address(const ip::address& addr);
+            unsigned short port() const;
             void port(unsigned short port_num);
           };
 

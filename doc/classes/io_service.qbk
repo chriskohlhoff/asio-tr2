@@ -12,19 +12,19 @@
           class ``[link classes.io_service__id id]``;
           class ``[link classes.io_service__work work]``;
           class ``[link classes.io_service__strand strand]``;
-          enum run_exit_reason { out_of_work, interrupted, timed_out };
 
-          ``// [link classes.io_service__construct_destroy construct/destroy]:``
+          // constructors/destructor:
           io_service();
           ~io_service(); // non-virtual
 
-          ``// [link classes.io_service__operations operations]:``
-          run_exit_reason run();
-          run_exit_reason run(const date_time::time_duration_type& duration);
+          // members:
+          void run();
           void interrupt();
           void reset();
-          template<typename Handler> void dispatch(Handler handler);
-          template<typename Handler> void post(Handler handler);
+          template<typename CompletionHandler>
+            void dispatch(CompletionHandler handler);
+          template<typename CompletionHandler>
+            void post(CompletionHandler handler);
           template<typename Handler> unspecified wrap(Handler handler);
 
         private:
@@ -64,11 +64,5 @@ io_service parameter, the `invalid_service_owner` exception is thrown.
 Once a service reference is obtained from an io_service object by calling
 `use_service<>`, that reference remains usable as long as the owning io_service
 object exists.
-
-[section:io_service__construct_destroy [^io_service] constructor and destructor]
-[endsect]
-
-[section:io_service__operations [^io_service] operations]
-[endsect]
 
 [endsect]
