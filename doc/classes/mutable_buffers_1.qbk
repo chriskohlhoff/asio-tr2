@@ -1,8 +1,10 @@
 [section:mutable_buffers_1 Class [^mutable_buffers_1]]
 
 The `mutable_buffers_1` class meets the requirements for [link
-requirements.mutable_buffers `MutableBuffers`] and [link
-requirements.const_buffers `ConstBuffers`].
+requirements.mutable_buffers `MutableBuffers`], [link
+requirements.const_buffers `ConstBuffers`], [link
+requirements.convertible_to_mutable_buffer `ConvertibleToMutableBuffer`], and
+[link requirements.convertible_to_const_buffer `ConvertibleToConstBuffer`].
 
   namespace std {
     namespace tr2 {
@@ -14,13 +16,13 @@ requirements.const_buffers `ConstBuffers`].
         public:
           // types:
           typedef mutable_buffer value_type;
-          typedef ``[*implementation defined]`` const_iterator;
+          typedef ``['[*unspecified]]`` const_iterator;
 
-          // construct:
+          // constructors:
           mutable_buffers_1(void* data, size_t size);
           explicit mutable_buffers_1(const mutable_buffer& b);
 
-          // iterators:
+          // members:
           const_iterator begin() const;
           const_iterator end() const;
         };

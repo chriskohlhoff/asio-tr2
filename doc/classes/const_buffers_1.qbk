@@ -1,7 +1,8 @@
 [section:const_buffers_1 Class [^const_buffers_1]]
 
 The `const_buffers_1` class meets the requirements for [link
-requirements.const_buffers `ConstBuffers`].
+requirements.const_buffers `ConstBuffers`], and [link
+requirements.convertible_to_const_buffer `ConvertibleToConstBuffer`].
 
   namespace std {
     namespace tr2 {
@@ -13,13 +14,13 @@ requirements.const_buffers `ConstBuffers`].
         public:
           // types:
           typedef const_buffer value_type;
-          typedef ``[*implementation defined]`` const_iterator;
+          typedef ``['[*unspecified]]`` const_iterator;
 
-          // construct:
+          // constructors:
           const_buffers_1(const void* data, size_t size);
           explicit const_buffers_1(const const_buffer& b);
 
-          // iterators:
+          // members:
           const_iterator begin() const;
           const_iterator end() const;
         };

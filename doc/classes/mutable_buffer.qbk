@@ -1,5 +1,9 @@
 [section:mutable_buffer Class [^mutable_buffer]]
 
+The `mutable_buffer` class meets the requirements for [link
+requirements.convertible_to_mutable_buffer `ConvertibleToMutableBuffer`] and
+[link requirements.convertible_to_const_buffer `ConvertibleToConstBuffer`].
+
   namespace std {
     namespace tr2 {
       namespace sys {
@@ -11,17 +15,64 @@
           mutable_buffer(void* data, size_t size);
         };
 
-        template<typename T>
-          T buffer_cast(const mutable_buffer& b);
-
+        template<class T> T buffer_cast(const mutable_buffer& b);
         size_t buffer_size(const mutable_buffer& b);
 
         mutable_buffer operator+(const mutable_buffer& b, size_t size);
-
-        mutable_buffer operator+(size_t b, const mutable_buffer& size);
+        mutable_buffer operator+(size_t size, const mutable_buffer& b);
 
       } // namespace sys
     } // namespace tr2
   } // namespace std
+
+[section [^mutable_buffer] constructors]
+
+  mutable_buffer();
+
+[function_postconditions `buffer_cast<void*>(*this) == 0` and
+`buffer_size(*this) == 0`.]
+
+  mutable_buffer(void* data, size_t size);
+
+[function_postconditions `buffer_cast<void*>(*this) == data` and
+`buffer_size(*this) == size`.]
+
+[endsect]
+
+[section [^mutable_buffer] globals]
+
+  template<class T> T buffer_cast(const mutable_buffer& b);
+
+[function_returns A pointer to the memory area represented by the buffer `b`.
+`T` must be a pointer type such that the expression `static_cast<T>(p)` is
+valid, where `p` is of type `void*`.]
+
+  size_t buffer_size(const mutable_buffer& b);
+
+[function_returns The size of the memory area represented by the buffer `b`.]
+
+[endsect]
+
+[section [^mutable_buffer] operators]
+
+  mutable_buffer operator+(const mutable_buffer& b, size_t size);
+
+[function_returns A `mutable_buffer` equivalent to
+``
+  mutable_buffer(
+    buffer_cast<char*>(b) + min(size, buffer_size(b)),
+    buffer_size(b) - min(size, buffer_size(b)));
+``]
+
+  mutable_buffer operator+(size_t size, const mutable_buffer& b);
+
+[function_returns A `mutable_buffer` equivalent to
+``
+  mutable_buffer(
+    buffer_cast<char*>(b) + min(size, buffer_size(b)),
+    buffer_size(b) - min(size, buffer_size(b)));
+``]
+
+[endsect]
 
 [endsect]

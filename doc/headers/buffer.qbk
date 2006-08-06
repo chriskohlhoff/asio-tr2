@@ -18,9 +18,9 @@
         const_buffer operator+(const const_buffer&, size_t);
         const_buffer operator+(size_t, const const_buffer&);
 
-        class mutable_buffers_1;
+        class ``[link classes.mutable_buffers_1 mutable_buffers_1]``;
 
-        class const_buffers_1;
+        class ``[link classes.const_buffers_1 const_buffers_1]``;
 
         mutable_buffers_1 buffer(void*, size_t);
         const_buffers_1 buffer(const void*, size_t);
