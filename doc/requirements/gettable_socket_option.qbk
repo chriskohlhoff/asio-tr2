@@ -10,7 +10,7 @@ requirements, and `u` denotes an identifier.
     [`a.level(p);`]
     [`int`]
     [
-      note: returns a value suitable for passing as the /level/ argument to the
+      Returns a value suitable for passing as the /level/ argument to the
       __POSIX__ function __getsockopt__ (or equivalent).
     ]
   ]
@@ -18,25 +18,25 @@ requirements, and `u` denotes an identifier.
     [`a.name(p);`]
     [`int`]
     [
-      note: returns a value suitable for passing as the /option_name/ argument
-      to the __POSIX__ function __getsockopt__ (or equivalent).
+      Returns a value suitable for passing as the /option_name/ argument to the
+      __POSIX__ function __getsockopt__ (or equivalent).
     ]
   ]
   [
     [`a.data(p);`]
     [a pointer, convertible to `void*`]
     [
-      note: returns a pointer suitable for passing as the /option_value/
-      argument to the __POSIX__ function __getsockopt__ (or equivalent).
+      Returns a pointer suitable for passing as the /option_value/ argument to
+      the __POSIX__ function __getsockopt__ (or equivalent).
     ]
   ]
   [
     [`a.size(p);`]
     [`size_t`]
     [
-      note: returns a value suitable for passing as the /option_len/ argument
-      to the __POSIX__ function __getsockopt__ (or equivalent), after
-      appropriate integer conversion has been performed.
+      Returns a value suitable for passing as the /option_len/ argument to the
+      _POSIX__ function __getsockopt__ (or equivalent), after appropriate
+      integer conversion has been performed.
     ]
   ]
   [
@@ -44,10 +44,10 @@ requirements, and `u` denotes an identifier.
     []
     [
       post: `a.size(p) == s`\n
-      note: passed the value contained in the /option_len/ argument to
-      the __POSIX__ function __getsockopt__ (or equivalent) after a successful
-      completion of the function. Permitted to throw an exception if the
-      socket option object `a` does not support the specified size.
+      Passed the value contained in the /option_len/ argument to the __POSIX__
+      function __getsockopt__ (or equivalent) after a successful completion of
+      the function. Permitted to throw an exception if the socket option object
+      `a` does not support the specified size.
     ]
   ]
 ]

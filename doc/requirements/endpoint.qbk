@@ -6,7 +6,7 @@ An endpoint must meet the requirements of `CopyConstructible` types (C++ Std,
 In the table below, `X` denotes an endpoint class, `a` denotes a value of type
 `X`, and `u` denotes an identifier.
 
-[table Table--Endpoint requirements (all platforms)
+[table Table--Endpoint requirements
   [[expression] [type] [assertion/note\npre/post-conditions]]
   [
     [`X::protocol_type`]
@@ -39,7 +39,7 @@ In the table below, `X` denotes an endpoint class, `a` denotes a value of `X`,
     [`a.data();`]
     [a pointer]
     [
-      note: returns a pointer suitable for passing as the /address/ argument to
+      Returns a pointer suitable for passing as the /address/ argument to
       __POSIX__ functions such as __accept__, __getpeername__, __getsockname__
       and __recvfrom__. The implementation shall perform a
       `reinterpret_cast` on the pointer to convert it to `sockaddr*`.
@@ -50,7 +50,7 @@ In the table below, `X` denotes an endpoint class, `a` denotes a value of `X`,
       u.data();`]
     [a pointer]
     [
-      note: returns a pointer suitable for passing as the /address/ argument to
+      Returns a pointer suitable for passing as the /address/ argument to
       __POSIX__ functions such as __connect__, or as the /dest_addr/ argument
       to __POSIX__ functions such as  __sendto__. The implementation shall
       perform a `reinterpret_cast` on the pointer to convert it to `const
@@ -61,7 +61,7 @@ In the table below, `X` denotes an endpoint class, `a` denotes a value of `X`,
     [`a.size();`]
     [`size_t`]
     [
-      note: returns a value suitable for passing as the /address_len/ argument
+      Returns a value suitable for passing as the /address_len/ argument
       to __POSIX__ functions such as __connect__, or as the /dest_len/ argument
       to __POSIX__ functions such as __sendto__, after appropriate integer
       conversion has been performed.
@@ -72,21 +72,20 @@ In the table below, `X` denotes an endpoint class, `a` denotes a value of `X`,
     []
     [
       post: `a.size() == s`\n
-      note: passed the value contained in the /address_len/ argument to
-      __POSIX__ functions such as __accept__, __getpeername__, __getsockname__
-      and __recvfrom__, after a successful completion of the function.
-      Permitted to throw an exception if the protocol associated with the
-      endpoint object `a` does not support the specified size.
+      Passed the value contained in the /address_len/ argument to __POSIX__
+      functions such as __accept__, __getpeername__, __getsockname__ and
+      __recvfrom__, after a successful completion of the function. Permitted to
+      throw an exception if the protocol associated with the endpoint object `a`
+      does not support the specified size.
     ]
   ]
   [
     [`a.capacity();`]
     [`size_t`]
     [
-      note: returns a value suitable for passing as the /address_len/ argument
-      to __POSIX__ functions such as __accept__, __getpeername__,
-      __getsockname__ and __recvfrom__, after appropriate integer conversion
-      has been performed.
+      Returns a value suitable for passing as the /address_len/ argument to
+      __POSIX__ functions such as __accept__, __getpeername__, __getsockname__
+      and __recvfrom__, after appropriate integer conversion has been performed.
     ]
   ]
 ]
