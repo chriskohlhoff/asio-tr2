@@ -1,4 +1,4 @@
-[section:io_control_command I/O control commands]
+[section:io_control_command I/O control command requirements]
 
 In the table below, `X` denotes an I/O control command class, `a` denotes a
 value of `X`, and `u` denotes an identifier.

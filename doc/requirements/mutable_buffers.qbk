@@ -1,4 +1,4 @@
-[section:mutable_buffers Mutable buffers objects]
+[section:mutable_buffers Mutable buffers requirements]
 
 In the table below, `X` denotes a class containing objects of type `T`, `a`
 denotes a value of type `X` and `u` denotes an identifier.

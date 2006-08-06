@@ -1,4 +1,4 @@
-[section:timer_service Timer services]
+[section:timer_service Timer service requirements]
 
 A timer service must meet the requirements for an [link
 requirements.io_object_service I/O object service], as well as the additional

@@ -26,42 +26,4 @@
     } // namespace tr2
   } // namespace std
 
-Class `service` is the base class for I\/O feature sets. A class is a /service/
-if it is publicly derived from another service, or if it is a class derived
-from `io_service::service` and contains a publicly-accessible declaration as
-follows:
-
-  static io_service::id id;
-
-Template parameters which are required to be services are those named `Service`
-in declarations. A program that passes a type that is /not/ a service, as an
-(explicit or deduced) template parameter to an io_service function expecting a
-service, is ill-formed.
-
-All services define a one-argument constructor that takes a reference to the
-`io_service` object that owns the service. This constructor is /explicit/,
-preventing its participation in automatic conversions. For example:
-
-  class my_service : public io_service::service
-  {
-  public:
-    static io_service::id id;
-    explicit my_service(io_service& ios);
-  private:
-    virtual void shutdown_service();
-    ...
-  };
-
-A service's `shutdown_service` member function must cause all copies of
-user-defined handler objects that are held by the service to be destroyed.
-
-The implementation performs `delete static_cast<io_service::service*>(s)`
-(where `s` is a pointer to the service) when the owning `io_service` object is
-destroyed.
-
-An `io_service` object's destructor first invokes the `shutdown_service` member
-function for each service in reverse order of the completion of service
-constructors. The `io_service` destructor then destroys each service in reverse
-order of the completion of service construction.
-
 [endsect]

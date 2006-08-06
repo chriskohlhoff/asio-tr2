@@ -1,4 +1,4 @@
-[section:connect_handler Connect handlers]
+[section:connect_handler Connect handler requirements]
 
 A connect handler must meet the requirements for a [link requirements.handler
 handler]. A value `h` of a connect handler class should work correctly in the

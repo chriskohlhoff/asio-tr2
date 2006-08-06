@@ -1,4 +1,4 @@
-[section:write_handler Write handlers]
+[section:write_handler Write handler requirements]
 
 A write handler must meet the requirements for a [link requirements.handler
 handler]. A value `h` of a write handler class should work correctly in the

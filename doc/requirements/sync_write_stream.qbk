@@ -1,4 +1,4 @@
-[section:sync_write_stream Synchronous write streams]
+[section:sync_write_stream Synchronous write stream requirements]
 
 In the table below, `a` denotes a synchronous write stream object, `cb` denotes
 an object satisfying constant buffers requirements, and `ec` denotes an object

@@ -5,7 +5,7 @@
     [authors [Kohlhoff, Christopher]]
     [category template]
     [category generic]
-    [last-revision $Date: 2006/08/06 09:06:39 $]
+    [last-revision $Date: 2006/08/06 09:29:13 $]
 ]
 
 [/-----------------------------------------------------------------------------]
@@ -346,6 +346,10 @@ express type requirements, as listed in the table below.
     [[link requirements.resolver_service resolver service]]
   ]
   [
+    [`Service`]
+    [[link requirements.service service]]
+  ]
+  [
     [`SettableSocketOption`]
     [[link requirements.settable_socket_option settable socket option]]
   ]
@@ -390,9 +394,12 @@ express type requirements, as listed in the table below.
 [section Basic I/O services]
 [include:headers headers/io_service.qbk]
 [include:requirements requirements/handler.qbk]
+[include:requirements requirements/completion_handler.qbk]
+[include:requirements requirements/bound_completion_handler.qbk]
 [include:classes classes/io_service.qbk]
 [include:classes classes/io_service__service.qbk]
 [include:classes classes/io_service__id.qbk]
+[include:requirements requirements/service.qbk]
 [include:classes classes/io_service__work.qbk]
 [include:classes classes/io_service__strand.qbk]
 [include:requirements requirements/io_object_service.qbk]

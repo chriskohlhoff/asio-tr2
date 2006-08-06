@@ -1,4 +1,4 @@
-[section:async_write_stream Asynchronous write streams]
+[section:async_write_stream Asynchronous write stream requirements]
 
 In the table below, `a` denotes an asynchronous write stream object, `cb`
 denotes an object satisfying constant buffers requirements, and `h` denotes a

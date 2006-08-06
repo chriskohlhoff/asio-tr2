@@ -56,7 +56,4 @@ requirements.
   ]
 ]
 
-[include:requirements completion_handler.qbk]
-[include:requirements bound_completion_handler.qbk]
-
 [endsect]

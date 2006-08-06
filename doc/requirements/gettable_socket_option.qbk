@@ -1,4 +1,4 @@
-[section:gettable_socket_option Gettable socket options]
+[section:gettable_socket_option Gettable socket option requirements]
 
 In the table below, `X` denotes a socket option class, `a` denotes a value of
 `X`, `p` denotes a value that meets the [link requirements.protocol protocol]

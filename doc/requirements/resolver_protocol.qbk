@@ -1,4 +1,4 @@
-[section:resolver_protocol Resolver protocols]
+[section:resolver_protocol Resolver protocol requirements]
 
 A resolver protocol must meet the requirements for a [link
 requirements.protocol protocol], as well as the additional requirements listed

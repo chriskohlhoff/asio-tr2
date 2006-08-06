@@ -1,4 +1,4 @@
-[section:const_buffers Constant buffers objects]
+[section:const_buffers Constant buffers requirements]
 
 In the table below, `X` denotes a class containing objects of type `T`, `a`
 denotes a value of type `X` and `u` denotes an identifier.

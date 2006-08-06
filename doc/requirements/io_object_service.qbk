@@ -1,6 +1,7 @@
-[section:io_object_service I/O object services]
+[section:io_object_service I/O object service requirements]
 
-An I/O object service must meet the requirements listed below.
+An I/O object service must meet the requirements for a [link
+requirements.service service], as well as the requirements listed below.
 
 In the table below, `X` denotes an I/O object service class, `a` denotes a
 value of type `X`, `b` denotes a value of type `X::implementation_type`, and

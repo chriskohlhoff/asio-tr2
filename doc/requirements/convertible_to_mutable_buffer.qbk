@@ -1,4 +1,4 @@
-[section:convertible_to_mutable_buffer Convertible to [^mutable_buffer]]
+[section:convertible_to_mutable_buffer Convertible to [^mutable_buffer] requirements]
 
 A type that meets the requirements for convertibility to `mutable_buffer` must
 meet the requirements of `CopyConstructible` types (C++ Std, 20.1.3), and the

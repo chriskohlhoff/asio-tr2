@@ -1,4 +1,4 @@
-[section:acceptor_service Acceptor services]
+[section:acceptor_service Acceptor service requirements]
 
 An acceptor service must meet the requirements for an [link
 requirements.io_object_service I/O object service], as well as the additional

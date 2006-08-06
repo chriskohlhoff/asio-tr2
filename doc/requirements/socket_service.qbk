@@ -1,4 +1,4 @@
-[section:socket_service Socket services]
+[section:socket_service Socket service requirements]
 
 A socket service must meet the requirements for an [link
 requirements.io_object_service I/O object service], as well as the additional

@@ -1,4 +1,4 @@
-[section:sync_read_stream Synchronous read streams]
+[section:sync_read_stream Synchronous read stream requirements]
 
 In the table below, `a` denotes a synchronous read stream object, `mb` denotes
 an object satisfying mutable buffers requirements, and `ec` denotes an object of
