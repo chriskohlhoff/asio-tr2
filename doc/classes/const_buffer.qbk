@@ -65,7 +65,7 @@ valid, where `p` is of type `const void*`.]
 [function_returns A `const_buffer` equivalent to
 ``
   const_buffer(
-    buffer_cast<char*>(b) + min(size, buffer_size(b)),
+    buffer_cast<const char*>(b) + min(size, buffer_size(b)),
     buffer_size(b) - min(size, buffer_size(b)));
 ``]
 
@@ -74,7 +74,7 @@ valid, where `p` is of type `const void*`.]
 [function_returns A `const_buffer` equivalent to
 ``
   const_buffer(
-    buffer_cast<char*>(b) + min(size, buffer_size(b)),
+    buffer_cast<const char*>(b) + min(size, buffer_size(b)),
     buffer_size(b) - min(size, buffer_size(b)));
 ``]
 
