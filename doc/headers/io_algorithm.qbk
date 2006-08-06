@@ -8,6 +8,11 @@
 
         unspecified transfer_at_least(size_t);
 
+        template<class Allocator = std::allocator<char> >
+          class basic_streambuf; // ``[*TODO]`` needs new name
+
+        typedef basic_streambuf<> streambuf; // ``[*TODO]`` needs new name
+
         // synchronous read operations:
         template<class SyncReadStream, class MutableBuffers>
           size_t read(SyncReadStream& stream, const MutableBuffers& buffers);
@@ -22,6 +27,17 @@
                         const MutableBuffers& buffers,
                         CompletionCondition completion_condition,
                         error_code& ec);
+        template<class SyncReadStream, class Allocator>
+          size_t read(SyncReadStream& stream, basic_streambuf<Allocator>& sb);
+        template<class SyncReadStream, class Allocator,
+          class CompletionCondition>
+            size_t read(SyncReadStream& stream, basic_streambuf<Allocator>& sb,
+                        CompletionCondition completion_condition);
+        template<class SyncReadStream, class Allocator,
+          class CompletionCondition>
+            size_t read(SyncReadStream& stream, basic_streambuf<Allocator>& sb,
+                        CompletionCondition completion_condition,
+                        error_code& ec);
 
         // asynchronous read operations:
         template<class AsyncReadStream, class MutableBuffers, class ReadHandler>
@@ -31,6 +47,16 @@
           class CompletionCondition, class ReadHandler>
             size_t async_read(AsyncReadStream& stream,
                               const MutableBuffers& buffers,
+                              CompletionCondition completion_condition,
+                              ReadHandler handler);
+        template<class AsyncReadStream, class Allocator, class ReadHandler>
+          size_t async_read(AsyncReadStream& stream,
+                            basic_streambuf<Allocator>& sb,
+                            ReadHandler handler);
+        template<class AsyncReadStream, class Allocator,
+          class CompletionCondition, class ReadHandler>
+            size_t async_read(AsyncReadStream& stream,
+                              basic_streambuf<Allocator>& sb,
                               CompletionCondition completion_condition,
                               ReadHandler handler);
 
@@ -48,6 +74,19 @@
                          const ConstBuffers& buffers,
                          CompletionCondition completion_condition,
                          error_code& ec);
+        template<class SyncWriteStream, class Allocator>
+          size_t write(SyncWriteStream& stream, basic_streambuf<Allocator>& sb);
+        template<class SyncWriteStream, class Allocator,
+          class CompletionCondition>
+            size_t write(SyncWriteStream& stream,
+                         basic_streambuf<Allocator>& sb,
+                         CompletionCondition completion_condition);
+        template<class SyncWriteStream, class Allocator,
+          class CompletionCondition>
+            size_t write(SyncWriteStream& stream,
+                         basic_streambuf<Allocator>& sb,
+                         CompletionCondition completion_condition,
+                         error_code& ec);
 
         // asynchronous write operations:
         template<class AsyncWriteStream, class ConstBuffers, class WriteHandler>
@@ -59,6 +98,48 @@
                                const ConstBuffers& buffers,
                                CompletionCondition completion_condition,
                                WriteHandler handler);
+        template<class AsyncWriteStream, class Allocator, class WriteHandler>
+          size_t async_write(AsyncWriteStream& stream,
+                             basic_streambuf<Allocator>& sb,
+                             WriteHandler handler);
+        template<class AsyncWriteStream, class Allocator,
+          class CompletionCondition, class WriteHandler>
+            size_t async_write(AsyncWriteStream& stream,
+                               basic_streambuf<Allocator>& sb,
+                               CompletionCondition completion_condition,
+                               WriteHandler handler);
+
+        template <class SyncReadStream, class Allocator>
+          size_t read_until(SyncReadStream& s, basic_streambuf<Allocator>& sb,
+                            char delim);
+        template <class SyncReadStream, class Allocator>
+          size_t read_until(SyncReadStream& s, basic_streambuf<Allocator>& sb,
+                            char delim, error_code& ec);
+        template <class SyncReadStream, class Allocator>
+          size_t read_until(SyncReadStream& s, basic_streambuf<Allocator>& sb,
+                            const string& delim);
+        template <class SyncReadStream, class Allocator>
+          size_t read_until(SyncReadStream& s, basic_streambuf<Allocator>& sb,
+                            const string& delim, error_code& ec);
+        template <class SyncReadStream, class Allocator>
+          size_t read_until(SyncReadStream& s, basic_streambuf<Allocator>& sb,
+                            const regex& expr);
+        template <class SyncReadStream, class Allocator>
+          size_t read_until(SyncReadStream& s, basic_streambuf<Allocator>& sb,
+                            const regex& expr, error_code& ec);
+
+        template <class AsyncReadStream, class Allocator, class ReadHandler>
+          void async_read_until(AsyncReadStream& s,
+                                basic_streambuf<Allocator>& sb, char delim,
+                                ReadHandler handler);
+        template <class AsyncReadStream, class Allocator, class ReadHandler>
+          void async_read_until(AsyncReadStream& s,
+                                basic_streambuf<Allocator>& sb,
+                                const string& delim, ReadHandler handler);
+        template <class AsyncReadStream, class Allocator, class ReadHandler>
+          void async_read_until(AsyncReadStream& s,
+                                basic_streambuf<Allocator>& sb,
+                                const regex& expr, ReadHandler handler);
 
       } // namespace sys
     } // namespace tr2
