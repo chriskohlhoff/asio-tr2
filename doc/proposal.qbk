@@ -5,7 +5,7 @@
     [authors [Kohlhoff, Christopher]]
     [category template]
     [category generic]
-    [last-revision $Date: 2006/08/06 11:36:50 $]
+    [last-revision $Date: 2006/08/06 14:52:48 $]
 ]
 
 [/-----------------------------------------------------------------------------]
@@ -172,6 +172,79 @@ thread.
 [/-----------------------------------------------------------------------------]
 
 [section Motivation and Scope]
+
+[section Scope]
+
+Problem areas addressed by this proposal include:
+
+* Networking using TCP and UDP, including support for multicast.
+* Client and server applications.
+* Scalability to handle many concurrent connections.
+* Protocol independence between IPv4 and IPv6.
+* Name resolution (i.e. DNS).
+* Timers.
+
+Features that are considered outside the scope of this proposal include:
+
+* Protocol implementations such as HTTP, SMTP or FTP.
+* Encryption (e.g. SSL, TLS).
+* Operating system specific demultiplexing APIs.
+* Support for realtime environments.
+* QoS-enabled sockets.
+* Other TCP/IP protocols such as ICMP.
+
+[endsect]
+
+[section Target Audience]
+
+The bulk of the library interface is intended for use by developers with at
+least some understanding of networking concepts (or a willingness to learn). A
+high level iostreams interface supports simple use cases and permits novices to
+develop network code without needing to get into too much depth.
+
+[endsect]
+
+[section Reference Implementation]
+
+The Boost.Asio library, from which this proposal is derived, has been deployed
+in a number of production systems, such as internet-facing HTTP servers,
+instant messaging gateways and finance applications.
+
+The Boost.Asio library has been used on the following platforms:
+
+* Win32 using Visual C++ 7.1 and Visual C++ 8.0.
+* Win32 using Borland C++Builder 6 patch 4.
+* Win32 using MinGW.
+* Win32 using Cygwin.
+* Linux (2.4 or 2.6 kernels) using g++ 3.3 or later.
+* Solaris using g++ 3.3 or later.
+* Mac OS X 10.4 using g++ 3.3 or later.
+* QNX Neutrino 6.3 using g++ 3.3 or later.
+* FreeBSD using g++ 3.3 or later.
+
+[endsect]
+
+[section Related Work]
+
+The interface is based on the BSD sockets API, which is widely implemented and
+supported by extensive literature. It is also used as the basis of networking
+APIs in other languages (e.g. Java). Unsafe practices of the BSD sockets API,
+e.g. lack of compile-time type safety, are not included.
+
+Asynchronous support is derived from the Proactor design pattern as implemented
+by the ADAPTIVE Communication Environment
+\[[@http://www.cs.wustl.edu/~schmidt/ACE.html ACE]\], and is influenced by the
+design of the Symbian C++ sockets API
+\[[@http://www.symbian.com/developer/techlib/v70sdocs/doc_source/reference/cpp/SocketsClient/index.html
+Symbian]\], which supports synchronous and asynchronous operations
+side-by-side. The Microsoft .NET socket classes
+\[[@http://msdn2.microsoft.com/en-us/library/system.net.sockets.socket.aspx
+.NET]\] and the Extended Sockets API
+\[[@http://opengroup.org/icsc/uploads/40/6415/ES_API_1_0.pdf ES-API]\]
+developed by The Open Group support similar styles of network programming.
+
+[endsect]
+
 [endsect]
 
 [/-----------------------------------------------------------------------------]
@@ -186,10 +259,14 @@ standard. An implementation of this library requires operating system-specific
 functions that lie outside the C++03 standard.
 
 [section Relationship to TR1]
+
+This proposal uses the TR1 libraries for fixed size arrays and regular
+expressions. Programs developed using the proposed library typically make
+extensive use of TR1 function object binders.
+
 [endsect]
 
 [section Relationship to Threading and Memory Model Proposals]
-[endsect]
 
 This proposal does not require, and would not be coupled to, hypothetical
 standard library support for threading. The interface is intended to support
@@ -207,6 +284,8 @@ defined. In particular, the proposal will attempt to address:
 * The relationship between asynchronous operation initiation, completion, and
   inter-thread memory visibility.
 
+[endsect]
+
 [section Relationship to Date-Time Library Proposal]
 
 This proposal uses classes defined in the Proposal to Add Date-Time to the C++
@@ -218,7 +297,7 @@ Standard Library (N1900).
 
 The classes defined in the Diagnostics Library chapter of the Filesystem
 Library Proposal (N1975) are used in this proposal. ['Note: some modification
-of these classes may be required.]
+of these classes is required from those defined in N1975.]
 
 [endsect]
 
