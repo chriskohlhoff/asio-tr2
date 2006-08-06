@@ -4,7 +4,7 @@
     namespace tr2 {
       namespace sys {
 
-        template<class Time> struct time_traits;
+        template<class Time> struct ``[link classes.time_traits time_traits]``;
 
         template<class Time, class TimeTraits = time_traits<Time> >
           class ``[link classes.deadline_timer_service deadline_timer_service]``;

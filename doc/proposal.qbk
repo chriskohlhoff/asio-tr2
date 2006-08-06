@@ -5,7 +5,7 @@
     [authors [Kohlhoff, Christopher]]
     [category template]
     [category generic]
-    [last-revision $Date: 2006/08/06 05:01:39 $]
+    [last-revision $Date: 2006/08/06 07:34:23 $]
 ]
 
 [/-----------------------------------------------------------------------------]
@@ -259,159 +259,186 @@ of these classes may be required.]
 [section Proposed Text for the Standard]
 
 Throughout this clause, the names of the template parameters are used to
-express type requirements:
+express type requirements, as listed in the table below.
 
-* If a template parameter is `Protocol`, the actual template argument shall
-  satisfy the requirements of a [link requirements.protocol protocol].
+[table Table--Template parameters and type requirements
+  [[template parameter name][type requirements]]
+  [
+    [`AcceptHandler`]
+    [[link requirements.accept_handler accept handler]]
+  ]
+  [
+    [`AcceptorService`]
+    [[link requirements.acceptor_service acceptor service]]
+  ]
+  [
+    [`AsyncReadStream`]
+    [[link requirements.async_read_stream asynchronous read stream]]
+  ]
+  [
+    [`AsyncWriteStream`]
+    [[link requirements.async_write_stream asynchronous write stream]]
+  ]
+  [
+    [`CompletionHandler`]
+    [[link requirements.completion_handler completion handler]]
+  ]
+  [
+    [`ConnectHandler`]
+    [[link requirements.connect_handler connect handler]]
+  ]
+  [
+    [`ConstBuffers`]
+    [[link requirements.const_buffers const buffers]]
+  ]
+  [
+    [`ConvertibleToConstBuffer`]
+    [[link requirements.convertible_to_const_buffer convertible to
+    `const_buffer`]]
+  ]
+  [
+    [`ConvertibleToMutableBuffer`]
+    [[link requirements.convertible_to_mutable_buffer convertible to
+    `mutable_buffer`]]
+  ]
+  [
+    [`DatagramSocketService`]
+    [[link requirements.datagram_socket_service datagram socket service]]
+  ]
+  [
+    [`GettableSocketOption`]
+    [[link requirements.gettable_socket_option gettable socket option]]
+  ]
+  [
+    [`Handler`]
+    [[link requirements.handler handler]]
+  ]
+  [
+    [`IoControlCommand`]
+    [[link requirements.io_control_command I/O control command]]
+  ]
+  [
+    [`IoObjectService`]
+    [[link requirements.io_object_service I/O object service]]
+  ]
+  [
+    [`MutableBuffers`]
+    [[link requirements.mutable_buffers mutable buffers]]
+  ]
+  [
+    [`Protocol`]
+    [[link requirements.protocol protocol]]
+  ]
+  [
+    [`ReadHandler`]
+    [[link requirements.read_handler read handler]]
+  ]
+  [
+    [`ResolveHandler`]
+    [[link requirements.resolve_handler resolve handler]]
+  ]
+  [
+    [`ResolverProtocol`]
+    [[link requirements.resolver_protocol resolver protocol]]
+  ]
+  [
+    [`ResolverService`]
+    [[link requirements.resolver_service resolver service]]
+  ]
+  [
+    [`SettableSocketOption`]
+    [[link requirements.settable_socket_option settable socket option]]
+  ]
+  [
+    [`SocketService`]
+    [[link requirements.socket_service socket service]]
+  ]
+  [
+    [`StreamSocketService`]
+    [[link requirements.stream_socket_service stream socket service]]
+  ]
+  [
+    [`SyncReadStream`]
+    [[link requirements.sync_read_stream synchronous read stream]]
+  ]
+  [
+    [`SyncWriteStream`]
+    [[link requirements.sync_write_stream synchronous write stream]]
+  ]
+  [
+    [`TimerService`]
+    [[link requirements.timer_service timer service]]
+  ]
+  [
+    [`TimeTraits`]
+    [[link requirements.time_traits time traits]]
+  ]
+  [
+    [`WaitHandler`]
+    [[link requirements.wait_handler wait handler]]
+  ]
+  [
+    [`WriteHandler`]
+    [[link requirements.write_handler write handler]]
+  ]
+]
 
-* If a template parameter is `ResolverProtocol`, the actual template argument
-  shall satisfy the requirements of a [link requirements.resolver_protocol
-  resolver protocol].
+[section Errors]
+[include:headers headers/system_error.qbk]
+[endsect]
 
-* If a template parameter is `IoObjectService`, the actual template argument
-  shall satisfy the requirements of an [link requirements.io_object_service I/O
-  object service].
-
-* If a template parameter is `SocketService`, the actual template argument
-  shall satisfy the requirements of a [link requirements.socket_service socket
-  service].
-
-* If a template parameter is `StreamSocketService`, the actual template
-  argument shall satisfy the requirements of a [link
-  requirements.stream_socket_service stream socket service].
-
-* If a template parameter is `DatagramSocketService`, the actual template
-  argument shall satisfy the requirements of a [link
-  requirements.datagram_socket_service datagram socket service].
-
-* If a template parameter is `AcceptorService`, the actual template argument
-  shall satisfy the requirements of an [link requirements.acceptor_service
-  acceptor service].
-
-* If a template parameter is `ResolverService`, the actual template argument
-  shall satisfy the requirements of a [link requirements.resolver_service
-  resolver service].
-
-* If a template parameter is `TimerService`, the actual template argument
-  shall satisfy the requirements of a [link requirements.timer_service timer
-  service].
-
-* If a template parameter is `ConvertibleToMutableBuffer`, the actual template
-  argument shall satisfy the requirements for [link
-  requirements.convertible_to_mutable_buffer convertibility to
-  `mutable_buffer`].
-
-* If a template parameter is `MutableBuffers`, the actual template argument
-  shall satisfy the requirements of a [link requirements.mutable_buffers
-  mutable buffers] object.
-
-* If a template parameter is `ConvertibleToConstBuffer`, the actual template
-  argument shall satisfy the requirements for [link
-  requirements.convertible_to_const_buffer convertibility to `const_buffer`].
-
-* If a template parameter is `ConstBuffers`, the actual template argument shall
-  satisfy the requirements of a [link requirements.const_buffers constant
-  buffers] object.
-
-* If a template parameter is `GettableSocketOption`, the actual template
-  argument shall satisfy the requirements of a [link
-  requirements.gettable_socket_option gettable socket option].
-
-* If a template parameter is `SettableSocketOption`, the actual template
-  argument shall satisfy the requirements of a [link
-  requirements.settable_socket_option settable socket option].
-
-* If a template parameter is `IoControlCommand`, the actual template argument
-  shall satisfy the requirements of an [link requirements.io_control_command
-  I/O control command].
-
-* If a template parameter is `Handler`, the actual template argument
-  shall satisfy the requirements of a [link requirements.handler handler].
-
-* If a template parameter is `CompletionHandler`, the actual template argument
-  shall satisfy the requirements of a [link requirements.completion_handler
-  completion handler].
-
-* If a template parameter is `ReadHandler`, the actual template argument
-  shall satisfy the requirements of a [link requirements.read_handler read
-  handler].
-
-* If a template parameter is `WriteHandler`, the actual template argument
-  shall satisfy the requirements of a [link requirements.write_handler write
-  handler].
-
-* If a template parameter is `ConnectHandler`, the actual template argument
-  shall satisfy the requirements of a [link requirements.connect_handler connect
-  handler].
-
-* If a template parameter is `AcceptHandler`, the actual template argument
-  shall satisfy the requirements of an [link requirements.accept_handler accept
-  handler].
-
-* If a template parameter is `ResolveHandler`, the actual template argument
-  shall satisfy the requirements of a [link requirements.resolve_handler resolve
-  handler].
-
-* If a template parameter is `WaitHandler`, the actual template argument
-  shall satisfy the requirements of a [link requirements.wait_handler wait
-  handler].
-
-* If a template parameter is `SyncReadStream`, the actual template argument
-  shall satisfy the requirements of a [link requirements.sync_read_stream
-  synchronous read stream].
-
-* If a template parameter is `AsyncReadStream`, the actual template argument
-  shall satify the requirements of an [link requirements.async_read_stream
-  asynchronous read stream].
-
-* If a template parameter is `SyncWriteStream`, the actual template argument
-  shall satisfy the requirements of a [link requirements.sync_write_stream
-  synchronous write stream].
-
-* If a template parameter is `AsyncWriteStream`, the actual template argument
-  shall satisfy the requirements of an [link requirements.async_write_stream
-  asynchronous write stream].
-
-[include:requirements requirements/endpoint.qbk]
-[include:requirements requirements/protocol.qbk]
-[include:requirements requirements/resolver_protocol.qbk]
-[include:requirements requirements/io_object_service.qbk]
-[include:requirements requirements/socket_service.qbk]
-[include:requirements requirements/stream_socket_service.qbk]
-[include:requirements requirements/datagram_socket_service.qbk]
-[include:requirements requirements/acceptor_service.qbk]
-[include:requirements requirements/resolver_service.qbk]
-[include:requirements requirements/timer_service.qbk]
-[include:requirements requirements/convertible_to_mutable_buffer.qbk]
-[include:requirements requirements/mutable_buffers.qbk]
-[include:requirements requirements/convertible_to_const_buffer.qbk]
-[include:requirements requirements/const_buffers.qbk]
-[include:requirements requirements/gettable_socket_option.qbk]
-[include:requirements requirements/settable_socket_option.qbk]
-[include:requirements requirements/io_control_command.qbk]
-[include:requirements requirements/handler.qbk]
-[include:requirements requirements/sync_read_stream.qbk]
-[include:requirements requirements/async_read_stream.qbk]
-[include:requirements requirements/sync_write_stream.qbk]
-[include:requirements requirements/async_write_stream.qbk]
-
+[section Basic I/O services]
 [include:headers headers/io_service.qbk]
+[include:requirements requirements/handler.qbk]
 [include:classes classes/io_service.qbk]
 [include:classes classes/io_service__service.qbk]
 [include:classes classes/io_service__id.qbk]
 [include:classes classes/io_service__work.qbk]
 [include:classes classes/io_service__strand.qbk]
+[include:requirements requirements/io_object_service.qbk]
 [include:classes classes/basic_io_object.qbk]
-[include:headers headers/system_error.qbk]
+[endsect]
+
+[section Timers]
 [include:headers headers/timer.qbk]
+[include:requirements requirements/time_traits.qbk]
+[include:classes classes/time_traits.qbk]
+[include:requirements requirements/wait_handler.qbk]
+[include:requirements requirements/timer_service.qbk]
 [include:classes classes/deadline_timer_service.qbk]
 [include:classes classes/basic_deadline_timer.qbk]
+[endsect]
+
+[section Buffers]
 [include:headers headers/buffer.qbk]
 [include:classes classes/mutable_buffer.qbk]
 [include:classes classes/const_buffer.qbk]
+[include:requirements requirements/convertible_to_mutable_buffer.qbk]
+[include:requirements requirements/mutable_buffers.qbk]
+[include:requirements requirements/convertible_to_const_buffer.qbk]
+[include:requirements requirements/const_buffers.qbk]
 [include:classes classes/mutable_buffers_1.qbk]
 [include:classes classes/const_buffers_1.qbk]
+[endsect]
+
+[section Networking]
 [include:headers headers/network.qbk]
+[include:requirements requirements/endpoint.qbk]
+[include:requirements requirements/protocol.qbk]
+[include:requirements requirements/resolver_protocol.qbk]
+[include:requirements requirements/socket_service.qbk]
+[include:requirements requirements/stream_socket_service.qbk]
+[include:requirements requirements/datagram_socket_service.qbk]
+[include:requirements requirements/acceptor_service.qbk]
+[include:requirements requirements/resolver_service.qbk]
+[include:requirements requirements/gettable_socket_option.qbk]
+[include:requirements requirements/settable_socket_option.qbk]
+[include:requirements requirements/io_control_command.qbk]
+[include:requirements requirements/read_handler.qbk]
+[include:requirements requirements/write_handler.qbk]
+[include:requirements requirements/accept_handler.qbk]
+[include:requirements requirements/connect_handler.qbk]
+[include:requirements requirements/resolve_handler.qbk]
 [include:classes classes/socket_base.qbk]
 [include:classes classes/socket_base__broadcast.qbk]
 [include:classes classes/socket_base__debug.qbk]
@@ -446,7 +473,16 @@ express type requirements:
 [include:classes classes/ip__multicast__leave_group.qbk]
 [include:classes classes/ip__multicast__hops.qbk]
 [include:classes classes/ip__multicast__enable_loopback.qbk]
+[endsect]
+
+[section Utilities]
 [include:headers headers/io_algorithm.qbk]
+[include:requirements requirements/sync_read_stream.qbk]
+[include:requirements requirements/async_read_stream.qbk]
+[include:requirements requirements/sync_write_stream.qbk]
+[include:requirements requirements/async_write_stream.qbk]
+[endsect]
+
 [endsect]
 
 [/-----------------------------------------------------------------------------]

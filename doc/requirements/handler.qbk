@@ -58,11 +58,5 @@ requirements.
 
 [include:requirements completion_handler.qbk]
 [include:requirements bound_completion_handler.qbk]
-[include:requirements read_handler.qbk]
-[include:requirements write_handler.qbk]
-[include:requirements accept_handler.qbk]
-[include:requirements connect_handler.qbk]
-[include:requirements resolve_handler.qbk]
-[include:requirements wait_handler.qbk]
 
 [endsect]

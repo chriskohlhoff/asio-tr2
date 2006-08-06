@@ -78,25 +78,23 @@ TimeTraits, TimerService>`, initialising the base class with
 
   size_t cancel();
 
-[function_returns Returns `this->service.cancel(this->implementation)`.]
+[function_returns `this->service.cancel(this->implementation)`.]
 
   time_type expires_at() const;
 
-[function_returns Returns `this->service.expires_at(this->implementation)`.]
+[function_returns `this->service.expires_at(this->implementation)`.]
 
   size_t expires_at(const time_type& t);
 
-[function_returns Returns `this->service.expires_at(this->implementation, t)`.]
+[function_returns `this->service.expires_at(this->implementation, t)`.]
 
   duration_type expires_from_now() const;
 
-[function_returns Returns
-`this->service.expires_from_now(this->implementation)`.]
+[function_returns `this->service.expires_from_now(this->implementation)`.]
 
   size_t expires_from_now(const duration_type& d);
 
-[function_returns Returns
-`this->service.expires_from_now(this->implementation, d)`.]
+[function_returns `this->service.expires_from_now(this->implementation, d)`.]
 
   void wait();
 
@@ -109,7 +107,7 @@ TimeTraits, TimerService>`, initialising the base class with
 
   error_code wait(error_code& ec);
 
-[function_returns Returns `this->service.wait(this->implementation, ec)`.]
+[function_returns `this->service.wait(this->implementation, ec)`.]
 
   template <class WaitHandler>
     void async_wait(WaitHandler handler);

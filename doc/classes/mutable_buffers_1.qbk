@@ -1,5 +1,9 @@
 [section:mutable_buffers_1 Class [^mutable_buffers_1]]
 
+The `mutable_buffers_1` class meets the requirements for [link
+requirements.mutable_buffers `MutableBuffers`] and [link
+requirements.const_buffers `ConstBuffers`].
+
   namespace std {
     namespace tr2 {
       namespace sys {
