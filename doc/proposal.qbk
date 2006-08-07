@@ -5,7 +5,7 @@
     [authors [Kohlhoff, Christopher]]
     [category template]
     [category generic]
-    [last-revision $Date: 2006/08/06 14:52:48 $]
+    [last-revision $Date: 2006/08/07 15:23:29 $]
 ]
 
 [/-----------------------------------------------------------------------------]
@@ -307,20 +307,23 @@ of these classes is required from those defined in N1975.]
 
 [section Design Decisions]
 
+[include:design design/bsd_sockets.qbk]
+[include:design design/iostreams.qbk]
+[include:design design/posix.qbk]
 [include:design design/threads.qbk]
+[include:design design/strands.qbk]
+[include:design design/buffers.qbk]
+[include:design design/allocation.qbk]
 
-* Why the BSD sockets API
+[section To be added]
+
 * Flaws in BSD socket API - type safety
+* Asynchronous pros and cons
 * Should acceptor set reuse_address or not
-* Buffers
 * Services
 * Signals
-* Strands
 * Two-tier concept requirements for portability
 * Why read/async_read/write/async_write are needed
-* Thread safety
-* Why eof is an error (function contracts, 0 noop for read/write).
-* Custom memory allocation
 * Protocol independence
 * No string constructors for IP address classes
 * Timers, monotonic time
@@ -330,6 +333,8 @@ of these classes is required from those defined in N1975.]
 * ioctl provided for platform specific use, e.g. QoS settings
 * Non-blocking flag is simulated
 * WSAEMSGSIZE mapping on Windows to no error, set message_truncated
+
+[endsect]
 
 [endsect]
 

@@ -1,0 +1,8 @@
+[section Why is EOF an error?]
+
+* The end of a stream can cause read functions to violate their contract. E.g.
+  a read of N bytes may finish early due to EOF.
+
+* To distinguish between end of stream and a successful read of size 0.
+
+[endsect]

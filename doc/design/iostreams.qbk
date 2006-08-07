@@ -1,0 +1,28 @@
+[section IOStreams]
+
+The proposal includes classes that implement iostreams on top of sockets. These
+hide away the complexities associated with endpoint resolution, protocol
+independence, etc. For example, to create a connection one might simply write:
+
+  ip::tcp::iostream stream("www.boost.org", "http");
+  if (!stream)
+  {
+    // Can't connect.
+  }
+
+The iostream class can also be used in conjunction with an acceptor to create simple servers. For example:
+
+  io_service ios;
+  ip::tcp::endpoint endpoint(tcp::v4(), 80);
+  ip::tcp::acceptor(ios, endpoint);
+  for (;;)
+  {
+    ip::tcp::iostream stream;
+    acceptor.accept(*stream.rdbuf());
+    ...
+  }
+
+Note: these iostream templates only support `char`, not `wchar_t`, and do not
+perform any code conversion.
+
+[endsect]

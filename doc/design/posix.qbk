@@ -1,0 +1,17 @@
+[section POSIX]
+
+This proposal defines two levels of conformance:
+
+* Interfaces which all implementations must follow.
+
+* Additional member functions that __POSIX__ implementations must provide.
+
+Implementations on platforms that have a sockets API similar to __POSIX__ (such
+as Microsoft Windows) are encouraged to provide the __POSIX__ member functions.
+
+The rationale is to allow the implementation to be portably extended by the
+user (or implementor) to support additional socket types. For example, UNIX
+domain, infrared or Bluetooth. Applications that do not require this
+extensibility should be portable to all platforms that implement the library.
+
+[endsect]
