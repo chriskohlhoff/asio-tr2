@@ -39,6 +39,8 @@ of an [link requirements.acceptor_service `AcceptorService`].
 
           native_type native(implementation_type& impl);
 
+          error_code cancel(implementation_type& impl, error_code& ec);
+
           template<class SettableSocketOption>
             error_code set_option(implementation_type& impl,
                                   const SettableSocketOption& option,

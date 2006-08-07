@@ -29,7 +29,7 @@ of a [link requirements.resolver_service `ResolverService`].
 
           void destroy(implementation_type& impl);
 
-          void cancel(implementation_type& impl);
+          error_code cancel(implementation_type& impl, error_code& ec);
 
           iterator_type resolve(implementation_type& impl,
                                 const query_type& q, error_code& ec);

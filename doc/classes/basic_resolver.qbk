@@ -21,6 +21,7 @@
 
           // members:
           void cancel();
+          error_code cancel(error_code& ec);
 
           iterator resolve(const query& q);
           iterator resolve(const query& q, error_code& ec);
@@ -51,7 +52,16 @@ ResolverService>`, initialising the base class with
 
   void cancel();
 
-[function_effects Calls `this->service.cancel(this->implementation)`.]
+[function_effects Calls:
+``
+  error_code ec;
+  this->service.cancel(this->implementation, ec);
+  if (ec) throw system_error(ec);
+``]
+
+  error_code cancel(error_code& ec);
+
+[function_returns `this->service.cancel(this->implementation, ec)`.]
 
   iterator resolve(const query& q);
 

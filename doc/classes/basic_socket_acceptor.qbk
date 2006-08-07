@@ -40,6 +40,9 @@
 
           native_type native();
 
+          void cancel();
+          error_code cancel(error_code& ec);
+
           template<class SettableSocketOption>
             void set_option(const SettableSocketOption& option);
           template<class SettableSocketOption>
@@ -197,6 +200,19 @@ native_acceptor, ec)`.]
   native_type native();
 
 [function_returns `this->service.native(this->implementation)`.]
+
+  void cancel();
+
+[function_effects Calls:
+``
+  error_code ec;
+  this->service.cancel(this->implementation, ec);
+  if (ec) throw system_error(ec);
+``]
+
+  error_code cancel(error_code& ec);
+
+[function_returns `this->service.cancel(this->implementation, ec)`.]
 
   template<class SettableSocketOption>
     void set_option(const SettableSocketOption& option);
