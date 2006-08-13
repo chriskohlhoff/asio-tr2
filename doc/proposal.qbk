@@ -1,11 +1,7 @@
-[library C++ TR2 Networking Library Proposal
+[library Networking Library Proposal for TR2
     [quickbook 1.1]
-    [copyright 2006 Christopher M. Kohlhoff]
-    [purpose Networking library]
-    [authors [Kohlhoff, Christopher]]
-    [category template]
-    [category generic]
-    [last-revision $Date: 2006/08/07 15:23:29 $]
+    [id tr2network]
+    [last-revision $Date: 2006/08/13 11:13:55 $]
 ]
 
 [/-----------------------------------------------------------------------------]
@@ -83,6 +79,9 @@
 [/-----------------------------------------------------------------------------]
 
 [section Overview]
+
+This document proposes a networking library for TR2. The library supports
+several levels of use, ranging from entry-level to advanced.
 
 To give some idea of the flavour of the proposed library, consider the
 following sample code. This is part of a server program that echoes characters
@@ -342,6 +341,22 @@ of these classes is required from those defined in N1975.]
 
 [section Proposed Text for the Standard]
 
+This clause describes components that C++ programs may use to perform network
+operations.
+
+The following subclauses describe components for I/O services, timers, buffer
+management, networking, and utility functions, as summarised in the table
+below:
+
+[table Table--Networking library summary
+  [[Subclause][Header(s)]]
+  [[Basic I/O Services][[link tr2network.basic_io_services `<io_service>`]]]
+  [[Timers][[link tr2network.timers `<timer>`]]]
+  [[Buffers][[link tr2network.buffers `<buffer>`]]]
+  [[Networking][[link tr2network.networking `<network>`]]]
+  [[Utilities][[link tr2network.utilities `<?>`]]]
+]
+
 Throughout this clause, the names of the template parameters are used to
 express type requirements, as listed in the table below.
 
@@ -475,7 +490,7 @@ express type requirements, as listed in the table below.
 [include:headers headers/system_error.qbk]
 [endsect]
 
-[section Basic I/O services]
+[section:basic_io_services Basic I/O services]
 [include:headers headers/io_service.qbk]
 [include:requirements requirements/handler.qbk]
 [include:requirements requirements/completion_handler.qbk]
@@ -490,7 +505,7 @@ express type requirements, as listed in the table below.
 [include:classes classes/basic_io_object.qbk]
 [endsect]
 
-[section Timers]
+[section:timers Timers]
 [include:headers headers/timer.qbk]
 [include:requirements requirements/time_traits.qbk]
 [include:classes classes/time_traits.qbk]
@@ -500,7 +515,7 @@ express type requirements, as listed in the table below.
 [include:classes classes/basic_deadline_timer.qbk]
 [endsect]
 
-[section Buffers]
+[section:buffers Buffers]
 [include:headers headers/buffer.qbk]
 [include:classes classes/mutable_buffer.qbk]
 [include:classes classes/const_buffer.qbk]
@@ -512,7 +527,7 @@ express type requirements, as listed in the table below.
 [include:classes classes/const_buffers_1.qbk]
 [endsect]
 
-[section Networking]
+[section:networking Networking]
 [include:headers headers/network.qbk]
 [include:requirements requirements/endpoint.qbk]
 [include:requirements requirements/protocol.qbk]
@@ -572,7 +587,7 @@ express type requirements, as listed in the table below.
 [include:classes classes/ip__multicast__enable_loopback.qbk]
 [endsect]
 
-[section Utilities]
+[section:utilities Utilities]
 [include:headers headers/io_algorithm.qbk]
 [include:requirements requirements/sync_read_stream.qbk]
 [include:requirements requirements/async_read_stream.qbk]
