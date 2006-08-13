@@ -28,7 +28,7 @@ of a [link requirements.timer_service `TimerService`].
 
           void destroy(implementation_type& impl);
 
-          void cancel(implementation_type& impl);
+          size_t cancel(implementation_type& impl);
 
           time_type expires_at(const implementation_type& impl);
           size_t expires_at(implementation_type& impl, const time_type& t);
@@ -72,12 +72,13 @@ the service.]
 Implicitly cancels asynchronous wait operations associated with `impl` as if by
 calling `cancel(impl)`.]
 
-  void cancel(implementation_type& impl);
+  size_t cancel(implementation_type& impl);
 
 [function_effects Causes any outstanding asynchronous wait operations to
 complete as soon as possible. Handlers for cancelled operations shall be passed
-the error code `error::operation_aborted`. Returns the number of operations
-that were cancelled.]
+the error code `error::operation_aborted`.]
+
+[function_returns The number of operations that were cancelled.]
 
   time_type expires_at(const implementation_type& impl);
 
@@ -88,7 +89,9 @@ that were cancelled.]
 
 [function_effects Sets the expiry time associated with the timer implementation
 `impl`. Implicitly cancels asynchronous wait operations, as if by calling
-`cancel(impl)`. Returns the number of operations that were cancelled.]
+`cancel(impl)`.]
+
+[function_returns The number of operations that were cancelled.]
 
 [function_postconditions `expires_at(impl) == t`.]
 
@@ -133,10 +136,10 @@ timer implementation `impl`. When the operation is complete, a copy of the
 handler object `handler` will be posted for execution as if by:\n\n
 
 1. Constructing an object `bch` meeting [link requirements.completion_handler
-`BoundCompletionHandler`] requirements, such that the expression `bch()` calls
-`handler1(ec)`, where `handler1` is a copy of `handler` and `ec` is a value of
-type `const error_code` that indicates whether the wait operation succeeded or
-failed; then\n\n
+`bound completion handler`] requirements, such that the expression `bch()`
+calls `handler1(ec)`, where `handler1` is a copy of `handler` and `ec` is a
+value of type `const error_code` that indicates whether the wait operation
+succeeded or failed; then\n\n
 
 2. Calling `owner().post(bch)`.\n
 

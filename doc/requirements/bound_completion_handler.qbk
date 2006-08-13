@@ -10,7 +10,7 @@ corresponding functions for the user-supplied handler. A bound completion
 handler meets the requirements for a [link requirements.completion_handler
 completion handler].
 
-[std_example A bound completion handler for a ReadHandler:..
+[std_example A bound completion handler for a `ReadHandler`:..
 ``
   template<class ReadHandler>
   struct bound_read_handler
