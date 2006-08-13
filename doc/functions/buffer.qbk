@@ -1,0 +1,210 @@
+[section:buffer Buffer creation functions]
+
+In the functions below, `T` must be a ['POD type].
+
+For the function overloads below that accept an argument of type `vector<>`,
+the buffer objects returned are invalidated by any vector operation that also
+invalidates all references, pointers and iterators referring to the elements in
+the sequence (C++ Std, 23.2.4).
+
+For the function overloads below that accept an argument of type
+`basic_string<>`, the buffer objects returned are invalidated according to the
+rules defined for invalidation of references, pointers and iterators referring
+to elements of the sequence (C++ Std, 21.3).
+
+  mutable_buffers_1 buffer(void* p, size_t s);
+
+[function_returns `mutable_buffers_1(p, s)`.]
+
+  const_buffers_1 buffer(const void* p, size_t s);
+
+[function_returns `const_buffers_1(p, s)`.]
+
+  mutable_buffers_1 buffer(const mutable_buffer& b);
+
+[function_returns `mutable_buffers_1(b)`.]
+
+  mutable_buffers_1 buffer(const mutable_buffer& b, size_t s);
+
+[function_returns A `mutable_buffers_1` value equivalent to:
+``
+  mutable_buffers_1(
+    buffer_cast<void*>(b),
+    min(buffer_size(b), s));
+``]
+
+  const_buffers_1 buffer(const const_buffer& b);
+
+[function_returns `const_buffers_1(b)`.]
+
+  const_buffers_1 buffer(const const_buffer& b, size_t s);
+
+[function_returns A `const_buffers_1` value equivalent to:
+``
+  const_buffers_1(
+    buffer_cast<const void*>(b),
+    min(buffer_size(b), s));
+``]
+
+  template<class T, size_t N>
+    mutable_buffers_1 buffer(T (&arr)[N]);
+
+[function_returns A `mutable_buffers_1` value equivalent to:
+``
+  mutable_buffers_1(
+    static_cast<void*>(arr),
+    N * sizeof(T));
+``]
+
+  template<class T, size_t N>
+    mutable_buffers_1 buffer(T (&arr)[N], size_t s);
+
+[function_returns A `mutable_buffers_1` value equivalent to:
+``
+  mutable_buffers_1(
+    static_cast<void*>(arr),
+    min(N * sizeof(T), s));
+``]
+
+  template<class T, size_t N>
+    const_buffers_1 buffer(const T (&arr)[N]);
+
+[function_returns A `const_buffers_1` value equivalent to:
+``
+  const_buffers_1(
+    static_cast<const void*>(arr),
+    N * sizeof(T));
+``]
+
+  template<class T, size_t N>
+    const_buffers_1 buffer(const T (&arr)[N], size_t s);
+
+[function_returns A `const_buffers_1` value equivalent to:
+``
+  const_buffers_1(
+    static_cast<const void*>(arr),
+    min(N * sizeof(T), s));
+``]
+
+  template<class T, size_t N>
+    mutable_buffers_1 buffer(array<T, N>& arr);
+
+[function_returns A `mutable_buffers_1` value equivalent to:
+``
+  mutable_buffers_1(
+    arr.data(),
+    arr.size() * sizeof(T));
+``]
+
+  template<class T, size_t N>
+    mutable_buffers_1 buffer(array<T, N>& arr, size_t s);
+
+[function_returns A `mutable_buffers_1` value equivalent to:
+``
+  mutable_buffers_1(
+    arr.data(),
+    min(arr.size() * sizeof(T), s));
+``]
+
+  template<class T, size_t N>
+    const_buffers_1 buffer(array<const T, N>& arr);
+
+[function_returns A `const_buffers_1` value equivalent to:
+``
+  const_buffers_1(
+    arr.data(),
+    arr.size() * sizeof(T));
+``]
+
+  template<class T, size_t N>
+    const_buffers_1 buffer(array<const T, N>& arr, size_t s);
+
+[function_returns A `const_buffers_1` value equivalent to:
+``
+  const_buffers_1(
+    arr.data(),
+    min(arr.size() * sizeof(T), s));
+``]
+
+  template<class T, size_t N>
+    const_buffers_1 buffer(const array<T, N>& arr);
+
+[function_returns A `const_buffers_1` value equivalent to:
+``
+  const_buffers_1(
+    arr.data(),
+    arr.size() * sizeof(T));
+``]
+
+  template<class T, size_t N>
+    const_buffers_1 buffer(const array<T, N>& arr, size_t s);
+
+[function_returns A `const_buffers_1` value equivalent to:
+``
+  const_buffers_1(
+    arr.data(),
+    min(arr.size() * sizeof(T), s));
+``]
+
+  template<class T, class Allocator>
+    mutable_buffers_1 buffer(vector<T, Allocator>& vec);
+
+[function_returns A `mutable_buffers_1` value equivalent to:
+``
+  mutable_buffers_1(
+    vec.size() ? &vec[0] : 0,
+    vec.size() * sizeof(T));
+``]
+
+  template<class T, class Allocator>
+    mutable_buffers_1 buffer(vector<T, Allocator>& vec, size_t s);
+
+[function_returns A `mutable_buffers_1` value equivalent to:
+``
+  mutable_buffers_1(
+    vec.size() ? &vec[0] : 0,
+    min(vec.size() * sizeof(T), s));
+``]
+
+  template<class T, class Allocator>
+    const_buffers_1 buffer(const vector<T, Allocator>& vec);
+
+[function_returns A `const_buffers_1` value equivalent to:
+``
+  const_buffers_1(
+    vec.size() ? &vec[0] : 0,
+    vec.size() * sizeof(T));
+``]
+
+  template<class T, class Allocator>
+    const_buffers_1 buffer(const vector<T, Allocator>& vec, size_t s);
+
+[function_returns A `const_buffers_1` value equivalent to:
+``
+  const_buffers_1(
+    vec.size() ? &vec[0] : 0,
+    min(vec.size() * sizeof(T), s));
+``]
+
+  template<class CharT, class Traits, class Allocator>
+    const_buffers_1 buffer(const basic_string<CharT, Traits, Allocator>& str);
+
+[function_returns A `const_buffers_1` value equivalent to:
+``
+  const_buffers_1(
+    str.data()
+    str.size() * sizeof(CharT));
+``]
+
+  template<class CharT, class Traits, class Allocator>
+    const_buffers_1 buffer(const basic_string<CharT, Traits, Allocator>& str,
+                           size_t s);
+
+[function_returns A `const_buffers_1` value equivalent to:
+``
+  const_buffers_1(
+    str.data()
+    min(str.size() * sizeof(CharT), s));
+``]
+
+[endsect]

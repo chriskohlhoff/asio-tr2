@@ -27,10 +27,10 @@ denotes a value of type `X` and `u` denotes an identifier.
          const X& x1, const X& x2)
        {
          return
-           distance(a.begin(), a.end())
-             == distance(u.begin(), u.end())
-               && equal(a.begin(), a.end(),
-                        u.begin(), equal_buffer);
+           distance(x1.begin(), x1.end())
+             == distance(x2.begin(), x2.end())
+               && equal(x1.begin(), x1.end(),
+                        x2.begin(), equal_buffer);
        }
      ``
      and the binary predicate `equal_buffer` is defined as

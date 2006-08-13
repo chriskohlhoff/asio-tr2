@@ -1,7 +1,7 @@
 [library Networking Library Proposal for TR2
     [quickbook 1.1]
     [id tr2network]
-    [last-revision $Date: 2006/08/13 11:13:55 $]
+    [last-revision $Date: 2006/08/13 14:12:53 $]
 ]
 
 [/-----------------------------------------------------------------------------]
@@ -525,6 +525,7 @@ express type requirements, as listed in the table below.
 [include:requirements requirements/const_buffers.qbk]
 [include:classes classes/mutable_buffers_1.qbk]
 [include:classes classes/const_buffers_1.qbk]
+[include:functions functions/buffer.qbk]
 [endsect]
 
 [section:networking Networking]
