@@ -1,7 +1,7 @@
 [library Networking Library Proposal for TR2
     [quickbook 1.1]
     [id tr2network]
-    [last-revision $Date: 2006/08/13 14:12:53 $]
+    [last-revision $Date: 2006/08/17 03:32:47 $]
 ]
 
 [/-----------------------------------------------------------------------------]
@@ -9,6 +9,8 @@
 [template std_note[text]
 \[['Note:] [text] --['end note]\]
 ]
+
+[template inline_note[text] \[['Note:] [text] --['end note]\] ]
 
 [template std_example[text code]
 \[['Example:] [text]
@@ -75,6 +77,7 @@
 [def __sys_socket_h__ [@http://www.opengroup.org/onlinepubs/000095399/basedefs/sys/socket.h.html `sys/socket.h`]]
 [def __netinet_in_h__ [@http://www.opengroup.org/onlinepubs/000095399/basedefs/netinet/in.h.html `netinet/in.h`]]
 [def __netinet_tcp_h__ [@http://www.opengroup.org/onlinepubs/000095399/basedefs/netinet/tcp.h.html `netinet/tcp.h`]]
+[def __dotdotdot__ ...]
 
 [/-----------------------------------------------------------------------------]
 

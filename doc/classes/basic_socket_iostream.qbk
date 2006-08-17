@@ -21,10 +21,64 @@
           void close();
 
           basic_socket_streambuf<Protocol, StreamSocketService>* rdbuf() const;
+
+        private:
+  //      basic_socket_streambuf<Protocol,
+  ``//        StreamSocketService> sb;        ['[*exposition only]]``
         };
 
       } // namespace sys
     } // namespace tr2
   } // namespace std
+
+The class template `basic_socket_iostream<Protocol, StreamSocketService>`
+supports reading and writing from sockets. It uses a
+`basic_socket_streambuf<Protocol, StreamSocketService>` object to control the
+associated sequences. For the sake of exposition, the maintained data is
+presented here as:
+
+- `sb`, the `basic_socket_streambuf` object.
+
+[section [^basic_socket_iostream] constructors]
+
+  basic_socket_iostream();
+
+[function_effects Constructs an object of class
+`basic_socket_iostream<Protocol, StreamSocketService>`, initialising the base
+class with `basic_iostream<char>(&sb)` and initialising `sb` with
+`basic_socket_streambuf<Protocol, StreamSocketService>()`.]
+
+  template <class T1, ..., class TN>
+    explicit basic_socket_iostream(T1 t1, ..., TN tn);
+
+[function_effects Constructs an object of class
+`basic_socket_iostream<Protocol, StreamSocketService>`, initialising the base
+class with `basic_iostream<char>(&sb)` and initialising `sb` with
+`basic_socket_streambuf<Protocol, StreamSocketService>()`. Then calls
+`rdbuf()->connect(t1, __dotdotdot__, tn)`. If that function returns a null
+pointer, calls `setstate(failbit)`.]
+
+[endsect]
+
+[section [^basic_socket_iostream] members]
+
+  template <class T1, ..., class TN>
+    void connect(T1 t1, ..., TN tn);
+
+[function_effects Calls `rdbuf()->connect(t1, __dotdotdot__, tn)`. If that
+function returns a null pointer, calls `setstate(failbit)` (which may throw
+`ios_base::failure`).]
+
+  void close();
+
+[function_effects Calls `rdbuf()->close()`. If that function returns a null
+pointer, calls `setstate(failbit)` (which may throw `ios_base::failure`).]
+
+  basic_socket_streambuf<Protocol, StreamSocketService>* rdbuf() const;
+
+[function_returns `const_cast<basic_socket_streambuf<Protocol,
+StreamSocketService>*>(&sb)`.]
+
+[endsect]
 
 [endsect]
