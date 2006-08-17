@@ -1,7 +1,7 @@
 [library Networking Library Proposal for TR2
     [quickbook 1.1]
     [id tr2network]
-    [last-revision $Date: 2006/08/17 03:32:47 $]
+    [last-revision $Date: 2006/08/17 06:15:23 $]
 ]
 
 [/-----------------------------------------------------------------------------]
@@ -395,13 +395,13 @@ express type requirements, as listed in the table below.
   ]
   [
     [`ConvertibleToConstBuffer`]
-    [[link requirements.convertible_to_const_buffer convertible to
-    `const_buffer`]]
+    [[link requirements.convertible_to_const_buffer convertible to a
+    const buffer]]
   ]
   [
     [`ConvertibleToMutableBuffer`]
-    [[link requirements.convertible_to_mutable_buffer convertible to
-    `mutable_buffer`]]
+    [[link requirements.convertible_to_mutable_buffer convertible to a
+    mutable buffer]]
   ]
   [
     [`DatagramSocketService`]
@@ -488,6 +488,8 @@ express type requirements, as listed in the table below.
     [[link requirements.write_handler write handler]]
   ]
 ]
+
+[include:definitions definitions.qbk]
 
 [section Errors]
 [include:headers headers/system_error.qbk]

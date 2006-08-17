@@ -143,7 +143,13 @@ the table below.]
 
   bytes_type to_bytes() const;
 
+[function_returns A representation of the address in [link
+definitions.network_byte_order network byte order].]
+
   unsigned long to_ulong() const;
+
+[function_returns A representation of the address in [link
+definitions.host_byte_order host byte order].]
 
   string to_string() const;
 
