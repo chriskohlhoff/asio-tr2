@@ -74,7 +74,8 @@ the table below.]
 `[0, 0xFF]`.]
 
 [function_throws `out_of_range` if any element of the array `bytes` is not in
-the range `[0, 0xFF]`.]
+the range `[0, 0xFF]`. [inline_note For implementations where `UCHAR_MAX ==
+0xFF`, no out-of-range detection is needed.]]
 
 [function_postconditions The postconditions of this function are indicated in
 the table below.]
@@ -101,7 +102,9 @@ the table below.]
 
 [function_requires `val` is in the range `[0, 0xFFFFFFFF]`.]
 
-[function_throws `out_of_range` if `val` is not in the range `[0, 0xFFFFFFFF]`.]
+[function_throws `out_of_range` if `val` is not in the range `[0, 0xFFFFFFFF]`.
+[inline_note For implementations where `ULONG_MAX == 0xFFFFFFFF`, no
+out-of-range detection is needed.]]
 
 [function_postconditions The postconditions of this function are indicated in
 the table below.]
@@ -164,14 +167,23 @@ definitions.host_byte_order host byte order].]
 
   string to_string(error_code& ec) const;
 
-[function_block Returns a string representation of the address. The format is
-specified by the __POSIX__ function __inet_ntop__ when invoked with address
-family `AF_INET`.]
+[function_effects Converts an address into a string representation. The format
+is specified by the __POSIX__ function __inet_ntop__ when invoked with address
+family `AF_INET`. On success, sets `ec` such that the expression `!ec` is true.
+On failure, an implementation shall set `ec` to the `error_code` value
+corresponding to the failure condition, as shown in the table below. For
+failure conditions not listed, an implementation is permitted to set `ec` to
+any other value such that the expression `!ec` is false.]
 
-[function_block If conversion to string succeeds, `ec` shall be set to a value
-used to represent not-an-error. If conversion to string fails due to lack of
-support for IP version 4, `ec` shall be set to
-`error::address_family_not_supported`.]
+[function_returns The string representation of the address.]
+
+[table Table--to_string() failure conditions
+  [[failure condition][error code]]
+  [
+    [The implementation does not support IP version 4.]
+    [`error::address_family_not_supported`]
+  ]
+]
 
 [endsect]
 
@@ -179,11 +191,40 @@ support for IP version 4, `ec` shall be set to
 
   static address_v4 from_string(const string& str);
 
-[function_block See inet_pton.]
+[function_effects Calls:
+``
+  error_code ec;
+  address_v4 a = from_string(str, ec);
+  if (ec) throw system_error(ec);
+``]
+
+[function_returns `a`.]
 
   static address_v4 from_string(const string& str, error_code& ec);
 
-[function_block See inet_pton.]
+[function_effects Converts a string representation of an address into a
+corresponding `address_v4` value. The format is specified by the __POSIX__
+function __inet_pton__ when invoked with address family `AF_INET`. On success,
+sets `ec` such that the expression `!ec` is true. On failure, an implementation
+shall set `ec` to the `error_code` value corresponding to the failure
+condition, as shown in the table below. For failure conditions not listed, an
+implementation is permitted to set `ec` to any other value such that the
+expression `!ec` is false.]
+
+[table Table--from_string() failure conditions
+  [[failure condition][error code]]
+  [
+    [The implementation does not support IP version 4.]
+    [`error::address_family_not_supported`]
+  ]
+  [
+    [`str` does not contain a valid string representation of an address.]
+    [`error::invalid_argument`]
+  ]
+]
+
+[function_returns If successful, an `address_v4` value corresponding to the
+string `str`. Otherwise returns `address_v4()`.]
 
   static address_v4 any();
 
@@ -211,6 +252,52 @@ support for IP version 4, `ec` shall be set to
 [endsect]
 
 [section [^ip::address_v4] comparisons]
+
+  bool operator==(const address_v4& a, const address_v4& b);
+
+[function_returns `a.to_ulong() == b.to_ulong()`.]
+
+  bool operator!=(const address_v4& a, const address_v4& b);
+
+[function_returns `a.to_ulong() != b.to_ulong()`.]
+
+  bool operator< (const address_v4& a, const address_v4& b);
+
+[function_returns `a.to_ulong() < b.to_ulong()`.]
+
+  bool operator> (const address_v4& a, const address_v4& b);
+
+[function_returns `a.to_ulong() > b.to_ulong()`.]
+
+  bool operator<=(const address_v4& a, const address_v4& b);
+
+[function_returns `a.to_ulong() <= b.to_ulong()`.]
+
+  bool operator>=(const address_v4& a, const address_v4& b);
+
+[function_returns `a.to_ulong() >= b.to_ulong()`.]
+
+[endsect]
+
+[section [^ip::address_v4] I/O]
+
+  template<class CharT, class Traits>
+    basic_ostream<CharT, Traits>& operator<<(
+      basic_ostream<CharT, Traits>& os, const address_v4& addr);
+
+[function_effects Outputs the string representation of the address to the
+stream, as if by calling:
+``
+  error_code ec;
+  string s = addr.to_string(ec);
+  if (ec)
+    os.setstate(ios_base::failbit);
+  else
+    for (string::iterator i = s.begin(); i != s.end(); ++i)
+      os << os.widen(*i);
+``]
+
+[function_returns `os`.]
 
 [endsect]
 
