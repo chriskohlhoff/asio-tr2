@@ -63,7 +63,7 @@
 the table below.]
 
 [table Table--address_v4::address_v4() effects
-  [[Expression][Value]]
+  [[expression][value]]
   [[`to_bytes()`][`{0, 0, 0, 0}`]]
   [[`to_ulong()`][0]]
 ]
@@ -81,7 +81,7 @@ the range `[0, 0xFF]`. [inline_note For implementations where `UCHAR_MAX ==
 the table below.]
 
 [table Table--address_v4::address_v4(const bytes_type&) effects
-  [[Expression][Value]]
+  [[expression][value]]
   [
     [`to_bytes()`]
     [``
@@ -110,7 +110,7 @@ out-of-range detection is needed.]]
 the table below.]
 
 [table Table--address_v4::address_v4(unsigned long) effects
-  [[Expression][Value]]
+  [[expression][value]]
   [
     [`to_bytes()`]
     [``
@@ -286,12 +286,12 @@ string `str`. Otherwise returns `address_v4()`.]
       basic_ostream<CharT, Traits>& os, const address_v4& addr);
 
 [function_effects Outputs the string representation of the address to the
-stream, as if by calling:
+stream, as if it were implemented as follows:
 ``
   error_code ec;
   string s = addr.to_string(ec);
   if (ec)
-    os.setstate(ios_base::failbit);
+    os.setstate(ios_base::failbit); // may throw ios::failure
   else
     for (string::iterator i = s.begin(); i != s.end(); ++i)
       os << os.widen(*i);
