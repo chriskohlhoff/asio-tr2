@@ -63,4 +63,198 @@
     } // namespace tr2
   } // namespace std
 
+[section [^ip::address_v6] constructors]
+
+  address_v6();
+
+[function_effects Constructs an object of class `address_v6`.]
+
+[function_postconditions The postconditions of this function are indicated in
+the table below.]
+
+[table Table--address_v4::address_v4() effects
+  [[expression][value]]
+  [
+    [`to_bytes()`]
+    [``
+       {0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0}
+     ``]
+  ]
+  [[`scope_id()`][`0`]]
+]
+
+  explicit address_v6(const bytes_type& bytes,
+    unsigned long scope_id = 0);
+
+[function_effects Constructs an object of class `address_v6`.]
+
+[function_postconditions The postconditions of this function are indicated in
+the table below.]
+
+[table Table--address_v4::address_v4() effects
+  [[expression][value]]
+  [[`to_bytes()`][`bytes`]]
+  [[`scope_id()`][`scope_id`]]
+]
+
+[endsect]
+
+[section [^ip::address_v6] members]
+
+  void scope_id(unsigned long id);
+
+[function_postconditions `scope_id() == id`.]
+
+  unsigned long scope_id() const;
+
+[function_returns The scope identifier associated with the address.]
+
+  bool is_unspecified() const;
+
+  bool is_loopback() const;
+
+  bool is_multicast() const;
+
+  bool is_link_local() const;
+
+  bool is_site_local() const;
+
+  bool is_v4_mapped() const;
+
+  bool is_v4_compatible() const;
+
+  bool is_multicast_node_local() const;
+
+  bool is_multicast_link_local() const;
+
+  bool is_multicast_site_local() const;
+
+  bool is_multicast_org_local() const;
+
+  bool is_multicast_global() const;
+
+  bytes_type to_bytes() const;
+
+[function_returns A representation of the address in [link
+definitions.network_byte_order network byte order].]
+
+  string to_string() const;
+
+[function_effects Calls:
+``
+  error_code ec;
+  string s = to_string(ec);
+  if (ec) throw system_error(ec);
+``]
+
+[function_returns `s`.]
+
+  string to_string(error_code& ec) const;
+
+[function_effects Converts an address into a string representation. If
+`scope_id() == 0`, the format is specified by the __POSIX__ function
+__inet_ntop__ when invoked with address family `AF_INET6`. If `scope_id() !=
+0`, the format is ['`address`]`%`['`scope-id`], where ['`address`] is the
+string representation of the equivalent address having `scope_id() == 0`, and
+['`scope-id`] is an implementation-defined string representation of the scope
+identifier. On success, sets `ec` such that the expression `!ec` is true. On
+failure, an implementation shall set `ec` to the `error_code` value
+corresponding to the failure condition, as shown in the table below. For
+failure conditions not listed, an implementation is permitted to set `ec` to
+any other value such that the expression `!ec` is false.]
+
+[table Table--to_string() failure conditions
+  [[failure condition][error code]]
+  [
+    [The implementation does not support IP version 6.]
+    [`error::address_family_not_supported`]
+  ]
+]
+
+[function_returns The string representation of the address.]
+
+  address_v4 to_v4() const;
+
+[endsect]
+
+[section [^ip::address_v6] static members]
+
+  static address_v6 from_string(const string& str);
+
+[function_effects Calls:
+``
+  error_code ec;
+  address_v6 a = from_string(str, ec);
+  if (ec) throw system_error(ec);
+``]
+
+[function_returns `a`.]
+
+  static address_v6 from_string(const string& str, error_code& ec);
+
+  static address_v6 any();
+
+[function_returns `address_v6()`.]
+
+  static address_v6 loopback();
+
+  static address_v6 v4_mapped(const address_v4& addr);
+
+  static address_v6 v4_compatible(const address_v4& addr);
+
+[endsect]
+
+[section [^ip::address_v6] comparisons]
+
+  bool operator==(const address_v6& a, const address_v6& b);
+
+[function_returns `a.to_bytes() == b.to_bytes() && a.scope_id() ==
+b.scope_id()`.]
+
+  bool operator!=(const address_v6& a, const address_v6& b);
+
+[function_returns `!(a == b)`.]
+
+  bool operator< (const address_v6& a, const address_v6& b);
+
+[function_returns `a.to_bytes() < b.to_bytes() || (!(b.to_bytes() <
+a.to_bytes()) && a.scope_id() < b.scope_id())`.]
+
+  bool operator> (const address_v6& a, const address_v6& b);
+
+[function_returns `b < a`.]
+
+  bool operator<=(const address_v6& a, const address_v6& b);
+
+[function_returns `!(b < a)`.]
+
+  bool operator>=(const address_v6& a, const address_v6& b);
+
+[function_returns `!(a < b)`.]
+
+[endsect]
+
+[section [^ip::address_v6] I/O]
+
+  template<class CharT, class Traits>
+    basic_ostream<CharT, Traits>& operator<<(
+      basic_ostream<CharT, Traits>& os, const address_v6& addr);
+
+[function_effects Outputs the string representation of the address to the
+stream, as if it were implemented as follows:
+``
+  error_code ec;
+  string s = addr.to_string(ec);
+  if (ec)
+    os.setstate(ios_base::failbit); // may throw ios::failure
+  else
+    for (string::iterator i = s.begin(); i != s.end(); ++i)
+      os << os.widen(*i);
+``]
+
+[function_returns `os`.]
+
+[endsect]
+
 [endsect]
