@@ -59,16 +59,20 @@
 
   address_v4();
 
+[function_effects Constructs an object of class `address_v4`.]
+
 [function_postconditions The postconditions of this function are indicated in
 the table below.]
 
 [table Table--address_v4::address_v4() effects
   [[expression][value]]
   [[`to_bytes()`][`{0, 0, 0, 0}`]]
-  [[`to_ulong()`][0]]
+  [[`to_ulong()`][`0`]]
 ]
 
   address_v4(const bytes_type& bytes);
+
+[function_effects Constructs an object of class `address_v4`.]
 
 [function_requires Each element of the array `bytes` is in the range
 `[0, 0xFF]`.]
@@ -99,6 +103,8 @@ the table below.]
 ]
 
   address_v4(unsigned long val);
+
+[function_effects Constructs an object of class `address_v4`.]
 
 [function_requires `val` is in the range `[0, 0xFFFFFFFF]`.]
 
@@ -175,8 +181,6 @@ corresponding to the failure condition, as shown in the table below. For
 failure conditions not listed, an implementation is permitted to set `ec` to
 any other value such that the expression `!ec` is false.]
 
-[function_returns The string representation of the address.]
-
 [table Table--to_string() failure conditions
   [[failure condition][error code]]
   [
@@ -184,6 +188,8 @@ any other value such that the expression `!ec` is false.]
     [`error::address_family_not_supported`]
   ]
 ]
+
+[function_returns The string representation of the address.]
 
 [endsect]
 
