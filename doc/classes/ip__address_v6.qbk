@@ -79,7 +79,7 @@ Protocol Version 6 (IPv6) Addressing Architecture].]
 [function_postconditions The postconditions of this function are indicated in
 the table below.]
 
-[table Table--address_v4::address_v4() effects
+[table Table--address_v6::address_v6() effects
   [[expression][value]]
   [[`is_unspecified()`][`true`]]
   [[`scope_id()`][`0`]]
@@ -93,7 +93,7 @@ the table below.]
 [function_postconditions The postconditions of this function are indicated in
 the table below.]
 
-[table Table--address_v4::address_v4() effects
+[table Table--address_v6::address_v6() effects
   [[expression][value]]
   [[`to_bytes()`][`bytes`]]
   [[`scope_id()`][`scope_id`]]

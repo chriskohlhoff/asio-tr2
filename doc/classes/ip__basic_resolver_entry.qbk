@@ -30,4 +30,78 @@
     } // namespace tr2
   } // namespace std
 
+[section [^ip::basic_resolver_entry] constructors]
+
+  basic_resolver_entry();
+
+[function_effects Constructs an object of class
+`basic_resolver_entry<InternetProtocol>`.]
+
+[function_postconditions The postconditions of this function are indicated in
+the table below.]
+
+[table Table--basic_resolver_entry<InternetProtocol>::basic_resolver_entry() effects
+  [[expression][value]]
+  [
+    [`endpoint()`]
+    [`basic_endpoint<InternetProtocol>()`]
+  ]
+  [
+    [`host_name()`]
+    [`string()`]
+  ]
+  [
+    [`service_name()`]
+    [`string()`]
+  ]
+]
+
+  basic_resolver_entry(const endpoint_type& ep, const string& h,
+                       const string& s);
+
+[function_effects Constructs an object of class
+`basic_resolver_entry<InternetProtocol>` with the specified endpoint, host name
+and service name.]
+
+[function_postconditions The postconditions of this function are indicated in
+the table below.]
+
+[table Table--basic_resolver_entry<InternetProtocol>::basic_resolver_entry() effects
+  [[expression][value]]
+  [
+    [`endpoint()`]
+    [`ep`]
+  ]
+  [
+    [`host_name()`]
+    [`h`]
+  ]
+  [
+    [`service_name()`]
+    [`s`]
+  ]
+]
+
+[endsect]
+
+[section [^ip::basic_resolver_entry] members]
+
+  endpoint_type endpoint() const;
+
+[function_returns The endpoint associated with the resolver entry.]
+
+  operator endpoint_type() const;
+
+[function_returns `endpoint()`.]
+
+  string host_name() const;
+
+[function_returns The host name associated with the resolver entry.]
+
+  string service_name() const;
+
+[function_returns The service name associated with the resolver entry.]
+
+[endsect]
+
 [endsect]
