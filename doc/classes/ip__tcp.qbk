@@ -1,5 +1,8 @@
 [section:ip__tcp Class [^ip::tcp]]
 
+The `tcp` class meets the requirements for an [link
+requirements.internet_protocol `InternetProtocol`].
+
   namespace std {
     namespace tr2 {
       namespace sys {
@@ -25,6 +28,14 @@
           private:
             tcp(); // not defined
           };
+
+          // tcp comparisons:
+          bool operator==(const tcp& a, const tcp& b);
+          bool operator!=(const tcp& a, const tcp& b);
+          bool operator< (const tcp& a, const tcp& b);
+          bool operator> (const tcp& a, const tcp& b);
+          bool operator<=(const tcp& a, const tcp& b);
+          bool operator>=(const tcp& a, const tcp& b);
 
         } // namespace ip
       } // namespace sys
@@ -84,5 +95,38 @@ file __netinet_in_h__.
     [`IPPROTO_TCP`]
   ]
 ]
+
+[section [^ip::tcp] comparisons]
+
+  bool operator==(const tcp& a, const tcp& b);
+
+[function_returns A boolean indicating whether two objects of class `tcp` are
+equal, such that the expression `tcp::v4() == tcp::v4()` is true, the
+expression `tcp::v6() == tcp::v6()` is true, and the expression `tcp::v4() ==
+tcp::v6()` is false.]
+
+  bool operator!=(const tcp& a, const tcp& b);
+
+[function_returns `!(a == b)`.]
+
+  bool operator< (const tcp& a, const tcp& b);
+
+[function_returns A boolean indicating whether an object `a` of class `tcp` is
+less than an object `b` of class `tcp`, such that the expression `tcp::v4() <
+tcp::v6()` is true.]
+
+  bool operator> (const tcp& a, const tcp& b);
+
+[function_returns `b < a`.]
+
+  bool operator<=(const tcp& a, const tcp& b);
+  
+[function_returns `!(b < a)`.]
+
+  bool operator>=(const tcp& a, const tcp& b);
+
+[function_returns `!(a < b)`.]
+
+[endsect]
 
 [endsect]

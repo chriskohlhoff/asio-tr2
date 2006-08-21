@@ -1,7 +1,7 @@
 [library Networking Library Proposal for TR2
     [quickbook 1.1]
     [id tr2network]
-    [last-revision $Date: 2006/08/17 06:15:23 $]
+    [last-revision $Date: 2006/08/21 03:30:11 $]
 ]
 
 [/-----------------------------------------------------------------------------]
@@ -416,6 +416,10 @@ express type requirements, as listed in the table below.
     [[link requirements.handler handler]]
   ]
   [
+    [`InternetProtocol`]
+    [[link requirements.internet_protocol Internet protocol]]
+  ]
+  [
     [`IoControlCommand`]
     [[link requirements.io_control_command I/O control command]]
   ]
@@ -538,6 +542,7 @@ express type requirements, as listed in the table below.
 [include:requirements requirements/endpoint.qbk]
 [include:requirements requirements/protocol.qbk]
 [include:requirements requirements/resolver_protocol.qbk]
+[include:requirements requirements/internet_protocol.qbk]
 [include:requirements requirements/socket_service.qbk]
 [include:requirements requirements/stream_socket_service.qbk]
 [include:requirements requirements/datagram_socket_service.qbk]

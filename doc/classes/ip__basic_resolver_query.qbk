@@ -5,25 +5,25 @@
       namespace sys {
         namespace ip {
 
-          template<class ResolverProtocol>
+          template<class InternetProtocol>
           class basic_resolver_query :
             public resolver_query_base
           {
           public:
             // types:
-            typedef ResolverProtocol protocol_type;
+            typedef InternetProtocol protocol_type;
 
             // constructors:
             basic_resolver_query();
             basic_resolver_query(const string& service_name,
                                  flags f = passive | address_configured);
-            basic_resolver_query(const Protocol& proto,
+            basic_resolver_query(const InternetProtocol& proto,
                                  const string& service_name,
                                  flags f = passive | address_configured);
             basic_resolver_query(const string& host_name, 
                                  const string& service_name,
                                  flags f = address_configured);
-            basic_resolver_query(const Protocol& proto,
+            basic_resolver_query(const InternetProtocol& proto,
                                  const string& host_name, 
                                  const string& service_name,
                                  flags f = address_configured);
@@ -41,7 +41,7 @@ __POSIX__ implementations must provide the following member functions:
       namespace sys {
         namespace ip {
 
-          template<class ResolverProtocol>
+          template<class InternetProtocol>
           class basic_resolver_query :
             public resolver_query_base
           {

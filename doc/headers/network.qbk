@@ -88,40 +88,45 @@
             basic_ostream<CharT, Traits>& operator<<(
               basic_ostream<CharT, Traits>&, const address_v6&);
 
-          template<class Protocol> class ``[link classes.ip__basic_endpoint basic_endpoint]``;
+          template<class InternetProtocol>
+            class ``[link classes.ip__basic_endpoint basic_endpoint]``;
 
           // basic_endpoint comparisons:
-          template<class Protocol>
-            bool operator==(const basic_endpoint<Protocol>&,
-                            const basic_endpoint<Protocol>&);
-          template<class Protocol>
-            bool operator!=(const basic_endpoint<Protocol>&,
-                            const basic_endpoint<Protocol>&);
-          template<class Protocol>
-            bool operator< (const basic_endpoint<Protocol>&,
-                            const basic_endpoint<Protocol>&);
-          template<class Protocol>
-            bool operator> (const basic_endpoint<Protocol>&,
-                            const basic_endpoint<Protocol>&);
-          template<class Protocol>
-            bool operator<=(const basic_endpoint<Protocol>&,
-                            const basic_endpoint<Protocol>&);
-          template<class Protocol>
-            bool operator>=(const basic_endpoint<Protocol>&,
-                            const basic_endpoint<Protocol>&);
+          template<class InternetProtocol>
+            bool operator==(const basic_endpoint<InternetProtocol>&,
+                            const basic_endpoint<InternetProtocol>&);
+          template<class InternetProtocol>
+            bool operator!=(const basic_endpoint<InternetProtocol>&,
+                            const basic_endpoint<InternetProtocol>&);
+          template<class InternetProtocol>
+            bool operator< (const basic_endpoint<InternetProtocol>&,
+                            const basic_endpoint<InternetProtocol>&);
+          template<class InternetProtocol>
+            bool operator> (const basic_endpoint<InternetProtocol>&,
+                            const basic_endpoint<InternetProtocol>&);
+          template<class InternetProtocol>
+            bool operator<=(const basic_endpoint<InternetProtocol>&,
+                            const basic_endpoint<InternetProtocol>&);
+          template<class InternetProtocol>
+            bool operator>=(const basic_endpoint<InternetProtocol>&,
+                            const basic_endpoint<InternetProtocol>&);
 
           // basic_endpoint I/O:
-          template<class CharT, class Traits, class Protocol>
+          template<class CharT, class Traits, class InternetProtocol>
             basic_ostream<CharT, Traits>& operator<<(
-              basic_ostream<CharT, Traits>&, const basic_endpoint<Protocol>&);
+              basic_ostream<CharT, Traits>&,
+              const basic_endpoint<InternetProtocol>&);
 
           class ``[link classes.ip__resolver_query_base resolver_query_base]``;
 
-          template<class Protocol> ``[link classes.ip__basic_resolver_query basic_resolver_query]``;
+          template<class InternetProtocol>
+            ``[link classes.ip__basic_resolver_query basic_resolver_query]``;
 
-          template<class Protocol> ``[link classes.ip__basic_resolver_entry basic_resolver_entry]``;
+          template<class InternetProtocol>
+            ``[link classes.ip__basic_resolver_entry basic_resolver_entry]``;
 
-          template<class Protocol> ``[link classes.ip__basic_resolver_iterator basic_resolver_iterator]``;
+          template<class InternetProtocol>
+            ``[link classes.ip__basic_resolver_iterator basic_resolver_iterator]``;
 
           string host_name();
           string host_name(error_code&);

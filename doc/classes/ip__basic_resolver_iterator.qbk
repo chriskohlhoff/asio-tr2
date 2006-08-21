@@ -5,15 +5,15 @@
       namespace sys {
         namespace ip {
 
-          template<class ResolverProtocol>
+          template<class InternetProtocol>
           class basic_resolver_iterator :
             public iterator<forward_iterator_tag,
-              basic_resolver_entry<ResolverProtocol> >
+              basic_resolver_entry<InternetProtocol> >
           {
           public:
             // types:
-            typedef ResolverProtocol protocol_type;
-            typedef typename ResolverProtocol::endpoint endpoint_type;
+            typedef InternetProtocol protocol_type;
+            typedef typename InternetProtocol::endpoint endpoint_type;
 
             // constructors:
             basic_resolver_iterator();
@@ -34,10 +34,10 @@ __POSIX__ implementations must provide the following member functions:
       namespace sys {
         namespace ip {
 
-          template<class ResolverProtocol>
+          template<class InternetProtocol>
           class basic_resolver_iterator :
             public iterator<forward_iterator_tag,
-              basic_resolver_entry<ResolverProtocol> >
+              basic_resolver_entry<InternetProtocol> >
           {
           public:
             basic_resolver_iterator(addrinfo* ai, const string& h,

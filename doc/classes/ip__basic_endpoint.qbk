@@ -1,24 +1,29 @@
 [section:ip__basic_endpoint Class template [^ip::basic_endpoint]]
 
+Instances of the `basic_endpoint` class template meet the requirements
+for an [link requirements.endpoint `Endpoint`].
+
   namespace std {
     namespace tr2 {
       namespace sys {
         namespace ip {
 
-          template<class Protocol>
+          template<class InternetProtocol>
           class basic_endpoint
           {
           public:
             // types:
-            typedef Protocol protocol_type;
+            typedef InternetProtocol protocol_type;
 
             // constructors:
             basic_endpoint();
-            basic_endpoint(const Protocol& proto, unsigned short port_num);
-            basic_endpoint(const ip::address& addr, unsigned short port_num);
+            basic_endpoint(const InternetProtocol& proto,
+                           unsigned short port_num);
+            basic_endpoint(const ip::address& addr,
+                           unsigned short port_num);
 
             // members:
-            Protocol protocol() const;
+            InternetProtocol protocol() const;
             ip::address address() const;
             void address(const ip::address& addr);
             unsigned short port() const;
@@ -26,30 +31,30 @@
           };
 
           // basic_endpoint comparisons:
-          template<class Protocol>
-            bool operator==(const basic_endpoint<Protocol>& a,
-                            const basic_endpoint<Protocol>& b);
-          template<class Protocol>
-            bool operator!=(const basic_endpoint<Protocol>& a,
-                            const basic_endpoint<Protocol>& b);
-          template<class Protocol>
-            bool operator< (const basic_endpoint<Protocol>& a,
-                            const basic_endpoint<Protocol>& b);
-          template<class Protocol>
-            bool operator> (const basic_endpoint<Protocol>& a,
-                            const basic_endpoint<Protocol>& b);
-          template<class Protocol>
-            bool operator<=(const basic_endpoint<Protocol>& a,
-                            const basic_endpoint<Protocol>& b);
-          template<class Protocol>
-            bool operator>=(const basic_endpoint<Protocol>& a,
-                            const basic_endpoint<Protocol>& b);
+          template<class InternetProtocol>
+            bool operator==(const basic_endpoint<InternetProtocol>& a,
+                            const basic_endpoint<InternetProtocol>& b);
+          template<class InternetProtocol>
+            bool operator!=(const basic_endpoint<InternetProtocol>& a,
+                            const basic_endpoint<InternetProtocol>& b);
+          template<class InternetProtocol>
+            bool operator< (const basic_endpoint<InternetProtocol>& a,
+                            const basic_endpoint<InternetProtocol>& b);
+          template<class InternetProtocol>
+            bool operator> (const basic_endpoint<InternetProtocol>& a,
+                            const basic_endpoint<InternetProtocol>& b);
+          template<class InternetProtocol>
+            bool operator<=(const basic_endpoint<InternetProtocol>& a,
+                            const basic_endpoint<InternetProtocol>& b);
+          template<class InternetProtocol>
+            bool operator>=(const basic_endpoint<InternetProtocol>& a,
+                            const basic_endpoint<InternetProtocol>& b);
 
           // basic_endpoint I/O:
-          template<class CharT, class Traits, class Protocol>
+          template<class CharT, class Traits, class InternetProtocol>
             basic_ostream<CharT, Traits>& operator<<(
               basic_ostream<CharT, Traits>& os,
-              const basic_endpoint<Protocol>& ep);
+              const basic_endpoint<InternetProtocol>& ep);
 
         } // namespace ip
       } // namespace sys
@@ -63,21 +68,216 @@ __POSIX__ implementations must provide the following member functions:
       namespace sys {
         namespace ip {
 
-          template<class Protocol>
+          template<class InternetProtocol>
           class basic_endpoint
           {
           public:
-            sockaddr* data();
-            const sockaddr* data() const;
+            ``['unspecified]``* data();
+            const ``['unspecified]``* data() const;
             size_t size() const;
             void resize(size_t size);
             size_t capacity() const;
             ``['[*// remainder unchanged]]``
+          private:
+  ``//        sockaddr\_storage data\_;  ['[*exposition only]]``
           };
 
         } // namespace ip
       } // namespace sys
     } // namespace tr2
   } // namespace std
+
+[section [^ip::basic_endpoint] constructors]
+
+  basic_endpoint();
+
+[function_effects Constructs an object of class
+`basic_endpoint<InternetProtocol>`.]
+
+[function_postconditions The postconditions of this function are indicated in
+the table below.]
+
+[table Table--address::address() effects
+  [[expression][value]]
+  [
+    [`address()`]
+    [`ip::address(ip::address_v4())`]
+  ]
+  [
+    [`port()`]
+    [`0`]
+  ]
+]
+
+  basic_endpoint(const InternetProtocol& proto,
+                 unsigned short port_num);
+
+[function_effects Constructs an object of class
+`basic_endpoint<InternetProtocol>` with the specified protocol and port
+number.]
+
+[function_postconditions The postconditions of this function are indicated in
+the table below.]
+
+[table Table--address::address() effects
+  [[expression][value]]
+  [
+    [`address()`]
+
+    [`ip::address(ip::address_v6())` if `proto == Protocol::v6()`, otherwise
+    `ip::address(ip::address_v4())`]
+  ]
+  [
+    [`port()`]
+    [`port_num`]
+  ]
+]
+
+  basic_endpoint(const ip::address& addr,
+                 unsigned short port_num);
+
+[function_effects Constructs an object of class
+`basic_endpoint<InternetProtocol>` with the specified address and port number.]
+
+[function_postconditions The postconditions of this function are indicated in
+the table below.]
+
+[table Table--address::address() effects
+  [[expression][value]]
+  [
+    [`address()`]
+    [`addr`]
+  ]
+  [
+    [`port()`]
+    [`port_num`]
+  ]
+]
+
+[endsect]
+
+[section [^ip::basic_endpoint] members]
+
+  InternetProtocol protocol() const;
+
+[function_returns `Protocol::v6()` if the expression `address().is_v6()` is
+true, otherwise `Protocol::v4()`.]
+
+  ip::address address() const;
+
+[function_returns The address associated with the endpoint.]
+
+  void address(const ip::address& addr);
+
+[function_effects Modifies the address associated with the endpoint.]
+
+[function_postconditions `address() == addr`.]
+
+  unsigned short port() const;
+
+[function_returns The port number associated with the endpoint.]
+
+  void port(unsigned short port_num);
+
+[function_effects Modifies the port number associated with the endpoint.]
+
+[function_postconditions `port() == port_num`.]
+
+[endsect]
+
+[section [^ip::basic_endpoint] comparisons]
+
+  template<class InternetProtocol>
+    bool operator==(const basic_endpoint<InternetProtocol>& a,
+                    const basic_endpoint<InternetProtocol>& b);
+
+[function_returns `a.address() == b.address() && a.port() == b.port())`.]
+
+  template<class InternetProtocol>
+    bool operator!=(const basic_endpoint<InternetProtocol>& a,
+                    const basic_endpoint<InternetProtocol>& b);
+
+[function_returns `!(a == b)`.]
+
+  template<class InternetProtocol>
+    bool operator< (const basic_endpoint<InternetProtocol>& a,
+                    const basic_endpoint<InternetProtocol>& b);
+
+[function_returns `a.address() < b.address() || (!(b.address() < a.address())
+&& a.port() < b.port())`.]
+
+  template<class InternetProtocol>
+    bool operator> (const basic_endpoint<InternetProtocol>& a,
+                    const basic_endpoint<InternetProtocol>& b);
+
+[function_returns `b < a`.]
+
+  template<class InternetProtocol>
+    bool operator<=(const basic_endpoint<InternetProtocol>& a,
+                    const basic_endpoint<InternetProtocol>& b);
+
+[function_returns `!(b < a)`.]
+
+  template<class InternetProtocol>
+    bool operator>=(const basic_endpoint<InternetProtocol>& a,
+                    const basic_endpoint<InternetProtocol>& b);
+
+[function_returns `!(a < b)`.]
+
+[endsect]
+
+[section [^ip::basic_endpoint] I/O]
+
+  template<class CharT, class Traits, class InternetProtocol>
+    basic_ostream<CharT, Traits>& operator<<(
+      basic_ostream<CharT, Traits>& os,
+      const basic_endpoint<InternetProtocol>& ep);
+
+[function_effects Outputs a representation of the endpoint to the stream, as if
+it were implemented as follows:
+``
+  basic_ostringstream<CharT, Traits> ss;
+  if (ep.protocol() == Protocol::v6())
+    ss << ss.widen('[') << ss.address() << ss.widen(']');
+  else
+    ss << ep.address();
+  ss << ss.widen(':') << ep.port();
+  os << ss.str();
+``]
+
+[function_returns `os`.]
+
+[std_note The representation of the endpoint when it contains an IP version 6
+address is based on [@http://www.ietf.org/rfc/rfc2732.txt RFC 2732: Format for
+Literal IPv6 Addresses in URL's].]
+
+[endsect]
+
+[section [^ip::basic_endpoint] POSIX members]
+
+  ``['unspecified]``* data();
+
+[function_returns `&data_`.]
+
+  const ``['unspecified]``* data() const;
+
+[function_returns `&data_`.]
+
+  size_t size() const;
+
+[function_returns `sizeof(sockaddr_in6)` if `protocol().family() == AF_INET`,
+otherwise `sizeof(sockaddr_in)`.]
+
+  void resize(size_t size);
+
+[function_throws `length_error` if the condition
+`protocol().family() == AF_INET6 && s != sizeof(sockaddr_in6)` `||`
+`protocol().family() != AF_INET6 && s != sizeof(sockaddr_in)` is true.]
+
+  size_t capacity() const;
+
+[function_returns `sizeof(data_)`.]
+
+[endsect]
 
 [endsect]
