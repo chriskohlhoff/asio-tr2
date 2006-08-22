@@ -162,10 +162,11 @@ sequence and output sequence.]
 
   const_buffers_type data() const;
 
-[function_returns An object of type `const_buffers_type` that satisfies
-`ConstBuffers` requirements, representing all character array objects in the
-input sequence. The returned object is invalidated by any `fifobuf` member
-function that modifies the input sequence or output sequence.]
+[function_returns An object of type `const_buffers_type` that satisfies [link
+requirements.const_buffers `ConstBuffers`] requirements, representing all
+character array objects in the input sequence. The returned object is
+invalidated by any `fifobuf` member function that modifies the input sequence
+or output sequence.]
 
   mutable_buffers_type prepare(size_t n);
 
@@ -174,11 +175,11 @@ function that modifies the input sequence or output sequence.]
 [function_effects Ensures that the output sequence can accommodate `n`
 characters, reallocating character array objects as necessary.]
 
-[function_returns An object of type `mutable_buffers_type` that satisfies
-`MutableBuffers` requirements, representing character array objects at the
-start of the output sequence such that the sum of the buffer sizes is `n`. The
-returned object is invalidated by any `fifobuf` member function that modifies
-the input sequence or output sequence.]
+[function_returns An object of type `mutable_buffers_type` that satisfies [link
+requirements.mutable_buffers `MutableBuffers`] requirements, representing
+character array objects at the start of the output sequence such that the sum
+of the buffer sizes is `n`. The returned object is invalidated by any `fifobuf`
+member function that modifies the input sequence or output sequence.]
 
 [function_throws `length_error` if `size() + n > max_size()`.]
 

@@ -68,7 +68,7 @@
                                  size_t);
 
         template<class Allocator = std::allocator<char> >
-          class basic_fifobuf;
+          class ``[link classes.basic_fifobuf basic_fifobuf]``;
 
         typedef basic_fifobuf<> fifobuf;
 
