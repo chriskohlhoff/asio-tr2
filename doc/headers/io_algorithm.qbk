@@ -14,17 +14,18 @@
         typedef basic_fifobuf<> fifobuf;
 
         // synchronous read operations:
-        template<class SyncReadStream, class MutableBuffers>
-          size_t read(SyncReadStream& stream, const MutableBuffers& buffers);
-        template<class SyncReadStream, class MutableBuffers,
+        template<class SyncReadStream, class MutableBufferSequence>
+          size_t read(SyncReadStream& stream,
+                      const MutableBufferSequence& buffers);
+        template<class SyncReadStream, class MutableBufferSequence,
           class CompletionCondition>
             size_t read(SyncReadStream& stream,
-                        const MutableBuffers& buffers,
+                        const MutableBufferSequence& buffers,
                         CompletionCondition completion_condition);
-        template<class SyncReadStream, class MutableBuffers,
+        template<class SyncReadStream, class MutableBufferSequence,
           class CompletionCondition>
             size_t read(SyncReadStream& stream,
-                        const MutableBuffers& buffers,
+                        const MutableBufferSequence& buffers,
                         CompletionCondition completion_condition,
                         error_code& ec);
         template<class SyncReadStream, class Allocator>
@@ -40,13 +41,15 @@
                         error_code& ec);
 
         // asynchronous read operations:
-        template<class AsyncReadStream, class MutableBuffers, class ReadHandler>
-          size_t async_read(AsyncReadStream& stream,
-                            const MutableBuffers& buffers, ReadHandler handler);
-        template<class AsyncReadStream, class MutableBuffers,
+        template<class AsyncReadStream, class MutableBufferSequence,
+          class ReadHandler>
+            size_t async_read(AsyncReadStream& stream,
+                              const MutableBufferSequence& buffers,
+                              ReadHandler handler);
+        template<class AsyncReadStream, class MutableBufferSequence,
           class CompletionCondition, class ReadHandler>
             size_t async_read(AsyncReadStream& stream,
-                              const MutableBuffers& buffers,
+                              const MutableBufferSequence& buffers,
                               CompletionCondition completion_condition,
                               ReadHandler handler);
         template<class AsyncReadStream, class Allocator, class ReadHandler>
@@ -61,17 +64,18 @@
                               ReadHandler handler);
 
         // synchronous write operations:
-        template<class SyncWriteStream, class ConstBuffers>
-          size_t write(SyncWriteStream& stream, const ConstBuffers& buffers);
-        template<class SyncWriteStream, class ConstBuffers,
+        template<class SyncWriteStream, class ConstBufferSequence>
+          size_t write(SyncWriteStream& stream,
+                       const ConstBufferSequence& buffers);
+        template<class SyncWriteStream, class ConstBufferSequence,
           class CompletionCondition>
             size_t write(SyncWriteStream& stream,
-                         const ConstBuffers& buffers,
+                         const ConstBufferSequence& buffers,
                          CompletionCondition completion_condition);
-        template<class SyncWriteStream, class ConstBuffers,
+        template<class SyncWriteStream, class ConstBufferSequence,
           class CompletionCondition>
             size_t write(SyncWriteStream& stream,
-                         const ConstBuffers& buffers,
+                         const ConstBufferSequence& buffers,
                          CompletionCondition completion_condition,
                          error_code& ec);
         template<class SyncWriteStream, class Allocator>
@@ -89,13 +93,15 @@
                          error_code& ec);
 
         // asynchronous write operations:
-        template<class AsyncWriteStream, class ConstBuffers, class WriteHandler>
-          size_t async_write(AsyncWriteStream& stream,
-                             const ConstBuffers& buffers, WriteHandler handler);
-        template<class AsyncWriteStream, class ConstBuffers,
+        template<class AsyncWriteStream, class ConstBufferSequence,
+          class WriteHandler>
+            size_t async_write(AsyncWriteStream& stream,
+                               const ConstBufferSequence& buffers,
+                               WriteHandler handler);
+        template<class AsyncWriteStream, class ConstBufferSequence,
           class CompletionCondition, class WriteHandler>
             size_t async_write(AsyncWriteStream& stream,
-                               const ConstBuffers& buffers,
+                               const ConstBufferSequence& buffers,
                                CompletionCondition completion_condition,
                                WriteHandler handler);
         template<class AsyncWriteStream, class Allocator, class WriteHandler>

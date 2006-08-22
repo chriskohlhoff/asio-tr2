@@ -163,7 +163,7 @@ sequence and output sequence.]
   const_buffers_type data() const;
 
 [function_returns An object of type `const_buffers_type` that satisfies [link
-requirements.const_buffers `ConstBuffers`] requirements, representing all
+requirements.const_buffers `ConstBufferSequence`] requirements, representing all
 character array objects in the input sequence. The returned object is
 invalidated by any `fifobuf` member function that modifies the input sequence
 or output sequence.]
@@ -176,7 +176,7 @@ or output sequence.]
 characters, reallocating character array objects as necessary.]
 
 [function_returns An object of type `mutable_buffers_type` that satisfies [link
-requirements.mutable_buffers `MutableBuffers`] requirements, representing
+requirements.mutable_buffers `MutableBufferSequence`] requirements, representing
 character array objects at the start of the output sequence such that the sum
 of the buffer sizes is `n`. The returned object is invalidated by any `fifobuf`
 member function that modifies the input sequence or output sequence.]

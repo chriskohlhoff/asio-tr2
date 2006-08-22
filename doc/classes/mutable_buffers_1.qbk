@@ -1,10 +1,10 @@
 [section:mutable_buffers_1 Class [^mutable_buffers_1]]
 
 The `mutable_buffers_1` class meets the requirements for [link
-requirements.mutable_buffers `MutableBuffers`], [link
-requirements.const_buffers `ConstBuffers`], [link
+requirements.mutable_buffers `MutableBufferSequence`], [link
+requirements.mutable_buffers `ConstBufferSequence`], [link
 requirements.convertible_to_mutable_buffer `ConvertibleToMutableBuffer`], and
-[link requirements.convertible_to_const_buffer `ConvertibleToConstBuffer`].
+[link requirements.convertible_to_mutable_buffer `ConvertibleToConstBuffer`].
 
   namespace std {
     namespace tr2 {
@@ -30,5 +30,35 @@ requirements.convertible_to_mutable_buffer `ConvertibleToMutableBuffer`], and
       } // namespace sys
     } // namespace tr2
   } // namespace std
+
+An object of class `mutable_buffers_1` represents a sequence of exactly one
+`mutable_buffer` object.
+
+[section [^mutable_buffers_1] constructors]
+
+  mutable_buffers_1(const void* data, size_t size);
+
+[function_effects Constructs an object of class `mutable_buffers_1`,
+initialising the base class with `mutable_buffer(data, size)`.]
+
+  explicit mutable_buffers_1(const mutable_buffer& b);
+
+[function_effects Constructs an object of class `mutable_buffers_1`,
+initialising the base class with `mutable_buffer(b)`.]
+
+[endsect]
+
+[section [^mutable_buffers_1] members]
+
+  const_iterator begin() const;
+
+[function_returns An iterator referring to the first (and only)
+`mutable_buffer` object in the sequence.]
+
+  const_iterator end() const;
+
+[function_returns An iterator which is the past-the-end value.]
+
+[endsect]
 
 [endsect]

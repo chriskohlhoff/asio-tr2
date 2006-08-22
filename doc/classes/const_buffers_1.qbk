@@ -1,7 +1,7 @@
 [section:const_buffers_1 Class [^const_buffers_1]]
 
 The `const_buffers_1` class meets the requirements for [link
-requirements.const_buffers `ConstBuffers`], and [link
+requirements.const_buffers `ConstBufferSequence`], and [link
 requirements.convertible_to_const_buffer `ConvertibleToConstBuffer`].
 
   namespace std {
@@ -28,5 +28,35 @@ requirements.convertible_to_const_buffer `ConvertibleToConstBuffer`].
       } // namespace sys
     } // namespace tr2
   } // namespace std
+
+An object of class `const_buffers_1` represents a sequence of exactly one
+`const_buffer` object.
+
+[section [^const_buffers_1] constructors]
+
+  const_buffers_1(const void* data, size_t size);
+
+[function_effects Constructs an object of class `const_buffers_1`, initialising
+the base class with `const_buffer(data, size)`.]
+
+  explicit const_buffers_1(const const_buffer& b);
+
+[function_effects Constructs an object of class `const_buffers_1`, initialising
+the base class with `const_buffer(b)`.]
+
+[endsect]
+
+[section [^const_buffers_1] members]
+
+  const_iterator begin() const;
+
+[function_returns An iterator referring to the first (and only) `const_buffer`
+object in the sequence.]
+
+  const_iterator end() const;
+
+[function_returns An iterator which is the past-the-end value.]
+
+[endsect]
 
 [endsect]

@@ -1,9 +1,9 @@
-[section:const_buffers Constant buffers requirements]
+[section:const_buffers Constant buffer sequence requirements]
 
 In the table below, `X` denotes a class containing objects of type `T`, `a`
 denotes a value of type `X` and `u` denotes an identifier.
 
-[table Table--ConstBuffers requirements
+[table Table--ConstBufferSequence requirements
   [[expression] [return type] [assertion/note\npre/post-condition]]
   [
     [`X::value_type`]
@@ -20,10 +20,10 @@ denotes a value of type `X` and `u` denotes an identifier.
   [
     [`X(a);`]
     []
-    [post: `equal_const_buffers(a, X(a))` where the binary predicate
-     `equal_const_buffers` is defined as
+    [post: `equal_const_buffer_seq(a, X(a))` where the binary predicate
+     `equal_const_buffer_seq` is defined as
      ``
-       bool equal_const_buffers(
+       bool equal_const_buffer_seq(
          const X& x1, const X& x2)
        {
          return

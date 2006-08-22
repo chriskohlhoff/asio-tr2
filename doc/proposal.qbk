@@ -1,7 +1,7 @@
 [library Networking Library Proposal for TR2
     [quickbook 1.1]
     [id tr2network]
-    [last-revision $Date: 2006/08/22 03:22:56 $]
+    [last-revision $Date: 2006/08/22 06:40:39 $]
 ]
 
 [/-----------------------------------------------------------------------------]
@@ -390,8 +390,8 @@ express type requirements, as listed in the table below.
     [[link requirements.connect_handler connect handler]]
   ]
   [
-    [`ConstBuffers`]
-    [[link requirements.const_buffers const buffers]]
+    [`ConstBufferSequence`]
+    [[link requirements.const_buffers const buffer sequence]]
   ]
   [
     [`ConvertibleToConstBuffer`]
@@ -428,8 +428,8 @@ express type requirements, as listed in the table below.
     [[link requirements.io_object_service I/O object service]]
   ]
   [
-    [`MutableBuffers`]
-    [[link requirements.mutable_buffers mutable buffers]]
+    [`MutableBufferSequence`]
+    [[link requirements.mutable_buffers mutable buffer sequence]]
   ]
   [
     [`Protocol`]
