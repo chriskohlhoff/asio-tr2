@@ -67,6 +67,11 @@
           const_buffers_1 buffer(const basic_string<CharT, Traits, Allocator>&,
                                  size_t);
 
+        template<class Allocator = std::allocator<char> >
+          class basic_fifobuf;
+
+        typedef basic_fifobuf<> fifobuf;
+
       } // namespace sys
     } // namespace tr2
   } // namespace std

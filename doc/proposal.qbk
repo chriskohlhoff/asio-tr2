@@ -1,7 +1,7 @@
 [library Networking Library Proposal for TR2
     [quickbook 1.1]
     [id tr2network]
-    [last-revision $Date: 2006/08/21 03:30:11 $]
+    [last-revision $Date: 2006/08/22 03:22:56 $]
 ]
 
 [/-----------------------------------------------------------------------------]
@@ -316,6 +316,7 @@ of these classes is required from those defined in N1975.]
 [include:design design/strands.qbk]
 [include:design design/buffers.qbk]
 [include:design design/allocation.qbk]
+[include:design design/line_based.qbk]
 
 [section To be added]
 
@@ -329,7 +330,6 @@ of these classes is required from those defined in N1975.]
 * Protocol independence
 * No string constructors for IP address classes
 * Timers, monotonic time
-* Rationale for read_until - HTTP example
 * Suppression of connection aborted error for accept operation
 * Socket option requirements to allow extensibility
 * ioctl provided for platform specific use, e.g. QoS settings
@@ -357,7 +357,7 @@ below:
   [[Timers][[link tr2network.timers `<timer>`]]]
   [[Buffers][[link tr2network.buffers `<buffer>`]]]
   [[Networking][[link tr2network.networking `<network>`]]]
-  [[Utilities][[link tr2network.utilities `<?>`]]]
+  [[Algorithms][[link tr2network.algorithms `<io_algorithm>`]]]
 ]
 
 Throughout this clause, the names of the template parameters are used to
@@ -535,6 +535,7 @@ express type requirements, as listed in the table below.
 [include:classes classes/mutable_buffers_1.qbk]
 [include:classes classes/const_buffers_1.qbk]
 [include:functions functions/buffer.qbk]
+[include:classes classes/basic_fifobuf.qbk]
 [endsect]
 
 [section:networking Networking]
@@ -598,7 +599,7 @@ express type requirements, as listed in the table below.
 [include:classes classes/ip__multicast__enable_loopback.qbk]
 [endsect]
 
-[section:utilities Utilities]
+[section:algorithms Algorithms]
 [include:headers headers/io_algorithm.qbk]
 [include:requirements requirements/sync_read_stream.qbk]
 [include:requirements requirements/async_read_stream.qbk]
