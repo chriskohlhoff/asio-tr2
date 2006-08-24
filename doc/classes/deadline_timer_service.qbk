@@ -137,8 +137,8 @@ handler object `handler` will be posted for execution as if by:\n\n
 
 1. Constructing an object `bch` meeting [link requirements.completion_handler
 `bound completion handler`] requirements, such that the expression `bch()`
-calls `handler1(ec)`, where `handler1` is a copy of `handler` and `ec` is a
-value of type `const error_code` that indicates whether the wait operation
+calls `handler1(ec)`, where `handler1` is a copy of `handler` and `ec` is an
+lvalue of type `const error_code` that indicates whether the wait operation
 succeeded or failed; then\n\n
 
 2. Calling `owner().post(bch)`.\n

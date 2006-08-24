@@ -43,15 +43,14 @@ requirements.
   [
     [``
       using namespace std::tr2::sys;
-      io_handler_dispatch(ch, &h);
+      io_handler_dispatch(f, &h);
     ``]
     []
     [
-      Causes the completion handler `ch` to be executed as if by calling
-      `ch()`.\n\n The `io_handler_dispatch()` function is located using
-      argument-dependent lookup. The function
-      `std::tr2::sys::io_handler_dispatch()` serves as a default if no
-      user-supplied function is available.
+      Causes the function object `f` to be executed as if by calling `f()`.\n\n
+      The `io_handler_dispatch()` function is located using argument-dependent
+      lookup. The function `std::tr2::sys::io_handler_dispatch()` serves as a
+      default if no user-supplied function is available.
     ]
   ]
 ]

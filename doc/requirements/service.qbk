@@ -23,13 +23,4 @@ preventing its participation in automatic conversions. For example:
 A service's `shutdown_service` member function must cause all copies of
 user-defined handler objects that are held by the service to be destroyed.
 
-The implementation performs `delete static_cast<io_service::service*>(s)`
-(where `s` is a pointer to the service) when the owning `io_service` object is
-destroyed.
-
-An `io_service` object's destructor first invokes the `shutdown_service` member
-function for each service in reverse order of the completion of service
-constructors. The `io_service` destructor then destroys each service in reverse
-order of the completion of service construction.
-
 [endsect]

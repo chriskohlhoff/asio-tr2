@@ -46,12 +46,12 @@ completion handler].
     io_handler_deallocate(pointer, size, &this_handler->handler_);
   }
 
-  template <class CompletionHandler, class ReadHandler>
-  void io_handler_dispatch(const CompletionHandler& handler,
+  template<class F, class ReadHandler>
+  void io_handler_dispatch(const F& f,
                            bound_read_handler<ReadHandler>* this_handler)
   {
     using namespace std::tr2::sys;
-    io_handler_dispatch(handler, &this_handler->handler_);
+    io_handler_dispatch(f, &this_handler->handler_);
   }
 ``
 ]

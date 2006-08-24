@@ -18,14 +18,27 @@
           ~io_service(); // non-virtual
 
           // members:
-          void run();
-          void interrupt();
+          size_t run();
+          size_t run(error_code& ec);
+
+          size_t run_one();
+          size_t run_one(error_code& ec);
+
+          size_t run_one(date_time::time_duration& d);
+          size_t run_one(date_time::time_duration& d, error_code& ec);
+
+          void stop();
+
           void reset();
-          template<typename CompletionHandler>
+
+          template<class CompletionHandler>
             void dispatch(CompletionHandler handler);
-          template<typename CompletionHandler>
+
+          template<class CompletionHandler>
             void post(CompletionHandler handler);
-          template<typename Handler> unspecified wrap(Handler handler);
+
+          template<class Handler>
+            unspecified wrap(Handler handler);
 
         private:
           io_service(const io_service&);     // not defined
@@ -33,9 +46,9 @@
         };
 
         // service access:
-        template<typename Service> Service& use_service(io_service& ios);
-        template<typename Service> void add_service(io_service& ios, Service* svc);
-        template<typename Service> bool has_service(io_service& ios) const;
+        template<class Service> Service& use_service(io_service& ios);
+        template<class Service> void add_service(io_service& ios, Service* svc);
+        template<class Service> bool has_service(io_service& ios) const;
         class service_already_exists : public logic_error { ... };
         class invalid_service_owner : public logic_error { ... };
 
@@ -43,26 +56,249 @@
     } // namespace tr2
   } // namespace std
 
-Class `io_service` implements a type-safe polymorphic set of services, indexed
-by service /type/.
+Class `io_service` implements an extensible, type-safe, polymorphic set of I/O
+services, indexed by service /type/. An object of class `io_service` must be
+initialised before I/O objects such as sockets, resolvers and timers can be
+used. These I/O objects are distinguished by having constructors that accept an
+`io_service&` parameter.
 
 Access to the services of an `io_service` is via three function templates,
 `use_service<>`, `add_service<>` and `has_service<>`.
 
 In a call to `use_service<Service>()`, the type argument chooses a service,
 making available all members of the named type. If `Service` is not present in
-an io_service, an object of type `Service` is created and added to the
-io_service. A C++ program can check if an io_service implements a particular
+an `io_service`, an object of type `Service` is created and added to the
+io_service. A C++ program can check if an `io_service` implements a particular
 service with the function template `has_service<Service>()`.
 
-Service objects may be explicitly added to an io_service using the function
-template `add_service<Service>()`, if the Service is not already present in the
-io_service. If the `Service` is already present, the `service_already_exists`
-exception is thrown. If the owner of the service is not the same object as the
-io_service parameter, the `invalid_service_owner` exception is thrown.
+Service objects may be explicitly added to an `io_service` using the function
+template `add_service<Service>()`. If the `Service` is already present, the
+`service_already_exists` exception is thrown. If the owner of the service is
+not the same object as the `io_service` parameter, the `invalid_service_owner`
+exception is thrown.
 
-Once a service reference is obtained from an io_service object by calling
-`use_service<>`, that reference remains usable as long as the owning io_service
-object exists.
+Once a service reference is obtained from an `io_service` object by calling
+`use_service<>`, that reference remains usable as long as the owning
+`io_service` object exists.
+
+Synchronous operations on I/O objects implicitly run the `io_service` object
+for an individual operation. The `io_service` functions `run()` or `run_one()`
+must be called for the `io_service` to perform asynchronous operations on
+behalf of a C++ program.
+
+[section [^io_service] constructors/destructor]
+
+  io_service();
+
+[function_effects Creates an object of class `io_service`.]
+
+  ~io_service();
+
+[function_effects Destroys an object of class `io_service`. For each service
+object `svc` in the `io_service` set, in reverse order of the beginning of
+service object lifetime (C++ Std, 3.8), performs `svc->shutdown_service()`.
+Then, for each service object `svc` in the `io_service` set, in reverse order
+of the beginning of service object lifetime, performs `delete
+static_cast<io_service::service*>(svc)`.]
+
+[endsect]
+
+[section [^io_service] members]
+
+  size_t run();
+
+[function_effects Calls:
+``
+  error_code ec;
+  size_t n = run(ec);
+  if (ec) throw system_error(ec);
+``]
+
+[function_returns `n`.]
+
+  size_t run(error_code& ec);
+
+[function_effects Performs `io_service` work until there is no more work to do,
+or the `io_service` is explicitly stopped, as if implemented as follows:
+``
+  size_t n = 0;
+  while (run_one(positive_infinity, ec))
+    if (n != numeric_limits<size_t>::max())
+      ++n;
+``]
+
+[function_returns `n`.]
+
+  size_t run_one();
+
+[function_effects Calls:
+``
+  error_code ec;
+  size_t n = run_one(positive_infinity, ec);
+  if (ec) throw system_error(ec);
+``]
+
+[function_returns `n`.]
+
+  size_t run_one(error_code& ec);
+
+[function_returns `run_one(positive_infinity, ec)`.]
+
+  size_t run_one(date_time::time_duration& d);
+
+[function_effects Calls:
+``
+  error_code ec;
+  size_t n = run_one(d, ec);
+  if (ec) throw system_error(ec);
+``]
+
+[function_returns `n`.]
+
+  size_t run_one(date_time::time_duration& d, error_code& ec);
+
+  void stop();
+
+  void reset();
+
+  template<class CompletionHandler>
+    void dispatch(CompletionHandler handler);
+
+[function_effects If the current thread (/TODO/) is executing a call to any
+overload of `run()` or `run_one()` for the same `io_service` object, invokes
+the completion handler by performing `io_handler_dispatch(handler, &handler)`.
+Otherwise, equivalent to calling `post(handler)`. (/TODO/ memory barrier)]
+
+  template<class CompletionHandler>
+    void post(CompletionHandler handler);
+
+[function_effects Requests deferred invocation of the handler by the
+`io_service`. Does not invoke the handler from within the call to `post()`. The
+handler shall be invoked by performing `io_handler_dispatch(handler1,
+&handler1)`, where `handler1` is a copy of `handler`, from a concurrent or
+subsequent call to any overload of `run()` or `run_one()` on the same
+`io_service` object. The `io_service` will have unfinished work, as if by
+maintaining the existence of one or more objects of class `io_service::work`
+constructed using the `io_service` object `*this`, until after the handler has
+been invoked (but no longer). (/TODO/ memory barrier.)]
+
+  template<class Handler>
+    unspecified wrap(Handler handler);
+
+[function_returns A forwarding call wrapper `f` with result type `void` and
+meeting [link requirements.handler handler] requirements. For exposition
+purposes, `f` is of type `F` and constructed using `f(*this, handler)`, where
+`F` is defined as
+follows:
+``
+  class F
+  {
+  public:
+    F(io_service& i, const Handler& h)
+      : io_service_(i), handler_(h) {}
+
+    template<class T1, class T2, __dotdotdot__, class TN>
+    void operator()(T1& t1, T2& t2, __dotdotdot__, TN& tN);
+
+    template<class T1, class T2, __dotdotdot__, class TN>
+    void operator()(T1& t1, T2& t2, __dotdotdot__, TN& tN) const;
+
+    io_service& io_service_;
+    Handler handler_;
+  };
+
+  void* io_handler_allocate(size_t size, F* this_handler);
+
+  void io_handler_deallocate(void* pointer, size_t size, F* this_handler);
+
+  template<class Function>
+  void io_handler_dispatch(const Function& func, F* this_handler);
+``]
+
+[function_block The effect of `f(v1, v2, __dotdotdot__, vN)` shall be as
+follows:\n\n
+- If the current thread (/TODO/) is executing a call to any overload of `run()`
+  or `run_one()` for the `io_service` object `io_service_`, invokes the wrapped
+  handler by performing `io_handler_dispatch(ch, &handler_)`, where `ch` is a
+  forwarding call wrapper such that expression `ch()` calls `handler_(v1, v2,
+  __dotdotdot__, vN)`.\n\n
+- Otherwise, performs `io_service_.post(ch)` where `ch` is an object of
+  unspecified type meeting [link requirements.completion_handler completion
+  handler] requirements, such that the expression `ch()` calls `handler1(u1,
+  u2, __dotdotdot__, uN)`, the expression `io_handler_allocate(size, &ch)`
+  returns `io_handler_allocate(size, &handler1)`, the expression
+  `io_handler_deallocate(pointer, size, &ch)` calls
+  `io_handler_deallocate(pointer, size, &handler1)`, and the expression
+  `io_handler_dispatch(func, &ch)` calls `io_handler_dispatch(func,
+  &handler1)`, where `handler1` is a copy of `handler_`, `u1, u2,
+  __dotdotdot__, uN` are copies of `v1, v2, __dotdotdot__, vN` respectively,
+  and `func` is an arbitrary function object taking no arguments.]
+
+[function_block The effect of `io_handler_allocate(size, &f)` shall be to
+return the result of the expression `io_handler_allocate(size,
+&f->handler_)`.]
+
+[function_block The effect of `io_handler_deallocate(pointer, size, &f)` shall
+be to call `io_handler_deallocate(pointer, size, &f->handler_)`.]
+
+[function_block The effect of `io_handler_dispatch(func, &f)` shall be as
+follows:\n\n
+- If the current thread (/TODO/) is executing a call to any overload of `run()`
+  or `run_one()` for the `io_service` object `f->io_service_`, invokes the
+  function object `func` by performing `io_handler_dispatch(func,
+  &f->handler_)`.\n\n
+- Otherwise, performs `io_service_.post(ch)` where `ch` is an object of
+  unspecified type meeting [link requirements.completion_handler completion
+  handler] requirements, such that the expression `ch()` calls `func1()`, the
+  expression `io_handler_allocate(size, &ch)` returns
+  `io_handler_allocate(size, &handler1)`, the expression
+  `io_handler_deallocate(pointer, size, &ch)` calls
+  `io_handler_deallocate(pointer, size, &handler1)`, and the expression
+  `io_handler_dispatch(func, &ch)` calls `io_handler_dispatch(func,
+  &handler1)`, where `handler1` is a copy of `f->handler_`, `func` is an
+  arbitrary function object taking no arguments, and `func1` is a copy of
+  `func`.]
+
+[endsect]
+
+[section [^io_service] globals]
+
+  template<class Service> Service& use_service(io_service& ios);
+
+[function_requires `Service` is a service class whose definition contains the
+public static member `id` as defined [link classes.io_service__service here].]
+
+[function_effects If an object of type `Service` does not already exist in the
+`io_service` set identified by `ios`, creates an object as if by calling `new
+Service(ios)` and adds it to the set.]
+
+[function_returns A reference to the corresponding service of `ios`.]
+
+[function_notes The reference returned remains valid as long as the
+`io_service` object `ios` exists.]
+
+  template<class Service> void add_service(io_service& ios, Service* svc);
+
+[function_requires `Service` is a service class whose definition contains the
+public static member `id` as defined [link classes.io_service__service here].
+The argument `svc` is a non-null pointer to a service object, and the condition
+`&svc->owner() == &ios` is true. A corresponding service object does not
+already exist in the `io_service` set identified by `ios`.]
+
+[function_effects Adds the service object `svc` to the `io_service` set.]
+
+[function_throws `service_already_exists` if a corresponding service object is
+already present in the `io_service` set identified by `ios`;
+`invalid_service_owner` if the condition `&svc->owner() == &ios` is false.]
+
+  template<class Service> bool has_service(io_service& ios) const;
+
+[function_requires `Service` is a service class whose definition contains the
+public static member `id` as defined [link classes.io_service__service here].]
+
+[function_returns `true` if the service requested is present in `ios`,
+otherwise `false`.]
+
+[endsect]
 
 [endsect]

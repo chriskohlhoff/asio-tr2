@@ -82,7 +82,7 @@ denotes an identifier.
       1. Constructing an object `bch` meeting
          [link requirements.completion_handler `bound completion handler`]
          requirements, such that the expression `bch()` calls `h1(ec)`, where
-         `h1` is a copy of `h` and `ec` is a value of type `const error_code`
+         `h1` is a copy of `h` and `ec` is an lvalue of type `const error_code`
          that indicates whether the wait operation succeeded or failed; then\n\n
       2. Calling `a.owner().post(bch)`.
       [std_note This implies that the handler `h` must not be called directly

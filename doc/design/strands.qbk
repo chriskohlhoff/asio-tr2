@@ -35,15 +35,15 @@ customisable hook associated with the final handler:
     void operator()() { ... }
   };
 
-  template<class CompletionHandler>
-  void io_handler_dispatch(CompletionHandler handler, my_handler*)
+  template<class F>
+  void io_handler_dispatch(F f, my_handler*)
   {
     // Do custom dispatch here.
-    // Default implementation calls handler();
+    // Default implementation calls f();
   }
 
-The `io_service::strand::wrap()` function creates a new handler that defines
-`io_handler_dispatch` so that the completion handler is passed to the strand's
-`dispatch()` function.
+The `io_service::strand::wrap()` function creates a new completion handler that
+defines `io_handler_dispatch` so that the function object is executed via the
+strand's `dispatch()` function.
 
 [endsect]
