@@ -11,12 +11,12 @@
         public:
           // constructors:
           basic_socket_iostream();
-          template <class T1, ..., class TN>
-            explicit basic_socket_iostream(T1 t1, ..., TN tn);
+          template<class T1, class T2, ..., class TN>
+            explicit basic_socket_iostream(T1 t1, T2 t2, ..., TN tN);
 
           // members:
-          template <class T1, ..., class TN>
-            void connect(T1 t1, ..., TN tn);
+          template<class T1, class T2, ..., class TN>
+            void connect(T1 t1, T2 t2, ..., TN tN);
 
           void close();
 
@@ -48,24 +48,24 @@ presented here as:
 class with `basic_iostream<char>(&sb)` and initialising `sb` with
 `basic_socket_streambuf<Protocol, StreamSocketService>()`.]
 
-  template <class T1, ..., class TN>
-    explicit basic_socket_iostream(T1 t1, ..., TN tn);
+  template<class T1, class T2, ..., class TN>
+    explicit basic_socket_iostream(T1 t1, T2 t2, ..., TN tN);
 
 [function_effects Constructs an object of class
 `basic_socket_iostream<Protocol, StreamSocketService>`, initialising the base
 class with `basic_iostream<char>(&sb)` and initialising `sb` with
 `basic_socket_streambuf<Protocol, StreamSocketService>()`. Then calls
-`rdbuf()->connect(t1, __dotdotdot__, tn)`. If that function returns a null
+`rdbuf()->connect(t1, t2, __dotdotdot__, tN)`. If that function returns a null
 pointer, calls `setstate(failbit)`.]
 
 [endsect]
 
 [section [^basic_socket_iostream] members]
 
-  template <class T1, ..., class TN>
-    void connect(T1 t1, ..., TN tn);
+  template<class T1, class T2, ..., class TN>
+    void connect(T1 t1, T2 t2, ..., TN tN);
 
-[function_effects Calls `rdbuf()->connect(t1, __dotdotdot__, tn)`. If that
+[function_effects Calls `rdbuf()->connect(t1, t2, __dotdotdot__, tN)`. If that
 function returns a null pointer, calls `setstate(failbit)` (which may throw
 `ios_base::failure`).]
 

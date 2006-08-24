@@ -20,9 +20,9 @@
           // members:
           basic_socket_streambuf<Protocol, StreamSocketService>*
             connect(const endpoint_type& e);
-          template<class T1, ..., class TN>
+          template<class T1, class T2, ..., class TN>
             basic_socket_streambuf<Protocol, StreamSocketService>*
-              connect(T1 t1, ..., TN tn);
+              connect(T1 t1, T2 t2, ..., TN tN);
 
           basic_socket_streambuf<Protocol, StreamSocketService>* close();
 
@@ -80,9 +80,9 @@ connection as if by calling:
 [function_returns `this` if `ec` indicates that a connection was successfully
 established, a null pointer otherwise.]
 
-  template<class T1, ..., class TN>
+  template<class T1, class T2, ..., class TN>
     basic_socket_streambuf<Protocol, StreamSocketService>*
-      connect(T1 t1, ..., TN tn);
+      connect(T1 t1, T2 t2, ..., TN tN);
 
 [function_requires The `Protocol` type must implement the additional
 requirements for a [link requirements.resolver_protocol resolver protocol].]
@@ -90,7 +90,7 @@ requirements for a [link requirements.resolver_protocol resolver protocol].]
 [function_effects Resets the `streambuf` get and put areas, then opens a
 connection as if by calling:
 ``
-  typename Protocol::resolver_query query(t1, __dotdotdot__, tn);
+  typename Protocol::resolver_query query(t1, t2, __dotdotdot__, tN);
   typename Protocol::resolver resolver(
       this->basic_socket<Protocol, StreamSocketService>::io_service());
   typename Protocol::resolver_iterator i = resolver.resolve(query);
