@@ -80,7 +80,7 @@ denotes an identifier.
     [Starts an asynchronous wait operation. When the operation is complete, a
       copy of the handler object `h` will be posted for execution as if by:\n\n
       1. Constructing an object `bch` meeting
-         [link requirements.completion_handler `bound completion handler`]
+         [link requirements.bound_completion_handler bound completion handler]
          requirements, such that the expression `bch()` calls `h1(ec)`, where
          `h1` is a copy of `h` and `ec` is an lvalue of type `const error_code`
          that indicates whether the wait operation succeeded or failed; then\n\n

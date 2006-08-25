@@ -12,4 +12,17 @@ See
 Host and Network Byte Orders].
 [endsect]
 
+[section:synchronous_operation synchronous operation]
+A synchronous operation is logically executed in the context of the initiating
+thread. Control is not returned to the initiating thread until the operation
+completes.
+[endsect]
+
+[section:asynchronous_operation asynchronous operation]
+An asynchronous operation is logically executed in parallel to the context of
+the initiating thread. Control is returned immediately to the initiating thread
+without waiting for the operation to complete. Multiple asynchronous operations
+may be executed in parallel by a single initiating thread.
+[endsect]
+
 [endsect]
