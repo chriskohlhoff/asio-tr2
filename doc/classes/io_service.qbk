@@ -11,6 +11,7 @@
           class ``[link classes.io_service__service service]``;
           class ``[link classes.io_service__id id]``;
           class ``[link classes.io_service__work work]``;
+          class strand_service;
           class ``[link classes.io_service__strand strand]``;
 
           // constructors/destructor:
@@ -156,12 +157,16 @@ one of `run()`, `run_one()`, `poll()`, or `poll_one()`.]
 [function_effects Dispatches at most one handler, where the handler was
 previously scheduled for deferred invocation as if by calling `post()`. Does
 not return until one of the following conditions is true: a handler has been
-invoked; the `io_service` has been stopped; or, an error has occurred. If a
+invoked; the `io_service` has been explicitly stopped; no objects of class
+`io_service::work` exist for the `io_service`; or, an error has occurred. If a
 handler was invoked or the `io_service` was stopped, sets `ec` such that the
-expression `!ec` is true. Otherwise, an implementation shall set `ec` to the
-`error_code` value corresponding to the failure condition, as shown in the
-table below. For failure conditions not listed, an implementation is permitted
-to set `ec` to any other value such that the expression `!ec` is false.]
+expression `!ec` is true. If no `io_service::work` objects exist for the
+`io_service`, stops the `io_service` as if by calling `stop()` and sets `ec`
+such that the expression `!ec` is true. Otherwise, an implementation shall set
+`ec` to the `error_code` value corresponding to the failure condition, as shown
+in the table below. For failure conditions not listed, an implementation is
+permitted to set `ec` to any other value such that the expression `!ec` is
+false.]
 
 [table Table--run_one() failure conditions
   [[failure condition][error code]]
@@ -222,13 +227,15 @@ explicitly stopped, as if implemented as follows:
 [function_effects Dispatches at most one handler, where the handler was
 previously scheduled for deferred invocation as if by calling `post()`. Returns
 immediately if the `io_service` has been stopped. Returns immediately if no
-handler is ready to be dispatched. Otherwise, invokes one handler and returns.
-If a handler was invoked or the `io_service` was stopped, sets `ec` such that
-the expression `!ec` is true. Otherwise, an implementation shall set `ec` to
-any value such that the expression `!ec` is false.]
+handler is ready to be dispatched. If no `io_service::work` objects exist for
+the `io_service`, stops the `io_service` as if by calling `stop()` and returns.
+Otherwise, invokes one handler and returns. If a handler was invoked or the
+`io_service` was stopped, sets `ec` such that the expression `!ec` is true.
+Otherwise, an implementation shall set `ec` to any value such that the
+expression `!ec` is false.]
 
 [function_block If the invoked handler throws an exception, the exception shall
-be allowed to propagate to the caller of `run_one()`. The `io_service` state
+be allowed to propagate to the caller of `poll_one()`. The `io_service` state
 shall be equivalent to if the handler had been successfully invoked without
 throwing an exception.]
 

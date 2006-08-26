@@ -19,4 +19,9 @@
     } // namespace tr2
   } // namespace std
 
+An object of class `io_service::work` represents a unit of unfinished work for
+an `io_service`. When the destructor is called, and if no other
+`io_service::work` objects exist for the `io_service`, stops the `io_service`
+as if by calling `io_service::stop()`.
+
 [endsect]
