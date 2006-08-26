@@ -84,7 +84,7 @@ denotes an identifier.
          requirements, such that the expression `bch()` calls `h1(ec)`, where
          `h1` is a copy of `h` and `ec` is an lvalue of type `const error_code`
          that indicates whether the wait operation succeeded or failed; then\n\n
-      2. Calling `a.owner().post(bch)`.
+      2. Calling `a.io_service().post(bch)`.
       [std_note This implies that the handler `h` must not be called directly
       from within the `a.async_wait(b, h)` call, even if the asynchronous wait
       operation completes immediately.]

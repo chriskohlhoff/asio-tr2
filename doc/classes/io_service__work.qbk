@@ -7,9 +7,13 @@
         class io_service::work
         {
         public:
-          explicit work(io_service& s);
+          // constructors/destructor:
+          explicit work(std::tr2::sys::io_service& ios);
           work(const work& other);
           ~work();
+
+          // members:
+          std::tr2::sys::io_service& io_service();
 
         private:
           void operator=(const work&); // not defined
@@ -20,8 +24,35 @@
   } // namespace std
 
 An object of class `io_service::work` represents a unit of unfinished work for
-an `io_service`. When the destructor is called, and if no other
-`io_service::work` objects exist for the `io_service`, stops the `io_service`
-as if by calling `io_service::stop()`.
+an `io_service`.
+
+[section [^io_service::work] constructors/destructor]
+
+  explicit work(std::tr2::sys::io_service& ios);
+
+[function_effects Constructs an object of class `work`.]
+
+[function_postconditions `&io_service() == ios`.]
+
+  work(const work& other);
+
+[function_effects Constructs an object of class `work`.]
+
+[function_postconditions `&io_service() == &other.io_service()`.]
+
+  ~work();
+
+[function_effects If no other `work` objects exist for the `io_service`, stops
+the `io_service` as if by calling `io_service().stop()`.]
+
+[endsect]
+
+[section [^io_service::work] members]
+
+  std::tr2::sys::io_service& io_service();
+
+[function_returns The `io_service` associated with the work.]
+
+[endsect]
 
 [endsect]

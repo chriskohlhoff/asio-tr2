@@ -42,7 +42,7 @@
 
   std::tr2::sys::io_service& io_service();
 
-[function_returns `service.owner()`.]
+[function_returns `service.io_service()`.]
 
 [endsect]
 

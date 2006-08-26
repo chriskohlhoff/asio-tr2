@@ -13,11 +13,15 @@
 
           // members:
           std::tr2::sys::io_service& io_service();
-          template<typename CompletionHandler>
+
+          template<class CompletionHandler>
             void dispatch(CompletionHandler handler);
-          template<typename CompletionHandler>
+
+          template<class CompletionHandler>
             void post(CompletionHandler handler);
-          template<typename Handler> unspecified wrap(Handler handler);
+
+          template<class Handler>
+            unspecified wrap(Handler handler);
 
         private:
           strand(const strand&);         // not defined
@@ -27,5 +31,7 @@
       } // namespace sys
     } // namespace tr2
   } // namespace std
+
+An object 
 
 [endsect]

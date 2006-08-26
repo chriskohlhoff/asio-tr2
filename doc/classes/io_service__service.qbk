@@ -7,10 +7,10 @@
         class io_service::service
         {
         public:
-          io_service& owner();
+          std::tr2::sys::io_service& io_service();
 
         protected:
-          service(io_service& owner);
+          service(std::tr2::sys::io_service& owner);
           virtual ~service();
 
         private:
