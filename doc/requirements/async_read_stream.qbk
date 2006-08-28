@@ -1,20 +1,67 @@
 [section:async_read_stream Asynchronous read stream requirements]
 
 In the table below, `a` denotes an asynchronous read stream object, `mb`
-denotes an object satisfying mutable buffers requirements, and `h` denotes a
-function object ...
+denotes an object satisfying [link requirements.mutable_buffers mutable buffer
+sequence] requirements, and `h` denotes an object satisfying [link
+requirements.read_handler read handler] requirements.
 
 [table Table--Asynchronous read stream requirements
   [[operation] [type] [semantics, pre/post-conditions]]
   [
     [`a.io_service();`]
     [`io_service&`]
-    [...]
+    [Returns the `io_service` object through which the `async_read_some`
+    handler `h` will be invoked.]
   ]
   [
     [`a.async_read_some(mb, h);`]
     [`void`]
-    [...]
+    [
+      Starts an asynchronous operation to read one or more bytes of data from
+      the stream `a`.\n
+      \n
+      The mutable buffer sequence `mb` specifies memory where the data should
+      be placed. The `async_read_some` operation shall always fill a buffer in
+      the sequence completely before proceeding to the next.\n
+      \n
+      The implementation shall maintain one or more copies of `mb` until such
+      time as the read operation no longer requires access to the memory
+      specified by the buffers in the sequence. The program must ensure the
+      memory is valid until:\n
+      \n
+      - the last copy of `mb` is destroyed, or\n
+      \n
+      - the handler for the asynchronous read operation is invoked,\n
+      \n
+      whichever comes first.\n
+      \n
+      The `io_service` object specified by `a.io_service()` shall have
+      unfinished work, as if by maintaining the existence of one or more
+      objects of class `io_service::work` constructed using the `io_service`,
+      until after the handler for the asynchronous read operation has been
+      invoked (but no longer).\n
+      \n
+      When the operation is complete, a copy of the handler object `h` will be
+      posted for execution as if by:\n
+      \n
+      1. Constructing an object `bch` meeting [link
+      requirements.bound_completion_handler bound completion handler]
+      requirements, such that the expression `bch()` calls `h1(ec, s)`, where
+      `h1` is a copy of `h`, `ec` is an lvalue of type `const error_code` that
+      indicates whether the read operation succeeded or failed, and `s` is an
+      lvalue of type `const size_t` specifying the number of bytes read;
+      then\n
+      \n
+      2. Calling `a.io_service().post(bch)`.\n
+      \n
+      [inline_note This implies that the handler `h` must not be called directly
+      from within the `a.async_read_some(mb, h)` call, even if the asynchronous
+      read operation completes immediately.]\n
+      \n
+      If the total size of all buffers in the sequence `mb` is `0`, the
+      asynchronous read operation shall complete immediately and pass `0` in
+      the argument `s` to the handler that specifies the number of bytes read.
+    ]
   ]
 ]
 

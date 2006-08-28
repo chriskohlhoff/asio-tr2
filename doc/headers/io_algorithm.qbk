@@ -1,17 +1,12 @@
-[section Header [^<?>] synopsis]
+[section Header [^<io_algorithm>] synopsis]
 
   namespace std {
     namespace tr2 {
       namespace sys {
 
-        unspecified transfer_all();
-
-        unspecified transfer_at_least(size_t);
-
-        template<class Allocator = std::allocator<char> >
-          class basic_fifobuf;
-
-        typedef basic_fifobuf<> fifobuf;
+        // completion conditions:
+        class transfer_all;
+        class transfer_at_least;
 
         // synchronous read operations:
         template<class SyncReadStream, class MutableBufferSequence>
@@ -156,6 +151,7 @@ function object that when applied to an `error_code` and number of bytes as a
 `size_t` returns a value testable as `true`. In other words, if an algorithm
 takes `CompletionCondition completion_condition` as its argument, it should
 work correctly in the construct `if (completion_condition(ec, bc)){...}`, where
-`ec` is of type `const error_code` and `bc` is of type `size_t`.
+`ec` is an lvalue of type `const error_code` and `bc` is an lvalue of type
+`const size_t`.
 
 [endsect]

@@ -1,20 +1,67 @@
 [section:async_write_stream Asynchronous write stream requirements]
 
 In the table below, `a` denotes an asynchronous write stream object, `cb`
-denotes an object satisfying constant buffers requirements, and `h` denotes a
-function object ...
+denotes an object satisfying [link requirements.const_buffers constant buffer
+sequence] requirements, and `h` denotes an object satisfying [link
+requirements.write_handler write handler] requirements.
 
 [table Table--Synchronous write stream requirements
   [[operation] [type] [semantics, pre/post-conditions]]
   [
     [`a.io_service();`]
     [`io_service&`]
-    [...]
+    [Returns the `io_service` object through which the `async_write_some`
+    handler `h` will be invoked.]
   ]
   [
     [`a.async_write_some(cb, h);`]
     [`void`]
-    [...]
+    [
+      Starts an asynchronous operation to write one or more bytes of data to
+      the stream `a`. The constant buffer sequence `cb` specifies memory where
+      the data to be written is located. The `async_write_some` operation shall always
+      write a buffer in the sequence completely before proceeding to the
+      next.\n
+      \n
+      The implementation shall maintain one or more copies of `cb` until such
+      time as the read operation no longer requires access to the memory
+      specified by the buffers in the sequence. The program must ensure the
+      memory is valid until:\n
+      \n
+      - the last copy of `cb` is destroyed, or\n
+      \n
+      - the handler for the asynchronous write operation is invoked,\n
+      \n
+      whichever comes first.\n
+      \n
+      The `io_service` object specified by `a.io_service()` shall have
+      unfinished work, as if by maintaining the existence of one or more
+      objects of class `io_service::work` constructed using the `io_service`,
+      until after the handler for the asynchronous write operation has been
+      invoked (but no longer).\n
+      \n
+      When the operation is complete, a copy of the handler object `h` will be
+      posted for execution as if by:\n
+      \n
+      1. Constructing an object `bch` meeting [link
+      requirements.bound_completion_handler bound completion handler]
+      requirements, such that the expression `bch()` calls `h1(ec, s)`, where
+      `h1` is a copy of `h`, `ec` is an lvalue of type `const error_code` that
+      indicates whether the write operation succeeded or failed, and `s` is an
+      lvalue of type `const size_t` specifying the number of bytes written;
+      then\n
+      \n
+      2. Calling `a.io_service().post(bch)`.\n
+      \n
+      [inline_note This implies that the handler `h` must not be called directly
+      from within the `a.async_write_some(mb, h)` call, even if the asynchronous
+      write operation completes immediately.]\n
+      \n
+      If the total size of all buffers in the sequence `cb` is `0`, the
+      asynchronous write operation shall complete immediately and pass `0` in
+      the argument `s` to the handler that specifies the number of bytes
+      written.
+    ]
   ]
 ]
 
