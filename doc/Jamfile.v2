@@ -14,8 +14,8 @@ boostbook standalone
   :
     proposal
   :
-    <xsl:param>toc.section.depth=3
-    <xsl:param>toc.max.depth=3
+    <xsl:param>toc.section.depth=6
+    <xsl:param>toc.max.depth=6
   ;
 
 # install html : design/membar.png ;

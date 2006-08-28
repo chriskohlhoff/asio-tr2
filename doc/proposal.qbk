@@ -1,7 +1,7 @@
 [library Networking Library Proposal for TR2
     [quickbook 1.1]
     [id tr2network]
-    [last-revision $Date: 2006/08/25 13:18:17 $]
+    [last-revision $Date: 2006/08/28 04:18:19 $]
 ]
 
 [/-----------------------------------------------------------------------------]
@@ -318,14 +318,16 @@ of these classes is required from those defined in N1975.]
 [include:design design/allocation.qbk]
 [include:design design/line_based.qbk]
 
-[section To be added]
+[section Other Design Decisions]
+
+The following list summarises some other design decisions made in the
+development of the library:
 
 * Flaws in BSD socket API - type safety
 * Asynchronous pros and cons
 * Should acceptor set reuse_address or not
 * Services
 * Signals
-* Two-tier concept requirements for portability
 * Why read/async_read/write/async_write are needed
 * Protocol independence
 * No string constructors for IP address classes
@@ -335,6 +337,8 @@ of these classes is required from those defined in N1975.]
 * ioctl provided for platform specific use, e.g. QoS settings
 * Non-blocking flag is simulated
 * WSAEMSGSIZE mapping on Windows to no error, set message_truncated
+
+Contact the author for more information.
 
 [endsect]
 
@@ -353,11 +357,31 @@ below:
 
 [table Table--Networking library summary
   [[Subclause][Header(s)]]
-  [[Basic I/O Services][[link tr2network.basic_io_services `<io_service>`]]]
-  [[Timers][[link tr2network.timers `<timer>`]]]
-  [[Buffers][[link tr2network.buffers `<buffer>`]]]
-  [[Networking][[link tr2network.networking `<network>`]]]
-  [[Algorithms][[link tr2network.algorithms `<io_algorithm>`]]]
+  [
+    [[link tr2network.basic_io_services Basic I/O services]]
+    [`<io_service>`]
+  ]
+  [
+    [[link tr2network.timers Timers]]
+    [`<timer>`]
+  ]
+  [
+    [[link tr2network.buffers Buffers]]
+    [`<buffer>`]
+  ]
+  [
+    [
+      [link tr2network.sockets Sockets]\n
+      [link tr2network.resolvers Resolvers]\n
+      [link tr2network.socket_streams Socket streams]\n
+      [link tr2network.internet_protocol Internet protocol]\n
+    ]
+    [`<network>`]
+  ]
+  [
+    [[link tr2network.algorithms Algorithms]]
+    [`<io_algorithm>`]
+  ]
 ]
 
 Throughout this clause, the names of the template parameters are used to
@@ -517,39 +541,41 @@ express type requirements, as listed in the table below.
 
 [section:timers Timers]
 [include:headers headers/timer.qbk]
+[section:timers_requirements Requirements]
 [include:requirements requirements/time_traits.qbk]
-[include:classes classes/time_traits.qbk]
 [include:requirements requirements/wait_handler.qbk]
 [include:requirements requirements/timer_service.qbk]
+[endsect]
+[include:classes classes/time_traits.qbk]
 [include:classes classes/deadline_timer_service.qbk]
 [include:classes classes/basic_deadline_timer.qbk]
 [endsect]
 
 [section:buffers Buffers]
 [include:headers headers/buffer.qbk]
-[include:classes classes/mutable_buffer.qbk]
-[include:classes classes/const_buffer.qbk]
+[section:buffers_requirements Requirements]
 [include:requirements requirements/convertible_to_mutable_buffer.qbk]
 [include:requirements requirements/mutable_buffers.qbk]
 [include:requirements requirements/convertible_to_const_buffer.qbk]
 [include:requirements requirements/const_buffers.qbk]
+[endsect]
+[include:classes classes/mutable_buffer.qbk]
+[include:classes classes/const_buffer.qbk]
 [include:classes classes/mutable_buffers_1.qbk]
 [include:classes classes/const_buffers_1.qbk]
 [include:functions functions/buffer.qbk]
 [include:classes classes/basic_fifobuf.qbk]
 [endsect]
 
-[section:networking Networking]
+[section:sockets Sockets]
 [include:headers headers/network.qbk]
+[section:sockets_requirements Requirements]
 [include:requirements requirements/endpoint.qbk]
 [include:requirements requirements/protocol.qbk]
-[include:requirements requirements/resolver_protocol.qbk]
-[include:requirements requirements/internet_protocol.qbk]
 [include:requirements requirements/socket_service.qbk]
-[include:requirements requirements/stream_socket_service.qbk]
 [include:requirements requirements/datagram_socket_service.qbk]
+[include:requirements requirements/stream_socket_service.qbk]
 [include:requirements requirements/acceptor_service.qbk]
-[include:requirements requirements/resolver_service.qbk]
 [include:requirements requirements/gettable_socket_option.qbk]
 [include:requirements requirements/settable_socket_option.qbk]
 [include:requirements requirements/io_control_command.qbk]
@@ -557,8 +583,9 @@ express type requirements, as listed in the table below.
 [include:requirements requirements/write_handler.qbk]
 [include:requirements requirements/accept_handler.qbk]
 [include:requirements requirements/connect_handler.qbk]
-[include:requirements requirements/resolve_handler.qbk]
+[endsect]
 [include:classes classes/socket_base.qbk]
+[section General socket options]
 [include:classes classes/socket_base__broadcast.qbk]
 [include:classes classes/socket_base__debug.qbk]
 [include:classes classes/socket_base__do_not_route.qbk]
@@ -570,17 +597,35 @@ express type requirements, as listed in the table below.
 [include:classes classes/socket_base__reuse_address.qbk]
 [include:classes classes/socket_base__send_buffer_size.qbk]
 [include:classes classes/socket_base__send_low_watermark.qbk]
+[endsect]
 [include:classes classes/basic_socket.qbk]
 [include:classes classes/datagram_socket_service.qbk]
 [include:classes classes/basic_datagram_socket.qbk]
 [include:classes classes/stream_socket_service.qbk]
 [include:classes classes/basic_stream_socket.qbk]
-[include:classes classes/basic_socket_streambuf.qbk]
-[include:classes classes/basic_socket_iostream.qbk]
 [include:classes classes/socket_acceptor_service.qbk]
 [include:classes classes/basic_socket_acceptor.qbk]
+[endsect]
+
+[section:resolvers Resolvers]
+[section:resolvers_requirements Requirements]
+[include:requirements requirements/resolver_protocol.qbk]
+[include:requirements requirements/resolver_service.qbk]
+[include:requirements requirements/resolve_handler.qbk]
+[endsect]
 [include:classes classes/resolver_service.qbk]
 [include:classes classes/basic_resolver.qbk]
+[endsect]
+
+[section:socket_streams Socket streams]
+[include:classes classes/basic_socket_streambuf.qbk]
+[include:classes classes/basic_socket_iostream.qbk]
+[endsect]
+
+[section:internet_protocol Internet protocol]
+[section:internet_protocol_requirements Requirements]
+[include:requirements requirements/internet_protocol.qbk]
+[endsect]
 [include:classes classes/ip__address.qbk]
 [include:classes classes/ip__address_v4.qbk]
 [include:classes classes/ip__address_v6.qbk]
@@ -592,20 +637,28 @@ express type requirements, as listed in the table below.
 [include:classes classes/ip__tcp.qbk]
 [include:classes classes/ip__tcp__no_delay.qbk]
 [include:classes classes/ip__udp.qbk]
+[section IPv6 socket options]
 [include:classes classes/ip__v6_only.qbk]
+[endsect]
+[section Unicast socket options]
 [include:classes classes/ip__unicast__hops.qbk]
+[endsect]
+[section Multicast socket options]
 [include:classes classes/ip__multicast__join_group.qbk]
 [include:classes classes/ip__multicast__leave_group.qbk]
 [include:classes classes/ip__multicast__hops.qbk]
 [include:classes classes/ip__multicast__enable_loopback.qbk]
 [endsect]
+[endsect]
 
 [section:algorithms Algorithms]
 [include:headers headers/io_algorithm.qbk]
+[section:algorithms_requirements Requirements]
 [include:requirements requirements/sync_read_stream.qbk]
 [include:requirements requirements/async_read_stream.qbk]
 [include:requirements requirements/sync_write_stream.qbk]
 [include:requirements requirements/async_write_stream.qbk]
+[endsect]
 [endsect]
 
 [endsect]
