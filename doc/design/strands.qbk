@@ -36,14 +36,14 @@ customisable hook associated with the final handler:
   };
 
   template<class F>
-  void io_handler_dispatch(F f, my_handler*)
+  void io_handler_invoke(F f, my_handler*)
   {
-    // Do custom dispatch here.
+    // Do custom invocation here.
     // Default implementation calls f();
   }
 
 The `io_service::strand::wrap()` function creates a new completion handler that
-defines `io_handler_dispatch` so that the function object is executed via the
-strand's `dispatch()` function.
+defines `io_handler_invoke` so that the function object is executed through the
+strand.
 
 [endsect]

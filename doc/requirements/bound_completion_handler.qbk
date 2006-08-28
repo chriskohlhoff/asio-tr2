@@ -5,10 +5,9 @@ user-supplied hander, where the user-supplied handler accepts one or more
 arguments. The bound completion handler does not accept any arguments, and
 contains values to be passed as arguments to the user-supplied handler. The
 bound completion handler forwards the `io_handler_allocate()`,
-`io_handler_deallocate()`, and `io_handler_dispatch()` calls to the
-corresponding functions for the user-supplied handler. A bound completion
-handler meets the requirements for a [link requirements.completion_handler
-completion handler].
+`io_handler_deallocate()`, and `io_handler_invoke()` calls to the corresponding
+functions for the user-supplied handler. A bound completion handler meets the
+requirements for a [link requirements.completion_handler completion handler].
 
 [std_example A bound completion handler for a [link requirements.read_handler
 `ReadHandler`]:..
@@ -48,11 +47,11 @@ completion handler].
   }
 
   template<class F, class ReadHandler>
-  void io_handler_dispatch(const F& f,
-                           bound_read_handler<ReadHandler>* this_handler)
+  void io_handler_invoke(const F& f,
+                         bound_read_handler<ReadHandler>* this_handler)
   {
     using namespace std::tr2::sys;
-    io_handler_dispatch(f, &this_handler->handler_);
+    io_handler_invoke(f, &this_handler->handler_);
   }
 ``
 ]

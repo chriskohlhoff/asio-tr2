@@ -42,8 +42,9 @@ an `io_service`.
 
   ~work();
 
-[function_effects If no other `work` objects exist for the `io_service`, stops
-the `io_service` as if by calling `io_service().stop()`.]
+[function_effects If no other `work` object `w` exists such that
+`&io_service() == &w.io_service()`, stops the `io_service` as if by calling
+`io_service().stop()`.]
 
 [endsect]
 

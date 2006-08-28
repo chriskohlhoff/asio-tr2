@@ -27,7 +27,7 @@ be invoked as if by:
 
 # Dispatching the handler from within a call to an overload of `run()`,
   `run_one()`, `poll()` or `poll_one()` on the `io_service`, by performing
-  `io_handler_dispatch(bch, &h)` where `h` is a copy of the handler.
+  `io_handler_invoke(bch, &h)` where `h` is a copy of the handler.
 
 [std_note This implies that the handler must not be called directly from within
 the initiating function, even if the asynchronous operation completes
@@ -39,24 +39,24 @@ is the required size in bytes, and `h` is the handler associated with the
 asynchronous operation. The implementation shall perform
 `io_handler_deallocate(p, size, &h)`, where `p` is a pointer to the storage, to
 deallocate the storage prior to the invocation of the handler via
-`io_handler_dispatch`. Multiple storage blocks may be allocated for a single
+`io_handler_invoke`. Multiple storage blocks may be allocated for a single
 asynchronous operation.
 
 The implementation shall not make concurrent calls to `io_handler_allocate`,
-`io_handler_deallocate` or `io_handler_dispatch` for a single handler.
+`io_handler_deallocate` or `io_handler_invoke` for a single handler.
 
-The call to `io_handler_dispatch` shall be preceded by an acquire memory
-barrier (/TODO/) and succeeded by a release memory barrier (/TODO/).
+The call to `io_handler_invoke` shall be preceded by an acquire memory barrier
+(/TODO/) and succeeded by a release memory barrier (/TODO/).
 
 Calls to `io_handler_allocate` or `io_handler_deallocate` from the initiating
 function shall occur prior to the release memory barrier (/TODO/).
 
 Calls to `io_handler_allocate` or `io_handler_deallocate` that occur
-immediately before `io_handler_dispatch` shall occur after the acquire memory
+immediately before `io_handler_invoke` shall occur after the acquire memory
 barrier.
 
 Calls to `io_handler_allocate` and `io_handler_deallocate` not from the
-initiating function and not immediately before `io_handler_dispatch` shall be
+initiating function and not immediately before `io_handler_invoke` shall be
 preceded by an acquire memory barrier (/TODO/) and succeeded by a release
 memory barrier (/TODO/).
 

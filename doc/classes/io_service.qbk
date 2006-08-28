@@ -89,10 +89,10 @@ implicitly run the `io_service` object for an individual operation. The
 `io_service` functions `run()`, `run_one()`, `poll()` or `poll_one()` must be
 called for the `io_service` to perform [link definitions.asynchronous_operation
 asynchronous operations] on behalf of a C++ program. Notification that an
-asynchronous operation has completed is delivered by dispatch of the associated
-[link requirements.handler handler]. Handlers are dispatched only by a thread
-that is currently calling any overload of `run()`, `run_one()`, `poll()` or
-`poll_one()` for the `io_service`.
+asynchronous operation has completed is delivered by invocation of the
+associated [link requirements.handler handler]. Handlers are dispatched only by
+a thread that is currently calling any overload of `run()`, `run_one()`,
+`poll()` or `poll_one()` for the `io_service`.
 
 [section [^io_service] constructors/destructor]
 
@@ -105,8 +105,10 @@ that is currently calling any overload of `run()`, `run_one()`, `poll()` or
 [function_effects Destroys an object of class `io_service`. For each service
 object `svc` in the `io_service` set, in reverse order of the beginning of
 service object lifetime (C++ Std, 3.8), performs `svc->shutdown_service()`.
-Then, for each service object `svc` in the `io_service` set, in reverse order
-of the beginning of service object lifetime, performs `delete
+Then, uninvoked handler objects that were scheduled for deferred invocation on
+the `io_service`, or any associated `strand`, are destroyed. Then, for each
+service object `svc` in the `io_service` set, in reverse order of the beginning
+of service object lifetime, performs `delete
 static_cast<io_service::service*>(svc)`.]
 
 [endsect]
@@ -153,19 +155,32 @@ or the `io_service` is explicitly stopped, as if implemented as follows:
 [function_requires Must not be called from a thread that is currently calling
 one of `run()`, `run_one()`, `poll()`, or `poll_one()`.]
 
-[function_effects Dispatches at most one handler, where the handler was
-previously scheduled for deferred invocation as if by calling `post()`. Does
-not return until one of the following conditions is true: a handler has been
-invoked; the `io_service` has been explicitly stopped; no object `w` of class
-`io_service::work` exists where `&w.io_service() == this`; or, an error has
-occurred. If a handler was invoked or the `io_service` was stopped, sets `ec`
-such that the expression `!ec` is true. If no `io_service::work` objects exist
-for the `io_service`, stops the `io_service` as if by calling `stop()` and sets
-`ec` such that the expression `!ec` is true. Otherwise, an implementation shall
-set `ec` to the `error_code` value corresponding to the failure condition, as
-shown in the table below. For failure conditions not listed, an implementation
-is permitted to set `ec` to any other value such that the expression `!ec` is
-false.]
+[function_effects Does not return until one of the following conditions is
+true:\n\n
+
+- An error has occurred. `ec` shall be set to the `error_code` value
+  corresponding to the failure condition, as shown in the table below. For
+  failure conditions not listed, an implementation is permitted to set `ec` to
+  any other value such that the expression `!ec` is false.\n\n
+
+- The `io_service` has been explicitly stopped by a call to `stop()`. `ec`
+  shall be set such that the expression `!ec` is true.\n\n
+
+- No object `w` of class `io_service::work` exists where `&w.io_service() ==
+  this`. The `io_service` shall be stopped as if by calling `stop()` and `ec`
+  shall be set such that the expression `!ec` is true.\n\n
+
+- One handler `h` has been invoked by performing `io_handler_invoke(h, &h)`.
+  `ec` shall be set such that the expression `!ec` is true.\n\n
+
+If the function can complete due to more than one of these conditions, the
+earliest condition listed is chosen, and the effects associated with the other
+conditions shall not be performed.]
+
+[function_block If the invoked handler throws an exception, the exception shall
+be allowed to propagate to the caller of `run_one()`. The `io_service` state
+shall be equivalent to if the handler had been successfully invoked without
+throwing an exception.]
 
 [table Table--run_one() failure conditions
   [[failure condition][error code]]
@@ -175,14 +190,9 @@ false.]
   ]
 ]
 
-[function_block If the invoked handler throws an exception, the exception shall
-be allowed to propagate to the caller of `run_one()`. The `io_service` state
-shall be equivalent to if the handler had been successfully invoked without
-throwing an exception.]
-
 [function_returns `1` if a handler was invoked, otherwise `0`.]
 
-[function_notes This function may dispatch additional handlers through nested
+[function_notes This function may invoke additional handlers through nested
 calls to `dispatch()`. These do not count towards the return value.]
 
   size_t poll();
@@ -199,8 +209,8 @@ calls to `dispatch()`. These do not count towards the return value.]
   size_t poll(error_code& ec);
 
 [function_effects Performs `io_service` work without blocking until there are
-no handlers ready to be dispatched immediately, or the `io_service` is
-explicitly stopped, as if implemented as follows:
+no handlers ready to be dispatched immediately, or the `io_service` is stopped,
+as if implemented as follows:
 ``
   size_t n = 0;
   while (poll_one(ec))
@@ -223,15 +233,27 @@ explicitly stopped, as if implemented as follows:
 
   size_t poll_one(error_code& ec);
 
-[function_effects Dispatches at most one handler, where the handler was
-previously scheduled for deferred invocation as if by calling `post()`. Returns
-immediately if the `io_service` has been stopped. Returns immediately if no
-handler is ready to be dispatched. If no object `w` of class `io_service::work`
-exists where `&w.io_service() == this`, stops the `io_service` as if by calling
-`stop()` and returns. Otherwise, invokes one handler and returns. If a handler
-was invoked or the `io_service` was stopped, sets `ec` such that the expression
-`!ec` is true. Otherwise, an implementation shall set `ec` to any value such
-that the expression `!ec` is false.]
+[function_effects Performs one of the following actions:\n\n
+
+- If an error has occurred, sets `ec` to any `error_code` value such that the
+  expression `!ec` is false.\n\n
+
+- If the `io_service` has been explicitly stopped by a call to `stop()`, sets
+  `ec` shall such that the expression `!ec` is true.\n\n
+
+- If no object `w` of class `io_service::work` exists where `&w.io_service() ==
+  this`, stops the `io_service` as if by calling `stop()` and sets `ec` such
+  that the expression `!ec` is true.\n\n
+
+- If a handler `h` is available for immediate invocation, invokes the handler
+  by performing `io_handler_invoke(h, &h)`, and sets `ec` such that the
+  expression `!ec` is true.\n\n
+
+- Otherwise, sets `ec` such that the expression `!ec` is true.\n\n
+
+If the function can succeed in more than one of these ways, the earliest
+condition listed is chosen, and the effects associated with the other
+conditions shall not be performed.]
 
 [function_block If the invoked handler throws an exception, the exception shall
 be allowed to propagate to the caller of `poll_one()`. The `io_service` state
@@ -240,7 +262,7 @@ throwing an exception.]
 
 [function_returns `1` if a handler was invoked, otherwise `0`.]
 
-[function_notes This function may dispatch additional handlers through nested
+[function_notes This function may invoke additional handlers through nested
 calls to `dispatch()`. These do not count towards the return value.]
 
   void stop();
@@ -270,105 +292,138 @@ entered as an effect of a prior call to `stop()`.]
 [function_effects If the current thread (/TODO/) is executing a call to any
 overload of `run()`, `run_one()`, `poll()` or `poll_one()` for the same
 `io_service` object, invokes the completion handler by performing
-`io_handler_dispatch(handler, &handler)`. Otherwise, equivalent to calling
+`io_handler_invoke(handler, &handler)`. Otherwise, equivalent to calling
 `post(handler)`. (/TODO/ memory barrier)]
 
 [function_block If the invoked handler throws an exception, the exception shall
-be allowed to propagate to the caller of `run_one()`. The `io_service` state
+be allowed to propagate to the caller of `dispatch()`. The `io_service` state
 shall be equivalent to if the handler had been successfully invoked without
 throwing an exception.]
 
   template<class CompletionHandler>
     void post(CompletionHandler handler);
 
-[function_effects Requests deferred invocation of the handler by the
-`io_service`. Does not invoke the handler from within the call to `post()`. The
-handler shall be invoked by performing `io_handler_dispatch(handler1,
-&handler1)`, where `handler1` is a copy of `handler`, from a concurrent or
-subsequent call to any overload of `run()`, `run_one()`, `poll()` or
-`poll_one()` on the same `io_service` object. The `io_service` shall have
+[function_effects Requests invocation of the handler by the `io_service`. Does
+not invoke the handler from within the call to `post()`. The `io_service` makes
+a copy of the handler and maintains one or more copies of the handler until
+after the handler has been invoked (but no longer). The `io_service` shall have
 unfinished work, as if by maintaining the existence of one or more objects of
 class `io_service::work` constructed using the `io_service` object `*this`,
-until after the handler has been invoked (but no longer). All copies of the
-handler shall be destroyed after the handler has been invoked. (/TODO/ memory
+until after the handler has been invoked (but no longer). (/TODO/ memory
 barrier.)]
 
   template<class Handler>
     unspecified wrap(Handler handler);
 
-[function_returns A forwarding call wrapper `f` with result type `void` and
-meeting [link requirements.handler handler] requirements. For exposition
-purposes, `f` is of type `F` and constructed using `f(*this, handler)`, where
-`F` is defined as
-follows:
+[function_returns An object `f` of an unspecified type `F` meeting [link
+requirements.handler handler] requirements, and constructed using `f(*this,
+handler)`, where `F` behaves as if defined as follows:
 ``
   class F
   {
   public:
-    F(io_service& i, const Handler& h)
+    F(io_service& i, Handler h)
       : io_service_(i), handler_(h) {}
 
     template<class T1, class T2, __dotdotdot__, class TN>
-    void operator()(T1& t1, T2& t2, __dotdotdot__, TN& tN);
+    class GN
+    {
+    public:
+      GN(Handler h, T1 t1, T2 t2, __dotdotdot__, TN tN)
+        : handler_(h), t1_(t1), t2_(t2), __dotdotdot__, tN_(tN) {}
+
+      void operator()() { handler_(t1_, t2_, __dotdotdot__, tN_); }
+
+      friend void* io_handler_allocate(size_t size, GN* this_g)
+      {
+        return io_handler_allocate(size, &this_g->handler_);
+      }
+
+      friend void io_handler_deallocate(void* pointer, size_t size, GN* this_g)
+      {
+        io_handler_deallocate(pointer, size, &this_g->handler_);
+      }
+
+      template<class Function>
+      friend void io_handler_invoke(Function func, GN* this_g)
+      {
+        io_handler_invoke(func, &this_g->handler_);
+      }
+
+    private:
+      Handler handler_;
+      T1 t1_; T2 t2_; __dotdotdot__; TN tN_;
+    };
 
     template<class T1, class T2, __dotdotdot__, class TN>
-    void operator()(T1& t1, T2& t2, __dotdotdot__, TN& tN) const;
+    void operator()(T1 t1, T2 t2, __dotdotdot__, TN tN)
+    {
+      io_service_.dispatch(GN<T1,T2,__dotdotdot__,TN>(handler_, t1, t2, __dotdotdot__, tN));
+    }
 
+    friend void* io_handler_allocate(size_t size, F* this_f)
+    {
+      return io_handler_allocate(size, &this_f->handler_);
+    }
+
+    friend void io_handler_deallocate(void* pointer, size_t size, F* this_f)
+    {
+      io_handler_deallocate(pointer, size, &this_f->handler_);
+    }
+
+    template<class Function>
+    class H
+    {
+    public:
+      H(Function f, Handler h)
+        : function_(f), handler_(h) {}
+
+      void operator()()
+      {
+        function_();
+      }
+
+      friend void* io_handler_allocate(size_t size, H* this_h)
+      {
+        return io_handler_allocate(size, &this_h->handler_);
+      }
+
+      friend void io_handler_deallocate(void* pointer, size_t size, H* this_h)
+      {
+        io_handler_deallocate(pointer, size, &this_h->handler_);
+      }
+
+      template<class Function1>
+      friend void io_handler_invoke(Function1 func, H* this_h)
+      {
+        io_handler_invoke(func, &this_h->handler_);
+      }
+
+    private:
+      Function function_;
+      Handler handler_;
+    };
+
+    template<class Function>
+    friend void io_handler_invoke(Function func, F* this_f)
+    {
+      this_f->io_service_.dispatch(H<Function>(func, this_f->handler_));
+    }
+
+  private:
     io_service& io_service_;
     Handler handler_;
   };
-
-  void* io_handler_allocate(size_t size, F* this_handler);
-
-  void io_handler_deallocate(void* pointer, size_t size, F* this_handler);
-
-  template<class Function>
-  void io_handler_dispatch(const Function& func, F* this_handler);
 ``]
 
-[function_block The effect of `f(v1, v2, __dotdotdot__, vN)` shall be as
-follows:\n\n
-- If the current thread (/TODO/) is executing a call to any overload of
-  `run()`, `run_one()`, `poll()` or `poll_one()` for the `io_service` object
-  `io_service_`, invokes the wrapped handler by performing
-  `io_handler_dispatch(ch, &handler_)`, where `ch` is a forwarding call wrapper
-  such that expression `ch()` calls `handler_(v1, v2, __dotdotdot__, vN)`.\n\n
-- Otherwise, performs `io_service_.post(ch)` where `ch` is an object of
-  unspecified type meeting [link requirements.completion_handler completion
-  handler] requirements, such that the expression `ch()` calls `handler1(u1,
-  u2, __dotdotdot__, uN)`, the expression `io_handler_allocate(size, &ch)`
-  returns `io_handler_allocate(size, &handler1)`, the expression
-  `io_handler_deallocate(pointer, size, &ch)` calls
-  `io_handler_deallocate(pointer, size, &handler1)`, and the expression
-  `io_handler_dispatch(func, &ch)` calls `io_handler_dispatch(func,
-  &handler1)`, where `handler1` is a copy of `handler_`, `u1, u2,
-  __dotdotdot__, uN` are copies of `v1, v2, __dotdotdot__, vN` respectively,
-  and `func` is an arbitrary function object taking no arguments.]
+[function_block [inline_note In practical terms, the effect of `f(v1, v2,
+__dotdotdot__, vN)` is to cause the `io_service` to perform `handler(v1, v2,
+__dotdotdot__, vN)` from within a call to `run()`, `run_one()`, `poll()` or
+`poll_one()`.\n\n
 
-[function_block The effect of `io_handler_allocate(size, &f)` shall be to
-return the result of the expression `io_handler_allocate(size,
-&f->handler_)`.]
-
-[function_block The effect of `io_handler_deallocate(pointer, size, &f)` shall
-be to call `io_handler_deallocate(pointer, size, &f->handler_)`.]
-
-[function_block The effect of `io_handler_dispatch(func, &f)` shall be as
-follows:\n\n
-- If the current thread (/TODO/) is executing a call to any overload of
-  `run()`, `run_one()`, `poll()` or `poll_one()` for the `io_service` object
-  `f->io_service_`, invokes the function object `func` by performing
-  `io_handler_dispatch(func, &f->handler_)`.\n\n
-- Otherwise, performs `io_service_.post(ch)` where `ch` is an object of
-  unspecified type meeting [link requirements.completion_handler completion
-  handler] requirements, such that the expression `ch()` calls `func1()`, the
-  expression `io_handler_allocate(size, &ch)` returns
-  `io_handler_allocate(size, &handler1)`, the expression
-  `io_handler_deallocate(pointer, size, &ch)` calls
-  `io_handler_deallocate(pointer, size, &handler1)`, and the expression
-  `io_handler_dispatch(func, &ch)` calls `io_handler_dispatch(func,
-  &handler1)`, where `handler1` is a copy of `f->handler_`, `func` is an
-  arbitrary function object taking no arguments, and `func1` is a copy of
-  `func`.]
+Similarly, the effect of `io_handler_invoke(g, &f)` is to cause the
+`io_service` to perform `g()` from within a call to `run()`, `run_one()`,
+`poll()` or `poll_one()`.]]
 
 [endsect]
 
