@@ -97,14 +97,6 @@ TimeTraits, TimerService>`, initialising the base class with
 [function_returns `this->service.expires_from_now(this->implementation, d)`.]
 
   void wait();
-
-[function_effects Calls:
-``
-  error_code ec;
-  this->service.wait(this->implementation, ec);
-  if (ec) throw system_error(ec);
-``]
-
   error_code wait(error_code& ec);
 
 [function_returns `this->service.wait(this->implementation, ec)`.]

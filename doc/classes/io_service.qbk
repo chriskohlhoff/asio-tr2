@@ -116,16 +116,6 @@ static_cast<io_service::service*>(svc)`.]
 [section [^io_service] members]
 
   size_t run();
-
-[function_effects Calls:
-``
-  error_code ec;
-  size_t n = run(ec);
-  if (ec) throw system_error(ec);
-``]
-
-[function_returns `n`.]
-
   size_t run(error_code& ec);
 
 [function_effects Performs `io_service` work until there is no more work to do,
@@ -140,16 +130,6 @@ or the `io_service` is explicitly stopped, as if implemented as follows:
 [function_returns `n`.]
 
   size_t run_one();
-
-[function_effects Calls:
-``
-  error_code ec;
-  size_t n = run_one(ec);
-  if (ec) throw system_error(ec);
-``]
-
-[function_returns `n`.]
-
   size_t run_one(error_code& ec);
 
 [function_requires Must not be called from a thread that is currently calling
@@ -196,16 +176,6 @@ throwing an exception.]
 calls to `dispatch()`. These do not count towards the return value.]
 
   size_t poll();
-
-[function_effects Calls:
-``
-  error_code ec;
-  size_t n = poll(ec);
-  if (ec) throw system_error(ec);
-``]
-
-[function_returns `n`.]
-
   size_t poll(error_code& ec);
 
 [function_effects Performs `io_service` work without blocking until there are
@@ -221,16 +191,6 @@ as if implemented as follows:
 [function_returns `n`.]
 
   size_t poll_one();
-
-[function_effects Calls:
-``
-  error_code ec;
-  size_t n = poll_one(ec);
-  if (ec) throw system_error(ec);
-``]
-
-[function_returns `n`.]
-
   size_t poll_one(error_code& ec);
 
 [function_effects Performs one of the following actions:\n\n

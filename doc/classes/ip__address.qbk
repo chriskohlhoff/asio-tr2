@@ -207,16 +207,6 @@ the table below.]
 [function_throws `bad_cast` if `is_v6()` is false.]
 
   string to_string() const;
-
-[function_effects Calls:
-``
-  error_code ec;
-  string s = to_string(ec);
-  if (ec) throw system_error(ec);
-``]
-
-[function_returns `s`.]
-
   string to_string(error_code& ec) const;
 
 [function_returns `is_v4() ? to_v4().to_string(ec) : to_v6().to_string(ec)`.]
@@ -226,16 +216,6 @@ the table below.]
 [section [^ip::address] static members]
 
   static address from_string(const string& str);
-
-[function_effects Calls:
-``
-  error_code ec;
-  address a = from_string(str, ec);
-  if (ec) throw system_error(ec);
-``]
-
-[function_returns `a`.]
-
   static address from_string(const string& str, error_code& ec);
 
 [function_effects Converts a string representation of an address into an object

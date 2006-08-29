@@ -1,0 +1,41 @@
+[section:error_requirements Requirements on implementations]
+
+Implementations of functions described in this clause are permitted to call the
+application programming interface (API) provided by the operating system. If
+such an operating system API call results in an error, implementations shall
+report the error as follows:
+
+- If the function takes an argument of type `error_code& ec`, the function
+shall not throw exceptions to report operating system errors. If an error
+occurs, `ec` shall be set to an `error_code` value that reflects the error
+reported by the operating system, otherwise `ec` shall be set to `0`. If the
+function would otherwise return `void`, it shall return an `error_code` with
+the value of `ec`.
+
+- Otherwise, the operating system error shall be reported by throwing an
+exception of class `system_error`.
+
+Where a function provides overloads of both forms, and the throwing overload
+returns `void`, the throwing overload shall behave as if implemented in terms
+of the non-throwing overload as follows:
+
+  void ``['[*f]]``(``['[*A1]]`` a1, ``['[*A2]]`` a2, ..., ``['[*AN]]`` aN)
+  {
+    error_code ec;
+    ``['[*f]]``(a1, a2, ..., aN, ec);
+    if (ec) throw system_error(ec);
+  }
+
+Where a function provides overloads of both forms, and the throwing overload
+returns non-`void`, the throwing overload shall behave as if implemented in
+terms of the non-throwing overload as follows:
+
+  ``['[*R f]]``(``['[*A1]]`` a1, ``['[*A2]]`` a2, ..., ``['[*AN]]`` aN)
+  {
+    error_code ec;
+    ``['[*R]]`` r = ``['[*f]]``(a1, a2, ..., aN, ec);
+    if (ec) throw system_error(ec);
+    return r;
+  }
+
+[endsect]

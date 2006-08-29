@@ -161,16 +161,6 @@ definitions.network_byte_order network byte order].]
 definitions.host_byte_order host byte order].]
 
   string to_string() const;
-
-[function_effects Calls:
-``
-  error_code ec;
-  string s = to_string(ec);
-  if (ec) throw system_error(ec);
-``]
-
-[function_returns `s`.]
-
   string to_string(error_code& ec) const;
 
 [function_effects Converts an address into a string representation. The format
@@ -196,16 +186,6 @@ any other value such that the expression `!ec` is false.]
 [section [^ip::address_v4] static members]
 
   static address_v4 from_string(const string& str);
-
-[function_effects Calls:
-``
-  error_code ec;
-  address_v4 a = from_string(str, ec);
-  if (ec) throw system_error(ec);
-``]
-
-[function_returns `a`.]
-
   static address_v4 from_string(const string& str, error_code& ec);
 
 [function_effects Converts a string representation of an address into a

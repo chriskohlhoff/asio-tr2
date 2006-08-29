@@ -244,16 +244,6 @@ following method:
 definitions.network_byte_order network byte order].]
 
   string to_string() const;
-
-[function_effects Calls:
-``
-  error_code ec;
-  string s = to_string(ec);
-  if (ec) throw system_error(ec);
-``]
-
-[function_returns `s`.]
-
   string to_string(error_code& ec) const;
 
 [function_effects Converts an address into a string representation. If
@@ -298,16 +288,6 @@ IPv4 compatible IPv6 address, as if computed by the following method:
 [section [^ip::address_v6] static members]
 
   static address_v6 from_string(const string& str);
-
-[function_effects Calls:
-``
-  error_code ec;
-  address_v6 a = from_string(str, ec);
-  if (ec) throw system_error(ec);
-``]
-
-[function_returns `a`.]
-
   static address_v6 from_string(const string& str, error_code& ec);
 
 [function_effects Converts a string representation of an address into a

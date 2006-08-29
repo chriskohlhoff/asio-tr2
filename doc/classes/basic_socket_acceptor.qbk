@@ -80,6 +80,7 @@
           template<class SocketService>
             error_code accept(basic_socket<Protocol, SocketService>& socket,
                               error_code& ec);
+
           template<class SocketService, class AcceptHandler>
             void async_accept(basic_socket<Protocol, SocketService>& socket,
                               AcceptHandler handler);
@@ -90,6 +91,7 @@
           template<class SocketService>
             error_code accept(basic_socket<Protocol, SocketService>& socket,
                               endpoint_type& endpoint, error_code& ec);
+
           template<class SocketService, class AcceptHandler>
             void async_accept(basic_socket<Protocol, SocketService>& socket,
                               endpoint_type& endpoint, AcceptHandler handler);
@@ -156,28 +158,12 @@ the object as if by calling:
 [section [^basic_socket_acceptor] members]
 
   void open(const protocol_type& protocol);
-
-[function_effects Calls:
-``
-  error_code ec;
-  this->service.open(this->implementation, protocol, ec);
-  if (ec) throw system_error(ec);
-``]
-
   error_code open(const protocol_type& protocol, error_code& ec);
 
 [function_returns `this->service.open(this->implementation, protocol, ec)`.]
 
   void assign(const protocol_type& protocol,
               const native_type& native_acceptor);
-
-[function_effects Calls:
-``
-  error_code ec;
-  this->service.assign(this->implementation, protocol, native_acceptor, ec);
-  if (ec) throw system_error(ec);
-``]
-
   error_code assign(const protocol_type& protocol,
                     const native_type& native_acceptor, error_code& ec);
 
@@ -185,14 +171,6 @@ the object as if by calling:
 native_acceptor, ec)`.]
 
   void close();
-
-[function_effects Calls:
-``
-  error_code ec;
-  this->service.close(this->implementation, ec);
-  if (ec) throw system_error(ec);
-``]
-
   error_code close(error_code& ec);
 
 [function_returns `this->service.close(this->implementation, ec)`.]
@@ -202,28 +180,12 @@ native_acceptor, ec)`.]
 [function_returns `this->service.native(this->implementation)`.]
 
   void cancel();
-
-[function_effects Calls:
-``
-  error_code ec;
-  this->service.cancel(this->implementation, ec);
-  if (ec) throw system_error(ec);
-``]
-
   error_code cancel(error_code& ec);
 
 [function_returns `this->service.cancel(this->implementation, ec)`.]
 
   template<class SettableSocketOption>
     void set_option(const SettableSocketOption& option);
-
-[function_effects Calls:
-``
-  error_code ec;
-  this->service.set_option(this->implementation, option, ec);
-  if (ec) throw system_error(ec);
-``]
-
   template<class SettableSocketOption>
     error_code set_option(const SettableSocketOption& option,
                           error_code& ec);
@@ -232,14 +194,6 @@ native_acceptor, ec)`.]
 
   template<class GettableSocketOption>
     void get_option(GettableSocketOption& option);
-
-[function_effects Calls:
-``
-  error_code ec;
-  this->service.get_option(this->implementation, option, ec);
-  if (ec) throw system_error(ec);
-``]
-
   template<class GettableSocketOption>
     error_code get_option(GettableSocketOption& option, error_code& ec);
 
@@ -247,14 +201,6 @@ native_acceptor, ec)`.]
 
   template<class IoControlCommand>
     void io_control(IoControlCommand& command);
-
-[function_effects Calls:
-``
-  error_code ec;
-  this->service.io_control(this->implementation, command, ec);
-  if (ec) throw system_error(ec);
-``]
-
   template<class IoControlCommand>
     error_code io_control(IoControlCommand& command, error_code& ec);
 
@@ -262,84 +208,32 @@ native_acceptor, ec)`.]
 ec)`.]
 
   bool blocking() const;
-
-[function_effects Calls:
-``
-  error_code ec;
-  bool b = this->service.blocking(this->implementation, ec);
-  if (ec) throw system_error(ec);
-``]
-
-[function_returns `b`.]
-
   bool blocking(error_code& ec) const;
 
 [function_returns `this->service.blocking(this->implementation, ec)`.]
 
   void blocking(bool block);
-
-[function_effects Calls:
-``
-  error_code ec;
-  this->service.blocking(this->implementation, block, ec);
-  if (ec) throw system_error(ec);
-``]
-
   error_code blocking(bool block, error_code& ec);
 
 [function_returns `this->service.blocking(this->implementation, block, ec)`.]
 
   void bind(const endpoint_type& endpoint);
-
-[function_effects Calls:
-``
-  error_code ec;
-  this->service.bind(this->implementation, endpoint, ec);
-  if (ec) throw system_error(ec);
-``]
-
   error_code bind(const endpoint_type& endpoint, error_code& ec);
 
 [function_returns `this->service.bind(this->implementation, endpoint, ec)`.]
 
   void listen(int backlog);
-
-[function_effects Calls:
-``
-  error_code ec;
-  this->service.listen(this->implementation, backlog, ec);
-  if (ec) throw system_error(ec);
-``]
-
   error_code listen(int backlog, error_code& ec);
 
 [function_returns `this->service.listen(this->implementation, backlog, ec)`.]
 
   endpoint_type local_endpoint() const;
-
-[function_effects Calls:
-``
-  error_code ec;
-  endpoint_type e = this->service.local_endpoint(this->implementation, ec);
-  if (ec) throw system_error(ec);
-``]
-
-[function_returns `e`.]
-
   endpoint_type local_endpoint(error_code& ec) const;
 
 [function_returns `this->service.local_endpoint(this->implementation, ec)`.]
 
   template<class SocketService>
     void accept(basic_socket<Protocol, SocketService>& socket);
-
-[function_effects Calls:
-``
-  error_code ec;
-  this->service.accept(this->implementation, socket, 0, ec);
-  if (ec) throw system_error(ec);
-``]
-
   template<class SocketService>
     error_code accept(basic_socket<Protocol, SocketService>& socket,
                       error_code& ec);
@@ -356,14 +250,6 @@ socket, 0, handler)`.]
   template<class SocketService>
     void accept(basic_socket<Protocol, SocketService>& socket,
                 endpoint_type& endpoint);
-
-[function_effects Calls:
-``
-  error_code ec;
-  this->service.accept(this->implementation, socket, &endpoint, ec);
-  if (ec) throw system_error(ec);
-``]
-
   template<class SocketService>
     error_code accept(basic_socket<Protocol, SocketService>& socket,
                       endpoint_type& endpoint, error_code& ec);
