@@ -1,131 +1,20 @@
 [section:ip__v6_only Class [^ip::v6_only]]
 
 The `v6_only` class represents a socket option for determining whether a socket
-created for an IPv6 protocol is restricted to IPv6 communications only.
+created for an IPv6 protocol is restricted to IPv6 communications only. It
+shall be defined as a [link classes.socket_base__bool_socket_options boolean
+socket option] with the name and values in the table below:
 
-`v6_only` satisfies the requirements for `CopyConstructible`, `Assignable`,
-[link requirements.gettable_socket_option `GettableSocketOption`], and [link
-requirements.settable_socket_option `SettableSocketOption`].
+[table Table--v6_only boolean socket option
+  [[['C]][['L]][['N]]]
+  [
+    [`v6_only`]
+    [`IPPROTO_IPV6`]
+    [`IPV6_V6ONLY`]
+  ]
+]
 
-  namespace std {
-    namespace tr2 {
-      namespace sys {
-        namespace ip {
-
-          class v6_only
-          {
-          public:
-            // constructors:
-            v6_only();
-            explicit v6_only(bool v);
-
-            // members:
-            v6_only& operator=(bool v);
-
-            bool value() const;
-
-            operator bool() const;
-            bool operator!() const;
-          };
-
-        } // namespace ip
-      } // namespace sys
-    } // namespace tr2
-  } // namespace std
-
-__POSIX__ implementations must provide the following member functions:
-
-  namespace std {
-    namespace tr2 {
-      namespace sys {
-        namespace ip {
-
-          class v6_only
-          {
-          public:
-            template<class Protocol> int level(const Protocol& p) const;
-            template<class Protocol> int name(const Protocol& p) const;
-            template<class Protocol> ``['unspecified]``* data(const Protocol& p);
-            template<class Protocol> const ``['unspecified]``* data(const Protocol& p) const;
-            template<class Protocol> size_t size(const Protocol& p) const;
-            template<class Protocol> void resize(const Protocol& p, size_t s);
-            ``['[*// remainder unchanged]]``
-          private:
-  ``//        int value_;  ['[*exposition only]]``
-          };
-
-        } // namespace ip
-      } // namespace sys
-    } // namespace tr2
-  } // namespace std
-
-[section [^ip::v6_only] constructors]
-
-  v6_only();
-
-[function_postconditions `!value()`.]
-
-  explicit v6_only(bool v);
-
-[function_postconditions `value() == v`.]
-
-[endsect] 
-
-[section [^ip::v6_only] members]
-
-  v6_only& operator=(bool v);
-
-[function_returns `*this`.]
-
-[function_postconditions `value() == v`.]
-
-  bool value() const;
-
-[function_returns The stored socket option value. For __POSIX__
-implementations, returns `value_ != 0`.]
-
-  operator bool() const;
-
-[function_returns `value()`.]
-
-  bool operator!() const;
-
-[function_returns `!value()`.]
-
-[endsect]
-
-[section [^ip::v6_only] __POSIX__ members]
-
-  template<class Protocol> int level(const Protocol& p) const;
-
-[function_returns `IPPROTO_IPV6`.]
-
-[function_note The constant `IPPROTO_IPV6` is defined in the __POSIX__ header
-file __netinet_in_h__.]
-
-  template<class Protocol> int name(const Protocol& p) const;
-
-[function_returns `IPV6_V6ONLY`.]
-
-[function_note The constant `IPV6_V6ONLY` is defined in the __POSIX__ header
-file __netinet_in_h__.]
-
-  template<class Protocol> ``['unspecified]``* data(const Protocol& p) const;
-
-[function_returns `&value_`.]
-
-  template<class Protocol> const ``['unspecified]``* data(const Protocol& p) const;
-
-[function_returns `&value_`.]
-
-  template<class Protocol> size_t size(const Protocol& p) const;
-
-[function_returns `sizeof(value_)`.]
-
-  template<class Protocol> void resize(const Protocol& p, size_t s);
-
-[function_throws `length_error` if `s != sizeof(value_)`.]
-  
-[endsect]
+[std_note The constants `IPPROTO_IPV6` and `IPV6_V6ONLY` are defined in the
+__POSIX__ header file __netinet_in_h__.]
 
 [endsect]

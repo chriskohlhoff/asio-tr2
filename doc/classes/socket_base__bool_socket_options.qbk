@@ -1,0 +1,174 @@
+[section:socket_base__bool_socket_options Boolean socket options]
+
+The `socket_base::broadcast`, `socket_base::debug`,
+`socket_base::do_not_route`, `socket_base::keep_alive`,
+`socket_base::out_of_band_inline` and `socket_base::reuse_address` classes are
+boolean socket options.
+
+Boolean socket option classes satisfy the requirements for `CopyConstructible`,
+`Assignable`, [link requirements.gettable_socket_option
+`GettableSocketOption`], and [link requirements.settable_socket_option
+`SettableSocketOption`].
+
+Boolean socket option classes shall be defined as follows:
+
+  class ``['[*C]]``
+  {
+  public:
+    // constructors:
+    ``['[*C]]``();
+    explicit ``['[*C]]``(bool v);
+
+    // members:
+    ``['[*C]]``& operator=(bool v);
+
+    bool value() const;
+
+    operator bool() const;
+    bool operator!() const;
+  };
+
+__POSIX__ implementations shall provide the following member functions:
+
+  class ``['[*C]]``
+  {
+  public:
+    template<class Protocol> int level(const Protocol& p) const;
+    template<class Protocol> int name(const Protocol& p) const;
+    template<class Protocol> ``['unspecified]``* data(const Protocol& p);
+    template<class Protocol> const ``['unspecified]``* data(const Protocol& p) const;
+    template<class Protocol> size_t size(const Protocol& p) const;
+    template<class Protocol> void resize(const Protocol& p, size_t s);
+    ``['[*// remainder unchanged]]``
+  private:
+  ``//int value_;  ['[*exposition only]]``
+  };
+
+The names and values used in the definition of the boolean socket option
+classes are described in the table below.
+
+[table Table--Boolean socket options
+  [[['C]][['L]][['N]][description]]
+  [
+    [`socket_base::broadcast`]
+    [`SOL_SOCKET`]
+    [`SO_BROADCAST`]
+    [
+      Determines whether a socket permits sending of broadcast messages, if
+      supported by the protocol.
+    ]
+  ]
+  [
+    [`socket_base::debug`]
+    [`SOL_SOCKET`]
+    [`SO_DEBUG`]
+    [
+      Determines whether a debugging information is recorded by the underlying
+      protocol.
+    ]
+  ]
+  [
+    [`socket_base::do_not_route`]
+    [`SOL_SOCKET`]
+    [`SO_DONTROUTE`]
+    [
+      Determines whether outgoing messages bypass standard routing facilities.
+    ]
+  ]
+  [
+    [`socket_base::keep_alive`]
+    [`SOL_SOCKET`]
+    [`SO_KEEPALIVE`]
+    [
+      Determines whether a socket permits sending of keep_alive messages, if
+      supported by the protocol.
+    ]
+  ]
+  [
+    [`socket_base::out_of_band_inline`]
+    [`SOL_SOCKET`]
+    [`SO_OOBINLINE`]
+    [
+      Determines whether out-of-band data (also known as urgent data) is
+      received inline.
+    ]
+  ]
+  [
+    [`socket_base::reuse_address`]
+    [`SOL_SOCKET`]
+    [`SO_REUSEADDR`]
+    [
+      Determines whether the validation of endpoints used for binding a socket
+      should allow the reuse of local endpoints, if supported by the protocol.
+    ]
+  ]
+]
+
+[std_note The constants `SOL_SOCKET`, `SO_BROADCAST`, `SO_DEBUG`,
+`SO_DONTROUTE`, `SO_KEEPALIVE`, `SO_OOBINLINE` and `SO_REUSEADDR` are defined
+in the __POSIX__ header file __sys_socket_h__.]
+
+[section Boolean socket option constructors]
+
+  ``['[*C]]``();
+
+[function_postconditions `!value()`.]
+
+  explicit ``['[*C]]``(bool v);
+
+[function_postconditions `value() == v`.]
+
+[endsect]
+
+[section Boolean socket option members]
+
+  ``['[*C]]``& operator=(bool v);
+
+[function_returns `*this`.]
+
+[function_postconditions `value() == v`.]
+
+  bool value() const;
+
+[function_returns The stored socket option value. For __POSIX__
+implementations, returns `value_ != 0`.]
+
+  operator bool() const;
+
+[function_returns `value()`.]
+
+  bool operator!() const;
+
+[function_returns `!value()`.]
+
+[endsect]
+
+[section Boolean socket option POSIX members]
+
+  template<class Protocol> int level(const Protocol& p) const;
+
+[function_returns ['[*`L`]].]
+
+  template<class Protocol> int name(const Protocol& p) const;
+
+[function_returns ['[*`N`]].]
+
+  template<class Protocol> ``['unspecified]``* data(const Protocol& p) const;
+
+[function_returns `&value_`.]
+
+  template<class Protocol> const ``['unspecified]``* data(const Protocol& p) const;
+
+[function_returns `&value_`.]
+
+  template<class Protocol> size_t size(const Protocol& p) const;
+
+[function_returns `sizeof(value_)`.]
+
+  template<class Protocol> void resize(const Protocol& p, size_t s);
+
+[function_throws `length_error` if `s != sizeof(value_)`.]
+  
+[endsect]
+
+[endsect]
