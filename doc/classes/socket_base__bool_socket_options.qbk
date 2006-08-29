@@ -153,7 +153,7 @@ implementations, returns `value_ != 0`.]
 
 [function_returns ['[*`N`]].]
 
-  template<class Protocol> ``['unspecified]``* data(const Protocol& p) const;
+  template<class Protocol> ``['unspecified]``* data(const Protocol& p);
 
 [function_returns `&value_`.]
 
@@ -167,7 +167,8 @@ implementations, returns `value_ != 0`.]
 
   template<class Protocol> void resize(const Protocol& p, size_t s);
 
-[function_throws `length_error` if `s != sizeof(value_)`.]
+[function_throws `length_error` if `s` is not a valid data size for the
+protocol specified by `p`.]
   
 [endsect]
 

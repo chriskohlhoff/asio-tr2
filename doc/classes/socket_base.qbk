@@ -13,11 +13,11 @@
           class ``[link classes.socket_base__bool_socket_options keep_alive]``;
           class ``[link classes.socket_base__linger linger]``;
           class ``[link classes.socket_base__bool_socket_options out_of_band_inline]``;
-          class ``[link classes.socket_base__receive_buffer_size receive_buffer_size]``;
-          class ``[link classes.socket_base__receive_low_watermark receive_low_watermark]``;
+          class ``[link classes.socket_base__int_socket_options receive_buffer_size]``;
+          class ``[link classes.socket_base__int_socket_options receive_low_watermark]``;
           class ``[link classes.socket_base__bool_socket_options reuse_address]``;
-          class ``[link classes.socket_base__send_buffer_size send_buffer_size]``;
-          class ``[link classes.socket_base__send_low_watermark send_low_watermark]``;
+          class ``[link classes.socket_base__int_socket_options send_buffer_size]``;
+          class ``[link classes.socket_base__int_socket_options send_low_watermark]``;
 
           typedef ``['[*T1]]`` shutdown_type;
           static const shutdown_type shutdown_receive;

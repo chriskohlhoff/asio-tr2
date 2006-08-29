@@ -1,149 +1,24 @@
 [section:ip__multicast__hops Class [^ip::multicast::hops]]
 
 The `hops` class represents a socket option for specifying the default number
-of hops (also known as time-to-live or TTL) on outbound multicast datagrams.
+of hops (also known as time-to-live or TTL) on outbound multicast datagrams. It
+shall be defined as an [link classes.socket_base__int_socket_options integral
+socket option] with the name and values in the table below:
 
-`hops` satisfies the requirements for `CopyConstructible`, `Assignable`,
-[link requirements.gettable_socket_option `GettableSocketOption`], and [link
-requirements.settable_socket_option `SettableSocketOption`].
+[table Table--hops integral socket option
+  [[['C]][['L]][['N]]]
+  [
+    [`hops`]
+    [`IPPROTO_IPV6` if `p.family() == AF_INET6`, otherwise `IPPROTO_IP`.]
+    [`IPV6_MULTICAST_HOPS` if `p.family() == AF_INET6`, otherwise `IP_MULTICAST_TTL`.]
+  ]
+]
 
-  namespace std {
-    namespace tr2 {
-      namespace sys {
-        namespace ip {
-          namespace multicast {
+[std_note The constants `IPPROTO_IP`, `IPPROTO_IPV6` and `IPV6_MULTICAST_HOPS`
+are defined in the __POSIX__ header file __netinet_in_h__. [*Where is
+`IP_MULTICAST_TTL` in __POSIX__?]]
 
-            class hops
-            {
-            public:
-              // constructors:
-              hops();
-              explicit hops(int v);
-
-              // members:
-              hops& operator=(int v);
-
-              int value() const;
-            };
-
-          } // namespace multicast
-        } // namespace ip
-      } // namespace sys
-    } // namespace tr2
-  } // namespace std
-
-__POSIX__ implementations must provide the following member functions:
-
-  namespace std {
-    namespace tr2 {
-      namespace sys {
-        namespace ip {
-          namespace multicast {
-
-            class hops
-            {
-            public:
-              template<class Protocol> int level(const Protocol& p) const;
-              template<class Protocol> int name(const Protocol& p) const;
-              template<class Protocol> ``['unspecified]``* data(const Protocol& p);
-              template<class Protocol> const ``['unspecified]``* data(const Protocol& p) const;
-              template<class Protocol> size_t size(const Protocol& p) const;
-              template<class Protocol> void resize(const Protocol& p, size_t s);
-              ``['[*// remainder unchanged]]``
-            private:
-  ``//          int value_;               ['[*exposition only]]``
-  ``//          unsigned char v4\_value\_;  ['[*exposition only]]``
-  ``//          unsigned int v6\_value\_;   ['[*exposition only]]``
-            };
-
-          } // namespace multicast
-        } // namespace ip
-      } // namespace sys
-    } // namespace tr2
-  } // namespace std
-
-[section [^ip::multicast::hops] constructors]
-
-  hops();
-
-[function_effects For __POSIX__ implementations, sets `value_` to `0`,
-`v4_value_` to `0`, and `v6_value_` to `0`.]
-
-[function_postconditions `value() == 0`.]
-
-  explicit hops(int v);
-
-[function_effects For __POSIX__ implementations, sets `value_` to `v`,
-`v4_value_` to `v`, and `v6_value_` to `v`.]
-
-[function_throws `out_of_range` if `v` is not in the range `[0, 255]`.]
-
-[function_postconditions `value() == v`.]
-
-[endsect]
-
-[section [^ip::multicast::hops] members]
-
-  hops& operator=(int v);
-
-[function_effects For __POSIX__ implementations, sets `value_` to `v`,
-`v4_value_` to `v`, and `v6_value_` to `v`.]
-
-[function_returns `*this`.]
-
-[function_throws `out_of_range` if `v` is not in the range `[0, 255]`.]
-
-[function_postconditions `value() == v`.]
-
-  int value() const;
-
-[function_returns The stored socket option value. For __POSIX__
-implementations, returns `value_`.]
-
-[endsect]
-
-[section [^ip::multicast::hops] __POSIX__ members]
-
-  template<class Protocol> int level(const Protocol& p) const;
-
-[function_returns `IPPROTO_IPV6` if `p.family() == AF_INET6`, otherwise
-`IPPROTO_IP`.]
-
-[function_note The constants `IPPROTO_IP` and `IPPROTO_IPV6` are defined in the
-__POSIX__ header file __netinet_in_h__.]
-
-  template<class Protocol> int name(const Protocol& p) const;
-
-[function_returns `IPV6_MULTICAST_HOPS` if `p.family() == AF_INET6`, otherwise
-`IP_MULTICAST_TTL`.]
-
-[function_note The constant `IPV6_MULTICAST_HOPS` is defined in the __POSIX__
-header file __netinet_in_h__. [*Where is `IP_MULTICAST_TTL` in __POSIX__?]]
-
-  template<class Protocol> ``['unspecified]``* data(const Protocol& p) const;
-
-[function_returns `&v6_value_` if `p.family() == AF_INET6`, otherwise
-`&v4_value_`.]
-
-  template<class Protocol> const ``['unspecified]``* data(const Protocol& p) const;
-
-[function_returns `&v6_value_` if `p.family() == AF_INET6`, otherwise
-`&v4_value_`.]
-
-  template<class Protocol> size_t size(const Protocol& p) const;
-
-[function_returns `sizeof(v6_value_)` if `p.family() == AF_INET6`, otherwise
-`sizeof(v4_value_)`.]
-
-  template<class Protocol> void resize(const Protocol& p, size_t s);
-
-[function_effects Sets `value_` to `v6_value_` if `p.family() == AF_INET6`,
-otherwise sets `value_` to `v4_value_`.]
-
-[function_throws `length_error` if the condition `p.family() == AF_INET6 && s
-!= sizeof(v6_value_) || p.family() != AF_INET6 && s != sizeof(v4_value_)` is
-true.]
-
-[endsect]
+Constructors for the `hops` class shall throw `out_of_range` if the argument is
+not in the range `[0, 255]`.
 
 [endsect]

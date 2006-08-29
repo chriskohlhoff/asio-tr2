@@ -79,8 +79,8 @@ enabled. For __POSIX__ implementations, returns `value_.l_onoff != 0`.]
 
   int timeout() const;
 
-[function_returns The stored socket option value for the linger timeout. For
-__POSIX__ implementations, returns `value_.l_linger`.]
+[function_returns The stored socket option value for the linger timeout, in
+seconds. For __POSIX__ implementations, returns `value_.l_linger`.]
 
   void timeout(int t);
 
