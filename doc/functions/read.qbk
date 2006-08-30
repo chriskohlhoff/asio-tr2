@@ -49,16 +49,13 @@ operation.]
 
   template<class SyncReadStream, class Allocator>
     size_t read(SyncReadStream& stream, basic_fifobuf<Allocator>& fb);
-
   template<class SyncReadStream, class Allocator>
     size_t read(SyncReadStream& stream, basic_fifobuf<Allocator>& fb,
                 error_code& ec);
-
   template<class SyncReadStream, class Allocator,
     class CompletionCondition>
       size_t read(SyncReadStream& stream, basic_fifobuf<Allocator>& fb,
                   CompletionCondition completion_condition);
-
   template<class SyncReadStream, class Allocator,
     class CompletionCondition>
       size_t read(SyncReadStream& stream, basic_fifobuf<Allocator>& fb,
