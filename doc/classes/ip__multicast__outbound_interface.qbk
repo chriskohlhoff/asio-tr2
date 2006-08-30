@@ -1,0 +1,108 @@
+[section:ip__multicast__outbound_interface Class [^ip::multicast::outbound_interface]]
+
+The `outbound_interface` class represents a socket option that specifies the
+network interface to use for outgoing multicast datagrams.
+
+`outbound_interface` satisfies the requirements for `CopyConstructible`,
+`Assignable`, and [link requirements.settable_socket_option
+`SettableSocketOption`].
+
+  namespace std {
+    namespace tr2 {
+      namespace sys {
+        namespace ip {
+          namespace multicast {
+
+            class outbound_interface
+            {
+            public:
+              // constructors:
+              outbound_interface();
+              outbound_interface(const address_v4& network_interface);
+              outbound_interface(unsigned int network_interface);
+            };
+
+          } // namespace multicast
+        } // namespace ip
+      } // namespace sys
+    } // namespace tr2
+  } // namespace std
+
+__POSIX__ implementations must provide the following member functions:
+
+  namespace std {
+    namespace tr2 {
+      namespace sys {
+        namespace ip {
+          namespace multicast {
+
+            class outbound_interface
+            {
+            public:
+              template<class Protocol> int level(const Protocol& p) const;
+              template<class Protocol> int name(const Protocol& p) const;
+              template<class Protocol> const ``['unspecified]``* data(const Protocol& p) const;
+              template<class Protocol> size_t size(const Protocol& p) const;
+              ``['[*// remainder unchanged]]``
+            private:
+  ``//          in\_addr v4\_value\_;       ['[*exposition only]]``
+  ``//          unsigned int v6\_value\_;  ['[*exposition only]]``
+            };
+
+          } // namespace multicast
+        } // namespace ip
+      } // namespace sys
+    } // namespace tr2
+  } // namespace std
+
+[section [^ip::multicast::outbound_interface] constructors]
+
+  outbound_interface();
+
+[function_effects For __POSIX__ implementations, both `v4_value_` and
+`v6_value_` are zero-initialised.]
+
+  outbound_interface(const address_v4& network_interface);
+
+[function_effects For __POSIX__ implementations, `v4_value_` is initialised to
+correspond to the IPv4 address `network_interface`, and `v6_value_` is
+zero-initialised.]
+
+  outbound_interface(unsigned int network_interface);
+
+[function_effects For __POSIX__ implementations, `v6_value_` is initialised to
+`network_interface`, and `v4_value_` is zero-initialised.]
+
+[endsect]
+
+[section [^ip::multicast::outbound_interface] __POSIX__ members]
+
+  template<class Protocol> int level(const Protocol& p) const;
+
+[function_returns `IPPROTO_IPV6` if `p.family() == AF_INET6`, otherwise
+`IPPROTO_IP`.]
+
+[function_note The constants `IPPROTO_IP` and `IPPROTO_IPV6` are defined in the
+__POSIX__ header file __netinet_in_h__.]
+
+  template<class Protocol> int name(const Protocol& p) const;
+
+[function_returns `IPV6_MULTICAST_IF` if `p.family() == AF_INET6`, otherwise
+`IP_MULTICAST_IF`.]
+
+[function_note The constant `IPV6_MULTICAST_IF` is defined in the __POSIX__
+header file __netinet_in_h__. [*Where is `IP_MULTICAST_IF` in __POSIX__?]]
+
+  template<class Protocol> const ``['unspecified]``* data(const Protocol& p) const;
+
+[function_returns `&v6_value_` if `p.family() == AF_INET6`, otherwise
+`&v4_value_`.]
+
+  template<class Protocol> size_t size(const Protocol& p) const;
+
+[function_returns `sizeof(v6_value_)` if `p.family() == AF_INET6`, otherwise
+`sizeof(v4_value_)`.]
+
+[endsect]
+
+[endsect]

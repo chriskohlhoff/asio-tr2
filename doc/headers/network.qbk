@@ -157,7 +157,7 @@
 
             class ``[link classes.ip__multicast__group_socket_options leave_group]``;
 
-            class outbound_interface;
+            class ``[link classes.ip__multicast__outbound_interface outbound_interface]``;
 
             class ``[link classes.ip__multicast__hops hops]``;
 
