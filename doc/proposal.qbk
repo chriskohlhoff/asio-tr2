@@ -1,7 +1,7 @@
 [library Networking Library Proposal for TR2
     [quickbook 1.1]
     [id tr2network]
-    [last-revision $Date: 2006/08/30 02:27:58 $]
+    [last-revision $Date: 2006/08/30 05:12:07 $]
 ]
 
 [/-----------------------------------------------------------------------------]
@@ -646,6 +646,8 @@ express type requirements, as listed in the table below.
 [include:requirements requirements/sync_write_stream.qbk]
 [include:requirements requirements/async_write_stream.qbk]
 [endsect]
+[include:classes classes/transfer_all.qbk]
+[include:classes classes/transfer_at_least.qbk]
 [endsect]
 
 [endsect]

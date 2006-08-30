@@ -1,0 +1,25 @@
+[section:transfer_at_least Class [^transfer_at_least]]
+
+  namespace std {
+    namespace tr2 {
+      namespace sys {
+
+        class transfer_at_least :
+          public binary_function<error_code, size_t, bool>
+        {
+        public:
+          transfer_at_least(size_t m);
+          bool operator()(const error_code& ec, size_t s) const;
+        private:
+  ``//      size\_t minimum\_;  ['[*exposition only]]``
+        };
+
+      } // namespace sys
+    } // namespace tr2
+  } // namespace std
+
+The constructor initialises `minimum_` with `m`.
+
+`operator()` returns `!!ec || s >= minimum_`.
+
+[endsect]

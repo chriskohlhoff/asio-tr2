@@ -1,0 +1,20 @@
+[section:transfer_all Class [^transfer_all]]
+
+  namespace std {
+    namespace tr2 {
+      namespace sys {
+
+        class transfer_all :
+          public binary_function<error_code, size_t, bool>
+        {
+        public:
+          bool operator()(const error_code& ec, size_t) const;
+        };
+
+      } // namespace sys
+    } // namespace tr2
+  } // namespace std
+
+`operator()` returns `!!ec`.
+
+[endsect]
