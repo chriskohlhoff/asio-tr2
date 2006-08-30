@@ -153,9 +153,9 @@
 
           namespace multicast {
 
-            class ``[link classes.ip__multicast__join_group join_group]``;
+            class ``[link classes.ip__multicast__group_socket_options join_group]``;
 
-            class ``[link classes.ip__multicast__leave_group leave_group]``;
+            class ``[link classes.ip__multicast__group_socket_options leave_group]``;
 
             class outbound_interface;
 

@@ -1,7 +1,7 @@
 [library Networking Library Proposal for TR2
     [quickbook 1.1]
     [id tr2network]
-    [last-revision $Date: 2006/08/30 12:29:52 $]
+    [last-revision $Date: 2006/08/30 14:04:59 $]
 ]
 
 [/-----------------------------------------------------------------------------]
@@ -632,8 +632,7 @@ express type requirements, as listed in the table below.
 [include:classes classes/ip__udp.qbk]
 [include:classes classes/ip__v6_only.qbk]
 [include:classes classes/ip__unicast__hops.qbk]
-[include:classes classes/ip__multicast__join_group.qbk]
-[include:classes classes/ip__multicast__leave_group.qbk]
+[include:classes classes/ip__multicast__group_socket_options.qbk]
 [include:classes classes/ip__multicast__hops.qbk]
 [include:classes classes/ip__multicast__enable_loopback.qbk]
 [endsect]

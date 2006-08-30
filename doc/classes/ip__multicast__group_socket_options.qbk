@@ -1,0 +1,125 @@
+[section:ip__multicast__group_socket_options Multicast group management socket options]
+
+The `ip::multicast::join_group` and `ip::multicast::leave_group` classes are
+socket options for multicast group management.
+
+Multicast group management socket option classes satisfy the requirements for
+`CopyConstructible`, `Assignable`, and [link
+requirements.settable_socket_option `SettableSocketOption`].
+
+Multicast group management socket option classes shall be defined as follows:
+
+  class ``['[*C]]``
+  {
+  public:
+    // constructors:
+    ``['[*C]]``();
+    explicit ``['[*C]]``(const address& multicast_group);
+    ``['[*C]]``(const address_v4& multicast_group,
+      const address_v4& network_interface = address_v4::any());
+    ``['[*C]]``(const address_v6& multicast_group,
+      unsigned int network_interface = 0);
+  };
+
+__POSIX__ implementations shall provide the following member functions:
+
+  class ``['[*C]]``
+  {
+  public:
+    template<class Protocol> int level(const Protocol& p) const;
+    template<class Protocol> int name(const Protocol& p) const;
+    template<class Protocol> const ``['unspecified]``* data(const Protocol& p) const;
+    template<class Protocol> size_t size(const Protocol& p) const;
+    ``['[*// remainder unchanged]]``
+  private:
+  ``//ip\_mreq v4\_value\_;    ['[*exposition only]]``
+  ``//ipv6\_mreq v6\_value\_;  ['[*exposition only]]``
+  };
+
+The names and values used in the definition of the multicast group management
+socket option classes are described in the table below.
+
+[table Table--Multicast group management socket options
+  [[['C]][['L]][['N]][description]]
+  [
+    [`ip::multicast::join_group`]
+    [`IPPROTO_IPV6` if `p.family() == AF_INET6`, otherwise `IPPROTO_IP`.]
+    [`IPV6_JOIN_GROUP` if `p.family() == AF_INET6`, otherwise `IP_ADD_MEMBERSHIP`.]
+    [
+      Used to join a multicast group.
+    ]
+  ]
+  [
+    [`ip::multicast::leave_group`]
+    [`IPPROTO_IPV6` if `p.family() == AF_INET6`, otherwise `IPPROTO_IP`.]
+    [`IPV6_LEAVE_GROUP` if `p.family() == AF_INET6`, otherwise `IP_DROP_MEMBERSHIP`.]
+    [
+      Used to leave a multicast group.
+    ]
+  ]
+]
+
+[std_note The constants `IPPROTO_IP` and `IPPROTO_IPV6` are defined in the
+__POSIX__ header file __netinet_in_h__. The constants `IPV6_JOIN_GROUP` and
+`IPV6_LEAVE_GROUP` are defined in the __POSIX__ header file __netinet_in_h__.
+[*Where are `IP_ADD_MEMBERSHIP` and `IP_DROP_MEMBERSHIP` in __POSIX__?]]
+
+[section Multicast group management socket option constructors]
+
+  ``['[*C]]``();
+
+[function_effects For __POSIX__ implementations, both `v4_value_` and
+`v6_value_` are zero-initialised.]
+
+  explicit ``['[*C]]``(const address& multicast_group);
+
+[function_effects For __POSIX__ implementations, if `multicast_group.is_v6()`
+is true then `v6_value_.ipv6mr_multiaddr` is initialised to correspond to the
+IPv6 address returned by `multicast_group.to_v6()`,
+`v6_value_.ipv6mr_interface` is set to `0`, and `v4_value_` is
+zero-initialised; otherwise, `v4_value_.imr_multiaddr` is initialised to
+correspond to the IPv4 address returned by `multicast_group.to_v4()`,
+`v4_value_.imr_interface` is zero-initialised, and `v6_value_` is
+zero-initialised.]
+
+  ``['[*C]]``(const address_v4& multicast_group,
+    const address_v4& network_interface = address_v4::any());
+
+[function_effects For __POSIX__ implementations, `v4_value_.imr_multiaddr` is
+initialised to correspond to the address `multicast_group`,
+`v4_value_.imr_interface` is initialised to correspond to address
+`network_interface`, and `v6_value_` is zero-initialised.]
+
+  ``['[*C]]``(const address_v6& multicast_group,
+    unsigned int network_interface = 0);
+
+[function_effects For __POSIX__ implementations, `v6_value_.ipv6mr_multiaddr`
+is initialised to correspond to the address `multicast_group`,
+`v6_value_.ipv6mr_interface` is initialised to `network_interface`, and
+`v4_value_` is zero-initialised.]
+
+[endsect]
+
+[section Multicast group management socket option __POSIX__ members]
+
+  template<class Protocol> int level(const Protocol& p) const;
+
+[function_returns ['[*`L`]].]
+
+  template<class Protocol> int name(const Protocol& p) const;
+
+[function_returns ['[*`N`]].]
+
+  template<class Protocol> const ``['unspecified]``* data(const Protocol& p) const;
+
+[function_returns `&v6_value_` if `p.family() == AF_INET6`, otherwise
+`&v4_value_`.]
+
+  template<class Protocol> size_t size(const Protocol& p) const;
+
+[function_returns `sizeof(v6_value_)` if `p.family() == AF_INET6`, otherwise
+`sizeof(v4_value_)`.]
+
+[endsect]
+
+[endsect]
