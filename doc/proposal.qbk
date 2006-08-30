@@ -1,7 +1,7 @@
 [library Networking Library Proposal for TR2
     [quickbook 1.1]
     [id tr2network]
-    [last-revision $Date: 2006/08/29 15:01:00 $]
+    [last-revision $Date: 2006/08/30 02:27:58 $]
 ]
 
 [/-----------------------------------------------------------------------------]
@@ -64,6 +64,7 @@
 [def __POSIX__ /POSIX/]
 [def __accept__ [@http://www.opengroup.org/onlinepubs/000095399/functions/connect.html `accept()`]]
 [def __connect__ [@http://www.opengroup.org/onlinepubs/000095399/functions/connect.html `connect()`]]
+[def __gethostname__ [@http://www.opengroup.org/onlinepubs/000095399/functions/gethostname.html `gethostname()`]]
 [def __getpeername__ [@http://www.opengroup.org/onlinepubs/000095399/functions/getpeername.html `getpeername()`]]
 [def __getsockname__ [@http://www.opengroup.org/onlinepubs/000095399/functions/getsockname.html `getsockname()`]]
 [def __getsockopt__ [@http://www.opengroup.org/onlinepubs/000095399/functions/getsockopt.html `getsockopt()`]]
@@ -625,6 +626,7 @@ express type requirements, as listed in the table below.
 [include:classes classes/ip__basic_resolver_entry.qbk]
 [include:classes classes/ip__basic_resolver_iterator.qbk]
 [include:classes classes/ip__basic_resolver_query.qbk]
+[include:functions functions/ip__host_name.qbk]
 [include:classes classes/ip__tcp.qbk]
 [include:classes classes/ip__tcp__no_delay.qbk]
 [include:classes classes/ip__udp.qbk]

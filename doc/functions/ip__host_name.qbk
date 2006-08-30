@@ -1,0 +1,9 @@
+[section:ip__host_name Host name functions]
+
+  string host_name();
+  string host_name(error_code&);
+
+[function_returns The standard host name for the current machine, determined as
+if by __POSIX__ __gethostname__.]
+
+[endsect]
