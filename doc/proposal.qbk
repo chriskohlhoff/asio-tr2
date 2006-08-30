@@ -1,7 +1,7 @@
 [library Networking Library Proposal for TR2
     [quickbook 1.1]
     [id tr2network]
-    [last-revision $Date: 2006/08/30 14:30:54 $]
+    [last-revision $Date: 2006/08/30 14:41:08 $]
 ]
 
 [/-----------------------------------------------------------------------------]
@@ -338,6 +338,7 @@ development of the library:
 * ioctl provided for platform specific use, e.g. QoS settings
 * Non-blocking flag is simulated
 * WSAEMSGSIZE mapping on Windows to no error, set message_truncated
+* Why ip::multicast::outbound_interface is settable only.
 
 Contact the author for more information.
 
