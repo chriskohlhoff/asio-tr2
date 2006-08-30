@@ -8,7 +8,7 @@
         class ``[link classes.transfer_all transfer_all]``;
         class ``[link classes.transfer_at_least transfer_at_least]``;
 
-        // synchronous read operations:
+        ``// [link functions.read synchronous read operations]:``
         template<class SyncReadStream, class MutableBufferSequence>
           size_t read(SyncReadStream& stream,
                       const MutableBufferSequence& buffers);
@@ -27,17 +27,17 @@
                         CompletionCondition completion_condition,
                         error_code& ec);
         template<class SyncReadStream, class Allocator>
-          size_t read(SyncReadStream& stream, basic_fifobuf<Allocator>& sb);
+          size_t read(SyncReadStream& stream, basic_fifobuf<Allocator>& fb);
         template<class SyncReadStream, class Allocator>
-          size_t read(SyncReadStream& stream, basic_fifobuf<Allocator>& sb,
+          size_t read(SyncReadStream& stream, basic_fifobuf<Allocator>& fb,
                       error_code& ec);
         template<class SyncReadStream, class Allocator,
           class CompletionCondition>
-            size_t read(SyncReadStream& stream, basic_fifobuf<Allocator>& sb,
+            size_t read(SyncReadStream& stream, basic_fifobuf<Allocator>& fb,
                         CompletionCondition completion_condition);
         template<class SyncReadStream, class Allocator,
           class CompletionCondition>
-            size_t read(SyncReadStream& stream, basic_fifobuf<Allocator>& sb,
+            size_t read(SyncReadStream& stream, basic_fifobuf<Allocator>& fb,
                         CompletionCondition completion_condition,
                         error_code& ec);
 
@@ -55,12 +55,12 @@
                               ReadHandler handler);
         template<class AsyncReadStream, class Allocator, class ReadHandler>
           size_t async_read(AsyncReadStream& stream,
-                            basic_fifobuf<Allocator>& sb,
+                            basic_fifobuf<Allocator>& fb,
                             ReadHandler handler);
         template<class AsyncReadStream, class Allocator,
           class CompletionCondition, class ReadHandler>
             size_t async_read(AsyncReadStream& stream,
-                              basic_fifobuf<Allocator>& sb,
+                              basic_fifobuf<Allocator>& fb,
                               CompletionCondition completion_condition,
                               ReadHandler handler);
 
@@ -83,19 +83,19 @@
                          CompletionCondition completion_condition,
                          error_code& ec);
         template<class SyncWriteStream, class Allocator>
-          size_t write(SyncWriteStream& stream, basic_fifobuf<Allocator>& sb);
+          size_t write(SyncWriteStream& stream, basic_fifobuf<Allocator>& fb);
         template<class SyncWriteStream, class Allocator>
-          size_t write(SyncWriteStream& stream, basic_fifobuf<Allocator>& sb,
+          size_t write(SyncWriteStream& stream, basic_fifobuf<Allocator>& fb,
                        error_code& ec);
         template<class SyncWriteStream, class Allocator,
           class CompletionCondition>
             size_t write(SyncWriteStream& stream,
-                         basic_fifobuf<Allocator>& sb,
+                         basic_fifobuf<Allocator>& fb,
                          CompletionCondition completion_condition);
         template<class SyncWriteStream, class Allocator,
           class CompletionCondition>
             size_t write(SyncWriteStream& stream,
-                         basic_fifobuf<Allocator>& sb,
+                         basic_fifobuf<Allocator>& fb,
                          CompletionCondition completion_condition,
                          error_code& ec);
 
@@ -113,47 +113,47 @@
                                WriteHandler handler);
         template<class AsyncWriteStream, class Allocator, class WriteHandler>
           size_t async_write(AsyncWriteStream& stream,
-                             basic_fifobuf<Allocator>& sb,
+                             basic_fifobuf<Allocator>& fb,
                              WriteHandler handler);
         template<class AsyncWriteStream, class Allocator,
           class CompletionCondition, class WriteHandler>
             size_t async_write(AsyncWriteStream& stream,
-                               basic_fifobuf<Allocator>& sb,
+                               basic_fifobuf<Allocator>& fb,
                                CompletionCondition completion_condition,
                                WriteHandler handler);
 
         // synchronous delimited read operations:
         template <class SyncReadStream, class Allocator>
-          size_t read_until(SyncReadStream& s, basic_fifobuf<Allocator>& sb,
+          size_t read_until(SyncReadStream& s, basic_fifobuf<Allocator>& fb,
                             char delim);
         template <class SyncReadStream, class Allocator>
-          size_t read_until(SyncReadStream& s, basic_fifobuf<Allocator>& sb,
+          size_t read_until(SyncReadStream& s, basic_fifobuf<Allocator>& fb,
                             char delim, error_code& ec);
         template <class SyncReadStream, class Allocator>
-          size_t read_until(SyncReadStream& s, basic_fifobuf<Allocator>& sb,
+          size_t read_until(SyncReadStream& s, basic_fifobuf<Allocator>& fb,
                             const string& delim);
         template <class SyncReadStream, class Allocator>
-          size_t read_until(SyncReadStream& s, basic_fifobuf<Allocator>& sb,
+          size_t read_until(SyncReadStream& s, basic_fifobuf<Allocator>& fb,
                             const string& delim, error_code& ec);
         template <class SyncReadStream, class Allocator>
-          size_t read_until(SyncReadStream& s, basic_fifobuf<Allocator>& sb,
+          size_t read_until(SyncReadStream& s, basic_fifobuf<Allocator>& fb,
                             const regex& expr);
         template <class SyncReadStream, class Allocator>
-          size_t read_until(SyncReadStream& s, basic_fifobuf<Allocator>& sb,
+          size_t read_until(SyncReadStream& s, basic_fifobuf<Allocator>& fb,
                             const regex& expr, error_code& ec);
 
         // asynchronous delimited read operations:
         template <class AsyncReadStream, class Allocator, class ReadHandler>
           void async_read_until(AsyncReadStream& s,
-                                basic_fifobuf<Allocator>& sb, char delim,
+                                basic_fifobuf<Allocator>& fb, char delim,
                                 ReadHandler handler);
         template <class AsyncReadStream, class Allocator, class ReadHandler>
           void async_read_until(AsyncReadStream& s,
-                                basic_fifobuf<Allocator>& sb,
+                                basic_fifobuf<Allocator>& fb,
                                 const string& delim, ReadHandler handler);
         template <class AsyncReadStream, class Allocator, class ReadHandler>
           void async_read_until(AsyncReadStream& s,
-                                basic_fifobuf<Allocator>& sb,
+                                basic_fifobuf<Allocator>& fb,
                                 const regex& expr, ReadHandler handler);
 
       } // namespace sys
