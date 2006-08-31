@@ -111,7 +111,7 @@
                         CompletionCondition completion_condition,
                         error_code& ec);
 
-        // asynchronous read operations:
+        ``// [link functions.async_read asynchronous read operations]:``
 
         template<class AsyncReadStream, class MutableBufferSequence,
           class ReadHandler>
