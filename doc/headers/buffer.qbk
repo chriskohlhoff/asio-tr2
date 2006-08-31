@@ -135,7 +135,7 @@
                               CompletionCondition completion_condition,
                               ReadHandler handler);
 
-        // synchronous write operations:
+        ``// [link functions.write synchronous write operations]:``
 
         template<class SyncWriteStream, class ConstBufferSequence>
           size_t write(SyncWriteStream& stream,
@@ -195,7 +195,7 @@
                                CompletionCondition completion_condition,
                                WriteHandler handler);
 
-        // synchronous delimited read operations:
+        ``// [link functions.read_until synchronous delimited read operations]:``
 
         template <class SyncReadStream, class Allocator>
           size_t read_until(SyncReadStream& s, basic_fifobuf<Allocator>& fb,
