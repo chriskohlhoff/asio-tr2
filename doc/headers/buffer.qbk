@@ -210,7 +210,7 @@
           size_t read_until(SyncReadStream& s, basic_fifobuf<Allocator>& fb,
                             const string& delim, error_code& ec);
 
-        // asynchronous delimited read operations:
+        ``// [link functions.async_read_until asynchronous delimited read operations]:``
 
         template <class AsyncReadStream, class Allocator, class ReadHandler>
           void async_read_until(AsyncReadStream& s,
