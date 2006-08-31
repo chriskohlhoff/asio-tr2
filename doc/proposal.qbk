@@ -1,7 +1,7 @@
 [library Networking Library Proposal for TR2
     [quickbook 1.1]
     [id tr2network]
-    [last-revision $Date: 2006/08/31 08:09:12 $]
+    [last-revision $Date: 2006/08/31 11:40:59 $]
 ]
 
 [/-----------------------------------------------------------------------------]
@@ -573,6 +573,7 @@ express type requirements, as listed in the table below.
 [include:functions functions/read.qbk]
 [include:functions functions/async_read.qbk]
 [include:functions functions/write.qbk]
+[include:functions functions/async_write.qbk]
 [include:functions functions/read_until.qbk]
 [endsect]
 

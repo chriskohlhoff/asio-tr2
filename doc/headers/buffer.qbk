@@ -171,7 +171,7 @@
                          CompletionCondition completion_condition,
                          error_code& ec);
 
-        // asynchronous write operations:
+        ``// [link functions.async_write asynchronous write operations]:``
 
         template<class AsyncWriteStream, class ConstBufferSequence,
           class WriteHandler>

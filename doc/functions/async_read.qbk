@@ -13,7 +13,7 @@
                         ReadHandler handler);
 
 [function_effects Initiates an asynchronous operation to read data from the
-[link requirements.sync_read_stream buffer-oriented asynchronous read stream]
+[link requirements.async_read_stream buffer-oriented asynchronous read stream]
 object `stream` by performing one or more asynchronous operations on the stream
 using the stream's `async_read_some` member function (henceforth referred to as
 asynchronous /read_some/ operations). The operation is performed via the
@@ -25,12 +25,12 @@ requirements.asynchronous_operations asynchronous operation] requirements.]
 read operation shall always fill a buffer in the sequence completely before
 proceeding to the next.]
 
-[function_block The implementation shall maintain one or more copies of `mb`
-until such time as the read operation no longer requires access to the memory
-specified by the buffers in the sequence. The program must ensure the memory is
-valid until:]
+[function_block The implementation shall maintain one or more copies of
+`buffers` until such time as the read operation no longer requires access to
+the memory specified by the buffers in the sequence. The program must ensure
+the memory is valid until:]
 
-[function_block - the last copy of `mb` is destroyed, or]
+[function_block - the last copy of `buffers` is destroyed, or]
 
 [function_block - the handler for the asynchronous operation is invoked,]
 
@@ -50,6 +50,9 @@ with an object of class `transfer_all`.]
 been filled; or]
 
 [function_block - the completion condition returns true.]
+
+[function_block The program must ensure the `AsyncReadStream` object `stream`
+is valid until the handler for the asynchronous operation is invoked.]
 
 [function_block Any implementation-defined handler objects passed to
 asynchronous /read_some/ operations shall implement `io_handler_allocate`,
@@ -73,7 +76,7 @@ the total number of bytes transferred.]
                         ReadHandler handler);
 
 [function_effects Initiates an asynchronous operation to read data from the
-[link requirements.sync_read_stream buffer-oriented asynchronous read stream]
+[link requirements.async_read_stream buffer-oriented asynchronous read stream]
 object `stream` by performing one or more asynchronous /read_some/ operations
 on the stream. The operation is performed via the `io_service` object
 `stream.io_service()` and behaves according to [link
@@ -84,10 +87,8 @@ requirements.mutable_buffers mutable buffer sequence] is obtained prior to each
 `async_read_some` call using `fb.prepare(min(N, fb.max_size() - fb.size()))`,
 where `N` is a suitable implementation-defined value. After the completion of
 each asynchronous /read_some/ operation, the implementation performs
-`fb.commit(n)`, where `n` is the return value from `read_some`.]
-
-[function_block The program must ensure the `basic_fifobuf<>` object `fb` is
-valid until the handler for the asynchronous operation is invoked.]
+`fb.commit(n)`, where `n` is the value passed to the asynchronous /read_some/
+operation's completion handler.]
 
 [function_block The `completion_condition` parameter specifies a function
 object to be called after the completion of each asynchronous /read_some/
@@ -99,10 +100,14 @@ with an object of class `transfer_all`.]
 
 [function_block The asynchronous read operation continues until:]
 
-[function_block - all buffers in the mutable buffer sequence `buffers` have
-been filled; or]
+[function_block - the `basic_fifobuf<>` object `fb` is full, that is `fb.size()
+== fb.max_size()`; or]
 
 [function_block - the completion condition returns true.]
+
+[function_block The program must ensure both the `AsyncReadStream` object
+`stream` and the `basic_fifobuf<>` object `fb` are valid until the handler for
+the asynchronous operation is invoked.]
 
 [function_block Any implementation-defined handler objects passed to
 asynchronous /read_some/ operations shall implement `io_handler_allocate`,
