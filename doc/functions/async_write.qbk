@@ -84,7 +84,7 @@ object `stream.io_service()` and behaves according to [link
 requirements.asynchronous_operations asynchronous operation] requirements.]
 
 [function_block Data is written from the `basic_fifobuf<>` object `fb`. A [link
-requirements.mutable_buffers mutable buffer sequence] is obtained prior to each
+requirements.const_buffers constant buffer sequence] is obtained prior to each
 `async_write_some` call using `fb.data()`. After the completion of each
 asynchronous /write_some/ operation, the implementation performs
 `fb.consume(n)`, where `n` is the value passed to the asynchronous /write_some/
