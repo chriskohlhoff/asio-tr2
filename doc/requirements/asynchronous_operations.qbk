@@ -14,6 +14,11 @@ An implementation is permitted to make copies of a handler argument. All copies
 of the handler argument shall be considered equivalent. All copies of the
 handler will be destroyed immediately after the handler is dispatched.
 
+The `io_service` object associated with an asynchronous operation shall have
+unfinished work, as if by maintaining the existence of one or more objects of
+class `io_service::work` constructed using the `io_service`, until after the
+handler for the asynchronous operation has been invoked (but no longer).
+
 When an asynchronous operation is complete, the handler for the operation will
 be invoked as if by:
 

@@ -131,30 +131,19 @@ a.expires_at(b))`.]
   template<class WaitHandler>
     void async_wait(implementation_type& impl, WaitHandler handler);
 
-[function_effects Starts an asynchronous wait operation associated with the
-timer implementation `impl`. When the operation is complete, a copy of the
-handler object `handler` will be posted for execution as if by:\n\n
+[function_effects Initiates an asynchronous wait operation that is performed
+via the `io_service` object returned by `io_service()` and behaves according to
+[link requirements.asynchronous_operations asynchronous operation]
+requirements.]
 
-1. Constructing an object `bch` meeting [link
-requirements.bound_completion_handler bound completion handler] requirements,
-such that the expression `bch()` calls `handler1(ec)`, where `handler1` is a
-copy of `handler` and `ec` is an lvalue of type `const error_code` that
-indicates whether the wait operation succeeded or failed; then\n\n
-
-2. Calling `io_service().post(bch)`.\n
-
-[std_note This implies that the handler `h` must not be called directly from
-within the `async_wait()` call, even if the asynchronous wait operation
-completes immediately.]
-
-The handler shall be posted for execution only if the condition `!!ec ||
-!TimeTraits::lt(TimeTraits::now(), expires_at(impl))` holds, where `ec` is the
-error code to be passed to the handler. On success, `ec` shall contain a value
-such that the expression `!ec` is true. On failure, an implementation shall
-pass as `ec` the `error_code` value corresponding to the failure condition, as
-shown in the table below. For failure conditions not listed, an implementation
-is permitted to pass as `ec` any other value such that the expression `!ec` is
-false.]
+[function_block The handler shall be posted for execution only if the condition
+`!!ec || !TimeTraits::lt(TimeTraits::now(), expires_at(impl))` holds, where
+`ec` is the error code to be passed to the handler. On success, `ec` shall
+contain a value such that the expression `!ec` is true. On failure, an
+implementation shall pass as `ec` the `error_code` value corresponding to the
+failure condition, as shown in the table below. For failure conditions not
+listed, an implementation is permitted to pass as `ec` any other value such
+that the expression `!ec` is false.]
 
 [table Table--async_wait() failure conditions
   [[failure condition][error code]]
