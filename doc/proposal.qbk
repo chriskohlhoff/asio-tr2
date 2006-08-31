@@ -1,7 +1,7 @@
 [library Networking Library Proposal for TR2
     [quickbook 1.1]
     [id tr2network]
-    [last-revision $Date: 2006/08/30 14:41:08 $]
+    [last-revision $Date: 2006/08/31 03:19:58 $]
 ]
 
 [/-----------------------------------------------------------------------------]
@@ -380,10 +380,6 @@ below:
     ]
     [`<network>`]
   ]
-  [
-    [[link tr2network.algorithms Algorithms]]
-    [`<io_algorithm>`]
-  ]
 ]
 
 Throughout this clause, the names of the template parameters are used to
@@ -401,11 +397,11 @@ express type requirements, as listed in the table below.
   ]
   [
     [`AsyncReadStream`]
-    [[link requirements.async_read_stream asynchronous read stream]]
+    [[link requirements.async_read_stream buffer-oriented asynchronous read stream]]
   ]
   [
     [`AsyncWriteStream`]
-    [[link requirements.async_write_stream asynchronous write stream]]
+    [[link requirements.async_write_stream buffer-oriented asynchronous write stream]]
   ]
   [
     [`CompletionHandler`]
@@ -495,11 +491,11 @@ express type requirements, as listed in the table below.
   ]
   [
     [`SyncReadStream`]
-    [[link requirements.sync_read_stream synchronous read stream]]
+    [[link requirements.sync_read_stream buffer-oriented synchronous read stream]]
   ]
   [
     [`SyncWriteStream`]
-    [[link requirements.sync_write_stream synchronous write stream]]
+    [[link requirements.sync_write_stream buffer-oriented synchronous write stream]]
   ]
   [
     [`TimerService`]
@@ -561,6 +557,10 @@ express type requirements, as listed in the table below.
 [include:requirements requirements/mutable_buffers.qbk]
 [include:requirements requirements/convertible_to_const_buffer.qbk]
 [include:requirements requirements/const_buffers.qbk]
+[include:requirements requirements/sync_read_stream.qbk]
+[include:requirements requirements/async_read_stream.qbk]
+[include:requirements requirements/sync_write_stream.qbk]
+[include:requirements requirements/async_write_stream.qbk]
 [endsect]
 [include:classes classes/mutable_buffer.qbk]
 [include:classes classes/const_buffer.qbk]
@@ -568,10 +568,15 @@ express type requirements, as listed in the table below.
 [include:classes classes/const_buffers_1.qbk]
 [include:functions functions/buffer.qbk]
 [include:classes classes/basic_fifobuf.qbk]
+[include:classes classes/transfer_all.qbk]
+[include:classes classes/transfer_at_least.qbk]
+[include:functions functions/read.qbk]
+[include:functions functions/write.qbk]
 [endsect]
 
-[section:sockets Sockets]
 [include:headers headers/network.qbk]
+
+[section:sockets Sockets]
 [section:sockets_requirements Requirements]
 [include:requirements requirements/endpoint.qbk]
 [include:requirements requirements/protocol.qbk]
@@ -637,20 +642,6 @@ express type requirements, as listed in the table below.
 [include:classes classes/ip__multicast__outbound_interface.qbk]
 [include:classes classes/ip__multicast__hops.qbk]
 [include:classes classes/ip__multicast__enable_loopback.qbk]
-[endsect]
-
-[section:algorithms Algorithms]
-[include:headers headers/io_algorithm.qbk]
-[section:algorithms_requirements Requirements]
-[include:requirements requirements/sync_read_stream.qbk]
-[include:requirements requirements/async_read_stream.qbk]
-[include:requirements requirements/sync_write_stream.qbk]
-[include:requirements requirements/async_write_stream.qbk]
-[endsect]
-[include:classes classes/transfer_all.qbk]
-[include:classes classes/transfer_at_least.qbk]
-[include:functions functions/read.qbk]
-[include:functions functions/write.qbk]
 [endsect]
 
 [endsect]

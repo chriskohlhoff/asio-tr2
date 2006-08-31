@@ -19,8 +19,8 @@
                    error_code& ec);
 
 [function_effects Writes data to the [link requirements.sync_write_stream
-synchronous write stream] object `stream` by performing one or more calls to
-the stream's `write_some` member function.]
+buffer-oriented synchronous write stream] object `stream` by performing one or
+more calls to the stream's `write_some` member function.]
 
 [function_block The [link requirements.const_buffers constant buffer sequence]
 `buffers` specifies memory where the data to be written is located. The

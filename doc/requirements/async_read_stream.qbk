@@ -1,11 +1,11 @@
-[section:async_read_stream Asynchronous read stream requirements]
+[section:async_read_stream Buffer-oriented asynchronous read stream requirements]
 
 In the table below, `a` denotes an asynchronous read stream object, `mb`
 denotes an object satisfying [link requirements.mutable_buffers mutable buffer
 sequence] requirements, and `h` denotes an object satisfying [link
 requirements.read_handler read handler] requirements.
 
-[table Table--Asynchronous read stream requirements
+[table Table--Buffer-oriented asynchronous read stream requirements
   [[operation] [type] [semantics, pre/post-conditions]]
   [
     [`a.io_service();`]

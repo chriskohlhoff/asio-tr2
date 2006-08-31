@@ -1,11 +1,11 @@
-[section:async_write_stream Asynchronous write stream requirements]
+[section:async_write_stream Buffer-oriented asynchronous write stream requirements]
 
 In the table below, `a` denotes an asynchronous write stream object, `cb`
 denotes an object satisfying [link requirements.const_buffers constant buffer
 sequence] requirements, and `h` denotes an object satisfying [link
 requirements.write_handler write handler] requirements.
 
-[table Table--Synchronous write stream requirements
+[table Table--Buffer-oriented asynchronous write stream requirements
   [[operation] [type] [semantics, pre/post-conditions]]
   [
     [`a.io_service();`]

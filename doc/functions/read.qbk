@@ -19,8 +19,8 @@
                   error_code& ec);
 
 [function_effects Reads data from the [link requirements.sync_read_stream
-synchronous read stream] object `stream` by performing one or more calls to
-the stream's `read_some` member function.]
+buffer-oriented synchronous read stream] object `stream` by performing one or
+more calls to the stream's `read_some` member function.]
 
 [function_block The [link requirements.mutable_buffers mutable buffer sequence]
 `buffers` specifies memory where the data should be placed. The synchronous
