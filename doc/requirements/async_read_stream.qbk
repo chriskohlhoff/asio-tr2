@@ -39,8 +39,8 @@ requirements.read_handler read handler] requirements.
       whichever comes first.\n
       \n
       If the total size of all buffers in the sequence `mb` is `0`, the
-      asynchronous read operation shall complete immediately and pass `0` in
-      the argument `s` to the handler that specifies the number of bytes read.
+      asynchronous read operation shall complete immediately and pass `0` as
+      the argument to the handler that specifies the number of bytes read.
     ]
   ]
 ]

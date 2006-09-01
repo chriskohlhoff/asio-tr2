@@ -28,11 +28,11 @@ the implementation performs `fb.commit(n)`, where `n` is the return value from
 
 [function_block The synchronous read operation continues until:]
 
-[function_block - the `basic_fifobuf<>` object's input sequence contains the
-delimiter `delim`; or]
+[function_block [mdash] the `basic_fifobuf<>` object's input sequence contains
+the delimiter `delim`; or]
 
-[function_block - the `basic_fifobuf<>` object `fb` is full, that is `fb.size()
-== fb.max_size()`.]
+[function_block [mdash] the `basic_fifobuf<>` object `fb` is full, that is
+`fb.size() == fb.max_size()`.]
 
 [function_block On exit, if the `basic_fifobuf<>` object's input sequence
 contains the delimiter, `ec` shall contain a value such that the expression

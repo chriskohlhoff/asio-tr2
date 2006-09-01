@@ -8,7 +8,7 @@ option] with the name and values in the table below:
 [table Table--enable_loopback boolean socket option
   [[['C]][['L]][['N]]]
   [
-    [`enable_loopback`]
+    [`ip::multicast::enable_loopback`]
     [`IPPROTO_IPV6` if `p.family() == AF_INET6`, otherwise `IPPROTO_IP`.]
     [`IPV6_MULTICAST_LOOP` if `p.family() == AF_INET6`, otherwise `IP_MULTICAST_LOOP`.]
   ]

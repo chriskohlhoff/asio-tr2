@@ -27,11 +27,11 @@ operation's completion handler.]
 
 [function_block The asynchronous read operation continues until:]
 
-[function_block - the `basic_fifobuf<>` object's input sequence contains the
-delimiter `delim`; or]
+[function_block [mdash] the `basic_fifobuf<>` object's input sequence contains
+the delimiter `delim`; or]
 
-[function_block - the `basic_fifobuf<>` object `fb` is full, that is `fb.size()
-== fb.max_size()`.]
+[function_block [mdash] the `basic_fifobuf<>` object `fb` is full, that is
+`fb.size() == fb.max_size()`.]
 
 [function_block The program must ensure both the `AsyncReadStream` object
 `stream` and the `basic_fifobuf<>` object `fb` are valid until the handler for

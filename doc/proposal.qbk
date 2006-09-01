@@ -1,21 +1,21 @@
 [library Networking Library Proposal for TR2
     [quickbook 1.1]
     [id tr2network]
-    [last-revision $Date: 2006/09/01 04:51:00 $]
+    [last-revision $Date: 2006/09/01 05:20:13 $]
 ]
 
 [/-----------------------------------------------------------------------------]
 
 [template std_note[text]
-\[['Note:] [text] '''&mdash;''' ['end note]\]
+\[['Note:] [text] '''&mdash;'''['end note]\]
 ]
 
-[template inline_note[text] \[['Note:] [text] '''&mdash;''' ['end note]\] ]
+[template inline_note[text] \[['Note:] [text] '''&mdash;'''['end note]\] ]
 
 [template std_example[text code]
 \[['Example:] [text]
 [code]
-'''&mdash;''' ['end example]\]
+'''&mdash;'''['end example]\]
 ]
 
 [template function_block[text]
@@ -51,12 +51,12 @@
 ]
 
 [template function_note[text]
-[:\[['Note:] [text] '''&mdash;''' ['end note]\]]
+[:\[['Note:] [text] '''&mdash;'''['end note]\]]
 ]
 
 [template function_example[text]
 [:\[['Example:] [text]
-'''&mdash;''' ['end example]\]]
+'''&mdash;'''['end example]\]]
 ]
 
 [template commentary[text]
@@ -363,8 +363,8 @@ This clause describes components that C++ programs may use to perform network
 operations.
 
 The following subclauses describe components for I/O services, timers, buffer
-management, networking, and utility functions, as summarised in the table
-below:
+management, sockets, endpoint resolution, iostreams, and internet protocol, as
+summarised in the table below:
 
 [table Table--Networking library summary
   [[Subclause][Header(s)]]

@@ -36,10 +36,10 @@ not specified behave as if called with an object of class `transfer_all`.]
 
 [function_block The synchronous read operation continues until:]
 
-[function_block - all buffers in the mutable buffer sequence `buffers` have
-been filled; or]
+[function_block [mdash] all buffers in the mutable buffer sequence `buffers`
+have been filled; or]
 
-[function_block - the completion condition returns true.]
+[function_block [mdash] the completion condition returns true.]
 
 [function_block On exit, `ec` contains the `error_code` value from the most
 recent `read_some` call.]
@@ -82,10 +82,10 @@ not specified behave as if called with an object of class `transfer_all`.]
 
 [function_block The synchronous read operation continues until:]
 
-[function_block - the `basic_fifobuf<>` object `fb` is full, that is `fb.size()
-== fb.max_size()`; or]
+[function_block [mdash] the `basic_fifobuf<>` object `fb` is full, that is
+`fb.size() == fb.max_size()`; or]
 
-[function_block - the completion condition returns true.]
+[function_block [mdash] the completion condition returns true.]
 
 [function_block On exit, `ec` contains the `error_code` value from the most
 recent `read_some` call.]

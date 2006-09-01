@@ -8,7 +8,7 @@ option] with the name and values in the table below:
 [table Table--hops integral socket option
   [[['C]][['L]][['N]]]
   [
-    [`hops`]
+    [`ip::unicast::hops`]
     [`IPPROTO_IPV6` if `p.family() == AF_INET6`, otherwise `IPPROTO_IP`.]
     [`IPV6_UNICAST_HOPS` if `p.family() == AF_INET6`, otherwise `IP_TTL`.]
   ]

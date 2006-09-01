@@ -30,9 +30,9 @@ proceeding to the next.]
 the memory specified by the buffers in the sequence. The program must ensure
 the memory is valid until:]
 
-[function_block - the last copy of `buffers` is destroyed, or]
+[function_block [mdash] the last copy of `buffers` is destroyed, or]
 
-[function_block - the handler for the asynchronous operation is invoked,]
+[function_block [mdash] the handler for the asynchronous operation is invoked,]
 
 [function_block whichever comes first.]
 
@@ -46,10 +46,10 @@ with an object of class `transfer_all`.]
 
 [function_block The asynchronous read operation continues until:]
 
-[function_block - all buffers in the mutable buffer sequence `buffers` have
-been filled; or]
+[function_block [mdash] all buffers in the mutable buffer sequence `buffers`
+have been filled; or]
 
-[function_block - the completion condition returns true.]
+[function_block [mdash] the completion condition returns true.]
 
 [function_block The program must ensure the `AsyncReadStream` object `stream`
 is valid until the handler for the asynchronous operation is invoked.]
@@ -100,10 +100,10 @@ with an object of class `transfer_all`.]
 
 [function_block The asynchronous read operation continues until:]
 
-[function_block - the `basic_fifobuf<>` object `fb` is full, that is `fb.size()
-== fb.max_size()`; or]
+[function_block [mdash] the `basic_fifobuf<>` object `fb` is full, that is
+`fb.size() == fb.max_size()`; or]
 
-[function_block - the completion condition returns true.]
+[function_block [mdash] the completion condition returns true.]
 
 [function_block The program must ensure both the `AsyncReadStream` object
 `stream` and the `basic_fifobuf<>` object `fb` are valid until the handler for

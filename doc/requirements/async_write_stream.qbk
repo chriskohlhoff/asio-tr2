@@ -39,9 +39,8 @@ requirements.write_handler write handler] requirements.
       whichever comes first.\n
       \n
       If the total size of all buffers in the sequence `cb` is `0`, the
-      asynchronous write operation shall complete immediately and pass `0` in
-      the argument `s` to the handler that specifies the number of bytes
-      written.
+      asynchronous write operation shall complete immediately and pass `0` as
+      the argument to the handler that specifies the number of bytes written.
     ]
   ]
 ]
