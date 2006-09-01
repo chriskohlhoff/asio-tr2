@@ -140,18 +140,18 @@ returns `traits_type::to_int_type(*gptr())`.]
 [function_effects Puts back the character designated by `c` to the input
 sequence, if possible, in one of three ways:\n
 \n
-- If `traits_type::eq_int_type(c,traits_type::eof())` returns `false`, and if
-the function makes a putback position available, and if
+[mdash] If `traits_type::eq_int_type(c,traits_type::eof())` returns `false`,
+and if the function makes a putback position available, and if
 `traits_type::eq(traits_type::to_char_type(c),gptr()[-1])` returns `true`,
 decrements the next pointer for the input sequence, `gptr()`.\nReturns: `c`.\n
 \n
-- If `traits_type::eq_int_type(c,traits_type::eof())` returns `false`, and if
-the function makes a putback position available, and if the function is
+[mdash] If `traits_type::eq_int_type(c,traits_type::eof())` returns `false`,
+and if the function makes a putback position available, and if the function is
 permitted to assign to the putback position, decrements the next pointer for
 the input sequence, and stores `c` there.\nReturns: `c`.\n
 \n
-- If `traits_type::eq_int_type(c,traits_type::eof())` returns `true`, and if
-either the input sequence has a putback position available or the function
+[mdash] If `traits_type::eq_int_type(c,traits_type::eof())` returns `true`, and
+if either the input sequence has a putback position available or the function
 makes a putback position available, decrements the next pointer for the input
 sequence, `gptr()`.\nReturns: `traits_type::not_eof(c)`.]
 

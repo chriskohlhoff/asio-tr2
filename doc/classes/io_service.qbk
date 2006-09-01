@@ -138,20 +138,20 @@ one of `run()`, `run_one()`, `poll()`, or `poll_one()`.]
 [function_effects Does not return until one of the following conditions is
 true:\n\n
 
-- An error has occurred. `ec` shall be set to the `error_code` value
-  corresponding to the failure condition, as shown in the table below. For
-  failure conditions not listed, an implementation is permitted to set `ec` to
-  any other value such that the expression `!ec` is false.\n\n
+[mdash] An error has occurred. `ec` shall be set to the `error_code` value
+corresponding to the failure condition, as shown in the table below. For
+failure conditions not listed, an implementation is permitted to set `ec` to
+any other value such that the expression `!ec` is false.\n\n
 
-- The `io_service` has been explicitly stopped by a call to `stop()`. `ec`
-  shall be set such that the expression `!ec` is true.\n\n
+[mdash] The `io_service` has been explicitly stopped by a call to `stop()`.
+`ec` shall be set such that the expression `!ec` is true.\n\n
 
-- No object `w` of class `io_service::work` exists where `&w.io_service() ==
-  this`. The `io_service` shall be stopped as if by calling `stop()` and `ec`
-  shall be set such that the expression `!ec` is true.\n\n
+[mdash] No object `w` of class `io_service::work` exists where `&w.io_service()
+== this`. The `io_service` shall be stopped as if by calling `stop()` and `ec`
+shall be set such that the expression `!ec` is true.\n\n
 
-- One handler `h` has been invoked by performing `io_handler_invoke(h, &h)`.
-  `ec` shall be set such that the expression `!ec` is true.\n\n
+[mdash] One handler `h` has been invoked by performing `io_handler_invoke(h,
+&h)`. `ec` shall be set such that the expression `!ec` is true.\n\n
 
 If the function can complete due to more than one of these conditions, the
 earliest condition listed is chosen, and the effects associated with the other
@@ -195,21 +195,21 @@ as if implemented as follows:
 
 [function_effects Performs one of the following actions:\n\n
 
-- If an error has occurred, sets `ec` to any `error_code` value such that the
-  expression `!ec` is false.\n\n
+[mdash] If an error has occurred, sets `ec` to any `error_code` value such that
+the expression `!ec` is false.\n\n
 
-- If the `io_service` has been explicitly stopped by a call to `stop()`, sets
-  `ec` shall such that the expression `!ec` is true.\n\n
+[mdash] If the `io_service` has been explicitly stopped by a call to `stop()`,
+sets `ec` shall such that the expression `!ec` is true.\n\n
 
-- If no object `w` of class `io_service::work` exists where `&w.io_service() ==
-  this`, stops the `io_service` as if by calling `stop()` and sets `ec` such
-  that the expression `!ec` is true.\n\n
+[mdash] If no object `w` of class `io_service::work` exists where
+`&w.io_service() == this`, stops the `io_service` as if by calling `stop()` and
+sets `ec` such that the expression `!ec` is true.\n\n
 
-- If a handler `h` is available for immediate invocation, invokes the handler
-  by performing `io_handler_invoke(h, &h)`, and sets `ec` such that the
-  expression `!ec` is true.\n\n
+[mdash] If a handler `h` is available for immediate invocation, invokes the
+handler by performing `io_handler_invoke(h, &h)`, and sets `ec` such that the
+expression `!ec` is true.\n\n
 
-- Otherwise, sets `ec` such that the expression `!ec` is true.\n\n
+[mdash] Otherwise, sets `ec` such that the expression `!ec` is true.\n\n
 
 If the function can succeed in more than one of these ways, the earliest
 condition listed is chosen, and the effects associated with the other

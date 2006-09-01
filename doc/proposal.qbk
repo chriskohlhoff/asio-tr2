@@ -1,21 +1,21 @@
 [library Networking Library Proposal for TR2
     [quickbook 1.1]
     [id tr2network]
-    [last-revision $Date: 2006/08/31 13:47:23 $]
+    [last-revision $Date: 2006/09/01 04:51:00 $]
 ]
 
 [/-----------------------------------------------------------------------------]
 
 [template std_note[text]
-\[['Note:] [text] --['end note]\]
+\[['Note:] [text] '''&mdash;''' ['end note]\]
 ]
 
-[template inline_note[text] \[['Note:] [text] --['end note]\] ]
+[template inline_note[text] \[['Note:] [text] '''&mdash;''' ['end note]\] ]
 
 [template std_example[text code]
 \[['Example:] [text]
 [code]
---['end example]\]
+'''&mdash;''' ['end example]\]
 ]
 
 [template function_block[text]
@@ -51,13 +51,19 @@
 ]
 
 [template function_note[text]
-[:\[['Note:] [text] --['end note]\]]
+[:\[['Note:] [text] '''&mdash;''' ['end note]\]]
 ]
 
 [template function_example[text]
 [:\[['Example:] [text]
---['end example]\]]
+'''&mdash;''' ['end example]\]]
 ]
+
+[template commentary[text]
+[blurb [text]]
+]
+
+[template mdash[] '''&mdash; ''']
 
 [/-----------------------------------------------------------------------------]
 
@@ -324,7 +330,7 @@ of these classes is required from those defined in N1975.]
 The following list summarises some other design decisions made in the
 development of the library:
 
-* Flaws in BSD socket API - type safety
+* Flaws in BSD socket API [mdash] type safety
 * Asynchronous pros and cons
 * Should acceptor set reuse_address or not
 * Services
@@ -349,6 +355,9 @@ Contact the author for more information.
 [/-----------------------------------------------------------------------------]
 
 [section Proposed Text for the Standard]
+
+[commentary Grey-shaded italic text is commentary on the proposal. It is not to
+be added to the TR.]
 
 This clause describes components that C++ programs may use to perform network
 operations.

@@ -37,7 +37,7 @@ supports reading and writing from sockets. It uses a
 associated sequences. For the sake of exposition, the maintained data is
 presented here as:
 
-- `sb`, the `basic_socket_streambuf` object.
+[mdash] `sb`, the `basic_socket_streambuf` object.
 
 [section [^basic_socket_iostream] constructors]
 

@@ -5,14 +5,14 @@ application programming interface (API) provided by the operating system. If
 such an operating system API call results in an error, implementations shall
 report the error as follows:
 
-- If the function takes an argument of type `error_code& ec`, the function
-shall not throw exceptions to report operating system errors. If an error
-occurs, `ec` shall be set to an `error_code` value that reflects the error
-reported by the operating system, otherwise `ec` shall be set to `0`. If the
-function would otherwise return `void`, it shall return an `error_code` with
-the value of `ec`.
+[mdash] If the function takes an argument of type `error_code& ec`, the
+function shall not throw exceptions to report operating system errors. If an
+error occurs, `ec` shall be set to an `error_code` value that reflects the
+error reported by the operating system, otherwise `ec` shall be set to `0`. If
+the function would otherwise return `void`, it shall return an `error_code`
+with the value of `ec`.
 
-- Otherwise, the operating system error shall be reported by throwing an
+[mdash] Otherwise, the operating system error shall be reported by throwing an
 exception of class `system_error`.
 
 Where a function provides overloads of both forms, and the throwing overload

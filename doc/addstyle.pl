@@ -12,6 +12,7 @@ my $style =
 "<style>" .
 "blockquote pre.programlisting { margin-left: 2em; }\n" .
 "div.informaltable { text-align: center; }" .
+"p.blurb { background-color: #e0e0e0; font-style: italic; }" .
 "table { margin: auto; }" .
 "</style>";
 

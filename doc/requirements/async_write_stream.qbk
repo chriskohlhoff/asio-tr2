@@ -32,9 +32,9 @@ requirements.write_handler write handler] requirements.
       specified by the buffers in the sequence. The program must ensure the
       memory is valid until:\n
       \n
-      - the last copy of `cb` is destroyed, or\n
+      [mdash] the last copy of `cb` is destroyed, or\n
       \n
-      - the handler for the asynchronous write operation is invoked,\n
+      [mdash] the handler for the asynchronous write operation is invoked,\n
       \n
       whichever comes first.\n
       \n

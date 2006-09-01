@@ -37,28 +37,28 @@ invocation of handlers.
 
 Given:
 
-- An `io_service` object `i`.
+[mdash] An `io_service` object `i`.
 
-- A `strand` object `s` constructed using `s(i)`.
+[mdash] A `strand` object `s` constructed using `s(i)`.
 
-- An object `a` meeting [link requirements.completion_handler completion
+[mdash] An object `a` meeting [link requirements.completion_handler completion
 handler] requirements, where `a` is passed to the `strand` by performing either
 `s.dispatch(a)` or `s.post(a)`. For this discussion `a` and all copies of `a`
 are considered equivalent.
 
-- An object `b` meeting [link requirements.completion_handler completion
+[mdash] An object `b` meeting [link requirements.completion_handler completion
 handler] requirements, where `b` is passed to the `strand` by performing either
 `s.dispatch(b)` or `s.post(b)`. For this discussion `b` and all copies of `b`
 are considered equivalent.
 
-- An arbitrary function object `x` that is valid in the expression `x()`.
+[mdash] An arbitrary function object `x` that is valid in the expression `x()`.
 
-- An arbitrary function object `y` that is valid in the expression `y()`.
+[mdash] An arbitrary function object `y` that is valid in the expression `y()`.
 
-- An arbitrary thread /thread1/ that is calling any overload of `run()`,
+[mdash] An arbitrary thread /thread1/ that is calling any overload of `run()`,
 `run_one()`, `poll()` or `poll_one()` for the `io_service` object `i`.
 
-- An arbitrary thread /thread2/ that is calling any overload of `run()`,
+[mdash] An arbitrary thread /thread2/ that is calling any overload of `run()`,
 `run_one()`, `poll()` or `poll_one()` for the `io_service` object `i`.
 
 The implementation shall ensure that, if /thread1/ performs
@@ -69,10 +69,11 @@ The implementation shall ensure that, if /thread1/ performs
 
 [std_note No requirements are made on implementations with respect to:\n\n
 
-- whether handlers dispatched through different `strand` objects may or may not
-be invoked concurrently; or\n\n
+[mdash] whether handlers dispatched through different `strand` objects may or
+may not be invoked concurrently; or\n\n
 
-- the order of invocation of handler objects dispatched through a `strand`.]
+[mdash] the order of invocation of handler objects dispatched through a
+`strand`.]
 
 [section [^io_service::strand] constructors/destructor]
 

@@ -42,13 +42,13 @@
 
 `socket_base` defines several member types:
 
-- socket option classes `broadcast`, `debug`, `do_not_route`, `keep_alive`,
-  `linger`, `out_of_band_inline`, `receive_buffer_size`,
-  `receive_low_watermark`, `reuse_address`, `send_buffer_size`, and
-  `send_low_watermark`;
+[mdash] socket option classes `broadcast`, `debug`, `do_not_route`,
+`keep_alive`, `linger`, `out_of_band_inline`, `receive_buffer_size`,
+`receive_low_watermark`, `reuse_address`, `send_buffer_size`, and
+`send_low_watermark`;
 
-- an enumerated type, `shutdown_type`;
+[mdash] an enumerated type, `shutdown_type`;
 
-- a bitmask type, `message_flags`.
+[mdash] a bitmask type, `message_flags`.
 
 [endsect]
