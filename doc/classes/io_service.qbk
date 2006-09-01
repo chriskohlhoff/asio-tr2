@@ -111,6 +111,22 @@ service object `svc` in the `io_service` set, in reverse order of the beginning
 of service object lifetime, performs `delete
 static_cast<io_service::service*>(svc)`.]
 
+[commentary The destruction sequence described above permits programs to
+simplify their resource management by using `shared_ptr<>`. Where an object's
+lifetime is tied to the lifetime of a connection (or some other sequence of
+asynchronous operations), a `shared_ptr` to the object would be bound into the
+handlers for all asynchronous operations associated with it. This works as
+follows:\n
+\n
+[mdash] When a single connection ends, all associated asynchronous operations
+complete. The corresponding handler objects are destroyed, and all `shared_ptr`
+references to the objects are destroyed.\n
+\n
+[mdash] To shut down the whole program, the `io_service` function `stop()` is
+called to terminate any `run()` calls as soon as possible. The `io_service`
+destructor defined above destroys all handlers, causing all `shared_ptr`
+references to all connection objects to be destroyed.]
+
 [endsect]
 
 [section [^io_service] members]

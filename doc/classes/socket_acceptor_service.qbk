@@ -108,7 +108,7 @@ the service.]
 
 [function_effects Initialises the socket acceptor implementation `impl`.]
 
-[function_postconditions !is_open(impl).]
+[function_postconditions `!is_open(impl)`.]
 
   void destroy(implementation_type& impl);
 
@@ -649,9 +649,9 @@ an error indicating that a connection has been aborted (such as __POSIX__
 [function_effects Initiates an asynchronous operation to associate `socket`
 with the first connection extracted from the queue of pending connections of
 the socket acceptor `impl`, as if by __POSIX__ __accept__. The operation is
-performed via the `io_service` object returned by `io_service()` and behaves
-according to [link requirements.asynchronous_operations asynchronous operation]
-requirements.]
+performed via the `io_service` object returned by
+`io_service::service::io_service()` and behaves according to [link
+requirements.asynchronous_operations asynchronous operation] requirements.]
 
 [function_block The program must ensure the `basic_socket<>` object `socket` is
 valid until the handler for the asynchronous operation is invoked. If `endpoint
