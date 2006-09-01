@@ -35,6 +35,8 @@
           error_code assign(const protocol_type& protocol,
                             const native_type& native_acceptor, error_code& ec);
 
+          bool is_open() const;
+
           void close();
           error_code close(error_code& ec);
 
@@ -60,11 +62,11 @@
           template<class IoControlCommand>
             error_code io_control(IoControlCommand& command, error_code& ec);
 
-          bool blocking() const;
-          bool blocking(error_code& ec) const;
+          bool is_blocking() const;
+          bool is_blocking(error_code& ec) const;
 
-          void blocking(bool block);
-          error_code blocking(bool block, error_code& ec);
+          void set_blocking(bool block);
+          error_code set_blocking(bool block, error_code& ec);
 
           void bind(const endpoint_type& endpoint);
           error_code bind(const endpoint_type& endpoint, error_code& ec);
@@ -170,6 +172,10 @@ the object as if by calling:
 [function_returns `this->service.assign(this->implementation, protocol,
 native_acceptor, ec)`.]
 
+  bool is_open() const;
+
+[function_returns `this->service.is_open(this->implementation)`.]
+
   void close();
   error_code close(error_code& ec);
 
@@ -207,15 +213,15 @@ native_acceptor, ec)`.]
 [function_returns `this->service.io_control(this->implementation, command,
 ec)`.]
 
-  bool blocking() const;
-  bool blocking(error_code& ec) const;
+  bool is_blocking() const;
+  bool is_blocking(error_code& ec) const;
 
-[function_returns `this->service.blocking(this->implementation, ec)`.]
+[function_returns `this->service.is_blocking(this->implementation, ec)`.]
 
-  void blocking(bool block);
-  error_code blocking(bool block, error_code& ec);
+  void set_blocking(bool block);
+  error_code set_blocking(bool block, error_code& ec);
 
-[function_returns `this->service.blocking(this->implementation, block, ec)`.]
+[function_returns `this->service.set_blocking(this->implementation, block, ec)`.]
 
   void bind(const endpoint_type& endpoint);
   error_code bind(const endpoint_type& endpoint, error_code& ec);

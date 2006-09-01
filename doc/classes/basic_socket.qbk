@@ -34,6 +34,8 @@
           error_code assign(const protocol_type& protocol,
                             const native_type& native_socket, error_code& ec);
 
+          bool is_open() const;
+
           void close();
           error_code close(error_code& ec);
 
@@ -59,11 +61,11 @@
           template<class IoControlCommand>
             error_code io_control(IoControlCommand& command, error_code& ec);
 
-          bool blocking() const;
-          bool blocking(error_code& ec) const;
+          bool is_blocking() const;
+          bool is_blocking(error_code& ec) const;
 
-          void blocking(bool block);
-          error_code blocking(bool block, error_code& ec);
+          void set_blocking(bool block);
+          error_code set_blocking(bool block, error_code& ec);
 
           bool at_mark() const;
           bool at_mark(error_code& ec) const;
@@ -89,6 +91,33 @@
           void shutdown(shutdown_type what);
           error_code shutdown(shutdown_type what, error_code& ec);
         };
+
+        // convenience functions:
+
+        template<class Protocol, class SocketService>
+          void connect(basic_socket<Protocol,SocketService>& s,
+                       const typename Procotol::endpoint& e);
+        template<class Protocol, class SocketService>
+          error_code connect(basic_socket<Protocol,SocketService>& s,
+                             const typename Procotol::endpoint& e,
+                             error_code& ec);
+
+        template<class Protocol, class SocketService, class Iterator>
+          void connect(basic_socket<Protocol,SocketService>& s,
+                       Iterator first, Iterator last);
+        template<class Protocol, class SocketService, class Iterator>
+          error_code connect(basic_socket<Protocol,SocketService>& s,
+                             Iterator first, Iterator last, error_code& ec);
+
+        template<class Protocol, class SocketService, class ConnectHandler>
+          void async_connect(basic_socket<Protocol,SocketService>& s,
+                             const typename Procotol::endpoint& e,
+                             ConnectHandler handler);
+        template<class Protocol, class SocketService, class Iterator,
+          class ConnectHandler>
+            void async_connect(basic_socket<Protocol,SocketService>& s,
+                               Iterator first, Iterator last,
+                               ConnectHandler handler);
 
       } // namespace sys
     } // namespace tr2
@@ -158,6 +187,10 @@ then assigning the existing native socket into the object as if by calling:
 [function_returns `this->service.assign(this->implementation, protocol,
 native_socket, ec)`.]
 
+  bool is_open() const;
+
+[function_returns `this->service.is_open(this->implementation)`.]
+
   void close();
   error_code close(error_code& ec);
 
@@ -195,15 +228,15 @@ native_socket, ec)`.]
 [function_returns `this->service.io_control(this->implementation, command,
 ec)`.]
 
-  bool blocking() const;
-  bool blocking(error_code& ec) const;
+  bool is_blocking() const;
+  bool is_blocking(error_code& ec) const;
 
-[function_returns `this->service.blocking(this->implementation, ec)`.]
+[function_returns `this->service.is_blocking(this->implementation, ec)`.]
 
-  void blocking(bool block);
-  error_code blocking(bool block, error_code& ec);
+  void set_blocking(bool block);
+  error_code set_blocking(bool block, error_code& ec);
 
-[function_returns `this->service.blocking(this->implementation, block, ec)`.]
+[function_returns `this->service.set_blocking(this->implementation, block, ec)`.]
 
   bool at_mark() const;
   bool at_mark(error_code& ec) const;
@@ -245,6 +278,78 @@ endpoint, handler)`.]
   error_code shutdown(shutdown_type what, error_code& ec);
 
 [function_returns `this->service.shutdown(this->implementation, what, ec)`.]
+
+[endsect]
+
+[section [^basic_socket] convenience functions]
+
+  template<class Protocol, class SocketService>
+    void connect(basic_socket<Protocol,SocketService>& s,
+                 const typename Procotol::endpoint& e);
+  template<class Protocol, class SocketService>
+    error_code connect(basic_socket<Protocol,SocketService>& s,
+                       const typename Procotol::endpoint& e,
+                       error_code& ec);
+
+[function_requires `!s.is_open()`.]
+
+[function_effects Behaves as if implemented as follows:
+``
+  s.open(e.protocol(), ec);
+  if (!ec)
+    s.connect(e, ec);
+``]
+
+[function_returns `ec`.]
+
+  template<class Protocol, class SocketService, class Iterator>
+    void connect(basic_socket<Protocol,SocketService>& s,
+                 Iterator first, Iterator last);
+  template<class Protocol, class SocketService, class Iterator>
+    error_code connect(basic_socket<Protocol,SocketService>& s,
+                       Iterator first, Iterator last, error_code& ec);
+
+[function_requires `!s.is_open() && first != last`. `Iterator` is a forward
+iterator type, and the result of dereferencing an object of type `Iterator` is
+convertible to the `Protocol::endpoint` type.]
+
+[function_effects Behaves as if implemented as follows:
+``
+  while (first != last)
+  {
+    typename Protocol::endpoint e(*first);
+    s.open(e.protocol(), ec);
+    if (!ec)
+      s.connect(e, ec);
+    if (!ec)
+      break;
+    s.close(ec);
+    if (ec)
+      break;
+    ++first;
+  }
+``]
+
+[function_returns `ec`.]
+
+  template<class Protocol, class SocketService, class ConnectHandler>
+    void async_connect(basic_socket<Protocol,SocketService>& s,
+                       const typename Procotol::endpoint& e,
+                       ConnectHandler handler);
+
+[function_requires `!s.is_open()`.]
+
+[function_effects /TODO/]
+
+  template<class Protocol, class SocketService, class Iterator,
+    class ConnectHandler>
+      void async_connect(basic_socket<Protocol,SocketService>& s,
+                         Iterator first, Iterator last,
+                         ConnectHandler handler);
+
+[function_requires `!s.is_open()`.]
+
+[function_effects /TODO/]
 
 [endsect]
 

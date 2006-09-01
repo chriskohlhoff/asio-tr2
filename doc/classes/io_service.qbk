@@ -41,7 +41,7 @@
             void post(CompletionHandler handler);
 
           template<class Handler>
-            unspecified wrap(Handler handler);
+            ``['[*unspecified]]`` wrap(Handler handler);
 
         private:
           io_service(const io_service&);     // not defined
@@ -273,7 +273,7 @@ until after the handler has been invoked (but no longer). (/TODO/ memory
 barrier.)]
 
   template<class Handler>
-    unspecified wrap(Handler handler);
+    ``['[*unspecified]]`` wrap(Handler handler);
 
 [function_returns An object `f` of an unspecified type `F` meeting [link
 requirements.handler handler] requirements, and constructed using `f(*this,

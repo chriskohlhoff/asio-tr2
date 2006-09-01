@@ -35,6 +35,8 @@ of a [link requirements.datagram_socket_service `DatagramSocketService`].
                             const protocol_type& protocol,
                             const native_type& native_socket, error_code& ec);
 
+          bool is_open(const implementation_type& impl) const;
+
           error_code close(implementation_type& impl, error_code& ec);
 
           native_type native(implementation_type& impl);
@@ -55,10 +57,11 @@ of a [link requirements.datagram_socket_service `DatagramSocketService`].
             error_code io_control(implementation_type& impl,
                                   IoControlCommand& command, error_code& ec);
 
-          bool blocking(const implementation_type& impl, error_code& ec) const;
+          bool is_blocking(const implementation_type& impl,
+                           error_code& ec) const;
 
-          error_code blocking(implementation_type& impl, bool block,
-                              error_code& ec);
+          error_code set_blocking(implementation_type& impl, bool block,
+                                  error_code& ec);
 
           bool at_mark(const implementation_type& impl, error_code& ec) const;
 
