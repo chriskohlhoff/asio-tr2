@@ -4,7 +4,7 @@ In the table below, `X` denotes a socket option class, `a` denotes a value of
 `X`, `p` denotes a value that meets the [link requirements.protocol protocol]
 requirements, and `u` denotes an identifier.
 
-[table Table--GettableSocketOption requirements (POSIX)
+[table Table--GettableSocketOption requirements (POSIX and Windows)
   [[expression] [type] [assertion/note\npre/post-conditions]]
   [
     [`a.level(p);`]

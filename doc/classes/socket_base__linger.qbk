@@ -30,7 +30,8 @@ requirements.settable_socket_option `SettableSocketOption`].
     } // namespace tr2
   } // namespace std
 
-__POSIX__ implementations must provide the following member functions:
+__POSIX__ and __Windows__ implementations shall provide the following member
+functions:
 
   namespace std {
     namespace tr2 {
@@ -71,7 +72,8 @@ __POSIX__ implementations must provide the following member functions:
   bool enabled() const;
 
 [function_returns The stored socket option value for whether linger on close is
-enabled. For __POSIX__ implementations, returns `value_.l_onoff != 0`.]
+enabled. For __POSIX__ and __Windows__ implementations, returns `value_.l_onoff
+!= 0`.]
 
   void enabled(bool e);
 
@@ -80,7 +82,8 @@ enabled. For __POSIX__ implementations, returns `value_.l_onoff != 0`.]
   int timeout() const;
 
 [function_returns The stored socket option value for the linger timeout, in
-seconds. For __POSIX__ implementations, returns `value_.l_linger`.]
+seconds. For __POSIX__ and __Windows__ implementations, returns
+`value_.l_linger`.]
 
   void timeout(int t);
 
@@ -88,7 +91,7 @@ seconds. For __POSIX__ implementations, returns `value_.l_linger`.]
 
 [endsect]
 
-[section [^socket_base::linger] __POSIX__ members]
+[section [^socket_base::linger] __POSIX__ and __Windows__ members]
 
   template<class Protocol> int level(const Protocol& p) const;
 

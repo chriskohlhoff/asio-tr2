@@ -87,6 +87,18 @@ of an [link requirements.acceptor_service `AcceptorService`].
     } // namespace tr2
   } // namespace std
 
+[section [^socket_acceptor_service] types]
+
+  typedef ``['[*implementation-defined]]`` native_type;
+
+[function_block The native representation of a socket acceptor. Must satisfy
+the requirements of `CopyConstructible` types (C++ Std, 20.1.3), and the
+requirements of `Assignable` types (C++ Std, 23.1). For __POSIX__
+implementations, must be convertible to and from `int`. For __Windows__
+implementations, must be convertible to and from `SOCKET`.]
+
+[endsect]
+
 [section [^socket_acceptor_service] constructors]
 
   explicit socket_acceptor_service(io_service& ios);

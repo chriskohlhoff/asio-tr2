@@ -28,7 +28,8 @@ Boolean socket option classes shall be defined as follows:
     bool operator!() const;
   };
 
-__POSIX__ implementations shall provide the following member functions:
+__POSIX__ and __Windows__ implementations shall provide the following member
+functions:
 
   class ``['[*C]]``
   {
@@ -130,7 +131,7 @@ in the __POSIX__ header file __sys_socket_h__.]
 
   bool value() const;
 
-[function_returns The stored socket option value. For __POSIX__
+[function_returns The stored socket option value. For __POSIX__ and __Windows__
 implementations, returns `value_ != 0`.]
 
   operator bool() const;
@@ -143,7 +144,7 @@ implementations, returns `value_ != 0`.]
 
 [endsect]
 
-[section Boolean socket option POSIX members]
+[section Boolean socket option __POSIX__ and __Windows__ members]
 
   template<class Protocol> int level(const Protocol& p) const;
 

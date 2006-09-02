@@ -42,7 +42,8 @@ requirements.internet_protocol `InternetProtocol`].
     } // namespace tr2
   } // namespace std
 
-__POSIX__ implementations must provide the following member functions:
+__POSIX__ and __Windows__ implementations shall provide the following member
+functions:
 
   namespace std {
     namespace tr2 {
@@ -68,7 +69,7 @@ In the table below, `u` denotes an identifier. The constants `AF_INET`,
 __sys_socket_h__. The constant `IPPROTO_TCP` is defined in the __POSIX__ header
 file __netinet_in_h__.
 
-[table Table--POSIX values
+[table Table--POSIX and Windows values
   [[expression] [value]]
   [
     [`tcp u(tcp::v4()); u.family();`]

@@ -28,7 +28,8 @@ network interface to use for outgoing multicast datagrams.
     } // namespace tr2
   } // namespace std
 
-__POSIX__ implementations must provide the following member functions:
+__POSIX__ and __Windows__ implementations shall provide the following member
+functions:
 
   namespace std {
     namespace tr2 {
@@ -59,23 +60,23 @@ __POSIX__ implementations must provide the following member functions:
 
   outbound_interface();
 
-[function_effects For __POSIX__ implementations, both `v4_value_` and
-`v6_value_` are zero-initialised.]
+[function_effects For __POSIX__ and __Windows__ implementations, both
+`v4_value_` and `v6_value_` are zero-initialised.]
 
   outbound_interface(const address_v4& network_interface);
 
-[function_effects For __POSIX__ implementations, `v4_value_` is initialised to
-correspond to the IPv4 address `network_interface`, and `v6_value_` is
-zero-initialised.]
+[function_effects For __POSIX__ and __Windows__ implementations, `v4_value_` is
+initialised to correspond to the IPv4 address `network_interface`, and
+`v6_value_` is zero-initialised.]
 
   outbound_interface(unsigned int network_interface);
 
-[function_effects For __POSIX__ implementations, `v6_value_` is initialised to
-`network_interface`, and `v4_value_` is zero-initialised.]
+[function_effects For __POSIX__ and __Windows__ implementations, `v6_value_` is
+initialised to `network_interface`, and `v4_value_` is zero-initialised.]
 
 [endsect]
 
-[section [^ip::multicast::outbound_interface] __POSIX__ members]
+[section [^ip::multicast::outbound_interface] __POSIX__ and __Windows__ members]
 
   template<class Protocol> int level(const Protocol& p) const;
 

@@ -16,7 +16,7 @@ of a [link requirements.stream_socket_service `StreamSocketService`].
           typedef Protocol protocol_type;
           typedef typename Protocol::endpoint endpoint_type;
           typedef ``['[*unspecified]]`` implementation_type;
-          typedef ``['[*unspecified]]`` native_type;
+          typedef ``['[*implementation-defined]]`` native_type;
 
           // constructors:
           explicit stream_socket_service(io_service& ios);

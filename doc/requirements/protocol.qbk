@@ -15,7 +15,7 @@ In the table below, `X` denotes a protocol class, and `a` denotes a value of
   ]
 ]
 
-[table Table--Protocol requirements (POSIX)
+[table Table--Protocol requirements (POSIX and Windows)
   [[expression] [return type] [assertion/note\npre/post-conditions]]
   [
     [`a.family()`]

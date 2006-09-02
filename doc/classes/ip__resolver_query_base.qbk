@@ -32,7 +32,7 @@ bitwise-distinct values. The meanings and __POSIX__ equivalents for each flag
 are defined in the table below.
 
 [table Table--resolver flags
-  [[flag] [meaning] [POSIX equivalent]]
+  [[flag] [meaning] [__POSIX__ equivalent]]
   [
     [`passive`]
     [Returned endpoints are intended for use as locally bound socket endpoints.]
