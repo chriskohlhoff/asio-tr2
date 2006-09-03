@@ -28,8 +28,6 @@
           static const message_flags message_peek;
           static const message_flags message_out_of_band;
           static const message_flags message_do_not_route;
-          static const message_flags message_truncated;
-          static const message_flags message_control_truncated;
 
           static const int max_connections;
 

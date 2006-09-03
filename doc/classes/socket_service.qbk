@@ -100,38 +100,57 @@ Instances of the `socket_service` class template meet the requirements of a
           error_code shutdown(implementation_type& impl, shutdown_type how,
                               error_code& ec);
 
-          template<class MutableBufferSequence,
-            class ConvertibleToMutableBuffer>
+          template<class MutableBufferSequence>
               size_t receive(implementation_type& impl,
                              const MutableBufferSequence& buffers,
                              socket_base::message_flags flags,
-                             socket_base::message_flags& out_flags,
-                             const ConvertibleToMutableBuffer& control_data,
                              error_code& ec);
 
-          template<class MutableBufferSequence,
-            class ConvertibleToMutableBuffer, class ReadHandler>
+          template<class MutableBufferSequence, class ReadHandler>
               void async_receive(implementation_type& impl,
                                  const MutableBufferSequence& buffers,
                                  socket_base::message_flags flags,
-                                 socket_base::message_flags& out_flags,
-                                 const ConvertibleToMutableBuffer& control_data,
                                  ReadHandler handler);
 
-          template<class ConstBufferSequence, class ConvertibleToConstBuffer>
+          template<class MutableBufferSequence>
+              size_t receive_from(implementation_type& impl,
+                                  const MutableBufferSequence& buffers,
+                                  endpoint_type& sender,
+                                  socket_base::message_flags flags,
+                                  error_code& ec);
+
+          template<class MutableBufferSequence, class ReadHandler>
+              void async_receive_from(implementation_type& impl,
+                                      const MutableBufferSequence& buffers,
+                                      endpoint_type& sender,
+                                      socket_base::message_flags flags,
+                                      ReadHandler handler);
+
+          template<class ConstBufferSequence>
             size_t send(implementation_type& impl,
                         const ConstBufferSequence& buffers,
                         socket_base::message_flags flags,
-                        const ConvertibleToConstBuffer& control_data,
                         error_code& ec);
 
-          template<class ConstBufferSequence, class ConvertibleToConstBuffer,
-            class WriteHandler>
+          template<class ConstBufferSequence, class WriteHandler>
               void async_send(implementation_type& impl,
                               const ConstBufferSequence& buffers,
                               socket_base::message_flags flags,
-                              const ConvertibleToConstBuffer& control_data,
                               WriteHandler handler);
+
+          template<class ConstBufferSequence>
+            size_t send_to(implementation_type& impl,
+                           const ConstBufferSequence& buffers,
+                           const endpoint_type& destination,
+                           socket_base::message_flags flags,
+                           error_code& ec);
+            
+          template<class ConstBufferSequence, class WriteHandler>
+              void async_send_to(implementation_type& impl,
+                                 const ConstBufferSequence& buffers,
+                                 const endpoint_type& destination,
+                                 socket_base::message_flags flags,
+                                 WriteHandler handler);
         };
 
       } // namespace sys
@@ -859,90 +878,131 @@ expression `!ec` is false.]
 
 [function_returns `ec`.]
 
-  template<class MutableBufferSequence,
-    class ConvertibleToMutableBuffer>
+  template<class MutableBufferSequence>
       size_t receive(implementation_type& impl,
                      const MutableBufferSequence& buffers,
                      socket_base::message_flags flags,
-                     socket_base::message_flags& out_flags,
-                     const ConvertibleToMutableBuffer& control_data,
                      error_code& ec);
 
 [function_requires `traits_type::has_receive` and `is_open(impl)`.]
 
-  template<class MutableBufferSequence,
-    class ConvertibleToMutableBuffer, class ReadHandler>
+[function_effects Reads data from a connected socket `impl`, as if by __POSIX__
+__recvmsg__.]
+
+[function_block The mutable buffer sequence `buffers` specifies memory where
+the data should be placed. The operation shall always fill a buffer in the
+sequence completely before proceeding to the next. If the total size of all
+buffers in the sequence `buffers` is `0`, the function shall return `0`
+immediately. An implementation shall not set `ec` to any value where `!!ec` is
+true to indicate that data was truncated.]
+
+[function_block The `flags` argument specifies the type of receive operation to be performed.]
+
+[function_block On success, sets `ec` such that the expression `!ec` is true.
+On failure, an implementation shall set `ec` to the `error_code` value
+corresponding to the failure condition, as shown in the table below. For
+failure conditions not listed, an implementation is permitted to set `ec` to
+any other value such that the expression `!ec` is false.]
+
+[table Table--receive() failure conditions
+  [[failure condition][error code]]
+  [
+    [`!is_open(impl)`, or the native socket implementation returned by
+    `native(impl)` is not valid.]
+    [`error::bad_descriptor`]
+  ]
+  [
+    [The native implementation returned by `native(impl)` is not a valid
+    socket.]
+    [`error::not_socket`]
+  ]
+  [
+    [The socket has not been connected.]
+    [`error::not_connected`]
+  ]
+  [
+    [The flags are not supported for the protocol.]
+    [`error::not_supported`]
+  ]
+  [
+    [The connection was gracefully closed by the remote host.]
+    [`error::eof`]
+  ]
+  [
+    [The connection was reset by the remote host.]
+    [`error::connection_reset`]
+  ]
+  [
+    [The sum of all buffer sizes in the sequence `buffers` exceeds an
+    implementation-defined limit, or the `socket_base::message_out_of_band`
+    flags is set and is not supported by the protocol.]
+    [`error::invalid_argument`]
+  ]
+  [
+    [The number of buffers in the mutable buffer sequence `buffers` is 0 or
+    exceeds an implementation-defined limit.]
+    [`error::message_size`]
+  ]
+]
+
+[function_returns The numbers of bytes read, or 0 if `!!ec` is true.]
+
+  template<class MutableBufferSequence, class ReadHandler>
       void async_receive(implementation_type& impl,
                          const MutableBufferSequence& buffers,
                          socket_base::message_flags flags,
-                         socket_base::message_flags& out_flags,
-                         const ConvertibleToMutableBuffer& control_data,
                          ReadHandler handler);
 
 [function_requires `traits_type::has_receive` and `is_open(impl)`.]
 
-  template<class MutableBufferSequence,
-    class ConvertibleToMutableBuffer>
+  template<class MutableBufferSequence>
       size_t receive_from(implementation_type& impl,
                           const MutableBufferSequence& buffers,
                           endpoint_type& sender,
                           socket_base::message_flags flags,
-                          socket_base::message_flags& out_flags,
-                          const ConvertibleToMutableBuffer&
-                            control_data,
                           error_code& ec);
 
 [function_requires `traits_type::has_receive_from` and `is_open(impl)`.]
 
-  template<class MutableBufferSequence,
-    class ConvertibleToMutableBuffer, class ReadHandler>
+  template<class MutableBufferSequence, class ReadHandler>
       void async_receive_from(implementation_type& impl,
                               const MutableBufferSequence& buffers,
                               endpoint_type& sender,
                               socket_base::message_flags flags,
-                              socket_base::message_flags& out_flags,
-                              const ConvertibleToMutableBuffer&
-                                control_data,
                               ReadHandler handler);
 
 [function_requires `traits_type::has_receive_from` and `is_open(impl)`.]
 
-  template<class ConstBufferSequence, class ConvertibleToConstBuffer>
+  template<class ConstBufferSequence>
     size_t send(implementation_type& impl,
                 const ConstBufferSequence& buffers,
                 socket_base::message_flags flags,
-                const ConvertibleToConstBuffer& control_data,
                 error_code& ec);
 
 [function_requires `traits_type::has_send` and `is_open(impl)`.]
 
-  template<class ConstBufferSequence, class ConvertibleToConstBuffer,
-    class WriteHandler>
+  template<class ConstBufferSequence, class WriteHandler>
       void async_send(implementation_type& impl,
                       const ConstBufferSequence& buffers,
                       socket_base::message_flags flags,
-                      const ConvertibleToConstBuffer& control_data,
                       WriteHandler handler);
 
 [function_requires `traits_type::has_send` and `is_open(impl)`.]
 
-  template<class ConstBufferSequence, class ConvertibleToConstBuffer>
+  template<class ConstBufferSequence>
     size_t send_to(implementation_type& impl,
                    const ConstBufferSequence& buffers,
                    const endpoint_type& destination,
                    socket_base::message_flags flags,
-                   const ConvertibleToConstBuffer& control_data,
                    error_code& ec);
     
 [function_requires `traits_type::has_send_to` and `is_open(impl)`.]
 
-  template<class ConstBufferSequence, class ConvertibleToConstBuffer,
-    class WriteHandler>
+  template<class ConstBufferSequence, class WriteHandler>
       void async_send_to(implementation_type& impl,
                          const ConstBufferSequence& buffers,
                          const endpoint_type& destination,
                          socket_base::message_flags flags,
-                         const ConvertibleToConstBuffer& control_data,
                          WriteHandler handler);
 
 [function_requires `traits_type::has_send_to` and `is_open(impl)`.]
