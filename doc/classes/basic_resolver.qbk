@@ -51,29 +51,11 @@ ResolverService>`, initialising the base class with
 [section [^basic_resolver] members]
 
   void cancel();
-
-[function_effects Calls:
-``
-  error_code ec;
-  this->service.cancel(this->implementation, ec);
-  if (ec) throw system_error(ec);
-``]
-
   error_code cancel(error_code& ec);
 
 [function_returns `this->service.cancel(this->implementation, ec)`.]
 
   iterator resolve(const query& q);
-
-[function_effects Calls:
-``
-  error_code ec;
-  iterator i = this->service.resolve(this->implementation, q, ec);
-  if (ec) throw system_error(ec);
-``]
-
-[function_returns `i`.]
-
   iterator resolve(const query& q, error_code& ec);
 
 [function_returns `this->service.resolve(this->implementation, q, ec)`.]
@@ -85,16 +67,6 @@ ResolverService>`, initialising the base class with
 handler)`.]
 
   iterator resolve(const endpoint_type& e);
-
-[function_effects Calls:
-``
-  error_code ec;
-  iterator i = this->service.resolve(this->implementation, e, ec);
-  if (ec) throw system_error(ec);
-``]
-
-[function_returns `i`.]
-
   iterator resolve(const endpoint_type& e, error_code& ec);
 
 [function_returns `this->service.resolve(this->implementation, e, ec)`.]

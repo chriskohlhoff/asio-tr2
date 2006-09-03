@@ -23,7 +23,10 @@ denotes an identifier.
     ]
   ]
   [
-    [`a.cancel(b);`]
+    [``
+      error_code u;
+      a.cancel(b, u);
+    ``]
     [`size_t`]
     [
       Causes any outstanding asynchronous wait operations to complete as soon as
@@ -38,11 +41,14 @@ denotes an identifier.
     []
   ]
   [
-    [`a.expires_at(b, t);`]
+    [``
+      error_code u;
+      a.expires_at(b, t, u);
+    ``]
     [`size_t`]
     [
       Implicitly cancels asynchronous wait operations, as if by calling
-      `a.cancel(b)`. Returns the number of operations that were cancelled.\n
+      `a.cancel(b, u)`. Returns the number of operations that were cancelled.\n
       post: `a.expires_at(b) == t`.
     ]
   ]
@@ -55,10 +61,13 @@ denotes an identifier.
     ]
   ]
   [
-    [`a.expires_from_now(b, d);`]
+    [``
+      error_code u;
+      a.expires_from_now(b, d, u);
+    ``]
     [`size_t`]
     [
-      Equivalent to `a.expires_at(b, TimeTraits::add(TimeTraits::now(), d))`.
+      Equivalent to `a.expires_at(b, TimeTraits::add(TimeTraits::now(), d), u)`.
     ]
   ]
   [
