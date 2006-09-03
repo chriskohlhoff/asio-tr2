@@ -1,0 +1,99 @@
+[section:socket_traits Socket traits requirements]
+
+In the table below, `X` denotes a socket traits class.
+
+[table Table--SocketTraits requirements
+  [[expression] [return type] [semantics] [complexity]]
+  [
+    [`X::has_accept`]
+    [`bool`]
+    [Whether the socket supports the `accept` and `async_accept` operations.]
+    [compile-time]
+  ]
+  [
+    [`X::has_available`]
+    [`bool`]
+    [Whether the socket supports the `available` operation.]
+    [compile-time]
+  ]
+  [
+    [`X::has_bind`]
+    [`bool`]
+    [Whether the socket supports the `bind` operation.]
+    [compile-time]
+  ]
+  [
+    [`X::has_connect`]
+    [`bool`]
+    [Whether the socket supports the `connect` and `async_connect` operations.]
+    [compile-time]
+  ]
+  [
+    [`X::has_listen`]
+    [`bool`]
+    [Whether the socket supports the `listen` operation.]
+    [compile-time]
+  ]
+  [
+    [`X::has_local_endpoint`]
+    [`bool`]
+    [Whether the socket supports the `local_endpoint` operation.]
+    [compile-time]
+  ]
+  [
+    [`X::has_mark`]
+    [`bool`]
+    [Whether the socket supports the `at_mark` operation.]
+    [compile-time]
+  ]
+  [
+    [`X::has_read_some`]
+    [`bool`]
+    [Whether the socket supports the `read_some` and `async_read_some` operations.]
+    [compile-time]
+  ]
+  [
+    [`X::has_receive`]
+    [`bool`]
+    [Whether the socket supports the `receive` and `async_receive` operations.]
+    [compile-time]
+  ]
+  [
+    [`X::has_receive_from`]
+    [`bool`]
+    [Whether the socket supports the `receive_from` and `async_receive_from` operations.]
+    [compile-time]
+  ]
+  [
+    [`X::has_remote_endpoint`]
+    [`bool`]
+    [Whether the socket supports the `remote_endpoint` operation.]
+    [compile-time]
+  ]
+  [
+    [`X::has_send`]
+    [`bool`]
+    [Whether the socket supports the `send` and `async_send` operations.]
+    [compile-time]
+  ]
+  [
+    [`X::has_send_to`]
+    [`bool`]
+    [Whether the socket supports the `send_to` and `async_send_to` operations.]
+    [compile-time]
+  ]
+  [
+    [`X::has_shutdown`]
+    [`bool`]
+    [Whether the socket supports the `shutdown` operation.]
+    [compile-time]
+  ]
+  [
+    [`X::has_write_some`]
+    [`bool`]
+    [Whether the socket supports the `write_some` and `async_write_some` operations.]
+    [compile-time]
+  ]
+]
+
+[endsect]

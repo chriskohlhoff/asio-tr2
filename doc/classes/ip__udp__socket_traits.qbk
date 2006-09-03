@@ -1,0 +1,35 @@
+[section:ip__udp__socket_traits Struct [^ip::udp::socket_traits]]
+
+The `udp::socket_traits` class meets the requirements for [link
+requirements.socket_traits `SocketTraits`].
+
+  namespace std {
+    namespace tr2 {
+      namespace sys {
+        namespace ip {
+
+          struct udp::socket_traits
+          {
+            static const bool has_accept = false;
+            static const bool has_available = true;
+            static const bool has_bind = true;
+            static const bool has_connect = true;
+            static const bool has_listen = false;
+            static const bool has_local_endpoint = true;
+            static const bool has_mark = false;
+            static const bool has_read_some = false;
+            static const bool has_receive = true;
+            static const bool has_receive_from = true;
+            static const bool has_remote_endpoint = true;
+            static const bool has_send = true;
+            static const bool has_send_to = true;
+            static const bool has_shutdown = true;
+            static const bool has_write_some = false;
+          };
+
+        } // namespace ip
+      } // namespace sys
+    } // namespace tr2
+  } // namespace std
+
+[endsect]

@@ -8,30 +8,17 @@
 
         class ``[link classes.socket_base socket_base]``;
 
-        template<class Protocol, class SocketService>
-          class ``[link classes.basic_socket basic_socket]``;
+        template<class Protocol, class SocketTraits,
+          class SocketService = socket_service<Protocol, SocketTraits> >
+            class ``[link classes.basic_socket basic_socket]``;
 
-        template<class Protocol> class ``[link classes.datagram_socket_service datagram_socket_service]``;
-
-        template<class Protocol,
-          class DatagramSocketService = datagram_socket_service<Protocol> >
-            class ``[link classes.basic_datagram_socket basic_datagram_socket]``;
-
-        template<class Protocol> class ``[link classes.stream_socket_service stream_socket_service]``;
-
-        template<class Protocol,
-          class StreamSocketService = stream_socket_service<Protocol> >
-            class ``[link classes.basic_stream_socket basic_stream_socket]``;
-
-        template<class Protocol> class ``[link classes.socket_acceptor_service socket_acceptor_service]``;
-
-        template<class Protocol,
-          class AcceptorService = socket_acceptor_service<Protocol> >
-            class ``[link classes.basic_socket_acceptor basic_socket_acceptor]``;
+        template<class Protocol, class SocketTraits>
+          class ``[link classes.socket_service socket_service]``;
 
         // Resolvers:
 
-        template<class ResolverProtocol> class ``[link classes.resolver_service resolver_service]``;
+        template<class ResolverProtocol>
+          class ``[link classes.resolver_service resolver_service]``;
 
         template<class ResolverProtocol,
           class ResolverService = resolver_service<ResolverProtocol> >
@@ -39,12 +26,12 @@
 
         // Socket streams:
 
-        template<class Protocol,
-          class StreamSocketService = stream_socket_service<Protocol> >
+        template<class Protocol, class SocketTraits,
+          class SocketService = socket_service<Protocol, SocketTraits> >
             class ``[link classes.basic_socket_streambuf basic_socket_streambuf]``;
 
-        template<class Protocol,
-          class StreamSocketService = stream_socket_service<Protocol> >
+        template<class Protocol, class SocketTraits,
+          class SocketService = socket_service<Protocol, SocketTraits> >
             class ``[link classes.basic_socket_iostream basic_socket_iostream]``;
 
         // Internet protocol:
@@ -141,7 +128,23 @@
 
           class ``[link classes.ip__tcp tcp]``;
 
+          // tcp comparisons:
+          bool operator==(const tcp& a, const tcp& b);
+          bool operator!=(const tcp& a, const tcp& b);
+          bool operator< (const tcp& a, const tcp& b);
+          bool operator> (const tcp& a, const tcp& b);
+          bool operator<=(const tcp& a, const tcp& b);
+          bool operator>=(const tcp& a, const tcp& b);
+
           class ``[link classes.ip__udp udp]``;
+
+          // udp comparisons:
+          bool operator==(const udp& a, const udp& b);
+          bool operator!=(const udp& a, const udp& b);
+          bool operator< (const udp& a, const udp& b);
+          bool operator> (const udp& a, const udp& b);
+          bool operator<=(const udp& a, const udp& b);
+          bool operator>=(const udp& a, const udp& b);
 
           class ``[link classes.ip__v6_only v6_only]``;
 

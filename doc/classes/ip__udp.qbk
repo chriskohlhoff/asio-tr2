@@ -16,7 +16,8 @@ requirements.internet_protocol `InternetProtocol`].
             typedef basic_resolver_query<udp> resolver_query;
             typedef basic_resolver_iterator<udp> resolver_iterator;
             typedef basic_resolver<udp> resolver;
-            typedef basic_datagram_socket<udp> socket;
+            struct ``[link classes.ip__udp__socket_traits socket_traits]``;
+            typedef basic_socket<udp, socket_traits> socket;
 
             // static members:
             static udp v4();
@@ -25,6 +26,14 @@ requirements.internet_protocol `InternetProtocol`].
           private:
             udp(); // not defined
           };
+
+          // udp comparisons:
+          bool operator==(const udp& a, const udp& b);
+          bool operator!=(const udp& a, const udp& b);
+          bool operator< (const udp& a, const udp& b);
+          bool operator> (const udp& a, const udp& b);
+          bool operator<=(const udp& a, const udp& b);
+          bool operator>=(const udp& a, const udp& b);
 
         } // namespace ip
       } // namespace sys
@@ -47,14 +56,6 @@ functions:
             int protocol() const;
             ``['[*// remainder unchanged]]``
           };
-
-          // udp comparisons:
-          bool operator==(const udp& a, const udp& b);
-          bool operator!=(const udp& a, const udp& b);
-          bool operator< (const udp& a, const udp& b);
-          bool operator> (const udp& a, const udp& b);
-          bool operator<=(const udp& a, const udp& b);
-          bool operator>=(const udp& a, const udp& b);
 
         } // namespace ip
       } // namespace sys

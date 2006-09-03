@@ -4,10 +4,10 @@
     namespace tr2 {
       namespace sys {
 
-        template<class Protocol, class StreamSocketService>
+        template<class Protocol, class SocketTraits, class SocketService>
         class basic_socket_streambuf :
           public basic_streambuf<char>,
-          public basic_socket<Protocol, StreamSocketService>
+          public basic_socket<Protocol,SocketTraits,SocketService>
         {
         public:
           // types:
@@ -18,13 +18,13 @@
           virtual ~basic_socket_streambuf();
 
           // members:
-          basic_socket_streambuf<Protocol, StreamSocketService>*
+          basic_socket_streambuf<Protocol,SocketTraits,SocketService>*
             connect(const endpoint_type& e);
           template<class T1, class T2, ..., class TN>
-            basic_socket_streambuf<Protocol, StreamSocketService>*
+            basic_socket_streambuf<Protocol,SocketTraits,SocketService>*
               connect(T1 t1, T2 t2, ..., TN tN);
 
-          basic_socket_streambuf<Protocol, StreamSocketService>* close();
+          basic_socket_streambuf<Protocol,SocketTraits,SocketService>* close();
 
         protected:
           // overridden virtual functions:
@@ -39,49 +39,54 @@
     } // namespace tr2
   } // namespace std
 
-The class `basic_socket_streambuf<Protocol, StreamSocketService>` associates
-both the input sequence and the output sequence with a socket. The input and
-output sequences are independent and do not support seeking. Multibyte/wide
-character conversion is not supported.
+The class `basic_socket_streambuf<Protocol,SocketTraits,SocketService>`
+associates both the input sequence and the output sequence with a socket. The
+input and output sequences are independent and do not support seeking.
+Multibyte/wide character conversion is not supported.
+
+The class `basic_socket_streambuf<Protocol,SocketTraits,SocketService>`
+requires that `SocketTraits::has_read_some` and `SocketTraits::has_write_some`
+evaluate to true.
 
 [section [^basic_socket_streambuf] constructors]
 
   basic_socket_streambuf();
 
 [function_effects Constructs an object of class
-`basic_socket_streambuf<Protocol, StreamSocketService>`, initialising the base
-classes with `basic_streambuf<char>()` and `basic_socket<Protocol,
-StreamSocketService>(ios)`, where `ios` is an implementation-defined object of
-class `io_service` that has a longer lifetime than the `basic_socket<Protocol,
-StreamSocketService>` base.]
+`basic_socket_streambuf<Protocol,SocketTraits,SocketService>`, initialising the
+base classes with `basic_streambuf<char>()` and
+`basic_socket<Protocol,SocketTraits,SocketService>(ios)`, where `ios` is an
+implementation-defined object of class `io_service` that has a longer lifetime
+than the `basic_socket<Protocol,SocketTraits,SocketService>` base.]
 
   virtual ~basic_socket_streambuf();
 
-[function_effects Destroys an object of class `basic_socket_streambuf<Protocol,
-StreamSocketService>`. If a put area exists, calls
-`overflow(traits_type::eof())` to flush characters. [inline_note The socket is
-closed by the `basic_socket<Protocol, StreamSocketService>` destructor.]]
+[function_effects Destroys an object of class
+`basic_socket_streambuf<Protocol,SocketTraits,SocketService>`. If a put area
+exists, calls `overflow(traits_type::eof())` to flush characters. [inline_note
+The socket is closed by the `basic_socket<Protocol,SocketTraits,SocketService>`
+destructor.]]
 
 [endsect]
 
 [section [^basic_socket_streambuf] members]
 
-  basic_socket_streambuf<Protocol, StreamSocketService>*
+  basic_socket_streambuf<Protocol,SocketTraits,SocketService>*
     connect(const endpoint_type& e);
 
 [function_effects Resets the `streambuf` get and put areas, then opens a
 connection as if by calling:
 ``
   error_code ec;
-  this->basic_socket<Protocol, StreamSocketService>::close(ec);
-  this->basic_socket<Protocol, StreamSocketService>::connect(*i, ec);
+  this->basic_socket<Protocol,SocketTraits,SocketService>::close(ec);
+  this->basic_socket<Protocol,SocketTraits,SocketService>::connect(*i, ec);
 ``]
 
 [function_returns `this` if `ec` indicates that a connection was successfully
 established, a null pointer otherwise.]
 
   template<class T1, class T2, ..., class TN>
-    basic_socket_streambuf<Protocol, StreamSocketService>*
+    basic_socket_streambuf<Protocol,SocketTraits,SocketService>*
       connect(T1 t1, T2 t2, ..., TN tN);
 
 [function_requires The `Protocol` type must implement the additional
@@ -92,14 +97,14 @@ connection as if by calling:
 ``
   typename Protocol::resolver_query query(t1, t2, __dotdotdot__, tN);
   typename Protocol::resolver resolver(
-      this->basic_socket<Protocol, StreamSocketService>::io_service());
+      this->basic_socket<Protocol,SocketTraits,SocketService>::io_service());
   typename Protocol::resolver_iterator i = resolver.resolve(query);
   typename Protocol::resolver_iterator end;
   error_code ec = error::host_not_found;
   while (ec && i != end)
   {
-    this->basic_socket<Protocol, StreamSocketService>::close(ec);
-    this->basic_socket<Protocol, StreamSocketService>::connect(*i, ec);
+    this->basic_socket<Protocol,SocketTraits,SocketService>::close(ec);
+    this->basic_socket<Protocol,SocketTraits,SocketService>::connect(*i, ec);
     ++i;
   }
 ``]
@@ -107,13 +112,13 @@ connection as if by calling:
 [function_returns `this` if `ec` indicates that a connection was successfully
 established, a null pointer otherwise.]
 
-  basic_socket_streambuf<Protocol, StreamSocketService>* close();
+  basic_socket_streambuf<Protocol,SocketTraits,SocketService>* close();
 
 [function_effects If a put area exists, calls `overflow(traits_type::eof())` to
 flush characters. Calls:
 ``
   error_code ec;
-  this->basic_socket<Protocol, StreamSocketService>::close(ec);
+  this->basic_socket<Protocol,SocketTraits,SocketService>::close(ec);
 ``
 then resets the get and put areas. If the call to `overflow` fails or if the
 value of `ec` indicates failure then `close` fails.]
@@ -130,7 +135,7 @@ value of `ec` indicates failure then `close` fails.]
 `basic_streambuf<char>::underflow()`, with the specialisation that a sequence
 of characters is read from the input sequence as if by reading from the socket
 into an internal buffer as if by calling
-`this->service.receive(this->implementation, __dotdotdot__)`.]
+`this->basic_socket<Protocol,SocketTraits,SocketService>::read_some(__dotdotdot__)`;
 
 [function_effects Returns `traits_type::eof()` to indicate failure. Otherwise
 returns `traits_type::to_int_type(*gptr())`.]
@@ -167,7 +172,8 @@ putback positions available as a result of any call.]
 [function_effects Behaves according to the description of
 `basic_streambuf<char>::overflow(c)`, except that the behaviour of "consuming
 characters" is performed by output of the characters to the socket as if by one
-or more calls to `this->service.send(this->implementation, __dotdotdot__)`.]
+or more calls to
+`this->basic_socket<Protocol,SocketTraits,SocketService>::write_some(__dotdotdot__)`.]
 
 [function_returns `traits_type::not_eof(c)` to indicate success, and
 `traits_type::eof()` to indicate failure.]

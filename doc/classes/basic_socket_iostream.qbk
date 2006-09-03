@@ -4,7 +4,7 @@
     namespace tr2 {
       namespace sys {
 
-        template<class Protocol, class StreamSocketService>
+        template<class Protocol, class SocketTraits, class SocketService>
         class basic_socket_iostream :
           public basic_iostream<char>
         {
@@ -20,21 +20,22 @@
 
           void close();
 
-          basic_socket_streambuf<Protocol, StreamSocketService>* rdbuf() const;
+          basic_socket_streambuf<Protocol,SocketTraits,SocketService>*
+            rdbuf() const;
 
         private:
   //      basic_socket_streambuf<Protocol,
-  ``//        StreamSocketService> sb;        ['[*exposition only]]``
+  ``//        SocketTraits, SocketService> sb;    ['[*exposition only]]``
         };
 
       } // namespace sys
     } // namespace tr2
   } // namespace std
 
-The class template `basic_socket_iostream<Protocol, StreamSocketService>`
+The class template `basic_socket_iostream<Protocol,SocketTraits,SocketService>`
 supports reading and writing from sockets. It uses a
-`basic_socket_streambuf<Protocol, StreamSocketService>` object to control the
-associated sequences. For the sake of exposition, the maintained data is
+`basic_socket_streambuf<Protocol,SocketTraits,SocketService>` object to control
+the associated sequences. For the sake of exposition, the maintained data is
 presented here as:
 
 [mdash] `sb`, the `basic_socket_streambuf` object.
@@ -44,17 +45,17 @@ presented here as:
   basic_socket_iostream();
 
 [function_effects Constructs an object of class
-`basic_socket_iostream<Protocol, StreamSocketService>`, initialising the base
-class with `basic_iostream<char>(&sb)` and initialising `sb` with
-`basic_socket_streambuf<Protocol, StreamSocketService>()`.]
+`basic_socket_iostream<Protocol,SocketTraits,SocketService>`, initialising the
+base class with `basic_iostream<char>(&sb)` and initialising `sb` with
+`basic_socket_streambuf<Protocol,SocketTraits,SocketService>()`.]
 
   template<class T1, class T2, ..., class TN>
     explicit basic_socket_iostream(T1 t1, T2 t2, ..., TN tN);
 
 [function_effects Constructs an object of class
-`basic_socket_iostream<Protocol, StreamSocketService>`, initialising the base
-class with `basic_iostream<char>(&sb)` and initialising `sb` with
-`basic_socket_streambuf<Protocol, StreamSocketService>()`. Then calls
+`basic_socket_iostream<Protocol,SocketTraits,SocketService>`, initialising the
+base class with `basic_iostream<char>(&sb)` and initialising `sb` with
+`basic_socket_streambuf<Protocol,SocketTraits,SocketService>()`. Then calls
 `rdbuf()->connect(t1, t2, __dotdotdot__, tN)`. If that function returns a null
 pointer, calls `setstate(failbit)`.]
 
@@ -74,10 +75,10 @@ function returns a null pointer, calls `setstate(failbit)` (which may throw
 [function_effects Calls `rdbuf()->close()`. If that function returns a null
 pointer, calls `setstate(failbit)` (which may throw `ios_base::failure`).]
 
-  basic_socket_streambuf<Protocol, StreamSocketService>* rdbuf() const;
+  basic_socket_streambuf<Protocol,SocketTraits,SocketService>*
+    rdbuf() const;
 
-[function_returns `const_cast<basic_socket_streambuf<Protocol,
-StreamSocketService>*>(&sb)`.]
+[function_returns `const_cast<basic_socket_streambuf<Protocol,SocketTraits,SocketService>*>(&sb)`.]
 
 [endsect]
 

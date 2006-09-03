@@ -1,7 +1,7 @@
 [library Networking Library Proposal for TR2
     [quickbook 1.1]
     [id tr2network]
-    [last-revision $Date: 2006/09/03 08:04:26 $]
+    [last-revision $Date: 2006/09/03 11:47:10 $]
 ]
 
 [/-----------------------------------------------------------------------------]
@@ -407,10 +407,6 @@ express type requirements, as listed in the table below.
     [[link requirements.accept_handler accept handler]]
   ]
   [
-    [`AcceptorService`]
-    [[link requirements.acceptor_service acceptor service]]
-  ]
-  [
     [`AsyncReadStream`]
     [[link requirements.async_read_stream buffer-oriented asynchronous read stream]]
   ]
@@ -439,10 +435,6 @@ express type requirements, as listed in the table below.
     [`ConvertibleToMutableBuffer`]
     [[link requirements.convertible_to_mutable_buffer convertible to a
     mutable buffer]]
-  ]
-  [
-    [`DatagramSocketService`]
-    [[link requirements.datagram_socket_service datagram socket service]]
   ]
   [
     [`GettableSocketOption`]
@@ -501,8 +493,8 @@ express type requirements, as listed in the table below.
     [[link requirements.socket_service socket service]]
   ]
   [
-    [`StreamSocketService`]
-    [[link requirements.stream_socket_service stream socket service]]
+    [`SocketTraits`]
+    [[link requirements.socket_traits socket traits]]
   ]
   [
     [`SyncReadStream`]
@@ -600,10 +592,8 @@ express type requirements, as listed in the table below.
 [section:sockets_requirements Requirements]
 [include:requirements requirements/endpoint.qbk]
 [include:requirements requirements/protocol.qbk]
+[include:requirements requirements/socket_traits.qbk]
 [include:requirements requirements/socket_service.qbk]
-[include:requirements requirements/datagram_socket_service.qbk]
-[include:requirements requirements/stream_socket_service.qbk]
-[include:requirements requirements/acceptor_service.qbk]
 [include:requirements requirements/gettable_socket_option.qbk]
 [include:requirements requirements/settable_socket_option.qbk]
 [include:requirements requirements/io_control_command.qbk]
@@ -617,12 +607,7 @@ express type requirements, as listed in the table below.
 [include:classes classes/socket_base__int_socket_options.qbk]
 [include:classes classes/socket_base__linger.qbk]
 [include:classes classes/basic_socket.qbk]
-[include:classes classes/datagram_socket_service.qbk]
-[include:classes classes/basic_datagram_socket.qbk]
-[include:classes classes/stream_socket_service.qbk]
-[include:classes classes/basic_stream_socket.qbk]
-[include:classes classes/socket_acceptor_service.qbk]
-[include:classes classes/basic_socket_acceptor.qbk]
+[include:classes classes/socket_service.qbk]
 [endsect]
 
 [section:resolvers Resolvers]
@@ -654,8 +639,11 @@ express type requirements, as listed in the table below.
 [include:classes classes/ip__basic_resolver_query.qbk]
 [include:functions functions/ip__host_name.qbk]
 [include:classes classes/ip__tcp.qbk]
+[include:classes classes/ip__tcp__socket_traits.qbk]
+[include:classes classes/ip__tcp__acceptor_traits.qbk]
 [include:classes classes/ip__tcp__no_delay.qbk]
 [include:classes classes/ip__udp.qbk]
+[include:classes classes/ip__udp__socket_traits.qbk]
 [include:classes classes/ip__v6_only.qbk]
 [include:classes classes/ip__unicast__hops.qbk]
 [include:classes classes/ip__multicast__group_socket_options.qbk]

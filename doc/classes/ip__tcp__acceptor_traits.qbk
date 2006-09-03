@@ -1,0 +1,35 @@
+[section:ip__tcp__acceptor_traits Struct [^ip::tcp::acceptor_traits]]
+
+The `tcp::acceptor_traits` class meets the requirements for [link
+requirements.socket_traits `SocketTraits`].
+
+  namespace std {
+    namespace tr2 {
+      namespace sys {
+        namespace ip {
+
+          struct tcp::acceptor_traits
+          {
+            static const bool has_accept = true;
+            static const bool has_available = true;
+            static const bool has_bind = true;
+            static const bool has_connect = false;
+            static const bool has_listen = true;
+            static const bool has_local_endpoint = true;
+            static const bool has_mark = false;
+            static const bool has_read_some = false;
+            static const bool has_receive = false;
+            static const bool has_receive_from = false;
+            static const bool has_remote_endpoint = false;
+            static const bool has_send = false;
+            static const bool has_send_to = false;
+            static const bool has_shutdown = false;
+            static const bool has_write_some = false;
+          };
+
+        } // namespace ip
+      } // namespace sys
+    } // namespace tr2
+  } // namespace std
+
+[endsect]
