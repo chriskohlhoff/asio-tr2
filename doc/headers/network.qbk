@@ -15,15 +15,6 @@
           class SocketService = socket_service<Protocol, SocketTraits> >
             class ``[link classes.basic_socket basic_socket]``;
 
-        // Resolvers:
-
-        template<class ResolverProtocol>
-          class ``[link classes.resolver_service resolver_service]``;
-
-        template<class ResolverProtocol,
-          class ResolverService = resolver_service<ResolverProtocol> >
-            class ``[link classes.basic_resolver basic_resolver]``;
-
         // Socket streams:
 
         template<class Protocol, class SocketTraits,
@@ -122,6 +113,13 @@
 
           template<class InternetProtocol>
             ``[link classes.ip__basic_resolver_iterator basic_resolver_iterator]``;
+
+          template<class InternetProtocol>
+            class ``[link classes.ip__resolver_service resolver_service]``;
+
+          template<class InternetProtocol,
+            class ResolverService = resolver_service<InternetProtocol> >
+              class ``[link classes.ip__basic_resolver basic_resolver]``;
 
           string ``[link functions.ip__host_name host_name]``();
           string ``[link functions.ip__host_name host_name]``(error_code&);

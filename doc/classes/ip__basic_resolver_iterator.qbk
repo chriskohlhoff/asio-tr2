@@ -8,7 +8,7 @@
           template<class InternetProtocol>
           class basic_resolver_iterator :
             public iterator<forward_iterator_tag,
-              basic_resolver_entry<InternetProtocol> >
+              const basic_resolver_entry<InternetProtocol> >
           {
           public:
             // types:
@@ -27,30 +27,14 @@
     } // namespace tr2
   } // namespace std
 
-__POSIX__ and __Windows__ implementations shall provide the following member
-functions:
+[section [^ip::basic_resolver_iterator] constructors]
 
-  namespace std {
-    namespace tr2 {
-      namespace sys {
-        namespace ip {
+  basic_resolver_iterator();
 
-          template<class InternetProtocol>
-          class basic_resolver_iterator :
-            public iterator<forward_iterator_tag,
-              basic_resolver_entry<InternetProtocol> >
-          {
-          public:
-            basic_resolver_iterator(addrinfo* ai, const string& h,
-                                    const string& s);
-            basic_resolver_iterator(const endpoint_type& ep, const string& h,
-                                    const string& s);
-            ``['[*// remainder unchanged]]``
-          };
+[function_effects Initialises an object of class
+`basic_resolver_iterator<InternetProtocol>` so that it represents an end
+iterator.]
 
-        } // namespace ip
-      } // namespace sys
-    } // namespace tr2
-  } // namespace std
+[endsect]
 
 [endsect]

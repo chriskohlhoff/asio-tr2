@@ -1,7 +1,7 @@
 [library Networking Library Proposal for TR2
     [quickbook 1.1]
     [id tr2network]
-    [last-revision $Date: 2006/09/03 16:22:47 $]
+    [last-revision $Date: 2006/09/03 22:51:39 $]
 ]
 
 [/-----------------------------------------------------------------------------]
@@ -393,7 +393,6 @@ summarised in the table below:
   [
     [
       [link tr2network.sockets Sockets]\n
-      [link tr2network.resolvers Resolvers]\n
       [link tr2network.socket_streams Socket streams]\n
       [link tr2network.internet_protocol Internet protocol]\n
     ]
@@ -475,10 +474,6 @@ express type requirements, as listed in the table below.
   [
     [`ResolveHandler`]
     [[link requirements.resolve_handler resolve handler]]
-  ]
-  [
-    [`ResolverProtocol`]
-    [[link requirements.resolver_protocol resolver protocol]]
   ]
   [
     [`ResolverService`]
@@ -614,16 +609,6 @@ express type requirements, as listed in the table below.
 [include:classes classes/basic_socket.qbk]
 [endsect]
 
-[section:resolvers Resolvers]
-[section:resolvers_requirements Requirements]
-[include:requirements requirements/resolver_protocol.qbk]
-[include:requirements requirements/resolver_service.qbk]
-[include:requirements requirements/resolve_handler.qbk]
-[endsect]
-[include:classes classes/resolver_service.qbk]
-[include:classes classes/basic_resolver.qbk]
-[endsect]
-
 [section:socket_streams Socket streams]
 [include:classes classes/basic_socket_streambuf.qbk]
 [include:classes classes/basic_socket_iostream.qbk]
@@ -632,6 +617,8 @@ express type requirements, as listed in the table below.
 [section:internet_protocol Internet protocol]
 [section:internet_protocol_requirements Requirements]
 [include:requirements requirements/internet_protocol.qbk]
+[include:requirements requirements/resolver_service.qbk]
+[include:requirements requirements/resolve_handler.qbk]
 [endsect]
 [include:classes classes/ip__address.qbk]
 [include:classes classes/ip__address_v4.qbk]
@@ -641,6 +628,8 @@ express type requirements, as listed in the table below.
 [include:classes classes/ip__basic_resolver_entry.qbk]
 [include:classes classes/ip__basic_resolver_iterator.qbk]
 [include:classes classes/ip__basic_resolver_query.qbk]
+[include:classes classes/ip__resolver_service.qbk]
+[include:classes classes/ip__basic_resolver.qbk]
 [include:functions functions/ip__host_name.qbk]
 [include:classes classes/ip__tcp.qbk]
 [include:classes classes/ip__tcp__socket_traits.qbk]

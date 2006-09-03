@@ -34,28 +34,4 @@
     } // namespace tr2
   } // namespace std
 
-__POSIX__ and __Windows__implementations shall provide the following member
-functions:
-
-  namespace std {
-    namespace tr2 {
-      namespace sys {
-        namespace ip {
-
-          template<class InternetProtocol>
-          class basic_resolver_query :
-            public resolver_query_base
-          {
-          public:
-            const addrinfo* hints() const;
-            const char* host() const;
-            const char* service() const;
-            ``['[*// remainder unchanged]]``
-          };
-
-        } // namespace ip
-      } // namespace sys
-    } // namespace tr2
-  } // namespace std
-
 [endsect]

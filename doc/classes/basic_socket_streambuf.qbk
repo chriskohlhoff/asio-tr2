@@ -90,16 +90,16 @@ established, a null pointer otherwise.]
       connect(T1 t1, T2 t2, ..., TN tN);
 
 [function_requires The `Protocol` type must implement the additional
-requirements for a [link requirements.resolver_protocol resolver protocol].]
+requirements for an [link requirements.internet_protocol internet protocol].]
 
 [function_effects Resets the `streambuf` get and put areas, then opens a
 connection as if by calling:
 ``
-  typename Protocol::resolver_query query(t1, t2, __dotdotdot__, tN);
+  typename Protocol::resolver::query query(t1, t2, __dotdotdot__, tN);
   typename Protocol::resolver resolver(
       this->basic_socket<Protocol,SocketTraits,SocketService>::io_service());
-  typename Protocol::resolver_iterator i = resolver.resolve(query);
-  typename Protocol::resolver_iterator end;
+  typename Protocol::resolver::iterator i = resolver.resolve(query);
+  typename Protocol::resolver::iterator end;
   error_code ec = error::host_not_found;
   while (ec && i != end)
   {

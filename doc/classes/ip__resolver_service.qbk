@@ -1,4 +1,4 @@
-[section:resolver_service Class template [^resolver_service]]
+[section:ip__resolver_service Class template [^ip::resolver_service]]
 
 Instances of the `resolver_service` class template meet the requirements
 of a [link requirements.resolver_service `ResolverService`].
@@ -6,60 +6,64 @@ of a [link requirements.resolver_service `ResolverService`].
   namespace std {
     namespace tr2 {
       namespace sys {
+        namespace ip {
 
-        template<class ResolverProtocol>
-        class resolver_service :
-          public io_service::service
-        {
-        public:
-          // types:
-          typedef ResolverProtocol protocol_type;
-          typedef typename ResolverProtocol::endpoint endpoint_type;
-          typedef typename ResolverProtocol::resolver_query query_type;
-          typedef typename ResolverProtocol::resolver_iterator iterator_type;
-          typedef ``['[*unspecified]]`` implementation_type;
+          template<class InternetProtocol>
+          class resolver_service :
+            public io_service::service
+          {
+          public:
+            // types:
+            typedef InternetProtocol protocol_type;
+            typedef typename InternetProtocol::endpoint endpoint_type;
+            typedef basic_resolver_query<InternetProtocol> query_type;
+            typedef basic_resolver_iterator<InternetProtocol> iterator_type;
+            typedef ``['[*unspecified]]`` implementation_type;
 
-          // constructors:
-          explicit resolver_service(io_service& ios);
+            // constructors:
+            explicit resolver_service(io_service& ios);
 
-          // members:
-          void shutdown_service();
+            // members:
+            void shutdown_service();
 
-          void construct(implementation_type& impl);
+            void construct(implementation_type& impl);
 
-          void destroy(implementation_type& impl);
+            void destroy(implementation_type& impl);
 
-          error_code cancel(implementation_type& impl, error_code& ec);
+            error_code cancel(implementation_type& impl, error_code& ec);
 
-          iterator_type resolve(implementation_type& impl,
-                                const query_type& q, error_code& ec);
+            iterator_type resolve(implementation_type& impl,
+                                  const query_type& q, error_code& ec);
 
-          template<class ResolveHandler>
-            void async_resolve(implementation_type& impl,
-                               const query_type& q, ResolveHandler handler);
+            template<class ResolveHandler>
+              void async_resolve(implementation_type& impl,
+                                 const query_type& q, ResolveHandler handler);
 
-          iterator_type resolve(implementation_type& impl,
-                                const endpoint_type& e, error_code& ec);
+            iterator_type resolve(implementation_type& impl,
+                                  const endpoint_type& e, error_code& ec);
 
-          template<class ResolveHandler>
-            void async_resolve(implementation_type& impl,
-                               const endpoint_type& e, ResolveHandler handler);
-        };
+            template<class ResolveHandler>
+              void async_resolve(implementation_type& impl,
+                                 const endpoint_type& e,
+                                 ResolveHandler handler);
+          };
 
+        } // namespace ip
       } // namespace sys
     } // namespace tr2
   } // namespace std
 
-[section [^resolver_service] constructors]
+[section [^ip::resolver_service] constructors]
 
   explicit resolver_service(io_service& ios);
 
-[function_effects Constructs an object of class `resolver_service<Protocol>`,
-initialising the base class with `io_service::service(ios)`.]
+[function_effects Constructs an object of class
+`resolver_service<InternetProtocol>`, initialising the base class with
+`io_service::service(ios)`.]
 
 [endsect]
 
-[section [^resolver_service] members]
+[section [^ip::resolver_service] members]
 
   void shutdown_service();
 
@@ -91,9 +95,10 @@ value such that the expression `!ec` is false.]
   iterator_type resolve(implementation_type& impl,
                         const query_type& q, error_code& ec);
 
-[function_effects Translates a query into a list of endpoints, as if by
-__POSIX__ __getaddrinfo__. On success, sets `ec` such that the expression `!ec`
-is true. On failure, an implementation shall set `ec` to the `error_code` value
+[function_effects Translates a query into a sequence of
+`basic_resolver_entry<InternetProtocol>` objects, as if by __POSIX__
+__getaddrinfo__. On success, sets `ec` such that the expression `!ec` is true.
+On failure, an implementation shall set `ec` to the `error_code` value
 corresponding to the failure condition, as shown in the table below. For
 failure conditions not listed, an implementation is permitted to set `ec` to
 any other value such that the expression `!ec` is false.]
@@ -130,10 +135,11 @@ successful, the condition `i != iterator_type()` holds.]
                        const query_type& q, ResolveHandler handler);
 
 [function_effects Initiates an asynchronous operation to translate a query into
-a list of endpoints, as if by __POSIX__ __getaddrinfo__. The operation is
-performed via the `io_service` object returned by
-`io_service::service::io_service()` and behaves according to [link
-requirements.asynchronous_operations asynchronous operation] requirements.]
+a sequence of `basic_resolver_entry<InternetProtocol>` objects, as if by
+__POSIX__ __getaddrinfo__. The operation is performed via the `io_service`
+object returned by `io_service::service::io_service()` and behaves according to
+[link requirements.asynchronous_operations asynchronous operation]
+requirements.]
 
 [function_block On completion of the asynchronous operation, the
 `ResolveHandler` object `handler` shall be invoked with an `error_code` value
@@ -150,24 +156,27 @@ expression `!ec` is false.]
   iterator_type resolve(implementation_type& impl,
                         const endpoint_type& e, error_code& ec);
 
-[function_effects Translates an endpoint into host and service names, as if by
-__POSIX__ __getnameinfo__, passing the flag `NI_DGRAM` if the protocol is a
-datagram protocol, otherwise passing no flags. On success, sets `ec` such that
-the expression `!ec` is true. On failure, an implementation shall set `ec` to
-any `error_code` value such that the expression `!ec` is false.]
+[function_effects Translates an endpoint into a sequence of zero or one
+`basic_resolver_entry<InternetProtocol>` objects, as if by __POSIX__
+__getnameinfo__, passing the flag `NI_DGRAM` if the protocol is a datagram
+protocol, otherwise passing no flags. On success, sets `ec` such that the
+expression `!ec` is true. On failure, an implementation shall set `ec` to any
+`error_code` value such that the expression `!ec` is false.]
 
 [function_returns An iterator object `i` such that, if the operation is
 successful, the condition `i != iterator_type()` holds.]
 
   template<class ResolveHandler>
     void async_resolve(implementation_type& impl,
-                       const endpoint_type& e, ResolveHandler handler);
+                       const endpoint_type& e,
+                       ResolveHandler handler);
 
 [function_effects Initiates an asynchronous operation to translate an endpoint
-into host and service names, as if by __POSIX__ __getnameinfo__. The operation
-is performed via the `io_service` object returned by
-`io_service::service::io_service()` and behaves according to [link
-requirements.asynchronous_operations asynchronous operation] requirements.]
+into a sequence of zero or one `basic_resolver_entry<InternetProtocol>`
+objects, as if by __POSIX__ __getnameinfo__. The operation is performed via the
+`io_service` object returned by `io_service::service::io_service()` and behaves
+according to [link requirements.asynchronous_operations asynchronous operation]
+requirements.]
 
 [function_block On completion of the asynchronous operation, the
 `ResolveHandler` object `handler` shall be invoked with an `error_code` value

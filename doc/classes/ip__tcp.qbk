@@ -13,8 +13,6 @@ requirements.internet_protocol `InternetProtocol`].
           public:
             // types:
             typedef basic_endpoint<tcp> endpoint;
-            typedef basic_resolver_query<tcp> resolver_query;
-            typedef basic_resolver_iterator<tcp> resolver_iterator;
             typedef basic_resolver<tcp> resolver;
             struct ``[link classes.ip__tcp__socket_traits socket_traits]``;
             struct ``[link classes.ip__tcp__acceptor_traits acceptor_traits]``;

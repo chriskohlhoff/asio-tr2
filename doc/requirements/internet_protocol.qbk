@@ -1,14 +1,19 @@
 [section:internet_protocol Internet protocol requirements]
 
 An internet protocol must meet the requirements for a [link
-requirements.protocol protocol] and for a [link requirements.resolver_protocol
-resolver protocol], as well as the additional requirements listed below.
+requirements.protocol protocol] as well as the additional requirements listed
+below.
 
 In the table below, `X` denotes an internet protocol class, `a` denotes a value
 of type `X`, and `b` denotes a value of type `X`.
 
 [table Table--InternetProtocol requirements
   [[expression] [return type] [assertion/note\npre/post-conditions]]
+  [
+    [`X::resolver`]
+    [`ip::basic_resolver<X>`]
+    [The type of a resolver for the protocol.]
+  ]
   [
     [`X::v4()`]
     [`X`]

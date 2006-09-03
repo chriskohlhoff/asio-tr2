@@ -1,0 +1,88 @@
+[section:ip__basic_resolver Class template [^ip::basic_resolver]]
+
+  namespace std {
+    namespace tr2 {
+      namespace sys {
+        namespace ip {
+
+          template<class InternetProtocol, class ResolverService>
+          class basic_resolver :
+            public basic_io_object<ResolverService>,
+            public socket_base
+          {
+          public:
+            // types:
+            typedef InternetProtocol protocol_type;
+            typedef typename InternetProtocol::endpoint endpoint_type;
+            typedef basic_resolver_query<InternetProtocol> query;
+            typedef basic_resolver_iterator<InternetProtocol> iterator;
+
+            // constructors:
+            explicit basic_resolver(std::tr2::sys::io_service& io_service);
+
+            // members:
+            void cancel();
+            error_code cancel(error_code& ec);
+
+            iterator resolve(const query& q);
+            iterator resolve(const query& q, error_code& ec);
+
+            template <class ResolveHandler>
+              void async_resolve(const query& q, ResolveHandler handler);
+
+            iterator resolve(const endpoint_type& e);
+            iterator resolve(const endpoint_type& e, error_code& ec);
+
+            template <class ResolveHandler>
+              void async_resolve(const endpoint_type& e,
+                                 ResolveHandler handler);
+          };
+
+        } // namespace ip
+      } // namespace sys
+    } // namespace tr2
+  } // namespace std
+
+[section [^ip::basic_resolver] constructors]
+
+  explicit basic_resolver(std::tr2::sys::io_service& io_service);
+
+[function_effects Constructs an object of class
+`basic_resolver<InternetProtocol, ResolverService>`, initialising the base
+class with `basic_io_object(io_service)`.]
+
+[endsect]
+
+[section [^ip::basic_resolver] members]
+
+  void cancel();
+  error_code cancel(error_code& ec);
+
+[function_returns `this->service.cancel(this->implementation, ec)`.]
+
+  iterator resolve(const query& q);
+  iterator resolve(const query& q, error_code& ec);
+
+[function_returns `this->service.resolve(this->implementation, q, ec)`.]
+
+  template <class ResolveHandler>
+    void async_resolve(const query& q, ResolveHandler handler);
+
+[function_effects Calls `this->service.async_resolve(this->implementation, q,
+handler)`.]
+
+  iterator resolve(const endpoint_type& e);
+  iterator resolve(const endpoint_type& e, error_code& ec);
+
+[function_returns `this->service.resolve(this->implementation, e, ec)`.]
+
+  template <class ResolveHandler>
+    void async_resolve(const endpoint_type& e,
+                       ResolveHandler handler);
+
+[function_effects Calls `this->service.async_resolve(this->implementation, e,
+handler)`.]
+
+[endsect]
+
+[endsect]
