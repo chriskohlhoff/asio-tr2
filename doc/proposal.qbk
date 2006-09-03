@@ -1,7 +1,7 @@
 [library Networking Library Proposal for TR2
     [quickbook 1.1]
     [id tr2network]
-    [last-revision $Date: 2006/09/03 13:22:51 $]
+    [last-revision $Date: 2006/09/03 13:56:18 $]
 ]
 
 [/-----------------------------------------------------------------------------]
@@ -607,8 +607,8 @@ express type requirements, as listed in the table below.
 [include:classes classes/socket_base__bool_socket_options.qbk]
 [include:classes classes/socket_base__int_socket_options.qbk]
 [include:classes classes/socket_base__linger.qbk]
-[include:classes classes/basic_socket.qbk]
 [include:classes classes/socket_service.qbk]
+[include:classes classes/basic_socket.qbk]
 [endsect]
 
 [section:resolvers Resolvers]

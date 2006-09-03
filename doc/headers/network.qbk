@@ -8,12 +8,12 @@
 
         class ``[link classes.socket_base socket_base]``;
 
+        template<class Protocol, class SocketTraits>
+          class ``[link classes.socket_service socket_service]``;
+
         template<class Protocol, class SocketTraits,
           class SocketService = socket_service<Protocol, SocketTraits> >
             class ``[link classes.basic_socket basic_socket]``;
-
-        template<class Protocol, class SocketTraits>
-          class ``[link classes.socket_service socket_service]``;
 
         // Resolvers:
 
