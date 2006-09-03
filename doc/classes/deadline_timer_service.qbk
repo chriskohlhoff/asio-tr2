@@ -77,7 +77,7 @@ Cancels asynchronous wait operations associated with `impl` as if by performing:
 ``
   error_code ec;
   cancel(impl, ec);
-``.]
+``]
 
   size_t cancel(implementation_type& impl, error_code& ec);
 

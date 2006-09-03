@@ -1,7 +1,7 @@
 [library Networking Library Proposal for TR2
     [quickbook 1.1]
     [id tr2network]
-    [last-revision $Date: 2006/09/03 13:56:18 $]
+    [last-revision $Date: 2006/09/03 14:54:16 $]
 ]
 
 [/-----------------------------------------------------------------------------]
@@ -74,7 +74,9 @@
 [def __close__ [@http://www.opengroup.org/onlinepubs/000095399/functions/close.html `close()`]]
 [def __connect__ [@http://www.opengroup.org/onlinepubs/000095399/functions/connect.html `connect()`]]
 [def __fcntl__ [@http://www.opengroup.org/onlinepubs/000095399/functions/fcntl.html `fcntl()`]]
+[def __getaddrinfo__ [@http://www.opengroup.org/onlinepubs/000095399/functions/getaddrinfo.html `getaddrinfo()`]]
 [def __gethostname__ [@http://www.opengroup.org/onlinepubs/000095399/functions/gethostname.html `gethostname()`]]
+[def __getnameinfo__ [@http://www.opengroup.org/onlinepubs/000095399/functions/getnameinfo.html `getnameinfo()`]]
 [def __getpeername__ [@http://www.opengroup.org/onlinepubs/000095399/functions/getpeername.html `getpeername()`]]
 [def __getsockname__ [@http://www.opengroup.org/onlinepubs/000095399/functions/getsockname.html `getsockname()`]]
 [def __getsockopt__ [@http://www.opengroup.org/onlinepubs/000095399/functions/getsockopt.html `getsockopt()`]]

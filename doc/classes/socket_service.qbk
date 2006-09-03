@@ -155,7 +155,7 @@ implementations, must be convertible to and from `SOCKET`.]
   explicit socket_service(io_service& ios);
 
 [function_effects Constructs an object of class
-`socket_service<Protocol>`, initialising the base class with
+`socket_service<Protocol,SocketTraits>`, initialising the base class with
 `io_service::service(ios)`.]
 
 [endsect]
@@ -741,7 +741,7 @@ operation is performed via the `io_service` object returned by
 requirements.asynchronous_operations asynchronous operation] requirements.]
 
 [function_block On completion of the asynchronous operation, the
-`AcceptHandler` object `handler` shall be invoked with an `error_code` value
+`ConnectHandler` object `handler` shall be invoked with an `error_code` value
 `ec`. On success, `ec` shall contain a value such that the expression `!ec` is
 true, and `socket.is_open()` shall be true. On failure, an implementation shall
 pass as `ec` the `error_code` value corresponding to the failure condition, as

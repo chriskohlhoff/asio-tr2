@@ -33,19 +33,150 @@ of a [link requirements.resolver_service `ResolverService`].
 
           iterator_type resolve(implementation_type& impl,
                                 const query_type& q, error_code& ec);
+
           template<class ResolveHandler>
             void async_resolve(implementation_type& impl,
-                               const query_type& q, ResolverHandler handler);
+                               const query_type& q, ResolveHandler handler);
 
           iterator_type resolve(implementation_type& impl,
                                 const endpoint_type& e, error_code& ec);
+
           template<class ResolveHandler>
             void async_resolve(implementation_type& impl,
-                               const endpoint_type& e, ResolverHandler handler);
+                               const endpoint_type& e, ResolveHandler handler);
         };
 
       } // namespace sys
     } // namespace tr2
   } // namespace std
+
+[section [^resolver_service] constructors]
+
+  explicit resolver_service(io_service& ios);
+
+[function_effects Constructs an object of class `resolver_service<Protocol>`,
+initialising the base class with `io_service::service(ios)`.]
+
+[endsect]
+
+[section [^resolver_service] members]
+
+  void shutdown_service();
+
+[function_effects Destroys all copies of user-defined handler objects owned by
+the service.]
+
+  void construct(implementation_type& impl);
+
+[function_effects Initialises the resolver implementation `impl`.]
+
+  void destroy(implementation_type& impl);
+
+[function_effects Cleans up resources owned by the resolver implementation
+`impl`. Cancels asynchronous operations associated with `impl` as if by
+performing:
+``
+  error_code ec;
+  cancel(impl, ec);
+``]
+
+  error_code cancel(implementation_type& impl, error_code& ec);
+
+[function_effects Causes any outstanding asynchronous operations to complete as
+soon as possible. Handlers for cancelled operations shall be passed the error
+code `error::operation_aborted`. On success, sets `ec` such that the expression
+`!ec` is true. On failure, an implementation shall set `ec` to any `error_code`
+value such that the expression `!ec` is false.]
+
+  iterator_type resolve(implementation_type& impl,
+                        const query_type& q, error_code& ec);
+
+[function_effects Translates a query into a list of endpoints, as if by
+__POSIX__ __getaddrinfo__. On success, sets `ec` such that the expression `!ec`
+is true. On failure, an implementation shall set `ec` to the `error_code` value
+corresponding to the failure condition, as shown in the table below. For
+failure conditions not listed, an implementation is permitted to set `ec` to
+any other value such that the expression `!ec` is false.]
+
+[table Table--resolve() failure conditions
+  [[failure condition][error code]]
+  [
+    [The protocol's family was not recognised.]
+    [`error::address_family_not_supported`]
+  ]
+  [
+    [The protocol's type is not supported.]
+    [`error::socket_type_not_supported`]
+  ]
+  [
+    [The name in the query was not found.]
+    [`error::name_not_found`]
+  ]
+  [
+    [Temporary failure in name resolution.]
+    [`error::name_not_found_try_again`]
+  ]
+  [
+    [The service in the query was not found.]
+    [`error::service_not_found`]
+  ]
+]
+
+[function_returns An iterator object `i` such that, if the operation is
+successful, the condition `i != iterator_type()` holds.]
+
+  template<class ResolveHandler>
+    void async_resolve(implementation_type& impl,
+                       const query_type& q, ResolveHandler handler);
+
+[function_effects Initiates an asynchronous operation to translate a query into
+a list of endpoints, as if by __POSIX__ __getaddrinfo__. The operation is
+performed via the `io_service` object returned by
+`io_service::service::io_service()` and behaves according to [link
+requirements.asynchronous_operations asynchronous operation] requirements.]
+
+[function_block On completion of the asynchronous operation, the
+`ResolveHandler` object `handler` shall be invoked with an `error_code` value
+`ec` and an iterator `i` of type `iterator_type`. On success, `ec` shall
+contain a value such that the expression `!ec` is true, and the expression `i
+!= iterator_type()` shall be true. On failure, an implementation shall pass as
+`ec` the `error_code` value corresponding to the failure condition, as shown in
+the table for `resolve()` above, with the addition of
+`error::operation_aborted` for cancelled operations, and the expression `i ==
+iterator_type()` shall be true. For failure conditions not listed, an
+implementation is permitted to pass as `ec` any other value such that the
+expression `!ec` is false.]
+
+  iterator_type resolve(implementation_type& impl,
+                        const endpoint_type& e, error_code& ec);
+
+[function_effects Translates an endpoint into host and service names, as if by
+__POSIX__ __getnameinfo__, passing the flag `NI_DGRAM` if the protocol is a
+datagram protocol, otherwise passing no flags. On success, sets `ec` such that
+the expression `!ec` is true. On failure, an implementation shall set `ec` to
+any `error_code` value such that the expression `!ec` is false.]
+
+[function_returns An iterator object `i` such that, if the operation is
+successful, the condition `i != iterator_type()` holds.]
+
+  template<class ResolveHandler>
+    void async_resolve(implementation_type& impl,
+                       const endpoint_type& e, ResolveHandler handler);
+
+[function_effects Initiates an asynchronous operation to translate an endpoint
+into host and service names, as if by __POSIX__ __getnameinfo__. The operation
+is performed via the `io_service` object returned by
+`io_service::service::io_service()` and behaves according to [link
+requirements.asynchronous_operations asynchronous operation] requirements.]
+
+[function_block On completion of the asynchronous operation, the
+`ResolveHandler` object `handler` shall be invoked with an `error_code` value
+`ec` and an iterator object `i` of type `iterator_type`. On success, `ec` shall
+contain a value such that the expression `!ec` is true, and the expression `i
+!= iterator_type()` shall be true. On failure, an implementation shall pass as
+`ec` any `error_code` value such that the expression `!ec` is false, and the
+expression `i == iterator_type()` shall be true.]
+
+[endsect]
 
 [endsect]
