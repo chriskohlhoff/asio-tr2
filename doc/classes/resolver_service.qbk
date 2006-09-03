@@ -109,12 +109,12 @@ any other value such that the expression `!ec` is false.]
     [`error::socket_type_not_supported`]
   ]
   [
-    [The name in the query was not found.]
-    [`error::name_not_found`]
+    [The host in the query was not found.]
+    [`error::host_not_found`]
   ]
   [
-    [Temporary failure in name resolution.]
-    [`error::name_not_found_try_again`]
+    [Temporary failure in host name resolution.]
+    [`error::host_not_found_try_again`]
   ]
   [
     [The service in the query was not found.]
