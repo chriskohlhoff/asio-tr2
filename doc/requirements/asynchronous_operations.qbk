@@ -68,19 +68,8 @@ memory barrier (/TODO/).
 If the thread that initiates an asynchronous operation terminates before the
 associated handler is dispatched, the behaviour is implementation-defined.
 
-Asynchronous operations shall not fail with any error condition listed in the
-table below.
-
-[table Table--disallowed failure conditions for asynchronous operations
-  [[failure condition][error code]]
-  [
-    [Operation interrupted by signal.]
-    [`error::interrupted`]
-  ]
-  [
-    [The operation would block.]
-    [`error::would_block`]
-  ]
-]
+Asynchronous operations shall not fail with any error condition indicating
+interruption by signal (__POSIX__ `EINTR`) or that the operation would block
+(__POSIX__ `EWOULDBLOCK`).
 
 [endsect]

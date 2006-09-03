@@ -57,12 +57,6 @@ of an [link requirements.acceptor_service `AcceptorService`].
             error_code io_control(implementation_type& impl,
                                   IoControlCommand& command, error_code& ec);
 
-          bool is_blocking(const implementation_type& impl,
-                           error_code& ec) const;
-
-          error_code set_blocking(implementation_type& impl, bool block,
-                                  error_code& ec);
-
           error_code bind(implementation_type& impl,
                           const endpoint_type& endpoint, error_code& ec);
 
@@ -124,9 +118,11 @@ the service.]
 
   void destroy(implementation_type& impl);
 
-[function_effects Cleans up resources owned by the socket acceptor
-implementation `impl`. Implicitly cancels asynchronous accept operations
-associated with `impl` and closes the socket acceptor.]
+[function_effects If `is_open(impl)` is true, cancels pending asynchronous
+operations associated with `impl`, and releases socket acceptor resources as if
+by __POSIX__ __close__. Otherwise, no effect. Handlers for cancelled
+asynchronous operations are passed the `error_code` value
+`error::operation_aborted`. Failure conditions are ignored.]
 
   error_code open(implementation_type& impl,
                   const protocol_type& protocol, error_code& ec);
@@ -175,8 +171,7 @@ the expression `!ec` is false.]
 
 [function_returns `ec`.]
 
-[function_postconditions `is_open(impl) && is_blocking(impl, err) && !err`,
-  where `err` is a value of type `error_code`.]
+[function_postconditions `is_open(impl)`.]
 
   error_code assign(implementation_type& impl,
                     const protocol_type& protocol,
@@ -222,10 +217,6 @@ the expression `!ec` is false.]
     [The native socket acceptor implementation returned by `native(impl)` is
     not valid.]
     [`error::bad_descriptor`]
-  ]
-  [
-    [Operation interrupted by signal.]
-    [`error::interrupted`]
   ]
 ]
 
@@ -388,78 +379,9 @@ to set `ec` to any other value such that the expression `!ec` is false.]
     [The I/O control command name or data is invalid for the socket acceptor.]
     [`error::invalid_argument`]
   ]
-  [
-    [Operation interrupted by signal.]
-    [`error::interrupted`]
-  ]
 ]
 
 [function_returns `ec`.]
-
-  bool is_blocking(const implementation_type& impl,
-                   error_code& ec) const;
-
-[function_requires `is_open(impl)`.]
-
-[function_effects Determines whether synchronous accept operations on the
-socket acceptor `impl` must block (that is, they are not permitted to fail with
-`error::would_block`), as if by __POSIX__ __fcntl__ with command `F_GETFL` to
-check whether the `O_NONBLOCKING` flag is unset. On success, sets `ec` such
-that the expression `!ec` is true. On failure, an implementation shall set `ec`
-to the `error_code` value corresponding to the failure condition, as shown in
-the table below. For failure conditions not listed, an implementation is
-permitted to set `ec` to any other value such that the expression `!ec` is
-false.]
-
-[table Table--is_blocking() failure conditions
-  [[failure condition][error code]]
-  [
-    [`!is_open(impl)`, or the native socket acceptor implementation returned
-    by `native(impl)` is not valid.]
-    [`error::bad_descriptor`]
-  ]
-  [
-    [The native implementation returned by `native(impl)` is not a valid socket
-    acceptor.]
-    [`error::not_socket`]
-  ]
-]
-
-[function_returns `true` if the operation succeeded and synchronous operations
-must block. Otherwise, `false`.]
-
-  error_code set_blocking(implementation_type& impl, bool block,
-                          error_code& ec);
-
-[function_requires `is_open(impl)`.]
-
-[function_effects Sets whether synchronous operations on the socket acceptor
-`impl` must block (that is, they are not permitted to fail with
-`error::would_block`), as if by __POSIX__ __fcntl__ with command `F_SETFL` to
-clear or set the `O_NONBLOCKING` flag. On success, sets `ec` such that the
-expression `!ec` is true. On failure, an implementation shall set `ec` to the
-`error_code` value corresponding to the failure condition, as shown in the
-table below. For failure conditions not listed, an implementation is permitted
-to set `ec` to any other value such that the expression `!ec` is false.]
-
-[table Table--set_blocking() failure conditions
-  [[failure condition][error code]]
-  [
-    [`!is_open(impl)`, or the native socket acceptor implementation returned
-    by `native(impl)` is not valid.]
-    [`error::bad_descriptor`]
-  ]
-  [
-    [The native implementation returned by `native(impl)` is not a valid socket
-    acceptor.]
-    [`error::not_socket`]
-  ]
-]
-
-[function_returns `ec`.]
-
-[function_postconditions `is_blocking(impl, err) && !err`, where `err` is a
-value of type `error_code`.]
 
   error_code bind(implementation_type& impl,
                   const endpoint_type& endpoint, error_code& ec);
@@ -616,6 +538,10 @@ to set `ec` to any other value such that the expression `!ec` is false.]
     [`error::not_socket`]
   ]
   [
+    [`socket.is_open()`.]
+    [`error::already_open`]
+  ]
+  [
     [The socket acceptor's protocol does not support the operation.]
     [`error::not_supported`]
   ]
@@ -630,15 +556,6 @@ to set `ec` to any other value such that the expression `!ec` is false.]
   [
     [No more sockets are available for the system.]
     [`error::no_system_descriptors`]
-  ]
-  [
-    [The socket acceptor has been marked as non-blocking and no connections are
-    ready to be accepted.]
-    [`error::would_block`]
-  ]
-  [
-    [Operation interrupted by signal.]
-    [`error::interrupted`]
   ]
 ]
 
@@ -690,6 +607,10 @@ false.]
     [The native implementation returned by `native(impl)` is not a valid socket
     acceptor.]
     [`error::not_socket`]
+  ]
+  [
+    [`socket.is_open()`.]
+    [`error::already_open`]
   ]
   [
     [The socket acceptor's protocol does not support the operation.]

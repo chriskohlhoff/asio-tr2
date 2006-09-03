@@ -1,0 +1,7 @@
+[section:synchronous_operations Requirements on synchronous operations]
+
+Synchronous operations shall not fail with any error condition indicating
+interruption by signal (__POSIX__ `EINTR`) or that the operation would block
+(__POSIX__ `EWOULDBLOCK`).
+
+[endsect]

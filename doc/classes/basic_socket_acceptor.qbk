@@ -62,12 +62,6 @@
           template<class IoControlCommand>
             error_code io_control(IoControlCommand& command, error_code& ec);
 
-          bool is_blocking() const;
-          bool is_blocking(error_code& ec) const;
-
-          void set_blocking(bool block);
-          error_code set_blocking(bool block, error_code& ec);
-
           void bind(const endpoint_type& endpoint);
           error_code bind(const endpoint_type& endpoint, error_code& ec);
 
@@ -212,16 +206,6 @@ native_acceptor, ec)`.]
 
 [function_returns `this->service.io_control(this->implementation, command,
 ec)`.]
-
-  bool is_blocking() const;
-  bool is_blocking(error_code& ec) const;
-
-[function_returns `this->service.is_blocking(this->implementation, ec)`.]
-
-  void set_blocking(bool block);
-  error_code set_blocking(bool block, error_code& ec);
-
-[function_returns `this->service.set_blocking(this->implementation, block, ec)`.]
 
   void bind(const endpoint_type& endpoint);
   error_code bind(const endpoint_type& endpoint, error_code& ec);

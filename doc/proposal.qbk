@@ -1,7 +1,7 @@
 [library Networking Library Proposal for TR2
     [quickbook 1.1]
     [id tr2network]
-    [last-revision $Date: 2006/09/01 14:25:56 $]
+    [last-revision $Date: 2006/09/03 08:04:26 $]
 ]
 
 [/-----------------------------------------------------------------------------]
@@ -85,6 +85,7 @@
 [def __recvfrom__ [@http://www.opengroup.org/onlinepubs/000095399/functions/recvfrom.html `recvfrom()`]]
 [def __sendto__ [@http://www.opengroup.org/onlinepubs/000095399/functions/sendto.html `sendto()`]]
 [def __setsockopt__ [@http://www.opengroup.org/onlinepubs/000095399/functions/setsockopt.html `setsockopt()`]]
+[def __shutdown__ [@http://www.opengroup.org/onlinepubs/000095399/functions/shutdown.html `shutdown()`]]
 [def __socket__ [@http://www.opengroup.org/onlinepubs/000095399/functions/socket.html `socket()`]]
 [def __sys_socket_h__ [@http://www.opengroup.org/onlinepubs/000095399/basedefs/sys/socket.h.html `sys/socket.h`]]
 [def __netinet_in_h__ [@http://www.opengroup.org/onlinepubs/000095399/basedefs/netinet/in.h.html `netinet/in.h`]]
@@ -549,6 +550,7 @@ express type requirements, as listed in the table below.
 [include:classes classes/io_service__strand.qbk]
 [include:requirements requirements/io_object_service.qbk]
 [include:classes classes/basic_io_object.qbk]
+[include:requirements requirements/synchronous_operations.qbk]
 [include:requirements requirements/asynchronous_operations.qbk]
 [endsect]
 

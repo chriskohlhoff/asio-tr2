@@ -110,18 +110,8 @@ TimeTraits::add(TimeTraits::now(), d))`.]
   
 [function_effects Performs a synchronous wait operation associated with the
 timer implementation `impl`. On success, sets `ec` such that the expression
-`!ec` is true. On failure, an implementation shall set `ec` to the `error_code`
-value corresponding to the failure condition, as shown in the table below. For
-failure conditions not listed, an implementation is permitted to set `ec` to
-any other value such that the expression `!ec` is false.]
-
-[table Table--wait() failure conditions
-  [[failure condition][error code]]
-  [
-    [Operation interrupted by signal.]
-    [`error::interrupted`]
-  ]
-]
+`!ec` is true. On failure, an implementation shall set `ec` to any `error_code`
+value such that the expression `!ec` is false.]
 
 [function_returns `ec`.]
 
