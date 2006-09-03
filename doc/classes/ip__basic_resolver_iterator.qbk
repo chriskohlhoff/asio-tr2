@@ -46,11 +46,6 @@ functions:
             basic_resolver_iterator(const endpoint_type& ep, const string& h,
                                     const string& s);
             ``['[*// remainder unchanged]]``
-
-          private:
-  ``//        shared\_ptr<addrinfo> ai; ['[*exposition only]]``
-  ``//        string host;             ['[*exposition only]]``
-  ``//        string service;          ['[*exposition only]]``
           };
 
         } // namespace ip
