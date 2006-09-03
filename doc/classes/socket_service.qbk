@@ -7,7 +7,7 @@ Instances of the `socket_service` class template meet the requirements of a
     namespace tr2 {
       namespace sys {
 
-        template<class Protocol>
+        template<class Protocol, class SocketTraits>
         class socket_service :
           public io_service::service
         {
@@ -15,6 +15,7 @@ Instances of the `socket_service` class template meet the requirements of a
           // types:
           typedef Protocol protocol_type;
           typedef typename Protocol::endpoint endpoint_type;
+          typedef SocketTraits traits_type;
           typedef ``['[*unspecified]]`` implementation_type;
           typedef ``['[*implementation-defined]]`` native_type;
 
@@ -64,6 +65,23 @@ Instances of the `socket_service` class template meet the requirements of a
 
           error_code bind(implementation_type& impl,
                           const endpoint_type& endpoint, error_code& ec);
+
+          error_code listen(implementation_type& impl, int backlog,
+                            error_code& ec);
+
+          endpoint_type local_endpoint(const implementation_type& impl,
+                                       error_code& ec) const;
+
+          template<class SocketTraits1, class SocketService1>
+            error_code accept(implementation_type& impl,
+              basic_socket<Protocol,SocketTraits1,SocketService1>& socket,
+              endpoint_type* endpoint, error_code& ec);
+
+          template<class SocketTraits1, class SocketService1,
+            class AcceptHandler>
+              void async_accept(implementation_type& impl,
+                  basic_socket<Protocol,SocketTraits1,SocketService1>& socket,
+                  endpoint_type* endpoint, AcceptHandler handler);
 
           error_code connect(implementation_type& impl,
                              const endpoint_type& endpoint, error_code& ec);
@@ -251,6 +269,8 @@ failure condition, as shown in the table below. For failure conditions not
 listed, an implementation is permitted to set `ec` to any other value such that
 the expression `!ec` is false.]
 
+[function_returns `ec`.]
+
   native_type native(implementation_type& impl);
 
 [function_returns The native representation of the socket implementation
@@ -416,22 +436,54 @@ any other value such that the expression `!ec` is false.]
 
 [function_returns `ec`.]
 
+[commentary This proposal does not include any classes that satisfy [link
+requirements.io_control_command `IoControlCommand`] requirements. However,
+implementation-specific extensions such as QoS may be implemented using
+`ioctl()`, and the `io_control()` operation is included to allow these
+extensions to be supported.]
+
   bool at_mark(const implementation_type& impl, error_code& ec) const;
+
+[function_requires `traits_type::has_mark` and `is_open(impl)`.]
+
+[function_effects Determines if the socket `impl` is at the out-of-band data
+mark, as if by __POSIX__ __sockatmark__. On success, sets `ec` such that the
+expression `!ec` is true. On failure, an implementation shall set `ec` to the
+`error_code` value corresponding to the failure condition, as shown in the
+table below. For failure conditions not listed, an implementation is permitted
+to set `ec` to any other value such that the expression `!ec` is false.]
+
+[table Table--at_mark() failure conditions
+  [[failure condition][error code]]
+  [
+    [`!is_open(impl)`, or the native socket implementation returned by
+    `native(impl)` is not valid.]
+    [`error::bad_descriptor`]
+  ]
+  [
+    [The native implementation returned by `native(impl)` is not a valid
+    socket.]
+    [`error::not_socket`\n
+    [inline_note Translated from __POSIX__ `ENOTTY`.]]
+  ]
+]
 
   size_t available(const implementation_type& impl,
                    error_code& ec) const;
 
+[function_requires `traits_type::has_available` and `is_open(impl)`.]
+
   error_code bind(implementation_type& impl,
                   const endpoint_type& endpoint, error_code& ec);
 
-[function_requires `is_open(impl)`.]
+[function_requires `traits_type::has_bind` and `is_open(impl)`.]
 
-[function_effects Establishes the postcondition as if by __POSIX__ __bind__. On
-success, sets `ec` such that the expression `!ec` is true. On failure, an
-implementation shall set `ec` to the `error_code` value corresponding to the
-failure condition, as shown in the table below. For failure conditions not
-listed, an implementation is permitted to set `ec` to any other value such that
-the expression `!ec` is false.]
+[function_effects Binds the socket `impl` to the specified local endpoint, as
+if by __POSIX__ __bind__. On success, sets `ec` such that the expression `!ec`
+is true. On failure, an implementation shall set `ec` to the `error_code` value
+corresponding to the failure condition, as shown in the table below. For
+failure conditions not listed, an implementation is permitted to set `ec` to
+any other value such that the expression `!ec` is false.]
 
 [table Table--bind() failure conditions
   [[failure condition][error code]]
@@ -454,12 +506,11 @@ the expression `!ec` is false.]
     [`error::address_not_available`]
   ]
   [
-    [The specified endpoint is not valid for the address family of the socket
-    acceptor's protocol.]
+    [The specified endpoint is not valid for the address family of the socket's
+    protocol.]
     [`error::address_family_not_supported`]
   ]
   [
-
     [The socket has already been bound, and does not support binding to a new
     endpoint.] [`error::invalid_argument`]
   ]
@@ -471,20 +522,148 @@ the expression `!ec` is false.]
 
 [function_returns `ec`.]
 
-[function_postconditions `local_endpoint(impl, err) == endpoint && !err`, where
-`err` is a value of type `error_code`.]
+  error_code listen(implementation_type& impl, int backlog,
+                    error_code& ec);
+
+[function_requires `traits_type::has_listen` and `is_open(impl)`.]
+
+[function_effects Marks the socket `impl` as ready to accept connections, as if
+by __POSIX__ __listen__. If `backlog == socket_base::max_connections`, the
+implementation shall set the socket's listen queue to the maximum allowable
+length. On success, sets `ec` such that the expression `!ec` is true. On
+failure, an implementation shall set `ec` to the `error_code` value
+corresponding to the failure condition, as shown in the table below. For
+failure conditions not listed, an implementation is permitted to set `ec` to
+any other value such that the expression `!ec` is false.]
+
+[table Table--listen() failure conditions
+  [[failure condition][error code]]
+  [
+    [`!is_open(impl)`, or the native socket implementation returned by
+    `native(impl)` is not valid.]
+    [`error::bad_descriptor`]
+  ]
+  [
+    [The native implementation returned by `native(impl)` is not a valid
+    socket.]
+    [`error::not_socket`]
+  ]
+  [
+    [The socket is not locally-bound, and the protocol does not support
+    listening on an unbound socket.]
+    [`error::address_required`]
+  ]
+  [
+    [The socket type of the socket's protocol does not support listening.]
+    [`error::not_supported`]
+  ]
+]
+
+  template<class SocketTraits1, class SocketService1>
+    error_code accept(implementation_type& impl,
+      basic_socket<Protocol,SocketTraits1,SocketService1>& socket,
+      endpoint_type* endpoint, error_code& ec);
+
+[function_requires `traits_type::has_accept`, `is_open(impl) &&
+!socket.is_open()`, and a prior call to `listen` for the socket `impl`.]
+
+[function_effects Associates `socket` with the first connection extracted from
+the queue of pending connections of the socket `impl`, as if by
+__POSIX__ __accept__. On success, sets `ec` such that the expression `!ec` is
+true, and if `endpoint != 0`, assigns into `*endpoint` the remote endpoint of
+the connection. On failure, an implementation shall set `ec` to the
+`error_code` value corresponding to the failure condition, as shown in the
+table below. For failure conditions not listed, an implementation is permitted
+to set `ec` to any other value such that the expression `!ec` is false.]
+
+[table Table--accept() failure conditions
+  [[failure condition][error code]]
+  [
+    [`!is_open(impl)`, or the native socket implementation returned
+    by `native(impl)` is not valid.]
+    [`error::bad_descriptor`]
+  ]
+  [
+    [The native implementation returned by `native(impl)` is not a valid
+    socket.]
+    [`error::not_socket`]
+  ]
+  [
+    [`socket.is_open()`.]
+    [`error::already_open`]
+  ]
+  [
+    [The socket's protocol does not support the operation.]
+    [`error::not_supported`]
+  ]
+  [
+    [The socket is not accepting connections.]
+    [`error::invalid_argument`]
+  ]
+  [
+    [No more sockets are available for the process.]
+    [`error::no_descriptors`]
+  ]
+  [
+    [No more sockets are available for the system.]
+    [`error::no_system_descriptors`]
+  ]
+]
+
+[function_block Implementations shall not permit the operation to complete with
+an error indicating that a connection has been aborted (such as __POSIX__
+`ECONNABORTED`, and __Windows__ `WSAECONNABORTED` or `ERROR_NETNAME_DELETED`).]
+
+[function_returns `ec`.]
+
+[function_postconditions `socket.is_open()`.]
+
+  template<class SocketTraits, class SocketService1,
+    class AcceptHandler>
+      void async_accept(implementation_type& impl,
+        basic_socket<Protocol,SocketTraits1,SocketService1>& socket,
+        endpoint_type* endpoint, AcceptHandler handler);
+
+[function_requires `traits_type::has_accept`, `is_open(impl) &&
+!socket.is_open()`, and a prior call to `listen` for the socket `impl`.]
+
+[function_effects Initiates an asynchronous operation to associate `socket`
+with the first connection extracted from the queue of pending connections of
+the socket `impl`, as if by __POSIX__ __accept__. The operation is
+performed via the `io_service` object returned by
+`io_service::service::io_service()` and behaves according to [link
+requirements.asynchronous_operations asynchronous operation] requirements.]
+
+[function_block The program must ensure the `basic_socket<>` object `socket` is
+valid until the handler for the asynchronous operation is invoked. If `endpoint
+!= 0`, the program must ensure the object `*endpoint` is valid until the
+handler for the asynchronous operation is invoked.]
+
+[function_block On completion of the asynchronous operation, the
+`AcceptHandler` object `handler` shall be invoked with an `error_code` value
+`ec`. On success, `ec` shall contain a value such that the expression `!ec` is
+true, and `socket.is_open()` shall be true. On failure, an implementation shall
+pass as `ec` the `error_code` value corresponding to the failure condition, as
+shown in the table for `accept()` above, with the addition of
+`error::operation_aborted` for cancelled operations. For failure conditions not
+listed, an implementation is permitted to pass as `ec` any other value such
+that the expression `!ec` is false.]
+
+[function_block Implementations shall not permit the operation to complete with
+an error indicating that a connection has been aborted (such as __POSIX__
+`ECONNABORTED`, and __Windows__ `WSAECONNABORTED` or `ERROR_NETNAME_DELETED`).]
 
   error_code connect(implementation_type& impl,
                      const endpoint_type& endpoint, error_code& ec);
 
-[function_requires `is_open(impl)`.]
+[function_requires `traits_type::has_connect` and `is_open(impl)`.]
 
-[function_effects Establishes the postcondition as if by __POSIX__ __connect__.
-On success, sets `ec` such that the expression `!ec` is true. On failure, an
-implementation shall set `ec` to the `error_code` value corresponding to the
-failure condition, as shown in the table below. For failure conditions not
-listed, an implementation is permitted to set `ec` to any other value such that
-the expression `!ec` is false.]
+[function_effects Connects the socket `impl` to the specified remote endpoint,
+as if by __POSIX__ __connect__. On success, sets `ec` such that the expression
+`!ec` is true. On failure, an implementation shall set `ec` to the `error_code`
+value corresponding to the failure condition, as shown in the table below. For
+failure conditions not listed, an implementation is permitted to set `ec` to
+any other value such that the expression `!ec` is false.]
 
 [table Table--connect() failure conditions
   [[failure condition][error code]]
@@ -511,8 +690,8 @@ the expression `!ec` is false.]
     [`error::address_not_available`]
   ]
   [
-    [The specified endpoint is not valid for the address family of the socket
-    acceptor's protocol.]
+    [The specified endpoint is not valid for the address family of the socket's
+    protocol.]
     [`error::address_family_not_supported`]
   ]
   [
@@ -547,42 +726,34 @@ the expression `!ec` is false.]
 
 [function_returns `ec`.]
 
-[function_postconditions `remote_endpoint(impl, err) == endpoint && !err`,
-where `err` is a value of type `error_code`.]
-
   template<class ConnectHandler>
     void async_connect(implementation_type& impl,
                        const endpoint_type& endpoint,
                        ConnectHandler handler);
 
-[function_requires `is_open(impl) && !socket.is_open()`, and a prior call to
-`listen` for the socket acceptor implementation `impl`.]
+[function_requires `traits_type::has_connect`, `is_open(impl) &&
+!socket.is_open()`, and a prior call to `listen` for the socket `impl`.]
 
-[function_effects Initiates an asynchronous operation to associate `socket`
-with the first connection extracted from the queue of pending connections of
-the socket acceptor `impl`, as if by __POSIX__ __accept__. The operation is
-performed via the `io_service` object returned by
+[function_effects Initiates an asynchronous operation to connect the socket
+`impl` to the specified remote endpoint, as if by __POSIX__ __connect__. The
+operation is performed via the `io_service` object returned by
 `io_service::service::io_service()` and behaves according to [link
 requirements.asynchronous_operations asynchronous operation] requirements.]
-
-[function_block The program must ensure the `basic_socket<>` object `socket` is
-valid until the handler for the asynchronous operation is invoked. If `endpoint
-!= 0`, the program must ensure the object `*endpoint` is valid until the
-handler for the asynchronous operation is invoked.]
 
 [function_block On completion of the asynchronous operation, the
 `AcceptHandler` object `handler` shall be invoked with an `error_code` value
 `ec`. On success, `ec` shall contain a value such that the expression `!ec` is
 true, and `socket.is_open()` shall be true. On failure, an implementation shall
 pass as `ec` the `error_code` value corresponding to the failure condition, as
-shown in the table below. For failure conditions not listed, an implementation
-is permitted to pass as `ec` any other value such that the expression `!ec` is
-false.]
+shown in the table for `connect()` above, with the addition of
+`error::operation_aborted` for cancelled operations. For failure conditions not
+listed, an implementation is permitted to pass as `ec` any other value such
+that the expression `!ec` is false.]
 
   endpoint_type local_endpoint(const implementation_type& impl,
                                error_code& ec) const;
 
-[function_requires `is_open(impl)`.]
+[function_requires `traits_type::has_local_endpoint` and `is_open(impl)`.]
 
 [function_effects Determines the locally-bound endpoint associated with the
 socket `impl`, as if by __POSIX__ __getsockname__. On success, sets
@@ -615,7 +786,7 @@ expression `!ec` is false.]
   endpoint_type remote_endpoint(const implementation_type& impl,
                                 error_code& ec) const;
 
-[function_requires `is_open(impl)`.]
+[function_requires `traits_type::has_remote_endpoint` and `is_open(impl)`.]
 
 [function_effects Determines the remote endpoint associated with the
 socket `impl`, as if by __POSIX__ __getpeername__. On success, sets
@@ -628,8 +799,8 @@ expression `!ec` is false.]
 [table Table--remote_endpoint() failure conditions
   [[failure condition][error code]]
   [
-    [`!is_open(impl)`, or the native socket implementation returned
-    by `native(impl)` is not valid.]
+    [`!is_open(impl)`, or the native socket implementation returned by
+    `native(impl)` is not valid.]
     [`error::bad_descriptor`]
   ]
   [
@@ -647,10 +818,12 @@ expression `!ec` is false.]
   ]
 ]
 
-[function_returns The locally-bound endpoint associated with `impl`.]
+[function_returns The remote endpoint associated with `impl`.]
 
   error_code shutdown(implementation_type& impl, shutdown_type how,
                       error_code& ec);
+
+[function_requires `traits_type::has_shutdown` and `is_open(impl)`.]
 
 [function_effects Shuts down all or part of a full-duplex connection for the
 socket `impl`, as if by __POSIX__ __shutdown__. If `how` is `shutdown_receive`,
@@ -662,11 +835,11 @@ condition, as shown in the table below. For failure conditions not listed, an
 implementation is permitted to set `ec` to any other value such that the
 expression `!ec` is false.]
 
-[table Table--remote_endpoint() failure conditions
+[table Table--shutdown() failure conditions
   [[failure condition][error code]]
   [
-    [`!is_open(impl)`, or the native socket implementation returned
-    by `native(impl)` is not valid.]
+    [`!is_open(impl)`, or the native socket implementation returned by
+    `native(impl)` is not valid.]
     [`error::bad_descriptor`]
   ]
   [
@@ -684,6 +857,8 @@ expression `!ec` is false.]
   ]
 ]
 
+[function_returns `ec`.]
+
   template<class MutableBufferSequence,
     class ConvertibleToMutableBuffer>
       size_t receive(implementation_type& impl,
@@ -692,6 +867,8 @@ expression `!ec` is false.]
                      socket_base::message_flags& out_flags,
                      const ConvertibleToMutableBuffer& control_data,
                      error_code& ec);
+
+[function_requires `traits_type::has_receive` and `is_open(impl)`.]
 
   template<class MutableBufferSequence,
     class ConvertibleToMutableBuffer, class ReadHandler>
@@ -702,12 +879,42 @@ expression `!ec` is false.]
                          const ConvertibleToMutableBuffer& control_data,
                          ReadHandler handler);
 
+[function_requires `traits_type::has_receive` and `is_open(impl)`.]
+
+  template<class MutableBufferSequence,
+    class ConvertibleToMutableBuffer>
+      size_t receive_from(implementation_type& impl,
+                          const MutableBufferSequence& buffers,
+                          endpoint_type& sender,
+                          socket_base::message_flags flags,
+                          socket_base::message_flags& out_flags,
+                          const ConvertibleToMutableBuffer&
+                            control_data,
+                          error_code& ec);
+
+[function_requires `traits_type::has_receive_from` and `is_open(impl)`.]
+
+  template<class MutableBufferSequence,
+    class ConvertibleToMutableBuffer, class ReadHandler>
+      void async_receive_from(implementation_type& impl,
+                              const MutableBufferSequence& buffers,
+                              endpoint_type& sender,
+                              socket_base::message_flags flags,
+                              socket_base::message_flags& out_flags,
+                              const ConvertibleToMutableBuffer&
+                                control_data,
+                              ReadHandler handler);
+
+[function_requires `traits_type::has_receive_from` and `is_open(impl)`.]
+
   template<class ConstBufferSequence, class ConvertibleToConstBuffer>
     size_t send(implementation_type& impl,
                 const ConstBufferSequence& buffers,
                 socket_base::message_flags flags,
                 const ConvertibleToConstBuffer& control_data,
                 error_code& ec);
+
+[function_requires `traits_type::has_send` and `is_open(impl)`.]
 
   template<class ConstBufferSequence, class ConvertibleToConstBuffer,
     class WriteHandler>
@@ -716,6 +923,30 @@ expression `!ec` is false.]
                       socket_base::message_flags flags,
                       const ConvertibleToConstBuffer& control_data,
                       WriteHandler handler);
+
+[function_requires `traits_type::has_send` and `is_open(impl)`.]
+
+  template<class ConstBufferSequence, class ConvertibleToConstBuffer>
+    size_t send_to(implementation_type& impl,
+                   const ConstBufferSequence& buffers,
+                   const endpoint_type& destination,
+                   socket_base::message_flags flags,
+                   const ConvertibleToConstBuffer& control_data,
+                   error_code& ec);
+    
+[function_requires `traits_type::has_send_to` and `is_open(impl)`.]
+
+  template<class ConstBufferSequence, class ConvertibleToConstBuffer,
+    class WriteHandler>
+      void async_send_to(implementation_type& impl,
+                         const ConstBufferSequence& buffers,
+                         const endpoint_type& destination,
+                         socket_base::message_flags flags,
+                         const ConvertibleToConstBuffer& control_data,
+                         WriteHandler handler);
+
+[function_requires `traits_type::has_send_to` and `is_open(impl)`.]
+
 [endsect]
 
 [endsect]

@@ -31,6 +31,8 @@
           static const message_flags message_truncated;
           static const message_flags message_control_truncated;
 
+          static const int max_connections;
+
         protected:
           socket_base();
           ~socket_base();
@@ -49,6 +51,8 @@
 
 [mdash] an enumerated type, `shutdown_type`;
 
-[mdash] a bitmask type, `message_flags`.
+[mdash] a bitmask type, `message_flags`;
+
+[mdash] a value, `max_connections`.
 
 [endsect]

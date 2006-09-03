@@ -135,7 +135,7 @@ value of `ec` indicates failure then `close` fails.]
 `basic_streambuf<char>::underflow()`, with the specialisation that a sequence
 of characters is read from the input sequence as if by reading from the socket
 into an internal buffer as if by calling
-`this->basic_socket<Protocol,SocketTraits,SocketService>::read_some(__dotdotdot__)`;
+`this->basic_socket<Protocol,SocketTraits,SocketService>::read_some(__dotdotdot__)`.]
 
 [function_effects Returns `traits_type::eof()` to indicate failure. Otherwise
 returns `traits_type::to_int_type(*gptr())`.]

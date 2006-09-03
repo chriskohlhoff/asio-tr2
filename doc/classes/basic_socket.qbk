@@ -71,7 +71,7 @@
           void bind(const endpoint_type& endpoint);
           error_code bind(const endpoint_type& endpoint, error_code& ec);
 
-          void listen(int backlog = -1);
+          void listen(int backlog = max_connections);
           error_code listen(int backlog, error_code& ec);
 
           template<class SocketTraits1, class SocketService1>
@@ -434,7 +434,7 @@ it as listening as if by calling:
   }
   if (traits_type::has_listen)
   {
-    this->service.listen(this->implementation, -1, ec);
+    this->service.listen(this->implementation, max_connections, ec);
     if (ec) throw system_error(ec);
   }
 ``]
@@ -532,7 +532,7 @@ ec)`.]
 
 [function_returns `this->service.bind(this->implementation, endpoint, ec)`.]
 
-  void listen(int backlog = -1);
+  void listen(int backlog = max_connections);
   error_code listen(int backlog, error_code& ec);
 
 [function_requires `traits_type::has_listen`.]
