@@ -125,52 +125,16 @@ the service.]
 operations associated with `impl`, and releases socket acceptor resources as if
 by __POSIX__ __close__. Otherwise, no effect. Handlers for cancelled
 asynchronous operations are passed the `error_code` value
-`error::operation_aborted`. Failure conditions are ignored.]
+`error::operation_aborted`. Failures are ignored.]
 
   error_code open(implementation_type& impl,
                   const protocol_type& protocol, error_code& ec);
 
 [function_requires `!is_open(impl)`.]
 
-[function_effects Establishes the postcondition, as if by __POSIX__ __socket__.
-On success, sets `ec` such that the expression `!ec` is true. On failure, an
-implementation shall set `ec` to the `error_code` value corresponding to the
-failure condition, as shown in the table below. For failure conditions not
-listed, an implementation is permitted to set `ec` to any other value such that
-the expression `!ec` is false.]
-
-[table Table--open() failure conditions
-  [[failure condition][error code]]
-  [
-    [`is_open(impl)`.]
-    [`error::already_open`]
-  ]
-  [
-    [The implementation does not support the address family specified by the
-     `protocol` value.]
-    [`error::address_family_not_supported`]
-  ]
-  [
-    [No more sockets are available for the process.]
-    [`error::no_descriptors`]
-  ]
-  [
-    [No more sockets are available for the system.]
-    [`error::no_system_descriptors`]
-  ]
-  [
-    [The implementation does not support the protocol specified by the
-     `protocol` value, or does not support the protocol in conjunction with the
-     address family specified by the `protocol` value.]
-    [`error::protocol_not_supported`]
-  ]
-  [
-    [The implementation does not support the socket type specified by the
-     `protocol` value, or does not support the socket type in conjunction with
-     the protocol specified by the `protocol` value.]
-    [`error::socket_type_not_supported`]
-  ]
-]
+[function_effects If `is_open(impl)` is true, sets `ec` to
+`error::already_open`. Otherwise establishes the postcondition, as if by
+__POSIX__ __socket__.]
 
 [function_returns `ec`.]
 
@@ -182,10 +146,9 @@ the expression `!ec` is false.]
 
 [function_requires `!is_open(impl)`.]
 
-[function_effects Assigns the existing socket acceptor to the implementation
-`impl`. On success, sets `ec` such that the expression `!ec` is true. On
-failure, an implementation shall set `ec` to any value such that the expression
-`!ec` is false.]
+[function_effects If `is_open(impl)` is true, sets `ec` to
+`error::already_open`. Otherwise assigns the existing socket acceptor to the
+implementation `impl`.]
 
 [function_returns `ec`.]
 
@@ -207,21 +170,7 @@ implementation `impl` was opened by a previous call to `open` or `assign`.]
 [function_effects If `is_open(impl)` is true, cancels pending asynchronous
 operations associated with `impl`, and establishes the postcondition as if by
 __POSIX__ __close__. Otherwise, no effect. Handlers for cancelled asynchronous
-operations are passed the `error_code` value `error::operation_aborted`. On
-success, sets `ec` such that the expression `!ec` is true. On failure, an
-implementation shall set `ec` to the `error_code` value corresponding to the
-failure condition, as shown in the table below. For failure conditions not
-listed, an implementation is permitted to set `ec` to any other value such that
-the expression `!ec` is false.]
-
-[table Table--close() failure conditions
-  [[failure condition][error code]]
-  [
-    [The native socket acceptor implementation returned by `native(impl)` is
-    not valid.]
-    [`error::bad_descriptor`]
-  ]
-]
+operations are passed the `error_code` value `error::operation_aborted`.]
 
 [function_returns `ec`.]
 
@@ -236,13 +185,10 @@ implementation `impl`.]
 
 [function_requires `is_open(impl)`.]
 
-[function_effects Cancels pending asynchronous operations associated with
-`impl`, if any. Handlers for cancelled asynchronous operations are passed the
-`error_code` value `error::operation_aborted`. On success, sets `ec` such that
-the expression `!ec` is true. On failure, an implementation shall set `ec` to
-the `error_code` value corresponding to the failure condition, as shown in the
-table below. For failure conditions not listed, an implementation is permitted
-to set `ec` to any other value such that the expression `!ec` is false.]
+[function_effects If `is_open(impl)` is false, sets `ec` to
+`error::bad_descriptor`. Otherwise cancels pending asynchronous operations
+associated with `impl`, if any. Handlers for cancelled asynchronous operations
+are passed the `error_code` value `error::operation_aborted`.]
 
 [function_block The conditions under which cancellation of asynchronous
 operations is permitted are implementation-defined. If current conditions do
@@ -255,24 +201,6 @@ cancel asynchronous operations started from the same thread. Vista provides
 `CancelIoEx` which may be used to cancel all asynchronous operations associated
 with a socket.]
 
-[table Table--cancel() failure conditions
-  [[failure condition][error code]]
-  [
-    [`!is_open(impl)`, or the native socket acceptor implementation returned
-    by `native(impl)` is not valid.]
-    [`error::bad_descriptor`]
-  ]
-  [
-    [The native implementation returned by `native(impl)` is not a valid socket
-    acceptor.]
-    [`error::not_socket`]
-  ]
-  [
-    [Pending asynchronous operations may not be cancelled at this time.]
-    [`error::not_supported`]
-  ]
-]
-
 [function_returns `ec`.]
 
   template<class SettableSocketOption>
@@ -282,37 +210,9 @@ with a socket.]
 
 [function_requires `is_open(impl)`.]
 
-[function_effects Sets an option on the socket acceptor `impl`, as if by
-__POSIX__ __setsockopt__. On success, sets `ec` such that the expression `!ec`
-is true. On failure, an implementation shall set `ec` to the `error_code` value
-corresponding to the failure condition, as shown in the table below. For
-failure conditions not listed, an implementation is permitted to set `ec` to
-any other value such that the expression `!ec` is false.]
-
-[table Table--set_option() failure conditions
-  [[failure condition][error code]]
-  [
-    [`!is_open(impl)`, or the native socket acceptor implementation returned
-    by `native(impl)` is not valid.]
-    [`error::bad_descriptor`]
-  ]
-  [
-    [The native implementation returned by `native(impl)` is not a valid socket
-    acceptor.]
-    [`error::not_socket`]
-  ]
-  [
-    [The option is not supported by the protocol.]
-    [`error::no_protocol_option`]
-  ]
-  [
-    [The socket option name `option.name()` is not valid at the specified
-    socket option level `option.level()`.]
-    [`error::invalid_argument`]
-  ]
-]
-
-[function_returns `ec`.]
+[function_effects If `is_open(impl)` is false, sets `ec` to
+`error::bad_descriptor`. Otherwise sets an option on the socket acceptor
+`impl`, as if by __POSIX__ __setsockopt__.]
 
   template<class GettableSocketOption>
     error_code get_option(const implementation_type& impl,
@@ -321,35 +221,9 @@ any other value such that the expression `!ec` is false.]
 
 [function_requires `is_open(impl)`.]
 
-[function_effects Gets an option from the socket acceptor `impl`, as if by
-__POSIX__ __getsockopt__. On success, sets `ec` such that the expression `!ec`
-is true. On failure, an implementation shall set `ec` to the `error_code` value
-corresponding to the failure condition, as shown in the table below. For
-failure conditions not listed, an implementation is permitted to set `ec` to
-any other value such that the expression `!ec` is false.]
-
-[table Table--get_option() failure conditions
-  [[failure condition][error code]]
-  [
-    [`!is_open(impl)`, or the native socket acceptor implementation returned
-    by `native(impl)` is not valid.]
-    [`error::bad_descriptor`]
-  ]
-  [
-    [The native implementation returned by `native(impl)` is not a valid socket
-    acceptor.]
-    [`error::not_socket`]
-  ]
-  [
-    [The option is not supported by the protocol.]
-    [`error::no_protocol_option`]
-  ]
-  [
-    [The socket option name `option.name()` is not valid at the specified
-    socket option level `option.level()`.]
-    [`error::invalid_argument`]
-  ]
-]
+[function_effects If `is_open(impl)` is false, sets `ec` to
+`error::bad_descriptor`. Otherwise gets an option from the socket acceptor
+`impl`, as if by __POSIX__ __getsockopt__.]
 
 [function_returns `ec`.]
 
@@ -359,30 +233,9 @@ any other value such that the expression `!ec` is false.]
 
 [function_requires `is_open(impl)`.]
 
-[function_effects Executes an I/O control command on the socket acceptor
-`impl`, as if by __POSIX__ __ioctl__. On success, sets `ec` such that the
-expression `!ec` is true. On failure, an implementation shall set `ec` to the
-`error_code` value corresponding to the failure condition, as shown in the
-table below. For failure conditions not listed, an implementation is permitted
-to set `ec` to any other value such that the expression `!ec` is false.]
-
-[table Table--io_control() failure conditions
-  [[failure condition][error code]]
-  [
-    [`!is_open(impl)`, or the native socket acceptor implementation returned
-    by `native(impl)` is not valid.]
-    [`error::bad_descriptor`]
-  ]
-  [
-    [The native implementation returned by `native(impl)` is not a valid socket
-    acceptor.]
-    [`error::not_socket`]
-  ]
-  [
-    [The I/O control command name or data is invalid for the socket acceptor.]
-    [`error::invalid_argument`]
-  ]
-]
+[function_effects If `is_open(impl)` is false, sets `ec` to
+`error::bad_descriptor`. Otherwise executes an I/O control command on the
+socket acceptor `impl`, as if by __POSIX__ __ioctl__.]
 
 [function_returns `ec`.]
 
@@ -397,87 +250,21 @@ extensions to be supported.]
 
 [function_requires `is_open(impl)`.]
 
-[function_effects Binds the socket `impl` to the specified local endpoint, as
-if by __POSIX__ __bind__. On success, sets `ec` such that the expression `!ec`
-is true. On failure, an implementation shall set `ec` to the `error_code` value
-corresponding to the failure condition, as shown in the table below. For
-failure conditions not listed, an implementation is permitted to set `ec` to
-any other value such that the expression `!ec` is false.]
-
-[table Table--bind() failure conditions
-  [[failure condition][error code]]
-  [
-    [`!is_open(impl)`, or the native socket acceptor implementation returned
-    by `native(impl)` is not valid.]
-    [`error::bad_descriptor`]
-  ]
-  [
-    [The native implementation returned by `native(impl)` is not a valid socket
-    acceptor.]
-    [`error::not_socket`]
-  ]
-  [
-    [The specified endpoint is already in use.]
-    [`error::address_in_use`]
-  ]
-  [
-    [The specified endpoint is not available from the local machine.]
-    [`error::address_not_available`]
-  ]
-  [
-    [The specified endpoint is not valid for the address family of the socket
-    acceptor's protocol.]
-    [`error::address_family_not_supported`]
-  ]
-  [
-    [The socket acceptor has already been bound, and does not support binding to
-    a new endpoint.]
-    [`error::invalid_argument`]
-  ]
-  [
-    [The socket type of the socket acceptor's protocol does not support
-    binding.]
-    [`error::not_supported`]
-  ]
-]
+[function_effects If `is_open(impl)` is false, sets `ec` to `error::bad_descriptor`. Otherwise binds the socket `impl` to the specified local endpoint, as
+if by __POSIX__ __bind__.]
 
 [function_returns `ec`.]
 
   error_code listen(implementation_type& impl, int backlog,
                     error_code& ec);
 
-[function_effects Marks the socket acceptor `impl` as ready to accept
-connections, as if by __POSIX__ __listen__. If `backlog <= 0`, the
-implementation shall set the socket acceptor's listen queue to the maximum
-allowable length. On success, sets `ec` such that the expression `!ec` is true.
-On failure, an implementation shall set `ec` to the `error_code` value
-corresponding to the failure condition, as shown in the table below. For
-failure conditions not listed, an implementation is permitted to set `ec` to
-any other value such that the expression `!ec` is false.]
+[function_requires `is_open(impl)`.]
 
-[table Table--listen() failure conditions
-  [[failure condition][error code]]
-  [
-    [`!is_open(impl)`, or the native socket acceptor implementation returned
-    by `native(impl)` is not valid.]
-    [`error::bad_descriptor`]
-  ]
-  [
-    [The native implementation returned by `native(impl)` is not a valid socket
-    acceptor.]
-    [`error::not_socket`]
-  ]
-  [
-    [The socket acceptor is not locally-bound, and the protocol does not
-    support listening on an unbound socket acceptor.]
-    [`error::address_required`]
-  ]
-  [
-    [The socket type of the socket acceptor's protocol does not support
-    listening.]
-    [`error::not_supported`]
-  ]
-]
+[function_effects If `is_open(impl)` is false, sets `ec` to
+`error::bad_descriptor`. Otherwse marks the socket acceptor `impl` as ready to
+accept connections, as if by __POSIX__ __listen__. If `backlog ==
+socket_base::max_connections`, the implementation shall set the socket
+acceptor's listen queue to the maximum allowable length.]
 
 [function_returns `ec`.]
 
@@ -486,33 +273,13 @@ any other value such that the expression `!ec` is false.]
 
 [function_requires `is_open(impl)`.]
 
-[function_effects Determines the locally-bound endpoint associated with the
-socket acceptor `impl`, as if by __POSIX__ __getsockname__. On success, sets
-`ec` such that the expression `!ec` is true. On failure, an implementation
-shall set `ec` to the `error_code` value corresponding to the failure
-condition, as shown in the table below. For failure conditions not listed, an
-implementation is permitted to set `ec` to any other value such that the
-expression `!ec` is false.]
+[function_effects If `is_open(impl)` is false, sets `ec` to
+`error::bad_descriptor`. Otherwise determines the locally-bound endpoint
+associated with the socket acceptor `impl`, as if by __POSIX__
+__getsockname__.]
 
-[table Table--local_endpoint() failure conditions
-  [[failure condition][error code]]
-  [
-    [`!is_open(impl)`, or the native socket acceptor implementation returned
-    by `native(impl)` is not valid.]
-    [`error::bad_descriptor`]
-  ]
-  [
-    [The native implementation returned by `native(impl)` is not a valid socket
-    acceptor.]
-    [`error::not_socket`]
-  ]
-  [
-    [The socket acceptor's protocol does not support the operation.]
-    [`error::not_supported`]
-  ]
-]
-
-[function_returns The locally-bound endpoint associated with `impl`.]
+[function_returns On success, the locally-bound endpoint associated with
+`impl`. Otherwise `endpoint_type()`.]
 
   template<class SocketService>
     error_code accept(implementation_type& impl,
@@ -522,48 +289,13 @@ expression `!ec` is false.]
 [function_requires `is_open(impl) && !socket.is_open()`, and a prior call to
 `listen` for the socket acceptor implementation `impl`.]
 
-[function_effects Associates `socket` with the first connection extracted from
-the queue of pending connections of the socket acceptor `impl`, as if by
-__POSIX__ __accept__. On success, sets `ec` such that the expression `!ec` is
-true, and if `endpoint != 0`, assigns into `*endpoint` the remote endpoint of
-the connection. On failure, an implementation shall set `ec` to the
-`error_code` value corresponding to the failure condition, as shown in the
-table below. For failure conditions not listed, an implementation is permitted
-to set `ec` to any other value such that the expression `!ec` is false.]
-
-[table Table--accept() failure conditions
-  [[failure condition][error code]]
-  [
-    [`!is_open(impl)`, or the native socket acceptor implementation returned
-    by `native(impl)` is not valid.]
-    [`error::bad_descriptor`]
-  ]
-  [
-    [The native implementation returned by `native(impl)` is not a valid socket
-    acceptor.]
-    [`error::not_socket`]
-  ]
-  [
-    [`socket.is_open()`.]
-    [`error::already_open`]
-  ]
-  [
-    [The socket acceptor's protocol does not support the operation.]
-    [`error::not_supported`]
-  ]
-  [
-    [The socket acceptor is not accepting connections.]
-    [`error::invalid_argument`]
-  ]
-  [
-    [No more sockets are available for the process.]
-    [`error::no_descriptors`]
-  ]
-  [
-    [No more sockets are available for the system.]
-    [`error::no_system_descriptors`]
-  ]
-]
+[function_effects If `is_open(impl)` is false, sets `ec` to
+`error::bad_descriptor`. If `socket.is_open()` is true, sets `ec` to
+`error::already_open`. Otherwise associates `socket` with the first connection
+extracted from the queue of pending connections of the socket acceptor `impl`,
+as if by __POSIX__ __accept__. On success, and if `endpoint != 0`, and if
+`endpoint != 0`, assigns into `*endpoint` the remote endpoint of the
+connection.]
 
 [function_block Implementations shall not permit the operation to complete with
 an error indicating that a connection has been aborted. [inline_note Such as
@@ -589,20 +321,15 @@ performed via the `io_service` object returned by
 `io_service::service::io_service()` and behaves according to [link
 requirements.asynchronous_operations asynchronous operation] requirements.]
 
+[function_block If `is_open(impl)` is false, the operation shall fail
+immediately with `error_code` value `error::bad_descriptor`. If
+`socket.is_open()` is true, the operation shall fail immediately with
+`error_code` value `error::already_open`.]
+
 [function_block The program must ensure the `basic_socket<>` object `socket` is
 valid until the handler for the asynchronous operation is invoked. If `endpoint
 != 0`, the program must ensure the object `*endpoint` is valid until the
 handler for the asynchronous operation is invoked.]
-
-[function_block On completion of the asynchronous operation, the
-`AcceptHandler` object `handler` shall be invoked with an `error_code` value
-`ec`. On success, `ec` shall contain a value such that the expression `!ec` is
-true, and `socket.is_open()` shall be true. On failure, an implementation shall
-pass as `ec` the `error_code` value corresponding to the failure condition, as
-shown in the table for `accept()` above, with the addition of
-`error::operation_aborted` for cancelled operations. For failure conditions not
-listed, an implementation is permitted to pass as `ec` any other value such
-that the expression `!ec` is false.]
 
 [function_block Implementations shall not permit the operation to complete with
 an error indicating that a connection has been aborted. [inline_note Such as

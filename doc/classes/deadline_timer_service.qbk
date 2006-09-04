@@ -86,9 +86,7 @@ Cancels asynchronous wait operations associated with `impl` as if by performing:
 
 [function_effects Causes any outstanding asynchronous wait operations to
 complete as soon as possible. Handlers for cancelled operations shall be passed
-the error code `error::operation_aborted`. On success, sets `ec` such that the
-expression `!ec` is true. On failure, an implementation shall set `ec` to any
-`error_code` value such that the expression `!ec` is false.]
+the error code `error::operation_aborted`.]
 
 [function_returns The number of operations that were cancelled.]
 
@@ -122,9 +120,7 @@ TimeTraits::add(TimeTraits::now(), d), ec)`.]
   error_code wait(implementation_type& impl, error_code& ec);
   
 [function_effects Performs a synchronous wait operation associated with the
-timer implementation `impl`. On success, sets `ec` such that the expression
-`!ec` is true. On failure, an implementation shall set `ec` to any `error_code`
-value such that the expression `!ec` is false.]
+timer implementation `impl`.]
 
 [function_returns `ec`.]
 
@@ -139,22 +135,9 @@ via the `io_service` object returned by `io_service()` and behaves according to
 [link requirements.asynchronous_operations asynchronous operation]
 requirements.]
 
-[function_block The handler shall be posted for execution only if the condition
+[function_block The handler shall be posted for invocation only if the condition
 `!!ec || !TimeTraits::lt(TimeTraits::now(), expires_at(impl))` holds, where
-`ec` is the error code to be passed to the handler. On success, `ec` shall
-contain a value such that the expression `!ec` is true. On failure, an
-implementation shall pass as `ec` the `error_code` value corresponding to the
-failure condition, as shown in the table below. For failure conditions not
-listed, an implementation is permitted to pass as `ec` any other value such
-that the expression `!ec` is false.]
-
-[table Table--async_wait() failure conditions
-  [[failure condition][error code]]
-  [
-    [Operation was cancelled.]
-    [`error::operation_aborted`]
-  ]
-]
+`ec` is the error code to be passed to the handler.]
 
 [endsect]
 
