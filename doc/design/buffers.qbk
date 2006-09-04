@@ -48,6 +48,4 @@ into a container. The `MutableBuffers` and `ConstBuffers` concepts have been
 defined so that containers such as `std::vector`, `std::list`, `std::vector` or
 `tr1::array` can be used.
 
-['TODO:] discussion of `const_buffers_1` and `mutable_buffers_1`.
-
 [endsect]

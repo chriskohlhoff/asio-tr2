@@ -6,6 +6,13 @@ requirements.mutable_buffers `ConstBufferSequence`], [link
 requirements.convertible_to_mutable_buffer `ConvertibleToMutableBuffer`], and
 [link requirements.convertible_to_mutable_buffer `ConvertibleToConstBuffer`].
 
+[commentary `mutable_buffers_1` is derived from `mutable_buffer` so that it is
+convertible to both `mutable_buffer` and `const_buffer`, while ensuring that
+the conversion to `mutable_buffer` is the better conversion. This prevents
+ambiguities when passing to functions that are overloaded on both
+`mutable_buffer` and `const_buffer`, such as [link functions.buffer
+`buffer()`].]
+
   namespace std {
     namespace tr2 {
       namespace sys {
