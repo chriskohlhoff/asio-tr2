@@ -12,6 +12,8 @@ Instances of the `socket_service` class template meet the requirements of a
           public io_service::service
         {
         public:
+          static io_service::id id;
+
           // types:
           typedef Protocol protocol_type;
           typedef typename Protocol::endpoint endpoint_type;
@@ -23,8 +25,6 @@ Instances of the `socket_service` class template meet the requirements of a
           explicit socket_service(io_service& ios);
 
           // members:
-          void shutdown_service();
-
           void construct(implementation_type& impl);
 
           void destroy(implementation_type& impl);
@@ -151,6 +151,9 @@ Instances of the `socket_service` class template meet the requirements of a
                                  const endpoint_type& destination,
                                  socket_base::message_flags flags,
                                  WriteHandler handler);
+
+        private:
+          virtual void shutdown_service();
         };
 
       } // namespace sys

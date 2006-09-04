@@ -12,6 +12,8 @@ of a [link requirements.datagram_socket_service `DatagramSocketService`].
           public io_service::service
         {
         public:
+          static io_service::id id;
+
           // types:
           typedef Protocol protocol_type;
           typedef typename Protocol::endpoint endpoint_type;
@@ -22,8 +24,6 @@ of a [link requirements.datagram_socket_service `DatagramSocketService`].
           explicit datagram_socket_service(io_service& ios);
 
           // members:
-          void shutdown_service();
-
           void construct(implementation_type& impl);
 
           void destroy(implementation_type& impl);
@@ -148,6 +148,9 @@ of a [link requirements.datagram_socket_service `DatagramSocketService`].
                                  socket_base::message_flags flags,
                                  const ConvertibleToConstBuffer& control_data,
                                  WriteHandler handler);
+
+        private:
+          virtual void shutdown_service();
         };
 
       } // namespace sys

@@ -13,6 +13,8 @@ of a [link requirements.resolver_service `ResolverService`].
             public io_service::service
           {
           public:
+          static io_service::id id;
+
             // types:
             typedef InternetProtocol protocol_type;
             typedef typename InternetProtocol::endpoint endpoint_type;
@@ -24,8 +26,6 @@ of a [link requirements.resolver_service `ResolverService`].
             explicit resolver_service(io_service& ios);
 
             // members:
-            void shutdown_service();
-
             void construct(implementation_type& impl);
 
             void destroy(implementation_type& impl);
@@ -46,6 +46,9 @@ of a [link requirements.resolver_service `ResolverService`].
               void async_resolve(implementation_type& impl,
                                  const endpoint_type& e,
                                  ResolveHandler handler);
+
+          private:
+            virtual void shutdown_service();
           };
 
         } // namespace ip

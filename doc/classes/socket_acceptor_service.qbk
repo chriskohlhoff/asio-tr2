@@ -12,6 +12,8 @@ of a [link requirements.socket_acceptor_service `SocketAcceptorService`].
           public io_service::service
         {
         public:
+          static io_service::id id;
+
           // types:
           typedef Protocol protocol_type;
           typedef typename Protocol::endpoint endpoint_type;
@@ -22,8 +24,6 @@ of a [link requirements.socket_acceptor_service `SocketAcceptorService`].
           explicit socket_acceptor_service(io_service& ios);
 
           // members:
-          void shutdown_service();
-
           void construct(implementation_type& impl);
 
           void destroy(implementation_type& impl);
@@ -75,6 +75,9 @@ of a [link requirements.socket_acceptor_service `SocketAcceptorService`].
             void async_accept(implementation_type& impl,
                               basic_socket<Protocol, SocketService>& socket,
                               endpoint_type* endpoint, AcceptHandler handler);
+
+        private:
+          virtual void shutdown_service();
         };
 
       } // namespace sys
@@ -394,12 +397,12 @@ extensions to be supported.]
 
 [function_requires `is_open(impl)`.]
 
-[function_effects Establishes the postcondition as if by __POSIX__ __bind__. On
-success, sets `ec` such that the expression `!ec` is true. On failure, an
-implementation shall set `ec` to the `error_code` value corresponding to the
-failure condition, as shown in the table below. For failure conditions not
-listed, an implementation is permitted to set `ec` to any other value such that
-the expression `!ec` is false.]
+[function_effects Binds the socket `impl` to the specified local endpoint, as
+if by __POSIX__ __bind__. On success, sets `ec` such that the expression `!ec`
+is true. On failure, an implementation shall set `ec` to the `error_code` value
+corresponding to the failure condition, as shown in the table below. For
+failure conditions not listed, an implementation is permitted to set `ec` to
+any other value such that the expression `!ec` is false.]
 
 [table Table--bind() failure conditions
   [[failure condition][error code]]
@@ -439,9 +442,6 @@ the expression `!ec` is false.]
 ]
 
 [function_returns `ec`.]
-
-[function_postconditions `local_endpoint(impl, err) == endpoint && !err`, where
-`err` is a value of type `error_code`.]
 
   error_code listen(implementation_type& impl, int backlog,
                     error_code& ec);

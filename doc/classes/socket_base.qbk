@@ -51,6 +51,7 @@
 
 [mdash] a bitmask type, `message_flags`;
 
-[mdash] a value, `max_connections`.
+The value `max_connections` contains the implementation-defined limit on the
+length of the queue of pending incoming connections.
 
 [endsect]

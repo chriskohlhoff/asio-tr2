@@ -12,6 +12,8 @@ of a [link requirements.timer_service `TimerService`].
           public io_service::service
         {
         public:
+          static io_service::id id;
+
           // types:
           typedef TimeTraits traits_type;
           typedef Time time_type;
@@ -22,8 +24,6 @@ of a [link requirements.timer_service `TimerService`].
           explicit deadline_timer_service(io_service& ios);
 
           // members:
-          void shutdown_service();
-
           void construct(implementation_type& impl);
 
           void destroy(implementation_type& impl);
@@ -44,6 +44,9 @@ of a [link requirements.timer_service `TimerService`].
 
           template<class WaitHandler>
             void async_wait(implementation_type& impl, WaitHandler handler);
+
+        private:
+          virtual void shutdown_service();
         };
 
       } // namespace sys
