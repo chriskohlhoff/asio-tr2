@@ -34,4 +34,24 @@
     } // namespace tr2
   } // namespace std
 
+The `basic_resolver_query` class encapsulates values used in name resolution.
+The meanings of the constructor arguments are defined below as if the name
+resolution is performed using __POSIX__ __getaddrinfo__:
+
+[mdash] /proto/ is used to populate the `ai_family`, `ai_socktype` and
+`ai_protocol` fields of the `addrinfo` structure passed as the /hints/ argument
+to __POSIX__ __getaddrinfo__.
+
+[mdash] /host_name/ is passed as the /nodename/ argument to __POSIX__
+__getaddrinfo__.
+
+[mdash] /service_name/ is passed as the /servname/ argument to __POSIX__
+__getaddrinfo__.
+
+[mdash] /flags/ is used to populate the `ai_flags` field of the `addrinfo`
+structure passed as the /hints/ argument to __POSIX__ __getaddrinfo__.
+
+If a default-constructed `basic_resolver_query` object is used in a call to
+`resolver_service<>::resolve()`, the results are undefined.
+
 [endsect]
