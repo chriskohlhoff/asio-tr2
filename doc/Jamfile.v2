@@ -15,6 +15,7 @@ boostbook standalone
     proposal
   :
     <xsl:param>toc.section.depth=6
+    <xsl:param>section.autolabel=1
     <xsl:param>toc.max.depth=6
   ;
 
