@@ -7,9 +7,9 @@ requirements listed below.
 In the table below, `X` denotes a timer service class for time type `Time` and
 traits type `TimeTraits`, `a` denotes a value of type `X`, `b` denotes a value
 of type `X::implementation_type`, `t` denotes a value of type `Time`, `d`
-denotes a value of type `TimeTraits::duration_type`, `h` denotes a value
-meeting [link requirements.wait_handler `WaitHandler`] requirements, and `u`
-denotes an identifier.
+denotes a value of type `TimeTraits::duration_type`, `e` denotes a value of
+type `error_code`, and `h` denotes a value meeting [link
+requirements.wait_handler `WaitHandler`] requirements.
 
 [table Table--TimerService requirements
   [[expression] [return type] [assertion/note\npre/post-condition]]
@@ -19,20 +19,19 @@ denotes an identifier.
     [
       From [link requirements.io_object_service IoObjectService] requirements.
       Implicitly cancels asynchronous wait operations, as if by calling
-      `a.cancel(b)`.
+      `a.cancel(b, e)`.
     ]
   ]
   [
     [``
-      error_code u;
-      a.cancel(b, u);
+      a.cancel(b, e);
     ``]
     [`size_t`]
     [
-      Causes any outstanding asynchronous wait operations to complete as soon as
-      possible. Handlers for cancelled operations shall be passed the error code
-      `error::operation_aborted`. Returns the number of operations that were
-      cancelled.
+      Causes any outstanding asynchronous wait operations to complete as soon
+      as possible. Handlers for cancelled operations shall be passed the error
+      code `error::operation_aborted`. Sets `e` to indicate success or failure.
+      Returns the number of operations that were cancelled.
     ]
   ]
   [
@@ -42,13 +41,12 @@ denotes an identifier.
   ]
   [
     [``
-      error_code u;
-      a.expires_at(b, t, u);
+      a.expires_at(b, t, e);
     ``]
     [`size_t`]
     [
       Implicitly cancels asynchronous wait operations, as if by calling
-      `a.cancel(b, u)`. Returns the number of operations that were cancelled.\n
+      `a.cancel(b, e)`. Returns the number of operations that were cancelled.\n
       post: `a.expires_at(b) == t`.
     ]
   ]
@@ -62,23 +60,21 @@ denotes an identifier.
   ]
   [
     [``
-      error_code u;
-      a.expires_from_now(b, d, u);
+      a.expires_from_now(b, d, e);
     ``]
     [`size_t`]
     [
-      Equivalent to `a.expires_at(b, TimeTraits::add(TimeTraits::now(), d), u)`.
+      Equivalent to `a.expires_at(b, TimeTraits::add(TimeTraits::now(), d), e)`.
     ]
   ]
   [
     [``
-      error_code u;
-      a.wait(b, u);
+      a.wait(b, e);
     ``]
     [`error_code`]
     [
-      Sets `u` to indicate success or failure. Returns `u`.\n
-      post: `!!u || !TimeTraits::lt(TimeTraits::now(), a.expires_at(b))`.
+      Sets `e` to indicate success or failure. Returns `e`.\n
+      post: `!!e || !TimeTraits::lt(TimeTraits::now(), a.expires_at(b))`.
     ]
   ]
   [

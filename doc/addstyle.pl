@@ -37,6 +37,7 @@ while (my $line = <$file_in>)
   $line =~ s~\<head\>~\<head\>$style~;
   $line =~ s~\<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"\>~\<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"\>$docno~;
   $line =~ s~\<\/body\>~$copyright\<\/body\>~;
+  $line =~ s/\240/ /g;
   push @lines, $line;
 }
 close $file_in;

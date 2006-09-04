@@ -398,7 +398,7 @@ immediately.]
 [function_block If the operation completes due to graceful connection closure
 by the peer, the operation shall fail with `error::eof`.]
 
-[function_returns On success, the numbers of bytes read. Otherwise `0`.]
+[function_returns On success, the number of bytes read. Otherwise `0`.]
 
   template<class MutableBufferSequence, class ReadHandler>
     void async_receive(implementation_type& impl,
@@ -468,7 +468,7 @@ immediately.]
 [function_block The `flags` argument specifies the type of send operation to be
 performed.]
 
-[function_returns On success, the numbers of bytes written. Otherwise `0`.]
+[function_returns On success, the number of bytes written. Otherwise `0`.]
 
   template<class ConstBufferSequence, class WriteHandler>
     void async_send(implementation_type& impl,
