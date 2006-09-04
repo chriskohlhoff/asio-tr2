@@ -134,6 +134,9 @@ references to all connection objects to be destroyed.]
   size_t run();
   size_t run(error_code& ec);
 
+[function_requires Must not be called from a thread that is currently calling
+one of `run()`, `run_one()`, `poll()`, or `poll_one()`.]
+
 [function_effects Performs `io_service` work until there is no more work to do,
 or the `io_service` is explicitly stopped, as if implemented as follows:
 ``
