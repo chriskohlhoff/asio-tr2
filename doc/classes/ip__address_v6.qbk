@@ -247,26 +247,14 @@ definitions.network_byte_order network byte order].]
   string to_string(error_code& ec) const;
 
 [function_effects Converts an address into a string representation. If
-`scope_id() == 0`, the format is specified by the __POSIX__ function
-__inet_ntop__ when invoked with address family `AF_INET6`. If `scope_id() !=
-0`, the format is ['`address`]`%`['`scope-id`], where ['`address`] is the
-string representation of the equivalent address having `scope_id() == 0`, and
-['`scope-id`] is an implementation-defined string representation of the scope
-identifier. On success, sets `ec` such that the expression `!ec` is true. On
-failure, an implementation shall set `ec` to the `error_code` value
-corresponding to the failure condition, as shown in the table below. For
-failure conditions not listed, an implementation is permitted to set `ec` to
-any other value such that the expression `!ec` is false.]
+`scope_id() == 0`, as if by __POSIX__ __inet_ntop__ when invoked with address
+family `AF_INET6`. If `scope_id() != 0`, the format is
+['`address`]`%`['`scope-id`], where ['`address`] is the string representation
+of the equivalent address having `scope_id() == 0`, and ['`scope-id`] is an
+implementation-defined string representation of the scope identifier.]
 
-[table Table--to_string() failure conditions
-  [[failure condition][error code]]
-  [
-    [The implementation does not support IP version 6.]
-    [`error::address_family_not_supported`]
-  ]
-]
-
-[function_returns The string representation of the address.]
+[function_returns If successful, the string representation of the address.
+Otherwise `string()`.]
 
   address_v4 to_v4() const;
 
@@ -299,23 +287,7 @@ identifier. All implementations shall accept as ['`scope-id`] a string
 representation of an unsigned decimal integer. It is implementation-defined
 whether alternative scope identifier representations are permitted. If
 ['`scope-id`] is not supplied, an `address_v6` object shall be returned such
-that `scope_id() == 0`. On success, sets `ec` such that the expression `!ec` is
-true. On failure, an implementation shall set `ec` to the `error_code` value
-corresponding to the failure condition, as shown in the table below. For
-failure conditions not listed, an implementation is permitted to set `ec` to
-any other value such that the expression `!ec` is false.]
-
-[table Table--from_string() failure conditions
-  [[failure condition][error code]]
-  [
-    [The implementation does not support IP version 6.]
-    [`error::address_family_not_supported`]
-  ]
-  [
-    [`str` does not contain a valid string representation of an address.]
-    [`error::invalid_argument`]
-  ]
-]
+that `scope_id() == 0`.]
 
 [function_returns If successful, an `address_v6` value corresponding to the
 string `str`. Otherwise returns `address_v6()`.]
