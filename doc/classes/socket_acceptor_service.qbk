@@ -214,6 +214,8 @@ with a socket.]
 `error::bad_descriptor`. Otherwise sets an option on the socket acceptor
 `impl`, as if by __POSIX__ __setsockopt__.]
 
+[function_returns `ec`.]
+
   template<class GettableSocketOption>
     error_code get_option(const implementation_type& impl,
                           GettableSocketOption& option,

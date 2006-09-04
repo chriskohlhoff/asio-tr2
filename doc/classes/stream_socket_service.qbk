@@ -1,7 +1,7 @@
 [section:stream_socket_service Class template [^stream_socket_service]]
 
 Instances of the `stream_socket_service` class template meet the requirements
-of a [link requirements.socket_service `StreamSocketService`].
+of a [link requirements.stream_socket_service `StreamSocketService`].
 
   namespace std {
     namespace tr2 {
@@ -74,17 +74,25 @@ of a [link requirements.socket_service `StreamSocketService`].
           endpoint_type remote_endpoint(const implementation_type& impl,
                                         error_code& ec) const;
 
+          error_code connect(implementation_type& impl,
+                             const endpoint_type& endpoint, error_code& ec);
+
+          template<class ConnectHandler>
+            void async_connect(implementation_type& impl,
+                               const endpoint_type& endpoint,
+                               ConnectHandler handler);
+
           template<class MutableBufferSequence>
-              size_t receive(implementation_type& impl,
-                             const MutableBufferSequence& buffers,
-                             socket_base::message_flags flags,
-                             error_code& ec);
+            size_t receive(implementation_type& impl,
+                           const MutableBufferSequence& buffers,
+                           socket_base::message_flags flags,
+                           error_code& ec);
 
           template<class MutableBufferSequence, class ReadHandler>
-              void async_receive(implementation_type& impl,
-                                 const MutableBufferSequence& buffers,
-                                 socket_base::message_flags flags,
-                                 ReadHandler handler);
+            void async_receive(implementation_type& impl,
+                               const MutableBufferSequence& buffers,
+                               socket_base::message_flags flags,
+                               ReadHandler handler);
 
           template<class ConstBufferSequence>
             size_t send(implementation_type& impl,
@@ -93,10 +101,10 @@ of a [link requirements.socket_service `StreamSocketService`].
                         error_code& ec);
 
           template<class ConstBufferSequence, class WriteHandler>
-              void async_send(implementation_type& impl,
-                              const ConstBufferSequence& buffers,
-                              socket_base::message_flags flags,
-                              WriteHandler handler);
+            void async_send(implementation_type& impl,
+                            const ConstBufferSequence& buffers,
+                            socket_base::message_flags flags,
+                            WriteHandler handler);
 
         private:
           virtual void shutdown_service();
@@ -147,53 +155,17 @@ the service.]
 operations associated with `impl`, disables the linger socket option to prevent
 the operation from blocking, and releases socket resources as if by __POSIX__
 __close__. Otherwise, no effect. Handlers for cancelled asynchronous operations
-are passed the `error_code` value `error::operation_aborted`. Failure
-conditions are ignored.]
+are passed the `error_code` value `error::operation_aborted`. Failures are
+ignored.]
 
   error_code open(implementation_type& impl,
                   const protocol_type& protocol, error_code& ec);
 
 [function_requires `!is_open(impl)`.]
 
-[function_effects Establishes the postcondition, as if by __POSIX__ __socket__.
-On success, sets `ec` such that the expression `!ec` is true. On failure, an
-implementation shall set `ec` to the `error_code` value corresponding to the
-failure condition, as shown in the table below. For failure conditions not
-listed, an implementation is permitted to set `ec` to any other value such that
-the expression `!ec` is false.]
-
-[table Table--open() failure conditions
-  [[failure condition][error code]]
-  [
-    [`is_open(impl)`.]
-    [`error::already_open`]
-  ]
-  [
-    [The implementation does not support the address family specified by the
-     `protocol` value.]
-    [`error::address_family_not_supported`]
-  ]
-  [
-    [No more sockets are available for the process.]
-    [`error::no_descriptors`]
-  ]
-  [
-    [No more sockets are available for the system.]
-    [`error::no_system_descriptors`]
-  ]
-  [
-    [The implementation does not support the protocol specified by the
-     `protocol` value, or does not support the protocol in conjunction with the
-     address family specified by the `protocol` value.]
-    [`error::protocol_not_supported`]
-  ]
-  [
-    [The implementation does not support the socket type specified by the
-     `protocol` value, or does not support the socket type in conjunction with
-     the protocol specified by the `protocol` value.]
-    [`error::socket_type_not_supported`]
-  ]
-]
+[function_effects If `is_open(impl)` is true, sets `ec` to
+`error::already_open`. Otherwise establishes the postcondition, as if by
+__POSIX__ __socket__.]
 
 [function_returns `ec`.]
 
@@ -205,10 +177,9 @@ the expression `!ec` is false.]
 
 [function_requires `!is_open(impl)`.]
 
-[function_effects Assigns the existing socket to the implementation `impl`. On
-success, sets `ec` such that the expression `!ec` is true. On failure, an
-implementation shall set `ec` to any value such that the expression `!ec` is
-false.]
+[function_effects If `is_open(impl)` is true, sets `ec` to
+`error::already_open`. Otherwise assigns the existing socket to the
+implementation `impl`.]
 
 [function_returns `ec`.]
 
@@ -230,12 +201,7 @@ was opened by a previous call to `open` or `assign`.]
 [function_effects If `is_open(impl)` is true, cancels pending asynchronous
 operations associated with `impl`, and establishes the postcondition as if by
 __POSIX__ __close__. Otherwise, no effect. Handlers for cancelled asynchronous
-operations are passed the `error_code` value `error::operation_aborted`. On
-success, sets `ec` such that the expression `!ec` is true. On failure, an
-implementation shall set `ec` to the `error_code` value corresponding to the
-failure condition, as shown in the table below. For failure conditions not
-listed, an implementation is permitted to set `ec` to any other value such that
-the expression `!ec` is false.]
+operations are passed the `error_code` value `error::operation_aborted`.]
 
 [function_returns `ec`.]
 
@@ -248,13 +214,10 @@ the expression `!ec` is false.]
 
 [function_requires `is_open(impl)`.]
 
-[function_effects Cancels pending asynchronous operations associated with
-`impl`, if any. Handlers for cancelled asynchronous operations are passed the
-`error_code` value `error::operation_aborted`. On success, sets `ec` such that
-the expression `!ec` is true. On failure, an implementation shall set `ec` to
-the `error_code` value corresponding to the failure condition, as shown in the
-table below. For failure conditions not listed, an implementation is permitted
-to set `ec` to any other value such that the expression `!ec` is false.]
+[function_effects If `is_open(impl)` is false, sets `ec` to
+`error::bad_descriptor`. Otherwise cancels pending asynchronous operations
+associated with `impl`, if any. Handlers for cancelled asynchronous operations
+are passed the `error_code` value `error::operation_aborted`.]
 
 [function_block The conditions under which cancellation of asynchronous
 operations is permitted are implementation-defined. If current conditions do
@@ -267,24 +230,6 @@ cancel asynchronous operations started from the same thread. Vista provides
 `CancelIoEx` which may be used to cancel all asynchronous operations associated
 with a socket.]
 
-[table Table--cancel() failure conditions
-  [[failure condition][error code]]
-  [
-    [`!is_open(impl)`, or the native socket implementation returned by
-    `native(impl)` is not valid.]
-    [`error::bad_descriptor`]
-  ]
-  [
-    [The native implementation returned by `native(impl)` is not a valid
-    socket.]
-    [`error::not_socket`]
-  ]
-  [
-    [Pending asynchronous operations may not be cancelled at this time.]
-    [`error::not_supported`]
-  ]
-]
-
 [function_returns `ec`.]
 
   template<class SettableSocketOption>
@@ -294,41 +239,9 @@ with a socket.]
 
 [function_requires `is_open(impl)`.]
 
-[function_effects Sets an option on the socket `impl`, as if by __POSIX__
-__setsockopt__. On success, sets `ec` such that the expression `!ec` is true.
-On failure, an implementation shall set `ec` to the `error_code` value
-corresponding to the failure condition, as shown in the table below. For
-failure conditions not listed, an implementation is permitted to set `ec` to
-any other value such that the expression `!ec` is false.]
-
-[table Table--set_option() failure conditions
-  [[failure condition][error code]]
-  [
-
-    [`!is_open(impl)`, or the native socket implementation returned by
-    `native(impl)` is not valid.]
-    [`error::bad_descriptor`]
-  ]
-  [
-    [The native implementation returned by `native(impl)` is not a valid
-    socket.]
-    [`error::not_socket`]
-  ]
-  [
-    [The option is not supported by the protocol.]
-    [`error::no_protocol_option`]
-  ]
-  [
-    [The socket option name `option.name()` is not valid at the specified
-    socket option level `option.level()`.]
-    [`error::invalid_argument`]
-  ]
-  [
-    [The socket is already connected, and a specified option cannot be set
-    while the socket is connected.]
-    [`error::already_connected`]
-  ]
-]
+[function_effects If `is_open(impl)` is false, sets `ec` to
+`error::bad_descriptor`. Otherwise sets an option on the socket `impl`, as if
+by __POSIX__ __setsockopt__.]
 
 [function_returns `ec`.]
 
@@ -339,35 +252,9 @@ any other value such that the expression `!ec` is false.]
 
 [function_requires `is_open(impl)`.]
 
-[function_effects Gets an option from the socket `impl`, as if by __POSIX__
-__getsockopt__. On success, sets `ec` such that the expression `!ec` is true.
-On failure, an implementation shall set `ec` to the `error_code` value
-corresponding to the failure condition, as shown in the table below. For
-failure conditions not listed, an implementation is permitted to set `ec` to
-any other value such that the expression `!ec` is false.]
-
-[table Table--get_option() failure conditions
-  [[failure condition][error code]]
-  [
-    [`!is_open(impl)`, or the native socket implementation returned by
-    `native(impl)` is not valid.]
-    [`error::bad_descriptor`]
-  ]
-  [
-    [The native implementation returned by `native(impl)` is not a valid
-    socket.]
-    [`error::not_socket`]
-  ]
-  [
-    [The option is not supported by the protocol.]
-    [`error::no_protocol_option`]
-  ]
-  [
-    [The socket option name `option.name()` is not valid at the specified
-    socket option level `option.level()`.]
-    [`error::invalid_argument`]
-  ]
-]
+[function_effects If `is_open(impl)` is false, sets `ec` to
+`error::bad_descriptor`. Otherwise gets an option from the socket `impl`, as if
+by __POSIX__ __getsockopt__.]
 
 [function_returns `ec`.]
 
@@ -377,30 +264,9 @@ any other value such that the expression `!ec` is false.]
 
 [function_requires `is_open(impl)`.]
 
-[function_effects Executes an I/O control command on the socket `impl`, as if
-by __POSIX__ __ioctl__. On success, sets `ec` such that the expression `!ec` is
-true. On failure, an implementation shall set `ec` to the `error_code` value
-corresponding to the failure condition, as shown in the table below. For
-failure conditions not listed, an implementation is permitted to set `ec` to
-any other value such that the expression `!ec` is false.]
-
-[table Table--io_control() failure conditions
-  [[failure condition][error code]]
-  [
-    [`!is_open(impl)`, or the native socket implementation returned by
-    `native(impl)` is not valid.]
-    [`error::bad_descriptor`]
-  ]
-  [
-    [The native implementation returned by `native(impl)` is not a valid
-    socket.]
-    [`error::not_socket`]
-  ]
-  [
-    [The I/O control command name or data is invalid for the socket.]
-    [`error::invalid_argument`]
-  ]
-]
+[function_effects If `is_open(impl)` is false, sets `ec` to
+`error::bad_descriptor`. Otherwise executes an I/O control command on the
+socket `impl`, as if by __POSIX__ __ioctl__.]
 
 [function_returns `ec`.]
 
@@ -414,128 +280,34 @@ extensions to be supported.]
 
 [function_requires `is_open(impl)`.]
 
-[function_effects Determines if the socket `impl` is at the out-of-band data
-mark, as if by __POSIX__ __sockatmark__. On success, sets `ec` such that the
-expression `!ec` is true. On failure, an implementation shall set `ec` to the
-`error_code` value corresponding to the failure condition, as shown in the
-table below. For failure conditions not listed, an implementation is permitted
-to set `ec` to any other value such that the expression `!ec` is false.]
+[function_effects If `is_open(impl)` is false, sets `ec` to
+`error::bad_descriptor`. If the value returned by `native(impl)` is not a valid
+socket, sets `ec` to `error::not_socket`. [inline_note Instead of __POSIX__
+`ENOTTY`.] Otherwise determines if the socket `impl` is at the out-of-band data
+mark, as if by __POSIX__ __sockatmark__.]
 
-[table Table--at_mark() failure conditions
-  [[failure condition][error code]]
-  [
-    [`!is_open(impl)`, or the native socket implementation returned by
-    `native(impl)` is not valid.]
-    [`error::bad_descriptor`]
-  ]
-  [
-    [The native implementation returned by `native(impl)` is not a valid
-    socket.]
-    [`error::not_socket`\n
-    [inline_note Translated from __POSIX__ `ENOTTY`.]]
-  ]
-]
+[function_returns A `bool` indicating whether the socket is at the out-of-band
+data mark.]
 
   size_t available(const implementation_type& impl,
                    error_code& ec) const;
 
 [function_requires `is_open(impl)`.]
 
-[function_effects Determines the number of bytes that may be read from the
-socket without blocking. On success, sets `ec` such that the expression `!ec`
-is true. On failure, an implementation shall set `ec` to the `error_code` value
-corresponding to the failure condition, as shown in the table below. For
-failure conditions not listed, an implementation is permitted to set `ec` to
-any other value such that the expression `!ec` is false.]
+[function_effects If `is_open(impl)` is false, sets `ec` to
+`error::bad_descriptor`. Otherwise determines the number of bytes that may be
+read without blocking.]
 
 [function_returns The number of bytes that may be read without blocking, or 0
-if `!!ec` is true.]
+if an error occurs.]
 
   error_code bind(implementation_type& impl,
                   const endpoint_type& endpoint, error_code& ec);
 
 [function_requires `is_open(impl)`.]
 
-[function_effects Binds the socket `impl` to the specified local endpoint, as
-if by __POSIX__ __bind__. On success, sets `ec` such that the expression `!ec`
-is true. On failure, an implementation shall set `ec` to the `error_code` value
-corresponding to the failure condition, as shown in the table below. For
-failure conditions not listed, an implementation is permitted to set `ec` to
-any other value such that the expression `!ec` is false.]
-
-[table Table--bind() failure conditions
-  [[failure condition][error code]]
-  [
-    [`!is_open(impl)`, or the native socket implementation returned by
-    `native(impl)` is not valid.]
-    [`error::bad_descriptor`]
-  ]
-  [
-    [The native implementation returned by `native(impl)` is not a valid
-    socket.]
-    [`error::not_socket`]
-  ]
-  [
-    [The specified endpoint is already in use.]
-    [`error::address_in_use`]
-  ]
-  [
-    [The specified endpoint is not available from the local machine.]
-    [`error::address_not_available`]
-  ]
-  [
-    [The specified endpoint is not valid for the address family of the socket's
-    protocol.]
-    [`error::address_family_not_supported`]
-  ]
-  [
-    [The socket has already been bound, and does not support binding to a new
-    endpoint.] [`error::invalid_argument`]
-  ]
-  [
-    [The socket type of the socket's protocol does not support binding.]
-    [`error::not_supported`]
-  ]
-]
-
-[function_returns `ec`.]
-
-  error_code listen(implementation_type& impl, int backlog,
-                    error_code& ec);
-
-[function_requires `is_open(impl)`.]
-
-[function_effects Marks the socket `impl` as ready to accept connections, as if
-by __POSIX__ __listen__. If `backlog == socket_base::max_connections`, the
-implementation shall set the socket's listen queue to the maximum allowable
-length. On success, sets `ec` such that the expression `!ec` is true. On
-failure, an implementation shall set `ec` to the `error_code` value
-corresponding to the failure condition, as shown in the table below. For
-failure conditions not listed, an implementation is permitted to set `ec` to
-any other value such that the expression `!ec` is false.]
-
-[table Table--listen() failure conditions
-  [[failure condition][error code]]
-  [
-    [`!is_open(impl)`, or the native socket implementation returned by
-    `native(impl)` is not valid.]
-    [`error::bad_descriptor`]
-  ]
-  [
-    [The native implementation returned by `native(impl)` is not a valid
-    socket.]
-    [`error::not_socket`]
-  ]
-  [
-    [The socket is not locally-bound, and the protocol does not support
-    listening on an unbound socket.]
-    [`error::address_required`]
-  ]
-  [
-    [The socket type of the socket's protocol does not support listening.]
-    [`error::not_supported`]
-  ]
-]
+[function_effects If `is_open(impl)` is false, sets `ec` to `error::bad_descriptor`. Otherwise binds the socket `impl` to the specified local endpoint, as
+if by __POSIX__ __bind__.]
 
 [function_returns `ec`.]
 
@@ -544,37 +316,11 @@ any other value such that the expression `!ec` is false.]
 
 [function_requires `is_open(impl)`.]
 
-[function_effects Shuts down all or part of a full-duplex connection for the
-socket `impl`, as if by __POSIX__ __shutdown__. If `how` is `shutdown_receive`,
-uses __POSIX__ `SHUT_RD`. If `how` is `shutdown_send`, uses __POSIX__
-`SHUT_WR`. If `how` is `shutdown_both`, uses __POSIX__ `SHUT_RDWR`. On success,
-sets `ec` such that the expression `!ec` is true. On failure, an implementation
-shall set `ec` to the `error_code` value corresponding to the failure
-condition, as shown in the table below. For failure conditions not listed, an
-implementation is permitted to set `ec` to any other value such that the
-expression `!ec` is false.]
-
-[table Table--shutdown() failure conditions
-  [[failure condition][error code]]
-  [
-    [`!is_open(impl)`, or the native socket implementation returned by
-    `native(impl)` is not valid.]
-    [`error::bad_descriptor`]
-  ]
-  [
-    [The native implementation returned by `native(impl)` is not a valid
-    socket.]
-    [`error::not_socket`]
-  ]
-  [
-    [The socket has not been connected.]
-    [`error::not_connected`]
-  ]
-  [
-    [The `how` argument is invalid.]
-    [`error::invalid_argument`]
-  ]
-]
+[function_effects If `is_open(impl)` is false, sets `ec` to
+`error::bad_descriptor`. Otherwise shuts down all or part of a full-duplex
+connection for the socket `impl`, as if by __POSIX__ __shutdown__. If `how` is
+`shutdown_receive`, uses __POSIX__ `SHUT_RD`. If `how` is `shutdown_send`, uses
+__POSIX__ `SHUT_WR`. If `how` is `shutdown_both`, uses __POSIX__ `SHUT_RDWR`.]
 
 [function_returns `ec`.]
 
@@ -583,141 +329,33 @@ expression `!ec` is false.]
 
 [function_requires `is_open(impl)`.]
 
-[function_effects Determines the locally-bound endpoint associated with the
-socket `impl`, as if by __POSIX__ __getsockname__. On success, sets
-`ec` such that the expression `!ec` is true. On failure, an implementation
-shall set `ec` to the `error_code` value corresponding to the failure
-condition, as shown in the table below. For failure conditions not listed, an
-implementation is permitted to set `ec` to any other value such that the
-expression `!ec` is false.]
+[function_effects If `is_open(impl)` is false, sets `ec` to
+`error::bad_descriptor`. Otherwise determines the locally-bound endpoint
+associated with the socket `impl`, as if by __POSIX__ __getsockname__.]
 
-[table Table--local_endpoint() failure conditions
-  [[failure condition][error code]]
-  [
-    [`!is_open(impl)`, or the native socket implementation returned
-    by `native(impl)` is not valid.]
-    [`error::bad_descriptor`]
-  ]
-  [
-    [The native implementation returned by `native(impl)` is not a valid
-    socket.]
-    [`error::not_socket`]
-  ]
-  [
-    [The socket's protocol does not support the operation.]
-    [`error::not_supported`]
-  ]
-]
-
-[function_returns The locally-bound endpoint associated with `impl`.]
+[function_returns On success, the locally-bound endpoint associated with
+`impl`. Otherwise `endpoint_type()`.]
 
   endpoint_type remote_endpoint(const implementation_type& impl,
                                 error_code& ec) const;
 
 [function_requires `is_open(impl)`.]
 
-[function_effects Determines the remote endpoint associated with the
-socket `impl`, as if by __POSIX__ __getpeername__. On success, sets
-`ec` such that the expression `!ec` is true. On failure, an implementation
-shall set `ec` to the `error_code` value corresponding to the failure
-condition, as shown in the table below. For failure conditions not listed, an
-implementation is permitted to set `ec` to any other value such that the
-expression `!ec` is false.]
+[function_effects If `is_open(impl)` is false, sets `ec` to
+`error::bad_descriptor`. Otherwise determines the remote endpoint associated
+with the socket `impl`, as if by __POSIX__ __getpeername__.]
 
-[table Table--remote_endpoint() failure conditions
-  [[failure condition][error code]]
-  [
-    [`!is_open(impl)`, or the native socket implementation returned by
-    `native(impl)` is not valid.]
-    [`error::bad_descriptor`]
-  ]
-  [
-    [The native implementation returned by `native(impl)` is not a valid
-    socket.]
-    [`error::not_socket`]
-  ]
-  [
-    [The socket has not been connected.]
-    [`error::not_connected`]
-  ]
-  [
-    [The socket's protocol does not support the operation.]
-    [`error::not_supported`]
-  ]
-]
-
-[function_returns The remote endpoint associated with `impl`.]
+[function_returns On success, the remote endpoint associated with `impl`.
+Otherwise `endpoint_type()`.]
 
   error_code connect(implementation_type& impl,
                      const endpoint_type& endpoint, error_code& ec);
 
 [function_requires `is_open(impl)`.]
 
-[function_effects Connects the socket `impl` to the specified remote endpoint,
-as if by __POSIX__ __connect__. On success, sets `ec` such that the expression
-`!ec` is true. On failure, an implementation shall set `ec` to the `error_code`
-value corresponding to the failure condition, as shown in the table below. For
-failure conditions not listed, an implementation is permitted to set `ec` to
-any other value such that the expression `!ec` is false.]
-
-[table Table--connect() failure conditions
-  [[failure condition][error code]]
-  [
-    [`!is_open(impl)`, or the native socket implementation returned by
-    `native(impl)` is not valid.]
-    [`error::bad_descriptor`]
-  ]
-  [
-    [The native implementation returned by `native(impl)` is not a valid
-    socket.]
-    [`error::not_socket`]
-  ]
-  [
-    [The socket is already connected.]
-    [`error::already_connected`]
-  ]
-  [
-    [Attempted to establish a connection that uses endpoints that are already in use.]
-    [`error::address_in_use`]
-  ]
-  [
-    [The specified endpoint is not available from the local machine.]
-    [`error::address_not_available`]
-  ]
-  [
-    [The specified endpoint is not valid for the address family of the socket's
-    protocol.]
-    [`error::address_family_not_supported`]
-  ]
-  [
-    [The socket is already connected.]
-    [`error::already_connected`]
-  ]
-  [
-    [Connection refused.]
-    [`error::connection_refused`]
-  ]
-  [
-    [No route to network.]
-    [`error::network_unreachable`]
-  ]
-  [
-    [The local network interface is down.]
-    [`error::network_down`]
-  ]
-  [
-    [No route to host.]
-    [`error::host_unreachable`]
-  ]
-  [
-    [The connection attempt was reset by the remote host.]
-    [`error::connection_reset`]
-  ]
-  [
-    [The connection attempt timed out.]
-    [`error::timed_out`]
-  ]
-]
+[function_effects If `is_open(impl)` is false, sets `ec` to
+`error::bad_descriptor`. Otherwise connects the socket `impl` to the specified
+remote endpoint, as if by __POSIX__ __connect__.]
 
 [function_returns `ec`.]
 
@@ -734,101 +372,50 @@ operation is performed via the `io_service` object returned by
 `io_service::service::io_service()` and behaves according to [link
 requirements.asynchronous_operations asynchronous operation] requirements.]
 
-[function_block On completion of the asynchronous operation, the
-`ConnectHandler` object `handler` shall be invoked with an `error_code` value
-`ec`. On success, `ec` shall contain a value such that the expression `!ec` is
-true. On failure, an implementation shall pass as `ec` the `error_code` value
-corresponding to the failure condition, as shown in the table for `connect()`
-above, with the addition of `error::operation_aborted` for cancelled
-operations. For failure conditions not listed, an implementation is permitted
-to pass as `ec` any other value such that the expression `!ec` is false.]
+[function_block If `is_open(impl)` is false, the operation shall fail
+immediately with `error_code` value `error::bad_descriptor`.]
 
   template<class MutableBufferSequence>
-      size_t receive(implementation_type& impl,
-                     const MutableBufferSequence& buffers,
-                     socket_base::message_flags flags,
-                     error_code& ec);
+    size_t receive(implementation_type& impl,
+                   const MutableBufferSequence& buffers,
+                   socket_base::message_flags flags,
+                   error_code& ec);
 
 [function_requires `is_open(impl)`.]
 
-[function_effects Reads data from a connected socket `impl`, as if by __POSIX__
-__recvmsg__.]
+[function_effects If `is_open(impl)` is false, sets `ec` to
+`error::bad_descriptor`. Otherwise reads data from a connected socket `impl`,
+as if by __POSIX__ __recvmsg__.]
 
 [function_block The mutable buffer sequence `buffers` specifies memory where
 the data should be placed. The operation shall always fill a buffer in the
 sequence completely before proceeding to the next. If the total size of all
 buffers in the sequence `buffers` is `0`, the function shall return `0`
-immediately. An implementation shall not set `ec` to any value where `!!ec` is
-true to indicate that data was truncated.]
+immediately.]
 
 [function_block The `flags` argument specifies the type of receive operation to be performed.]
 
-[function_block On success, sets `ec` such that the expression `!ec` is true.
-On failure, an implementation shall set `ec` to the `error_code` value
-corresponding to the failure condition, as shown in the table below. For
-failure conditions not listed, an implementation is permitted to set `ec` to
-any other value such that the expression `!ec` is false.]
+[function_block If the operation completes due to graceful connection closure
+by the peer, the operation shall fail with `error::eof`.]
 
-[table Table--receive() failure conditions
-  [[failure condition][error code]]
-  [
-    [`!is_open(impl)`, or the native socket implementation returned by
-    `native(impl)` is not valid.]
-    [`error::bad_descriptor`]
-  ]
-  [
-    [The native implementation returned by `native(impl)` is not a valid
-    socket.]
-    [`error::not_socket`]
-  ]
-  [
-    [The socket has not been connected.]
-    [`error::not_connected`]
-  ]
-  [
-    [The flags are not supported for the protocol.]
-    [`error::not_supported`]
-  ]
-  [
-    [The connection was gracefully closed by the remote host.]
-    [`error::eof`]
-  ]
-  [
-    [The connection was reset by the remote host.]
-    [`error::connection_reset`]
-  ]
-  [
-    [The connection timed out.]
-    [`error::timed_out`]
-  ]
-  [
-    [The sum of all buffer sizes in the sequence `buffers` exceeds an
-    implementation-defined limit, or the `socket_base::message_out_of_band`
-    flag is set and no out-of-band data is available.]
-    [`error::invalid_argument`]
-  ]
-  [
-    [The number of buffers in the mutable buffer sequence `buffers` is 0 or
-    exceeds an implementation-defined limit.]
-    [`error::message_size`]
-  ]
-]
-
-[function_returns The numbers of bytes read, or 0 if `!!ec` is true.]
+[function_returns On success, the numbers of bytes read. Otherwise `0`.]
 
   template<class MutableBufferSequence, class ReadHandler>
-      void async_receive(implementation_type& impl,
-                         const MutableBufferSequence& buffers,
-                         socket_base::message_flags flags,
-                         ReadHandler handler);
+    void async_receive(implementation_type& impl,
+                       const MutableBufferSequence& buffers,
+                       socket_base::message_flags flags,
+                       ReadHandler handler);
 
-[function_requires `is_open(impl)`.]
+[function_requires `is_open(impl) && (flags & socket_base::message_peek) == 0`.]
 
 [function_effects Initiates an asynchronous operation to read data from a
 connected socket `impl`, as if by __POSIX__ __recvmsg__. The operation is
 performed via the `io_service` object `a.io_service()` and behaves according to
 [link requirements.asynchronous_operations asynchronous operation]
 requirements.]
+
+[function_block If `is_open(impl)` is false, the operation shall fail
+immediately with `error_code` value `error::bad_descriptor`.]
 
 [function_block The mutable buffer sequence `buffers` specifies memory where
 the data should be placed. The operation shall always fill a buffer in the
@@ -847,64 +434,18 @@ sequence `buffers` is `0`, the asynchronous read operation shall complete
 immediately and pass `0` as the argument to the handler that specifies the
 number of bytes read.]
 
-[function_block On completion of the asynchronous operation, the `ReadHandler`
-object `handler` shall be invoked with an `error_code` value `ec`, and a
-`size_t` value `s`. On success, `ec` shall contain a value such that the
-expression `!ec` is true, and `s` shall contain the number of bytes read. On
-failure, an implementation shall pass as `ec` the `error_code` value
-corresponding to the failure condition, as shown in the table below, and `s`
-shall contain `0`. For failure conditions not listed, an implementation is
-permitted to pass as `ec` any other value such that the expression `!ec` is
-false.]
+[function_block The `flags` argument specifies the type of receive operation to
+be performed. If `flags & socket_base::message_peek` is true, the operation
+shall fail immediately with `error::invalid_argument`. If `flags &
+socket_base::message_out_of_band` is true, the operation shall continue until
+out-of-band data is received, or an error occurs.]
 
-[table Table--async_receive() failure conditions
-  [[failure condition][error code]]
-  [
-    [`!is_open(impl)`, or the native socket implementation returned by
-    `native(impl)` is not valid.]
-    [`error::bad_descriptor`]
-  ]
-  [
-    [The native implementation returned by `native(impl)` is not a valid
-    socket.]
-    [`error::not_socket`]
-  ]
-  [
-    [The socket has not been connected.]
-    [`error::not_connected`]
-  ]
-  [
-    [The flags are not supported for the protocol.]
-    [`error::not_supported`]
-  ]
-  [
-    [The connection was gracefully closed by the remote host.]
-    [`error::eof`]
-  ]
-  [
-    [The connection was reset by the remote host.]
-    [`error::connection_reset`]
-  ]
-  [
-    [The connection timed out.]
-    [`error::timed_out`]
-  ]
-  [
-    [The sum of all buffer sizes in the sequence `buffers` exceeds an
-    implementation-defined limit, or the `socket_base::message_peek` flag was
-    specified.]
-    [`error::invalid_argument`]
-  ]
-  [
-    [The number of buffers in the mutable buffer sequence `buffers` is 0 or
-    exceeds an implementation-defined limit.]
-    [`error::message_size`]
-  ]
-  [
-    [The operation was cancelled.]
-    [`error::operation_aborted`]
-  ]
-]
+[function_block If the operation completes due to graceful connection closure
+by the peer, the operation shall fail with `error::eof`.]
+
+[function_block If the operation completes successfully, the `ReadHandler`
+object `handler` is invoked with the number of bytes transferred. Otherwise
+`0`.]
 
   template<class ConstBufferSequence>
     size_t send(implementation_type& impl,
@@ -914,74 +455,61 @@ false.]
 
 [function_requires `is_open(impl)`.]
 
-[function_effects Writes data to a connected socket `impl`, as if by __POSIX__
-__sendmsg__.]
+[function_effects If `is_open(impl)` is false, sets `ec` to
+`error::bad_descriptor`. Otherwise writes data to a connected socket `impl`,
+as if by __POSIX__ __sendmsg__.]
 
 [function_block The constant buffer sequence `buffers` specifies memory where
-the data should be placed. The operation shall always write a buffer in the
-sequence completely before proceeding to the next. If the total size of all
+the data to be written is located. The operation shall always write a buffer in
+the sequence completely before proceeding to the next. If the total size of all
 buffers in the sequence `buffers` is `0`, the function shall return `0`
 immediately.]
 
 [function_block The `flags` argument specifies the type of send operation to be
 performed.]
 
-[function_block On success, sets `ec` such that the expression `!ec` is true.
-On failure, an implementation shall set `ec` to the `error_code` value
-corresponding to the failure condition, as shown in the table below. For
-failure conditions not listed, an implementation is permitted to set `ec` to
-any other value such that the expression `!ec` is false.]
-
-[table Table--send() failure conditions
-  [[failure condition][error code]]
-  [
-    [`!is_open(impl)`, or the native socket implementation returned by
-    `native(impl)` is not valid.]
-    [`error::bad_descriptor`]
-  ]
-  [
-    [The native implementation returned by `native(impl)` is not a valid
-    socket.]
-    [`error::not_socket`]
-  ]
-  [
-    [The socket has not been connected.]
-    [`error::not_connected`]
-  ]
-  [
-    [The flags are not supported for the protocol.]
-    [`error::not_supported`]
-  ]
-  [
-    [The connection was gracefully closed by the remote host.]
-    [`error::eof`]
-  ]
-  [
-    [The connection was reset by the remote host.]
-    [`error::connection_reset`]
-  ]
-  [
-    [The sum of all buffer sizes in the sequence `buffers` exceeds an
-    implementation-defined limit, or the `socket_base::message_out_of_band`
-    flags is set and protocol.]
-    [`error::invalid_argument`]
-  ]
-  [
-    [The number of buffers in the mutable buffer sequence `buffers` is 0 or
-    exceeds an implementation-defined limit.]
-    [`error::message_size`]
-  ]
-]
-
-[function_returns The numbers of bytes written, or 0 if `!!ec` is true.]
+[function_returns On success, the numbers of bytes written. Otherwise `0`.]
 
   template<class ConstBufferSequence, class WriteHandler>
-      void async_send(implementation_type& impl,
-                      const ConstBufferSequence& buffers,
-                      socket_base::message_flags flags,
-                      WriteHandler handler);
+    void async_send(implementation_type& impl,
+                    const ConstBufferSequence& buffers,
+                    socket_base::message_flags flags,
+                    WriteHandler handler);
 
 [function_requires `is_open(impl)`.]
+
+[function_effects Initiates an asynchronous operation to write data to a
+connected socket `impl`, as if by __POSIX__ __sendmsg__. The operation is
+performed via the `io_service` object `a.io_service()` and behaves according to
+[link requirements.asynchronous_operations asynchronous operation]
+requirements.]
+
+[function_block If `is_open(impl)` is false, the operation shall fail
+immediately with `error_code` value `error::bad_descriptor`.]
+
+[function_block The constant buffer sequence `buffers` specifies memory where
+the data to be written is located. The operation shall always write a buffer in
+the sequence completely before proceeding to the next. The implementation shall
+maintain one or more copies of `buffers` until such time as the write operation
+no longer requires access to the memory specified by the buffers in the
+sequence. The program must ensure the memory is valid until:]
+
+[function_block [mdash] the last copy of `buffers` is destroyed, or]
+
+[function_block [mdash] the handler for the asynchronous write operation is
+invoked,]
+
+[function_block whichever comes first. If the total size of all buffers in the
+sequence `buffers` is `0`, the asynchronous write operation shall complete
+immediately and pass `0` as the argument to the handler that specifies the
+number of bytes written.]
+
+[function_block The `flags` argument specifies the type of send operation to
+be performed.]
+
+[function_block If the operation completes successfully, the `WriteHandler`
+object `handler` is invoked with the number of bytes transferred. Otherwise
+`0`.]
 
 [endsect]
 

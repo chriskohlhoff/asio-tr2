@@ -72,4 +72,7 @@ Asynchronous operations shall not fail with any error condition indicating
 interruption by signal (__POSIX__ `EINTR`) or that the operation would block
 (__POSIX__ `EWOULDBLOCK`).
 
+Unless otherwise specified, asynchronous operations make copies of const
+reference and by-value arguments passed to the initiating functions.
+
 [endsect]
