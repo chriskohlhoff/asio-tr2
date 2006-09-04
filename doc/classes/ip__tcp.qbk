@@ -14,11 +14,9 @@ requirements.internet_protocol `InternetProtocol`].
             // types:
             typedef basic_endpoint<tcp> endpoint;
             typedef basic_resolver<tcp> resolver;
-            struct ``[link classes.ip__tcp__socket_traits socket_traits]``;
-            struct ``[link classes.ip__tcp__acceptor_traits acceptor_traits]``;
-            typedef basic_socket<tcp, socket_traits> socket;
-            typedef basic_socket<tcp, acceptor_traits> acceptor;
-            typedef basic_socket<tcp, socket_traits> iostream;
+            typedef basic_stream_socket<tcp> socket;
+            typedef basic_socket_acceptor<tcp> acceptor;
+            typedef basic_socket_iostream<tcp> iostream;
             class ``[link classes.ip__tcp__no_delay no\_delay]``;
 
             // static members:

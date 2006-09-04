@@ -14,8 +14,7 @@ requirements.internet_protocol `InternetProtocol`].
             // types:
             typedef basic_endpoint<udp> endpoint;
             typedef basic_resolver<udp> resolver;
-            struct ``[link classes.ip__udp__socket_traits socket_traits]``;
-            typedef basic_socket<udp, socket_traits> socket;
+            typedef basic_datagram_socket<udp> socket;
 
             // static members:
             static udp v4();

@@ -1,7 +1,7 @@
 [section:socket_acceptor_service Class template [^socket_acceptor_service]]
 
 Instances of the `socket_acceptor_service` class template meet the requirements
-of an [link requirements.acceptor_service `AcceptorService`].
+of a [link requirements.socket_acceptor_service `SocketAcceptorService`].
 
   namespace std {
     namespace tr2 {
@@ -383,6 +383,12 @@ to set `ec` to any other value such that the expression `!ec` is false.]
 
 [function_returns `ec`.]
 
+[commentary This proposal does not include any classes that satisfy [link
+requirements.io_control_command `IoControlCommand`] requirements. However,
+implementation-specific extensions such as QoS may be implemented using
+`ioctl()`, and the `io_control()` operation is included to allow these
+extensions to be supported.]
+
   error_code bind(implementation_type& impl,
                   const endpoint_type& endpoint, error_code& ec);
 
@@ -560,8 +566,9 @@ to set `ec` to any other value such that the expression `!ec` is false.]
 ]
 
 [function_block Implementations shall not permit the operation to complete with
-an error indicating that a connection has been aborted (such as __POSIX__
-`ECONNABORTED`, and __Windows__ `WSAECONNABORTED` or `ERROR_NETNAME_DELETED`).]
+an error indicating that a connection has been aborted. [inline_note Such as
+__POSIX__ `ECONNABORTED`, and __Windows__ `WSAECONNABORTED` or
+`ERROR_NETNAME_DELETED`).]]
 
 [function_returns `ec`.]
 
@@ -592,47 +599,15 @@ handler for the asynchronous operation is invoked.]
 `ec`. On success, `ec` shall contain a value such that the expression `!ec` is
 true, and `socket.is_open()` shall be true. On failure, an implementation shall
 pass as `ec` the `error_code` value corresponding to the failure condition, as
-shown in the table below. For failure conditions not listed, an implementation
-is permitted to pass as `ec` any other value such that the expression `!ec` is
-false.]
-
-[table Table--async_accept() failure conditions
-  [[failure condition][error code]]
-  [
-    [`!is_open(impl)`, or the native socket acceptor implementation returned
-    by `native(impl)` is not valid.]
-    [`error::bad_descriptor`]
-  ]
-  [
-    [The native implementation returned by `native(impl)` is not a valid socket
-    acceptor.]
-    [`error::not_socket`]
-  ]
-  [
-    [`socket.is_open()`.]
-    [`error::already_open`]
-  ]
-  [
-    [The socket acceptor's protocol does not support the operation.]
-    [`error::not_supported`]
-  ]
-  [
-    [The socket acceptor is not accepting connections.]
-    [`error::invalid_argument`]
-  ]
-  [
-    [No more sockets are available for the process.]
-    [`error::no_descriptors`]
-  ]
-  [
-    [No more sockets are available for the system.]
-    [`error::no_system_descriptors`]
-  ]
-]
+shown in the table for `accept()` above, with the addition of
+`error::operation_aborted` for cancelled operations. For failure conditions not
+listed, an implementation is permitted to pass as `ec` any other value such
+that the expression `!ec` is false.]
 
 [function_block Implementations shall not permit the operation to complete with
-an error indicating that a connection has been aborted (such as __POSIX__
-`ECONNABORTED`, and __Windows__ `WSAECONNABORTED` or `ERROR_NETNAME_DELETED`).]
+an error indicating that a connection has been aborted. [inline_note Such as
+__POSIX__ `ECONNABORTED`, and __Windows__ `WSAECONNABORTED` or
+`ERROR_NETNAME_DELETED`).]]
 
 [endsect]
 

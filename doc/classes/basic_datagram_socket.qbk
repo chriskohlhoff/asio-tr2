@@ -1,0 +1,311 @@
+[section:basic_datagram_socket Class template [^basic_datagram_socket]]
+
+  namespace std {
+    namespace tr2 {
+      namespace sys {
+
+        template<class Protocol, class DatagramSocketService>
+        class basic_datagram_socket :
+          public basic_socket<DatagramSocketService>
+        {
+        public:
+          // types:
+          typedef typename DatagramSocketService::native_type native_type;
+          typedef Protocol protocol_type;
+          typedef typename Protocol::endpoint endpoint_type;
+
+          // constructors:
+          explicit basic_datagram_socket(std::tr2::sys::io_service& io_service);
+          basic_datagram_socket(std::tr2::sys::io_service& io_service,
+                                const protocol_type& protocol);
+          basic_datagram_socket(std::tr2::sys::io_service& io_service,
+                                const endpoint_type& endpoint);
+          basic_datagram_socket(std::tr2::sys::io_service& io_service,
+                                const protocol_type& protocol,
+                                const native_type& native_socket);
+
+          // members:
+          template<class MutableBufferSequence>
+            size_t receive(const MutableBufferSequence& buffers);
+          template<class MutableBufferSequence>
+            size_t receive(const MutableBufferSequence& buffers,
+                           error_code& ec);
+
+          template<class MutableBufferSequence, class ReadHandler>
+            void async_receive(const MutableBufferSequence& buffers,
+                               ReadHandler handler);
+
+          template<class MutableBufferSequence>
+            size_t receive(const MutableBufferSequence& buffers,
+                           socket_base::message_flags flags);
+          template<class MutableBufferSequence>
+            size_t receive(const MutableBufferSequence& buffers,
+                           socket_base::message_flags flags, error_code& ec);
+
+          template<class MutableBufferSequence, class ReadHandler>
+            void async_receive(const MutableBufferSequence& buffers,
+                               socket_base::message_flags flags,
+                               ReadHandler handler);
+
+          template<class MutableBufferSequence>
+            size_t receive_from(const MutableBufferSequence& buffers,
+                                endpoint_type& sender);
+          template<class MutableBufferSequence>
+            size_t receive_from(const MutableBufferSequence& buffers,
+                                endpoint_type& sender, error_code& ec);
+
+          template<class MutableBufferSequence, class ReadHandler>
+            void async_receive_from(const MutableBufferSequence& buffers,
+                                    endpoint_type& sender,
+                                    ReadHandler handler);
+
+          template<class MutableBufferSequence>
+            size_t receive_from(const MutableBufferSequence& buffers,
+                                endpoint_type& sender,
+                                socket_base::message_flags flags);
+          template<class MutableBufferSequence>
+            size_t receive_from(const MutableBufferSequence& buffers,
+                                endpoint_type& sender,
+                                socket_base::message_flags flags,
+                                error_code& ec);
+
+          template<class MutableBufferSequence, class ReadHandler>
+            void async_receive_from(const MutableBufferSequence& buffers,
+                                    endpoint_type& sender,
+                                    socket_base::message_flags flags,
+                                    ReadHandler handler);
+
+          template<class ConstBufferSequence>
+            size_t send(const ConstBufferSequence& buffers);
+          template<class ConstBufferSequence>
+            size_t send(const ConstBufferSequence& buffers, error_code& ec);
+
+          template<class ConstBufferSequence, class WriteHandler>
+            void async_send(const ConstBufferSequence& buffers,
+                            WriteHandler handler);
+
+          template<class ConstBufferSequence>
+            size_t send(const ConstBufferSequence& buffers,
+                        socket_base::message_flags flags);
+          template<class ConstBufferSequence>
+            size_t send(const ConstBufferSequence& buffers,
+                        socket_base::message_flags flags, error_code& ec);
+
+          template<class ConstBufferSequence, class WriteHandler>
+            void async_send(const ConstBufferSequence& buffers,
+                            socket_base::message_flags flags,
+                            WriteHandler handler);
+
+          template<class ConstBufferSequence>
+            size_t send_to(const ConstBufferSequence& buffers,
+                           const endpoint_type& destination);
+          template<class ConstBufferSequence>
+            size_t send_to(const ConstBufferSequence& buffers,
+                           const endpoint_type& destination, error_code& ec);
+
+          template<class ConstBufferSequence, class WriteHandler>
+            void async_send_to(const ConstBufferSequence& buffers,
+                               const endpoint_type& destination,
+                               WriteHandler handler);
+
+          template<class ConstBufferSequence>
+            size_t send_to(const ConstBufferSequence& buffers,
+                           const endpoint_type& destination,
+                           socket_base::message_flags flags);
+          template<class ConstBufferSequence>
+            size_t send_to(const ConstBufferSequence& buffers,
+                           const endpoint_type& destination,
+                           socket_base::message_flags flags, error_code& ec);
+
+          template<class ConstBufferSequence, class WriteHandler>
+            void async_send_to(const ConstBufferSequence& buffers,
+                               const endpoint_type& destination,
+                               socket_base::message_flags flags,
+                               WriteHandler handler);
+        };
+
+      } // namespace sys
+    } // namespace tr2
+  } // namespace std
+
+[section [^basic_datagram_socket] constructors]
+
+  explicit basic_datagram_socket(std::tr2::sys::io_service& io_service);
+
+[function_effects Constructs an object of class `basic_datagram_socket<Protocol,
+DatagramSocketService>`, initialising the base class with
+`basic_socket(io_service)`.]
+
+  basic_datagram_socket(std::tr2::sys::io_service& io_service,
+                        const protocol_type& protocol);
+
+[function_effects Constructs an object of class `basic_datagram_socket<Protocol,
+DatagramSocketService>`, initialising the base class with
+`basic_socket(io_service, protocol)`.]
+
+  basic_datagram_socket(std::tr2::sys::io_service& io_service,
+                        const endpoint_type& endpoint);
+
+[function_effects Constructs an object of class `basic_datagram_socket<Protocol,
+DatagramSocketService>`, initialising the base class with
+`basic_socket(io_service, endpoint)`.]
+
+  basic_datagram_socket(std::tr2::sys::io_service& io_service,
+                        const protocol_type& protocol,
+                        const native_type& native_socket);
+
+[function_effects Constructs an object of class `basic_datagram_socket<Protocol,
+SocketService>`, initialising the base class with `basic_socket(io_service,
+protocol, native_socket)`.]
+
+[endsect]
+
+[section [^basic_datagram_socket] members]
+
+  template<class MutableBufferSequence>
+    size_t receive(const MutableBufferSequence& buffers);
+  template<class MutableBufferSequence>
+    size_t receive(const MutableBufferSequence& buffers,
+                   error_code& ec);
+
+[function_returns `this->service.receive(this->implementation, buffers, 0, 0,
+mutable_buffer(), ec)`.]
+
+  template<class MutableBufferSequence, class ReadHandler>
+    void async_receive(const MutableBufferSequence& buffers,
+                       ReadHandler handler);
+
+[function_effects Calls `this->service.async_receive(this->implementation,
+buffers, 0, handler)`.]
+
+  template<class MutableBufferSequence>
+    size_t receive(const MutableBufferSequence& buffers,
+                   socket_base::message_flags flags);
+  template<class MutableBufferSequence>
+    size_t receive(const MutableBufferSequence& buffers,
+                   socket_base::message_flags flags, error_code& ec);
+
+[function_returns `this->service.receive(this->implementation, buffers, flags,
+ec)`.]
+
+  template<class MutableBufferSequence, class ReadHandler>
+    void async_receive(const MutableBufferSequence& buffers,
+                       socket_base::message_flags flags,
+                       ReadHandler handler);
+
+[function_effects Calls `this->service.async_receive(this->implementation,
+buffers, flags, handler)`.]
+
+  template<class MutableBufferSequence>
+    size_t receive_from(const MutableBufferSequence& buffers,
+                        endpoint_type& sender);
+  template<class MutableBufferSequence>
+    size_t receive_from(const MutableBufferSequence& buffers,
+                        endpoint_type& sender, error_code& ec);
+
+[function_returns `this->service.receive_from(this->implementation, buffers,
+sender, 0, ec)`.]
+
+  template<class MutableBufferSequence, class ReadHandler>
+    void async_receive_from(const MutableBufferSequence& buffers,
+                            endpoint_type& sender,
+                            ReadHandler handler);
+
+[function_effects Calls `this->service.async_receive_from(this->implementation,
+buffers, sender, 0, handler)`.]
+
+  template<class MutableBufferSequence>
+    size_t receive_from(const MutableBufferSequence& buffers,
+                        endpoint_type& sender,
+                        socket_base::message_flags flags);
+  template<class MutableBufferSequence>
+    size_t receive_from(const MutableBufferSequence& buffers,
+                        endpoint_type& sender,
+                        socket_base::message_flags flags,
+                        error_code& ec);
+
+[function_returns `this->service.receive_from(this->implementation, buffers,
+sender, flags, ec)`.]
+
+  template<class MutableBufferSequence, class ReadHandler>
+    void async_receive_from(const MutableBufferSequence& buffers,
+                            endpoint_type& sender,
+                            socket_base::message_flags flags,
+                            ReadHandler handler);
+
+[function_effects Calls `this->service.async_receive_from(this->implementation,
+buffers, sender, flags, handler)`.]
+
+  template<class ConstBufferSequence>
+    size_t send(const ConstBufferSequence& buffers);
+  template<class ConstBufferSequence>
+    size_t send(const ConstBufferSequence& buffers, error_code& ec);
+
+[function_returns `this->service.send(this->implementation, buffers, 0, ec)`.]
+
+  template<class ConstBufferSequence, class WriteHandler>
+    void async_send(const ConstBufferSequence& buffers, WriteHandler handler);
+
+[function_effects Calls `this->service.async_send(this->implementation, buffers,
+0, handler)`.]
+
+  template<class ConstBufferSequence>
+    size_t send(const ConstBufferSequence& buffers,
+                socket_base::message_flags flags);
+  template<class ConstBufferSequence>
+    size_t send(const ConstBufferSequence& buffers,
+                socket_base::message_flags flags, error_code& ec);
+
+[function_returns `this->service.send(this->implementation, buffers, flags,
+ec)`.]
+
+  template<class ConstBufferSequence, class WriteHandler>
+    void async_send(const ConstBufferSequence& buffers,
+                    socket_base::message_flags flags,
+                    WriteHandler handler);
+
+[function_effects Calls `this->service.async_send(this->implementation, buffers,
+flags, handler)`.]
+
+  template<class ConstBufferSequence>
+    size_t send_to(const ConstBufferSequence& buffers,
+                   const endpoint_type& destination);
+  template<class ConstBufferSequence>
+    size_t send_to(const ConstBufferSequence& buffers,
+                   const endpoint_type& destination, error_code& ec);
+
+[function_returns `this->service.send_to(this->implementation, buffers,
+destination, 0, ec)`.]
+
+  template<class ConstBufferSequence, class WriteHandler>
+    void async_send_to(const ConstBufferSequence& buffers,
+                       const endpoint_type& destination,
+                       WriteHandler handler);
+
+[function_effects Calls `this->service.async_send_to(this->implementation,
+buffers, destination, 0, handler)`.]
+
+  template<class ConstBufferSequence>
+    size_t send_to(const ConstBufferSequence& buffers,
+                   const endpoint_type& destination,
+                   socket_base::message_flags flags);
+  template<class ConstBufferSequence>
+    size_t send_to(const ConstBufferSequence& buffers,
+                   const endpoint_type& destination,
+                   socket_base::message_flags flags, error_code& ec);
+
+[function_returns `this->service.send_to(this->implementation, buffers,
+destination, flags, ec)`.]
+
+  template<class ConstBufferSequence, class WriteHandler>
+    void async_send_to(const ConstBufferSequence& buffers,
+                       const endpoint_type& destination,
+                       socket_base::message_flags flags,
+                       WriteHandler handler);
+
+[function_effects Calls `this->service.async_send_to(this->implementation,
+buffers, destination, flags, handler)`.]
+
+[endsect]
+
+[endsect]

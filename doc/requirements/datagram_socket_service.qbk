@@ -1,0 +1,7 @@
+[section:datagram_socket_service Datagram socket service requirements]
+
+A datagram socket service must meet the requirements for a [link
+requirements.socket_service socket service], as well as the additional
+requirements listed below.
+
+[endsect]
