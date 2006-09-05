@@ -89,34 +89,6 @@
           ~basic_socket();
         };
 
-        // convenience functions:
-
-        template<class Protocol, class SocketService>
-          void connect(basic_socket<Protocol, SocketService>& s,
-                       const typename Procotol::endpoint& e);
-        template<class Protocol, class SocketService>
-          error_code connect(basic_socket<Protocol, SocketService>& s,
-                             const typename Procotol::endpoint& e,
-                             error_code& ec);
-
-        template<class Protocol, class SocketService, class ConnectHandler>
-            void async_connect(basic_socket<Protocol, SocketService>& s,
-                               const typename Procotol::endpoint& e,
-                               ConnectHandler handler);
-
-        template<class Protocol, class SocketService, class Iterator>
-          void connect(basic_socket<Protocol, SocketService>& s,
-                       Iterator first, Iterator last);
-        template<class Protocol, class SocketService, class Iterator>
-          error_code connect(basic_socket<Protocol, SocketService>& s,
-                             Iterator first, Iterator last, error_code& ec);
-
-        template<class Protocol, class SocketService, class Iterator,
-          class ConnectHandler>
-            void async_connect(basic_socket<Protocol, SocketService>& s,
-                               Iterator first, Iterator last,
-                               ConnectHandler handler);
-
       } // namespace sys
     } // namespace tr2
   } // namespace std
@@ -266,85 +238,32 @@ ec)`.]
   void connect(const endpoint_type& endpoint);
   error_code connect(const endpoint_type& endpoint, error_code& ec);
 
-[function_returns `this->service.connect(this->implementation, endpoint, ec)`.]
+[function_effects If `is_open()` is false, opens the socket by calling:
+``
+  this->service.open(this->implementation, endpoint.protocol(), ec);
+``
+then, if no error has occurred, connects the socket by calling:
+``
+  this->service.connect(this->implementation, endpoint, ec);
+``]
+
+[function_returns `ec`.]
 
   template<class ConnectHandler>
     void async_connect(const endpoint_type& endpoint, ConnectHandler handler);
 
-[function_effects Calls `this->service.async_connect(this->implementation,
-endpoint, handler)`.]
-
-[endsect]
-
-[section [^basic_socket] convenience functions]
-
-  template<class Protocol, class SocketService>
-    void connect(basic_socket<Protocol, SocketService>& s,
-                 const typename Procotol::endpoint& e);
-  template<class Protocol, class SocketService>
-    error_code connect(basic_socket<Protocol, SocketService>& s,
-                       const typename Procotol::endpoint& e,
-                       error_code& ec);
-
-[function_requires `!s.is_open()`.]
-
-[function_effects Behaves as if implemented as follows:
+[function_effects If `is_open()` is false, opens the socket by calling:
 ``
-  s.open(e.protocol(), ec);
-  if (!ec)
-    s.connect(e, ec);
-``]
-
-[function_returns `ec`.]
-
-  template<class Protocol, class SocketService, class ConnectHandler>
-      void async_connect(basic_socket<Protocol, SocketService>& s,
-                         const typename Procotol::endpoint& e,
-                         ConnectHandler handler);
-
-[function_requires `!s.is_open()`.]
-
-[function_effects /TODO/]
-
-  template<class Protocol, class SocketService, class Iterator>
-    void connect(basic_socket<Protocol, SocketService>& s,
-                 Iterator first, Iterator last);
-  template<class Protocol, class SocketService, class Iterator>
-    error_code connect(basic_socket<Protocol, SocketService>& s,
-                       Iterator first, Iterator last, error_code& ec);
-
-[function_requires `!s.is_open() && first != last`. `Iterator` is a forward
-iterator type, and the result of dereferencing an object of type `Iterator` is
-convertible to the `Protocol::endpoint` type.]
-
-[function_effects Behaves as if implemented as follows:
+  error_code ec;
+  this->service.open(this->implementation, endpoint.protocol(), ec);
 ``
-  while (first != last)
-  {
-    typename Protocol::endpoint e(*first);
-    s.open(e.protocol(), ec);
-    if (!ec)
-      s.connect(e, ec);
-    if (!ec)
-      break;
-    s.close(ec);
-    if (ec)
-      break;
-    ++first;
-  }
+If the socket failed to open, uses
+`this->service.io_service().post(__dotdotdot__)` to invoke the handler with the
+`error_code` value `ec`. Otherwise initiates an asynchronous operation to
+connect the socket by calling:
+``
+  this->service.async_connect(this->implementation, endpoint, handler);
 ``]
-
-[function_returns `ec`.]
-
-  template<class Protocol, class SocketService, class Iterator,
-    class ConnectHandler>
-      void async_connect(basic_socket<Protocol, SocketService>& s,
-                         Iterator first, Iterator last,
-                         ConnectHandler handler);
-
-[function_requires `!s.is_open()`.]
-
-[function_effects /TODO/]
 
 [endsect]
 
