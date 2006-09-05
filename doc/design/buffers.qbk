@@ -44,8 +44,8 @@ to provide an opaque representation of contiguous memory, where:
 
 Finally, multiple buffers can be passed to scatter-gather operations (such as
 `std::tr2::sys::read` or `std::tr2::sys::write`) by putting the buffer objects
-into a container. The `MutableBuffers` and `ConstBuffers` concepts have been
-defined so that containers such as `std::vector`, `std::list`, `std::vector` or
-`tr1::array` can be used.
+into a container. The `MutableBufferSequence` and `ConstBufferSequence`
+concepts have been defined so that containers such as `std::vector`,
+`std::list`, `std::vector` or `tr1::array` can be used.
 
 [endsect]
