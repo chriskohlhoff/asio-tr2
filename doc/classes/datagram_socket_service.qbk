@@ -529,6 +529,9 @@ shall fail immediately with `error::invalid_argument`. If `flags &
 socket_base::message_out_of_band` is true, the operation shall continue until
 out-of-band data is received, or an error occurs.]
 
+[function_block The program must ensure the object `sender` is valid until the
+handler for the asynchronous operation is invoked.]
+
 [function_block If the operation completes successfully, the `ReadHandler`
 object `handler` is invoked with the number of bytes transferred. Otherwise
 `0`.]

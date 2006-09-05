@@ -196,7 +196,8 @@ denote identifiers.
   ]
   [
     [``
-      a.bind(b, e, ec);
+      const typename Protocol::endpoint& u = e;
+      a.bind(b, u, ec);
     ``]
     [`error_code`]
     [
@@ -254,7 +255,8 @@ denote identifiers.
   ]
   [
     [``
-      a.connect(b, e, ec);
+      const typename Protocol::endpoint& u = e;
+      a.connect(b, u, ec);
     ``]
     [`error_code`]
     [
@@ -263,7 +265,8 @@ denote identifiers.
   ]
   [
     [``
-      a.async_connect(b, e, ch);
+      const typename Protocol::endpoint& u = e;
+      a.async_connect(b, u, ch);
     ``]
     []
     [

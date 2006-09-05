@@ -157,7 +157,8 @@ and `u` and `v` denote identifiers.
   ]
   [
     [``
-      a.bind(b, e, ec);
+      const typename Protocol::endpoint& u = e;
+      a.bind(b, u, ec);
     ``]
     [`error_code`]
     [
