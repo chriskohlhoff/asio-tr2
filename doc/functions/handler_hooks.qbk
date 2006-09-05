@@ -1,0 +1,15 @@
+[section:handler_hooks Default handler hook functions]
+
+  void* io_handler_allocate(size_t s, ...);
+
+[function_returns `::operator new(s)`.]
+
+  void io_handler_deallocate(void* p, size_t s, ...);
+
+[function_effects Calls `::operator delete(p)`.]
+
+  template<class F> void io_handler_invoke(F f, ...);
+
+[function_effects Performs `f()`.]
+
+[endsect]
