@@ -59,10 +59,7 @@ functions:
     } // namespace tr2
   } // namespace std
 
-In the table below, `u` denotes an identifier. The constants `AF_INET`,
-`AF_INET6` and `SOCK_DGRAM` are defined in the __POSIX__ header file
-__sys_socket_h__. The constant `IPPROTO_UDP` is defined in the __POSIX__ header
-file __netinet_in_h__.
+In the table below, `u` denotes an identifier.
 
 [table Table--POSIX and Windows values
   [[expression] [value]]
@@ -91,6 +88,10 @@ file __netinet_in_h__.
     [`IPPROTO_UDP`]
   ]
 ]
+
+[std_note The constants `AF_INET`, `AF_INET6` and `SOCK_DGRAM` are defined in
+the __POSIX__ header file __sys_socket_h__. The constant `IPPROTO_UDP` is
+defined in the __POSIX__ header file __netinet_in_h__.]
 
 [section [^ip::udp] comparisons]
 
