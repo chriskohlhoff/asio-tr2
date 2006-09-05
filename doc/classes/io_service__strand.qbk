@@ -122,7 +122,7 @@ handler invocation as defined above.]
     ``['[*unspecified]]`` wrap(Handler handler);
 
 [function_returns An object `f` of an unspecified type `F` meeting [link
-requirements.handler handler] requirements, and constructed using `f(*this,
+requirements.handler handler] requirements, and constructed using `F(*this,
 handler)`, where `F` behaves as if defined as follows:
 ``
   class F
