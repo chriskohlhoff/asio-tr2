@@ -222,7 +222,7 @@ are passed the `error_code` value `error::operation_aborted`.]
 [function_block The conditions under which cancellation of asynchronous
 operations is permitted are implementation-defined. If current conditions do
 not permit cancellation, an implementation shall set `ec` to
-`error::not_supported`.]
+`error::operation_not_supported`.]
 
 [commentary This flexibility is included to support implementations on
 __Windows__ versions prior to Vista, where the `CancelIo` function will only
