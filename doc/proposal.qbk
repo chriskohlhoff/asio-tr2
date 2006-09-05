@@ -1,7 +1,7 @@
 [library Networking Library Proposal for TR2
     [quickbook 1.1]
     [id tr2network]
-    [last-revision $Date: 2006/09/05 07:47:45 $]
+    [last-revision $Date: 2006/09/05 14:02:43 $]
 ]
 
 [/-----------------------------------------------------------------------------]
@@ -549,7 +549,6 @@ express type requirements, as listed in the table below.
 [include:requirements requirements/bound_completion_handler.qbk]
 [include:requirements requirements/service.qbk]
 [include:requirements requirements/io_object_service.qbk]
-[include:requirements requirements/errors.qbk]
 [include:requirements requirements/synchronous_operations.qbk]
 [include:requirements requirements/asynchronous_operations.qbk]
 [endsect]
