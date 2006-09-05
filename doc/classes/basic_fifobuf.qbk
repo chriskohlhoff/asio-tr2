@@ -11,8 +11,8 @@
         public:
           // types:
           typedef Allocator allocator_type;
-          typedef ``['[*unspecified]]`` const_buffers_type;
-          typedef ``['[*unspecified]]`` mutable_buffers_type;
+          typedef ``['unspecified]`` const_buffers_type;
+          typedef ``['unspecified]`` mutable_buffers_type;
 
           // constructors:
           explicit basic_fifobuf(

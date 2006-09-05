@@ -21,7 +21,7 @@
             void post(CompletionHandler handler);
 
           template<class Handler>
-            ``['[*unspecified]]`` wrap(Handler handler);
+            ``['unspecified]`` wrap(Handler handler);
 
         private:
           strand(const strand&);         // not defined
@@ -119,7 +119,7 @@ invoked without throwing an exception.]
 handler invocation as defined above.]
 
   template<class Handler>
-    ``['[*unspecified]]`` wrap(Handler handler);
+    ``['unspecified]`` wrap(Handler handler);
 
 [function_returns An object `f` of an unspecified type `F` meeting [link
 requirements.handler handler] requirements, and constructed using `F(*this,

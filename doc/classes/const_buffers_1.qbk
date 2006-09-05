@@ -14,7 +14,7 @@ requirements.convertible_to_const_buffer `ConvertibleToConstBuffer`].
         public:
           // types:
           typedef const_buffer value_type;
-          typedef ``['[*unspecified]]`` const_iterator;
+          typedef ``['unspecified]`` const_iterator;
 
           // constructors:
           const_buffers_1(const void* data, size_t size);

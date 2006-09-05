@@ -20,7 +20,7 @@ of a [link requirements.resolver_service `ResolverService`].
             typedef typename InternetProtocol::endpoint endpoint_type;
             typedef basic_resolver_query<InternetProtocol> query_type;
             typedef basic_resolver_iterator<InternetProtocol> iterator_type;
-            typedef ``['[*unspecified]]`` implementation_type;
+            typedef ``['unspecified]`` implementation_type;
 
             // constructors:
             explicit resolver_service(io_service& ios);
@@ -91,9 +91,9 @@ performing:
 
 [function_effects Causes any outstanding asynchronous operations to complete as
 soon as possible. Handlers for cancelled operations shall be passed the error
-code `error::operation_aborted`. On success, sets `ec` such that the expression
-`!ec` is true. On failure, an implementation shall set `ec` to any `error_code`
-value such that the expression `!ec` is false.]
+code `error::operation_aborted`.]
+
+[function_returns `ec`.]
 
   iterator_type resolve(implementation_type& impl,
                         const query_type& q, error_code& ec);

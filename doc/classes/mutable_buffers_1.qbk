@@ -23,7 +23,7 @@ ambiguities when passing to functions that are overloaded on both
         public:
           // types:
           typedef mutable_buffer value_type;
-          typedef ``['[*unspecified]]`` const_iterator;
+          typedef ``['unspecified]`` const_iterator;
 
           // constructors:
           mutable_buffers_1(void* data, size_t size);

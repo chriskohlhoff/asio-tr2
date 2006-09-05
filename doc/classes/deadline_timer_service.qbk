@@ -18,7 +18,7 @@ of a [link requirements.timer_service `TimerService`].
           typedef TimeTraits traits_type;
           typedef Time time_type;
           typedef typename TimeTraits::duration_type duration_type;
-          typedef ``['[*unspecified]]`` implementation_type;
+          typedef ``['unspecified]`` implementation_type;
 
           // constructors:
           explicit deadline_timer_service(io_service& ios);
