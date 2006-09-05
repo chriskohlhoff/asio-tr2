@@ -3,7 +3,7 @@
 In the table below, `X` denotes an I/O control command class, `a` denotes a
 value of `X`, and `u` denotes an identifier.
 
-[table Table--IoControlCommand requirements
+[table Table--IoControlCommand requirements (POSIX and Windows)
   [[expression] [type] [assertion/note\npre/post-conditions]]
   [
     [`a.name();`]
