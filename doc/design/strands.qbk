@@ -1,4 +1,4 @@
-[section Strands]
+[section:strands Strands]
 
 A strand is defined as a strictly sequential invocation of event handlers (i.e.
 no concurrent invocation). Use of strands allows execution of code in a

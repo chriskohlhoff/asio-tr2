@@ -158,9 +158,7 @@ one of `run()`, `run_one()`, `poll()`, or `poll_one()`.]
 true:\n\n
 
 [mdash] An error has occurred. `ec` shall be set to the `error_code` value
-corresponding to the failure condition, as shown in the table below. For
-failure conditions not listed, an implementation is permitted to set `ec` to
-any other value such that the expression `!ec` is false.\n\n
+corresponding to the failure condition.\n\n
 
 [mdash] The `io_service` has been explicitly stopped by a call to `stop()`.
 `ec` shall be set such that the expression `!ec` is true.\n\n
@@ -180,14 +178,6 @@ conditions shall not be performed.]
 be allowed to propagate to the caller of `run_one()`. The `io_service` state
 shall be equivalent to if the handler had been successfully invoked without
 throwing an exception.]
-
-[table Table--run_one() failure conditions
-  [[failure condition][error code]]
-  [
-    [Operation interrupted by signal.]
-    [`error::interrupted`]
-  ]
-]
 
 [function_returns `1` if a handler was invoked, otherwise `0`.]
 
@@ -268,11 +258,11 @@ entered as an effect of a prior call to `stop()`.]
   template<class CompletionHandler>
     void dispatch(CompletionHandler handler);
 
-[function_effects If the current thread (/TODO/) is executing a call to any
-overload of `run()`, `run_one()`, `poll()` or `poll_one()` for the same
-`io_service` object, invokes the completion handler by performing
+[function_effects If the current thread is executing a call to any overload of
+`run()`, `run_one()`, `poll()` or `poll_one()` for the same `io_service`
+object, invokes the completion handler by performing
 `io_handler_invoke(handler, &handler)`. Otherwise, equivalent to calling
-`post(handler)`. (/TODO/ memory barrier)]
+`post(handler)`.]
 
 [function_block If the invoked handler throws an exception, the exception shall
 be allowed to propagate to the caller of `dispatch()`. The `io_service` state
@@ -285,11 +275,16 @@ throwing an exception.]
 [function_effects Requests invocation of the handler by the `io_service`. Does
 not invoke the handler from within the call to `post()`. The `io_service` makes
 a copy of the handler and maintains one or more copies of the handler until
-after the handler has been invoked (but no longer). The `io_service` shall have
+immediately after the handler has been invoked. The `io_service` shall have
 unfinished work, as if by maintaining the existence of one or more objects of
 class `io_service::work` constructed using the `io_service` object `*this`,
-until after the handler has been invoked (but no longer). (/TODO/ memory
-barrier.)]
+until immediately after the handler has been invoked.]
+
+[function_block The `post()` function behaves according to the rules for [link
+requirements.asynchronous_operations asynchronous operations] with respect to
+the treatment of `handler` as a by-value parameter, storage allocation and
+memory visibility. The object `*this` is considered to be the associated
+`io_service`.]
 
   template<class Handler>
     ``['unspecified]`` wrap(Handler handler);

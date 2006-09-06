@@ -79,7 +79,7 @@ and by all member functions, during the lifetime of each `fifobuf` object.
 ``
   fifobuf b;
   std::ostream os(&b);
-  b << "Hello, World!\n";
+  os << "Hello, World!\n";
 
   // try sending all data in input sequence
   size_t n = sock.send(b.data());
@@ -98,6 +98,10 @@ and by all member functions, during the lifetime of each `fifobuf` object.
 
   // received data is "committed" from output sequence to input sequence
   b.commit(n);
+
+  std::istream is(&b);
+  std::string s;
+  is >> s;
 ``]
 
 [section [^basic_fifobuf] constructors]

@@ -1,7 +1,7 @@
 [library Networking Library Proposal for TR2
     [quickbook 1.1]
     [id tr2network]
-    [last-revision $Date: 2006/09/06 06:52:31 $]
+    [last-revision $Date: 2006/09/06 12:49:46 $]
 ]
 
 [/-----------------------------------------------------------------------------]
@@ -567,6 +567,7 @@ Library chapter defined in \[N1975\] and modified by \[N2066\].]
 [include:requirements requirements/bound_completion_handler.qbk]
 [include:requirements requirements/service.qbk]
 [include:requirements requirements/io_object_service.qbk]
+[include:requirements requirements/thread_safety.qbk]
 [include:requirements requirements/synchronous_operations.qbk]
 [include:requirements requirements/asynchronous_operations.qbk]
 [endsect]
@@ -715,6 +716,9 @@ This subclause defines components for performing timer operations.
 [/-----------------------------------------------------------------------------]
 
 [section Acknowledgements]
+
+/TODO/
+
 [endsect]
 
 [/-----------------------------------------------------------------------------]

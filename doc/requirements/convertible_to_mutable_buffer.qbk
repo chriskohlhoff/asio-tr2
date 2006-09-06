@@ -76,8 +76,7 @@ convertibility to a mutable buffer, `a` and `b` denote values of type `X`, and
   [
     [``
       mutable_buffer u(a);
-      X v(b);
-      v = a;
+      X v(b); v = a;
       mutable_buffer w(v);
     ``]
     [``

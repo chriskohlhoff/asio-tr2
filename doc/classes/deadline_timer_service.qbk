@@ -93,7 +93,7 @@ the error code `error::operation_aborted`.]
   time_type expires_at(const implementation_type& impl) const;
 
 [function_returns The expiry time associated with the timer implementation
-`impl`, as previously set using `expires_at()` or `expires_from_now`.]
+`impl`, as previously set using `expires_at()` or `expires_from_now()`.]
 
   size_t expires_at(implementation_type& impl, const time_type& t,
                     error_code& ec);

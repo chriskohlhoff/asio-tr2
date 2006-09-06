@@ -76,8 +76,7 @@ convertibility to a const buffer, `a` and `b` denote values of type `X`, and
   [
     [``
       const_buffer u(a);
-      X v(b);
-      v = a;
+      X v(b); v = a;
       const_buffer w(v);
     ``]
     [``

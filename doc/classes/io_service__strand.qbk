@@ -65,8 +65,6 @@ The implementation shall ensure that, if /thread1/ performs
 `io_handler_dispatch(x, &a)`, /thread2/ does not concurrently perform
 `io_handler_dispatch(y, &b)`.
 
-/TODO:/ Sequence points to define concurrency? Memory barriers?
-
 [std_note No requirements are made on implementations with respect to:\n\n
 
 [mdash] whether handlers dispatched through different `strand` objects may or

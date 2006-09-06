@@ -12,7 +12,7 @@ requirements, and `ec` denotes an object of type `error_code`.
     [Equivalent to:
      ``
        error_code ec;
-       size_t s = a.write_some(mb, ec);
+       size_t s = a.write_some(cb, ec);
        if (ec) throw system_error(ec);
        return s;
      ``]

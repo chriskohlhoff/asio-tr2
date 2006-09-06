@@ -2,6 +2,11 @@
 
 [section Thread Safety]
 
+In general, it is safe to make concurrent use of distinct objects, but unsafe
+to make concurrent use of a single object. However, types such as `io_service`
+provide a stronger guarantee that it is safe to use a single object
+concurrently.
+
 [endsect]
 
 [section Internal Threads]
@@ -41,6 +46,11 @@ The reasons for this approach include:
 [endsect]
 
 [section Memory Visibility]
+
+The following diagram outlines one possible strategy for managing memory
+visibility. It is intended that programs that make use of [link design.strands
+implicit or explicit strands] should not have to directly include memory
+barriers or synchronisation mechanisms.
 
 [$membar.png]
 
