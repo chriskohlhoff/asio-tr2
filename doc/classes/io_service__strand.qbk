@@ -62,8 +62,8 @@ are considered equivalent.
 `run_one()`, `poll()` or `poll_one()` for the `io_service` object `i`.
 
 The implementation shall ensure that, if /thread1/ performs
-`io_handle_dispatch(x, &a)`, /thread2/ does not concurrently perform
-`io_handle_dispatch(y, &b)`.
+`io_handler_dispatch(x, &a)`, /thread2/ does not concurrently perform
+`io_handler_dispatch(y, &b)`.
 
 /TODO:/ Sequence points to define concurrency? Memory barriers?
 
