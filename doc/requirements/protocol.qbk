@@ -15,6 +15,9 @@ In the table below, `X` denotes a protocol class, and `a` denotes a value of
   ]
 ]
 
+In the table below, `X` denotes a protocol class, and `a` denotes a value of
+`X`.
+
 [table Table--Protocol requirements for extensible implementations
   [[expression] [return type] [assertion/note\npre/post-conditions]]
   [

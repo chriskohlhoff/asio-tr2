@@ -79,7 +79,7 @@ initialisation of each value is implementation-defined.
   [[`timed_out`][`ETIMEDOUT`]]
 ]
 
-[std_note The __POSIX__ equivalent constants used above are defined in the
-__POSIX__ header file __errno_h__.]
+[std_note The equivalent constants used above are defined in the __POSIX__
+header file __errno_h__.]
 
 [endsect]

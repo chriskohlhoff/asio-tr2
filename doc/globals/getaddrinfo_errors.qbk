@@ -15,7 +15,7 @@
   } // namespace std
 
 The meaning of each `error_code` value declared above shall correspond to the
-__POSIX__ equivalent error used by __getaddrinfo__, as defined in the table
+__POSIX__ equivalent returned by __getaddrinfo__, as defined in the table
 below. The method of initialisation of each value is implementation-defined.
 
 [table Table--getaddrinfo errors

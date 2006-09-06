@@ -1,7 +1,7 @@
 [library Networking Library Proposal for TR2
     [quickbook 1.1]
     [id tr2network]
-    [last-revision $Date: 2006/09/06 03:05:19 $]
+    [last-revision $Date: 2006/09/06 03:29:07 $]
 ]
 
 [/-----------------------------------------------------------------------------]
@@ -376,7 +376,7 @@ This clause describes components that C++ programs may use to perform network
 operations.
 
 [commentary The Filesystem Library Proposal \[N1975\] adds introductory text to
-the TR to establish a relationship to __POSIX__. This proposal uses this
+the TR to establish a relationship to __POSIX__. This proposal uses the
 relationship to similarly define behaviour "as if" implemented by __POSIX__,
 except that the requirements for error reporting are stricter than those
 outlined in \[N1975\].]
@@ -540,7 +540,7 @@ express type requirements, as listed in the table below.
 
 [include:definitions definitions.qbk]
 
-[section Diagnostics Library]
+[section Diagnostics library]
 [commentary The following text is intended as an addition to the Diagnostics
 Library chapter defined in \[N1975\] and modified by \[N2066\].]
 [include:headers headers/system_error.qbk]

@@ -1,4 +1,4 @@
-[section Extensibility requirements]
+[section Extensibility]
 
 This clause defines an optional level of conformance, in the form of
 additional member functions on types that satisfy [link requirements.protocol
