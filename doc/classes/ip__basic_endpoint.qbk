@@ -248,8 +248,7 @@ it were implemented as follows:
 [function_returns `os`.]
 
 [std_note The representation of the endpoint when it contains an IP version 6
-address is based on [@http://www.ietf.org/rfc/rfc2732.txt RFC 2732: Format for
-Literal IPv6 Addresses in URL's].]
+address is based on [RFC2732].]
 
 [endsect]
 

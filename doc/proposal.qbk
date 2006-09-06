@@ -1,7 +1,7 @@
 [library Networking Library Proposal for TR2
     [quickbook 1.1]
     [id tr2network]
-    [last-revision $Date: 2006/09/06 05:19:34 $]
+    [last-revision $Date: 2006/09/06 06:52:31 $]
 ]
 
 [/-----------------------------------------------------------------------------]
@@ -98,6 +98,22 @@
 [def __netinet_in_h__ [@http://www.opengroup.org/onlinepubs/000095399/basedefs/netinet/in.h.html `netinet/in.h`]]
 [def __netinet_tcp_h__ [@http://www.opengroup.org/onlinepubs/000095399/basedefs/netinet/tcp.h.html `netinet/tcp.h`]]
 [def __dotdotdot__ ...]
+
+[/-----------------------------------------------------------------------------]
+
+[template POSIX[] \[[link ref-POSIX POSIX]\] ]
+[template N1975[] \[[link ref-N1975 N1975]\] ]
+[template N2058[] \[[link ref-N2058 N2058]\] ]
+[template N2066[] \[[link ref-N2066 N2066]\] ]
+[template ACE[] \[[link ref-ACE ACE]\] ]
+[template SYMBIAN[] \[[link ref-SYMBIAN SYMBIAN]\] ]
+[template MSNET[] \[[link ref-MS-NET MS-NET]\] ]
+[template ESAPI[] \[[link ref-ES-API ES-API]\] ]
+[template RFC821[] \[[link ref-RFC821 RFC821]\] ]
+[template RFC959[] \[[link ref-RFC959 RFC959]\] ]
+[template RFC2616[] \[[link ref-RFC2616 RFC2616]\] ]
+[template RFC2732[] \[[link ref-RFC2732 RFC2732]\] ]
+[template RFC3513[] \[[link ref-RFC3513 RFC3513]\] ]
 
 [/-----------------------------------------------------------------------------]
 
@@ -254,16 +270,11 @@ APIs in other languages (e.g. Java). Unsafe practices of the BSD sockets API,
 e.g. lack of compile-time type safety, are not included.
 
 Asynchronous support is derived from the Proactor design pattern as implemented
-by the ADAPTIVE Communication Environment
-\[[@http://www.cs.wustl.edu/~schmidt/ACE.html ACE]\], and is influenced by the
-design of the Symbian C++ sockets API
-\[[@http://www.symbian.com/developer/techlib/v70sdocs/doc_source/reference/cpp/SocketsClient/index.html
-Symbian]\], which supports synchronous and asynchronous operations
-side-by-side. The Microsoft .NET socket classes
-\[[@http://msdn2.microsoft.com/en-us/library/system.net.sockets.socket.aspx
-.NET]\] and the Extended Sockets API
-\[[@http://opengroup.org/icsc/uploads/40/6415/ES_API_1_0.pdf ES-API]\]
-developed by The Open Group support similar styles of network programming.
+by the ADAPTIVE Communication Environment [ACE], and is influenced by the
+design of the Symbian C++ sockets API [SYMBIAN], which supports synchronous and
+asynchronous operations side-by-side. The Microsoft .NET socket classes [MSNET]
+and the Extended Sockets API [ESAPI] developed by The Open Group support
+similar styles of network programming.
 
 [endsect]
 
@@ -311,15 +322,14 @@ defined. In particular, the proposal will attempt to address:
 [section Relationship to Date-Time Library Proposal]
 
 This proposal uses classes defined in the Proposal to Add Date-Time to the C++
-Standard Library (N1900).
+Standard Library [N2058].
 
 [endsect]
 
 [section Relationship to Filesystem Library Proposal]
 
 The classes defined in the Diagnostics Library chapter of the Filesystem
-Library Proposal (N1975) are used in this proposal. ['Note: some modification
-of these classes is required from those defined in N1975.]
+Library Proposal [N1975], and updated by [N2066], are used in this proposal.
 
 [endsect]
 
@@ -375,11 +385,11 @@ be added to the TR.]
 This clause describes components that C++ programs may use to perform network
 operations.
 
-[commentary The Filesystem Library Proposal \[N1975\] adds introductory text to
-the TR to establish a relationship to __POSIX__. This proposal uses the
+[commentary The Filesystem Library Proposal [N1975] adds introductory text to
+the TR to establish a relationship to __POSIX__ [POSIX]. This proposal uses the
 relationship to similarly define behaviour "as if" implemented by __POSIX__,
 except that the requirements for error reporting are stricter than those
-outlined in \[N1975\].]
+outlined in [N1975].]
 
 The following subclauses describe components for I/O services, timers, buffer
 management, sockets, endpoint resolution, iostreams, and internet protocol, as
@@ -436,12 +446,12 @@ express type requirements, as listed in the table below.
   ]
   [
     [`ConstBufferSequence`]
-    [[link requirements.const_buffers const buffer sequence]]
+    [[link requirements.const_buffers constant buffer sequence]]
   ]
   [
     [`ConvertibleToConstBuffer`]
     [[link requirements.convertible_to_const_buffer convertible to a
-    const buffer]]
+    constant buffer]]
   ]
   [
     [`ConvertibleToMutableBuffer`]
@@ -710,4 +720,54 @@ This subclause defines components for performing timer operations.
 [/-----------------------------------------------------------------------------]
 
 [section References]
+
+[#ref-POSIX] \[POSIX\] ['ISO/IEC 9945:2003], ['IEEE Std 1003.1-2001], and ['The
+Open Group Base Specifications, Issue 6]. Also known as ['The Single Unix
+Specification, Version 3].
+
+[#ref-N1975] \[N1975\] Dawes, Beman,
+['Filesystem Library Proposal for TR2 (Revision 3)], 2006
+
+[#ref-N2058] \[N2058\] Garland, Jeff,
+['Proposal to Add Date-Time to the C++ Standard Library], 2006
+
+[#ref-N2066] \[N2066\] Dawes, Beman,
+['TR2 Diagnostics Enhancements], 2006
+
+[#ref-ACE] \[ACE\] Schmidt, Douglas C.,
+['ADAPTIVE Communication Environment],
+[@http://www.cs.wustl.edu/~schmidt/ACE.html]
+
+[#ref-SYMBIAN] \[SYMBIAN\] Symbian Ltd,
+['Sockets Client],
+[@http://www.symbian.com/developer/techlib/v70sdocs/doc_source/reference/cpp/SocketsClient/index.html]
+
+[#ref-MS-NET] \[MS-NET\] Microsoft Corporation,
+['.NET Framework Class Library, Socket Class],
+[@http://msdn2.microsoft.com/en-us/library/system.net.sockets.socket.aspx]
+
+[#ref-ES-API] \[ES-API\] The Interconnect Software Consortium / The Open Group,
+['Extended Sockets API (ES-API), Issue 1.0], 2005,
+[@http://opengroup.org/icsc/uploads/40/6415/ES_API_1_0.pdf]
+
+[#ref-RFC821] \[RFC821\] Postel, J.,
+['RFC 821: Simple Mail Transfer Protocol], 1982,
+[@http://www.ietf.org/rfc/rfc0821.txt]
+
+[#ref-RFC959] \[RFC959\] Postel, J. and Reynolds, J.,
+['RFC 959: File Transfer Protocol (FTP)], 1985,
+[@http://www.ietf.org/rfc/rfc0959.txt]
+
+[#ref-RFC2616] \[RFC2616\] Fielding, R. et al,
+['RFC 2616: Hypertext Transfer Protocol -- HTTP/1.1], 1999,
+[@http://www.ietf.org/rfc/rfc2616.txt]
+
+[#ref-RFC2732] \[RFC2732\] Hinden, R., Carpenter, B. and Masinter, L.,
+['RFC 2732: Format for Literal IPv6 Addresses in URL's], 1999,
+[@http://www.ietf.org/rfc/rfc2732.txt]
+
+[#ref-RFC3513] \[RFC3513\] Hinden, R. and Deering, S.,
+['RFC 3513: Internet Protocol Version 6 (IPv6) Addressing Architecture], 2003,
+[@http://www.ietf.org/rfc/rfc3513.txt]
+
 [endsect]

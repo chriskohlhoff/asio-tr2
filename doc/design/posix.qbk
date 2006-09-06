@@ -5,8 +5,7 @@ This proposal defines two levels of conformance:
 * Basic interfaces which all implementations must follow.
 
 * Additional member functions that provide extensibility. It is intended
-  that__POSIX__ and __Windows__ implementations
-  will provide these.
+  that __POSIX__ and __Windows__ implementations will provide these.
 
 Implementations on platforms that have a sockets API similar to __POSIX__ and
 __Windows__ are also encouraged to provide the additional member functions.

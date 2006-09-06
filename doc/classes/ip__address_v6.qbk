@@ -67,8 +67,7 @@
 `is_multicast`, `is_link_local`, `is_site_local`, `is_v4_mapped`,
 `is_v4_compatible`, `is_multicast_node_local`, `is_multicast_link_local`,
 `is_multicast_site_local`, `is_multicast_org_local` and `is_multicast_global`
-are determined by [@http://www.ietf.org/rfc/rfc3513.txt RFC 3513: Internet
-Protocol Version 6 (IPv6) Addressing Architecture].]
+are determined by [RFC3513].]
 
 [section [^ip::address_v6] constructors]
 

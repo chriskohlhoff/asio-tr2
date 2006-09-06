@@ -1,7 +1,7 @@
 [section:bound_completion_handler Bound completion handlers]
 
 A bound completion handler is a handler object that contains a copy of a
-user-supplied hander, where the user-supplied handler accepts one or more
+user-supplied handler, where the user-supplied handler accepts one or more
 arguments. The bound completion handler does not accept any arguments, and
 contains values to be passed as arguments to the user-supplied handler. The
 bound completion handler forwards the `io_handler_allocate()`,
