@@ -90,7 +90,7 @@ implicitly run the `io_service` object for an individual operation. The
 called for the `io_service` to perform [link definitions.asynchronous_operation
 asynchronous operations] on behalf of a C++ program. Notification that an
 asynchronous operation has completed is delivered by invocation of the
-associated [link requirements.handler handler]. Handlers are dispatched only by
+associated [link requirements.handler handler]. Handlers are invoked only by
 a thread that is currently calling any overload of `run()`, `run_one()`,
 `poll()` or `poll_one()` for the `io_service`.
 
