@@ -33,7 +33,7 @@ In the table below, `X` denotes an endpoint class, `a` denotes a value of type
 In the table below, `X` denotes an endpoint class, `a` denotes a value of `X`,
 `s` denotes a size in bytes, and `u` denotes an identifier.
 
-[table Table--Endpoint requirements (POSIX and Windows)
+[table Table--Endpoint requirements for extensible implementations
   [[expression] [type] [assertion/note\npre/post-conditions]]
   [
     [`a.data();`]

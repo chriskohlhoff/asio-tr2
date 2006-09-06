@@ -1,7 +1,7 @@
 [library Networking Library Proposal for TR2
     [quickbook 1.1]
     [id tr2network]
-    [last-revision $Date: 2006/09/05 14:02:43 $]
+    [last-revision $Date: 2006/09/06 03:05:19 $]
 ]
 
 [/-----------------------------------------------------------------------------]
@@ -375,6 +375,12 @@ be added to the TR.]
 This clause describes components that C++ programs may use to perform network
 operations.
 
+[commentary The Filesystem Library Proposal \[N1975\] adds introductory text to
+the TR to establish a relationship to __POSIX__. This proposal uses this
+relationship to similarly define behaviour "as if" implemented by __POSIX__,
+except that the requirements for error reporting are stricter than those
+outlined in \[N1975\].]
+
 The following subclauses describe components for I/O services, timers, buffer
 management, sockets, endpoint resolution, iostreams, and internet protocol, as
 summarised in the table below:
@@ -534,7 +540,9 @@ express type requirements, as listed in the table below.
 
 [include:definitions definitions.qbk]
 
-[section Errors]
+[section Diagnostics Library]
+[commentary The following text is intended as an addition to the Diagnostics
+Library chapter defined in \[N1975\] and modified by \[N2066\].]
 [include:headers headers/system_error.qbk]
 [include:globals globals/errno_errors.qbk]
 [include:globals globals/getaddrinfo_errors.qbk]
@@ -605,6 +613,7 @@ express type requirements, as listed in the table below.
 
 [section:sockets Sockets]
 [section:sockets_requirements Requirements]
+[include:requirements requirements/extensibility.qbk]
 [include:requirements requirements/endpoint.qbk]
 [include:requirements requirements/protocol.qbk]
 [include:requirements requirements/socket_service.qbk]

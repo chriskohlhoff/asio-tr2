@@ -24,8 +24,7 @@ Integral socket option classes shall be defined as follows:
     int value() const;
   };
 
-__POSIX__ and __Windows__ implementations shall provide the following member
-functions:
+Extensible implementations shall provide the following member functions:
 
   class ``['[*C]]``
   {
@@ -107,12 +106,12 @@ and `SO_SNDLOWAT` are defined in the __POSIX__ header file __sys_socket_h__.]
 
   int value() const;
 
-[function_returns The stored socket option value. For __POSIX__ and __Windows__
+[function_returns The stored socket option value. For extensible
 implementations, returns `value_`.]
 
 [endsect]
 
-[section Integral socket option __POSIX__ and __Windows__ members]
+[section Integral socket option members (extensible implementations)]
 
   template<class Protocol> int level(const Protocol& p) const;
 

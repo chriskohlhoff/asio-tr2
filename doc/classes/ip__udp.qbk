@@ -37,8 +37,7 @@ requirements.internet_protocol `InternetProtocol`].
     } // namespace tr2
   } // namespace std
 
-__POSIX__ and __Windows__ implementations shall provide the following member
-functions:
+Extensible implementations shall provide the following member functions:
 
   namespace std {
     namespace tr2 {
@@ -61,7 +60,7 @@ functions:
 
 In the table below, `u` denotes an identifier.
 
-[table Table--POSIX and Windows values
+[table Table--Behaviour of extensible implementations
   [[expression] [value]]
   [
     [`udp u(udp::v4()); u.family();`]

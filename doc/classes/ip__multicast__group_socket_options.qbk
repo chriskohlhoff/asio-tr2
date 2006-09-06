@@ -21,8 +21,7 @@ Multicast group management socket option classes shall be defined as follows:
       unsigned int network_interface = 0);
   };
 
-__POSIX__ and __Windows__ implementations shall provide the following member
-functions:
+Extensible implementations shall provide the following member functions:
 
   class ``['[*C]]``
   {
@@ -69,39 +68,39 @@ __POSIX__ header file __netinet_in_h__. The constants `IPV6_JOIN_GROUP` and
 
   ``['[*C]]``();
 
-[function_effects For __POSIX__ and __Windows__ implementations, both
-`v4_value_` and `v6_value_` are zero-initialised.]
+[function_effects For extensible implementations, both `v4_value_` and
+`v6_value_` are zero-initialised.]
 
   explicit ``['[*C]]``(const address& multicast_group);
 
-[function_effects For __POSIX__ and __Windows__ implementations, if
-`multicast_group.is_v6()` is true then `v6_value_.ipv6mr_multiaddr` is
-initialised to correspond to the IPv6 address returned by
-`multicast_group.to_v6()`, `v6_value_.ipv6mr_interface` is set to `0`, and
-`v4_value_` is zero-initialised; otherwise, `v4_value_.imr_multiaddr` is
-initialised to correspond to the IPv4 address returned by
-`multicast_group.to_v4()`, `v4_value_.imr_interface` is zero-initialised, and
-`v6_value_` is zero-initialised.]
+[function_effects For extensible implementations, if `multicast_group.is_v6()`
+is true then `v6_value_.ipv6mr_multiaddr` is initialised to correspond to the
+IPv6 address returned by `multicast_group.to_v6()`,
+`v6_value_.ipv6mr_interface` is set to `0`, and `v4_value_` is
+zero-initialised; otherwise, `v4_value_.imr_multiaddr` is initialised to
+correspond to the IPv4 address returned by `multicast_group.to_v4()`,
+`v4_value_.imr_interface` is zero-initialised, and `v6_value_` is
+zero-initialised.]
 
   ``['[*C]]``(const address_v4& multicast_group,
     const address_v4& network_interface = address_v4::any());
 
-[function_effects For __POSIX__ and __Windows__ implementations,
-`v4_value_.imr_multiaddr` is initialised to correspond to the address
-`multicast_group`, `v4_value_.imr_interface` is initialised to correspond to
-address `network_interface`, and `v6_value_` is zero-initialised.]
+[function_effects For extensible implementations, `v4_value_.imr_multiaddr` is
+initialised to correspond to the address `multicast_group`,
+`v4_value_.imr_interface` is initialised to correspond to address
+`network_interface`, and `v6_value_` is zero-initialised.]
 
   ``['[*C]]``(const address_v6& multicast_group,
     unsigned int network_interface = 0);
 
-[function_effects For __POSIX__ and __Windows__ implementations,
-`v6_value_.ipv6mr_multiaddr` is initialised to correspond to the address
-`multicast_group`, `v6_value_.ipv6mr_interface` is initialised to
-`network_interface`, and `v4_value_` is zero-initialised.]
+[function_effects For extensible implementations, `v6_value_.ipv6mr_multiaddr`
+is initialised to correspond to the address `multicast_group`,
+`v6_value_.ipv6mr_interface` is initialised to `network_interface`, and
+`v4_value_` is zero-initialised.]
 
 [endsect]
 
-[section Multicast group management socket option __POSIX__ and __Windows__ members]
+[section Multicast group management socket option members (extensible implementations)]
 
   template<class Protocol> int level(const Protocol& p) const;
 

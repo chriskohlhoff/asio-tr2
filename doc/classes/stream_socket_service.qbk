@@ -120,9 +120,10 @@ of a [link requirements.stream_socket_service `StreamSocketService`].
 
 [function_block The native representation of a socket. Must satisfy the
 requirements of `CopyConstructible` types (C++ Std, 20.1.3), and the
-requirements of `Assignable` types (C++ Std, 23.1). For __POSIX__
-implementations, must be convertible to and from `int`. For __Windows__
-implementations, must be convertible to and from `SOCKET`.]
+requirements of `Assignable` types (C++ Std, 23.1). [inline_note For __POSIX__
+implementations, this type would typically be convertible to and from `int`.
+For __Windows__ implementations, this type would typically be convertible to
+and from `SOCKET`.]]
 
 [endsect]
 

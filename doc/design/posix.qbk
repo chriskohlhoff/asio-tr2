@@ -2,16 +2,17 @@
 
 This proposal defines two levels of conformance:
 
-* Interfaces which all implementations must follow.
+* Basic interfaces which all implementations must follow.
 
-* Additional member functions that __POSIX__ and __Windows__ implementations
-  must provide.
+* Additional member functions that provide extensibility. It is intended
+  that__POSIX__ and __Windows__ implementations
+  will provide these.
 
 Implementations on platforms that have a sockets API similar to __POSIX__ and
-__Windows__ are encouraged to provide the additional member functions.
+__Windows__ are also encouraged to provide the additional member functions.
 
 The rationale is to allow the implementation to be portably extended by a
-program (or implementor) to add:
+program (or implementor) to add additional:
 
 * protocols, such as UNIX domain sockets, infrared or Bluetooth;
 

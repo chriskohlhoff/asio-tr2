@@ -61,8 +61,7 @@ for an [link requirements.endpoint `Endpoint`].
     } // namespace tr2
   } // namespace std
 
-__POSIX__ and __Windows__ implementations shall provide the following member
-functions:
+Extensible implementations shall provide the following member functions:
 
   namespace std {
     namespace tr2 {
@@ -254,7 +253,7 @@ Literal IPv6 Addresses in URL's].]
 
 [endsect]
 
-[section [^ip::basic_endpoint] __POSIX__ and __Windows__ members]
+[section [^ip::basic_endpoint] members (extensible implementations)]
 
   ``['unspecified]``* data();
 
