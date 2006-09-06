@@ -32,7 +32,7 @@ an `io_service`.
 
 [function_effects Constructs an object of class `work`.]
 
-[function_postconditions `&io_service() == ios`.]
+[function_postconditions `&io_service() == &ios`.]
 
   work(const work& other);
 
