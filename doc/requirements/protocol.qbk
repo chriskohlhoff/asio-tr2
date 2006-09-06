@@ -24,24 +24,24 @@ In the table below, `X` denotes a protocol class, and `a` denotes a value of
     [`a.family()`]
     [`int`]
     [
-      Returns a value suitable for passing as the /domain/ argument to the
-      __POSIX__ function __socket__ (or equivalent).
+      Returns a value suitable for passing as the /domain/ argument to
+      __POSIX__ __socket__ (or equivalent).
     ]
   ]
   [
     [`a.type()`]
     [`int`]
     [
-      Returns a value suitable for passing as the /type/ argument to the
-      __POSIX__ function __socket__ (or equivalent).
+      Returns a value suitable for passing as the /type/ argument to __POSIX__
+      __socket__ (or equivalent).
     ]
   ]
   [
     [`a.protocol()`]
     [`int`]
     [
-      Returns a value suitable for passing as the /protocol/ argument to the
-      __POSIX__ function __socket__ (or equivalent).
+      Returns a value suitable for passing as the /protocol/ argument to
+      __POSIX__ __socket__ (or equivalent).
     ]
   ]
 ]

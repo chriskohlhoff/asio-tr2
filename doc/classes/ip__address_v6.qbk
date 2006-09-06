@@ -280,14 +280,14 @@ IPv4 compatible IPv6 address, as if computed by the following method:
 
 [function_effects Converts a string representation of an address into a
 corresponding `address_v6` value. The format is either ['`address`] or
-['`address`]`%`['`scope-id`], where ['`address`] is in the format specified
-by the __POSIX__ function __inet_pton__ when invoked with address family
-`AF_INET6`, and ['`scope-id`] is an optional string specifying the scope
-identifier. All implementations shall accept as ['`scope-id`] a string
-representation of an unsigned decimal integer. It is implementation-defined
-whether alternative scope identifier representations are permitted. If
-['`scope-id`] is not supplied, an `address_v6` object shall be returned such
-that `scope_id() == 0`.]
+['`address`]`%`['`scope-id`], where ['`address`] is in the format specified by
+__POSIX__ __inet_pton__ when invoked with address family `AF_INET6`, and
+['`scope-id`] is an optional string specifying the scope identifier. All
+implementations shall accept as ['`scope-id`] a string representation of an
+unsigned decimal integer. It is implementation-defined whether alternative
+scope identifier representations are permitted. If ['`scope-id`] is not
+supplied, an `address_v6` object shall be returned such that `scope_id() ==
+0`.]
 
 [function_returns If successful, an `address_v6` value corresponding to the
 string `str`. Otherwise returns `address_v6()`.]

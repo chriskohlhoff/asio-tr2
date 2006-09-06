@@ -9,8 +9,8 @@ value of `X`, and `u` denotes an identifier.
     [`a.name();`]
     [`int`]
     [
-      Returns a value suitable for passing as the /request/ argument to the
-      __POSIX__ function __ioctl__ (or equivalent).
+      Returns a value suitable for passing as the /request/ argument to
+      __POSIX__ __ioctl__ (or equivalent).
     ]
   ]
   [
