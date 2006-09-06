@@ -79,8 +79,8 @@ related objects occur from the one thread.]
 
 The `io_service` object associated with an asynchronous operation shall have
 unfinished work, as if by maintaining the existence of one or more objects of
-class `io_service::work` constructed using the `io_service`, until after the
-handler for the asynchronous operation has been invoked (but no longer).
+class `io_service::work` constructed using the `io_service`, until immediately
+after the handler for the asynchronous operation has been invoked.
 
 When an asynchronous operation is complete, the handler for the operation will
 be invoked as if by:
