@@ -1,7 +1,7 @@
 [library Networking Library Proposal for TR2
     [quickbook 1.1]
     [id tr2network]
-    [last-revision $Date: 2006/09/06 12:49:46 $]
+    [last-revision $Date: 2006/09/06 15:01:42 $]
 ]
 
 [/-----------------------------------------------------------------------------]
@@ -564,7 +564,6 @@ Library chapter defined in \[N1975\] and modified by \[N2066\].]
 [section:basic_io_services_requirements Requirements]
 [include:requirements requirements/handler.qbk]
 [include:requirements requirements/completion_handler.qbk]
-[include:requirements requirements/bound_completion_handler.qbk]
 [include:requirements requirements/service.qbk]
 [include:requirements requirements/io_object_service.qbk]
 [include:requirements requirements/thread_safety.qbk]

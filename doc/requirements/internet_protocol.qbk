@@ -34,28 +34,6 @@ of type `X`, and `b` denotes a value of type `X`.
     [convertible to `bool`]
     [Returns `!(a == b)`.]
   ]
-  [
-    [`a < b`]
-    [convertible to `bool`]
-    [Returns whether one protocol object is less than another. An object that
-    represents an IP version 4 protocol shall be less than an object that
-    represents an IP version 6 protocol.]
-  ]
-  [
-    [`a > b`]
-    [convertible to `bool`]
-    [Returns `b < a`.]
-  ]
-  [
-    [`a <= b`]
-    [convertible to `bool`]
-    [Returns `!(b < a)`.]
-  ]
-  [
-    [`a >= b`]
-    [convertible to `bool`]
-    [Returns `!(a < b)`.]
-  ]
 ]
 
 [endsect]
