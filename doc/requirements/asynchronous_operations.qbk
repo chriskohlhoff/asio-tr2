@@ -1,18 +1,81 @@
 [section:asynchronous_operations Requirements on asynchronous operations]
 
-By convention, all functions that initiate [link
-definitions.asynchronous_operation asynchronous operations] are named with the
-prefix `async_`. These functions shall be known as /initiating functions/.
+In this clause, an asynchronous operation is initiated by a function that is
+named with the prefix `async_`. These functions shall be known as ['initiating
+functions].
 
-All initiating functions shall include a release memory barrier (/TODO/) prior
-to any effect that may be visible to a different thread.
+All initiating functions in this clause take a function object meeting [link
+requirements.handler handler] requirements as the final parameter. These
+handlers accept as their first parameter an lvalue of type `const error_code`.
 
-All initiating functions take an object meeting [link requirements.handler
-handler] requirements as the last argument.
+Implementations of asynchronous operations described in this clause are
+permitted to call the application programming interface (API) provided by the
+operating system. If such an operating system API call results in an error, the
+handler shall be invoked with a `const error_code` lvalue that evaluates to
+true. Otherwise the handler shall be invoked with a `const error_code` lvalue
+that evaluates to false.
 
-An implementation is permitted to make copies of a handler argument. All copies
-of the handler argument shall be considered equivalent. All copies of the
-handler will be destroyed immediately after the handler is dispatched.
+Unless otherwise noted, when the behaviour of an asynchronous operation is
+defined "as if" implemented by a __POSIX__ function, the handler shall be
+invoked with an [link globals.errno_errors `errno` error] or [link
+globals.getaddrinfo_errors `getaddrinfo` error] value of type `error_code` that
+corresponds to the failure condition described by __POSIX__ for that function,
+if any. Otherwise the handler shall be invoked with an implementation-defined
+`error_code` value that reflects the operating system error.
+
+Asynchronous operations shall not fail with an error condition that indicates
+interruption by a signal (__POSIX__ `EINTR`). Asynchronous operations shall not
+fail with any error condition associated with non-blocking operations
+(__POSIX__ `EWOULDBLOCK`, `EAGAIN` or `EINPROGRESS`; __Windows__
+`WSAEWOULDBLOCK` or `WSAEINPROGRESS`).
+
+All asynchronous operations have an associated `io_service` object. Where the
+initiating function is a member function, the associated `io_service` is that
+returned by the `io_service()` member function on the same object. Where the
+initiating function is not a member function, the associated `io_service` is
+that returned by the `io_service()` member function of the first argument to
+the initiating function.
+
+Arguments to initiating functions shall be treated as follows:
+
+[mdash] If the parameter is declared as a const reference or by-value, the
+program is not required to guarantee the validity of the argument after the
+initiating function completes. The implementation may make copies of the
+argument, and all copies shall be destroyed no later than immediately after
+invocation of the handler.
+
+[mdash] If the parameter is declared as a non-const reference, const pointer or
+non-const pointer, the program must guarantee the validity of the argument
+until the handler is invoked.
+
+The library implementation is only permitted to make calls to an initiating
+function's arguments' copy constructors or destructors from a thread that
+satisfies one of the following conditions:
+
+[mdash] The thread is executing any member function of the associated
+`io_service` object.
+
+[mdash] The thread is executing the destructor of the associated `io_service`
+object.
+
+[mdash] The thread is executing one of the `io_service` service access
+functions `use_service`, `add_service` or `has_service`, where the first
+argument is the associated `io_service` object.
+
+[mdash] The thread is executing any member function, constructor or destructor
+of an object of a class defined in this clause, where the object's
+`io_service()` member function returns the associated `io_service` object.
+
+[mdash] The thread is executing any function defined in this clause, where any
+argument to the function has an `io_service()` member function that returns the
+associated `io_service` object.
+
+[commentary Implementations may use one or more hidden threads to emulate
+asynchronous functionality. The above requirements are intended to prevent
+these hidden threads from making calls to program code. This means that a
+program can, for example, use thread-unsafe reference counting in handler
+objects, provided the program ensures that all calls to an `io_service` and
+related objects occur from the one thread.]
 
 The `io_service` object associated with an asynchronous operation shall have
 unfinished work, as if by maintaining the existence of one or more objects of
@@ -22,39 +85,106 @@ handler for the asynchronous operation has been invoked (but no longer).
 When an asynchronous operation is complete, the handler for the operation will
 be invoked as if by:
 
-# Constructing an object `bch` meeting [link
-  requirements.bound_completion_handler bound completion handler]
-  requirements from the handler.
+# Constructing a bound completion handler `bch` for the handler, as described
+  below.
 
 # Calling `ios.post(bch)` to schedule the handler for deferred invocation,
-  where `ios` is the `io_service` associated with the I/O object on which the
-  asynchronous operation is being performed.
-
-# Dispatching the handler from within a call to an overload of `run()`,
-  `run_one()`, `poll()` or `poll_one()` on the `io_service`, by performing
-  `io_handler_invoke(bch, &h)` where `h` is a copy of the handler.
+  where `ios` is the associated `io_service`.
 
 [std_note This implies that the handler must not be called directly from within
 the initiating function, even if the asynchronous operation completes
 immediately.]
 
+A bound completion handler is a handler object that contains a copy of a
+user-supplied handler, where the user-supplied handler accepts one or more
+arguments. The bound completion handler does not accept any arguments, and
+contains values to be passed as arguments to the user-supplied handler. The
+bound completion handler forwards the `io_handler_allocate()`,
+`io_handler_deallocate()`, and `io_handler_invoke()` calls to the corresponding
+functions for the user-supplied handler. A bound completion handler meets the
+requirements for a [link requirements.completion_handler completion handler].
+
+[std_example A bound completion handler for a [link requirements.read_handler
+`ReadHandler`]:..
+``
+  template<class ReadHandler>
+  struct bound_read_handler
+  {
+    bound_read_handler(ReadHandler handler, const error_code& ec, size_t s)
+      : handler_(handler), ec_(ec), s_(s)
+    {
+    }
+
+    void operator()()
+    {
+      handler_(ec_, s_);
+    }
+
+    ReadHandler handler_;
+    const error_code ec_;
+    const size_t s_;
+  };
+
+  template<class ReadHandler>
+  void* io_handler_allocate(size_t size,
+                            bound_read_handler<ReadHandler>* this_handler)
+  {
+    using namespace std::tr2::sys;
+    return io_handler_allocate(size, &this_handler->handler_);
+  }
+
+  template<class ReadHandler>
+  void io_handler_deallocate(void* pointer, std::size_t size,
+                             bound_read_handler<ReadHandler>* this_handler)
+  {
+    using namespace std::tr2::sys;
+    io_handler_deallocate(pointer, size, &this_handler->handler_);
+  }
+
+  template<class F, class ReadHandler>
+  void io_handler_invoke(const F& f,
+                         bound_read_handler<ReadHandler>* this_handler)
+  {
+    using namespace std::tr2::sys;
+    io_handler_invoke(f, &this_handler->handler_);
+  }
+``
+]
+
+If the thread that initiates an asynchronous operation terminates before the
+associated handler is invoked, the behaviour is implementation-defined.
+
+The handler argument to an initiating function defines a handler identity. That
+is, the original handler argument and any copies of the handler argument shall
+be considered equivalent in the discussion below.
+
 If the implementation needs to allocate storage for an asynchronous operation,
 the implementation shall perform `io_handler_allocate(size, &h)`, where `size`
-is the required size in bytes, and `h` is the handler associated with the
-asynchronous operation. The implementation shall perform
-`io_handler_deallocate(p, size, &h)`, where `p` is a pointer to the storage, to
-deallocate the storage prior to the invocation of the handler via
+is the required size in bytes, and `h` is the handler. The implementation shall
+perform `io_handler_deallocate(p, size, &h)`, where `p` is a pointer to the
+storage, to deallocate the storage prior to the invocation of the handler via
 `io_handler_invoke`. Multiple storage blocks may be allocated for a single
 asynchronous operation.
 
 The implementation shall not make concurrent calls to `io_handler_allocate`,
-`io_handler_deallocate` or `io_handler_invoke` for a single handler.
+`io_handler_deallocate` or `io_handler_invoke` for a single handler identity.
+Calls to `io_handler_allocate`, `io_handler_deallocate` or `io_handler_invoke`
+shall only be made from threads that satisfy one of the conditions listed above
+for calls to the initiating function's arguments' copy constructors and
+destructors.
 
-The call to `io_handler_invoke` shall be preceded by an acquire memory barrier
-(/TODO/) and succeeded by a release memory barrier (/TODO/).
+[commentary The following text is intended to describe the behaviour of the
+implementation with respect to memory visibility. It needs to be rewritten
+using some better language.]
+
+All initiating functions shall include a release memory barrier prior to any
+effect that may be visible to a different thread.
+
+A call to `io_handler_invoke` shall be preceded by an acquire memory barrier
+and succeeded by a release memory barrier.
 
 Calls to `io_handler_allocate` or `io_handler_deallocate` from the initiating
-function shall occur prior to the release memory barrier (/TODO/).
+function shall occur prior to the release memory barrier.
 
 Calls to `io_handler_allocate` or `io_handler_deallocate` that occur
 immediately before `io_handler_invoke` shall occur after the acquire memory
@@ -62,17 +192,7 @@ barrier.
 
 Calls to `io_handler_allocate` and `io_handler_deallocate` not from the
 initiating function and not immediately before `io_handler_invoke` shall be
-preceded by an acquire memory barrier (/TODO/) and succeeded by a release
-memory barrier (/TODO/).
-
-If the thread that initiates an asynchronous operation terminates before the
-associated handler is dispatched, the behaviour is implementation-defined.
-
-Asynchronous operations shall not fail with any error condition indicating
-interruption by signal (__POSIX__ `EINTR`) or that the operation would block
-(__POSIX__ `EWOULDBLOCK`).
-
-Unless otherwise specified, asynchronous operations make copies of const
-reference and by-value arguments passed to the initiating functions.
+preceded by an acquire memory barrier and succeeded by a release memory
+barrier.
 
 [endsect]
