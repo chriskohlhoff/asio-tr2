@@ -1,4 +1,4 @@
-[section Header [^<system_error>] additions]
+[section Header [^<error_code>] additions]
 
   namespace std {
     namespace tr2 {
