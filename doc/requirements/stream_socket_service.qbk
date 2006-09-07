@@ -71,7 +71,8 @@ requirements.
       peer, the operation shall fail with `error::eof`.\n
       \n
       If the operation completes successfully, the `ReadHandler` object
-      `rh` is invoked with the number of bytes transferred. Otherwise `0`.
+      `rh` is invoked with the number of bytes transferred. Otherwise it is
+      invoked with `0`.
     ]
   ]
   [
@@ -122,7 +123,8 @@ requirements.
       bytes read.\n
       \n
       If the operation completes successfully, the `WriteHandler` object `wh`
-      is invoked with the number of bytes transferred. Otherwise `0`.
+      is invoked with the number of bytes transferred. Otherwise it is invoked
+      with `0`.
     ]
   ]
 ]

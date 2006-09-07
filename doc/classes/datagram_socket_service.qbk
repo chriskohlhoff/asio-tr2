@@ -469,7 +469,7 @@ by the peer, the operation shall fail with `error::eof`.]
 
 [function_block If the operation completes successfully, the `ReadHandler`
 object `handler` is invoked with the number of bytes transferred. Otherwise
-`0`.]
+it is invoked with `0`.]
 
   template<class MutableBufferSequence>
     size_t receive_from(implementation_type& impl,
@@ -535,7 +535,7 @@ handler for the asynchronous operation is invoked.]
 
 [function_block If the operation completes successfully, the `ReadHandler`
 object `handler` is invoked with the number of bytes transferred. Otherwise
-`0`.]
+it is invoked with `0`.]
 
   template<class ConstBufferSequence>
     size_t send(implementation_type& impl,
@@ -594,7 +594,7 @@ be performed.]
 
 [function_block If the operation completes successfully, the `WriteHandler`
 object `handler` is invoked with the number of bytes transferred. Otherwise
-`0`.]
+it is invoked with `0`.]
 
   template<class ConstBufferSequence>
     size_t send_to(implementation_type& impl,
@@ -655,7 +655,7 @@ be performed.]
 
 [function_block If the operation completes successfully, the `WriteHandler`
 object `handler` is invoked with the number of bytes transferred. Otherwise
-`0`.]
+it is invoked with `0`.]
 
 [endsect]
 
