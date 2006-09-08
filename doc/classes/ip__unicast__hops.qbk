@@ -15,8 +15,9 @@ option] with the name and values in the table below:
 ]
 
 [std_note The constants `IPPROTO_IP`, `IPPROTO_IPV6` and `IPV6_UNICAST_HOPS`
-are defined in the __POSIX__ header file __netinet_in_h__. [*Where is `IP_TTL`
-in __POSIX__?]]
+are defined in the __POSIX__ header file __netinet_in_h__.]
+
+[commentary Where is `IP_TTL` in __POSIX__?]
 
 Constructors for the `hops` class shall throw `out_of_range` if the argument is
 not in the range `[0, 255]`.

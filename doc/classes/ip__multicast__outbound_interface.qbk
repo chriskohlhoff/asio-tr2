@@ -96,7 +96,9 @@ __POSIX__ header file __netinet_in_h__.]
 `IP_MULTICAST_IF`.]
 
 [function_note The constant `IPV6_MULTICAST_IF` is defined in the __POSIX__
-header file __netinet_in_h__. [*Where is `IP_MULTICAST_IF` in __POSIX__?]]
+header file __netinet_in_h__.]
+
+[commentary Where is `IP_MULTICAST_IF` in __POSIX__?]
 
   template<class Protocol> const ``['unspecified]``* data(const Protocol& p) const;
 

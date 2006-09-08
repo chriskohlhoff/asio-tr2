@@ -72,8 +72,10 @@ socket option classes are described in the table below.
 
 [std_note The constants `IPPROTO_IP` and `IPPROTO_IPV6` are defined in the
 __POSIX__ header file __netinet_in_h__. The constants `IPV6_JOIN_GROUP` and
-`IPV6_LEAVE_GROUP` are defined in the __POSIX__ header file __netinet_in_h__.
-[*Where are `IP_ADD_MEMBERSHIP` and `IP_DROP_MEMBERSHIP` in __POSIX__?]]
+`IPV6_LEAVE_GROUP` are defined in the __POSIX__ header file __netinet_in_h__.]
+
+[commentary Where are `IP_ADD_MEMBERSHIP` and `IP_DROP_MEMBERSHIP` in
+__POSIX__?]
 
 [section Multicast group management socket option constructors]
 

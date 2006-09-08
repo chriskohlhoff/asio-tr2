@@ -15,7 +15,8 @@ option] with the name and values in the table below:
 ]
 
 [std_note The constants `IPPROTO_IP`, `IPPROTO_IPV6` and `IPV6_MULTICAST_LOOP`
-are defined in the __POSIX__ header file __netinet_in_h__. [*Where is
-`IP_MULTICAST_LOOP` in __POSIX__?]]
+are defined in the __POSIX__ header file __netinet_in_h__.]
+
+[commentary Where is `IP_MULTICAST_LOOP` in __POSIX__?]
 
 [endsect]
