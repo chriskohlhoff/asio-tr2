@@ -4,6 +4,7 @@
   `async_read_until` functions to violate their contract. E.g.
   a read of N bytes may finish early due to EOF.
 
-* To distinguish between end of stream and a successful read of size 0.
+* An EOF error may be used to distinguish the end of a stream from a successful
+  read of size 0.
 
 [endsect]
