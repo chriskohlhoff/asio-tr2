@@ -1,7 +1,7 @@
 [library Networking Library Proposal for TR2
     [quickbook 1.1]
     [id tr2network]
-    [last-revision $Date: 2006/09/08 12:50:17 $]
+    [last-revision $Date: 2006/09/08 13:02:50 $]
 ]
 
 [/-----------------------------------------------------------------------------]
@@ -109,6 +109,7 @@
 [template SYMBIAN[] \[[link ref-SYMBIAN SYMBIAN]\] ]
 [template MSNET[] \[[link ref-MS-NET MS-NET]\] ]
 [template ESAPI[] \[[link ref-ES-API ES-API]\] ]
+[template UNPV1[] \[[link ref-UNPV1 UNPV1]\] ]
 [template POSA2[] \[[link ref-POSA2 POSA2]\] ]
 [template RFC821[] \[[link ref-RFC821 RFC821]\] ]
 [template RFC959[] \[[link ref-RFC959 RFC959]\] ]
@@ -759,6 +760,9 @@ Specification, Version 3].
 [#ref-ES-API] \[ES-API\] The Interconnect Software Consortium / The Open Group,
 ['Extended Sockets API (ES-API), Issue 1.0], 2005,
 [@http://opengroup.org/icsc/uploads/40/6415/ES_API_1_0.pdf]
+
+[#ref-UNPV1] \[UNPV1\] Stevens, W. Richard,
+['UNIX Network Programming, Volume 1, 2nd Edition], Prentice Hall, 1998
 
 [#ref-POSA2] \[POSA2\] Schmidt, Douglas C. et al,
 ['Pattern Oriented Software Architecture, Volume 2], Wiley, 2000

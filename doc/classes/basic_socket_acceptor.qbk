@@ -20,7 +20,8 @@
           basic_socket_acceptor(std::tr2::sys::io_service& io_service,
                                 const protocol_type& protocol);
           basic_socket_acceptor(std::tr2::sys::io_service& io_service,
-                                const endpoint_type& endpoint);
+                                const endpoint_type& endpoint,
+                                bool reuse_addr = true);
           basic_socket_acceptor(std::tr2::sys::io_service& io_service,
                                 const protocol_type& protocol,
                                 const native_type& native_acceptor);
@@ -117,7 +118,8 @@ SocketAcceptorService>`, initialising the base class with
 ``]
 
   basic_socket_acceptor(std::tr2::sys::io_service& io_service,
-                        const endpoint_type& endpoint);
+                        const endpoint_type& endpoint,
+                        bool reuse_addr = true);
 
 [function_effects Constructs an object of class `basic_socket_acceptor<Protocol,
 SocketAcceptorService>`, initialising the base class with
@@ -127,11 +129,19 @@ it as ready to accept connections as if by calling:
   error_code ec;
   this->service.open(this->implementation, endpoint.protocol(), ec);
   if (ec) throw system_error(ec);
+  if (reuse_addr)
+  {
+    this->service.set_option(this->implementation, reuse_address(true), ec);
+    if (ec) throw system_error(ec);
+  }
   this->service.bind(this->implementation, endpoint, ec);
   if (ec) throw system_error(ec);
   this->service.listen(this->implementation, max_connections, ec);
   if (ec) throw system_error(ec);
 ``]
+
+[commentary [UNPV1] recommends setting `SO_REUSEADDR` by default in all TCP
+servers, although there are some security implications in doing so.]
 
   basic_socket_acceptor(std::tr2::sys::io_service& io_service,
                         const protocol_type& protocol,
