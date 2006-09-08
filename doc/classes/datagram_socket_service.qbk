@@ -404,6 +404,12 @@ requirements.asynchronous_operations asynchronous operation] requirements.]
 [function_block If `is_open(impl)` is false, the operation shall fail
 immediately with `error_code` value `error::bad_descriptor`.]
 
+[function_block When multiple asynchronous connect operations are initiated
+such that the operations may logically be performed in parallel, the behaviour
+is implementation-defined. When an asynchronous connect operation and an
+asynchronous read or write operation are initiated such that they may logically
+be performed in parallel, the behaviour is implementation-defined.]
+
   template<class MutableBufferSequence>
     size_t receive(implementation_type& impl,
                    const MutableBufferSequence& buffers,
@@ -463,6 +469,14 @@ be performed. If `flags & socket_base::message_peek` is true, the operation
 shall fail immediately with `error::invalid_argument`. If `flags &
 socket_base::message_out_of_band` is true, the operation shall continue until
 out-of-band data is received, or an error occurs.]
+
+[function_block When multiple asynchronous read operations with zero `flags`
+are initiated such that the operations may logically be performed in parallel,
+the implementation shall fill the `buffers` in the order in which the
+operations were issued. The order of invocation of the handlers for these
+operations is implementation-defined. When multiple asynchronous read
+operations with non-zero `flags` are initiated such that operations may
+logically be performed in parallel, the behaviour is implementation-defined.]
 
 [function_block If the operation completes due to graceful connection closure
 by the peer, the operation shall fail with `error::eof`.]
@@ -530,6 +544,14 @@ shall fail immediately with `error::invalid_argument`. If `flags &
 socket_base::message_out_of_band` is true, the operation shall continue until
 out-of-band data is received, or an error occurs.]
 
+[function_block When multiple asynchronous read operations with zero `flags`
+are initiated such that the operations may logically be performed in parallel,
+the implementation shall fill the `buffers` in the order in which the
+operations were issued. The order of invocation of the handlers for these
+operations is implementation-defined. When multiple asynchronous read
+operations with non-zero `flags` are initiated such that operations may
+logically be performed in parallel, the behaviour is implementation-defined.]
+
 [function_block The program must ensure the object `sender` is valid until the
 handler for the asynchronous operation is invoked.]
 
@@ -592,6 +614,14 @@ invoked,]
 [function_block The `flags` argument specifies the type of send operation to
 be performed.]
 
+[function_block When multiple asynchronous write operations with zero `flags`
+are initiated such that the operations may logically be performed in parallel,
+the implementation shall write the `buffers` in the order in which the
+operations were issued. The order of invocation of the handlers for these
+operations is implementation-defined. When multiple asynchronous write
+operations with non-zero `flags` are initiated such that operations may
+logically be performed in parallel, the behaviour is implementation-defined.]
+
 [function_block If the operation completes successfully, the `WriteHandler`
 object `handler` is invoked with the number of bytes transferred. Otherwise
 it is invoked with `0`.]
@@ -652,6 +682,14 @@ invoked,]
 
 [function_block The `flags` argument specifies the type of send operation to
 be performed.]
+
+[function_block When multiple asynchronous write operations with zero `flags`
+are initiated such that the operations may logically be performed in parallel,
+the implementation shall write the `buffers` in the order in which the
+operations were issued. The order of invocation of the handlers for these
+operations is implementation-defined. When multiple asynchronous write
+operations with non-zero `flags` are initiated such that operations may
+logically be performed in parallel, the behaviour is implementation-defined.]
 
 [function_block If the operation completes successfully, the `WriteHandler`
 object `handler` is invoked with the number of bytes transferred. Otherwise

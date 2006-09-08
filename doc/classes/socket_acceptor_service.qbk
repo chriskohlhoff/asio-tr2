@@ -329,6 +329,10 @@ immediately with `error_code` value `error::bad_descriptor`. If
 `socket.is_open()` is true, the operation shall fail immediately with
 `error_code` value `error::already_open`.]
 
+[function_block When multiple asynchronous accept operations are initiated such
+that the operations may logically be performed in parallel, the behaviour is
+implementation-defined.]
+
 [function_block The program must ensure the `basic_socket<>` object `socket` is
 valid until the handler for the asynchronous operation is invoked. If `endpoint
 != 0`, the program must ensure the object `*endpoint` is valid until the
