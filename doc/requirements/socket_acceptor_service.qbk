@@ -191,7 +191,7 @@ and `u` and `v` denote identifiers.
     ``]
     [`error_code`]
     [
-      pre: `a.is_open(b)`.\n
+      pre: `a.is_open(b) && !k.is_open()`.\n
       post: `k.is_open()`
     ]
   ]
