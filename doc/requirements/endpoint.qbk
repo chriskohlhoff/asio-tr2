@@ -74,7 +74,7 @@ In the table below, `X` denotes an endpoint class, `a` denotes a value of `X`,
       post: `a.size() == s`\n
       Passed the value contained in the /address_len/ argument to __POSIX__
       functions such as __accept__, __getpeername__, __getsockname__ and
-      __recvfrom__, after a successful completion of the function. Permitted to
+      __recvfrom__, after successful completion of the function. Permitted to
       throw an exception if the protocol associated with the endpoint object `a`
       does not support the specified size.
     ]
