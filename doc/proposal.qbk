@@ -1,7 +1,7 @@
 [library Networking Library Proposal for TR2
     [quickbook 1.1]
     [id tr2network]
-    [last-revision $Date: 2006/09/08 14:41:37 $]
+    [last-revision $Date: 2006/09/08 15:08:59 $]
 ]
 
 [/-----------------------------------------------------------------------------]
@@ -101,21 +101,21 @@
 
 [/-----------------------------------------------------------------------------]
 
-[template POSIX[] \[[link ref-POSIX POSIX]\] ]
-[template N1975[] \[[link ref-N1975 N1975]\] ]
-[template N2058[] \[[link ref-N2058 N2058]\] ]
-[template N2066[] \[[link ref-N2066 N2066]\] ]
-[template ACE[] \[[link ref-ACE ACE]\] ]
-[template SYMBIAN[] \[[link ref-SYMBIAN SYMBIAN]\] ]
-[template MSNET[] \[[link ref-MS-NET MS-NET]\] ]
-[template ESAPI[] \[[link ref-ES-API ES-API]\] ]
-[template UNPV1[] \[[link ref-UNPV1 UNPV1]\] ]
-[template POSA2[] \[[link ref-POSA2 POSA2]\] ]
-[template RFC821[] \[[link ref-RFC821 RFC821]\] ]
-[template RFC959[] \[[link ref-RFC959 RFC959]\] ]
-[template RFC2616[] \[[link ref-RFC2616 RFC2616]\] ]
-[template RFC2732[] \[[link ref-RFC2732 RFC2732]\] ]
-[template RFC3513[] \[[link ref-RFC3513 RFC3513]\] ]
+[template POSIX[] \[[link ref-POSIX POSIX]\]]
+[template N1900[] \[[link ref-N1900 N1900]\]]
+[template N1975[] \[[link ref-N1975 N1975]\]]
+[template N2066[] \[[link ref-N2066 N2066]\]]
+[template ACE[] \[[link ref-ACE ACE]\]]
+[template SYMBIAN[] \[[link ref-SYMBIAN SYMBIAN]\]]
+[template MSNET[] \[[link ref-MS-NET MS-NET]\]]
+[template ESAPI[] \[[link ref-ES-API ES-API]\]]
+[template UNPV1[] \[[link ref-UNPV1 UNPV1]\]]
+[template POSA2[] \[[link ref-POSA2 POSA2]\]]
+[template RFC821[] \[[link ref-RFC821 RFC821]\]]
+[template RFC959[] \[[link ref-RFC959 RFC959]\]]
+[template RFC2616[] \[[link ref-RFC2616 RFC2616]\]]
+[template RFC2732[] \[[link ref-RFC2732 RFC2732]\]]
+[template RFC3513[] \[[link ref-RFC3513 RFC3513]\]]
 
 [/-----------------------------------------------------------------------------]
 
@@ -327,7 +327,7 @@ defined. In particular, the proposal will attempt to address:
 [section Relationship to Date-Time Library Proposal]
 
 This proposal uses classes defined in the Proposal to Add Date-Time to the C++
-Standard Library [N2058].
+Standard Library [N1900].
 
 [endsect]
 
@@ -766,11 +766,12 @@ the time to meticulously read and review this proposal (except this bit).
 Open Group Base Specifications, Issue 6]. Also known as ['The Single Unix
 Specification, Version 3].
 
+[#ref-N1900] \[N1900\] Garland, Jeff,
+['Proposal to Add Date-Time to the C++ Standard Library], 2006.
+Updated by N2058.
+
 [#ref-N1975] \[N1975\] Dawes, Beman,
 ['Filesystem Library Proposal for TR2 (Revision 3)], 2006
-
-[#ref-N2058] \[N2058\] Garland, Jeff,
-['Proposal to Add Date-Time to the C++ Standard Library], 2006
 
 [#ref-N2066] \[N2066\] Dawes, Beman,
 ['TR2 Diagnostics Enhancements], 2006
