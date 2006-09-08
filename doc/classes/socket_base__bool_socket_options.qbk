@@ -63,7 +63,7 @@ classes are described in the table below.
     [`SOL_SOCKET`]
     [`SO_DEBUG`]
     [
-      Determines whether a debugging information is recorded by the underlying
+      Determines whether debugging information is recorded by the underlying
       protocol.
     ]
   ]

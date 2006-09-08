@@ -49,7 +49,7 @@
 
 [mdash] an enumerated type, `shutdown_type`;
 
-[mdash] a bitmask type, `message_flags`;
+[mdash] a bitmask type, `message_flags`.
 
 The value `max_connections` contains the implementation-defined limit on the
 length of the queue of pending incoming connections.
