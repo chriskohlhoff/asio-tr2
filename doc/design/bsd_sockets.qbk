@@ -9,4 +9,8 @@ and scalable applications. For example, it permits programmers to exert finer
 control over the number of system calls, avoid redundant data copying, minimise
 the use of resources like threads, and so on.
 
+Unsafe and error prone aspects of the BSD sockets API not included. For
+example, type safety is enforced at compile-time by using classes to represent
+sockets rather than `int`.
+
 [endsect]

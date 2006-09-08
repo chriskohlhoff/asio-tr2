@@ -55,6 +55,11 @@ Extensible implementations shall provide the following member functions:
     } // namespace tr2
   } // namespace std
 
+[commentary The `outbound_interface` class is a `SettableSocketOption` only,
+unlike its __POSIX__ equivalents which are both gettable and settable. This is
+to avoid the need for additional classes that provide a protocol independent
+representation of a network interface.]
+
 [section [^ip::multicast::outbound_interface] constructors]
 
   outbound_interface();

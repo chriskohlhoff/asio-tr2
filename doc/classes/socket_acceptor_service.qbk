@@ -306,6 +306,10 @@ an error indicating that a connection has been aborted. [inline_note Such as
 __POSIX__ `ECONNABORTED`, and __Windows__ `WSAECONNABORTED` or
 `ERROR_NETNAME_DELETED`).]]
 
+[commentary The `ECONNABORTED` error is suppressed since it is a transient
+error, is rarely (if ever) useful but handling it correctly adds complexity to
+even very simple servers.]
+
 [function_returns `ec`.]
 
 [function_postconditions `socket.is_open()`.]
