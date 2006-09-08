@@ -74,7 +74,7 @@ connection as if by calling:
 ``
   error_code ec;
   this->basic_socket<Protocol, StreamSocketService>::close(ec);
-  this->basic_socket<Protocol, StreamSocketService>::connect(*i, ec);
+  this->basic_socket<Protocol, StreamSocketService>::connect(e, ec);
 ``]
 
 [function_returns `this` if `ec` indicates that a connection was successfully
