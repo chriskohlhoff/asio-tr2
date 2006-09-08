@@ -1,7 +1,7 @@
 [library Networking Library Proposal for TR2
     [quickbook 1.1]
     [id tr2network]
-    [last-revision $Date: 2006/09/06 15:01:42 $]
+    [last-revision $Date: 2006/09/08 11:36:45 $]
 ]
 
 [/-----------------------------------------------------------------------------]
@@ -109,6 +109,7 @@
 [template SYMBIAN[] \[[link ref-SYMBIAN SYMBIAN]\] ]
 [template MSNET[] \[[link ref-MS-NET MS-NET]\] ]
 [template ESAPI[] \[[link ref-ES-API ES-API]\] ]
+[template POSA2[] \[[link ref-POSA2 POSA2]\] ]
 [template RFC821[] \[[link ref-RFC821 RFC821]\] ]
 [template RFC959[] \[[link ref-RFC959 RFC959]\] ]
 [template RFC2616[] \[[link ref-RFC2616 RFC2616]\] ]
@@ -340,6 +341,7 @@ Library Proposal [N1975], and updated by [N2066], are used in this proposal.
 [section Design Decisions]
 
 [include:design design/bsd_sockets.qbk]
+[include:design design/async.qbk]
 [include:design design/iostreams.qbk]
 [include:design design/posix.qbk]
 [include:design design/threads.qbk]
@@ -752,6 +754,9 @@ Specification, Version 3].
 [#ref-ES-API] \[ES-API\] The Interconnect Software Consortium / The Open Group,
 ['Extended Sockets API (ES-API), Issue 1.0], 2005,
 [@http://opengroup.org/icsc/uploads/40/6415/ES_API_1_0.pdf]
+
+[#ref-POSA2] \[POSA2\] Schmidt, Douglas C. et al,
+['Pattern Oriented Software Architecture, Volume 2], Wiley, 2000
 
 [#ref-RFC821] \[RFC821\] Postel, J.,
 ['RFC 821: Simple Mail Transfer Protocol], 1982,
