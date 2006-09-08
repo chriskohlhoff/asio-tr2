@@ -1,0 +1,84 @@
+[section:async Asynchronous Operations]
+
+The proposed library offers side-by-side support for synchronous and
+asynchronous operations. The asynchronous support is based on the Proactor
+design pattern [POSA2], and the advantages and disadvantages of this approach,
+when compared to a synchronous-only or Reactor approach, are outlined below.
+
+[section:async_advantages Advantages] 
+
+[mdash] Portability.
+
+[:Many operating systems offer a native asynchronous I/O API (such as
+overlapped I/O on __Windows__) as the preferred option for developing high
+performance network applications. The proposed library may be implemented in
+terms of native asynchronous I/O. However, if native support is not available,
+the library may also be implemented using synchronous event demultiplexors that
+typify the Reactor pattern, such as __POSIX__ `select()`.]
+
+[mdash] Decoupling threading from concurrency.
+
+[:Long-duration operations are performed asynchronously by the implementation
+on behalf of the application. Consequently applications do not need to spawn
+many threads in order to increase concurrency.]
+
+[mdash] Performance and scalability.
+
+[:Implementation strategies such as thread-per-connection (which a
+synchronous-only approach would require) can degrade system performance, due to
+increased context switching, synchronisation and data movement among CPUs. With
+asynchronous operations it is possible to avoid the cost of context switching
+by minimising the number of operating system threads [mdash] typically a
+limited resource [mdash] and only activating the logical threads of control
+that have events to process.]
+
+[mdash] Simplified application synchronisation.
+
+[:Asynchronous operation completion handlers can be written as though they
+exist in a single-threaded environment, and so application logic can be
+developed with little or no concern for synchronisation issues.]
+
+[mdash] Function composition.
+
+[:Function composition refers to the implementation of functions to provide a
+higher-level operation, such as sending a message in a particular format. Each
+function is implemented in terms of multiple calls to lower-level read or write
+operations.]
+
+[:For example, consider a protocol where each message consists of a
+fixed-length header followed by a variable length body, where the length of the
+body is specified in the header. A hypothetical read_message operation could be
+implemented using two lower-level reads, the first to receive the header and,
+once the length is known, the second to receive the body.]
+
+[:To compose functions in an asynchronous model, asynchronous operations can be
+chained together. That is, a completion handler for one operation can initiate
+the next. Starting the first call in the chain can be encapsulated so that the
+caller need not be aware that the higher-level operation is implemented as a
+chain of asynchronous operations.]
+
+[:The ability to compose new operations in this way simplifies the development
+of higher levels of abstraction above a networking library, such as functions
+to support a specific protocol.]
+
+[endsect]
+
+[section:async_disadvantages Disadvantages] 
+
+[mdash] Program complexity.
+
+[:It is more difficult to develop applications using asynchronous mechanisms
+due to the separation in time and space between operation initiation and
+completion. Applications may also be harder to debug due to the inverted flow
+of control.]
+
+[mdash] Memory usage.
+
+[:Buffer space must be committed for the duration of a read or write operation,
+which may continue indefinitely, and a separate buffer is required for each
+concurrent operation. The Reactor pattern, on the other hand, does not require
+buffer space until a socket is ready for reading or writing.]
+
+[endsect]
+
+[endsect]
