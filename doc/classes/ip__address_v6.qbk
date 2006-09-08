@@ -14,7 +14,7 @@
             // constructors:
             address_v6();
             explicit address_v6(const bytes_type& bytes,
-              unsigned long scope_id = 0);
+                                unsigned long scope_id = 0);
 
             // members:
             void scope_id(unsigned long id);
@@ -85,7 +85,7 @@ the table below.]
 ]
 
   explicit address_v6(const bytes_type& bytes,
-    unsigned long scope_id = 0);
+                      unsigned long scope_id = 0);
 
 [function_effects Constructs an object of class `address_v6`.]
 
