@@ -7,6 +7,17 @@ Multicast group management socket option classes satisfy the requirements for
 `CopyConstructible`, `Assignable`, and [link
 requirements.settable_socket_option `SettableSocketOption`].
 
+[std_example Creating a UDP socket and joining a multicast group:
+``
+  // Open an IPv4 UDP socket bound to a specific port.
+  ip::udp::endpoint ep(ip::udp::v4(), 12345);
+  ip::udp::socket sock(io_svc, ep);
+
+  // Join a multicast group.
+  ip::address addr = ip::address::from_string("239.255.0.1");
+  sock.set_option(ip::multicast::join_group(addr));
+``]
+
 Multicast group management socket option classes shall be defined as follows:
 
   class ``['[*C]]``
@@ -15,10 +26,10 @@ Multicast group management socket option classes shall be defined as follows:
     // constructors:
     ``['[*C]]``();
     explicit ``['[*C]]``(const address& multicast_group);
-    ``['[*C]]``(const address_v4& multicast_group,
-      const address_v4& network_interface = address_v4::any());
-    ``['[*C]]``(const address_v6& multicast_group,
-      unsigned int network_interface = 0);
+    explicit ``['[*C]]``(const address_v4& multicast_group,
+               const address_v4& network_interface = address_v4::any());
+    explicit ``['[*C]]``(const address_v6& multicast_group,
+               unsigned int network_interface = 0);
   };
 
 Extensible implementations shall provide the following member functions:
@@ -82,16 +93,16 @@ correspond to the IPv4 address returned by `multicast_group.to_v4()`,
 `v4_value_.imr_interface` is zero-initialised, and `v6_value_` is
 zero-initialised.]
 
-  ``['[*C]]``(const address_v4& multicast_group,
-    const address_v4& network_interface = address_v4::any());
+  explicit ``['[*C]]``(const address_v4& multicast_group,
+             const address_v4& network_interface = address_v4::any());
 
 [function_effects For extensible implementations, `v4_value_.imr_multiaddr` is
 initialised to correspond to the address `multicast_group`,
 `v4_value_.imr_interface` is initialised to correspond to address
 `network_interface`, and `v6_value_` is zero-initialised.]
 
-  ``['[*C]]``(const address_v6& multicast_group,
-    unsigned int network_interface = 0);
+  explicit ``['[*C]]``(const address_v6& multicast_group,
+             unsigned int network_interface = 0);
 
 [function_effects For extensible implementations, `v6_value_.ipv6mr_multiaddr`
 is initialised to correspond to the address `multicast_group`,
