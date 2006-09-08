@@ -383,6 +383,11 @@ is implementation-defined. When an asynchronous connect operation and an
 asynchronous read or write operation are initiated such that they may logically
 be performed in parallel, the behaviour is implementation-defined.]
 
+[function_block If a program performs a synchronous `set_option`, `io_control`,
+`bind`, `shutdown`, `connect`, `receive`, or `send` operation on `impl` while
+there is an incomplete asynchronous connect operation, the behaviour is
+implementation-defined.]
+
   template<class MutableBufferSequence>
     size_t receive(implementation_type& impl,
                    const MutableBufferSequence& buffers,
@@ -455,6 +460,11 @@ operations were issued. The order of invocation of the handlers for these
 operations is implementation-defined. When multiple asynchronous read
 operations with non-zero `flags` are initiated such that operations may
 logically be performed in parallel, the behaviour is implementation-defined.]
+
+[function_block If a program performs a synchronous `set_option`, `io_control`,
+`bind`, `shutdown`, `connect`, or `receive` operation on `impl` while there is
+an incomplete asynchronous read operation, the behaviour is
+implementation-defined.]
 
 [function_block If the operation completes due to graceful connection closure
 by the peer, the operation shall fail with `error::eof`.]
@@ -530,6 +540,11 @@ operations were issued. The order of invocation of the handlers for these
 operations is implementation-defined. When multiple asynchronous write
 operations with non-zero `flags` are initiated such that operations may
 logically be performed in parallel, the behaviour is implementation-defined.]
+
+[function_block If a program performs a synchronous `set_option`, `io_control`,
+`bind`, `shutdown`, `connect`, or `send` operation on `impl` while there is an
+incomplete asynchronous send operation, the behaviour is
+implementation-defined.]
 
 [function_block If the operation completes successfully, the `WriteHandler`
 object `handler` is invoked with the number of bytes transferred. Otherwise

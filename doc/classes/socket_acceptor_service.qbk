@@ -253,8 +253,9 @@ extensions to be supported.]
 
 [function_requires `is_open(impl)`.]
 
-[function_effects If `is_open(impl)` is false, sets `ec` to `error::bad_descriptor`. Otherwise binds the socket `impl` to the specified local endpoint, as
-if by __POSIX__ __bind__.]
+[function_effects If `is_open(impl)` is false, sets `ec` to
+`error::bad_descriptor`. Otherwise binds the socket `impl` to the specified
+local endpoint, as if by __POSIX__ __bind__.]
 
 [function_returns `ec`.]
 
@@ -332,6 +333,10 @@ immediately with `error_code` value `error::bad_descriptor`. If
 [function_block When multiple asynchronous accept operations are initiated such
 that the operations may logically be performed in parallel, the behaviour is
 implementation-defined.]
+
+[function_block If a program performs a synchronous `set_option`, `io_control`,
+`bind`, or `accept` operation on `impl` while there is an incomplete
+asynchronous accept operation, the behaviour is implementation-defined.]
 
 [function_block The program must ensure the `basic_socket<>` object `socket` is
 valid until the handler for the asynchronous operation is invoked. If `endpoint
