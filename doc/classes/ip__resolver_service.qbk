@@ -13,7 +13,7 @@ of a [link requirements.resolver_service `ResolverService`].
             public io_service::service
           {
           public:
-          static io_service::id id;
+            static io_service::id id;
 
             // types:
             typedef InternetProtocol protocol_type;

@@ -246,8 +246,8 @@ definitions.network_byte_order network byte order].]
   string to_string(error_code& ec) const;
 
 [function_effects Converts an address into a string representation. If
-`scope_id() == 0`, as if by __POSIX__ __inet_ntop__ when invoked with address
-family `AF_INET6`. If `scope_id() != 0`, the format is
+`scope_id() == 0`, converts as if by __POSIX__ __inet_ntop__ when invoked with
+address family `AF_INET6`. If `scope_id() != 0`, the format is
 ['`address`]`%`['`scope-id`], where ['`address`] is the string representation
 of the equivalent address having `scope_id() == 0`, and ['`scope-id`] is an
 implementation-defined string representation of the scope identifier.]

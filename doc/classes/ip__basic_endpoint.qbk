@@ -75,7 +75,7 @@ Extensible implementations shall provide the following member functions:
             ``['unspecified]``* data();
             const ``['unspecified]``* data() const;
             size_t size() const;
-            void resize(size_t size);
+            void resize(size_t s);
             size_t capacity() const;
             ``['[*// remainder unchanged]]``
           private:
@@ -267,7 +267,7 @@ address is based on [RFC2732].]
 [function_returns `sizeof(sockaddr_in6)` if `protocol().family() == AF_INET`,
 otherwise `sizeof(sockaddr_in)`.]
 
-  void resize(size_t size);
+  void resize(size_t s);
 
 [function_throws `length_error` if the condition
 `protocol().family() == AF_INET6 && s != sizeof(sockaddr_in6)` `||`

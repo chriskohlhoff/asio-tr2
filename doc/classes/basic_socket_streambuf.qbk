@@ -129,8 +129,8 @@ value of `ec` indicates failure then `close` fails.]
 [function_effects Behaves according to the description of
 `basic_streambuf<char>::underflow()`, with the specialisation that a sequence
 of characters is read from the input sequence as if by reading from the socket
-into an internal buffer as if by calling
-`this->service.receive(this->implementation, __dotdotdot__)`.]
+into an internal buffer by calling `this->service.receive(this->implementation,
+__dotdotdot__)`.]
 
 [function_effects Returns `traits_type::eof()` to indicate failure. Otherwise
 returns `traits_type::to_int_type(*gptr())`.]
