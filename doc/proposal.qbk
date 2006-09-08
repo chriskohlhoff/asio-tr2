@@ -1,7 +1,7 @@
 [library Networking Library Proposal for TR2
     [quickbook 1.1]
     [id tr2network]
-    [last-revision $Date: 2006/09/08 13:02:50 $]
+    [last-revision $Date: 2006/09/08 14:39:06 $]
 ]
 
 [/-----------------------------------------------------------------------------]
@@ -360,7 +360,7 @@ The following list summarises some other design decisions made in the
 development of the library. Some further decisions are also included as
 commentary in the proposed text.
 
-[mdash] The implementation is separated into two layers: "services" and the
+[mdash] The implementation is separated into two layers: "services", and the
 object-oriented wrappers around them.
 
 [mdash] The `read`, `async_read`, `write` and `async_write` functions are
@@ -724,7 +724,35 @@ This subclause defines components for performing timer operations.
 
 [section Acknowledgements]
 
-/TODO/
+The original ideas behind Boost.Asio were based on the work of Alexander
+Libman, and were fleshed out in discussions with him over numerous lunches.
+
+The first user of the library was Matthew Nourse, and over the past several
+years he has provided much valuable feedback on both the library and this
+proposal, and has been a not entirely unwilling accomplice in resolving many
+design issues.
+
+Beman Dawes encouraged and guided the development of this proposal. Review
+feedback was also gratefully received from John Ky and Andrew Kohlhoff.
+
+The library has received feedback in the form of comments, criticisms,
+contributions, bug reports, suggestions and questions from more than 100
+people. Many thanks to all concerned [mdash] it has all helped immensely in
+bringing the interface to maturity. Significant contributions to the design,
+rationale and implementation were made by Eugene Alterman, Stefan Arentz,
+Christopher Baus, Dick Bridges, Vygintas Daugmaudis, Beman Dawes, Felipe Magno
+de Almeida, Giovanni Deretta, Peter Dimov, Caleb Epstein, Jeff Garland, Ion
+Gatza'''&#241;'''aga, Darryl Green, Dirk Griffioen, Indrek Juhani, Jarl Lindrud,
+Jeremy Maitin-Shepard, Simon Meiklejohn, Cory Nelson, Arvid Norberg, Thorsten
+Ottosen, Rene Rivera, Roland Schwarz, Andrew Schweitzer, Arkadiy Vertleyb,
+Matthew Vogt, Pavel Vozenilek, and Theo Zourzouvillys. Not all of these people
+agreed with the design choices that have ultimately been selected, but the
+discussion they provoked was just as important in clarifying and solidifying
+the thinking behind the design.
+
+Finally, I would like to thank my wife Pauline, whose talents as a software
+engineer were put to good use in talking through design problems. She also took
+the time to meticulously read and review this proposal (except this bit).
 
 [endsect]
 
