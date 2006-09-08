@@ -16,7 +16,7 @@
 [function_effects Reads data from the [link requirements.sync_read_stream
 buffer-oriented synchronous read stream] object `stream` by performing zero or
 more calls to the stream's `read_some` member function, until the
-`basic_fifobuf<>` object's input sequence contains the specified delimeter
+`basic_fifobuf<>` object's input sequence contains the specified delimiter
 `delim`.]
 
 [function_block Data is placed into the `basic_fifobuf<>` object `fb`. A [link

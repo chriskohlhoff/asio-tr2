@@ -13,7 +13,7 @@
 [link requirements.async_read_stream buffer-oriented asynchronous read stream]
 object `stream` by performing zero or more asynchronous /read_some/ operations
 on the stream, until the `basic_fifobuf<>` object's input sequence contains the
-specified delimeter `delim`. The operation is performed via the `io_service`
+specified delimiter `delim`. The operation is performed via the `io_service`
 object `stream.io_service()` and behaves according to [link
 requirements.asynchronous_operations asynchronous operation] requirements.]
 

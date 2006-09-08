@@ -92,11 +92,11 @@ operation's completion handler.]
 
 [function_block The `completion_condition` parameter specifies a function
 object to be called after the completion of each asynchronous /read_some/
-operation. The function object is passed the `error_code` value from completion
-handler of the most recent asynchronous /read_some/ operation, and the total
-number of bytes transferred in the asynchronous read operation so far.
-Overloads where a completion condition is not specified behave as if called
-with an object of class `transfer_all`.]
+operation. The function object is passed the `error_code` value from the
+completion handler of the most recent asynchronous /read_some/ operation, and
+the total number of bytes transferred in the asynchronous read operation so
+far. Overloads where a completion condition is not specified behave as if
+called with an object of class `transfer_all`.]
 
 [function_block The asynchronous read operation continues until:]
 
