@@ -1,7 +1,7 @@
 [library Networking Library Proposal for TR2
     [quickbook 1.1]
     [id tr2network]
-    [last-revision $Date: 2006/09/08 14:39:06 $]
+    [last-revision $Date: 2006/09/08 14:41:37 $]
 ]
 
 [/-----------------------------------------------------------------------------]
@@ -262,6 +262,8 @@ The Boost.Asio library has been used on the following platforms:
 * Mac OS X 10.4 using g++ 3.3 or later.
 * QNX Neutrino 6.3 using g++ 3.3 or later.
 * FreeBSD using g++ 3.3 or later.
+
+Boost.Asio may be obtained from [@http://asio.sourceforge.net].
 
 [endsect]
 
