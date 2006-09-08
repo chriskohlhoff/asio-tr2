@@ -1,4 +1,4 @@
-[section Why is EOF an error?]
+[section Why EOF is an error]
 
 * The end of a stream can cause `read`, `async_read`, `read_until` or
   `async_read_until` functions to violate their contract. E.g.
