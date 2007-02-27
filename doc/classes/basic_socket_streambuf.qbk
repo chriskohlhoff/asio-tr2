@@ -90,17 +90,22 @@ requirements for an [link requirements.internet_protocol internet protocol].]
 [function_effects Resets the `streambuf` get and put areas, then opens a
 connection as if by calling:
 ``
+  error_code ec;
+  this->basic_socket<Protocol, StreamSocketService>::close(ec);
   typename Protocol::resolver::query query(t1, t2, __dotdotdot__, tN);
   typename Protocol::resolver resolver(
       this->basic_socket<Protocol, StreamSocketService>::io_service());
-  typename Protocol::resolver::iterator i = resolver.resolve(query);
-  typename Protocol::resolver::iterator end;
-  error_code ec = error::host_not_found;
-  while (ec && i != end)
+  typename Protocol::resolver::iterator i = resolver.resolve(query, ec);
+  if (!ec)
   {
-    this->basic_socket<Protocol, StreamSocketService>::close(ec);
-    this->basic_socket<Protocol, StreamSocketService>::connect(*i, ec);
-    ++i;
+    typename Protocol::resolver::iterator end;
+    ec = error::host_not_found;
+    while (ec && i != end)
+    {
+      this->basic_socket<Protocol, StreamSocketService>::close(ec);
+      this->basic_socket<Protocol, StreamSocketService>::connect(*i, ec);
+      ++i;
+    }
   }
 ``]
 

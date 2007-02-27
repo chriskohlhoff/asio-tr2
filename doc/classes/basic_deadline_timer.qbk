@@ -6,7 +6,7 @@
 
         template<class Time, class TimeTraits, class TimerService>
         class basic_deadline_timer :
-          public basic_io_object<ResolverService>
+          public basic_io_object<TimerService>
         {
         public:
           // types:
