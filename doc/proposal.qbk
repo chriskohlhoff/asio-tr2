@@ -1,7 +1,7 @@
 [library Networking Library Proposal for TR2
     [quickbook 1.1]
     [id tr2network]
-    [last-revision $Date: 2007/02/27 03:48:08 $]
+    [last-revision $Date: 2007/03/02 06:09:58 $]
 ]
 
 [/-----------------------------------------------------------------------------]
@@ -253,7 +253,7 @@ instant messaging gateways and finance applications.
 
 The Boost.Asio library has been used on the following platforms:
 
-* Win32 using Visual C++ 7.1 and Visual C++ 8.0.
+* Win32 or Win64 using Visual C++ 7.1 and Visual C++ 8.0.
 * Win32 using Borland C++Builder 6 patch 4.
 * Win32 using MinGW.
 * Win32 using Cygwin.
