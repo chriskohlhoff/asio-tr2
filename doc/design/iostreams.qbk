@@ -14,7 +14,7 @@ The iostream class can also be used in conjunction with an acceptor to create si
 
   io_service ios;
   ip::tcp::endpoint endpoint(tcp::v4(), 80);
-  ip::tcp::acceptor(ios, endpoint);
+  ip::tcp::acceptor acceptor(ios, endpoint);
   for (;;)
   {
     ip::tcp::iostream stream;
