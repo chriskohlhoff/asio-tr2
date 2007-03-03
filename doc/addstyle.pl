@@ -19,8 +19,8 @@ my $style =
 
 my $docno =
 "<pre>" .
-"Doc. no:  N2054=06-0124\n" .
-"Date:     2006-09-08\n" .
+"Doc. no:  N2175=07-0035\n" .
+"Date:     2007-03-04\n" .
 "Project:  Programming Language C++\n" .
 "Reply to: Christopher Kohlhoff &lt;chris\@kohlhoff.com&gt;\n" .
 "</pre>\n";
