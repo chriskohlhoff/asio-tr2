@@ -37,7 +37,7 @@ would allow users of this TR2 library to access all relevant error codes
           extern const error_code no_protocol_option;
           extern const error_code no_system_descriptors;
           extern const error_code not_connected;
-          extern const error_code not_socket;
+          extern const error_code not_a_socket;
           extern const error_code operation_aborted;
           extern const error_code operation_not_supported;
           extern const error_code protocol_not_supported;
@@ -79,7 +79,7 @@ initialisation of each value is implementation-defined.
   [[`no_protocol_option`][`ENOPROTOOPT`]]
   [[`no_system_descriptors`][`ENFILE`]]
   [[`not_connected`][`ENOTCONN`]]
-  [[`not_socket`][`ENOTSOCK`]]
+  [[`not_a_socket`][`ENOTSOCK`]]
   [[`operation_aborted`][`ECANCELED`]]
   [[`operation_not_supported`][`EOPNOTSUPP`]]
   [[`protocol_not_supported`][`EPROTONOSUPPORT`]]

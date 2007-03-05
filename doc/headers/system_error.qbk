@@ -31,7 +31,7 @@
           extern const error_code no_protocol_option;
           extern const error_code no_system_descriptors;
           extern const error_code not_connected;
-          extern const error_code not_socket;
+          extern const error_code not_a_socket;
           extern const error_code operation_aborted;
           extern const error_code operation_not_supported;
           extern const error_code protocol_not_supported;

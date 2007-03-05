@@ -311,7 +311,7 @@ extensions to be supported.]
 
 [function_effects If `is_open(impl)` is false, sets `ec` to
 `error::bad_descriptor`. If the value returned by `native(impl)` is not a valid
-socket, sets `ec` to `error::not_socket`. [inline_note Instead of __POSIX__
+socket, sets `ec` to `error::not_a_socket`. [inline_note Instead of __POSIX__
 `ENOTTY`.] Otherwise determines if the socket `impl` is at the out-of-band data
 mark, as if by __POSIX__ __sockatmark__.]
 
