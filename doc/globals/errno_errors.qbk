@@ -1,5 +1,12 @@
 [section:errno_errors [^errno] errors]
 
+[commentary [N2174] proposes for inclusion in C++0x a superset of the following
+error constants. If they are included then the constants below may be elided.
+It is suggested that they be replaced with using-declarations to introduce each
+of the listed error constants into the `std::tr2::sys::error` namespace. This
+would allow users of this TR2 library to access all relevant error codes
+([^errno], [^getaddrinfo] and miscellaneous) via a single namespace.]
+
   namespace std {
     namespace tr2 {
       namespace sys {

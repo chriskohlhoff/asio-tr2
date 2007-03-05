@@ -1,7 +1,7 @@
 [library Networking Library Proposal for TR2 (Revision 1)
     [quickbook 1.1]
     [id tr2network]
-    [last-revision $Date: 2007/03/05 00:29:31 $]
+    [last-revision $Date: 2007/03/05 02:31:16 $]
 ]
 
 [/-----------------------------------------------------------------------------]
@@ -104,6 +104,7 @@
 [template POSIX[] \[[link ref-POSIX POSIX]\]]
 [template N1900[] \[[link ref-N1900 N1900]\]]
 [template N1975[] \[[link ref-N1975 N1975]\]]
+[template N2174[] \[[link ref-N2174 N2174]\]]
 [template N2066[] \[[link ref-N2066 N2066]\]]
 [template ACE[] \[[link ref-ACE ACE]\]]
 [template SYMBIAN[] \[[link ref-SYMBIAN SYMBIAN]\]]
@@ -335,6 +336,8 @@ Standard Library [N1900].
 
 The classes defined in the Diagnostics Library chapter of the Filesystem
 Library Proposal [N1975], and updated by [N2066], are used in this proposal.
+[N2174] further updates these classes and proposes that they be included in
+C++0x.
 
 [endsect]
 
@@ -560,7 +563,8 @@ express type requirements, as listed in the table below.
 
 [section Diagnostics library]
 [commentary The following text is intended as an addition to the Diagnostics
-Library chapter defined in \[N1975\] and modified by \[N2066\].]
+Library chapter defined originally for TR2 in [N1975] and [N2066], and updated
+for C++0x in [N2174].]
 [include:headers headers/system_error.qbk]
 [include:globals globals/errno_errors.qbk]
 [include:globals globals/getaddrinfo_errors.qbk]
@@ -773,6 +777,9 @@ Updated by N2058.
 
 [#ref-N2066] \[N2066\] Dawes, Beman,
 ['TR2 Diagnostics Enhancements], 2006
+
+[#ref-N2174] \[N2174\] Dawes, Beman,
+['Diagnostics Enhancements for C++0x], 2007
 
 [#ref-ACE] \[ACE\] Schmidt, Douglas C.,
 ['ADAPTIVE Communication Environment],
