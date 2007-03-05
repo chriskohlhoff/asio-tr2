@@ -13,7 +13,7 @@
           extern const error_code already_connected;
           extern const error_code already_started;
           extern const error_code broken_pipe;
-          extern const error_code bad_descriptor;
+          extern const error_code bad_file_descriptor;
           extern const error_code connection_aborted;
           extern const error_code connection_refused;
           extern const error_code connection_reset;

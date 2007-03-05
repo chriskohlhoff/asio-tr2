@@ -216,7 +216,7 @@ operations are passed the `error_code` value `error::operation_aborted`.]
 [function_requires `is_open(impl)`.]
 
 [function_effects If `is_open(impl)` is false, sets `ec` to
-`error::bad_descriptor`. Otherwise cancels pending asynchronous operations
+`error::bad_file_descriptor`. Otherwise cancels pending asynchronous operations
 associated with `impl`, if any. Handlers for cancelled asynchronous operations
 are passed the `error_code` value `error::operation_aborted`.]
 
@@ -241,8 +241,8 @@ with a socket.]
 [function_requires `is_open(impl)`.]
 
 [function_effects If `is_open(impl)` is false, sets `ec` to
-`error::bad_descriptor`. Otherwise sets an option on the socket `impl`, as if
-by __POSIX__ __setsockopt__.]
+`error::bad_file_descriptor`. Otherwise sets an option on the socket `impl`, as
+if by __POSIX__ __setsockopt__.]
 
 [function_returns `ec`.]
 
@@ -254,8 +254,8 @@ by __POSIX__ __setsockopt__.]
 [function_requires `is_open(impl)`.]
 
 [function_effects If `is_open(impl)` is false, sets `ec` to
-`error::bad_descriptor`. Otherwise gets an option from the socket `impl`, as if
-by __POSIX__ __getsockopt__.]
+`error::bad_file_descriptor`. Otherwise gets an option from the socket `impl`,
+as if by __POSIX__ __getsockopt__.]
 
 [function_returns `ec`.]
 
@@ -266,7 +266,7 @@ by __POSIX__ __getsockopt__.]
 [function_requires `is_open(impl)`.]
 
 [function_effects If `is_open(impl)` is false, sets `ec` to
-`error::bad_descriptor`. Otherwise executes an I/O control command on the
+`error::bad_file_descriptor`. Otherwise executes an I/O control command on the
 socket `impl`, as if by __POSIX__ __ioctl__.]
 
 [function_returns `ec`.]
@@ -282,10 +282,10 @@ extensions to be supported.]
 [function_requires `is_open(impl)`.]
 
 [function_effects If `is_open(impl)` is false, sets `ec` to
-`error::bad_descriptor`. If the value returned by `native(impl)` is not a valid
-socket, sets `ec` to `error::not_a_socket`. [inline_note Instead of __POSIX__
-`ENOTTY`.] Otherwise determines if the socket `impl` is at the out-of-band data
-mark, as if by __POSIX__ __sockatmark__.]
+`error::bad_file_descriptor`. If the value returned by `native(impl)` is not a
+valid socket, sets `ec` to `error::not_a_socket`. [inline_note Instead of
+__POSIX__ `ENOTTY`.] Otherwise determines if the socket `impl` is at the
+out-of-band data mark, as if by __POSIX__ __sockatmark__.]
 
 [function_returns A `bool` indicating whether the socket is at the out-of-band
 data mark.]
@@ -296,8 +296,8 @@ data mark.]
 [function_requires `is_open(impl)`.]
 
 [function_effects If `is_open(impl)` is false, sets `ec` to
-`error::bad_descriptor`. Otherwise determines the number of bytes that may be
-read without blocking.]
+`error::bad_file_descriptor`. Otherwise determines the number of bytes that may
+be read without blocking.]
 
 [function_returns The number of bytes that may be read without blocking, or 0
 if an error occurs.]
@@ -308,8 +308,8 @@ if an error occurs.]
 [function_requires `is_open(impl)`.]
 
 [function_effects If `is_open(impl)` is false, sets `ec` to
-`error::bad_descriptor`. Otherwise binds the socket `impl` to the specified
-local endpoint, as if by __POSIX__ __bind__.]
+`error::bad_file_descriptor`. Otherwise binds the socket `impl` to the
+specified local endpoint, as if by __POSIX__ __bind__.]
 
 [function_returns `ec`.]
 
@@ -319,7 +319,7 @@ local endpoint, as if by __POSIX__ __bind__.]
 [function_requires `is_open(impl)`.]
 
 [function_effects If `is_open(impl)` is false, sets `ec` to
-`error::bad_descriptor`. Otherwise shuts down all or part of a full-duplex
+`error::bad_file_descriptor`. Otherwise shuts down all or part of a full-duplex
 connection for the socket `impl`, as if by __POSIX__ __shutdown__. If `how` is
 `shutdown_receive`, uses __POSIX__ `SHUT_RD`. If `how` is `shutdown_send`, uses
 __POSIX__ `SHUT_WR`. If `how` is `shutdown_both`, uses __POSIX__ `SHUT_RDWR`.]
@@ -332,7 +332,7 @@ __POSIX__ `SHUT_WR`. If `how` is `shutdown_both`, uses __POSIX__ `SHUT_RDWR`.]
 [function_requires `is_open(impl)`.]
 
 [function_effects If `is_open(impl)` is false, sets `ec` to
-`error::bad_descriptor`. Otherwise determines the locally-bound endpoint
+`error::bad_file_descriptor`. Otherwise determines the locally-bound endpoint
 associated with the socket `impl`, as if by __POSIX__ __getsockname__.]
 
 [function_returns On success, the locally-bound endpoint associated with
@@ -344,8 +344,8 @@ associated with the socket `impl`, as if by __POSIX__ __getsockname__.]
 [function_requires `is_open(impl)`.]
 
 [function_effects If `is_open(impl)` is false, sets `ec` to
-`error::bad_descriptor`. Otherwise determines the remote endpoint associated
-with the socket `impl`, as if by __POSIX__ __getpeername__.]
+`error::bad_file_descriptor`. Otherwise determines the remote endpoint
+associated with the socket `impl`, as if by __POSIX__ __getpeername__.]
 
 [function_returns On success, the remote endpoint associated with `impl`.
 Otherwise `endpoint_type()`.]
@@ -356,8 +356,8 @@ Otherwise `endpoint_type()`.]
 [function_requires `is_open(impl)`.]
 
 [function_effects If `is_open(impl)` is false, sets `ec` to
-`error::bad_descriptor`. Otherwise connects the socket `impl` to the specified
-remote endpoint, as if by __POSIX__ __connect__.]
+`error::bad_file_descriptor`. Otherwise connects the socket `impl` to the
+specified remote endpoint, as if by __POSIX__ __connect__.]
 
 [function_returns `ec`.]
 
@@ -375,7 +375,7 @@ operation is performed via the `io_service` object returned by
 requirements.asynchronous_operations asynchronous operation] requirements.]
 
 [function_block If `is_open(impl)` is false, the operation shall fail
-immediately with `error_code` value `error::bad_descriptor`.]
+immediately with `error_code` value `error::bad_file_descriptor`.]
 
 [function_block When multiple asynchronous connect operations are initiated
 such that the operations may logically be performed in parallel, the behaviour
@@ -397,8 +397,8 @@ implementation-defined.]
 [function_requires `is_open(impl)`.]
 
 [function_effects If `is_open(impl)` is false, sets `ec` to
-`error::bad_descriptor`. Otherwise reads data from a connected socket `impl`,
-as if by __POSIX__ __recvmsg__.]
+`error::bad_file_descriptor`. Otherwise reads data from a connected socket
+`impl`, as if by __POSIX__ __recvmsg__.]
 
 [function_block The mutable buffer sequence `buffers` specifies memory where
 the data should be placed. The operation shall always fill a buffer in the
@@ -428,7 +428,7 @@ performed via the `io_service` object `a.io_service()` and behaves according to
 requirements.]
 
 [function_block If `is_open(impl)` is false, the operation shall fail
-immediately with `error_code` value `error::bad_descriptor`.]
+immediately with `error_code` value `error::bad_file_descriptor`.]
 
 [function_block The mutable buffer sequence `buffers` specifies memory where
 the data should be placed. The operation shall always fill a buffer in the
@@ -482,8 +482,8 @@ it is invoked with `0`.]
 [function_requires `is_open(impl)`.]
 
 [function_effects If `is_open(impl)` is false, sets `ec` to
-`error::bad_descriptor`. Otherwise writes data to a connected socket `impl`,
-as if by __POSIX__ __sendmsg__.]
+`error::bad_file_descriptor`. Otherwise writes data to a connected socket
+`impl`, as if by __POSIX__ __sendmsg__.]
 
 [function_block The constant buffer sequence `buffers` specifies memory where
 the data to be written is located. The operation shall always write a buffer in
@@ -511,7 +511,7 @@ performed via the `io_service` object `a.io_service()` and behaves according to
 requirements.]
 
 [function_block If `is_open(impl)` is false, the operation shall fail
-immediately with `error_code` value `error::bad_descriptor`.]
+immediately with `error_code` value `error::bad_file_descriptor`.]
 
 [function_block The constant buffer sequence `buffers` specifies memory where
 the data to be written is located. The operation shall always write a buffer in

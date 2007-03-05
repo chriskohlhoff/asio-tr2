@@ -19,7 +19,7 @@ would allow users of this TR2 library to access all relevant error codes
           extern const error_code already_connected;
           extern const error_code already_started;
           extern const error_code broken_pipe;
-          extern const error_code bad_descriptor;
+          extern const error_code bad_file_descriptor;
           extern const error_code connection_aborted;
           extern const error_code connection_refused;
           extern const error_code connection_reset;
@@ -61,7 +61,7 @@ initialisation of each value is implementation-defined.
   [[`already_connected`][`EISCONN`]]
   [[`already_started`][`EALREADY`]]
   [[`broken_pipe`][`EPIPE`]]
-  [[`bad_descriptor`][`EBADF`]]
+  [[`bad_file_descriptor`][`EBADF`]]
   [[`connection_aborted`][`ECONNABORTED`]]
   [[`connection_refused`][`ECONNREFUSED`]]
   [[`connection_reset`][`ECONNRESET`]]

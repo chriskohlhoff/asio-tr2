@@ -187,7 +187,7 @@ implementation `impl`.]
 [function_requires `is_open(impl)`.]
 
 [function_effects If `is_open(impl)` is false, sets `ec` to
-`error::bad_descriptor`. Otherwise cancels pending asynchronous operations
+`error::bad_file_descriptor`. Otherwise cancels pending asynchronous operations
 associated with `impl`, if any. Handlers for cancelled asynchronous operations
 are passed the `error_code` value `error::operation_aborted`.]
 
@@ -212,7 +212,7 @@ with a socket.]
 [function_requires `is_open(impl)`.]
 
 [function_effects If `is_open(impl)` is false, sets `ec` to
-`error::bad_descriptor`. Otherwise sets an option on the socket acceptor
+`error::bad_file_descriptor`. Otherwise sets an option on the socket acceptor
 `impl`, as if by __POSIX__ __setsockopt__.]
 
 [function_returns `ec`.]
@@ -225,7 +225,7 @@ with a socket.]
 [function_requires `is_open(impl)`.]
 
 [function_effects If `is_open(impl)` is false, sets `ec` to
-`error::bad_descriptor`. Otherwise gets an option from the socket acceptor
+`error::bad_file_descriptor`. Otherwise gets an option from the socket acceptor
 `impl`, as if by __POSIX__ __getsockopt__.]
 
 [function_returns `ec`.]
@@ -237,7 +237,7 @@ with a socket.]
 [function_requires `is_open(impl)`.]
 
 [function_effects If `is_open(impl)` is false, sets `ec` to
-`error::bad_descriptor`. Otherwise executes an I/O control command on the
+`error::bad_file_descriptor`. Otherwise executes an I/O control command on the
 socket acceptor `impl`, as if by __POSIX__ __ioctl__.]
 
 [function_returns `ec`.]
@@ -254,7 +254,7 @@ extensions to be supported.]
 [function_requires `is_open(impl)`.]
 
 [function_effects If `is_open(impl)` is false, sets `ec` to
-`error::bad_descriptor`. Otherwise binds the socket `impl` to the specified
+`error::bad_file_descriptor`. Otherwise binds the socket `impl` to the specified
 local endpoint, as if by __POSIX__ __bind__.]
 
 [function_returns `ec`.]
@@ -265,8 +265,8 @@ local endpoint, as if by __POSIX__ __bind__.]
 [function_requires `is_open(impl)`.]
 
 [function_effects If `is_open(impl)` is false, sets `ec` to
-`error::bad_descriptor`. Otherwse marks the socket acceptor `impl` as ready to
-accept connections, as if by __POSIX__ __listen__. If `backlog ==
+`error::bad_file_descriptor`. Otherwse marks the socket acceptor `impl` as
+ready to accept connections, as if by __POSIX__ __listen__. If `backlog ==
 socket_base::max_connections`, the implementation shall set the socket
 acceptor's listen queue to the maximum allowable length.]
 
@@ -278,7 +278,7 @@ acceptor's listen queue to the maximum allowable length.]
 [function_requires `is_open(impl)`.]
 
 [function_effects If `is_open(impl)` is false, sets `ec` to
-`error::bad_descriptor`. Otherwise determines the locally-bound endpoint
+`error::bad_file_descriptor`. Otherwise determines the locally-bound endpoint
 associated with the socket acceptor `impl`, as if by __POSIX__
 __getsockname__.]
 
@@ -294,7 +294,7 @@ __getsockname__.]
 `listen` for the socket acceptor implementation `impl`.]
 
 [function_effects If `is_open(impl)` is false, sets `ec` to
-`error::bad_descriptor`. If `socket.is_open()` is true, sets `ec` to
+`error::bad_file_descriptor`. If `socket.is_open()` is true, sets `ec` to
 `error::already_open`. Otherwise associates `socket` with the first connection
 extracted from the queue of pending connections of the socket acceptor `impl`,
 as if by __POSIX__ __accept__. On success, and if `endpoint != 0`, and if
@@ -330,7 +330,7 @@ performed via the `io_service` object returned by
 requirements.asynchronous_operations asynchronous operation] requirements.]
 
 [function_block If `is_open(impl)` is false, the operation shall fail
-immediately with `error_code` value `error::bad_descriptor`. If
+immediately with `error_code` value `error::bad_file_descriptor`. If
 `socket.is_open()` is true, the operation shall fail immediately with
 `error_code` value `error::already_open`.]
 
