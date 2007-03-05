@@ -1,7 +1,7 @@
-[library Networking Library Proposal for TR2
+[library Networking Library Proposal for TR2 (Revision 1)
     [quickbook 1.1]
     [id tr2network]
-    [last-revision $Date: 2007/03/02 06:09:58 $]
+    [last-revision $Date: 2007/03/05 00:29:31 $]
 ]
 
 [/-----------------------------------------------------------------------------]
