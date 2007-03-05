@@ -93,7 +93,7 @@ and `u` and `v` denote identifiers.
     [
       If `a.is_open()` is true, causes any outstanding asynchronous operations
       to complete as soon as possible. Handlers for cancelled operations shall
-      be passed the error code `error::operation_aborted`.\n
+      be passed the error code `error::operation_canceled`.\n
       post: `!a.is_open(b)`.
     ]
   ]
@@ -114,7 +114,7 @@ and `u` and `v` denote identifiers.
       pre: `a.is_open(b)`.\n
       Causes any outstanding asynchronous operations to complete as soon as
       possible. Handlers for cancelled operations shall be passed the error
-      code `error::operation_aborted`.
+      code `error::operation_canceled`.
     ]
   ]
   [

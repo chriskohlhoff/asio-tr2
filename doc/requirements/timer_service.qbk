@@ -30,7 +30,7 @@ requirements.wait_handler `WaitHandler`] requirements.
     [
       Causes any outstanding asynchronous wait operations to complete as soon
       as possible. Handlers for cancelled operations shall be passed the error
-      code `error::operation_aborted`. Sets `e` to indicate success or failure.
+      code `error::operation_canceled`. Sets `e` to indicate success or failure.
       Returns the number of operations that were cancelled.
     ]
   ]

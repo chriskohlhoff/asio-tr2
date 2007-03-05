@@ -91,7 +91,7 @@ performing:
 
 [function_effects Causes any outstanding asynchronous operations to complete as
 soon as possible. Handlers for cancelled operations shall be passed the error
-code `error::operation_aborted`.]
+code `error::operation_canceled`.]
 
 [function_returns `ec`.]
 

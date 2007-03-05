@@ -86,7 +86,7 @@ Cancels asynchronous wait operations associated with `impl` as if by performing:
 
 [function_effects Causes any outstanding asynchronous wait operations to
 complete as soon as possible. Handlers for cancelled operations shall be passed
-the error code `error::operation_aborted`.]
+the error code `error::operation_canceled`.]
 
 [function_returns The number of operations that were cancelled.]
 

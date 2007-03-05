@@ -184,7 +184,7 @@ the service.]
 operations associated with `impl`, disables the linger socket option to prevent
 the operation from blocking, and releases socket resources as if by __POSIX__
 __close__. Otherwise, no effect. Handlers for cancelled asynchronous operations
-are passed the `error_code` value `error::operation_aborted`. Failures are
+are passed the `error_code` value `error::operation_canceled`. Failures are
 ignored.]
 
   error_code open(implementation_type& impl,
@@ -230,7 +230,7 @@ was opened by a previous call to `open` or `assign`.]
 [function_effects If `is_open(impl)` is true, cancels pending asynchronous
 operations associated with `impl`, and establishes the postcondition as if by
 __POSIX__ __close__. Otherwise, no effect. Handlers for cancelled asynchronous
-operations are passed the `error_code` value `error::operation_aborted`.]
+operations are passed the `error_code` value `error::operation_canceled`.]
 
 [function_returns `ec`.]
 
@@ -246,7 +246,7 @@ operations are passed the `error_code` value `error::operation_aborted`.]
 [function_effects If `is_open(impl)` is false, sets `ec` to
 `error::bad_file_descriptor`. Otherwise cancels pending asynchronous operations
 associated with `impl`, if any. Handlers for cancelled asynchronous operations
-are passed the `error_code` value `error::operation_aborted`.]
+are passed the `error_code` value `error::operation_canceled`.]
 
 [function_block The conditions under which cancellation of asynchronous
 operations is permitted are implementation-defined. If current conditions do

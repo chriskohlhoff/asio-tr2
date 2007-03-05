@@ -31,7 +31,7 @@ requirements.resolve_handler `ResolveHandler`] requirements.
     [
       Causes any outstanding asynchronous resolve operations to complete as
       soon as possible. Handlers for cancelled operations shall be passed the
-      error code `error::operation_aborted`.
+      error code `error::operation_canceled`.
     ]
   ]
   [
