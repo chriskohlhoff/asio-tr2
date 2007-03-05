@@ -207,4 +207,8 @@ to elements of the sequence (C++ Std, 21.3).
     min(str.size() * sizeof(CharT), s));
 ``]
 
+[commentary If C++0x guarantees that `basic_string<>` has contiguous storage,
+it may be worth investigating whether to provide `buffer()` overloads that
+return a `mutable_buffers_1` for a string.]
+
 [endsect]
