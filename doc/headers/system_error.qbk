@@ -6,12 +6,12 @@
         namespace error {
 
           ``// [link globals.errno_errors errno errors]:``
-          extern const error_code access_denied;
+          extern const error_code permission_denied;
           extern const error_code address_family_not_supported;
           extern const error_code address_in_use;
           extern const error_code address_not_available;
           extern const error_code already_connected;
-          extern const error_code already_started;
+          extern const error_code connection_already_in_progress;
           extern const error_code broken_pipe;
           extern const error_code bad_file_descriptor;
           extern const error_code connection_aborted;
@@ -21,15 +21,15 @@
           extern const error_code host_unreachable;
           extern const error_code interrupted;
           extern const error_code invalid_argument;
-          extern const error_code invalid_protocol_type;
+          extern const error_code wrong_protocol_type;
           extern const error_code message_size;
           extern const error_code network_down;
           extern const error_code network_reset;
           extern const error_code network_unreachable;
           extern const error_code no_buffer_space;
-          extern const error_code no_descriptors;
+          extern const error_code too_many_files_open;
           extern const error_code no_protocol_option;
-          extern const error_code no_system_descriptors;
+          extern const error_code too_many_files_open_in_system;
           extern const error_code not_connected;
           extern const error_code not_a_socket;
           extern const error_code operation_aborted;
