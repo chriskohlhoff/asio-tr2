@@ -48,6 +48,8 @@ presented here as:
 class with `basic_iostream<char>(&sb)` and initialising `sb` with
 `basic_socket_streambuf<Protocol, StreamSocketService>()`.]
 
+[function_postconditions `tie() == this`.]
+
   template<class T1, class T2, ..., class TN>
     explicit basic_socket_iostream(T1 t1, T2 t2, ..., TN tN);
 
@@ -57,6 +59,8 @@ class with `basic_iostream<char>(&sb)` and initialising `sb` with
 `basic_socket_streambuf<Protocol, StreamSocketService>()`. Then calls
 `rdbuf()->connect(t1, t2, __dotdotdot__, tN)`. If that function returns a null
 pointer, calls `setstate(failbit)`.]
+
+[function_postconditions `tie() == this`.]
 
 [endsect]
 
