@@ -3,10 +3,10 @@
 A handler must meet the requirements of `CopyConstructible` types (C++ Std,
 20.1.3).
 
-In the table below, `X` denotes a handler class, `h` denotes a value of `X`,
-`p` denotes a pointer to a block of allocated memory of type `void*`, `s`
-denotes the size for a block of allocated memory, and `f` denotes a function
-object taking no arguments.
+In the table below, `h` denotes a value of a handler class, `p` denotes a
+pointer to a block of allocated memory of type `void*`, `s` denotes the size
+for a block of allocated memory, and `f` denotes a function object taking no
+arguments.
 
 [table Table--Handler requirements
   [[expression] [return type] [assertion/note\npre/post-conditions]]
@@ -19,8 +19,9 @@ object taking no arguments.
     [
       Returns a pointer to a block of memory of size `s`. The pointer must
       satisfy the same alignment requirements as a pointer returned by
-      `::operator new()`. Throws `bad_alloc` on failure.\n\n The
-      `io_handler_allocate()` function is located using argument-dependent
+      `::operator new()`. Throws `bad_alloc` on failure.
+      
+      The `io_handler_allocate()` function is located using argument-dependent
       lookup. The function `std::tr2::sys::io_handler_allocate()` serves as a
       default if no user-supplied function is available.
     ]
@@ -33,8 +34,9 @@ object taking no arguments.
     []
     [
       Frees a block of memory associated with a pointer `p`, of at least size
-      `s`, that was previously allocated using `io_handler_allocate()`.\n\n The
-      `io_handler_deallocate()` function is located using argument-dependent
+      `s`, that was previously allocated using `io_handler_allocate()`.
+      
+      The `io_handler_deallocate()` function is located using argument-dependent
       lookup. The function `std::tr2::sys::io_handler_deallocate()` serves as a
       default if no user-supplied function is available.
     ]
@@ -46,7 +48,8 @@ object taking no arguments.
     ``]
     []
     [
-      Causes the function object `f` to be executed as if by calling `f()`.\n\n
+      Causes the function object `f` to be executed as if by calling `f()`.
+
       The `io_handler_invoke()` function is located using argument-dependent
       lookup. The function `std::tr2::sys::io_handler_invoke()` serves as a
       default if no user-supplied function is available.
