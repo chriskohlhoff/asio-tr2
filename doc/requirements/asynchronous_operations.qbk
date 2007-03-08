@@ -49,33 +49,23 @@ non-const pointer, the program must guarantee the validity of the argument
 until the handler is invoked.
 
 The library implementation is only permitted to make calls to an initiating
-function's arguments' copy constructors or destructors from a thread that
-satisfies one of the following conditions:
+function's arguments' copy constructors or destructors from the
+the locations:
 
-[mdash] The thread is executing any member function of the associated
-`io_service` object.
+[mdash] The initiating function.
 
-[mdash] The thread is executing the destructor of the associated `io_service`
-object.
+[mdash] The `run()`, `run_one()`, `poll()` or `poll_one()` member functions of
+the associated `io_service` object.
 
-[mdash] The thread is executing one of the `io_service` service access
-functions `use_service`, `add_service` or `has_service`, where the first
-argument is the associated `io_service` object.
-
-[mdash] The thread is executing any member function, constructor or destructor
-of an object of a class defined in this clause, where the object's
-`io_service()` member function returns the associated `io_service` object.
-
-[mdash] The thread is executing any function defined in this clause, where any
-argument to the function has an `io_service()` member function that returns the
-associated `io_service` object.
+[mdash] The destructor of the associated `io_service` object.
 
 [commentary Implementations may use one or more hidden threads to emulate
 asynchronous functionality. The above requirements are intended to prevent
-these hidden threads from making calls to program code. This means that a
-program can, for example, use thread-unsafe reference counting in handler
-objects, provided the program ensures that all calls to an `io_service` and
-related objects occur from the one thread.]
+these hidden threads from making calls to program code, as well as giving a
+clear indication to a library user as to when they can expect calls to their
+code. This means that a program can, for example, use thread-unsafe reference
+counting in handler objects, provided the program ensures that all calls to an
+`io_service` and related objects occur from the one thread.]
 
 The `io_service` object associated with an asynchronous operation shall have
 unfinished work, as if by maintaining the existence of one or more objects of
