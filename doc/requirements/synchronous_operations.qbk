@@ -26,6 +26,28 @@ Synchronous operations shall not fail with any error condition associated with
 non-blocking operations (__POSIX__ `EWOULDBLOCK`, `EAGAIN` or `EINPROGRESS`;
 __Windows__ `WSAEWOULDBLOCK` or `WSAEINPROGRESS`).
 
+Synchronous operations shall be cancellation points if the operation is defined
+"as if" implemented by a __POSIX__ function, and __POSIX__ specifies that a
+cancellation point shall occur when a thread executes the function. Synchronous
+operations may be cancellation points if the operation is defined "as if"
+implemented by a __POSIX__ function, and __POSIX__ specifies that a
+cancellation point may occur when a thread executes the function. The
+`io_service::run()`, `io_service::run_one()` and
+`deadline_timer_service<>::wait()` synchronous operations shall be cancellation
+points. An implementation shall not introduce cancellation points into any
+other functions specified in this clause.
+
+[commentary Synchronous operations in this proposal should participate in
+whatever cooperative thread cancellation is chosen by the committee. It is
+expected that the semantics of cancellation will be documented elsewhere.
+However, as far as this proposal is concerned, it is suggested that a
+synchronous operation that completes successfully (i.e. has the externally
+visible side effects associated with successful completion) will not process
+the cancellation and the cancellation shall remain pending. Furthermore, no
+requirement should be placed on implementations as to how long after
+cancellation is initiated a concurrent synchronous operation will detect the
+cancellation.]
+
 A synchronous operation may have an overload with parameters that differ only
 by the absence of `error_code& ec`. If the overload returns `void`, the
 overload shall behave as if implemented in terms of the synchronous operation
