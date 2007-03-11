@@ -6,7 +6,11 @@ functions].
 
 All initiating functions in this clause take a function object meeting [link
 requirements.handler handler] requirements as the final parameter. These
-handlers accept as their first parameter an lvalue of type `const error_code`.
+['handlers] accept as their first parameter an lvalue of type `const
+error_code`. The handler function object is ['invoked] to indicate completion
+of the asynchronous operation. The library implementation may make copies of
+the handler argument, and the original handler argument and all copies are
+interchangeable.
 
 Implementations of asynchronous operations described in this clause are
 permitted to call the application programming interface (API) provided by the
@@ -29,6 +33,21 @@ fail with any error condition associated with non-blocking operations
 (__POSIX__ `EWOULDBLOCK`, `EAGAIN` or `EINPROGRESS`; __Windows__
 `WSAEWOULDBLOCK` or `WSAEINPROGRESS`).
 
+The lifetime of arguments to initiating functions shall be treated as follows:
+
+[mdash] If the parameter is declared as a const reference or by-value, the
+implementation must not assume the validity of the argument after the
+initiating function completes. [inline_note In other words, the program is not
+required to guarantee the validity of the argument after the initiating
+function completes.] The implementation may make copies of the argument, and
+all copies shall be destroyed no later than immediately after invocation of the
+handler.
+
+[mdash] If the parameter is declared as a non-const reference, const pointer or
+non-const pointer, the implementation may assume the validity of the argument
+until the handler is invoked. [inline_note In other words, the program must
+guarantee the validity of the argument until the handler is invoked.]
+
 All asynchronous operations have an associated `io_service` object. Where the
 initiating function is a member function, the associated `io_service` is that
 returned by the `get_io_service()` member function on the same object. Where
@@ -36,38 +55,7 @@ the initiating function is not a member function, the associated `io_service`
 is that returned by the `get_io_service()` member function of the first
 argument to the initiating function.
 
-Arguments to initiating functions shall be treated as follows:
-
-[mdash] If the parameter is declared as a const reference or by-value, the
-program is not required to guarantee the validity of the argument after the
-initiating function completes. The implementation may make copies of the
-argument, and all copies shall be destroyed no later than immediately after
-invocation of the handler.
-
-[mdash] If the parameter is declared as a non-const reference, const pointer or
-non-const pointer, the program must guarantee the validity of the argument
-until the handler is invoked.
-
-The library implementation is only permitted to make calls to an initiating
-function's arguments' copy constructors or destructors from the
-the locations:
-
-[mdash] The initiating function.
-
-[mdash] The `run()`, `run_one()`, `poll()` or `poll_one()` member functions of
-the associated `io_service` object.
-
-[mdash] The destructor of the associated `io_service` object.
-
-[commentary Implementations may use one or more hidden threads to emulate
-asynchronous functionality. The above requirements are intended to prevent
-these hidden threads from making calls to program code, as well as giving a
-clear indication to a library user as to when they can expect calls to their
-code. This means that a program can, for example, use thread-unsafe reference
-counting in handler objects, provided the program ensures that all calls to an
-`io_service` and related objects occur from the one thread.]
-
-The `io_service` object associated with an asynchronous operation shall have
+An asynchronous operation's associated `io_service` object shall have
 unfinished work, as if by maintaining the existence of one or more objects of
 class `io_service::work` constructed using the `io_service`, until immediately
 after the handler for the asynchronous operation has been invoked.
@@ -79,19 +67,19 @@ be invoked as if by:
   below.
 
 # Calling `ios.post(bch)` to schedule the handler for deferred invocation,
-  where `ios` is the associated `io_service`.
+  where `ios` is the asynchronous operation's associated `io_service` object.
 
 [std_note This implies that the handler must not be called directly from within
 the initiating function, even if the asynchronous operation completes
 immediately.]
 
 A bound completion handler is a handler object that contains a copy of a
-user-supplied handler, where the user-supplied handler accepts one or more
+program-defined handler, where the program-defined handler accepts one or more
 arguments. The bound completion handler does not accept any arguments, and
-contains values to be passed as arguments to the user-supplied handler. The
+contains values to be passed as arguments to the program-defined handler. The
 bound completion handler forwards the `io_handler_allocate()`,
 `io_handler_deallocate()`, and `io_handler_invoke()` calls to the corresponding
-functions for the user-supplied handler. A bound completion handler meets the
+functions for the program-defined handler. A bound completion handler meets the
 requirements for a [link requirements.completion_handler completion handler].
 
 [std_example A bound completion handler for a [link requirements.read_handler
@@ -144,45 +132,48 @@ requirements for a [link requirements.completion_handler completion handler].
 If the thread that initiates an asynchronous operation terminates before the
 associated handler is invoked, the behaviour is implementation-defined.
 
-The handler argument to an initiating function defines a handler identity. That
-is, the original handler argument and any copies of the handler argument shall
-be considered equivalent in the discussion below.
+If the library implementation needs to allocate storage for an asynchronous
+operation, the implementation shall perform `io_handler_allocate(size, &h)`,
+where `size` is the required size in bytes, and `h` is the handler. The
+implementation shall perform `io_handler_deallocate(p, size, &h)`, where `p` is
+a pointer to the storage, to deallocate the storage prior to the invocation of
+the handler via `io_handler_invoke`. Multiple storage blocks may be allocated
+for a single asynchronous operation.
 
-If the implementation needs to allocate storage for an asynchronous operation,
-the implementation shall perform `io_handler_allocate(size, &h)`, where `size`
-is the required size in bytes, and `h` is the handler. The implementation shall
-perform `io_handler_deallocate(p, size, &h)`, where `p` is a pointer to the
-storage, to deallocate the storage prior to the invocation of the handler via
-`io_handler_invoke`. Multiple storage blocks may be allocated for a single
-asynchronous operation.
+For a given asynchronous operation, the library implementation may make calls
+to functions associated with the initiating function's arguments. [inline_note
+Including, but not limited to, copy constructors, destructors, assignment
+operators, `io_handler_invoke()`, `io_handler_allocate()` and
+`io_handler_deallocate()`.] The implementation is permitted to call these
+functions only from the following locations:
 
-The implementation shall not make concurrent calls to `io_handler_allocate`,
-`io_handler_deallocate` or `io_handler_invoke` for a single handler identity.
-Calls to `io_handler_allocate`, `io_handler_deallocate` or `io_handler_invoke`
-shall only be made from threads that satisfy one of the conditions listed above
-for calls to the initiating function's arguments' copy constructors and
-destructors.
+[mdash] The initiating function.
 
-[commentary The following text is intended to describe the behaviour of the
-implementation with respect to memory visibility. It needs to be rewritten
-using some better language.]
+[mdash] The `run()`, `run_one()`, `poll()` or `poll_one()` member functions of
+the associated `io_service` object.
 
-All initiating functions shall include a release memory barrier prior to any
-effect that may be visible to a different thread.
+[mdash] The destructors of the associated `io_service` object or of any service
+owned by the `io_service`.
 
-A call to `io_handler_invoke` shall be preceded by an acquire memory barrier
-and succeeded by a release memory barrier.
+[std_note Due to restrictions defined elsewhere, the implementation may only
+call `io_handler_invoke()` from the `run()`, `run_one()`, `poll()` or
+`poll_one()` member functions of the associated `io_service` object.]
 
-Calls to `io_handler_allocate` or `io_handler_deallocate` from the initiating
-function shall occur prior to the release memory barrier.
+Any calls made by the library implementation to functions associated with the
+initiating function's arguments will be performed such that calls occur in a
+sequence '''call<subscript><emphasis>1</emphasis></subscript>''' to
+'''call<subscript><emphasis>n</emphasis></subscript>''', where for all ['i], 1
+'''&le;''' ['i] '''&lt;''' ['n],
+'''call<subscript><emphasis>i</emphasis></subscript>''' precedes
+'''call<subscript><emphasis>i+1</emphasis></subscript>'''.
 
-Calls to `io_handler_allocate` or `io_handler_deallocate` that occur
-immediately before `io_handler_invoke` shall occur after the acquire memory
-barrier.
-
-Calls to `io_handler_allocate` and `io_handler_deallocate` not from the
-initiating function and not immediately before `io_handler_invoke` shall be
-preceded by an acquire memory barrier and succeeded by a release memory
-barrier.
+[commentary Implementations may use one or more hidden threads to emulate
+asynchronous functionality. The above requirements are intended to prevent
+these hidden threads from making calls to program code, ensuring that no calls
+occur concurrently for a single asynchronous operations, as well as giving a
+clear indication to a library user as to when they can expect calls to their
+code. This means that a program can, for example, use thread-unsafe reference
+counting in handler objects, provided the program ensures that all calls to an
+`io_service` and related objects occur from the one thread.]
 
 [endsect]
