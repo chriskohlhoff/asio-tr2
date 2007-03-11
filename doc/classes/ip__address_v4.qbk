@@ -64,7 +64,7 @@
 [function_postconditions The postconditions of this function are indicated in
 the table below.]
 
-[table Table--address_v4::address_v4() effects
+[table address_v4::address_v4() effects
   [[expression][value]]
   [[`to_bytes()`][`{0, 0, 0, 0}`]]
   [[`to_ulong()`][`0`]]
@@ -84,7 +84,7 @@ the range `[0, 0xFF]`. [inline_note For implementations where `UCHAR_MAX ==
 [function_postconditions The postconditions of this function are indicated in
 the table below.]
 
-[table Table--address_v4::address_v4(const bytes_type&) effects
+[table address_v4::address_v4(const bytes_type&) effects
   [[expression][value]]
   [
     [`to_bytes()`]
@@ -115,7 +115,7 @@ out-of-range detection is needed.]]
 [function_postconditions The postconditions of this function are indicated in
 the table below.]
 
-[table Table--address_v4::address_v4(unsigned long) effects
+[table address_v4::address_v4(unsigned long) effects
   [[expression][value]]
   [
     [`to_bytes()`]

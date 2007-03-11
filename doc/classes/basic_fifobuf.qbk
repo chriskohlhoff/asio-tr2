@@ -115,7 +115,7 @@ and by all member functions, during the lifetime of each `fifobuf` object.
 [function_postconditions The postconditions of this function are indicated in
 the table below.]
 
-[table Table--basic_fifobuf<Allocator>::basic_fifobuf(size_t, const Allocator&) effects
+[table basic_fifobuf<Allocator>::basic_fifobuf(size_t, const Allocator&) effects
   [[expression][value]]
   [
     [`size()`]

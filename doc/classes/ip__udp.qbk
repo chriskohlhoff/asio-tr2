@@ -56,7 +56,7 @@ Extensible implementations shall provide the following member functions:
 
 In the table below, `u` denotes an identifier.
 
-[table Table--Behaviour of extensible implementations
+[table Behaviour of extensible implementations
   [[expression] [value]]
   [
     [`udp u(udp::v4()); u.family();`]

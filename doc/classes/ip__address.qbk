@@ -58,7 +58,7 @@
 [function_postconditions The postconditions of this function are indicated in
 the table below.]
 
-[table Table--address::address() effects
+[table address::address() effects
   [[expression][value]]
   [
     [`is_v4()`]
@@ -82,7 +82,7 @@ the specified IP version 4 address.]
 [function_postconditions The postconditions of this function are indicated in
 the table below.]
 
-[table Table--address::address(const address_v4&) effects
+[table address::address(const address_v4&) effects
   [[expression][value]]
   [
     [`is_v4()`]
@@ -106,7 +106,7 @@ the specified IP version 6 address.]
 [function_postconditions The postconditions of this function are indicated in
 the table below.]
 
-[table Table--address::address(const address_v6&) effects
+[table address::address(const address_v6&) effects
   [[expression][value]]
   [
     [`is_v4()`]
@@ -136,7 +136,7 @@ class `address`.]
 [function_postconditions The postconditions of this function are indicated in
 the table below.]
 
-[table Table--address& address::operator=(const address_v4&) effects
+[table address& address::operator=(const address_v4&) effects
   [[expression][value]]
   [
     [`is_v4()`]
@@ -162,7 +162,7 @@ class `address`.]
 [function_postconditions The postconditions of this function are indicated in
 the table below.]
 
-[table Table--address& address::operator=(const address_v6&) effects
+[table address& address::operator=(const address_v6&) effects
   [[expression][value]]
   [
     [`is_v4()`]

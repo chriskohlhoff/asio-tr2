@@ -12,7 +12,7 @@ type `X::implementation_type`, `q` denotes a value of type
 `error_code`, and `h` denotes a value meeting [link
 requirements.resolve_handler `ResolveHandler`] requirements.
 
-[table Table--ResolverService requirements
+[table ResolverService requirements
   [[expression] [return type] [assertion/note\npre/post-condition]]
   [
     [`a.destroy(b);`]

@@ -8,7 +8,7 @@ In the table below, `X` denotes a class meeting the requirements for
 convertibility to a const buffer, `a` and `b` denote values of type `X`, and
 `u`, `v` and `w` denote identifiers.
 
-[table Table--ConvertibleToConstBuffer requirements
+[table ConvertibleToConstBuffer requirements
   [[expression][postcondition]]
   [
     [``

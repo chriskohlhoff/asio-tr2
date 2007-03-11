@@ -31,7 +31,7 @@
 bitwise-distinct values. The meanings and __POSIX__ equivalents for each flag
 are defined in the table below.
 
-[table Table--resolver flags
+[table resolver flags
   [[flag] [meaning] [__POSIX__ equivalent]]
   [
     [`passive`]

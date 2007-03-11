@@ -5,7 +5,7 @@ denotes an object satisfying [link requirements.const_buffers constant buffer
 sequence] requirements, and `h` denotes an object satisfying [link
 requirements.write_handler write handler] requirements.
 
-[table Table--Buffer-oriented asynchronous write stream requirements
+[table Buffer-oriented asynchronous write stream requirements
   [[operation] [type] [semantics, pre/post-conditions]]
   [
     [`a.get_io_service();`]

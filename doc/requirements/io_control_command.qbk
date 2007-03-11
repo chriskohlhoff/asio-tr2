@@ -2,7 +2,7 @@
 
 In the table below, `a` denotes a value of an I/O control command class.
 
-[table Table--IoControlCommand requirements for extensible implementations
+[table IoControlCommand requirements for extensible implementations
   [[expression] [type] [assertion/note\npre/post-conditions]]
   [
     [`a.name();`]

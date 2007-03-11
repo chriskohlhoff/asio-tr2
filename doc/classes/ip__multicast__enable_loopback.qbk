@@ -5,7 +5,7 @@ multicast datagrams are delivered back to the local application. It shall be
 defined as a [link classes.socket_base__bool_socket_options boolean socket
 option] with the name and values in the table below:
 
-[table Table--enable_loopback boolean socket option
+[table enable_loopback boolean socket option
   [[['C]][['L]][['N]]]
   [
     [`ip::multicast::enable_loopback`]

@@ -15,7 +15,7 @@ requirements, `cb` denotes a value satisfying [link requirements.const_buffers
 constant buffer sequence] requirements, and `wh` denotes a value meeting [link
 requirements.write_handler `WriteHandler`] requirements.
 
-[table Table--DatagramSocketService requirements
+[table DatagramSocketService requirements
   [[expression] [return type] [assertion/note\npre/post-condition]]
   [
     [`a.receive(b, mb, f, ec);`]

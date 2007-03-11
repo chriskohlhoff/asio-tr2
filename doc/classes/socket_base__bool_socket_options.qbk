@@ -47,7 +47,7 @@ Extensible implementations shall provide the following member functions:
 The names and values used in the definition of the boolean socket option
 classes are described in the table below.
 
-[table Table--Boolean socket options
+[table Boolean socket options
   [[['C]][['L]][['N]][description]]
   [
     [`socket_base::broadcast`]

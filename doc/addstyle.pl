@@ -11,8 +11,8 @@ if (@ARGV != 1)
 my $style =
 "<style>" .
 "blockquote pre.programlisting { margin-left: 1em; padding-left: 1em; }\n" .
-"div.informaltable { text-align: center; }\n" .
-"div.sidebar p { background-color: #e0e0e0; font-style: italic; }\n" .
+"div.table { text-align: center; }\n" .
+"p.sidebar { background-color: #e0e0e0; font-style: italic; }\n" .
 "p.tablecaption { font-weight: bold; }\n" .
 "table { margin: auto; }" .
 "</style>";
@@ -20,14 +20,14 @@ my $style =
 my $docno =
 "<pre>" .
 "Doc. no:  N2175=07-0035\n" .
-"Date:     2007-03-04\n" .
+"Date:     2007-03-11\n" .
 "Project:  Programming Language C++\n" .
 "Reply to: Christopher Kohlhoff &lt;chris\@kohlhoff.com&gt;\n" .
 "</pre>\n";
 
 my $copyright =
 "<hr/>\n" .
-"<em>Copyright &copy; 2006 Christopher M. Kohlhoff</em>\n";
+"<em>Copyright &copy; 2006-2007 Christopher M. Kohlhoff</em>\n";
 
 my @lines = ();
 my $saw_h4 = 0;
@@ -49,6 +49,10 @@ while (my $line = <$file_in>)
   {
     $line =~ s/<\/h4>/<\/p>/;
     $saw_h4 = 0;
+  }
+  if ($line =~ /<div class="sidebar"><p>/)
+  {
+    $line =~ s/<div class="sidebar"><p>/<div class="sidebar"><p class="sidebar">/;
   }
   push @lines, $line;
 }

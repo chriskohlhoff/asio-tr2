@@ -78,7 +78,7 @@ are determined by [RFC3513].]
 [function_postconditions The postconditions of this function are indicated in
 the table below.]
 
-[table Table--address_v6::address_v6() effects
+[table address_v6::address_v6() effects
   [[expression][value]]
   [[`is_unspecified()`][`true`]]
   [[`scope_id()`][`0`]]
@@ -92,7 +92,7 @@ the table below.]
 [function_postconditions The postconditions of this function are indicated in
 the table below.]
 
-[table Table--address_v6::address_v6() effects
+[table address_v6::address_v6() effects
   [[expression][value]]
   [[`to_bytes()`][`bytes`]]
   [[`scope_id()`][`scope_id`]]

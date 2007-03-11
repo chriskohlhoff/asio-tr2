@@ -8,7 +8,7 @@ pointer to a block of allocated memory of type `void*`, `s` denotes the size
 for a block of allocated memory, and `f` denotes a function object taking no
 arguments.
 
-[table Table--Handler requirements
+[table Handler requirements
   [[expression] [return type] [assertion/note\npre/post-conditions]]
   [
     [``

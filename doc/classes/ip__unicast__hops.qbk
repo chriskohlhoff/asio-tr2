@@ -5,7 +5,7 @@ of hops (also known as time-to-live or TTL) on outbound datagrams. It shall be
 defined as an [link classes.socket_base__int_socket_options integral socket
 option] with the name and values in the table below:
 
-[table Table--hops integral socket option
+[table hops integral socket option
   [[['C]][['L]][['N]]]
   [
     [`ip::unicast::hops`]

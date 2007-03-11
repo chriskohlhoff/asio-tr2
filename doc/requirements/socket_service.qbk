@@ -18,7 +18,7 @@ denotes a value meeting [link requirements.io_control_command
 requirements.connect_handler `ConnectHandler`] requirements, and `u` and `v`
 denote identifiers.
 
-[table Table--SocketService requirements
+[table SocketService requirements
   [[expression] [return type] [assertion/note\npre/post-condition]]
   [
     [`X::native_type`]

@@ -19,7 +19,7 @@ denotes a value meeting [link requirements.io_control_command
 value meeting [link requirements.accept_handler `AcceptHandler`] requirements,
 and `u` and `v` denote identifiers.
 
-[table Table--SocketAcceptorService requirements
+[table SocketAcceptorService requirements
   [[expression] [return type] [assertion/note\npre/post-condition]]
   [
     [`X::native_type`]

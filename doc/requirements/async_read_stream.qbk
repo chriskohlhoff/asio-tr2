@@ -5,7 +5,7 @@ denotes an object satisfying [link requirements.mutable_buffers mutable buffer
 sequence] requirements, and `h` denotes an object satisfying [link
 requirements.read_handler read handler] requirements.
 
-[table Table--Buffer-oriented asynchronous read stream requirements
+[table Buffer-oriented asynchronous read stream requirements
   [[operation] [type] [semantics, pre/post-conditions]]
   [
     [`a.get_io_service();`]

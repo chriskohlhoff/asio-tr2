@@ -50,7 +50,7 @@ Extensible implementations shall provide the following member functions:
 The names and values used in the definition of the multicast group management
 socket option classes are described in the table below.
 
-[table Table--Multicast group management socket options
+[table Multicast group management socket options
   [[['C]][['L]][['N]][description]]
   [
     [`ip::multicast::join_group`]

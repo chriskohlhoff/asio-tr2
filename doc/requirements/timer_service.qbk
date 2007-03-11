@@ -11,7 +11,7 @@ denotes a value of type `TimeTraits::duration_type`, `e` denotes a value of
 type `error_code`, and `h` denotes a value meeting [link
 requirements.wait_handler `WaitHandler`] requirements.
 
-[table Table--TimerService requirements
+[table TimerService requirements
   [[expression] [return type] [assertion/note\npre/post-condition]]
   [
     [`a.destroy(b);`]

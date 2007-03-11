@@ -5,7 +5,7 @@ created for an IPv6 protocol is restricted to IPv6 communications only. It
 shall be defined as a [link classes.socket_base__bool_socket_options boolean
 socket option] with the name and values in the table below:
 
-[table Table--v6_only boolean socket option
+[table v6_only boolean socket option
   [[['C]][['L]][['N]]]
   [
     [`v6_only`]

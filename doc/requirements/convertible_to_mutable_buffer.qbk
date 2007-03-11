@@ -8,7 +8,7 @@ In the table below, `X` denotes a class meeting the requirements for
 convertibility to a mutable buffer, `a` and `b` denote values of type `X`, and
 `u`, `v` and `w` denote identifiers.
 
-[table Table--ConvertibleToMutableBuffer requirements
+[table ConvertibleToMutableBuffer requirements
   [[expression][postcondition]]
   [
     [``

@@ -97,7 +97,7 @@ Extensible implementations shall provide the following member functions:
 [function_postconditions The postconditions of this function are indicated in
 the table below.]
 
-[table Table--basic_endpoint<InternetProtocol>::basic_endpoint() effects
+[table basic_endpoint<InternetProtocol>::basic_endpoint() effects
   [[expression][value]]
   [
     [`address()`]
@@ -119,7 +119,7 @@ number.]
 [function_postconditions The postconditions of this function are indicated in
 the table below.]
 
-[table Table--basic_endpoint<InternetProtocol>::basic_endpoint(const InternetProtocol&, unsigned short) effects
+[table basic_endpoint<InternetProtocol>::basic_endpoint(const InternetProtocol&, unsigned short) effects
   [[expression][value]]
   [
     [`address()`]
@@ -142,7 +142,7 @@ the table below.]
 [function_postconditions The postconditions of this function are indicated in
 the table below.]
 
-[table Table--basic_endpoint<InternetProtocol>::basic_endpoint(const ip::address&, unsigned short) effects
+[table basic_endpoint<InternetProtocol>::basic_endpoint(const ip::address&, unsigned short) effects
   [[expression][value]]
   [
     [`address()`]

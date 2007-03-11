@@ -52,7 +52,7 @@ The meaning of each `error_code` value declared above shall correspond to the
 __POSIX__ equivalent, as defined in the table below. The method of
 initialisation of each value is implementation-defined.
 
-[table Table--errno errors
+[table errno errors
   [[name][__POSIX__ equivalent]]
   [[`address_family_not_supported`][`EAFNOSUPPORT`]]
   [[`address_in_use`][`EADDRINUSE`]]

@@ -5,7 +5,7 @@ algorithm for coalescing small segments. It shall be defined as a [link
 classes.socket_base__bool_socket_options boolean socket option] with the name
 and values in the table below:
 
-[table Table--tcp::no_delay boolean socket option
+[table tcp::no_delay boolean socket option
   [[['C]][['L]][['N]]]
   [
     [`tcp::no_delay`]

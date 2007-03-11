@@ -1,7 +1,7 @@
 [library Networking Library Proposal for TR2 (Revision 1)
     [quickbook 1.1]
     [id tr2network]
-    [last-revision $Date: 2007/03/11 12:03:14 $]
+    [last-revision $Date: 2007/03/11 12:28:50 $]
 ]
 
 [/-----------------------------------------------------------------------------]
@@ -408,7 +408,7 @@ The following subclauses describe components for I/O services, timers, buffer
 management, sockets, endpoint resolution, iostreams, and internet protocol, as
 summarised in the table below:
 
-[table Table--Networking library summary
+[table Networking library summary
   [[Subclause][Header(s)]]
   [
     [[link tr2network.basic_io_services Basic I/O services]]
@@ -435,7 +435,7 @@ summarised in the table below:
 Throughout this clause, the names of the template parameters are used to
 express type requirements, as listed in the table below.
 
-[table Table--Template parameters and type requirements
+[table Template parameters and type requirements
   [[template parameter name][type requirements]]
   [
     [`AcceptHandler`]

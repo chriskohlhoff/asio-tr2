@@ -3,7 +3,7 @@
 In the table below, `X` denotes a class containing objects of type `T`, `a`
 denotes a value of type `X` and `u` denotes an identifier.
 
-[table Table--MutableBufferSequence requirements
+[table MutableBufferSequence requirements
   [[expression] [return type] [assertion/note\npre/post-condition]]
   [
     [`X::value_type`]

@@ -6,7 +6,7 @@ A protocol must meet the requirements of `CopyConstructible` types (C++ Std,
 In the table below, `X` denotes a protocol class, and `a` denotes a value of
 `X`.
 
-[table Table--Protocol requirements
+[table Protocol requirements
   [[expression] [return type] [assertion/note\npre/post-conditions]]
   [
     [`X::endpoint`]
@@ -18,7 +18,7 @@ In the table below, `X` denotes a protocol class, and `a` denotes a value of
 In the table below, `X` denotes a protocol class, and `a` denotes a value of
 `X`.
 
-[table Table--Protocol requirements for extensible implementations
+[table Protocol requirements for extensible implementations
   [[expression] [return type] [assertion/note\npre/post-conditions]]
   [
     [`a.family()`]

@@ -18,7 +18,7 @@ The meaning of each `error_code` value declared above shall correspond to the
 __POSIX__ equivalent returned by __getaddrinfo__, as defined in the table
 below. The method of initialisation of each value is implementation-defined.
 
-[table Table--getaddrinfo errors
+[table getaddrinfo errors
   [[name][__POSIX__ equivalent]]
   [[`host_not_found`][`EAI_NONAME`]]
   [[`host_not_found_try_again`][`EAI_AGAIN`]]

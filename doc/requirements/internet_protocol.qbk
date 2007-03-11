@@ -7,7 +7,7 @@ below.
 In the table below, `X` denotes an internet protocol class, `a` denotes a value
 of type `X`, and `b` denotes a value of type `X`.
 
-[table Table--InternetProtocol requirements
+[table InternetProtocol requirements
   [[expression] [return type] [assertion/note\npre/post-conditions]]
   [
     [`X::resolver`]
