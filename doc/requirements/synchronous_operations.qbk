@@ -45,8 +45,8 @@ synchronous operation that completes successfully (i.e. has the externally
 visible side effects associated with successful completion) will not process
 the cancellation and the cancellation shall remain pending. Furthermore, no
 requirement should be placed on implementations as to how long after
-cancellation is initiated a concurrent synchronous operation will detect the
-cancellation.]
+cancellation is initiated that a concurrent synchronous operation will detect
+the cancellation.]
 
 A synchronous operation may have an overload with parameters that differ only
 by the absence of `error_code& ec`. If the overload returns `void`, the
