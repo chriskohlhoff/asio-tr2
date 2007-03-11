@@ -1,7 +1,7 @@
 [library Networking Library Proposal for TR2 (Revision 1)
     [quickbook 1.1]
     [id tr2network]
-    [last-revision $Date: 2007/03/05 02:31:16 $]
+    [last-revision $Date: 2007/03/11 12:03:14 $]
 ]
 
 [/-----------------------------------------------------------------------------]
@@ -104,8 +104,9 @@
 [template POSIX[] \[[link ref-POSIX POSIX]\]]
 [template N1900[] \[[link ref-N1900 N1900]\]]
 [template N1975[] \[[link ref-N1975 N1975]\]]
-[template N2174[] \[[link ref-N2174 N2174]\]]
+[template N2052[] \[[link ref-N2052 N2052]\]]
 [template N2066[] \[[link ref-N2066 N2066]\]]
+[template N2174[] \[[link ref-N2174 N2174]\]]
 [template ACE[] \[[link ref-ACE ACE]\]]
 [template SYMBIAN[] \[[link ref-SYMBIAN SYMBIAN]\]]
 [template MSNET[] \[[link ref-MS-NET MS-NET]\]]
@@ -307,7 +308,7 @@ extensive use of TR1 function object binders.
 
 [section Relationship to Threading and Memory Model Proposals]
 
-This proposal does not require, and would not be coupled to, hypothetical
+This proposal does not require, and need not be coupled to, hypothetical
 standard library support for threading. The interface is intended to support
 implementations on platforms where threads are not available.
 
@@ -321,7 +322,8 @@ defined. In particular, the proposal will attempt to address:
   when.
 
 * The relationship between asynchronous operation initiation, completion, and
-  inter-thread memory visibility.
+  inter-thread memory visibility. This proposal borrows the term "precedes" from
+  Sequencing and the Concurrency Memory Model [N2052].
 
 [endsect]
 
@@ -722,6 +724,29 @@ This subclause defines components for performing timer operations.
 
 * Impact of trapping signed char implementations on streambuf and iostream support.
 
+* What nested namespaces should be used for the various components of the library.
+
+[endsect]
+
+[/-----------------------------------------------------------------------------]
+
+[section Document History]
+
+Paragraphs in the proposed text that have changed since N2054 are marked with
+change bars. The main changes are:
+
+* Try to clarify asynchronous operation requirements.
+
+* Specify that synchronous operations should participate in thread cancellation.
+
+* Clarify the behaviour of io_service::strand.
+
+* Rename all member functions named `io_service()` to `get_io_service()`.
+
+* Use `tie()` with `basic_socket_iostream<>` to synchronise input and output.
+
+* Update error constants in conjunction with [N2174].
+
 [endsect]
 
 [/-----------------------------------------------------------------------------]
@@ -773,54 +798,57 @@ Specification, Version 3].
 Updated by N2058.
 
 [#ref-N1975] \[N1975\] Dawes, Beman,
-['Filesystem Library Proposal for TR2 (Revision 3)], 2006
+['Filesystem Library Proposal for TR2 (Revision 3)], 2006.
+
+[#ref-N2052] \[N2052\] Nelson, Clark and Boehm, Hans-J.,
+['Sequencing and the Concurrency Memory Model], 2006.
 
 [#ref-N2066] \[N2066\] Dawes, Beman,
-['TR2 Diagnostics Enhancements], 2006
+['TR2 Diagnostics Enhancements], 2006.
 
 [#ref-N2174] \[N2174\] Dawes, Beman,
-['Diagnostics Enhancements for C++0x], 2007
+['Diagnostics Enhancements for C++0x], 2007.
 
 [#ref-ACE] \[ACE\] Schmidt, Douglas C.,
 ['ADAPTIVE Communication Environment],
-[@http://www.cs.wustl.edu/~schmidt/ACE.html]
+[@http://www.cs.wustl.edu/~schmidt/ACE.html].
 
 [#ref-SYMBIAN] \[SYMBIAN\] Symbian Ltd,
 ['Sockets Client],
-[@http://www.symbian.com/developer/techlib/v70sdocs/doc_source/reference/cpp/SocketsClient/index.html]
+[@http://www.symbian.com/developer/techlib/v70sdocs/doc_source/reference/cpp/SocketsClient/index.html].
 
 [#ref-MS-NET] \[MS-NET\] Microsoft Corporation,
 ['.NET Framework Class Library, Socket Class],
-[@http://msdn2.microsoft.com/en-us/library/system.net.sockets.socket.aspx]
+[@http://msdn2.microsoft.com/en-us/library/system.net.sockets.socket.aspx].
 
 [#ref-ES-API] \[ES-API\] The Interconnect Software Consortium / The Open Group,
 ['Extended Sockets API (ES-API), Issue 1.0], 2005,
-[@http://opengroup.org/icsc/uploads/40/6415/ES_API_1_0.pdf]
+[@http://opengroup.org/icsc/uploads/40/6415/ES_API_1_0.pdf].
 
 [#ref-UNPV1] \[UNPV1\] Stevens, W. Richard,
-['UNIX Network Programming, Volume 1, 2nd Edition], Prentice Hall, 1998
+['UNIX Network Programming, Volume 1, 2nd Edition], Prentice Hall, 1998.
 
 [#ref-POSA2] \[POSA2\] Schmidt, Douglas C. et al,
-['Pattern Oriented Software Architecture, Volume 2], Wiley, 2000
+['Pattern Oriented Software Architecture, Volume 2], Wiley, 2000.
 
 [#ref-RFC821] \[RFC821\] Postel, J.,
 ['RFC 821: Simple Mail Transfer Protocol], 1982,
-[@http://www.ietf.org/rfc/rfc0821.txt]
+[@http://www.ietf.org/rfc/rfc0821.txt].
 
 [#ref-RFC959] \[RFC959\] Postel, J. and Reynolds, J.,
 ['RFC 959: File Transfer Protocol (FTP)], 1985,
-[@http://www.ietf.org/rfc/rfc0959.txt]
+[@http://www.ietf.org/rfc/rfc0959.txt].
 
 [#ref-RFC2616] \[RFC2616\] Fielding, R. et al,
 ['RFC 2616: Hypertext Transfer Protocol -- HTTP/1.1], 1999,
-[@http://www.ietf.org/rfc/rfc2616.txt]
+[@http://www.ietf.org/rfc/rfc2616.txt].
 
 [#ref-RFC2732] \[RFC2732\] Hinden, R., Carpenter, B. and Masinter, L.,
 ['RFC 2732: Format for Literal IPv6 Addresses in URL's], 1999,
-[@http://www.ietf.org/rfc/rfc2732.txt]
+[@http://www.ietf.org/rfc/rfc2732.txt].
 
 [#ref-RFC3513] \[RFC3513\] Hinden, R. and Deering, S.,
 ['RFC 3513: Internet Protocol Version 6 (IPv6) Addressing Architecture], 2003,
-[@http://www.ietf.org/rfc/rfc3513.txt]
+[@http://www.ietf.org/rfc/rfc3513.txt].
 
 [endsect]
