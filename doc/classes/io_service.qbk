@@ -407,7 +407,7 @@ Similarly, the effect of `io_handler_invoke(g, &f)` is to cause the
   template<class Service> Service& use_service(io_service& ios);
 
 [function_requires `Service` is a service class whose definition contains the
-public static member `id` as defined [link classes.io_service__service here].]
+public static member `id` as defined [link classes.io_service__service below].]
 
 [function_effects If an object of type `Service` does not already exist in the
 `io_service` set identified by `ios`, creates an object as if by calling `new
@@ -421,7 +421,7 @@ Service(ios)` and adds it to the set.]
   template<class Service> void add_service(io_service& ios, Service* svc);
 
 [function_requires `Service` is a service class whose definition contains the
-public static member `id` as defined [link classes.io_service__service here].
+public static member `id` as defined [link classes.io_service__service below].
 The argument `svc` is a non-null pointer to a service object, and the condition
 `&svc->get_io_service() == &ios` is true. A corresponding service object does
 not already exist in the `io_service` set identified by `ios`.]
@@ -436,7 +436,7 @@ false.]
   template<class Service> bool has_service(io_service& ios) const;
 
 [function_requires `Service` is a service class whose definition contains the
-public static member `id` as defined [link classes.io_service__service here].]
+public static member `id` as defined [link classes.io_service__service below].]
 
 [function_returns `true` if the service requested is present in `ios`,
 otherwise `false`.]
