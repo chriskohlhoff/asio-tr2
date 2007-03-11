@@ -15,11 +15,9 @@
           typedef typename TimeTraits::duration_type duration_type;
 
           // constructors:
-          explicit basic_deadline_timer(std::tr2::sys::io_service& io_service);
-          basic_deadline_timer(std::tr2::sys::io_service& io_service,
-                               const time_type& t);
-          basic_deadline_timer(std::tr2::sys::io_service& io_service,
-                               const duration_type& d);
+          explicit basic_deadline_timer(io_service& ios);
+          basic_deadline_timer(io_service& ios, const time_type& t);
+          basic_deadline_timer(io_service& ios, const duration_type& d);
 
           // members:
           size_t cancel();
@@ -48,30 +46,28 @@
 
 [section [^basic_deadline_timer] constructors]
 
-  explicit basic_deadline_timer(std::tr2::sys::io_service& io_service);
+  explicit basic_deadline_timer(io_service& ios);
 
 [function_effects Constructs an object of class `basic_deadline_timer<Time,
 TimeTraits, TimerService>`, initialising the base class with
-`basic_io_object(io_service)`.]
+`basic_io_object(ios)`.]
 
-  basic_deadline_timer(std::tr2::sys::io_service& io_service,
-                       const time_type& t);
+  basic_deadline_timer(io_service& ios, const time_type& t);
 
 [function_effects Constructs an object of class `basic_deadline_timer<Time,
 TimeTraits, TimerService>`, initialising the base class with
-`basic_io_object(io_service)`, then setting the expiry time as if by calling:
+`basic_io_object(ios)`, then setting the expiry time as if by calling:
 ``
   error_code ec;
   this->service.expires_at(this->implementation, t, ec);
   if (ec) throw system_error(ec);
 ``]
 
-  basic_deadline_timer(std::tr2::sys::io_service& io_service,
-                       const duration_type& d);
+  basic_deadline_timer(io_service& ios, const duration_type& d);
 
 [function_effects Constructs an object of class `basic_deadline_timer<Time,
 TimeTraits, TimerService>`, initialising the base class with
-`basic_io_object(io_service)`, then setting the expiry time as if by calling:
+`basic_io_object(ios)`, then setting the expiry time as if by calling:
 ``
   error_code ec;
   this->service.expires_from_now(this->implementation, d, ec);

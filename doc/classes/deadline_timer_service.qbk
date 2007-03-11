@@ -131,8 +131,8 @@ a.expires_at(b))`.]
     void async_wait(implementation_type& impl, WaitHandler handler);
 
 [function_effects Initiates an asynchronous wait operation that is performed
-via the `io_service` object returned by `io_service()` and behaves according to
-[link requirements.asynchronous_operations asynchronous operation]
+via the `io_service` object returned by `get_io_service()` and behaves according
+to [link requirements.asynchronous_operations asynchronous operation]
 requirements.]
 
 [function_block The handler shall be posted for invocation only if the condition

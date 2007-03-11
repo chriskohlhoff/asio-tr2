@@ -8,12 +8,12 @@
         {
         public:
           // constructors/destructor:
-          explicit work(std::tr2::sys::io_service& ios);
+          explicit work(io_service& ios);
           work(const work& other);
           ~work();
 
           // members:
-          std::tr2::sys::io_service& io_service();
+          io_service& get_io_service();
 
         private:
           void operator=(const work&); // not defined
@@ -28,29 +28,29 @@ an `io_service`.
 
 [section [^io_service::work] constructors/destructor]
 
-  explicit work(std::tr2::sys::io_service& ios);
+  explicit work(io_service& ios);
 
 [function_effects Constructs an object of class `work`.]
 
-[function_postconditions `&io_service() == &ios`.]
+[function_postconditions `&get_io_service() == &ios`.]
 
   work(const work& other);
 
 [function_effects Constructs an object of class `work`.]
 
-[function_postconditions `&io_service() == &other.io_service()`.]
+[function_postconditions `&get_io_service() == &other.get_io_service()`.]
 
   ~work();
 
 [function_effects If no other `work` object `w` exists such that
-`&io_service() == &w.io_service()`, stops the `io_service` as if by calling
-`io_service().stop()`.]
+`&get_io_service() == &w.get_io_service()`, stops the `io_service` as if by
+calling `get_io_service().stop()`.]
 
 [endsect]
 
 [section [^io_service::work] members]
 
-  std::tr2::sys::io_service& io_service();
+  io_service& get_io_service();
 
 [function_returns The `io_service` associated with the work.]
 

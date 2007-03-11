@@ -163,9 +163,10 @@ corresponding to the failure condition.\n\n
 [mdash] The `io_service` has been explicitly stopped by a call to `stop()`.
 `ec` shall be set such that the expression `!ec` is true.\n\n
 
-[mdash] No object `w` of class `io_service::work` exists where `&w.io_service()
-== this`. The `io_service` shall be stopped as if by calling `stop()` and `ec`
-shall be set such that the expression `!ec` is true.\n\n
+[mdash] No object `w` of class `io_service::work` exists where
+`&w.get_io_service() == this`. The `io_service` shall be stopped as if by
+calling `stop()` and `ec` shall be set such that the expression `!ec` is
+true.\n\n
 
 [mdash] One handler `h` has been invoked by performing `io_handler_invoke(h,
 &h)`. `ec` shall be set such that the expression `!ec` is true.\n\n
@@ -211,8 +212,8 @@ the expression `!ec` is false.\n\n
 sets `ec` shall such that the expression `!ec` is true.\n\n
 
 [mdash] If no object `w` of class `io_service::work` exists where
-`&w.io_service() == this`, stops the `io_service` as if by calling `stop()` and
-sets `ec` such that the expression `!ec` is true.\n\n
+`&w.get_io_service() == this`, stops the `io_service` as if by calling `stop()`
+and sets `ec` such that the expression `!ec` is true.\n\n
 
 [mdash] If a handler `h` is available for immediate invocation, invokes the
 handler by performing `io_handler_invoke(h, &h)`, and sets `ec` such that the
@@ -422,14 +423,15 @@ Service(ios)` and adds it to the set.]
 [function_requires `Service` is a service class whose definition contains the
 public static member `id` as defined [link classes.io_service__service here].
 The argument `svc` is a non-null pointer to a service object, and the condition
-`&svc->io_service() == &ios` is true. A corresponding service object does not
-already exist in the `io_service` set identified by `ios`.]
+`&svc->get_io_service() == &ios` is true. A corresponding service object does
+not already exist in the `io_service` set identified by `ios`.]
 
 [function_effects Adds the service object `svc` to the `io_service` set.]
 
 [function_throws `service_already_exists` if a corresponding service object is
 already present in the `io_service` set identified by `ios`;
-`invalid_service_owner` if the condition `&svc->io_service() == &ios` is false.]
+`invalid_service_owner` if the condition `&svc->get_io_service() == &ios` is
+false.]
 
   template<class Service> bool has_service(io_service& ios) const;
 

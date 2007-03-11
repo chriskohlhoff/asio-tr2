@@ -15,13 +15,10 @@
           typedef typename Protocol::endpoint endpoint_type;
 
           // constructors:
-          explicit basic_datagram_socket(std::tr2::sys::io_service& io_service);
-          basic_datagram_socket(std::tr2::sys::io_service& io_service,
-                                const protocol_type& protocol);
-          basic_datagram_socket(std::tr2::sys::io_service& io_service,
-                                const endpoint_type& endpoint);
-          basic_datagram_socket(std::tr2::sys::io_service& io_service,
-                                const protocol_type& protocol,
+          explicit basic_datagram_socket(io_service& ios);
+          basic_datagram_socket(io_service& ios, const protocol_type& protocol);
+          basic_datagram_socket(io_service& ios, const endpoint_type& endpoint);
+          basic_datagram_socket(io_service& ios, const protocol_type& protocol,
                                 const native_type& native_socket);
 
           // members:
@@ -130,32 +127,29 @@
 
 [section [^basic_datagram_socket] constructors]
 
-  explicit basic_datagram_socket(std::tr2::sys::io_service& io_service);
+  explicit basic_datagram_socket(io_service& ios);
 
 [function_effects Constructs an object of class `basic_datagram_socket<Protocol,
 DatagramSocketService>`, initialising the base class with
-`basic_socket(io_service)`.]
+`basic_socket(ios)`.]
 
-  basic_datagram_socket(std::tr2::sys::io_service& io_service,
-                        const protocol_type& protocol);
-
-[function_effects Constructs an object of class `basic_datagram_socket<Protocol,
-DatagramSocketService>`, initialising the base class with
-`basic_socket(io_service, protocol)`.]
-
-  basic_datagram_socket(std::tr2::sys::io_service& io_service,
-                        const endpoint_type& endpoint);
+  basic_datagram_socket(io_service& ios, const protocol_type& protocol);
 
 [function_effects Constructs an object of class `basic_datagram_socket<Protocol,
 DatagramSocketService>`, initialising the base class with
-`basic_socket(io_service, endpoint)`.]
+`basic_socket(ios, protocol)`.]
 
-  basic_datagram_socket(std::tr2::sys::io_service& io_service,
-                        const protocol_type& protocol,
+  basic_datagram_socket(io_service& ios, const endpoint_type& endpoint);
+
+[function_effects Constructs an object of class `basic_datagram_socket<Protocol,
+DatagramSocketService>`, initialising the base class with
+`basic_socket(ios, endpoint)`.]
+
+  basic_datagram_socket(io_service& ios, const protocol_type& protocol,
                         const native_type& native_socket);
 
 [function_effects Constructs an object of class `basic_datagram_socket<Protocol,
-SocketService>`, initialising the base class with `basic_socket(io_service,
+SocketService>`, initialising the base class with `basic_socket(ios,
 protocol, native_socket)`.]
 
 [endsect]

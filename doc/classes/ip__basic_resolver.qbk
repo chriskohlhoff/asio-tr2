@@ -18,7 +18,7 @@
             typedef basic_resolver_iterator<InternetProtocol> iterator;
 
             // constructors:
-            explicit basic_resolver(std::tr2::sys::io_service& io_service);
+            explicit basic_resolver(io_service& ios);
 
             // members:
             void cancel();
@@ -45,11 +45,11 @@
 
 [section [^ip::basic_resolver] constructors]
 
-  explicit basic_resolver(std::tr2::sys::io_service& io_service);
+  explicit basic_resolver(io_service& ios);
 
 [function_effects Constructs an object of class
 `basic_resolver<InternetProtocol, ResolverService>`, initialising the base
-class with `basic_io_object(io_service)`.]
+class with `basic_io_object(ios)`.]
 
 [endsect]
 

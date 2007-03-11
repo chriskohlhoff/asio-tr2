@@ -78,13 +78,10 @@
 
         protected:
           // constructors:
-          explicit basic_socket(std::tr2::sys::io_service& io_service);
-          basic_socket(std::tr2::sys::io_service& io_service,
-                       const protocol_type& protocol);
-          basic_socket(std::tr2::sys::io_service& io_service,
-                       const endpoint_type& endpoint);
-          basic_socket(std::tr2::sys::io_service& io_service,
-                       const protocol_type& protocol,
+          explicit basic_socket(io_service& ios);
+          basic_socket(io_service& ios, const protocol_type& protocol);
+          basic_socket(io_service& ios, const endpoint_type& endpoint);
+          basic_socket(io_service& ios, const protocol_type& protocol,
                        const native_type& native_socket);
           ~basic_socket();
         };
@@ -95,31 +92,27 @@
 
 [section [^basic_socket] constructors]
 
-  explicit basic_socket(std::tr2::sys::io_service& io_service);
+  explicit basic_socket(io_service& ios);
 
 [function_effects Constructs an object of class `basic_socket<Protocol,
-SocketService>`, initialising the base class with
-`basic_io_object(io_service)`.]
+SocketService>`, initialising the base class with `basic_io_object(ios)`.]
 
-  basic_socket(std::tr2::sys::io_service& io_service,
-               const protocol_type& protocol);
+  basic_socket(io_service& ios, const protocol_type& protocol);
 
 [function_effects Constructs an object of class `basic_socket<Protocol,
-SocketService>`, initialising the base class with
-`basic_io_object(io_service)`, then opening the socket as if by calling:
+SocketService>`, initialising the base class with `basic_io_object(ios)`, then
+opening the socket as if by calling:
 ``
   error_code ec;
   this->service.open(this->implementation, protocol, ec);
   if (ec) throw system_error(ec);
 ``]
 
-  basic_socket(std::tr2::sys::io_service& io_service,
-               const endpoint_type& endpoint);
+  basic_socket(io_service& ios, const endpoint_type& endpoint);
 
 [function_effects Constructs an object of class `basic_socket<Protocol,
-SocketService>`, initialising the base class with
-`basic_io_object(io_service)`, then opening and binding the socket and marking
-it as listening as if by calling:
+SocketService>`, initialising the base class with `basic_io_object(ios)`, then
+opening and binding the socket and marking it as listening as if by calling:
 ``
   error_code ec;
   this->service.open(this->implementation, endpoint.protocol(), ec);
@@ -128,14 +121,12 @@ it as listening as if by calling:
   if (ec) throw system_error(ec);
 ``]
 
-  basic_socket(std::tr2::sys::io_service& io_service,
-               const protocol_type& protocol,
+  basic_socket(io_service& ios, const protocol_type& protocol,
                const native_type& native_socket);
 
 [function_effects Constructs an object of class `basic_socket<Protocol,
-SocketService>`, initialising the base class with
-`basic_io_object(io_service)`, then assigning the existing native socket into
-the object as if by calling:
+SocketService>`, initialising the base class with `basic_io_object(ios)`, then
+assigning the existing native socket into the object as if by calling:
 ``
   error_code ec;
   this->service.assign(this->implementation, protocol, native_socket, ec);
@@ -258,8 +249,8 @@ then, if no error has occurred, connects the socket by calling:
   this->service.open(this->implementation, endpoint.protocol(), ec);
 ``
 If the socket failed to open, uses
-`this->service.io_service().post(__dotdotdot__)` to invoke the handler with the
-`error_code` value `ec`. Otherwise initiates an asynchronous operation to
+`this->service.get_io_service().post(__dotdotdot__)` to invoke the handler with
+the `error_code` value `ec`. Otherwise initiates an asynchronous operation to
 connect the socket by calling:
 ``
   this->service.async_connect(this->implementation, endpoint, handler);

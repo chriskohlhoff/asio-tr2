@@ -325,9 +325,9 @@ even very simple servers.]
 [function_effects Initiates an asynchronous operation to associate `socket`
 with the first connection extracted from the queue of pending connections of
 the socket acceptor `impl`, as if by __POSIX__ __accept__. The operation is
-performed via the `io_service` object returned by
-`io_service::service::io_service()` and behaves according to [link
-requirements.asynchronous_operations asynchronous operation] requirements.]
+performed via the `io_service` object returned by `get_io_service()` and
+behaves according to [link requirements.asynchronous_operations asynchronous
+operation] requirements.]
 
 [function_block If `is_open(impl)` is false, the operation shall fail
 immediately with `error_code` value `error::bad_file_descriptor`. If

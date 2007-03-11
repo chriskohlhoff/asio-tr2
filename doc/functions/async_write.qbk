@@ -17,7 +17,7 @@
 stream] object `stream` by performing one or more asynchronous operations on
 the stream using the stream's `async_write_some` member function (henceforth
 referred to as asynchronous /write_some/ operations). The operation is
-performed via the `io_service` object `stream.io_service()` and behaves
+performed via the `io_service` object `stream.get_io_service()` and behaves
 according to [link requirements.asynchronous_operations asynchronous operation]
 requirements.]
 
@@ -80,7 +80,7 @@ and the total number of bytes transferred.]
 [link requirements.async_write_stream buffer-oriented asynchronous write
 stream] object `stream` by performing one or more asynchronous /write_some/
 operations on the stream. The operation is performed via the `io_service`
-object `stream.io_service()` and behaves according to [link
+object `stream.get_io_service()` and behaves according to [link
 requirements.asynchronous_operations asynchronous operation] requirements.]
 
 [function_block Data is written from the `basic_fifobuf<>` object `fb`. A [link

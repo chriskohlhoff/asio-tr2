@@ -21,13 +21,10 @@ requirements.async_write_stream asynchronous write streams].
           typedef typename Protocol::endpoint endpoint_type;
 
           // constructors:
-          explicit basic_stream_socket(std::tr2::sys::io_service& io_service);
-          basic_stream_socket(std::tr2::sys::io_service& io_service,
-                              const protocol_type& protocol);
-          basic_stream_socket(std::tr2::sys::io_service& io_service,
-                              const endpoint_type& endpoint);
-          basic_stream_socket(std::tr2::sys::io_service& io_service,
-                              const protocol_type& protocol,
+          explicit basic_stream_socket(io_service& ios);
+          basic_stream_socket(io_service& ios, const protocol_type& protocol);
+          basic_stream_socket(io_service& ios, const endpoint_type& endpoint);
+          basic_stream_socket(io_service& ios, const protocol_type& protocol,
                               const native_type& native_socket);
 
           // members:
@@ -101,33 +98,29 @@ requirements.async_write_stream asynchronous write streams].
 
 [section [^basic_stream_socket] constructors]
 
-  explicit basic_stream_socket(std::tr2::sys::io_service& io_service);
+  explicit basic_stream_socket(io_service& ios);
 
 [function_effects Constructs an object of class `basic_stream_socket<Protocol,
-StreamSocketService>`, initialising the base class with
-`basic_socket(io_service)`.]
+StreamSocketService>`, initialising the base class with `basic_socket(ios)`.]
 
-  basic_stream_socket(std::tr2::sys::io_service& io_service,
-                      const protocol_type& protocol);
+  basic_stream_socket(io_service& ios, const protocol_type& protocol);
 
 [function_effects Constructs an object of class `basic_stream_socket<Protocol,
-StreamSocketService>`, initialising the base class with
-`basic_socket(io_service, protocol)`.]
+StreamSocketService>`, initialising the base class with `basic_socket(ios,
+protocol)`.]
 
-  basic_stream_socket(std::tr2::sys::io_service& io_service,
-                      const endpoint_type& endpoint);
+  basic_stream_socket(io_service& ios, const endpoint_type& endpoint);
 
 [function_effects Constructs an object of class `basic_stream_socket<Protocol,
-StreamSocketService>`, initialising the base class with
-`basic_socket(io_service, endpoint)`.]
+StreamSocketService>`, initialising the base class with `basic_socket(ios,
+endpoint)`.]
 
-  basic_stream_socket(std::tr2::sys::io_service& io_service,
-                      const protocol_type& protocol,
+  basic_stream_socket(io_service& ios, const protocol_type& protocol,
                       const native_type& native_socket);
 
 [function_effects Constructs an object of class `basic_stream_socket<Protocol,
-SocketService>`, initialising the base class with `basic_socket(io_service,
-protocol, native_socket)`.]
+SocketService>`, initialising the base class with `basic_socket(ios, protocol,
+native_socket)`.]
 
 [endsect]
 

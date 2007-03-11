@@ -8,11 +8,11 @@
         {
         public:
           // constructors/destructor:
-          explicit strand(std::tr2::sys::io_service& ios);
+          explicit strand(io_service& ios);
           ~strand();
 
           // members:
-          std::tr2::sys::io_service& io_service();
+          io_service& get_io_service();
 
           template<class CompletionHandler>
             void dispatch(CompletionHandler handler);
@@ -88,11 +88,11 @@ invoked concurrently.]
 
 [section [^io_service::strand] constructors/destructor]
 
-  explicit strand(std::tr2::sys::io_service& ios);
+  explicit strand(io_service& ios);
 
 [function_effects Constructs an object of class `strand`.]
 
-[function_postconditions `&io_service() == &ios`.]
+[function_postconditions `&get_io_service() == &ios`.]
 
   ~strand();
 
@@ -104,7 +104,7 @@ that meets the guarantee of non-concurrency.]
 
 [section [^io_service::strand] members]
 
-  std::tr2::sys::io_service& io_service();
+  io_service& get_io_service();
 
 [function_returns The `io_service` associated with the strand.]
 
@@ -114,7 +114,7 @@ that meets the guarantee of non-concurrency.]
 [function_effects If the current thread is invoking a handler for the `strand`
 object `*this`, performs `io_handler_invoke(handler, &handler)`. Otherwise,
 requests invocation of the handler as if by performing
-`io_service().dispatch(handler)`, with the additional requirement of
+`get_io_service().dispatch(handler)`, with the additional requirement of
 non-concurrent handler invocation as defined above.]
 
 [function_block If the invoked handler throws an exception, the exception shall
@@ -126,8 +126,8 @@ invoked without throwing an exception.]
     void post(CompletionHandler handler);
 
 [function_effects Requests invocation of the handler as if by performing
-`io_service().post(handler)`, with the additional requirement of non-concurrent
-handler invocation as defined above.]
+`get_io_service().post(handler)`, with the additional requirement of
+non-concurrent handler invocation as defined above.]
 
   template<class Handler>
     ``['unspecified]`` wrap(Handler handler);

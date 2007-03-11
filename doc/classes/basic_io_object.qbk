@@ -12,10 +12,10 @@
           typedef typename IoObjectService::implementation_type
             implementation_type;
 
-          std::tr2::sys::io_service& io_service();
+          io_service& get_io_service();
 
         protected:
-          explicit basic_io_object(std::tr2::sys::io_service& io_service);
+          explicit basic_io_object(io_service& ios);
           ~basic_io_object();
 
           service_type& service;
@@ -32,17 +32,18 @@
 
 [section [^basic_io_object] members]
 
-  explicit basic_io_object(std::tr2::sys::io_service& io_service);
+  explicit basic_io_object(io_service& ios);
 
-[function_effects Calls `service.construct(implementation)`.]
+[function_effects Initialises `service` with the result of
+`use_service<service_type>(ios)` and calls `service.construct(implementation)`.]
 
   ~basic_io_object();
 
 [function_effects Calls `service.destroy(implementation)`.]
 
-  std::tr2::sys::io_service& io_service();
+  io_service& get_io_service();
 
-[function_returns `service.io_service()`.]
+[function_returns `service.get_io_service()`.]
 
 [endsect]
 

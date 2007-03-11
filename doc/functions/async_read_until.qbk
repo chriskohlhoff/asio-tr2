@@ -14,7 +14,7 @@
 object `stream` by performing zero or more asynchronous /read_some/ operations
 on the stream, until the `basic_fifobuf<>` object's input sequence contains the
 specified delimiter `delim`. The operation is performed via the `io_service`
-object `stream.io_service()` and behaves according to [link
+object `stream.get_io_service()` and behaves according to [link
 requirements.asynchronous_operations asynchronous operation] requirements.]
 
 [function_block Data is placed into the `basic_fifobuf<>` object `fb`. A [link

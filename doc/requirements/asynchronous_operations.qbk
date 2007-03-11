@@ -31,10 +31,10 @@ fail with any error condition associated with non-blocking operations
 
 All asynchronous operations have an associated `io_service` object. Where the
 initiating function is a member function, the associated `io_service` is that
-returned by the `io_service()` member function on the same object. Where the
-initiating function is not a member function, the associated `io_service` is
-that returned by the `io_service()` member function of the first argument to
-the initiating function.
+returned by the `get_io_service()` member function on the same object. Where
+the initiating function is not a member function, the associated `io_service`
+is that returned by the `get_io_service()` member function of the first
+argument to the initiating function.
 
 Arguments to initiating functions shall be treated as follows:
 

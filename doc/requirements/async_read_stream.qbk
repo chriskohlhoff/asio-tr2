@@ -8,7 +8,7 @@ requirements.read_handler read handler] requirements.
 [table Table--Buffer-oriented asynchronous read stream requirements
   [[operation] [type] [semantics, pre/post-conditions]]
   [
-    [`a.io_service();`]
+    [`a.get_io_service();`]
     [`io_service&`]
     [Returns the `io_service` object through which the `async_read_some`
     handler `h` will be invoked.]
@@ -19,7 +19,7 @@ requirements.read_handler read handler] requirements.
     [
       Initiates an asynchronous operation to read one or more bytes of data
       from the stream `a`. The operation is performed via the `io_service`
-      object `a.io_service()` and behaves according to [link
+      object `a.get_io_service()` and behaves according to [link
       requirements.asynchronous_operations asynchronous operation]
       requirements.\n
       \n

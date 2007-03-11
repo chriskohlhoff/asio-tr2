@@ -16,14 +16,11 @@
           typedef typename Protocol::endpoint endpoint_type;
 
           // constructors:
-          explicit basic_socket_acceptor(std::tr2::sys::io_service& io_service);
-          basic_socket_acceptor(std::tr2::sys::io_service& io_service,
-                                const protocol_type& protocol);
-          basic_socket_acceptor(std::tr2::sys::io_service& io_service,
-                                const endpoint_type& endpoint,
+          explicit basic_socket_acceptor(io_service& ios);
+          basic_socket_acceptor(io_service& ios, const protocol_type& protocol);
+          basic_socket_acceptor(io_service& ios, const endpoint_type& endpoint,
                                 bool reuse_addr = true);
-          basic_socket_acceptor(std::tr2::sys::io_service& io_service,
-                                const protocol_type& protocol,
+          basic_socket_acceptor(io_service& ios, const protocol_type& protocol,
                                 const native_type& native_acceptor);
 
           // members:
@@ -99,31 +96,29 @@
 
 [section [^basic_socket_acceptor] constructors]
 
-  explicit basic_socket_acceptor(std::tr2::sys::io_service& io_service);
+  explicit basic_socket_acceptor(io_service& ios);
 
 [function_effects Constructs an object of class `basic_socket_acceptor<Protocol,
 SocketAcceptorService>`, initialising the base class with
-`basic_io_object(io_service)`.]
+`basic_io_object(ios)`.]
 
-  basic_socket_acceptor(std::tr2::sys::io_service& io_service,
-                        const protocol_type& protocol);
+  basic_socket_acceptor(io_service& ios, const protocol_type& protocol);
 
 [function_effects Constructs an object of class `basic_socket_acceptor<Protocol,
 SocketAcceptorService>`, initialising the base class with
-`basic_io_object(io_service)`, then opening the socket as if by calling:
+`basic_io_object(ios)`, then opening the socket as if by calling:
 ``
   error_code ec;
   this->service.open(this->implementation, protocol, ec);
   if (ec) throw system_error(ec);
 ``]
 
-  basic_socket_acceptor(std::tr2::sys::io_service& io_service,
-                        const endpoint_type& endpoint,
+  basic_socket_acceptor(io_service& ios, const endpoint_type& endpoint,
                         bool reuse_addr = true);
 
 [function_effects Constructs an object of class `basic_socket_acceptor<Protocol,
 SocketAcceptorService>`, initialising the base class with
-`basic_io_object(io_service)`, then opening and binding the socket and marking
+`basic_io_object(ios)`, then opening and binding the socket and marking
 it as ready to accept connections as if by calling:
 ``
   error_code ec;
@@ -143,13 +138,12 @@ it as ready to accept connections as if by calling:
 [commentary [UNPV1] recommends setting `SO_REUSEADDR` by default in all TCP
 servers, although there are some security implications in doing so.]
 
-  basic_socket_acceptor(std::tr2::sys::io_service& io_service,
-                        const protocol_type& protocol,
+  basic_socket_acceptor(io_service& ios, const protocol_type& protocol,
                         const native_type& native_acceptor);
 
 [function_effects Constructs an object of class `basic_socket_acceptor<Protocol,
 SocketAcceptorService>`, initialising the base class with
-`basic_io_object(io_service)`, then assigning the existing native acceptor into
+`basic_io_object(ios)`, then assigning the existing native acceptor into
 the object as if by calling:
 ``
   error_code ec;

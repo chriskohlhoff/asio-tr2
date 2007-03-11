@@ -371,7 +371,7 @@ specified remote endpoint, as if by __POSIX__ __connect__.]
 [function_effects Initiates an asynchronous operation to connect the socket
 `impl` to the specified remote endpoint, as if by __POSIX__ __connect__. The
 operation is performed via the `io_service` object returned by
-`io_service::service::io_service()` and behaves according to [link
+`get_io_service()` and behaves according to [link
 requirements.asynchronous_operations asynchronous operation] requirements.]
 
 [function_block If `is_open(impl)` is false, the operation shall fail
@@ -423,9 +423,9 @@ by the peer, the operation shall fail with `error::eof`.]
 
 [function_effects Initiates an asynchronous operation to read data from a
 connected socket `impl`, as if by __POSIX__ __recvmsg__. The operation is
-performed via the `io_service` object `a.io_service()` and behaves according to
-[link requirements.asynchronous_operations asynchronous operation]
-requirements.]
+performed via the `io_service` object returned by `get_io_service()` and
+behaves according to [link requirements.asynchronous_operations asynchronous
+operation] requirements.]
 
 [function_block If `is_open(impl)` is false, the operation shall fail
 immediately with `error_code` value `error::bad_file_descriptor`.]
@@ -506,9 +506,9 @@ performed.]
 
 [function_effects Initiates an asynchronous operation to write data to a
 connected socket `impl`, as if by __POSIX__ __sendmsg__. The operation is
-performed via the `io_service` object `a.io_service()` and behaves according to
-[link requirements.asynchronous_operations asynchronous operation]
-requirements.]
+performed via the `io_service` object returned by `get_io_service()` and
+behaves according to [link requirements.asynchronous_operations asynchronous
+operation] requirements.]
 
 [function_block If `is_open(impl)` is false, the operation shall fail
 immediately with `error_code` value `error::bad_file_descriptor`.]

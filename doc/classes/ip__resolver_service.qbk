@@ -112,9 +112,8 @@ __getaddrinfo__.]
 [function_effects Initiates an asynchronous operation to translate a query into
 a sequence of `basic_resolver_entry<InternetProtocol>` objects, as if by
 __POSIX__ __getaddrinfo__. The operation is performed via the `io_service`
-object returned by `io_service::service::io_service()` and behaves according to
-[link requirements.asynchronous_operations asynchronous operation]
-requirements.]
+object returned by `get_io_service()` and behaves according to [link
+requirements.asynchronous_operations asynchronous operation] requirements.]
 
 [function_block If the operation completes successfully, the `ResolveHandler`
 object `handler` is invoked with an iterator object `i` such that the condition
@@ -138,8 +137,8 @@ __getnameinfo__.]
 [function_effects Initiates an asynchronous operation to translate an endpoint
 into a sequence of zero or one `basic_resolver_entry<InternetProtocol>`
 objects, as if by __POSIX__ __getnameinfo__. The operation is performed via the
-`io_service` object returned by `io_service::service::io_service()` and behaves
-according to [link requirements.asynchronous_operations asynchronous operation]
+`io_service` object returned by `get_io_service()` and behaves according to
+[link requirements.asynchronous_operations asynchronous operation]
 requirements.]
 
 [function_block If the operation completes successfully, the `ResolveHandler`

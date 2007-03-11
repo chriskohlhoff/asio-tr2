@@ -17,7 +17,7 @@
 object `stream` by performing one or more asynchronous operations on the stream
 using the stream's `async_read_some` member function (henceforth referred to as
 asynchronous /read_some/ operations). The operation is performed via the
-`io_service` object `stream.io_service()` and behaves according to [link
+`io_service` object `stream.get_io_service()` and behaves according to [link
 requirements.asynchronous_operations asynchronous operation] requirements.]
 
 [function_block The [link requirements.mutable_buffers mutable buffer sequence]
@@ -79,7 +79,7 @@ the total number of bytes transferred.]
 [link requirements.async_read_stream buffer-oriented asynchronous read stream]
 object `stream` by performing one or more asynchronous /read_some/ operations
 on the stream. The operation is performed via the `io_service` object
-`stream.io_service()` and behaves according to [link
+`stream.get_io_service()` and behaves according to [link
 requirements.asynchronous_operations asynchronous operation] requirements.]
 
 [function_block Data is placed into the `basic_fifobuf<>` object `fb`. A [link
