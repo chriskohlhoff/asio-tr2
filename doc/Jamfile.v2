@@ -1,22 +1,17 @@
 project asio-tr2-doc
-  : default-build onehtml
   : build-dir ../bin
   ;
 
 using quickbook ;
 
-xml proposal
+boostbook proposal
   :
     proposal.qbk
-  ;
-
-boostbook standalone
-  :
-    proposal
   :
     <xsl:param>toc.section.depth=6
     <xsl:param>section.autolabel=1
     <xsl:param>toc.max.depth=6
+    <format>onehtml
   ;
 
 # install html : design/membar.png ;
