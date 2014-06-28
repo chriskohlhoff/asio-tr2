@@ -99,7 +99,7 @@ connection as if by calling:
   if (!ec)
   {
     typename Protocol::resolver::iterator end;
-    ec = error::host_not_found;
+    ec = TBD_errc::host_not_found;
     while (ec && i != end)
     {
       this->basic_socket<Protocol, StreamSocketService>::close(ec);

@@ -14,13 +14,15 @@ my $style =
 "div.table { text-align: center; }\n" .
 "p.sidebar { background-color: #e0e0e0; font-style: italic; }\n" .
 "p.tablecaption { font-weight: bold; }\n" .
-"table { margin: auto; }" .
+"table { margin: auto; border: 1px solid gray; border-collapse: collapse; }" .
+"th { border: 1px solid gray; }" .
+"td { border: 1px solid gray; }" .
 "</style>";
 
 my $rev = `git rev-parse HEAD`;
 chomp($rev);
 my $draft_info = " (as of commit $rev)";
-$draft_info = "";
+#$draft_info = "";
 
 my $docno =
 "<pre>" .

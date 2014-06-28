@@ -1,0 +1,92 @@
+[section Error reporting]
+
+[section Synchronous operations]
+
+Synchronous network library functions often provide two overloads, one that
+throws an exception to report system errors, and another that sets an
+`error_code`.
+
+[std_note This supports two common use cases:[br][br]
+
+[mdash] Uses where system errors are truly exceptional and indicate a serious
+failure. Throwing an exception is the most appropriate response. This is the
+preferred default for most everyday programming.[br][br]
+
+[mdash] Uses where system errors are routine and do not necessarily represent
+failure. Returning an error code is the most appropriate response. This allows
+application specific error handling, including simply ignoring the
+error.[br][br]]
+
+Functions [*not] having an argument of type `error_code&` report errors as
+follows, unless otherwise specified:
+
+[mdash] When a call by the implementation to an operating system or other
+underlying API results in an error that prevents the function from meeting its
+specifications, an exception of type `system_error` shall be thrown.
+
+[mdash] Failure to allocate storage is reported by throwing an exception as
+described in the C++ standard (C++14 \[res.on.exception.handling\]).
+
+[mdash] Destructors throw nothing.
+
+Functions having an argument of type `error_code&` report errors as follows,
+unless otherwise specified:
+
+[mdash] If a call by the implementation to an operating system or other
+underlying API results in an error that prevents the function from meeting its
+specifications, the `error_code&` argument is set as appropriate for the
+specific error. Otherwise, `clear()` is called on the `error_code&` argument.
+
+Where a function is specified as two overloads, with and without an argument
+of type `error_code&`:
+
+  ``[*['R f]]``(``['[*A1]]`` a1, ``['[*A2]]`` a2, ..., ``['[*AN]]`` aN);
+  ``[*['R f]]``(``['[*A1]]`` a1, ``['[*A2]]`` a2, ..., ``['[*AN]]`` aN, error_code& ec);
+
+then, when [*['R]] is non-`void`, the effects of the first overload shall be as
+if:
+
+  error_code ec;
+  ``['[*R]]`` r(``['[*f]]``(a1, a2, ..., aN, ec));
+  if (ec) throw system_error(ec, __func__);
+  return r;
+
+Otherwise, when [*['R]] is `void`, the effects of the first overload shall be
+as if:
+
+  error_code ec;
+  ``['[*f]]``(a1, a2, ..., aN, ec);
+  if (ec) throw system_error(ec, __func__);
+
+[endsect]
+
+[section Asynchronous operations]
+
+TBD.
+
+[endsect]
+
+[section Error conditions]
+
+Unless otherwise specified, when the behaviour of a synchronous or asynchronous
+operation is defined "as if" implemented by a __POSIX__ function, the
+`error_code` produced by the function shall meet the following requirements:
+
+[mdash] If the failure condition is one that is listed by __POSIX__ for that
+function, the `error_code` shall compare equal to the error's corresponding
+`enum class errc` constant (C++14 \[syserr\]).
+
+[mdash] Otherwise, the `error_code` shall be set to an implementation-defined
+value that reflects the underlying operating system error.
+
+[std_example The __POSIX__ specification for __shutdown__ lists `EBADF` as one
+of its possible errors. If a function that is specified "as if" implemented by
+__shutdown__ fails with `EBADF` then the following condition holds for the
+`error_code` value `ec`:..`ec == errc::bad_file_descriptor`]
+
+[endsect]
+
+[include:globals globals/getaddrinfo_errors.qbk]
+[include:globals globals/misc_errors.qbk]
+
+[endsect]

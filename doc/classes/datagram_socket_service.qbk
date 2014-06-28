@@ -28,45 +28,45 @@ of a [link requirements.datagram_socket_service `DatagramSocketService`].
 
           void destroy(implementation_type& impl);
 
-          error_code open(implementation_type& impl,
-                          const protocol_type& protocol, error_code& ec);
+          void open(implementation_type& impl,
+                    const protocol_type& protocol, error_code& ec);
 
-          error_code assign(implementation_type& impl,
-                            const protocol_type& protocol,
-                            const native_type& native_socket, error_code& ec);
+          void assign(implementation_type& impl,
+                      const protocol_type& protocol,
+                      const native_type& native_socket, error_code& ec);
 
           bool is_open(const implementation_type& impl) const;
 
-          error_code close(implementation_type& impl, error_code& ec);
+          void close(implementation_type& impl, error_code& ec);
 
           native_type native(implementation_type& impl);
 
-          error_code cancel(implementation_type& impl, error_code& ec);
+          void cancel(implementation_type& impl, error_code& ec);
 
           template<class SettableSocketOption>
-            error_code set_option(implementation_type& impl,
-                                  const SettableSocketOption& option,
-                                  error_code& ec);
+            void set_option(implementation_type& impl,
+                            const SettableSocketOption& option,
+                            error_code& ec);
 
           template<class GettableSocketOption>
-            error_code get_option(const implementation_type& impl,
-                                  GettableSocketOption& option,
-                                  error_code& ec) const;
+            void get_option(const implementation_type& impl,
+                            GettableSocketOption& option,
+                            error_code& ec) const;
 
           template<class IoControlCommand>
-            error_code io_control(implementation_type& impl,
-                                  IoControlCommand& command, error_code& ec);
+            void io_control(implementation_type& impl,
+                            IoControlCommand& command, error_code& ec);
 
           bool at_mark(const implementation_type& impl, error_code& ec) const;
 
           size_t available(const implementation_type& impl,
                            error_code& ec) const;
 
-          error_code bind(implementation_type& impl,
-                          const endpoint_type& endpoint, error_code& ec);
+          void bind(implementation_type& impl,
+                    const endpoint_type& endpoint, error_code& ec);
 
-          error_code shutdown(implementation_type& impl, shutdown_type how,
-                              error_code& ec);
+          void shutdown(implementation_type& impl, shutdown_type how,
+                        error_code& ec);
 
           endpoint_type local_endpoint(const implementation_type& impl,
                                        error_code& ec) const;
@@ -74,8 +74,8 @@ of a [link requirements.datagram_socket_service `DatagramSocketService`].
           endpoint_type remote_endpoint(const implementation_type& impl,
                                         error_code& ec) const;
 
-          error_code connect(implementation_type& impl,
-                             const endpoint_type& endpoint, error_code& ec);
+          void connect(implementation_type& impl,
+                       const endpoint_type& endpoint, error_code& ec);
 
           template<class ConnectHandler>
             void async_connect(implementation_type& impl,
@@ -184,33 +184,29 @@ the service.]
 operations associated with `impl`, disables the linger socket option to prevent
 the operation from blocking, and releases socket resources as if by __POSIX__
 __close__. Otherwise, no effect. Handlers for cancelled asynchronous operations
-are passed the `error_code` value `error::operation_canceled`. Failures are
+are passed the `error_code` value `errc::operation_canceled`. Failures are
 ignored.]
 
-  error_code open(implementation_type& impl,
-                  const protocol_type& protocol, error_code& ec);
+  void open(implementation_type& impl,
+            const protocol_type& protocol, error_code& ec);
 
 [function_requires `!is_open(impl)`.]
 
 [function_effects If `is_open(impl)` is true, sets `ec` to
-`error::already_open`. Otherwise establishes the postcondition, as if by
+`TBD_errc::already_open`. Otherwise establishes the postcondition, as if by
 __POSIX__ __socket__.]
-
-[function_returns `ec`.]
 
 [function_postconditions `is_open(impl)`.]
 
-  error_code assign(implementation_type& impl,
-                    const protocol_type& protocol,
-                    const native_type& native_socket, error_code& ec);
+  void assign(implementation_type& impl,
+              const protocol_type& protocol,
+              const native_type& native_socket, error_code& ec);
 
 [function_requires `!is_open(impl)`.]
 
 [function_effects If `is_open(impl)` is true, sets `ec` to
-`error::already_open`. Otherwise assigns the existing socket to the
+`TBD_errc::already_open`. Otherwise assigns the existing socket to the
 implementation `impl`.]
-
-[function_returns `ec`.]
 
 [function_postconditions `is_open(impl)`.]
 
@@ -225,33 +221,31 @@ the same registration.]
 [function_returns A `bool` indicating whether the socket implementation `impl`
 was opened by a previous call to `open` or `assign`.]
 
-  error_code close(implementation_type& impl, error_code& ec);
+  void close(implementation_type& impl, error_code& ec);
 
 [function_effects If `is_open(impl)` is true, cancels pending asynchronous
 operations associated with `impl`, and establishes the postcondition as if by
 __POSIX__ __close__. Otherwise, no effect. Handlers for cancelled asynchronous
-operations are passed the `error_code` value `error::operation_canceled`.]
-
-[function_returns `ec`.]
+operations are passed the `error_code` value `errc::operation_canceled`.]
 
   native_type native(implementation_type& impl);
 
 [function_returns The native representation of the socket implementation
 `impl`.]
 
-  error_code cancel(implementation_type& impl, error_code& ec);
+  void cancel(implementation_type& impl, error_code& ec);
 
 [function_requires `is_open(impl)`.]
 
 [function_effects If `is_open(impl)` is false, sets `ec` to
-`error::bad_file_descriptor`. Otherwise cancels pending asynchronous operations
+`errc::bad_file_descriptor`. Otherwise cancels pending asynchronous operations
 associated with `impl`, if any. Handlers for cancelled asynchronous operations
-are passed the `error_code` value `error::operation_canceled`.]
+are passed the `error_code` value `errc::operation_canceled`.]
 
 [function_block The conditions under which cancellation of asynchronous
 operations is permitted are implementation-defined. If current conditions do
 not permit cancellation, an implementation shall set `ec` to
-`error::operation_not_supported`.]
+`errc::operation_not_supported`.]
 
 [commentary This flexibility is included to support implementations on
 __Windows__ versions prior to Vista, where the `CancelIo` function will only
@@ -259,45 +253,37 @@ cancel asynchronous operations started from the same thread. Vista provides
 `CancelIoEx` which may be used to cancel all asynchronous operations associated
 with a socket.]
 
-[function_returns `ec`.]
-
   template<class SettableSocketOption>
-    error_code set_option(implementation_type& impl,
-                          const SettableSocketOption& option,
-                          error_code& ec);
+    void set_option(implementation_type& impl,
+                    const SettableSocketOption& option,
+                    error_code& ec);
 
 [function_requires `is_open(impl)`.]
 
 [function_effects If `is_open(impl)` is false, sets `ec` to
-`error::bad_file_descriptor`. Otherwise sets an option on the socket `impl`, as
+`errc::bad_file_descriptor`. Otherwise sets an option on the socket `impl`, as
 if by __POSIX__ __setsockopt__.]
 
-[function_returns `ec`.]
-
   template<class GettableSocketOption>
-    error_code get_option(const implementation_type& impl,
-                          GettableSocketOption& option,
-                          error_code& ec) const;
+    void get_option(const implementation_type& impl,
+                    GettableSocketOption& option,
+                    error_code& ec) const;
 
 [function_requires `is_open(impl)`.]
 
 [function_effects If `is_open(impl)` is false, sets `ec` to
-`error::bad_file_descriptor`. Otherwise gets an option from the socket `impl`,
+`errc::bad_file_descriptor`. Otherwise gets an option from the socket `impl`,
 as if by __POSIX__ __getsockopt__.]
 
-[function_returns `ec`.]
-
   template<class IoControlCommand>
-    error_code io_control(implementation_type& impl,
-                          IoControlCommand& command, error_code& ec);
+    void io_control(implementation_type& impl,
+                    IoControlCommand& command, error_code& ec);
 
 [function_requires `is_open(impl)`.]
 
 [function_effects If `is_open(impl)` is false, sets `ec` to
-`error::bad_file_descriptor`. Otherwise executes an I/O control command on the
+`errc::bad_file_descriptor`. Otherwise executes an I/O control command on the
 socket `impl`, as if by __POSIX__ __ioctl__.]
-
-[function_returns `ec`.]
 
 [commentary This proposal does not include any classes that satisfy [link
 requirements.io_control_command `IoControlCommand`] requirements. However,
@@ -310,8 +296,8 @@ extensions to be supported.]
 [function_requires `is_open(impl)`.]
 
 [function_effects If `is_open(impl)` is false, sets `ec` to
-`error::bad_file_descriptor`. If the value returned by `native(impl)` is not a
-valid socket, sets `ec` to `error::not_a_socket`. [inline_note Instead of
+`errc::bad_file_descriptor`. If the value returned by `native(impl)` is not a
+valid socket, sets `ec` to `errc::not_a_socket`. [inline_note Instead of
 __POSIX__ `ENOTTY`.] Otherwise determines if the socket `impl` is at the
 out-of-band data mark, as if by __POSIX__ __sockatmark__.]
 
@@ -324,35 +310,31 @@ data mark.]
 [function_requires `is_open(impl)`.]
 
 [function_effects If `is_open(impl)` is false, sets `ec` to
-`error::bad_file_descriptor`. Otherwise determines the number of bytes that may
+`errc::bad_file_descriptor`. Otherwise determines the number of bytes that may
 be read without blocking.]
 
 [function_returns The number of bytes that may be read without blocking, or 0
 if an error occurs.]
 
-  error_code bind(implementation_type& impl,
-                  const endpoint_type& endpoint, error_code& ec);
+  void bind(implementation_type& impl,
+            const endpoint_type& endpoint, error_code& ec);
 
 [function_requires `is_open(impl)`.]
 
 [function_effects If `is_open(impl)` is false, sets `ec` to
-`error::bad_file_descriptor`. Otherwise binds the socket `impl` to the
+`errc::bad_file_descriptor`. Otherwise binds the socket `impl` to the
 specified local endpoint, as if by __POSIX__ __bind__.]
 
-[function_returns `ec`.]
-
-  error_code shutdown(implementation_type& impl, shutdown_type how,
-                      error_code& ec);
+  void shutdown(implementation_type& impl, shutdown_type how,
+                error_code& ec);
 
 [function_requires `is_open(impl)`.]
 
 [function_effects If `is_open(impl)` is false, sets `ec` to
-`error::bad_file_descriptor`. Otherwise shuts down all or part of a full-duplex
+`errc::bad_file_descriptor`. Otherwise shuts down all or part of a full-duplex
 connection for the socket `impl`, as if by __POSIX__ __shutdown__. If `how` is
 `shutdown_receive`, uses __POSIX__ `SHUT_RD`. If `how` is `shutdown_send`, uses
 __POSIX__ `SHUT_WR`. If `how` is `shutdown_both`, uses __POSIX__ `SHUT_RDWR`.]
-
-[function_returns `ec`.]
 
   endpoint_type local_endpoint(const implementation_type& impl,
                                error_code& ec) const;
@@ -360,7 +342,7 @@ __POSIX__ `SHUT_WR`. If `how` is `shutdown_both`, uses __POSIX__ `SHUT_RDWR`.]
 [function_requires `is_open(impl)`.]
 
 [function_effects If `is_open(impl)` is false, sets `ec` to
-`error::bad_file_descriptor`. Otherwise determines the locally-bound endpoint
+`errc::bad_file_descriptor`. Otherwise determines the locally-bound endpoint
 associated with the socket `impl`, as if by __POSIX__ __getsockname__.]
 
 [function_returns On success, the locally-bound endpoint associated with
@@ -372,22 +354,20 @@ associated with the socket `impl`, as if by __POSIX__ __getsockname__.]
 [function_requires `is_open(impl)`.]
 
 [function_effects If `is_open(impl)` is false, sets `ec` to
-`error::bad_file_descriptor`. Otherwise determines the remote endpoint
+`errc::bad_file_descriptor`. Otherwise determines the remote endpoint
 associated with the socket `impl`, as if by __POSIX__ __getpeername__.]
 
 [function_returns On success, the remote endpoint associated with `impl`.
 Otherwise `endpoint_type()`.]
 
-  error_code connect(implementation_type& impl,
-                     const endpoint_type& endpoint, error_code& ec);
+  void connect(implementation_type& impl,
+               const endpoint_type& endpoint, error_code& ec);
 
 [function_requires `is_open(impl)`.]
 
 [function_effects If `is_open(impl)` is false, sets `ec` to
-`error::bad_file_descriptor`. Otherwise connects the socket `impl` to the
+`errc::bad_file_descriptor`. Otherwise connects the socket `impl` to the
 specified remote endpoint, as if by __POSIX__ __connect__.]
-
-[function_returns `ec`.]
 
   template<class ConnectHandler>
     void async_connect(implementation_type& impl,
@@ -403,7 +383,7 @@ operation is performed via the `io_service` object returned by
 requirements.asynchronous_operations asynchronous operation] requirements.]
 
 [function_block If `is_open(impl)` is false, the operation shall fail
-immediately with `error_code` value `error::bad_file_descriptor`.]
+immediately with `error_code` value `errc::bad_file_descriptor`.]
 
 [function_block When multiple asynchronous connect operations are initiated
 such that the operations may logically be performed in parallel, the behaviour
@@ -425,7 +405,7 @@ operation, the behaviour is implementation-defined.]
 [function_requires `is_open(impl)`.]
 
 [function_effects If `is_open(impl)` is false, sets `ec` to
-`error::bad_file_descriptor`. Otherwise reads data from a connected socket
+`errc::bad_file_descriptor`. Otherwise reads data from a connected socket
 `impl`, as if by __POSIX__ __recvmsg__.]
 
 [function_block The mutable buffer sequence `buffers` specifies memory where
@@ -435,7 +415,7 @@ sequence completely before proceeding to the next.]
 [function_block The `flags` argument specifies the type of receive operation to be performed.]
 
 [function_block If the operation completes due to graceful connection closure
-by the peer, the operation shall fail with `error::eof`.]
+by the peer, the operation shall fail with `TBD_errc::eof`.]
 
 [function_returns On success, the number of bytes read. Otherwise `0`.]
 
@@ -454,7 +434,7 @@ according to [link requirements.asynchronous_operations asynchronous operation]
 requirements.]
 
 [function_block If `is_open(impl)` is false, the operation shall fail
-immediately with `error_code` value `error::bad_file_descriptor`.]
+immediately with `error_code` value `errc::bad_file_descriptor`.]
 
 [function_block The mutable buffer sequence `buffers` specifies memory where
 the data should be placed. The operation shall always fill a buffer in the
@@ -472,7 +452,7 @@ invoked,]
 
 [function_block The `flags` argument specifies the type of receive operation to
 be performed. If `flags & socket_base::message_peek` is true, the operation
-shall fail immediately with `error::invalid_argument`. If `flags &
+shall fail immediately with `errc::invalid_argument`. If `flags &
 socket_base::message_out_of_band` is true, the operation shall continue until
 out-of-band data is received, or an error occurs.]
 
@@ -490,7 +470,7 @@ while there is an incomplete asynchronous read operation, the behaviour is
 implementation-defined.]
 
 [function_block If the operation completes due to graceful connection closure
-by the peer, the operation shall fail with `error::eof`.]
+by the peer, the operation shall fail with `TBD_errc::eof`.]
 
 [function_block If the operation completes successfully, the `ReadHandler`
 object `handler` is invoked with the number of bytes transferred. Otherwise
@@ -506,7 +486,7 @@ it is invoked with `0`.]
 [function_requires `is_open(impl)`.]
 
 [function_effects If `is_open(impl)` is false, sets `ec` to
-`error::bad_file_descriptor`. Otherwise reads data from an unconnected socket
+`errc::bad_file_descriptor`. Otherwise reads data from an unconnected socket
 `impl`, as if by __POSIX__ __recvmsg__.]
 
 [function_block The mutable buffer sequence `buffers` specifies memory where
@@ -533,7 +513,7 @@ according to [link requirements.asynchronous_operations asynchronous operation]
 requirements.]
 
 [function_block If `is_open(impl)` is false, the operation shall fail
-immediately with `error_code` value `error::bad_file_descriptor`.]
+immediately with `error_code` value `errc::bad_file_descriptor`.]
 
 [function_block The mutable buffer sequence `buffers` specifies memory where
 the data should be placed. The operation shall always fill a buffer in the
@@ -551,7 +531,7 @@ invoked,]
 
 [function_block The `flags` argument specifies the type of receive operation to
 be performed. If `flags & socket_base::message_peek` is true, the operation
-shall fail immediately with `error::invalid_argument`. If `flags &
+shall fail immediately with `errc::invalid_argument`. If `flags &
 socket_base::message_out_of_band` is true, the operation shall continue until
 out-of-band data is received, or an error occurs.]
 
@@ -584,7 +564,7 @@ it is invoked with `0`.]
 [function_requires `is_open(impl)`.]
 
 [function_effects If `is_open(impl)` is false, sets `ec` to
-`error::bad_file_descriptor`. Otherwise writes data to a connected socket
+`errc::bad_file_descriptor`. Otherwise writes data to a connected socket
 `impl`, as if by __POSIX__ __sendmsg__.]
 
 [function_block The constant buffer sequence `buffers` specifies memory where
@@ -611,7 +591,7 @@ according to [link requirements.asynchronous_operations asynchronous operation]
 requirements.]
 
 [function_block If `is_open(impl)` is false, the operation shall fail
-immediately with `error_code` value `error::bad_file_descriptor`.]
+immediately with `error_code` value `errc::bad_file_descriptor`.]
 
 [function_block The constant buffer sequence `buffers` specifies memory where
 the data to be written is located. The operation shall always write a buffer in
@@ -657,7 +637,7 @@ it is invoked with `0`.]
 [function_requires `is_open(impl)`.]
 
 [function_effects If `is_open(impl)` is false, sets `ec` to
-`error::bad_file_descriptor`. Otherwise writes data to an unconnected socket
+`errc::bad_file_descriptor`. Otherwise writes data to an unconnected socket
 `impl`, as if by __POSIX__ __sendmsg__.]
 
 [function_block The constant buffer sequence `buffers` specifies memory where
@@ -685,7 +665,7 @@ according to [link requirements.asynchronous_operations asynchronous operation]
 requirements.]
 
 [function_block If `is_open(impl)` is false, the operation shall fail
-immediately with `error_code` value `error::bad_file_descriptor`.]
+immediately with `error_code` value `errc::bad_file_descriptor`.]
 
 [function_block The constant buffer sequence `buffers` specifies memory where
 the data to be written is located. The operation shall always write a buffer in

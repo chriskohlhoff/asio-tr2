@@ -21,11 +21,10 @@ that evaluates to false.
 
 Unless otherwise noted, when the behaviour of an asynchronous operation is
 defined "as if" implemented by a __POSIX__ function, the handler shall be
-invoked with an [link globals.errno_errors `errno` error] or [link
-globals.getaddrinfo_errors `getaddrinfo` error] value of type `error_code` that
-corresponds to the failure condition described by __POSIX__ for that function,
-if any. Otherwise the handler shall be invoked with an implementation-defined
-`error_code` value that reflects the operating system error.
+invoked with a value of type `error_code` that corresponds to the failure
+condition described by __POSIX__ for that function, if any. Otherwise the
+handler shall be invoked with an implementation-defined `error_code` value that
+reflects the operating system error.
 
 Asynchronous operations shall not fail with an error condition that indicates
 interruption by a signal (__POSIX__ `EINTR`). Asynchronous operations shall not

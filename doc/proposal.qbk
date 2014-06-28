@@ -561,16 +561,7 @@ express type requirements, as listed in the table below.
 ]
 
 [include:definitions definitions.qbk]
-
-[section Diagnostics library]
-[commentary The following text is intended as an addition to the Diagnostics
-Library chapter defined originally for TR2 in [N1975] and [N2066], and updated
-for C++0x in [N2174].]
-[include:headers headers/system_error.qbk]
-[include:globals globals/errno_errors.qbk]
-[include:globals globals/getaddrinfo_errors.qbk]
-[include:globals globals/misc_errors.qbk]
-[endsect]
+[include:error_reporting error_reporting.qbk]
 
 [section:basic_io_services Basic I/O services]
 [include:headers headers/io_service.qbk]
@@ -580,7 +571,6 @@ for C++0x in [N2174].]
 [include:requirements requirements/service.qbk]
 [include:requirements requirements/io_object_service.qbk]
 [include:requirements requirements/thread_safety.qbk]
-[include:requirements requirements/synchronous_operations.qbk]
 [include:requirements requirements/asynchronous_operations.qbk]
 [endsect]
 [include:classes classes/io_service.qbk]

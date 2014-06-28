@@ -4,6 +4,16 @@
     namespace experimental {
       namespace network {
 
+        ``// [link globals.getaddrinfo_errors getaddrinfo errors]:``
+        extern const error_code host_not_found;
+        extern const error_code host_not_found_try_again;
+        extern const error_code service_not_found;
+
+        ``// [link globals.misc_errors miscellaneous errors]:``
+        extern const error_code already_open;
+        extern const error_code eof;
+        extern const error_code not_found;
+
         // Sockets:
 
         class ``[link classes.socket_base socket_base]``;

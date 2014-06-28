@@ -34,7 +34,7 @@
           size_t expires_from_now(const duration_type& d, error_code& ec);
 
           void wait();
-          error_code wait(error_code& ec);
+          void wait(error_code& ec);
 
           template <class WaitHandler>
             void async_wait(WaitHandler handler);
@@ -102,9 +102,9 @@ TimeTraits, TimerService>`, initialising the base class with
 [function_returns `this->service.expires_from_now(this->implementation, d, ec)`.]
 
   void wait();
-  error_code wait(error_code& ec);
+  void wait(error_code& ec);
 
-[function_returns `this->service.wait(this->implementation, ec)`.]
+[function_effects Calls `this->service.wait(this->implementation, ec)`.]
 
   template <class WaitHandler>
     void async_wait(WaitHandler handler);

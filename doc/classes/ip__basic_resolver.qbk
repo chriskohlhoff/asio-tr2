@@ -22,7 +22,7 @@
 
             // members:
             void cancel();
-            error_code cancel(error_code& ec);
+            void cancel(error_code& ec);
 
             iterator resolve(const query& q);
             iterator resolve(const query& q, error_code& ec);
@@ -56,9 +56,9 @@ class with `basic_io_object(ios)`.]
 [section [^ip::basic_resolver] members]
 
   void cancel();
-  error_code cancel(error_code& ec);
+  void cancel(error_code& ec);
 
-[function_returns `this->service.cancel(this->implementation, ec)`.]
+[function_effects Calls `this->service.cancel(this->implementation, ec)`.]
 
   iterator resolve(const query& q);
   iterator resolve(const query& q, error_code& ec);

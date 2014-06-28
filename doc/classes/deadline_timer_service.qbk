@@ -40,7 +40,7 @@ of a [link requirements.timer_service `TimerService`].
           size_t expires_from_now(implementation_type& impl,
                                   const duration_type& d, error_code& ec);
 
-          error_code wait(implementation_type& impl, error_code& ec);
+          void wait(implementation_type& impl, error_code& ec);
 
           template<class WaitHandler>
             void async_wait(implementation_type& impl, WaitHandler handler);
@@ -86,7 +86,7 @@ Cancels asynchronous wait operations associated with `impl` as if by performing:
 
 [function_effects Causes any outstanding asynchronous wait operations to
 complete as soon as possible. Handlers for cancelled operations shall be passed
-the error code `error::operation_canceled`.]
+the error code `errc::operation_canceled`.]
 
 [function_returns The number of operations that were cancelled.]
 
@@ -117,12 +117,10 @@ TimeTraits::now())`.]
 [function_effects Equivalent to `a.expires_at(b,
 TimeTraits::add(TimeTraits::now(), d), ec)`.]
 
-  error_code wait(implementation_type& impl, error_code& ec);
+  void wait(implementation_type& impl, error_code& ec);
   
 [function_effects Performs a synchronous wait operation associated with the
 timer implementation `impl`.]
-
-[function_returns `ec`.]
 
 [function_postconditions `!!ec || !TimeTraits::lt(TimeTraits::now(),
 a.expires_at(b))`.]
