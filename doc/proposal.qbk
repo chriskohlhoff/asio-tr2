@@ -1,7 +1,6 @@
-[library Networking Library Proposal for TR2 (Revision 1)
+[library Networking Library Proposal (Revision 2)
     [quickbook 1.1]
-    [id tr2network]
-    [last-revision $Date: 2007/03/11 12:28:50 $]
+    [id network]
 ]
 
 [/-----------------------------------------------------------------------------]
@@ -411,22 +410,22 @@ summarised in the table below:
 [table Networking library summary
   [[Subclause][Header(s)]]
   [
-    [[link tr2network.basic_io_services Basic I/O services]]
+    [[link network.basic_io_services Basic I/O services]]
     [`<io_service>`]
   ]
   [
-    [[link tr2network.timers Timers]]
+    [[link network.timers Timers]]
     [`<timer>`]
   ]
   [
-    [[link tr2network.buffers Buffers]]
+    [[link network.buffers Buffers]]
     [`<buffer>`]
   ]
   [
     [
-      [link tr2network.sockets Sockets]\n
-      [link tr2network.socket_streams Socket streams]\n
-      [link tr2network.internet_protocol Internet protocol]\n
+      [link network.sockets Sockets]\n
+      [link network.socket_streams Socket streams]\n
+      [link network.internet_protocol Internet protocol]\n
     ]
     [`<network>`]
   ]
