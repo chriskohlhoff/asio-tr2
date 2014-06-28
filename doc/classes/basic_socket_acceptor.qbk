@@ -11,7 +11,7 @@
         {
         public:
           // types:
-          typedef typename SocketAcceptorService::native_type native_type;
+          typedef typename SocketAcceptorService::native_handle_type native_handle_type;
           typedef Protocol protocol_type;
           typedef typename Protocol::endpoint endpoint_type;
 
@@ -21,18 +21,18 @@
           basic_socket_acceptor(io_service& ios, const endpoint_type& endpoint,
                                 bool reuse_addr = true);
           basic_socket_acceptor(io_service& ios, const protocol_type& protocol,
-                                const native_type& native_acceptor);
+                                const native_handle_type& native_acceptor);
 
           // members:
-          native_type native();
+          native_handle_type native_handle();
 
           void open(const protocol_type& protocol = protocol_type());
           void open(const protocol_type& protocol, error_code& ec);
 
           void assign(const protocol_type& protocol,
-                      const native_type& native_acceptor);
+                      const native_handle_type& native_acceptor);
           void assign(const protocol_type& protocol,
-                      const native_type& native_acceptor, error_code& ec);
+                      const native_handle_type& native_acceptor, error_code& ec);
 
           bool is_open() const;
 
@@ -139,7 +139,7 @@ it as ready to accept connections as if by calling:
 servers, although there are some security implications in doing so.]
 
   basic_socket_acceptor(io_service& ios, const protocol_type& protocol,
-                        const native_type& native_acceptor);
+                        const native_handle_type& native_acceptor);
 
 [function_effects Constructs an object of class `basic_socket_acceptor<Protocol,
 SocketAcceptorService>`, initialising the base class with
@@ -155,9 +155,9 @@ the object as if by calling:
 
 [section [^basic_socket_acceptor] members]
 
-  native_type native();
+  native_handle_type native_handle();
 
-[function_returns `this->service.native(this->implementation)`.]
+[function_returns `this->service.native_handle(this->implementation)`.]
 
   void open(const protocol_type& protocol);
   void open(const protocol_type& protocol, error_code& ec);
@@ -166,9 +166,9 @@ the object as if by calling:
 ec)`.]
 
   void assign(const protocol_type& protocol,
-              const native_type& native_acceptor);
+              const native_handle_type& native_acceptor);
   void assign(const protocol_type& protocol,
-              const native_type& native_acceptor, error_code& ec);
+              const native_handle_type& native_acceptor, error_code& ec);
 
 [function_effects Calls `this->service.assign(this->implementation, protocol,
 native_acceptor, ec)`.]

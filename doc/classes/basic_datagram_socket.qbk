@@ -10,7 +10,7 @@
         {
         public:
           // types:
-          typedef typename DatagramSocketService::native_type native_type;
+          typedef typename DatagramSocketService::native_handle_type native_handle_type;
           typedef Protocol protocol_type;
           typedef typename Protocol::endpoint endpoint_type;
 
@@ -19,7 +19,7 @@
           basic_datagram_socket(io_service& ios, const protocol_type& protocol);
           basic_datagram_socket(io_service& ios, const endpoint_type& endpoint);
           basic_datagram_socket(io_service& ios, const protocol_type& protocol,
-                                const native_type& native_socket);
+                                const native_handle_type& native_socket);
 
           // members:
           template<class MutableBufferSequence>
@@ -146,7 +146,7 @@ DatagramSocketService>`, initialising the base class with
 `basic_socket(ios, endpoint)`.]
 
   basic_datagram_socket(io_service& ios, const protocol_type& protocol,
-                        const native_type& native_socket);
+                        const native_handle_type& native_socket);
 
 [function_effects Constructs an object of class `basic_datagram_socket<Protocol,
 SocketService>`, initialising the base class with `basic_socket(ios,
