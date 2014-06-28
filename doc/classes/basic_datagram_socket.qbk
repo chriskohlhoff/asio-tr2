@@ -1,8 +1,8 @@
 [section:basic_datagram_socket Class template [^basic_datagram_socket]]
 
   namespace std {
-    namespace tr2 {
-      namespace sys {
+    namespace experimental {
+      namespace network {
 
         template<class Protocol, class DatagramSocketService>
         class basic_datagram_socket :
@@ -121,8 +121,8 @@
                                WriteHandler handler);
         };
 
-      } // namespace sys
-    } // namespace tr2
+      } // namespace network
+    } // namespace experimental
   } // namespace std
 
 [section [^basic_datagram_socket] constructors]

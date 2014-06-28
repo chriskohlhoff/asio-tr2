@@ -1,8 +1,8 @@
 [section:basic_socket_acceptor Class template [^basic_socket_acceptor]]
 
   namespace std {
-    namespace tr2 {
-      namespace sys {
+    namespace experimental {
+      namespace network {
 
         template<class Protocol, class SocketAcceptorService>
         class basic_socket_acceptor :
@@ -90,8 +90,8 @@
                               endpoint_type& endpoint, AcceptHandler handler);
         };
 
-      } // namespace sys
-    } // namespace tr2
+      } // namespace network
+    } // namespace experimental
   } // namespace std
 
 [section [^basic_socket_acceptor] constructors]

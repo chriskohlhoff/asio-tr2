@@ -1,8 +1,8 @@
 [section:ip__basic_resolver_query Class template [^ip::basic_resolver_query]]
 
   namespace std {
-    namespace tr2 {
-      namespace sys {
+    namespace experimental {
+      namespace network {
         namespace ip {
 
           template<class InternetProtocol>
@@ -30,8 +30,8 @@
           };
 
         } // namespace ip
-      } // namespace sys
-    } // namespace tr2
+      } // namespace network
+    } // namespace experimental
   } // namespace std
 
 The `basic_resolver_query` class encapsulates values used in name resolution.

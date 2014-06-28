@@ -1,8 +1,8 @@
 [section:misc_errors Miscellaneous errors]
 
   namespace std {
-    namespace tr2 {
-      namespace sys {
+    namespace experimental {
+      namespace network {
         namespace error {
 
           extern const error_code already_open;
@@ -10,8 +10,8 @@
           extern const error_code not_found;
           
         } // namespace error
-      } // namespace sys
-    } // namespace tr2
+      } // namespace network
+    } // namespace experimental
   } // namespace std
 
 The method of initialisation of each `error_code` value declared above is

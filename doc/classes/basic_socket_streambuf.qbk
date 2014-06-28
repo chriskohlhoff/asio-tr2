@@ -1,8 +1,8 @@
 [section:basic_socket_streambuf Class template [^basic_socket_streambuf]]
 
   namespace std {
-    namespace tr2 {
-      namespace sys {
+    namespace experimental {
+      namespace network {
 
         template<class Protocol, class StreamSocketService>
         class basic_socket_streambuf :
@@ -35,8 +35,8 @@
           virtual streambuf* setbuf(char_type* s, streamsize n);
         };
 
-      } // namespace sys
-    } // namespace tr2
+      } // namespace network
+    } // namespace experimental
   } // namespace std
 
 The class `basic_socket_streambuf<Protocol, StreamSocketService>` associates

@@ -1,8 +1,8 @@
 [section:io_service__work Class [^io_service::work]]
 
   namespace std {
-    namespace tr2 {
-      namespace sys {
+    namespace experimental {
+      namespace network {
 
         class io_service::work
         {
@@ -19,8 +19,8 @@
           void operator=(const work&); // not defined
         };
 
-      } // namespace sys
-    } // namespace tr2
+      } // namespace network
+    } // namespace experimental
   } // namespace std
 
 An object of class `io_service::work` represents a unit of unfinished work for

@@ -1,8 +1,8 @@
 [section:io_service__service Class [^io_service::service]]
 
   namespace std {
-    namespace tr2 {
-      namespace sys {
+    namespace experimental {
+      namespace network {
 
         class io_service::service
         {
@@ -22,8 +22,8 @@
           void operator=(const service&); // not defined
         };
 
-      } // namespace sys
-    } // namespace tr2
+      } // namespace network
+    } // namespace experimental
   } // namespace std
 
 [endsect]

@@ -1,8 +1,8 @@
 [section:io_service__id Class [^io_service::id]]
 
   namespace std {
-    namespace tr2 {
-      namespace sys {
+    namespace experimental {
+      namespace network {
 
         class io_service::id
         {
@@ -14,8 +14,8 @@
           void operator=(const id&); // not defined
         };
 
-      } // namespace sys
-    } // namespace tr2
+      } // namespace network
+    } // namespace experimental
   } // namespace std
 
 The class `io_service::id` provides identification of services, and is used as

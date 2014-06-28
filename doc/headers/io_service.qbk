@@ -1,8 +1,8 @@
 [section Header [^<io_service>] synopsis]
 
   namespace std {
-    namespace tr2 {
-      namespace sys {
+    namespace experimental {
+      namespace network {
 
         class ``[link classes.io_service io_service]``;
 
@@ -21,8 +21,8 @@
         template<class IoObjectService>
           class ``[link classes.basic_io_object basic_io_object]``;
 
-      } // namespace sys
-    } // namespace tr2
+      } // namespace network
+    } // namespace experimental
   } // namespace std
 
 [endsect]

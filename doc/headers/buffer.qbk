@@ -1,8 +1,8 @@
 [section Header [^<buffer>] synopsis]
 
   namespace std {
-    namespace tr2 {
-      namespace sys {
+    namespace experimental {
+      namespace network {
 
         class ``[link classes.mutable_buffer mutable_buffer]``;
 
@@ -221,8 +221,8 @@
                                 basic_fifobuf<Allocator>& fb,
                                 const string& delim, ReadHandler handler);
 
-      } // namespace sys
-    } // namespace tr2
+      } // namespace network
+    } // namespace experimental
   } // namespace std
 
 [endsect]

@@ -1,8 +1,8 @@
 [section:basic_socket Class template [^basic_socket]]
 
   namespace std {
-    namespace tr2 {
-      namespace sys {
+    namespace experimental {
+      namespace network {
 
         template<class Protocol, class SocketService>
         class basic_socket :
@@ -86,8 +86,8 @@
           ~basic_socket();
         };
 
-      } // namespace sys
-    } // namespace tr2
+      } // namespace network
+    } // namespace experimental
   } // namespace std
 
 [section [^basic_socket] constructors]

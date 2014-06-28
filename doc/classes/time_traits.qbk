@@ -1,20 +1,20 @@
 [section:time_traits [^time_traits] specialisations]
 
   namespace std {
-    namespace tr2 {
-      namespace sys {
+    namespace experimental {
+      namespace network {
 
         template<> struct time_traits<date_time>;
 
-      } // namespace sys
-    } // namespace tr2
+      } // namespace network
+    } // namespace experimental
   } // namespace std
 
 [section Struct [^time_traits<date_time>]]
 
   namespace std {
-    namespace tr2 {
-      namespace sys {
+    namespace experimental {
+      namespace network {
 
         template<>
         struct time_traits<date_time>
@@ -37,8 +37,8 @@
             const duration_type& d);
         };
 
-      } // namespace sys
-    } // namespace tr2
+      } // namespace network
+    } // namespace experimental
   } // namespace std
 
 [section [^time_traits<date_time>] static members]

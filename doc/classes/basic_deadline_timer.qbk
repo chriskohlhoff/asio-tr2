@@ -1,8 +1,8 @@
 [section:basic_deadline_timer Class template [^basic_deadline_timer]]
 
   namespace std {
-    namespace tr2 {
-      namespace sys {
+    namespace experimental {
+      namespace network {
 
         template<class Time, class TimeTraits, class TimerService>
         class basic_deadline_timer :
@@ -40,8 +40,8 @@
             void async_wait(WaitHandler handler);
         };
 
-      } // namespace sys
-    } // namespace tr2
+      } // namespace network
+    } // namespace experimental
   } // namespace std
 
 [section [^basic_deadline_timer] constructors]

@@ -1,8 +1,8 @@
 [section:getaddrinfo_errors [^getaddrinfo] errors]
 
   namespace std {
-    namespace tr2 {
-      namespace sys {
+    namespace experimental {
+      namespace network {
         namespace error {
 
           extern const error_code host_not_found;
@@ -10,8 +10,8 @@
           extern const error_code service_not_found;
           
         } // namespace error
-      } // namespace sys
-    } // namespace tr2
+      } // namespace network
+    } // namespace experimental
   } // namespace std
 
 The meaning of each `error_code` value declared above shall correspond to the

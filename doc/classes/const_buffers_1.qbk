@@ -5,8 +5,8 @@ requirements.const_buffers `ConstBufferSequence`], and [link
 requirements.convertible_to_const_buffer `ConvertibleToConstBuffer`].
 
   namespace std {
-    namespace tr2 {
-      namespace sys {
+    namespace experimental {
+      namespace network {
 
         class const_buffers_1 :
           public const_buffer
@@ -25,8 +25,8 @@ requirements.convertible_to_const_buffer `ConvertibleToConstBuffer`].
           const_iterator end() const;
         };
 
-      } // namespace sys
-    } // namespace tr2
+      } // namespace network
+    } // namespace experimental
   } // namespace std
 
 An object of class `const_buffers_1` represents a sequence of exactly one

@@ -8,8 +8,8 @@ when a socket is closed and unsent data is present.
 requirements.settable_socket_option `SettableSocketOption`].
 
   namespace std {
-    namespace tr2 {
-      namespace sys {
+    namespace experimental {
+      namespace network {
 
         class socket_base::linger
         {
@@ -26,15 +26,15 @@ requirements.settable_socket_option `SettableSocketOption`].
           void timeout(int t);
         };
 
-      } // namespace sys
-    } // namespace tr2
+      } // namespace network
+    } // namespace experimental
   } // namespace std
 
 Extensible implementations shall provide the following member functions:
 
   namespace std {
-    namespace tr2 {
-      namespace sys {
+    namespace experimental {
+      namespace network {
 
         class socket_base::linger
         {
@@ -50,8 +50,8 @@ Extensible implementations shall provide the following member functions:
   ``//      ::linger value_;  ['[*exposition only]]``
         };
 
-      } // namespace sys
-    } // namespace tr2
+      } // namespace network
+    } // namespace experimental
   } // namespace std
 
 [section [^socket_base::linger] constructors]

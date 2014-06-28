@@ -1,8 +1,8 @@
 [section:ip__basic_resolver Class template [^ip::basic_resolver]]
 
   namespace std {
-    namespace tr2 {
-      namespace sys {
+    namespace experimental {
+      namespace network {
         namespace ip {
 
           template<class InternetProtocol, class ResolverService>
@@ -39,8 +39,8 @@
           };
 
         } // namespace ip
-      } // namespace sys
-    } // namespace tr2
+      } // namespace network
+    } // namespace experimental
   } // namespace std
 
 [section [^ip::basic_resolver] constructors]

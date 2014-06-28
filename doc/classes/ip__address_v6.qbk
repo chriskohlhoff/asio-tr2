@@ -1,8 +1,8 @@
 [section:ip__address_v6 Class [^ip::address_v6]]
 
   namespace std {
-    namespace tr2 {
-      namespace sys {
+    namespace experimental {
+      namespace network {
         namespace ip {
 
           class address_v6
@@ -59,8 +59,8 @@
               basic_ostream<CharT, Traits>& os, const address_v6& addr);
 
         } // namespace ip
-      } // namespace sys
-    } // namespace tr2
+      } // namespace network
+    } // namespace experimental
   } // namespace std
 
 [std_note The implementations of the functions `is_unspecified`, `is_loopback`,

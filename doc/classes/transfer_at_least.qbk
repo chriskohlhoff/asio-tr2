@@ -1,8 +1,8 @@
 [section:transfer_at_least Class [^transfer_at_least]]
 
   namespace std {
-    namespace tr2 {
-      namespace sys {
+    namespace experimental {
+      namespace network {
 
         class transfer_at_least :
           public binary_function<error_code, size_t, bool>
@@ -14,8 +14,8 @@
   ``//      size\_t minimum\_;  ['[*exposition only]]``
         };
 
-      } // namespace sys
-    } // namespace tr2
+      } // namespace network
+    } // namespace experimental
   } // namespace std
 
 The constructor initialises `minimum_` with `m`.

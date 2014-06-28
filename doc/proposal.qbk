@@ -129,7 +129,7 @@ To give some idea of the flavour of the proposed library, consider the
 following sample code. This is part of a server program that echoes characters
 it receives back to the client in upper case:
 
-  namespace sys = std::tr2::sys;
+  namespace network = std::experimental::network;
 
   template <typename Iterator>
   void uppercase(Iterator begin, Iterator end)

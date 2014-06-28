@@ -1,8 +1,8 @@
 [section:ip__address_v4 Class [^ip::address_v4]]
 
   namespace std {
-    namespace tr2 {
-      namespace sys {
+    namespace experimental {
+      namespace network {
         namespace ip {
 
           class address_v4
@@ -51,8 +51,8 @@
               basic_ostream<CharT, Traits>& os, const address_v4& addr);
 
         } // namespace ip
-      } // namespace sys
-    } // namespace tr2
+      } // namespace network
+    } // namespace experimental
   } // namespace std
 
 [section [^ip::address_v4] constructors]

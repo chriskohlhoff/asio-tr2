@@ -5,8 +5,8 @@ requirements.convertible_to_mutable_buffer `ConvertibleToMutableBuffer`] and
 [link requirements.convertible_to_const_buffer `ConvertibleToConstBuffer`].
 
   namespace std {
-    namespace tr2 {
-      namespace sys {
+    namespace experimental {
+      namespace network {
 
         class mutable_buffer
         {
@@ -21,8 +21,8 @@ requirements.convertible_to_mutable_buffer `ConvertibleToMutableBuffer`] and
         mutable_buffer operator+(const mutable_buffer& b, size_t size);
         mutable_buffer operator+(size_t size, const mutable_buffer& b);
 
-      } // namespace sys
-    } // namespace tr2
+      } // namespace network
+    } // namespace experimental
   } // namespace std
 
 [section [^mutable_buffer] constructors]

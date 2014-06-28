@@ -12,7 +12,7 @@ arguments.
   [[expression] [return type] [assertion/note\npre/post-conditions]]
   [
     [``
-      using namespace std::tr2::sys;
+      using namespace std::experimental::network;
       io_handler_allocate(s, &h);
     ``]
     [`void*`]
@@ -22,13 +22,13 @@ arguments.
       `::operator new()`. Throws `bad_alloc` on failure.
       
       The `io_handler_allocate()` function is located using argument-dependent
-      lookup. The function `std::tr2::sys::io_handler_allocate()` serves as a
+      lookup. The function `std::experimental::network::io_handler_allocate()` serves as a
       default if no user-supplied function is available.
     ]
   ]
   [
     [``
-      using namespace std::tr2::sys;
+      using namespace std::experimental::network;
       io_handler_deallocate(p, s, &h);
     ``]
     []
@@ -37,13 +37,13 @@ arguments.
       `s`, that was previously allocated using `io_handler_allocate()`.
       
       The `io_handler_deallocate()` function is located using argument-dependent
-      lookup. The function `std::tr2::sys::io_handler_deallocate()` serves as a
+      lookup. The function `std::experimental::network::io_handler_deallocate()` serves as a
       default if no user-supplied function is available.
     ]
   ]
   [
     [``
-      using namespace std::tr2::sys;
+      using namespace std::experimental::network;
       io_handler_invoke(f, &h);
     ``]
     []
@@ -51,7 +51,7 @@ arguments.
       Causes the function object `f` to be executed as if by calling `f()`.
 
       The `io_handler_invoke()` function is located using argument-dependent
-      lookup. The function `std::tr2::sys::io_handler_invoke()` serves as a
+      lookup. The function `std::experimental::network::io_handler_invoke()` serves as a
       default if no user-supplied function is available.
     ]
   ]

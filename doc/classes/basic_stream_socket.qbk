@@ -7,8 +7,8 @@ requirements.async_read_stream asynchronous read streams], and [link
 requirements.async_write_stream asynchronous write streams].
 
   namespace std {
-    namespace tr2 {
-      namespace sys {
+    namespace experimental {
+      namespace network {
 
         template<class Protocol, class StreamSocketService>
         class basic_stream_socket :
@@ -92,8 +92,8 @@ requirements.async_write_stream asynchronous write streams].
                                   WriteHandler handler);
         };
 
-      } // namespace sys
-    } // namespace tr2
+      } // namespace network
+    } // namespace experimental
   } // namespace std
 
 [section [^basic_stream_socket] constructors]

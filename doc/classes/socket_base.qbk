@@ -1,8 +1,8 @@
 [section:socket_base Class [^socket_base]]
 
   namespace std {
-    namespace tr2 {
-      namespace sys {
+    namespace experimental {
+      namespace network {
 
         class socket_base
         {
@@ -36,8 +36,8 @@
           ~socket_base();
         };
 
-      } // namespace sys
-    } // namespace tr2
+      } // namespace network
+    } // namespace experimental
   } // namespace std
 
 `socket_base` defines several member types:

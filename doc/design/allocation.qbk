@@ -21,7 +21,7 @@ Similarly, to deallocate the memory it will execute:
   io_handler_deallocate(pointer, size, &h);
 
 These functions are located using argument-dependent lookup. The implementation
-provides default implementations of the above functions in the `std::tr2::sys`
+provides default implementations of the above functions in the `std::experimental::network`
 namespace:
 
   void* io_handler_allocate(size_t, ...);

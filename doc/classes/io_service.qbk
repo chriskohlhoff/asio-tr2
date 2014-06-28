@@ -1,8 +1,8 @@
 [section:io_service Class [^io_service]]
 
   namespace std {
-    namespace tr2 {
-      namespace sys {
+    namespace experimental {
+      namespace network {
 
         class io_service
         {
@@ -55,8 +55,8 @@
         class service_already_exists : public logic_error { ... };
         class invalid_service_owner : public logic_error { ... };
 
-      } // namespace sys
-    } // namespace tr2
+      } // namespace network
+    } // namespace experimental
   } // namespace std
 
 Class `io_service` implements an extensible, type-safe, polymorphic set of I/O

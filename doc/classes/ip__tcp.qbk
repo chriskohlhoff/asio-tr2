@@ -4,8 +4,8 @@ The `tcp` class meets the requirements for an [link
 requirements.internet_protocol `InternetProtocol`].
 
   namespace std {
-    namespace tr2 {
-      namespace sys {
+    namespace experimental {
+      namespace network {
         namespace ip {
 
           class tcp
@@ -32,15 +32,15 @@ requirements.internet_protocol `InternetProtocol`].
           bool operator!=(const tcp& a, const tcp& b);
 
         } // namespace ip
-      } // namespace sys
-    } // namespace tr2
+      } // namespace network
+    } // namespace experimental
   } // namespace std
 
 Extensible implementations shall provide the following member functions:
 
   namespace std {
-    namespace tr2 {
-      namespace sys {
+    namespace experimental {
+      namespace network {
         namespace ip {
 
           class tcp
@@ -53,8 +53,8 @@ Extensible implementations shall provide the following member functions:
           };
 
         } // namespace ip
-      } // namespace sys
-    } // namespace tr2
+      } // namespace network
+    } // namespace experimental
   } // namespace std
 
 In the table below, `u` denotes an identifier.

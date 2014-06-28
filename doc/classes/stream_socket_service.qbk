@@ -4,8 +4,8 @@ Instances of the `stream_socket_service` class template meet the requirements
 of a [link requirements.stream_socket_service `StreamSocketService`].
 
   namespace std {
-    namespace tr2 {
-      namespace sys {
+    namespace experimental {
+      namespace network {
 
         template<class Protocol>
         class stream_socket_service :
@@ -110,8 +110,8 @@ of a [link requirements.stream_socket_service `StreamSocketService`].
           virtual void shutdown_service();
         };
 
-      } // namespace sys
-    } // namespace tr2
+      } // namespace network
+    } // namespace experimental
   } // namespace std
 
 [section [^stream_socket_service] types]

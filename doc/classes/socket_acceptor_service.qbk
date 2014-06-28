@@ -4,8 +4,8 @@ Instances of the `socket_acceptor_service` class template meet the requirements
 of a [link requirements.socket_acceptor_service `SocketAcceptorService`].
 
   namespace std {
-    namespace tr2 {
-      namespace sys {
+    namespace experimental {
+      namespace network {
 
         template<class Protocol>
         class socket_acceptor_service :
@@ -80,8 +80,8 @@ of a [link requirements.socket_acceptor_service `SocketAcceptorService`].
           virtual void shutdown_service();
         };
 
-      } // namespace sys
-    } // namespace tr2
+      } // namespace network
+    } // namespace experimental
   } // namespace std
 
 [section [^socket_acceptor_service] types]

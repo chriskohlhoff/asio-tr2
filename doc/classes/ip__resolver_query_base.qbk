@@ -1,8 +1,8 @@
 [section:ip__resolver_query_base Class [^ip::resolver_query_base]]
 
   namespace std {
-    namespace tr2 {
-      namespace sys {
+    namespace experimental {
+      namespace network {
         namespace ip {
 
           class resolver_query_base
@@ -23,8 +23,8 @@
           };
 
         } // namespace ip
-      } // namespace sys
-    } // namespace tr2
+      } // namespace network
+    } // namespace experimental
   } // namespace std
 
 `resolver_query_base` defines a bitmask type, `flags`. The flags constants have

@@ -8,8 +8,8 @@ network interface to use for outgoing multicast datagrams.
 `SettableSocketOption`].
 
   namespace std {
-    namespace tr2 {
-      namespace sys {
+    namespace experimental {
+      namespace network {
         namespace ip {
           namespace multicast {
 
@@ -24,15 +24,15 @@ network interface to use for outgoing multicast datagrams.
 
           } // namespace multicast
         } // namespace ip
-      } // namespace sys
-    } // namespace tr2
+      } // namespace network
+    } // namespace experimental
   } // namespace std
 
 Extensible implementations shall provide the following member functions:
 
   namespace std {
-    namespace tr2 {
-      namespace sys {
+    namespace experimental {
+      namespace network {
         namespace ip {
           namespace multicast {
 
@@ -51,8 +51,8 @@ Extensible implementations shall provide the following member functions:
 
           } // namespace multicast
         } // namespace ip
-      } // namespace sys
-    } // namespace tr2
+      } // namespace network
+    } // namespace experimental
   } // namespace std
 
 [commentary The `outbound_interface` class is a `SettableSocketOption` only,

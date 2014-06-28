@@ -1,8 +1,8 @@
 [section:basic_fifobuf Class template [^basic_fifobuf]]
 
   namespace std {
-    namespace tr2 {
-      namespace sys {
+    namespace experimental {
+      namespace network {
 
         template<class Allocator = std::allocator<char> >
         class basic_fifobuf :
@@ -39,8 +39,8 @@
           void operator=(const basic_fifobuf&);  // not defined
         };
 
-      } // namespace sys
-    } // namespace tr2
+      } // namespace network
+    } // namespace experimental
   } // namespace std
 
 The class `basic_fifobuf` is derived from `basic_streambuf` to associate the

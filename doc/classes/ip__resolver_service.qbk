@@ -4,8 +4,8 @@ Instances of the `resolver_service` class template meet the requirements
 of a [link requirements.resolver_service `ResolverService`].
 
   namespace std {
-    namespace tr2 {
-      namespace sys {
+    namespace experimental {
+      namespace network {
         namespace ip {
 
           template<class InternetProtocol>
@@ -52,8 +52,8 @@ of a [link requirements.resolver_service `ResolverService`].
           };
 
         } // namespace ip
-      } // namespace sys
-    } // namespace tr2
+      } // namespace network
+    } // namespace experimental
   } // namespace std
 
 [section [^ip::resolver_service] constructors]

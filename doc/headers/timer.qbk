@@ -1,8 +1,8 @@
 [section Header [^<timer>] synopsis]
 
   namespace std {
-    namespace tr2 {
-      namespace sys {
+    namespace experimental {
+      namespace network {
 
         template<class Time> struct ``[link classes.time_traits time_traits]``;
 
@@ -15,8 +15,8 @@
 
         typedef basic_deadline_timer<date_time> deadline_timer;
 
-      } // namespace sys
-    } // namespace tr2
+      } // namespace network
+    } // namespace experimental
   } // namespace std
 
 [endsect]

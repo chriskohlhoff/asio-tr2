@@ -107,7 +107,7 @@ requirements for a [link requirements.completion_handler completion handler].
   void* io_handler_allocate(size_t size,
                             bound_read_handler<ReadHandler>* this_handler)
   {
-    using namespace std::tr2::sys;
+    using namespace std::experimental::network;
     return io_handler_allocate(size, &this_handler->handler_);
   }
 
@@ -115,7 +115,7 @@ requirements for a [link requirements.completion_handler completion handler].
   void io_handler_deallocate(void* pointer, std::size_t size,
                              bound_read_handler<ReadHandler>* this_handler)
   {
-    using namespace std::tr2::sys;
+    using namespace std::experimental::network;
     io_handler_deallocate(pointer, size, &this_handler->handler_);
   }
 
@@ -123,7 +123,7 @@ requirements for a [link requirements.completion_handler completion handler].
   void io_handler_invoke(const F& f,
                          bound_read_handler<ReadHandler>* this_handler)
   {
-    using namespace std::tr2::sys;
+    using namespace std::experimental::network;
     io_handler_invoke(f, &this_handler->handler_);
   }
 ``
