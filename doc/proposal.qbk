@@ -171,8 +171,8 @@ Next, the equivalent code developed using asynchronous operations:
       std::vector<char>& buffer_space)
   {
     socket.async_read_some(sys::buffer(buffer_space),
-        std::tr1::bind(handle_read, _1, _2,
-          std::tr1::ref(socket), std::tr1::ref(buffer_space)));
+        std::bind(handle_read, _1, _2,
+          std::ref(socket), std::ref(buffer_space)));
   }
 
   void handle_read(
@@ -185,8 +185,8 @@ Next, the equivalent code developed using asynchronous operations:
     {
       uppercase(buffer_space.begin(), buffer_space.begin() + count);
       sys::async_write(socket, sys::buffer(buffer_space, count),
-          std::tr1::bind(handle_write, _1,
-            std::tr1::ref(socket), std::tr1::ref(buffer_space)));
+          std::bind(handle_write, _1,
+            std::ref(socket), std::ref(buffer_space)));
     }
   }
 
@@ -198,8 +198,8 @@ Next, the equivalent code developed using asynchronous operations:
     if (!ec)
     {
       socket.async_read_some(sys::buffer(buffer_space),
-          std::tr1::bind(handle_read, _1, _2,
-            std::tr1::ref(socket), std::tr1::ref(buffer_space)));
+          std::bind(handle_read, _1, _2,
+            std::ref(socket), std::ref(buffer_space)));
     }
   }
 

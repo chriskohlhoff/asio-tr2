@@ -18,7 +18,7 @@ server, to receive the first line of an HTTP request from a client:
     void start()
     {
       sys::async_read_until(socket_, data_, "\r\n",
-          std::tr1::bind(&http_connection::handle_request_line, this, _1));
+          std::bind(&http_connection::handle_request_line, this, _1));
     }
 
     void handle_request_line(sys::error_code ec)
