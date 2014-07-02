@@ -5,7 +5,7 @@ requirements.convertible_to_const_buffer `ConvertibleToConstBuffer`].
 
   namespace std {
     namespace experimental {
-      namespace network {
+      inline namespace network_v1 {
 
         class const_buffer
         {
@@ -21,7 +21,7 @@ requirements.convertible_to_const_buffer `ConvertibleToConstBuffer`].
         const_buffer operator+(const const_buffer& b, size_t size);
         const_buffer operator+(size_t size, const const_buffer& b);
 
-      } // namespace network
+      } // inline namespace network_v1
     } // namespace experimental
   } // namespace std
 

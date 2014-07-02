@@ -2,7 +2,7 @@
 
   namespace std {
     namespace experimental {
-      namespace network {
+      inline namespace network_v1 {
 
         class transfer_at_least :
           public binary_function<error_code, size_t, bool>
@@ -14,7 +14,7 @@
   ``//      size\_t minimum\_;  ['[*exposition only]]``
         };
 
-      } // namespace network
+      } // inline namespace network_v1
     } // namespace experimental
   } // namespace std
 

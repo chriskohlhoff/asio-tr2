@@ -2,7 +2,7 @@
 
   namespace std {
     namespace experimental {
-      namespace network {
+      inline namespace network_v1 {
         namespace ip {
 
           template<class InternetProtocol, class ResolverService>
@@ -39,7 +39,7 @@
           };
 
         } // namespace ip
-      } // namespace network
+      } // inline namespace network_v1
     } // namespace experimental
   } // namespace std
 

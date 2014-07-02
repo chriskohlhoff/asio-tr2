@@ -2,7 +2,7 @@
 
   namespace std {
     namespace experimental {
-      namespace network {
+      inline namespace network_v1 {
         namespace ip {
 
           class resolver_query_base
@@ -23,7 +23,7 @@
           };
 
         } // namespace ip
-      } // namespace network
+      } // inline namespace network_v1
     } // namespace experimental
   } // namespace std
 

@@ -2,7 +2,7 @@
 
   namespace std {
     namespace experimental {
-      namespace network {
+      inline namespace network_v1 {
 
         template<class Time, class TimeTraits, class TimerService>
         class basic_deadline_timer :
@@ -40,7 +40,7 @@
             void async_wait(WaitHandler handler);
         };
 
-      } // namespace network
+      } // inline namespace network_v1
     } // namespace experimental
   } // namespace std
 

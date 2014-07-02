@@ -2,7 +2,7 @@
 
   namespace std {
     namespace experimental {
-      namespace network {
+      inline namespace network_v1 {
 
         class ``[link classes.io_service io_service]``;
 
@@ -21,7 +21,7 @@
         template<class IoObjectService>
           class ``[link classes.basic_io_object basic_io_object]``;
 
-      } // namespace network
+      } // inline namespace network_v1
     } // namespace experimental
   } // namespace std
 

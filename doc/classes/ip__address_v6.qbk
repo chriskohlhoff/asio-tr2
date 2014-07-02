@@ -2,7 +2,7 @@
 
   namespace std {
     namespace experimental {
-      namespace network {
+      inline namespace network_v1 {
         namespace ip {
 
           class address_v6
@@ -59,7 +59,7 @@
               basic_ostream<CharT, Traits>& os, const address_v6& addr);
 
         } // namespace ip
-      } // namespace network
+      } // inline namespace network_v1
     } // namespace experimental
   } // namespace std
 

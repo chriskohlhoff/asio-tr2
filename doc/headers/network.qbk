@@ -2,7 +2,7 @@
 
   namespace std {
     namespace experimental {
-      namespace network {
+      inline namespace network_v1 {
 
         ``// [link globals.getaddrinfo_errors getaddrinfo errors]:``
         extern const error_code host_not_found;
@@ -190,7 +190,7 @@
 
           } // namespace multicast
         } // namespace ip
-      } // namespace network
+      } // inline namespace network_v1
     } // namespace experimental
   } // namespace std
 

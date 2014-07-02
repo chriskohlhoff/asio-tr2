@@ -2,11 +2,11 @@
 
   namespace std {
     namespace experimental {
-      namespace network {
+      inline namespace network_v1 {
 
         template<> struct time_traits<date_time>;
 
-      } // namespace network
+      } // inline namespace network_v1
     } // namespace experimental
   } // namespace std
 
@@ -14,7 +14,7 @@
 
   namespace std {
     namespace experimental {
-      namespace network {
+      inline namespace network_v1 {
 
         template<>
         struct time_traits<date_time>
@@ -37,7 +37,7 @@
             const duration_type& d);
         };
 
-      } // namespace network
+      } // inline namespace network_v1
     } // namespace experimental
   } // namespace std
 

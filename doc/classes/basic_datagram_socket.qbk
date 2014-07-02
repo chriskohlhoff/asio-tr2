@@ -2,7 +2,7 @@
 
   namespace std {
     namespace experimental {
-      namespace network {
+      inline namespace network_v1 {
 
         template<class Protocol, class DatagramSocketService>
         class basic_datagram_socket :
@@ -121,7 +121,7 @@
                                WriteHandler handler);
         };
 
-      } // namespace network
+      } // inline namespace network_v1
     } // namespace experimental
   } // namespace std
 

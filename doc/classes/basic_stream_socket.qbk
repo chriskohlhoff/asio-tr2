@@ -8,7 +8,7 @@ requirements.async_write_stream asynchronous write streams].
 
   namespace std {
     namespace experimental {
-      namespace network {
+      inline namespace network_v1 {
 
         template<class Protocol, class StreamSocketService>
         class basic_stream_socket :
@@ -92,7 +92,7 @@ requirements.async_write_stream asynchronous write streams].
                                   WriteHandler handler);
         };
 
-      } // namespace network
+      } // inline namespace network_v1
     } // namespace experimental
   } // namespace std
 

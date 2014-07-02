@@ -2,7 +2,7 @@
 
   namespace std {
     namespace experimental {
-      namespace network {
+      inline namespace network_v1 {
 
         template<class Protocol, class StreamSocketService>
         class basic_socket_streambuf :
@@ -35,7 +35,7 @@
           virtual streambuf* setbuf(char_type* s, streamsize n);
         };
 
-      } // namespace network
+      } // inline namespace network_v1
     } // namespace experimental
   } // namespace std
 

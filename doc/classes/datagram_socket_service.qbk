@@ -5,7 +5,7 @@ of a [link requirements.datagram_socket_service `DatagramSocketService`].
 
   namespace std {
     namespace experimental {
-      namespace network {
+      inline namespace network_v1 {
 
         template<class Protocol>
         class datagram_socket_service :
@@ -138,7 +138,7 @@ of a [link requirements.datagram_socket_service `DatagramSocketService`].
           virtual void shutdown_service();
         };
 
-      } // namespace network
+      } // inline namespace network_v1
     } // namespace experimental
   } // namespace std
 

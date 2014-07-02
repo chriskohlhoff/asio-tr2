@@ -15,7 +15,7 @@ ambiguities when passing to functions that are overloaded on both
 
   namespace std {
     namespace experimental {
-      namespace network {
+      inline namespace network_v1 {
 
         class mutable_buffers_1 :
           public mutable_buffer
@@ -34,7 +34,7 @@ ambiguities when passing to functions that are overloaded on both
           const_iterator end() const;
         };
 
-      } // namespace network
+      } // inline namespace network_v1
     } // namespace experimental
   } // namespace std
 

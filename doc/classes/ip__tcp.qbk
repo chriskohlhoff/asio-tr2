@@ -5,7 +5,7 @@ requirements.internet_protocol `InternetProtocol`].
 
   namespace std {
     namespace experimental {
-      namespace network {
+      inline namespace network_v1 {
         namespace ip {
 
           class tcp
@@ -32,7 +32,7 @@ requirements.internet_protocol `InternetProtocol`].
           bool operator!=(const tcp& a, const tcp& b);
 
         } // namespace ip
-      } // namespace network
+      } // inline namespace network_v1
     } // namespace experimental
   } // namespace std
 
@@ -40,7 +40,7 @@ Extensible implementations shall provide the following member functions:
 
   namespace std {
     namespace experimental {
-      namespace network {
+      inline namespace network_v1 {
         namespace ip {
 
           class tcp
@@ -53,7 +53,7 @@ Extensible implementations shall provide the following member functions:
           };
 
         } // namespace ip
-      } // namespace network
+      } // inline namespace network_v1
     } // namespace experimental
   } // namespace std
 

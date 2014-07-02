@@ -2,7 +2,7 @@
 
   namespace std {
     namespace experimental {
-      namespace network {
+      inline namespace network_v1 {
 
         template<class Protocol, class StreamSocketService>
         class basic_socket_iostream :
@@ -27,7 +27,7 @@
   ``//        StreamSocketService> sb;        ['[*exposition only]]``
         };
 
-      } // namespace network
+      } // inline namespace network_v1
     } // namespace experimental
   } // namespace std
 

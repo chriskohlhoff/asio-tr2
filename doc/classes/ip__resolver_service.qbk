@@ -5,7 +5,7 @@ of a [link requirements.resolver_service `ResolverService`].
 
   namespace std {
     namespace experimental {
-      namespace network {
+      inline namespace network_v1 {
         namespace ip {
 
           template<class InternetProtocol>
@@ -52,7 +52,7 @@ of a [link requirements.resolver_service `ResolverService`].
           };
 
         } // namespace ip
-      } // namespace network
+      } // inline namespace network_v1
     } // namespace experimental
   } // namespace std
 

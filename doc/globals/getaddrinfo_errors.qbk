@@ -2,7 +2,7 @@
 
   namespace std {
     namespace experimental {
-      namespace network {
+      inline namespace network_v1 {
         namespace error {
 
           extern const error_code host_not_found;
@@ -10,7 +10,7 @@
           extern const error_code service_not_found;
           
         } // namespace error
-      } // namespace network
+      } // inline namespace network_v1
     } // namespace experimental
   } // namespace std
 

@@ -2,7 +2,7 @@
 
   namespace std {
     namespace experimental {
-      namespace network {
+      inline namespace network_v1 {
 
         template<class Time> struct ``[link classes.time_traits time_traits]``;
 
@@ -15,7 +15,7 @@
 
         typedef basic_deadline_timer<date_time> deadline_timer;
 
-      } // namespace network
+      } // inline namespace network_v1
     } // namespace experimental
   } // namespace std
 

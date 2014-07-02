@@ -2,7 +2,7 @@
 
   namespace std {
     namespace experimental {
-      namespace network {
+      inline namespace network_v1 {
 
         class ``[link classes.mutable_buffer mutable_buffer]``;
 
@@ -221,7 +221,7 @@
                                 basic_fifobuf<Allocator>& fb,
                                 const string& delim, ReadHandler handler);
 
-      } // namespace network
+      } // inline namespace network_v1
     } // namespace experimental
   } // namespace std
 

@@ -5,7 +5,7 @@ of a [link requirements.socket_acceptor_service `SocketAcceptorService`].
 
   namespace std {
     namespace experimental {
-      namespace network {
+      inline namespace network_v1 {
 
         template<class Protocol>
         class socket_acceptor_service :
@@ -76,7 +76,7 @@ of a [link requirements.socket_acceptor_service `SocketAcceptorService`].
           virtual void shutdown_service();
         };
 
-      } // namespace network
+      } // inline namespace network_v1
     } // namespace experimental
   } // namespace std
 

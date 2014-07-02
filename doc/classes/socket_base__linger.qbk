@@ -9,7 +9,7 @@ requirements.settable_socket_option `SettableSocketOption`].
 
   namespace std {
     namespace experimental {
-      namespace network {
+      inline namespace network_v1 {
 
         class socket_base::linger
         {
@@ -26,7 +26,7 @@ requirements.settable_socket_option `SettableSocketOption`].
           void timeout(int t);
         };
 
-      } // namespace network
+      } // inline namespace network_v1
     } // namespace experimental
   } // namespace std
 
@@ -34,7 +34,7 @@ Extensible implementations shall provide the following member functions:
 
   namespace std {
     namespace experimental {
-      namespace network {
+      inline namespace network_v1 {
 
         class socket_base::linger
         {
@@ -50,7 +50,7 @@ Extensible implementations shall provide the following member functions:
   ``//      ::linger value_;  ['[*exposition only]]``
         };
 
-      } // namespace network
+      } // inline namespace network_v1
     } // namespace experimental
   } // namespace std
 

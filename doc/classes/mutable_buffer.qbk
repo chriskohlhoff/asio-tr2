@@ -6,7 +6,7 @@ requirements.convertible_to_mutable_buffer `ConvertibleToMutableBuffer`] and
 
   namespace std {
     namespace experimental {
-      namespace network {
+      inline namespace network_v1 {
 
         class mutable_buffer
         {
@@ -21,7 +21,7 @@ requirements.convertible_to_mutable_buffer `ConvertibleToMutableBuffer`] and
         mutable_buffer operator+(const mutable_buffer& b, size_t size);
         mutable_buffer operator+(size_t size, const mutable_buffer& b);
 
-      } // namespace network
+      } // inline namespace network_v1
     } // namespace experimental
   } // namespace std
 

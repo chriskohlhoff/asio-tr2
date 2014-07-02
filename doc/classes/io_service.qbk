@@ -2,7 +2,7 @@
 
   namespace std {
     namespace experimental {
-      namespace network {
+      inline namespace network_v1 {
 
         class io_service
         {
@@ -55,7 +55,7 @@
         class service_already_exists : public logic_error { ... };
         class invalid_service_owner : public logic_error { ... };
 
-      } // namespace network
+      } // inline namespace network_v1
     } // namespace experimental
   } // namespace std
 
