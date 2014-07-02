@@ -5,37 +5,46 @@
       inline namespace network_v1 {
         namespace ip {
 
-          template<class InternetProtocol, class ResolverService>
-          class basic_resolver :
-            public basic_io_object<ResolverService>,
-            public socket_base
+          template<class InternetProtocol>
+          class basic_resolver
           {
           public:
             // types:
+
             typedef InternetProtocol protocol_type;
             typedef typename InternetProtocol::endpoint endpoint_type;
             typedef basic_resolver_query<InternetProtocol> query;
             typedef basic_resolver_iterator<InternetProtocol> iterator;
 
-            // constructors:
-            explicit basic_resolver(io_service& ios);
+            // construct / copy / destroy:
 
-            // members:
+            explicit basic_resolver(io_service& ios);
+            basic_resolver(const basic_resolver&) = delete;
+            basic_resolver(basic_resolver&& rhs);
+
+            ~basic_resolver();
+
+            basic_resolver& operator=(const basic_resolver&) = delete;
+            basic_resolver& operator=(basic_resolver&& rhs);
+
+            // basic_resolver operations:
+
+            io_service& get_io_service();
+
             void cancel();
-            void cancel(error_code& ec);
 
             iterator resolve(const query& q);
             iterator resolve(const query& q, error_code& ec);
 
-            template <class ResolveHandler>
-              void async_resolve(const query& q, ResolveHandler handler);
+            template <class CompletionToken>
+              auto async_resolve(const query& q, CompletionToken&& token);
 
             iterator resolve(const endpoint_type& e);
             iterator resolve(const endpoint_type& e, error_code& ec);
 
-            template <class ResolveHandler>
-              void async_resolve(const endpoint_type& e,
-                                 ResolveHandler handler);
+            template <class CompletionToken>
+              auto async_resolve(const endpoint_type& e,
+                                 CompletionToken&& token);
           };
 
         } // namespace ip
@@ -48,40 +57,106 @@
   explicit basic_resolver(io_service& ios);
 
 [function_effects Constructs an object of class
-`basic_resolver<InternetProtocol, ResolverService>`, initialising the base
-class with `basic_io_object(ios)`.]
+`basic_resolver<InternetProtocol>`.]
+
+[function_postconditions `&get_io_service() == &ios`.]
+
+  basic_resolver(basic_resolver&& rhs);
+
+[function_effects Move constructs an object of class
+`basic_resolver<InternetProtocol>` that refers to the state originally
+represented by `rhs`.]
+
+[function_postconditions `&get_io_service() == &rhs.get_io_service()`.]
 
 [endsect]
 
-[section [^ip::basic_resolver] members]
+[section [^ip::basic_resolver] destructor]
+
+  ~basic_resolver();
+
+[function_effects Destroys the resolver, cancelling any asynchronous operations
+associated with the resolver as if by calling `cancel()`.]
+
+[endsect]
+
+[section [^ip::basic_resolver] assignment]
+
+  basic_resolver& operator=(basic_resolver&& rhs);
+
+[function_effects Cancels any outstanding asynchronous operations associated
+with `*this` as if by calling `cancel()`, then moves into `*this` the state
+originally represented by `rhs`.]
+
+[function_postconditions `&get_io_service() == &ios`.]
+
+[function_returns `*this`.]
+
+[endsect]
+
+[section [^ip::basic_resolver] operations]
+
+  io_service& get_io_service();
+
+[function_returns The associated `io_service`.]
 
   void cancel();
-  void cancel(error_code& ec);
 
-[function_effects Calls `this->service.cancel(this->implementation, ec)`.]
+[function_effects Causes any outstanding asynchronous resolve operations to
+complete as soon as possible. Handlers for cancelled operations shall be passed
+an error code `ec` such that `ec == errc::operation_canceled` holds true.]
 
   iterator resolve(const query& q);
   iterator resolve(const query& q, error_code& ec);
 
-[function_returns `this->service.resolve(this->implementation, q, ec)`.]
+[function_effects Translates a query into a sequence of
+`basic_resolver_entry<InternetProtocol>` objects, as if by __POSIX__
+__getaddrinfo__.]
 
-  template <class ResolveHandler>
-    void async_resolve(const query& q, ResolveHandler handler);
+[function_returns On success, an iterator object `i` such that the condition `i
+!= iterator()` holds. Otherwise `iterator()`.]
 
-[function_effects Calls `this->service.async_resolve(this->implementation, q,
-handler)`.]
+  template <class CompletionToken>
+    auto async_resolve(const query& q, CompletionToken&& token);
+
+[function_completion_signature `void(error_code ec, iterator i)`.]
+
+[function_effects Initiates an asynchronous operation to translate a query into
+a sequence of `basic_resolver_entry<InternetProtocol>` objects, as if by
+__POSIX__ __getaddrinfo__. The operation is performed via the `io_service`
+object returned by `get_io_service()` and behaves according to [link
+requirements.asynchronous_operations asynchronous operation] requirements.]
+
+[function_block If the operation completes successfully, the handler is passed
+an iterator object `i` such that the condition `i != iterator()` holds.
+Otherwise, `i` is `iterator()`.]
 
   iterator resolve(const endpoint_type& e);
   iterator resolve(const endpoint_type& e, error_code& ec);
 
-[function_returns `this->service.resolve(this->implementation, e, ec)`.]
+[function_effects Translates an endpoint into a sequence of zero or one
+`basic_resolver_entry<InternetProtocol>` objects, as if by __POSIX__
+__getnameinfo__.]
 
-  template <class ResolveHandler>
-    void async_resolve(const endpoint_type& e,
-                       ResolveHandler handler);
+[function_returns On success, an iterator object `i` such that the condition `i
+!= iterator()` holds. Otherwise `iterator()`.]
 
-[function_effects Calls `this->service.async_resolve(this->implementation, e,
-handler)`.]
+  template <class CompletionToken>
+    auto async_resolve(const endpoint_type& e,
+                       CompletionToken&& token);
+
+[function_completion_signature `void(error_code ec, iterator i)`.]
+
+[function_effects Initiates an asynchronous operation to translate an endpoint
+into a sequence of zero or one `basic_resolver_entry<InternetProtocol>`
+objects, as if by __POSIX__ __getnameinfo__. The operation is performed via the
+`io_service` object returned by `get_io_service()` and behaves according to
+[link requirements.asynchronous_operations asynchronous operation]
+requirements.]
+
+[function_block If the operation completes successfully, the handler is passed
+an iterator object `i` such that the condition `i != iterator()` holds.
+Otherwise, `i` is `iterator()`.]
 
 [endsect]
 

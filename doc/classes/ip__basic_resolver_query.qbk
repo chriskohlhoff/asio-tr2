@@ -52,6 +52,6 @@ __getaddrinfo__.
 structure passed as the /hints/ argument to __POSIX__ __getaddrinfo__.
 
 If a default-constructed `basic_resolver_query` object is used in a call to
-`resolver_service<>::resolve()`, the results are undefined.
+`basic_resolver<>::resolve()`, the results are undefined.
 
 [endsect]
