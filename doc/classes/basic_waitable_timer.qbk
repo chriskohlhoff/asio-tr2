@@ -1,0 +1,193 @@
+[section:basic_waitable_timer Class template [^basic_waitable_timer]]
+
+  namespace std {
+    namespace experimental {
+      inline namespace network_v1 {
+
+        template<class Clock, class WaitTraits = wait_traits<Clock>>
+        class basic_waitable_timer
+        {
+        public:
+          // types:
+
+          typedef Clock clock_type;
+          typedef typename Clock::duration duration;
+          typedef typename Clock::time_point time_point;
+          typedef WaitTraits traits_type;
+
+          // construct / copy / destroy:
+
+          explicit basic_waitable_timer(io_service& ios);
+          basic_waitable_timer(io_service& ios, const time_point& t);
+          basic_waitable_timer(io_service& ios, const duration& d);
+          basic_waitable_timer(const basic_waitable_timer&) = delete;
+          basic_waitable_timer(basic_waitable_timer&& rhs);
+
+          ~basic_waitable_timer();
+
+          basic_waitable_timer& operator=(const basic_waitable_timer&) = delete;
+          basic_waitable_timer& operator=(basic_waitable_timer&& rhs);
+
+          // basic_waitable_timer operations:
+
+          io_service& get_io_service();
+
+          size_t cancel();
+          size_t cancel_one();
+
+          time_point expiry() const;
+          size_t expires_at(const time_point& t);
+          size_t expires_after(const duration& d);
+
+          void wait();
+          void wait(error_code& ec);
+
+          template <class CompletionToken>
+            auto async_wait(CompletionToken&& token);
+        };
+
+      } // inline namespace network_v1
+    } // namespace experimental
+  } // namespace std
+
+[section [^basic_waitable_timer] constructors]
+
+  explicit basic_waitable_timer(io_service& ios);
+
+[function_effects Constructs an object of class `basic_waitable_timer<Clock,
+WaitTraits>`.]
+
+[function_postconditions\n
+\n
+[mdash] `&get_io_service() == &ios`.\n
+\n
+[mdash] `expiry() == Clock::time_point()`.]
+
+  basic_waitable_timer(io_service& ios, const time_point& t);
+
+[function_effects Constructs an object of class `basic_waitable_timer<Clock,
+WaitTraits>`, setting the expiry time as if by calling `this->expires_at(t)`.]
+
+[function_postconditions `&get_io_service() == &ios`.]
+
+  basic_waitable_timer(io_service& ios, const duration& d);
+
+[function_effects Constructs an object of class `basic_waitable_timer<Clock,
+WaitTraits>`, setting the expiry time as if by calling `this->expires_at(d)`.]
+
+[function_postconditions `&get_io_service() == &ios`.]
+
+  basic_waitable_timer(basic_waitable_timer&& rhs);
+
+[function_effects Move constructs an object of class
+`basic_waitable_timer<Clock, WaitTraits>` that refers to the state originally
+represented by `rhs`.]
+
+[function_postconditions\n
+\n
+[mdash] `&get_io_service() == &rhs.get_io_service()`.\n
+\n
+[mdash] `expiry()` returns the same value as `rhs.expiry()` prior to the
+constructor invocation.\n
+\n
+[mdash] `rhs.expiry() == Clock::time_point()`.]
+ 
+[endsect]
+
+[section [^basic_waitable_timer] destructor]
+
+  ~basic_waitable_timer();
+
+[function_effects Destroys the timer, cancelling any asynchronous wait
+operations associated with the timer as if by calling `cancel()`.]
+
+[endsect]
+
+[section [^basic_waitable_timer] assignment]
+
+  basic_waitable_timer& operator=(basic_waitable_timer&& rhs);
+
+[function_effects Moves into `*this` the state originally represented by
+`rhs`.]
+
+[function_postconditions\n
+\n
+[mdash] `&get_io_service() == &rhs.get_io_service()`.\n
+\n
+[mdash] `expiry()` returns the same value as `rhs.expiry()` prior to the
+constructor invocation.\n
+\n
+[mdash] `rhs.expiry() == Clock::time_point()`.]
+
+[function_returns `*this`.]
+ 
+[endsect]
+
+[section [^basic_waitable_timer] operations]
+
+  io_service& get_io_service();
+
+[function_returns The associated `io_service`.]
+
+  size_t cancel();
+
+[function_effects Causes any outstanding asynchronous wait operations to
+complete as soon as possible. Handlers for cancelled operations shall be passed
+an error code `ec` such that `ec == errc::operation_canceled` holds true.]
+
+[function_returns The number of operations that were cancelled.]
+
+  size_t cancel_one();
+
+[function_effects Causes the oldest outstanding asynchronous wait operation, if
+any, to complete as soon as possible. The handler for the cancelled operation
+shall be passed an error code `ec` such that `ec == errc::operation_canceled`
+holds true.]
+
+[function_returns The number of operations that were cancelled.]
+
+  time_point expiry() const;
+
+[function_returns The expiry time associated with the timer, as previously set
+using `expires_at()` or `expires_after()`.]
+
+[function_returns `this->service.expires_at(this->implementation)`.]
+
+  size_t expires_at(const time_point& t);
+
+[function_effects Sets the expiry time associated with the timer. Implicitly
+cancels asynchronous wait operations, as if by calling `cancel()`.]
+
+[function_returns The number of operations that were cancelled.]
+
+[function_postconditions `expiry() == t`.]
+
+  size_t expires_after(const duration& d);
+
+[function_returns `expires_at(Clock::now() + d)`.]
+
+  void wait();
+  void wait(error_code& ec);
+
+[function_effects Establishes the postcondition as if by repeatedly blocking
+the calling thread for the relative time produced by
+`WaitTraits::to_duration(expiry())`.]
+
+[function_postconditions `!!ec || !(Clock::now() < expiry())`.]
+
+  template <class CompletionToken>
+    auto async_wait(CompletionToken&& token);
+
+[function_completion_signature `void(error_code ec)`.]
+
+[function_effects Initiates an asynchronous wait operation that is performed
+via the `io_service` object returned by `get_io_service()` and behaves
+according to [link requirements.asynchronous_operations asynchronous operation]
+requirements.]
+
+[function_block The handler shall be posted only if the condition `!!ec ||
+!(Clock::now() < expiry())` holds.]
+
+[endsect]
+
+[endsect]

@@ -1,0 +1,44 @@
+[section:wait_traits Struct template [^wait_traits]]
+
+  namespace std {
+    namespace experimental {
+      inline namespace network_v1 {
+
+        template <class Clock>
+        struct wait_traits
+        {
+          static typename Clock::duration to_duration(
+            const typename Clock::duration& d);
+
+          static typename Clock::duration to_duration(
+            const typename Clock::time_point& t);
+        };
+
+      } // inline namespace network_v1
+    } // namespace experimental
+  } // namespace std
+
+Struct template `wait_traits` satisfies the [link requirements.wait_traits
+`WaitTraits`] type requirements. Template argument `Clock` is a type meeting
+the `Clock` requirements (C++ Std [time.clock.req]).
+
+A program may specialize this template if the `Clock` template parameter in the
+specialization is a user-defined type.
+
+[section Struct template [^wait_traits] members]
+
+  static typename Clock::duration to_duration(
+    const typename Clock::duration& d);
+
+[function_returns `d`.]
+
+  static typename Clock::duration to_duration(
+    const typename Clock::time_point& t);
+
+[function_returns If `Clock::now() + Clock::duration::max() < t`,
+`Clock::duration::max()`; if `Clock::now() + Clock::duration::min() > t`,
+`Clock::duration::min()`; otherwise, `t - Clock::now()`.]
+
+[endsect]
+
+[endsect]

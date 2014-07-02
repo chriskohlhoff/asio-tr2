@@ -41,6 +41,10 @@
 [:['Postconditions:] [text]]
 ]
 
+[template function_completion_signature[text]
+[:['Completion signature:] [text]]
+]
+
 [template function_complexity[text]
 [:['Complexity:] [text]]
 ]
@@ -543,16 +547,8 @@ express type requirements, as listed in the table below.
     [[link requirements.sync_write_stream buffer-oriented synchronous write stream]]
   ]
   [
-    [`TimerService`]
-    [[link requirements.timer_service timer service]]
-  ]
-  [
-    [`TimeTraits`]
-    [[link requirements.time_traits time traits]]
-  ]
-  [
-    [`WaitHandler`]
-    [[link requirements.wait_handler wait handler]]
+    [`WaitTraits`]
+    [[link requirements.wait_traits wait traits]]
   ]
   [
     [`WriteHandler`]
@@ -587,8 +583,8 @@ This subclause defines components for performing timer operations.
 [std_example Performing a synchronous wait operation on a timer:
 ``
   io_service i;
-  deadline_timer t(i);
-  t.expires_from_now(seconds(5));
+  steady_timer t(i);
+  t.expires_after(seconds(5));
   t.wait();
 ``]
 [std_example Performing an asynchronous wait operation on a timer:
@@ -596,20 +592,17 @@ This subclause defines components for performing timer operations.
   void handler(error_code ec) { __dotdotdot__ }
   __dotdotdot__
   io_service i;
-  deadline_timer t(i);
-  t.expires_from_now(seconds(5));
+  steady_timer t(i);
+  t.expires_after(seconds(5));
   t.async_wait(handler);
   i.run();
 ``]
 [include:headers headers/timer.qbk]
 [section:timers_requirements Requirements]
-[include:requirements requirements/time_traits.qbk]
-[include:requirements requirements/wait_handler.qbk]
-[include:requirements requirements/timer_service.qbk]
+[include:requirements requirements/wait_traits.qbk]
 [endsect]
-[include:classes classes/time_traits.qbk]
-[include:classes classes/deadline_timer_service.qbk]
-[include:classes classes/basic_deadline_timer.qbk]
+[include:classes classes/wait_traits.qbk]
+[include:classes classes/basic_waitable_timer.qbk]
 [endsect]
 
 [section:buffers Buffers]

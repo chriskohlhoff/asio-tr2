@@ -1,19 +1,19 @@
 [section Header [^<timer>] synopsis]
 
+  #include <chrono>
+
   namespace std {
     namespace experimental {
       inline namespace network_v1 {
 
-        template<class Time> struct ``[link classes.time_traits time_traits]``;
+        template <class Clock> struct ``[link classes.wait_traits wait_traits]``;
 
-        template<class Time, class TimeTraits = time_traits<Time> >
-          class ``[link classes.deadline_timer_service deadline_timer_service]``;
+        template <class Clock, class WaitTraits = wait_traits<Clock>>
+          class ``[link classes.basic_waitable_timer basic_waitable_timer]``;
 
-        template<class Time, class TimeTraits = time_traits<Time>,
-          class TimerService = deadline_timer_service<Time, TimeTraits> >
-            class ``[link classes.basic_deadline_timer basic_deadline_timer]``;
-
-        typedef basic_deadline_timer<date_time> deadline_timer;
+        typedef basic_waitable_timer<chrono::system_clock> system_timer;
+        typedef basic_waitable_timer<chrono::steady_clock> steady_timer;
+        typedef basic_waitable_timer<chrono::high_resolution_clock> high_resolution_timer;
 
       } // inline namespace network_v1
     } // namespace experimental
