@@ -4,7 +4,7 @@
     namespace experimental {
       inline namespace network_v1 {
 
-        template<class Clock, class WaitTraits = wait_traits<Clock>>
+        template <class Clock, class WaitTraits = wait_traits<Clock>>
         class basic_waitable_timer
         {
         public:
@@ -58,9 +58,7 @@
 WaitTraits>`.]
 
 [function_postconditions\n
-\n
 [mdash] `&get_io_service() == &ios`.\n
-\n
 [mdash] `expiry() == Clock::time_point()`.]
 
   basic_waitable_timer(io_service& ios, const time_point& t);
@@ -84,12 +82,9 @@ WaitTraits>`, setting the expiry time as if by calling `this->expires_at(d)`.]
 represented by `rhs`.]
 
 [function_postconditions\n
-\n
 [mdash] `&get_io_service() == &rhs.get_io_service()`.\n
-\n
 [mdash] `expiry()` returns the same value as `rhs.expiry()` prior to the
 constructor invocation.\n
-\n
 [mdash] `rhs.expiry() == Clock::time_point()`.]
  
 [endsect]
@@ -107,16 +102,14 @@ operations associated with the timer as if by calling `cancel()`.]
 
   basic_waitable_timer& operator=(basic_waitable_timer&& rhs);
 
-[function_effects Moves into `*this` the state originally represented by
-`rhs`.]
+[function_effects Cancels any outstanding asynchronous operations associated
+with `*this` as if by calling `cancel()`, then moves into `*this` the state
+originally represented by `rhs`.]
 
 [function_postconditions\n
-\n
 [mdash] `&get_io_service() == &rhs.get_io_service()`.\n
-\n
 [mdash] `expiry()` returns the same value as `rhs.expiry()` prior to the
-constructor invocation.\n
-\n
+assignment.\n
 [mdash] `rhs.expiry() == Clock::time_point()`.]
 
 [function_returns `*this`.]
