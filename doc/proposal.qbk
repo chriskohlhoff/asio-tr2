@@ -377,9 +377,14 @@ summarised in the table below:
     [
       [link network.sockets Sockets]\n
       [link network.socket_streams Socket streams]\n
+    ]
+    [`<socket>`]
+  ]
+  [
+    [
       [link network.internet_protocol Internet protocol]\n
     ]
-    [`<network>`]
+    [`<internet>`]
   ]
 ]
 
@@ -573,9 +578,8 @@ This subclause defines components for performing timer operations.
 [include:functions functions/async_read_until.qbk]
 [endsect]
 
-[include:headers headers/network.qbk]
-
 [section:sockets Sockets]
+[include:headers headers/socket.qbk]
 [section:sockets_requirements Requirements]
 [include:requirements requirements/native_handles.qbk]
 [include:requirements requirements/extensibility.qbk]
@@ -612,6 +616,7 @@ This subclause defines components for performing timer operations.
 [endsect]
 
 [section:internet_protocol Internet protocol]
+[include:headers headers/internet.qbk]
 [section:internet_protocol_requirements Requirements]
 [include:requirements requirements/internet_protocol.qbk]
 [endsect]

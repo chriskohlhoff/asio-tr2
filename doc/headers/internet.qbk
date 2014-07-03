@@ -1,56 +1,8 @@
-[section Header [^<network>] synopsis]
+[section Header [^<internet>] synopsis]
 
   namespace std {
     namespace experimental {
       inline namespace network_v1 {
-
-        ``// [link globals.getaddrinfo_errors getaddrinfo errors]:``
-        extern const error_code host_not_found;
-        extern const error_code host_not_found_try_again;
-        extern const error_code service_not_found;
-
-        ``// [link globals.misc_errors miscellaneous errors]:``
-        extern const error_code already_open;
-        extern const error_code eof;
-        extern const error_code not_found;
-
-        // Sockets:
-
-        class ``[link classes.socket_base socket_base]``;
-
-        template<class Protocol, class SocketService>
-          class ``[link classes.basic_socket basic_socket]``;
-
-        template<class Protocol> class ``[link classes.datagram_socket_service datagram_socket_service]``;
-
-        template<class Protocol,
-          class DatagramSocketService = datagram_socket_service<Protocol> >
-            class ``[link classes.basic_datagram_socket basic_datagram_socket]``;
-
-        template<class Protocol> class ``[link classes.stream_socket_service stream_socket_service]``;
-
-        template<class Protocol,
-          class StreamSocketService = stream_socket_service<Protocol> >
-            class ``[link classes.basic_stream_socket basic_stream_socket]``;
-
-        template<class Protocol> class ``[link classes.socket_acceptor_service socket_acceptor_service]``;
-
-        template<class Protocol,
-          class SocketAcceptorService = socket_acceptor_service<Protocol> >
-            class ``[link classes.basic_socket_acceptor basic_socket_acceptor]``;
-
-        // Socket streams:
-
-        template<class Protocol,
-          class StreamSocketService = stream_socket_service<Protocol> >
-            class ``[link classes.basic_socket_streambuf basic_socket_streambuf]``;
-
-        template<class Protocol,
-          class StreamSocketService = stream_socket_service<Protocol> >
-            class ``[link classes.basic_socket_iostream basic_socket_iostream]``;
-
-        // Internet protocol:
-
         namespace ip {
 
           class ``[link classes.ip__address address]``;
