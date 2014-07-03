@@ -629,6 +629,7 @@ This subclause defines components for performing timer operations.
 
 [section:sockets Sockets]
 [section:sockets_requirements Requirements]
+[include:requirements requirements/native_handles.qbk]
 [include:requirements requirements/extensibility.qbk]
 [include:requirements requirements/endpoint.qbk]
 [include:requirements requirements/protocol.qbk]

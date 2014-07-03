@@ -10,7 +10,7 @@
         {
         public:
           // types:
-          typedef typename DatagramSocketService::native_handle_type native_handle_type;
+          typedef typename DatagramSocketService::native_handle_type native_handle_type; // See ``[link requirements.native_handles native handles]``
           typedef Protocol protocol_type;
           typedef typename Protocol::endpoint endpoint_type;
 

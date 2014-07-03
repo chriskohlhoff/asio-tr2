@@ -18,7 +18,7 @@ of a [link requirements.stream_socket_service `StreamSocketService`].
           typedef Protocol protocol_type;
           typedef typename Protocol::endpoint endpoint_type;
           typedef ``['unspecified]`` implementation_type;
-          typedef ``['implementation defined]`` native_handle_type;
+          typedef ``['implementation defined]`` native_handle_type; // See ``[link requirements.native_handles native handles]``
 
           // constructors:
           explicit stream_socket_service(io_service& ios);
@@ -114,7 +114,7 @@ of a [link requirements.stream_socket_service `StreamSocketService`].
 
 [section [^stream_socket_service] types]
 
-  typedef ``['implementation defined]`` native_handle_type;
+  typedef ``['implementation defined]`` native_handle_type; // See ``[link requirements.native_handles native handles]``
 
 [function_block The native representation of a socket. Must satisfy the
 requirements of `CopyConstructible` types (C++ Std, 20.1.3), and the
