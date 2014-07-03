@@ -1,0 +1,79 @@
+[section:ip__address_cast Function [^ip::address_cast]]
+
+  template <class T> constexpr T address_cast(const address& a) noexcept(``['see below]``);
+
+[:This function template shall participate in overload resolution only for the
+ types `T` listed in the table below.]
+
+[table template <class T> constexpr T address_cast(const address&) effects
+  [[T][noexcept][remarks]]
+  [
+    [`address`]
+    [`true`]
+    [Returns `a`.]
+  ]
+  [
+    [`address_v4`]
+    [`false`]
+    [If `a.is_v4()` is `true`, returns the IP version 4 address specified in the
+     version-independent address object `a`. Otherwise, throws `bad_address_cast`.]
+  ]
+  [
+    [`address_v6`]
+    [`false`]
+    [If `a.is_v6()` is `true`, returns the IP version 6 address specified in the
+     version-independent address object `a`. Otherwise, throws `bad_address_cast`.]
+  ]
+]
+
+  template <class T> constexpr T address_cast(const address_v4& a) noexcept(``['see below]``);
+
+[:This function template shall participate in overload resolution only for the
+ types `T` listed in the table below.]
+
+[table template <class T> constexpr T address_cast(const address_v4&) effects
+  [[T][noexcept][remarks]]
+  [
+    [`address`]
+    [`true`]
+    [Returns a version-independent `address` object `b` such that `b.is_v4()`
+     is `true`, `b.is_v6()` is `false`, and `address_cast<address_v4>(b) == a`.]
+  ]
+  [
+    [`address_v4`]
+    [`true`]
+    [Returns `a`.]
+  ]
+  [
+    [`address_v6`]
+    []
+    [Function overload is deleted.]
+  ]
+]
+
+  template <class T> constexpr T address_cast(const address_v6& a) noexcept(``['see below]``);
+
+[:This function template shall participate in overload resolution only for the
+ types `T` listed in the table below.]
+
+[table template <class T> constexpr T address_cast(const address_v6&) effects
+  [[T][noexcept][remarks]]
+  [
+    [`address`]
+    [`true`]
+    [Returns a version-independent `address` object `b` such that `b.is_v4()`
+     is `false`, `b.is_v6()` is `true`, and `address_cast<address_v6>(b) == a`.]
+  ]
+  [
+    [`address_v4`]
+    []
+    [Function overload is deleted.]
+  ]
+  [
+    [`address_v6`]
+    [`true`]
+    [Returns `a`.]
+  ]
+]
+
+[endsect]

@@ -1,0 +1,21 @@
+[section:ip__bad_address_cast Class [^ip::bad_address_cast]]
+
+  namespace std {
+    namespace experimental {
+      inline namespace network_v1 {
+        namespace ip {
+
+          class bad_address_cast : bad_cast
+          {
+          public:
+            virtual const char* what() const noexcept;
+          };
+
+        } // namespace ip
+      } // inline namespace network_v1
+    } // namespace experimental
+  } // namespace std
+
+Objects of type `bad_address_cast` are thrown by a failed `address_cast`.
+
+[endsect]
