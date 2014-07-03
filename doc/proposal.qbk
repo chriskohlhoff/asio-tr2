@@ -297,54 +297,9 @@ similar styles of network programming.
 This is a pure library proposal. It does not add any new language features, nor
 does it alter any existing standard library headers.
 
-This library can be implemented using compilers that conform to the C++03
+This library can be implemented using compilers that conform to the C++14
 standard. An implementation of this library requires operating system-specific
-functions that lie outside the C++03 standard.
-
-[section Relationship to TR1]
-
-This proposal uses the TR1 libraries for fixed size arrays and regular
-expressions. Programs developed using the proposed library typically make
-extensive use of TR1 function object binders.
-
-[endsect]
-
-[section Relationship to Threading and Memory Model Proposals]
-
-This proposal does not require, and need not be coupled to, hypothetical
-standard library support for threading. The interface is intended to support
-implementations on platforms where threads are not available.
-
-However, the library interface is designed to allow the effective utilisation
-of threading if available, and its behaviour with respect to threads is clearly
-defined. In particular, the proposal will attempt to address:
-
-* Thread safety of classes and functions defined in the interface.
-
-* The threads from which an implementation is permitted to call user code, and
-  when.
-
-* The relationship between asynchronous operation initiation, completion, and
-  inter-thread memory visibility. This proposal borrows the term "precedes" from
-  Sequencing and the Concurrency Memory Model [N2052].
-
-[endsect]
-
-[section Relationship to Date-Time Library Proposal]
-
-This proposal uses classes defined in the Proposal to Add Date-Time to the C++
-Standard Library [N1900].
-
-[endsect]
-
-[section Relationship to Filesystem Library Proposal]
-
-The classes defined in the Diagnostics Library chapter of the Filesystem
-Library Proposal [N1975], and updated by [N2066], are used in this proposal.
-[N2174] further updates these classes and proposes that they be included in
-C++0x.
-
-[endsect]
+functions that lie outside the C++14 standard.
 
 [endsect]
 
