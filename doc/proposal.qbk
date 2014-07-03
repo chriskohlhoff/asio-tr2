@@ -256,19 +256,12 @@ The Boost.Asio library, from which this proposal is derived, has been deployed
 in a number of production systems, such as internet-facing HTTP servers,
 instant messaging gateways and finance applications.
 
-The Boost.Asio library has been used on the following platforms:
+The Boost.Asio library supports, or has been ported to, many operating systems
+including Linux, Mac OS X, Windows (native), Windows Runtime, Solaris, FreeBSD,
+NetBSD, OpenBSD, HP-UX, Tru64, AIX, iOS, Android, WinCE, Symbian,
+vxWorks and QNX Neutrino.
 
-* Win32 or Win64 using Visual C++ 7.1 and Visual C++ 8.0.
-* Win32 using Borland C++Builder 6 patch 4.
-* Win32 using MinGW.
-* Win32 using Cygwin.
-* Linux (2.4 or 2.6 kernels) using g++ 3.3 or later.
-* Solaris using g++ 3.3 or later.
-* Mac OS X 10.4 using g++ 3.3 or later.
-* QNX Neutrino 6.3 using g++ 3.3 or later.
-* FreeBSD using g++ 3.3 or later.
-
-Boost.Asio may be obtained from [@http://asio.sourceforge.net].
+Boost.Asio may be obtained from [@http://www.boost.org].
 
 [endsect]
 
