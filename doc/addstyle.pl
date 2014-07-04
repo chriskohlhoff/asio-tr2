@@ -12,7 +12,7 @@ my $style =
 "<style>" .
 "blockquote pre.programlisting { margin-left: 1em; padding-left: 1em; }\n" .
 "div.table { text-align: center; }\n" .
-"p.sidebar { background-color: #e0e0e0; font-style: italic; }\n" .
+".sidebar { background-color: #e0e0e0; font-style: italic; }\n" .
 "p.tablecaption { font-weight: bold; }\n" .
 "table { margin: auto; border: 1px solid gray; border-collapse: collapse; }" .
 "th { border: 1px solid gray; }" .
