@@ -162,6 +162,23 @@
 `basic_datagram_socket<Protocol>`, initialising the base class with
 `basic_socket<Protocol>(ios, protocol, native_socket)`.]
 
+  basic_datagram_socket(basic_datagram_socket&& rhs);
+
+[function_effects Move constructs an object of class
+`basic_datagram_socket<Protocol>`, initialising the base class with
+`basic_socket<Protocol>(static_cast<basic_socket<Protocol>&&>(rhs))`.]
+
+[endsect]
+
+[section [^basic_datagram_socket] assignment]
+
+  basic_datagram_socket& operator=(basic_datagram_socket&& rhs);
+
+[function_effects Calls
+`basic_socket<Protocol>::operator=(static_cast<basic_socket<Protocol>&&>(rhs))`.]
+
+[function_returns `*this`.]
+
 [endsect]
 
 [section [^basic_datagram_socket] operations]
