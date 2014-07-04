@@ -41,6 +41,10 @@
 [:['Postconditions:] [text]]
 ]
 
+[template function_error_conditions[text]
+[:['Error conditions:] [text]]
+]
+
 [template function_completion_signature[text]
 [:['Completion signature:] [text]]
 ]
@@ -601,6 +605,7 @@ This subclause defines components for performing timer operations.
 [include:requirements requirements/accept_handler.qbk]
 [include:requirements requirements/connect_handler.qbk]
 [endsect]
+[include:classes classes/socket_errc.qbk]
 [include:classes classes/socket_base.qbk]
 [include:classes classes/socket_base__bool_socket_options.qbk]
 [include:classes classes/socket_base__int_socket_options.qbk]

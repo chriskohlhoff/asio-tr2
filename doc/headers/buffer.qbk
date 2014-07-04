@@ -4,6 +4,10 @@
     namespace experimental {
       inline namespace network_v1 {
 
+        ``// [link globals.misc_errors miscellaneous errors]:``
+        extern const error_code eof;
+        extern const error_code not_found;
+
         class ``[link classes.mutable_buffer mutable_buffer]``;
 
         template<class T> T buffer_cast(const mutable_buffer&);

@@ -4,10 +4,14 @@
     namespace experimental {
       inline namespace network_v1 {
 
-        ``// [link globals.misc_errors miscellaneous errors]:``
-        extern const error_code already_open;
-        extern const error_code eof;
-        extern const error_code not_found;
+        enum class socket_errc {
+          already_open = ``['implementation defined]``
+        };
+
+        const error_category& socket_category() noexcept;
+
+        error_code make_error_code(socket_errc e) noexcept;
+        error_condition make_error_condition(socket_errc e) noexcept;
 
         // Sockets:
 
@@ -46,6 +50,11 @@
 
       } // inline namespace network_v1
     } // namespace experimental
+
+    template <> struct is_error_code_enum<
+      experimental::network_v1::socket_errc>
+        : public true_type {};
+
   } // namespace std
 
 [endsect]

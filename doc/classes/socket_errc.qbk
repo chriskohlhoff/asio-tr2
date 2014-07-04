@@ -1,0 +1,21 @@
+[section:error_codes Error codes]
+
+  const error_category& socket_category() noexcept;
+
+[function_returns A reference to an object of a type derived from class
+error_category.]
+
+[function_block The object’s `default_error_condition` and equivalent virtual
+functions shall behave as specified for the class `error_category`. The
+object’s `name` virtual function shall return a pointer to the string
+`"socket"`.]
+
+  error_code make_error_code(socket_errc e) noexcept;
+
+[function_returns `error_code(static_cast<int>(e), socket_category())`.]
+
+  error_condition make_error_condition(socket_errc e) noexcept;
+
+[function_returns `error_condition(static_cast<int>(e), socket_category())`.]
+
+[endsect]
