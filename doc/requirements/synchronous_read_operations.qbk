@@ -1,0 +1,11 @@
+[section:synchronous_read_operations Requirements on synchronous read operations]
+
+In this clause, a ['synchronous read operation] is a function that reads data
+into a ['mutable buffer sequence] argument of a type meeting [link
+requirements.mutable_buffers MutableBufferSequence] requirements.
+
+The mutable buffer sequence specifies memory where the data should be placed.
+A synchronous read operation shall always fill a buffer in the sequence
+completely before proceeding to the next.
+
+[endsect]

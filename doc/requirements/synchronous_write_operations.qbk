@@ -1,0 +1,11 @@
+[section:synchronous_write_operations Requirements on synchronous write operations]
+
+In this clause, a ['synchronous write operation] is a function that writes data
+from a ['constant buffer sequence] argument of a type meeting [link
+requirements.const_buffers ConstBufferSequence] requirements.
+
+The constant buffer sequence specifies memory where the data to be written is
+located. A synchronous write operation shall always write a buffer in the
+sequence completely before proceeding to the next.
+
+[endsect]

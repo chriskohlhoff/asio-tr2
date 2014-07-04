@@ -1,0 +1,23 @@
+[section:asynchronous_write_operations Requirements on asynchronous write operations]
+
+In this clause, an ['asynchronous write operation] is an [link
+requirements.asynchronous_operations asynchronous operation] that writes data
+from a ['constant buffer sequence] argument of a type meeting [link
+requirements.const_buffers ConstBufferSequence] requirements.
+
+The constant buffer sequence specifies memory where the data to be written is
+located. An asynchronous write operation shall always write a buffer in the
+sequence completely before proceeding to the next.
+
+The write operation's implementation shall maintain one or more copies of the
+buffer sequence until such time as the write operation no longer requires
+access to the memory specified by the buffers in the sequence. The program must
+ensure the memory is valid until:
+
+[mdash] the last copy of the buffer sequence is destroyed, or
+
+[mdash] the handler for the asynchronous operation is invoked,
+
+whichever comes first.
+
+[endsect]

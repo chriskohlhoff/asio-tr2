@@ -20,11 +20,8 @@
         template<class Protocol, class SocketService>
           class ``[link classes.basic_socket basic_socket]``;
 
-        template<class Protocol> class ``[link classes.datagram_socket_service datagram_socket_service]``;
-
-        template<class Protocol,
-          class DatagramSocketService = datagram_socket_service<Protocol> >
-            class ``[link classes.basic_datagram_socket basic_datagram_socket]``;
+        template<class Protocol>
+          class ``[link classes.basic_datagram_socket basic_datagram_socket]``;
 
         template<class Protocol> class ``[link classes.stream_socket_service stream_socket_service]``;
 
