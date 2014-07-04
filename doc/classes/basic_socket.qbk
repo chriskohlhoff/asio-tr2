@@ -366,7 +366,7 @@ asynchronous operations specified in this clause.]
 [function_remarks Implementations are permitted and encouraged to cache the
 native non-blocking mode that was applied through a prior call to
 `native_non_blocking()`. Implementations may return an incorrect value if a
-program sets the non-blocking mode is set directly on the socket, by calling an
+program sets the non-blocking mode directly on the socket, by calling an
 operating system-specific function on the result of `native_handle()`.]
 
   bool at_mark() const;
