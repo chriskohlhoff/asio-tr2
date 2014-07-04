@@ -296,39 +296,24 @@ with a socket.]
   template <class SettableSocketOption>
     void set_option(const SettableSocketOption& option, error_code& ec);
 
-[function_requires `is_open()`.]
-
 [function_effects Sets an option on the socket, as if by __POSIX__
 __setsockopt__.]
-
-[function_error_conditions\n
-[mdash] `errc::bad_file_descriptor` [mdash] if `is_open()` is false.]
 
   template <class GettableSocketOption>
     void get_option(GettableSocketOption& option);
   template <class GettableSocketOption>
     void get_option(GettableSocketOption& option, error_code& ec);
 
-[function_requires `is_open()`.]
-
 [function_effects Gets an option from the socket, as if by __POSIX__
 __getsockopt__.]
-
-[function_error_conditions\n
-[mdash] `errc::bad_file_descriptor` [mdash] if `is_open()` is false.]
 
   template <class IoControlCommand>
     void io_control(IoControlCommand& command);
   template <class IoControlCommand>
     void io_control(IoControlCommand& command, error_code& ec);
 
-[function_requires `is_open()`.]
-
 [function_effects Executes an I/O control command on the socket, as if by
 __POSIX__ __ioctl__.]
-
-[function_error_conditions\n
-[mdash] `errc::bad_file_descriptor` [mdash] if `is_open()` is false.]
 
 [commentary This proposal does not include any classes that satisfy [link
 requirements.io_control_command `IoControlCommand`] requirements. However,
@@ -339,11 +324,16 @@ extensions to be supported.]
   void non_blocking(bool mode);
   void non_blocking(bool mode, error_code& ec);
 
+[function_requires `is_open()`.]
+
 [function_effects Sets the non-blocking mode of the socket. If `mode` is true,
 subsequent synchronous operations may fail with error condition
 `errc::operation_would_block` if they are unable to perform the requested
 operation immediately. If `mode` is false, subsequent synchronous operations
 shall block until complete.]
+
+[function_error_conditions\n
+[mdash] `errc::bad_file_descriptor` [mdash] if `is_open()` is false.]
 
 [function_note The non-blocking mode has no effect on the behaviour of
 asynchronous operations.]
@@ -355,9 +345,14 @@ asynchronous operations.]
   void native_non_blocking(bool mode);
   void native_non_blocking(bool mode, error_code& ec);
 
-[function_effects Sets the non-blocking mode of the underlying native socket.
-This mode shall have no effect on the behaviour of the synchronous or
-asynchronous operations specified in this clause.]
+[function_effects Sets the non-blocking mode of the underlying native socket,
+as if by __POSIX__ __fcntl__ with command `F_SETFL` to add or clear the file
+status flag `O_NONBLOCK`. This mode shall have no effect on the behaviour of
+the synchronous or asynchronous operations specified in this clause.]
+
+[function_error_conditions\n
+[mdash] `errc::invalid_argument` [mdash] if `mode == false` and `non_blocking()
+== true`. [inline_note As the combination does not make sense.]]
 
   bool native_non_blocking() const;
 
@@ -365,23 +360,18 @@ asynchronous operations specified in this clause.]
 
 [function_remarks Implementations are permitted and encouraged to cache the
 native non-blocking mode that was applied through a prior call to
-`native_non_blocking()`. Implementations may return an incorrect value if a
+`native_non_blocking`. Implementations may return an incorrect value if a
 program sets the non-blocking mode directly on the socket, by calling an
 operating system-specific function on the result of `native_handle()`.]
 
   bool at_mark() const;
   bool at_mark(error_code& ec) const;
 
-[function_requires `is_open()`.]
-
 [function_effects Determines if the socket is at the out-of-band data mark, as
 if by __POSIX__ __sockatmark__.]
 
 [function_returns A `bool` indicating whether the socket is at the out-of-band
 data mark.]
-
-[function_error_conditions\n
-[mdash] `errc::bad_file_descriptor` [mdash] if `is_open()` is false.]
 
   size_t available() const;
   size_t available(error_code& ec) const;
@@ -397,31 +387,19 @@ blocking, or 0 if an error occurs.]
   void bind(const endpoint_type& endpoint);
   void bind(const endpoint_type& endpoint, error_code& ec);
 
-[function_requires `is_open(impl)`.]
-
 [function_effects Binds the socket to the specified local endpoint, as
 if by __POSIX__ __bind__.]
 
-[function_error_conditions\n
-[mdash] `errc::bad_file_descriptor` [mdash] if `is_open()` is false.]
-
   void shutdown(shutdown_type what);
   void shutdown(shutdown_type what, error_code& ec);
-
-[function_requires `is_open()`.]
 
 [function_effects Shuts down all or part of a full-duplex connection for the
 socket, as if by __POSIX__ __shutdown__. If `what` is `shutdown_receive`, uses
 __POSIX__ `SHUT_RD`. If `what` is `shutdown_send`, uses __POSIX__ `SHUT_WR`. If
 `what` is `shutdown_both`, uses __POSIX__ `SHUT_RDWR`.]
 
-[function_error_conditions\n
-[mdash] `errc::bad_file_descriptor` [mdash] if `is_open()` is false.]
-
   endpoint_type local_endpoint() const;
   endpoint_type local_endpoint(error_code& ec) const;
-
-[function_requires `is_open()`.]
 
 [function_effects Determines the locally-bound endpoint associated with the
 socket, as if by __POSIX__ __getsockname__.]
@@ -429,22 +407,14 @@ socket, as if by __POSIX__ __getsockname__.]
 [function_returns On success, the locally-bound endpoint. Otherwise
 `endpoint_type()`.]
 
-[function_error_conditions\n
-[mdash] `errc::bad_file_descriptor` [mdash] if `is_open()` is false.]
-
   endpoint_type remote_endpoint() const;
   endpoint_type remote_endpoint(error_code& ec) const;
-
-[function_requires `is_open()`.]
 
 [function_effects Determines the remote endpoint associated with the socket, as
 if by __POSIX__ __getpeername__.]
 
 [function_returns On success, the remote endpoint. Otherwise
 `endpoint_type()`.]
-
-[function_error_conditions\n
-[mdash] `errc::bad_file_descriptor` [mdash] if `is_open()` is false.]
 
   void connect(const endpoint_type& endpoint);
   void connect(const endpoint_type& endpoint, error_code& ec);
@@ -456,24 +426,25 @@ socket to the specified remote endpoint, as if by __POSIX__ __connect__.]
   template <class CompletionToken>
     auto async_connect(const endpoint_type& endpoint, CompletionToken&& token);
 
+[function_block An [link requirements.asynchronous_operations asynchronous
+operation].]
+
 [function_completion_signature `void(error_code ec)`.]
 
 [function_effects If `is_open()` is false, opens the socket by performing
 `open(endpoint.protocol(), ec)`; then, if no error has occurred, initiates an
 asynchronous operation to connect the socket to the specified remote endpoint,
-as if by __POSIX__ __connect__. The operation is performed via the `io_service`
-object returned by `get_io_service()` and behaves according to [link
-requirements.asynchronous_operations asynchronous operation] requirements.]
+as if by __POSIX__ __connect__.]
 
 [function_block When multiple asynchronous connect operations are initiated
 such that the operations may logically be performed in parallel, the behaviour
-is implementation-defined. When an asynchronous connect operation and an
-asynchronous read or write operation are initiated such that they may logically
-be performed in parallel, the behaviour is implementation-defined.]
+is unspecified. When an asynchronous connect operation and an asynchronous read
+or write operation are initiated such that they may logically be performed in
+parallel, the behaviour is unspecified.]
 
 [function_block If a program performs a synchronous operation on the socket,
 other than `close` or `cancel`, while there is an incomplete asynchronous
-connect operation, the behaviour is implementation-defined.]
+connect operation, the behaviour is unspecified.]
 
 [endsect]
 
