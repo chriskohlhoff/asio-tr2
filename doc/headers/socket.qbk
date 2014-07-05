@@ -18,26 +18,26 @@
 
         class ``[link classes.socket_base socket_base]``;
 
-        template<class Protocol>
+        template <class Protocol>
           class ``[link classes.basic_socket basic_socket]``;
 
-        template<class Protocol>
+        template <class Protocol>
           class ``[link classes.basic_datagram_socket basic_datagram_socket]``;
 
-        template<class Protocol>
+        template <class Protocol>
           class ``[link classes.basic_stream_socket basic_stream_socket]``;
 
-        template<class Protocol>
+        template <class Protocol>
           class ``[link classes.basic_socket_acceptor basic_socket_acceptor]``;
 
         // Socket streams:
 
-        template<class Protocol,
-          class StreamSocketService = stream_socket_service<Protocol> >
+        template <class Protocol, class Clock = chrono::steady_clock,
+          class WaitTraits = wait_traits<Clock>>
             class ``[link classes.basic_socket_streambuf basic_socket_streambuf]``;
 
-        template<class Protocol,
-          class StreamSocketService = stream_socket_service<Protocol> >
+        template <class Protocol, class Clock = chrono::steady_clock,
+          class WaitTraits = wait_traits<Clock>>
             class ``[link classes.basic_socket_iostream basic_socket_iostream]``;
 
         ``// [link functions.connect synchronous connect operations]:``

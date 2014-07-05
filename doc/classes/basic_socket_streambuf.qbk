@@ -4,27 +4,36 @@
     namespace experimental {
       inline namespace network_v1 {
 
-        template<class Protocol, class StreamSocketService>
+        template <class Protocol, class Clock, class WaitTraits>
         class basic_socket_streambuf :
           public basic_streambuf<char>,
-          public basic_socket<Protocol, StreamSocketService>
+          public basic_socket<Protocol>
         {
         public:
           // types:
-          typedef typename Protocol::endpoint endpoint_type;
 
-          // constructors/destructor:
+          typedef typename Protocol::endpoint endpoint_type;
+          typedef typename Clock::time_point time_point;
+          typedef typename Clock::duration duration;
+
+          // construct / destroy:
+
           basic_socket_streambuf();
           virtual ~basic_socket_streambuf();
 
           // members:
-          basic_socket_streambuf<Protocol, StreamSocketService>*
-            connect(const endpoint_type& e);
-          template<class T1, class T2, ..., class TN>
-            basic_socket_streambuf<Protocol, StreamSocketService>*
-              connect(T1 t1, T2 t2, ..., TN tN);
 
-          basic_socket_streambuf<Protocol, StreamSocketService>* close();
+          basic_socket_streambuf<Protocol>* connect(const endpoint_type& e);
+          template<class... Args>
+            basic_socket_streambuf<Protocol>* connect(Args&&... );
+
+          basic_socket_streambuf<Protocol>* close();
+
+          error_code error() const;
+
+          time_point expiry() const;
+          void expires_at(const time_point& t);
+          void expires_after(const duration& d);
 
         protected:
           // overridden virtual functions:
@@ -33,97 +42,109 @@
           virtual int_type overflow(int_type c = traits_type::eof());
           virtual int sync();
           virtual streambuf* setbuf(char_type* s, streamsize n);
+
+        private:
+          error_code ec_; // ``['exposition only]``
+          time_point expiry_; // ``['exposition only]``
         };
 
       } // inline namespace network_v1
     } // namespace experimental
   } // namespace std
 
-The class `basic_socket_streambuf<Protocol, StreamSocketService>` associates
-both the input sequence and the output sequence with a socket. The input and
-output sequences are independent and do not support seeking. Multibyte/wide
-character conversion is not supported.
+The class `basic_socket_streambuf<Protocol>` associates both the input sequence
+and the output sequence with a socket. The input and output sequences are
+independent and do not support seeking. Multibyte/wide character conversion is
+not supported.
 
 [section [^basic_socket_streambuf] constructors]
 
   basic_socket_streambuf();
 
 [function_effects Constructs an object of class
-`basic_socket_streambuf<Protocol, StreamSocketService>`, initialising the base
-classes with `basic_streambuf<char>()` and `basic_socket<Protocol,
-StreamSocketService>(ios)`, where `ios` is an implementation-defined object of
-class `io_service` that has a longer lifetime than the `basic_socket<Protocol,
-StreamSocketService>` base.]
+`basic_socket_streambuf<Protocol>`, initialising the base classes with
+`basic_streambuf<char>()` and `basic_socket<Protocol>(ios)`, where `ios` is an
+unspecified object of class `io_service` that has a longer lifetime than the
+`basic_socket<Protocol>` base.]
+
+[function_postconditions `expiry() == Clock::max()`.]
 
   virtual ~basic_socket_streambuf();
 
-[function_effects Destroys an object of class `basic_socket_streambuf<Protocol,
-StreamSocketService>`. If a put area exists, calls
+[function_effects Destroys an object of class
+`basic_socket_streambuf<Protocol>`. If a put area exists, calls
 `overflow(traits_type::eof())` to flush characters. [inline_note The socket is
-closed by the `basic_socket<Protocol, StreamSocketService>` destructor.]]
+closed by the `basic_socket<Protocol>` destructor.]]
 
 [endsect]
 
 [section [^basic_socket_streambuf] members]
 
-  basic_socket_streambuf<Protocol, StreamSocketService>*
-    connect(const endpoint_type& e);
+  basic_socket_streambuf<Protocol>* connect(const endpoint_type& e);
 
-[function_effects Resets the `streambuf` get and put areas, then opens a
-connection as if by calling:
+[function_effects Resets the `streambuf` get and put areas, closes the socket
+as if by calling `basic_socket<Protocol>::close(ec_)`, then establishes a
+connection as if by performing:
 ``
-  error_code ec;
-  this->basic_socket<Protocol, StreamSocketService>::close(ec);
-  this->basic_socket<Protocol, StreamSocketService>::connect(e, ec);
-``]
-
-[function_returns `this` if `ec` indicates that a connection was successfully
-established, a null pointer otherwise.]
-
-  template<class T1, class T2, ..., class TN>
-    basic_socket_streambuf<Protocol, StreamSocketService>*
-      connect(T1 t1, T2 t2, ..., TN tN);
-
-[function_requires The `Protocol` type must implement the additional
-requirements for an [link requirements.internet_protocol internet protocol].]
-
-[function_effects Resets the `streambuf` get and put areas, then opens a
-connection as if by calling:
+  basic_socket<Protocol>::async_connect(e, __unspecified__);
 ``
-  error_code ec;
-  this->basic_socket<Protocol, StreamSocketService>::close(ec);
-  typename Protocol::resolver::query query(t1, t2, __dotdotdot__, tN);
-  typename Protocol::resolver resolver(
-      this->basic_socket<Protocol, StreamSocketService>::get_io_service());
-  typename Protocol::resolver::iterator i = resolver.resolve(query, ec);
-  if (!ec)
-  {
-    typename Protocol::resolver::iterator end;
-    ec = TBD_errc::host_not_found;
-    while (ec && i != end)
-    {
-      this->basic_socket<Protocol, StreamSocketService>::close(ec);
-      this->basic_socket<Protocol, StreamSocketService>::connect(*i, ec);
-      ++i;
-    }
-  }
-``]
+`ec_` is set to reflect the error code produced by the operation. If the
+operation does not complete before the absolute timeout specified by
+`expiry_`, the socket is closed and `ec_` is set to
+`errc::operation_canceled`.]
 
-[function_returns `this` if `ec` indicates that a connection was successfully
-established, a null pointer otherwise.]
+[function_returns if `!ec_`, `this`; otherwise, a null pointer.]
 
-  basic_socket_streambuf<Protocol, StreamSocketService>* close();
+  template<class... Args>
+    basic_socket_streambuf<Protocol>* connect(Args&&... args);
+
+[function_requires The `Protocol` type must meet the requirements for an [link
+requirements.internet_protocol internet protocol].]
+
+[function_effects Resets the `streambuf` get and put areas. Constructs an
+object `q` of type `Protocol::resolver::query` by initialising the object with
+`q(forward<Args>(args)__dotdotdot__)`, then establishes a connection as if by
+performing:
+``
+  typename Protocol::resolver resolver(this->get_io_service());
+  typename Protocol::resolver::iterator i = resolver.resolve(q, ec_);
+  if (!ec_)
+    std::experimental::network_v1::async_connect(*this, i, __unspecified__);
+``
+`ec_` is set to reflect the error code produced by the asynchronous operation.
+If the operation does not complete before the absolute timeout specified by
+`expiry_`, the socket is closed and `ec_` is set to
+`errc::operation_canceled`.]
+
+[function_returns if `!ec_`, `this`; otherwise, a null pointer.]
+
+  basic_socket_streambuf<Protocol>* close();
 
 [function_effects If a put area exists, calls `overflow(traits_type::eof())` to
 flush characters. Calls:
 ``
-  error_code ec;
-  this->basic_socket<Protocol, StreamSocketService>::close(ec);
+  this->basic_socket<Protocol>::close(ec_);
 ``
-then resets the get and put areas. If the call to `overflow` fails or if the
-value of `ec` indicates failure then `close` fails.]
+then resets the get and put areas. If the call to `overflow` fails, or if `!ec_`,
+then `close` fails.]
 
 [function_returns `this` on success, a null pointer otherwise.]
+
+  error_code error() const;
+
+[function_returns `ec_`.]
+
+  time_point expiry() const;
+
+[function_returns `expiry_`.]
+
+  void expires_at(const time_point& t);
+
+[function_postconditions `expiry_ == t`.]
+
+  void expires_after(const duration& d);
+
+[function_effects Calls `expires_at(Clock::now() + d)`.]
 
 [endsect]
 
@@ -133,9 +154,10 @@ value of `ec` indicates failure then `close` fails.]
 
 [function_effects Behaves according to the description of
 `basic_streambuf<char>::underflow()`, with the specialisation that a sequence
-of characters is read from the input sequence as if by reading from the socket
-into an internal buffer by calling `this->service.receive(this->implementation,
-__dotdotdot__)`.]
+of characters is read from the input sequence as if by __POSIX__ __recvmsg__,
+and `ec_` is set to reflect the error code produced by the operation. If the
+operation does not complete before the absolute timeout specified by `expiry_`,
+the socket is closed and `ec_` is set to `errc::operation_canceled`.]
 
 [function_effects Returns `traits_type::eof()` to indicate failure. Otherwise
 returns `traits_type::to_int_type(*gptr())`.]
@@ -172,7 +194,10 @@ putback positions available as a result of any call.]
 [function_effects Behaves according to the description of
 `basic_streambuf<char>::overflow(c)`, except that the behaviour of "consuming
 characters" is performed by output of the characters to the socket as if by one
-or more calls to `this->service.send(this->implementation, __dotdotdot__)`.]
+or more calls to __POSIX__ __sendmsg__, and `ec_` is set to reflect the error
+code produced by the operation. If the operation does not complete before the
+absolute timeout specified by `expiry_`, the socket is closed and `ec_` is set
+to `errc::operation_canceled`.]
 
 [function_returns `traits_type::not_eof(c)` to indicate success, and
 `traits_type::eof()` to indicate failure.]
@@ -186,8 +211,8 @@ flush characters.]
 
 [function_effects If `setbuf(0,0)` is called on a stream before any I/O has
 occurred on that stream, the stream becomes unbuffered. Otherwise the results
-are implementation-defined. "Unbuffered" means that `pbase()` and `pptr()`
-always return null and output to the socket should appear as soon as possible.]
+are unspecified. "Unbuffered" means that `pbase()` and `pptr()` always return
+null and output to the socket should appear as soon as possible.]
 
 [endsect]
 
