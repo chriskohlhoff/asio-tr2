@@ -1,7 +1,0 @@
-[section:accept_handler Accept handler requirements]
-
-An accept handler must meet the requirements for a [link requirements.handler
-handler]. A value `h` of an accept handler class should work correctly in the
-expression `h(ec)`, where `ec` is an lvalue of type `const error_code`.
-
-[endsect]

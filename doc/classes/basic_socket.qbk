@@ -230,7 +230,8 @@ __socket__.]
 [mdash] `non_blocking() == false`.]
 
 [function_error_conditions\n
-[mdash] `socket_errc::already_open` [mdash] if `is_open()` is true.]
+[mdash] `socket_errc::already_open` [mdash] if the requirement `!is_open()` is
+unmet.]
 
   void assign(const protocol_type& protocol,
               const native_handle_type& native_socket);
@@ -244,7 +245,8 @@ __socket__.]
 [function_postconditions `non_blocking() == false`.]
 
 [function_error_conditions\n
-[mdash] `socket_errc::already_open` [mdash] if `is_open()` is true.]
+[mdash] `socket_errc::already_open` [mdash] if the requirement `!is_open()` is
+unmet.]
 
 [function_note Whether this function satisfies the postcondition `is_open() ==
 true` is dependent on the implementation-defined semantics of the

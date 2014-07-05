@@ -402,10 +402,6 @@ express type requirements, as listed in the table below.
 [table Template parameters and type requirements
   [[template parameter name][type requirements]]
   [
-    [`AcceptHandler`]
-    [[link requirements.accept_handler accept handler]]
-  ]
-  [
     [`AsyncReadStream`]
     [[link requirements.async_read_stream buffer-oriented asynchronous read stream]]
   ]
@@ -474,10 +470,6 @@ express type requirements, as listed in the table below.
   [
     [`SettableSocketOption`]
     [[link requirements.settable_socket_option settable socket option]]
-  ]
-  [
-    [`SocketAcceptorService`]
-    [[link requirements.socket_acceptor_service socket acceptor service]]
   ]
   [
     [`SocketService`]
@@ -595,13 +587,11 @@ This subclause defines components for performing timer operations.
 [include:requirements requirements/protocol.qbk]
 [include:requirements requirements/socket_service.qbk]
 [include:requirements requirements/stream_socket_service.qbk]
-[include:requirements requirements/socket_acceptor_service.qbk]
 [include:requirements requirements/gettable_socket_option.qbk]
 [include:requirements requirements/settable_socket_option.qbk]
 [include:requirements requirements/io_control_command.qbk]
 [include:requirements requirements/read_handler.qbk]
 [include:requirements requirements/write_handler.qbk]
-[include:requirements requirements/accept_handler.qbk]
 [include:requirements requirements/connect_handler.qbk]
 [endsect]
 [include:classes classes/socket_errc.qbk]
@@ -613,7 +603,6 @@ This subclause defines components for performing timer operations.
 [include:classes classes/basic_datagram_socket.qbk]
 [include:classes classes/stream_socket_service.qbk]
 [include:classes classes/basic_stream_socket.qbk]
-[include:classes classes/socket_acceptor_service.qbk]
 [include:classes classes/basic_socket_acceptor.qbk]
 [endsect]
 

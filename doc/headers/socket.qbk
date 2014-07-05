@@ -29,11 +29,8 @@
           class StreamSocketService = stream_socket_service<Protocol> >
             class ``[link classes.basic_stream_socket basic_stream_socket]``;
 
-        template<class Protocol> class ``[link classes.socket_acceptor_service socket_acceptor_service]``;
-
-        template<class Protocol,
-          class SocketAcceptorService = socket_acceptor_service<Protocol> >
-            class ``[link classes.basic_socket_acceptor basic_socket_acceptor]``;
+        template<class Protocol>
+          class ``[link classes.basic_socket_acceptor basic_socket_acceptor]``;
 
         // Socket streams:
 
