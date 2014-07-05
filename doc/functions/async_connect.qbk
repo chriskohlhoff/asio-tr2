@@ -1,0 +1,77 @@
+[section:async_connect Asynchronous connect operations]
+
+  template <class Protocol, class InputIterator, class CompletionToken>
+    auto async_connect(basic_socket<Protocol>& s,
+                       InputIterator first,
+                       CompletionToken&& token);
+
+[function_requires A default-constructed object of type `InputIterator` is an
+end-of-sequence iterator.]
+
+[function_returns `async_connect(s, first, InputIterator(),
+forward<CompletionToken>(token))`.]
+
+  template <class Protocol, class InputIterator, class CompletionToken>
+    auto async_connect(basic_socket<Protocol>& s,
+                       InputIterator first, InputIterator last,
+                       CompletionToken&& token);
+
+[function_block An [link requirements.asynchronous_operations asynchronous
+operation].]
+
+[function_completion_signature `void(error_code ec, InputIterator i)`.]
+
+[function_effects If `s.is_open()` is true, performs `s.close(ec)`. Initiates
+an asynchronous operation to determine the first iterator `i` in the range
+[half_open_range `first`,`last`] for which the asynchronous operation
+`s.async_connect(*i, __unspecified__)` succeeds. If no such iterator is found,
+`ec` contains the error code produced by the last unsuccessful connect
+operation and `i` contains `last`.]
+
+[function_error_conditions\n
+[mdash] `socket_errc::not_found` [mdash] if `first == last`.]
+
+  template <class Protocol, class InputIterator,
+    class ConnectCondition, class CompletionToken>
+      auto async_connect(basic_socket<Protocol>& s,
+                         InputIterator first,
+                         ConnectCondition c,
+                         CompletionToken&& token);
+
+[function_requires A default-constructed object of type `InputIterator` is an
+end-of-sequence iterator.]
+
+[function_returns `async_connect(s, first, InputIterator(), c,
+forward<CompletionToken>(token))`.]
+
+  template <class Protocol, class InputIterator,
+    class ConnectCondition, class CompletionToken>
+      auto async_connect(basic_socket<Protocol>& s,
+                         InputIterator first, InputIterator last,
+                         ConnectCondition c,
+                         CompletionToken&& token);
+
+[function_block An [link requirements.asynchronous_operations asynchronous
+operation].]
+
+[function_completion_signature `void(error_code ec, InputIterator i)`.]
+
+[function_requires `ConnectCondition` is a function object type meeting
+CopyConstructible requirements (C++ Std \[copyconstructible\]).]
+
+[function_effects If `s.is_open()` is true, performs `s.close(ec)`. Define
+`previous_ec` as an object of type `error_code` initialised such that
+`!previous_ec` holds true. Initiates an asynchronous operation to determine the
+first iterator `i` in the range [half_open_range `first`,`last`] for which
+`c(previous_ec, *i)` holds and, if so, for which the asynchronous operation
+`s.async_connect(*i, __unspecified__)` succeeds. If an asynchronous
+operation `s.async_connect(*i, __unspecified__)` fails, `previous_ec` is
+updated with the result of the operation. If no such iterator is found, `ec`
+contains the error code produced by the last unsuccessful connect operation and
+`i` contains `last`.]
+
+[function_error_conditions\n
+[mdash] `socket_errc::not_found` [mdash] if `first == last` or if the function
+object `c` returned false for all iterators in the range.]
+
+[endsect]

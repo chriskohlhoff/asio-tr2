@@ -76,6 +76,8 @@
 
 [template mdash[] '''&mdash; ''']
 
+[template half_open_range[text] '''&#91;'''[text])]
+
 [/-----------------------------------------------------------------------------]
 
 [def __POSIX__ /POSIX/]
@@ -109,6 +111,7 @@
 [def __netinet_in_h__ [@http://www.opengroup.org/onlinepubs/000095399/basedefs/netinet/in.h.html `netinet/in.h`]]
 [def __netinet_tcp_h__ [@http://www.opengroup.org/onlinepubs/000095399/basedefs/netinet/tcp.h.html `netinet/tcp.h`]]
 [def __dotdotdot__ ...]
+[def __unspecified__ '''<emphasis>unspecified</emphasis>''']
 
 [/-----------------------------------------------------------------------------]
 
@@ -594,6 +597,9 @@ This subclause defines components for performing timer operations.
 [include:classes classes/basic_socket_streambuf.qbk]
 [include:classes classes/basic_socket_iostream.qbk]
 [endsect]
+
+[include:functions functions/connect.qbk]
+[include:functions functions/async_connect.qbk]
 
 [section:internet_protocol Internet protocol]
 [include:headers headers/internet.qbk]
