@@ -414,10 +414,6 @@ express type requirements, as listed in the table below.
     [[link requirements.completion_handler completion handler]]
   ]
   [
-    [`ConnectHandler`]
-    [[link requirements.connect_handler connect handler]]
-  ]
-  [
     [`ConstBufferSequence`]
     [[link requirements.const_buffers constant buffer sequence]]
   ]
@@ -470,14 +466,6 @@ express type requirements, as listed in the table below.
   [
     [`SettableSocketOption`]
     [[link requirements.settable_socket_option settable socket option]]
-  ]
-  [
-    [`SocketService`]
-    [[link requirements.socket_service socket service]]
-  ]
-  [
-    [`StreamSocketService`]
-    [[link requirements.stream_socket_service stream socket service]]
   ]
   [
     [`SyncReadStream`]
@@ -585,14 +573,11 @@ This subclause defines components for performing timer operations.
 [include:requirements requirements/extensibility.qbk]
 [include:requirements requirements/endpoint.qbk]
 [include:requirements requirements/protocol.qbk]
-[include:requirements requirements/socket_service.qbk]
-[include:requirements requirements/stream_socket_service.qbk]
 [include:requirements requirements/gettable_socket_option.qbk]
 [include:requirements requirements/settable_socket_option.qbk]
 [include:requirements requirements/io_control_command.qbk]
 [include:requirements requirements/read_handler.qbk]
 [include:requirements requirements/write_handler.qbk]
-[include:requirements requirements/connect_handler.qbk]
 [endsect]
 [include:classes classes/socket_errc.qbk]
 [include:classes classes/socket_base.qbk]
@@ -601,7 +586,6 @@ This subclause defines components for performing timer operations.
 [include:classes classes/socket_base__linger.qbk]
 [include:classes classes/basic_socket.qbk]
 [include:classes classes/basic_datagram_socket.qbk]
-[include:classes classes/stream_socket_service.qbk]
 [include:classes classes/basic_stream_socket.qbk]
 [include:classes classes/basic_socket_acceptor.qbk]
 [endsect]

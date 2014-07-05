@@ -1,7 +1,0 @@
-[section:connect_handler Connect handler requirements]
-
-A connect handler must meet the requirements for a [link requirements.handler
-handler]. A value `h` of a connect handler class should work correctly in the
-expression `h(ec)`, where `ec` is an lvalue of type `const error_code`.
-
-[endsect]
