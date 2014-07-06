@@ -4,74 +4,85 @@
     namespace experimental {
       inline namespace network_v1 {
 
-        template<class Protocol, class StreamSocketService>
+        template <class Protocol, class Clock, class WaitTraits>
         class basic_socket_iostream :
           public basic_iostream<char>
         {
         public:
+          // types:
+
+          typedef typename Protocol::endpoint endpoint_type;
+          typedef typename Clock::time_point time_point;
+          typedef typename Clock::duration duration;
+
           // constructors:
+
           basic_socket_iostream();
-          template<class T1, class T2, ..., class TN>
-            explicit basic_socket_iostream(T1 t1, T2 t2, ..., TN tN);
+          template <class... Args>
+            explicit basic_socket_iostream(Args&&... args);
 
           // members:
-          template<class T1, class T2, ..., class TN>
-            void connect(T1 t1, T2 t2, ..., TN tN);
+
+          template <class... Args> void connect(Args&&... args);
 
           void close();
 
           basic_socket_streambuf<Protocol, StreamSocketService>* rdbuf() const;
 
+          error_code error() const;
+
+          time_point expiry() const;
+          void expires_at(const time_point& t);
+          void expires_after(const duration& d);
+
         private:
-  //      basic_socket_streambuf<Protocol,
-  ``//        StreamSocketService> sb;        ['[*exposition only]]``
+          basic_socket_streambuf<Protocol,
+            Clock, WaitTraits> sb_; // ``['exposition only]``
         };
 
       } // inline namespace network_v1
     } // namespace experimental
   } // namespace std
 
-The class template `basic_socket_iostream<Protocol, StreamSocketService>`
+The class template `basic_socket_iostream<Protocol, Clock, WaitTraits>`
 supports reading and writing from sockets. It uses a
-`basic_socket_streambuf<Protocol, StreamSocketService>` object to control the
+`basic_socket_streambuf<Protocol, Clock, WaitTraits>` object to control the
 associated sequences. For the sake of exposition, the maintained data is
 presented here as:
 
-[mdash] `sb`, the `basic_socket_streambuf` object.
+[mdash] `sb_`, the `basic_socket_streambuf` object.
 
 [section [^basic_socket_iostream] constructors]
 
   basic_socket_iostream();
 
 [function_effects Constructs an object of class
-`basic_socket_iostream<Protocol, StreamSocketService>`, initialising the base
-class with `basic_iostream<char>(&sb)` and initialising `sb` with
-`basic_socket_streambuf<Protocol, StreamSocketService>()`.]
+`basic_socket_iostream<Protocol, Clock, WaitTraits>`, initialising the base
+class with `basic_iostream<char>(&sb_)`, initialising `sb_` with
+`basic_socket_streambuf<Protocol, Clock, WaitTraits>()`, and performing
+`this->setf(std::ios_base::unitbuf)`.]
 
-[function_postconditions `tie() == this`.]
-
-  template<class T1, class T2, ..., class TN>
-    explicit basic_socket_iostream(T1 t1, T2 t2, ..., TN tN);
+  template <class... Args>
+    explicit basic_socket_iostream(Args&&... args);
 
 [function_effects Constructs an object of class
-`basic_socket_iostream<Protocol, StreamSocketService>`, initialising the base
-class with `basic_iostream<char>(&sb)` and initialising `sb` with
-`basic_socket_streambuf<Protocol, StreamSocketService>()`. Then calls
-`rdbuf()->connect(t1, t2, __dotdotdot__, tN)`. If that function returns a null
-pointer, calls `setstate(failbit)`.]
-
-[function_postconditions `tie() == this`.]
+`basic_socket_iostream<Protocol, Clock, WaitTraits>`, initialising the base
+class with `basic_iostream<char>(&sb_)` initialising `sb_` with
+`basic_socket_streambuf<Protocol, Clock, WaitTraits>()`, and performing
+`this->setf(std::ios_base::unitbuf)`. Then calls
+`rdbuf()->connect(forward<Args>(args)__dotdotdot__)`. If that function returns
+a null pointer, calls `setstate(failbit)`.]
 
 [endsect]
 
 [section [^basic_socket_iostream] members]
 
-  template<class T1, class T2, ..., class TN>
-    void connect(T1 t1, T2 t2, ..., TN tN);
+  template <class... Args>
+    void connect(Args&&... args);
 
-[function_effects Calls `rdbuf()->connect(t1, t2, __dotdotdot__, tN)`. If that
-function returns a null pointer, calls `setstate(failbit)` (which may throw
-`ios_base::failure`).]
+[function_effects Calls `rdbuf()->connect(forward<Args>(args)__dotdotdot__)`.
+If that function returns a null pointer, calls `setstate(failbit)` (which may
+throw `ios_base::failure`).]
 
   void close();
 
@@ -80,8 +91,24 @@ pointer, calls `setstate(failbit)` (which may throw `ios_base::failure`).]
 
   basic_socket_streambuf<Protocol, StreamSocketService>* rdbuf() const;
 
-[function_returns `const_cast<basic_socket_streambuf<Protocol,
-StreamSocketService>*>(&sb)`.]
+[function_returns `const_cast<basic_socket_streambuf<Protocol, Clock,
+WaitTraits>*>(&sb_)`.]
+
+  error_code error() const;
+
+[function_returns `rdbuf()->error()`.]
+
+  time_point expiry() const;
+
+[function_returns `rdbuf()->expiry()`.]
+
+  void expires_at(const time_point& t);
+
+[function_effects Calls `rdbuf()->expires_at(t)`.]
+
+  void expires_after(const duration& d);
+
+[function_effects Calls `rdbuf()->expires_after(d)`.]
 
 [endsect]
 
