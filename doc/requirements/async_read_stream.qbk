@@ -2,8 +2,7 @@
 
 In the table below, `a` denotes an asynchronous read stream object, `mb`
 denotes an object satisfying [link requirements.mutable_buffers mutable buffer
-sequence] requirements, and `h` denotes an object satisfying [link
-requirements.read_handler read handler] requirements.
+sequence] requirements, and `t` is a completion token.
 
 [table Buffer-oriented asynchronous read stream requirements
   [[operation] [type] [semantics, pre/post-conditions]]
@@ -11,36 +10,29 @@ requirements.read_handler read handler] requirements.
     [`a.get_io_service();`]
     [`io_service&`]
     [Returns the `io_service` object through which the `async_read_some`
-    handler `h` will be invoked.]
+    copmletion handler will be invoked.]
   ]
   [
-    [`a.async_read_some(mb, h);`]
-    [`void`]
+    [`a.async_read_some(mb, t);`]
     [
+      The return type is determined according to the requirements for an
+      [link requirements.asynchronous_operations asynchronous operation].
+    ]
+    [
+      Meets the requirements for an [link
+      requirements.asynchronous_read_operations asynchronous read operation]
+      with completion signature `void(error_code ec, size_t n)`.\n
+      \n
       Initiates an asynchronous operation to read one or more bytes of data
-      from the stream `a`. The operation is performed via the `io_service`
-      object `a.get_io_service()` and behaves according to [link
-      requirements.asynchronous_operations asynchronous operation]
-      requirements.\n
+      from the stream `a`.\n
       \n
-      The mutable buffer sequence `mb` specifies memory where the data should
-      be placed. The `async_read_some` operation shall always fill a buffer in
-      the sequence completely before proceeding to the next.\n
+      If successful, `n` is the number of bytes read and `ec` is set such that
+      `!ec` is true. If an error occurred, `n` is `0` and `ec` is set such that
+      `!!ec` is true. If all data has been read from the stream and the stream
+      has been shut down in an orderly manner, `n` is `0` and `ec` is set such
+      that `ec == TBD_errc::eof`.\n
       \n
-      The implementation shall maintain one or more copies of `mb` until such
-      time as the read operation no longer requires access to the memory
-      specified by the buffers in the sequence. The program must ensure the
-      memory is valid until:\n
-      \n
-      [mdash] the last copy of `mb` is destroyed, or\n
-      \n
-      [mdash] the handler for the asynchronous read operation is invoked,\n
-      \n
-      whichever comes first.\n
-      \n
-      If the total size of all buffers in the sequence `mb` is `0`, the
-      asynchronous read operation shall complete immediately and pass `0` as
-      the argument to the handler that specifies the number of bytes read.
+      The operation shall complete immediately if `buffer_size(mb) == 0`.
     ]
   ]
 ]

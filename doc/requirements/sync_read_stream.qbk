@@ -13,7 +13,7 @@ sequence] requirements, and `ec` denotes an object of type `error_code`.
      ``
        error_code ec;
        size_t s = a.read_some(mb, ec);
-       if (ec) throw system_error(ec);
+       if (ec) throw system_error(ec, __func__);
        return s;
      ``]
   ]
@@ -21,18 +21,18 @@ sequence] requirements, and `ec` denotes an object of type `error_code`.
     [`a.read_some(mb, ec);`]
     [`size_t`]
     [
-      Reads one or more bytes of data from the stream `a`.\n
+      Meets the requirements for a [link
+      requirements.synchronous_read_operations synchronous read operation].\n
       \n
-      The mutable buffer sequence `mb` specifies memory where the data should
-      be placed. The `read_some` operation shall always fill a buffer in the
-      sequence completely before proceeding to the next.\n
+      Reads one or more bytes of data from the stream `a`.\n
       \n
       If successful, returns the number of bytes read and sets `ec` such that
       `!ec` is true. If an error occurred, returns `0` and sets `ec` such that
-      `!!ec` is true.\n
+      `!!ec` is true. If all data has been read from the stream and the stream
+      has been shut down in an orderly manner, sets `ec` such that `ec ==
+      TBD_errc::eof`.\n
       \n
-      If the total size of all buffers in the sequence `mb` is `0`, the
-      function shall return `0` immediately.
+      The operation shall not block if `buffer_size(mb) == 0`.
     ]
   ]
 ]
