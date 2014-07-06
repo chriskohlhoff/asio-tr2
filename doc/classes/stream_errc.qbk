@@ -1,6 +1,6 @@
 [section:error_codes Error codes]
 
-  const error_category& socket_category() noexcept;
+  const error_category& stream_category() noexcept;
 
 [function_returns A reference to an object of a type derived from class
 error_category.]
@@ -8,14 +8,14 @@ error_category.]
 [function_block The object’s `default_error_condition` and `equivalent` virtual
 functions shall behave as specified for the class `error_category`. The
 object’s `name` virtual function shall return a pointer to the string
-`"socket"`.]
+`"stream"`.]
 
-  error_code make_error_code(socket_errc e) noexcept;
+  error_code make_error_code(stream_errc e) noexcept;
 
-[function_returns `error_code(static_cast<int>(e), socket_category())`.]
+[function_returns `error_code(static_cast<int>(e), stream_category())`.]
 
-  error_condition make_error_condition(socket_errc e) noexcept;
+  error_condition make_error_condition(stream_errc e) noexcept;
 
-[function_returns `error_condition(static_cast<int>(e), socket_category())`.]
+[function_returns `error_condition(static_cast<int>(e), stream_category())`.]
 
 [endsect]

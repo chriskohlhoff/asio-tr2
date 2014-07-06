@@ -208,8 +208,8 @@ block if `buffer_size(buffers) == 0`.]
 [function_returns On success, the number of bytes received. Otherwise `0`.]
 
 [function_error_conditions\n
-[mdash] `TBD_errc::eof` [mdash] if there is no data to be received and the peer
-performed an orderly shutdown.]
+[mdash] `stream_errc::eof` [mdash] if there is no data to be received and the
+peer performed an orderly shutdown.]
 
   template <class MutableBufferSequence, class CompletionToken>
     auto async_receive(const MutableBufferSequence& buffers,
@@ -253,8 +253,8 @@ bytes received. Otherwise `n` is `0`.]
 [function_error_conditions\n
 [mdash] `errc::invalid_argument` [mdash] if `(flags &
 socket_base::message_peek) != 0`.\n
-[mdash] `TBD_errc::eof` [mdash] if there is no data to be received and the peer
-performed an orderly shutdown.]
+[mdash] `stream_errc::eof` [mdash] if there is no data to be received and the
+peer performed an orderly shutdown.]
 
   template <class ConstBufferSequence>
     size_t send(const ConstBufferSequence& buffers);

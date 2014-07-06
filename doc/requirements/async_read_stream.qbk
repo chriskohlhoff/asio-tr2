@@ -30,7 +30,7 @@ sequence] requirements, and `t` is a completion token.
       `!ec` is true. If an error occurred, `n` is `0` and `ec` is set such that
       `!!ec` is true. If all data has been read from the stream and the stream
       has been shut down in an orderly manner, `n` is `0` and `ec` is set such
-      that `ec == TBD_errc::eof`.\n
+      that `ec == stream_errc::eof`.\n
       \n
       The operation shall complete immediately if `buffer_size(mb) == 0`.
     ]

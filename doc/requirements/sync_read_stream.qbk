@@ -30,7 +30,7 @@ sequence] requirements, and `ec` denotes an object of type `error_code`.
       `!ec` is true. If an error occurred, returns `0` and sets `ec` such that
       `!!ec` is true. If all data has been read from the stream and the stream
       has been shut down in an orderly manner, sets `ec` such that `ec ==
-      TBD_errc::eof`.\n
+      stream_errc::eof`.\n
       \n
       The operation shall not block if `buffer_size(mb) == 0`.
     ]

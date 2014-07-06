@@ -47,10 +47,10 @@ requirements.read_handler `ReadHandler`] object `handler` is invoked with an
 `error_code` value `ec` and a number of bytes `s`. If the `basic_fifobuf<>`
 object's input sequence contains the delimiter, `ec` shall contain a value such
 that the expression `!ec` is true. Otherwise, if the `basic_fifobuf<>` object
-is full, `ec` shall contain the `error_code` value `TBD_errc::not_found`. If the
-`basic_fifobuf<>` object is not full, `ec` contains the `error_code` from the
-most recent asynchronous /read_some/ operation. `s` shall contain the number of
-bytes in the `basic_fifobuf<>` object's input sequence up to and including the
-delimiter, if present, otherwise `0`.]
+is full, `ec` shall contain the `error_code` value `stream_errc::not_found`. If
+the `basic_fifobuf<>` object is not full, `ec` contains the `error_code` from
+the most recent asynchronous /read_some/ operation. `s` shall contain the
+number of bytes in the `basic_fifobuf<>` object's input sequence up to and
+including the delimiter, if present, otherwise `0`.]
 
 [endsect]

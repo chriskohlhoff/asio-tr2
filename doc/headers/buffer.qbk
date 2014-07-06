@@ -4,22 +4,28 @@
     namespace experimental {
       inline namespace network_v1 {
 
-        ``// [link globals.misc_errors miscellaneous errors]:``
-        extern const error_code eof;
-        extern const error_code not_found;
+        enum class stream_errc {
+          eof = ``['implementation defined]``,
+          not_found = ``['implementation defined]``
+        };
+
+        const error_category& stream_category() noexcept;
+
+        error_code make_error_code(stream_errc e) noexcept;
+        error_condition make_error_condition(stream_errc e) noexcept;
 
         class ``[link classes.mutable_buffer mutable_buffer]``;
 
-        template<class T> T buffer_cast(const mutable_buffer&);
-        size_t buffer_size(const mutable_buffer&);
-        mutable_buffer operator+(const mutable_buffer&, size_t);
-        mutable_buffer operator+(size_t, const mutable_buffer&);
+        template<class T> T buffer_cast(const mutable_buffer& b);
+        size_t buffer_size(const mutable_buffer& b);
+        mutable_buffer operator+(const mutable_buffer& b, size_t n);
+        mutable_buffer operator+(size_t n, const mutable_buffer& b);
 
         class ``[link classes.const_buffer const_buffer]``;
 
-        template<class T> T buffer_cast(const const_buffer&);
+        template<class T> T buffer_cast(const const_buffer& b);
         size_t buffer_size(const const_buffer&);
-        const_buffer operator+(const const_buffer&, size_t);
+        const_buffer operator+(const const_buffer&, size_t n);
         const_buffer operator+(size_t, const const_buffer&);
 
         class ``[link classes.mutable_buffers_1 mutable_buffers_1]``;
@@ -28,50 +34,55 @@
 
         ``// [link functions.buffer buffer creation functions]:``
 
-        mutable_buffers_1 buffer(void*, size_t);
-        const_buffers_1 buffer(const void*, size_t);
+        mutable_buffers_1 buffer(void* p, size_t n);
+        const_buffers_1 buffer(const void* p, size_t n);
 
-        mutable_buffers_1 buffer(const mutable_buffer&);
-        mutable_buffers_1 buffer(const mutable_buffer&, size_t);
-        const_buffers_1 buffer(const const_buffer&);
-        const_buffers_1 buffer(const const_buffer&, size_t);
-
-        template<class T, size_t N>
-          mutable_buffers_1 buffer(T (&)[N]);
-        template<class T, size_t N>
-          mutable_buffers_1 buffer(T (&)[N], size_t);
-        template<class T, size_t N>
-          const_buffers_1 buffer(const T (&)[N]);
-        template<class T, size_t N>
-          const_buffers_1 buffer(const T (&)[N], size_t);
+        mutable_buffers_1 buffer(const mutable_buffer& b);
+        mutable_buffers_1 buffer(const mutable_buffer& b, size_t n);
+        const_buffers_1 buffer(const const_buffer& b);
+        const_buffers_1 buffer(const const_buffer& b, size_t n);
 
         template<class T, size_t N>
-          mutable_buffers_1 buffer(array<T, N>&);
+          mutable_buffers_1 buffer(T (&arr)[N]);
         template<class T, size_t N>
-          mutable_buffers_1 buffer(array<T, N>&, size_t);
+          mutable_buffers_1 buffer(T (&arr)[N], size_t n);
         template<class T, size_t N>
-          const_buffers_1 buffer(array<const T, N>&);
+          const_buffers_1 buffer(const T (&arr)[N]);
         template<class T, size_t N>
-          const_buffers_1 buffer(array<const T, N>&, size_t);
+          const_buffers_1 buffer(const T (&arr)[N], size_t n);
+
         template<class T, size_t N>
-          const_buffers_1 buffer(const array<T, N>&);
+          mutable_buffers_1 buffer(array<T, N>& arr);
         template<class T, size_t N>
-          const_buffers_1 buffer(const array<T, N>&, size_t);
+          mutable_buffers_1 buffer(array<T, N>& arr, size_t n);
+        template<class T, size_t N>
+          const_buffers_1 buffer(array<const T, N>& arr);
+        template<class T, size_t N>
+          const_buffers_1 buffer(array<const T, N>& arr, size_t n);
+        template<class T, size_t N>
+          const_buffers_1 buffer(const array<T, N>& arr);
+        template<class T, size_t N>
+          const_buffers_1 buffer(const array<T, N>& arr, size_t n);
 
         template<class T, class Allocator>
           mutable_buffers_1 buffer(vector<T, Allocator>&);
         template<class T, class Allocator>
-          mutable_buffers_1 buffer(vector<T, Allocator>&, size_t);
+          mutable_buffers_1 buffer(vector<T, Allocator>&, size_t n);
         template<class T, class Allocator>
           const_buffers_1 buffer(const vector<T, Allocator>&);
         template<class T, class Allocator>
-          const_buffers_1 buffer(const vector<T, Allocator>&, size_t);
+          const_buffers_1 buffer(const vector<T, Allocator>&, size_t n);
 
+        template<class CharT, class Traits, class Allocator>
+          mutable_buffers_1 buffer(basic_string<CharT, Traits, Allocator>&);
+        template<class CharT, class Traits, class Allocator>
+          mutable_buffers_1 buffer(basic_string<CharT, Traits, Allocator>&,
+                                   size_t n);
         template<class CharT, class Traits, class Allocator>
           const_buffers_1 buffer(const basic_string<CharT, Traits, Allocator>&);
         template<class CharT, class Traits, class Allocator>
           const_buffers_1 buffer(const basic_string<CharT, Traits, Allocator>&,
-                                 size_t);
+                                 size_t n);
 
         template<class Allocator = std::allocator<char> >
           class ``[link classes.basic_fifobuf basic_fifobuf]``;
@@ -227,6 +238,11 @@
 
       } // inline namespace network_v1
     } // namespace experimental
+
+    template <> struct is_error_code_enum<
+      experimental::network_v1::stream_errc>
+        : public true_type {};
+
   } // namespace std
 
 [endsect]
