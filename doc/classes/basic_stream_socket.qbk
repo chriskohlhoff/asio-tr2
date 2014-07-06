@@ -24,11 +24,15 @@
                               const native_handle_type& native_socket);
           basic_stream_socket(const basic_stream_socket&) = delete;
           basic_stream_socket(basic_stream_socket&& rhs);
+          template <class OtherProtocol>
+            basic_stream_socket(basic_stream_socket<OtherProtocol>&& rhs);
 
           ~basic_stream_socket();
 
           basic_stream_socket& operator=(const basic_stream_socket&) = delete;
           basic_stream_socket& operator=(basic_stream_socket&& rhs);
+          template <class OtherProtocol>
+            basic_stream_socket& operator=(basic_stream_socket<OtherProtocol>&& rhs);
 
           // basic_stream_socket operations:
 
@@ -139,6 +143,18 @@ requirements.async_write_stream asynchronous write streams].
 `basic_stream_socket<Protocol>`, initialising the base class with
 `basic_socket<Protocol>(static_cast<basic_socket<Protocol>&&>(rhs))`.]
 
+  template <class OtherProtocol>
+    basic_stream_socket(basic_stream_socket<OtherProtocol>&& rhs);
+
+[function_requires `OtherProtocol` is implicitly convertible to `Protocol`.]
+
+[function_effects Move constructs an object of class
+`basic_stream_socket<Protocol>`, initialising the base class with
+`basic_socket<Protocol>(static_cast<basic_socket<OtherProtocol>&&>(rhs))`.]
+
+[function_remarks This constructor shall not participate in overload resolution
+unless `OtherProtocol` is implicitly convertible to `Protocol`.]
+
 [endsect]
 
 [section [^basic_stream_socket] assignment]
@@ -149,6 +165,19 @@ requirements.async_write_stream asynchronous write streams].
 `basic_socket<Protocol>::operator=(static_cast<basic_socket<Protocol>&&>(rhs))`.]
 
 [function_returns `*this`.]
+
+  template <class OtherProtocol>
+    basic_stream_socket& operator=(basic_stream_socket<OtherProtocol>&& rhs);
+
+[function_requires `OtherProtocol` is implicitly convertible to `Protocol`.]
+
+[function_effects Calls
+`basic_socket<Protocol>::operator=(static_cast<basic_socket<OtherProtocol>&&>(rhs))`.]
+
+[function_returns `*this`.]
+
+[function_remarks This assignment operator shall not participate in overload
+resolution unless `OtherProtocol` is implicitly convertible to `Protocol`.]
 
 [endsect]
 

@@ -96,11 +96,15 @@
                        const native_handle_type& native_socket); // See ``[link requirements.native_handles native handles]``
           basic_socket(const basic_socket&) = delete;
           basic_socket(basic_socket&& rhs);
+          template <class OtherProtocol>
+            basic_socket(basic_socket<OtherProtocol>&& rhs);
 
           ~basic_socket();
 
           basic_socket& operator=(const basic_socket&) = delete;
           basic_socket& operator=(basic_socket&& rhs);
+          template <class OtherProtocol>
+            basic_socket& operator=(basic_socket<OtherProtocol>&& rhs);
         };
 
       } // inline namespace network_v1
@@ -169,6 +173,25 @@ constructor invocation.\n
 to the constructor invocation.\n
 [mdash] `rhs.is_open() == false`.]
 
+  template <class OtherProtocol>
+    basic_socket(basic_socket<OtherProtocol>&& rhs);
+
+[function_requires `OtherProtocol` is implicitly convertible to `Protocol`.]
+
+[function_effects Move constructs an object of class `basic_socket<Protocol>`
+that refers to the state originally represented by `rhs`.]
+
+[function_postconditions\n
+[mdash] `&get_io_service() == &rhs.get_io_service()`.\n
+[mdash] `is_open()` returns the same value as `rhs.is_open()` prior to the
+constructor invocation.\n
+[mdash] `non_blocking()` returns the same value as `rhs.non_blocking()` prior
+to the constructor invocation.\n
+[mdash] `rhs.is_open() == false`.]
+
+[function_remarks This constructor shall not participate in overload resolution
+unless `OtherProtocol` is implicitly convertible to `Protocol`.]
+
 [endsect]
 
 [section [^basic_socket] destructor]
@@ -204,6 +227,31 @@ to the assignment.\n
 [mdash] `rhs.is_open() == false`.]
 
 [function_returns `*this`.]
+
+  template <class OtherProtocol>
+    basic_socket& operator=(basic_socket<OtherProtocol>&& rhs);
+
+[function_requires `OtherProtocol` is implicitly convertible to `Protocol`.]
+
+[function_effects If `is_open()` is true, cancels any asynchronous operations
+associated with the socket, disables the linger socket option to prevent the
+assignment from blocking, and releases socket resources as if by __POSIX__
+__close__. Then moves into `*this` the state originally represented by `rhs`.
+Handlers for cancelled operations shall be passed an error code `ec` such that
+`ec == errc::operation_canceled` holds true.]
+
+[function_postconditions\n
+[mdash] `&get_io_service() == &rhs.get_io_service()`.\n
+[mdash] `is_open()` returns the same value as `rhs.is_open()` prior to the
+assignment.\n
+[mdash] `non_blocking()` returns the same value as `rhs.non_blocking()` prior
+to the assignment.\n
+[mdash] `rhs.is_open() == false`.]
+
+[function_returns `*this`.]
+
+[function_remarks This assignment operator shall not participate in overload
+resolution unless `OtherProtocol` is implicitly convertible to `Protocol`.]
 
 [endsect]
 

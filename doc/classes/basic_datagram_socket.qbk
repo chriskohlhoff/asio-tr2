@@ -24,11 +24,15 @@
                                 const native_handle_type& native_socket);
           basic_datagram_socket(const basic_datagram_socket&) = delete;
           basic_datagram_socket(basic_datagram_socket&& rhs);
+          template <class OtherProtocol>
+            basic_datagram_socket(basic_datagram_socket<OtherProtocol>&& rhs);
 
           ~basic_datagram_socket();
 
           basic_datagram_socket& operator=(const basic_datagram_socket&) = delete;
           basic_datagram_socket& operator=(basic_datagram_socket&& rhs);
+          template <class OtherProtocol>
+            basic_datagram_socket& operator=(basic_datagram_socket<OtherProtocol>&& rhs);
 
           // basic_datagram_socket operations::
 
@@ -168,6 +172,18 @@
 `basic_datagram_socket<Protocol>`, initialising the base class with
 `basic_socket<Protocol>(static_cast<basic_socket<Protocol>&&>(rhs))`.]
 
+  template <class OtherProtocol>
+    basic_datagram_socket(basic_datagram_socket<OtherProtocol>&& rhs);
+
+[function_requires `OtherProtocol` is implicitly convertible to `Protocol`.]
+
+[function_effects Move constructs an object of class
+`basic_datagram_socket<Protocol>`, initialising the base class with
+`basic_socket<Protocol>(static_cast<basic_socket<OtherProtocol>&&>(rhs))`.]
+
+[function_remarks This constructor shall not participate in overload resolution
+unless `OtherProtocol` is implicitly convertible to `Protocol`.]
+
 [endsect]
 
 [section [^basic_datagram_socket] assignment]
@@ -178,6 +194,19 @@
 `basic_socket<Protocol>::operator=(static_cast<basic_socket<Protocol>&&>(rhs))`.]
 
 [function_returns `*this`.]
+
+  template <class OtherProtocol>
+    basic_datagram_socket& operator=(basic_datagram_socket<OtherProtocol>&& rhs);
+
+[function_requires `OtherProtocol` is implicitly convertible to `Protocol`.]
+
+[function_effects Calls
+`basic_socket<Protocol>::operator=(static_cast<basic_socket<OtherProtocol>&&>(rhs))`.]
+
+[function_returns `*this`.]
+
+[function_remarks This assignment operator shall not participate in overload
+resolution unless `OtherProtocol` is implicitly convertible to `Protocol`.]
 
 [endsect]
 

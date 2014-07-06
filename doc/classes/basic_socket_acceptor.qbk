@@ -25,11 +25,15 @@
                                 const native_handle_type& native_acceptor);
           basic_socket_acceptor(const basic_socket_acceptor&) = delete;
           basic_socket_acceptor(basic_socket_acceptor&& rhs);
+          template <class OtherProtocol>
+            basic_socket_acceptor(basic_socket_acceptor<OtherProtocol>&& rhs);
 
           ~basic_socket_acceptor();
 
           basic_socket_acceptor& operator=(const basic_socket_acceptor&) = delete;
           basic_socket_acceptor& operator=(basic_socket_acceptor&& rhs);
+          template <class OtherProtocol>
+            basic_socket_acceptor& operator=(basic_socket_acceptor<OtherProtocol>&& rhs);
 
           // basic_socket_acceptor operations:
 
@@ -192,6 +196,28 @@ to the constructor invocation.\n
 `rhs.enable_connection_aborted()` prior to the constructor invocation.\n
 [mdash] `rhs.is_open() == false`.]
 
+  template <class OtherProtocol>
+    basic_socket_acceptor(basic_socket_acceptor<OtherProtocol>&& rhs);
+
+[function_requires `OtherProtocol` is implicitly convertible to `Protocol`.]
+
+[function_effects Move constructs an object of class
+`basic_socket_acceptor<Protocol>` that refers to the state originally
+represented by `rhs`.]
+
+[function_postconditions\n
+[mdash] `&get_io_service() == &rhs.get_io_service()`.\n
+[mdash] `is_open()` returns the same value as `rhs.is_open()` prior to the
+constructor invocation.\n
+[mdash] `non_blocking()` returns the same value as `rhs.non_blocking()` prior
+to the constructor invocation.\n
+[mdash] `enable_connection_aborted()` returns the same value as
+`rhs.enable_connection_aborted()` prior to the constructor invocation.\n
+[mdash] `rhs.is_open() == false`.]
+
+[function_remarks This constructor shall not participate in overload resolution
+unless `OtherProtocol` is implicitly convertible to `Protocol`.]
+
 [endsect]
 
 [section [^basic_socket_acceptor] destructor]
@@ -227,6 +253,32 @@ to the assignment.\n
 [mdash] `rhs.is_open() == false`.]
 
 [function_returns `*this`.]
+
+  template <class OtherProtocol>
+    basic_socket_acceptor& operator=(basic_socket_acceptor<OtherProtocol>&& rhs);
+
+[function_requires `OtherProtocol` is implicitly convertible to `Protocol`.]
+
+[function_effects If `is_open()` is true, cancels any asynchronous operations
+associated with the acceptor, and releases acceptor resources as if by __POSIX__
+__close__. Then moves into `*this` the state originally represented by `rhs`.
+Handlers for cancelled operations shall be passed an error code `ec` such that
+`ec == errc::operation_canceled` holds true.]
+
+[function_postconditions\n
+[mdash] `&get_io_service() == &rhs.get_io_service()`.\n
+[mdash] `is_open()` returns the same value as `rhs.is_open()` prior to the
+assignment.\n
+[mdash] `non_blocking()` returns the same value as `rhs.non_blocking()` prior
+to the assignment.\n
+[mdash] `enable_connection_aborted()` returns the same value as
+`rhs.enable_connection_aborted()` prior to the assignment.\n
+[mdash] `rhs.is_open() == false`.]
+
+[function_returns `*this`.]
+
+[function_remarks This assignment operator shall not participate in overload
+resolution unless `OtherProtocol` is implicitly convertible to `Protocol`.]
 
 [endsect]
 
