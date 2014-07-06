@@ -79,7 +79,7 @@
 
   namespace std {
     namespace experimental {
-      namespace net {
+      inline namespace network_v1 {
         namespace ip {
 
           struct address_v6::bytes_type : array<unsigned char, 16>
@@ -89,7 +89,7 @@
           };
 
         } // namespace ip
-      } // namespace net
+      } // inline namespace network_v1
     } // namespace experimental
   } // namespace std
 
