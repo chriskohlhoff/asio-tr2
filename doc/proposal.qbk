@@ -561,6 +561,7 @@ This subclause defines components for performing timer operations.
 [include:classes classes/basic_fifobuf.qbk]
 [include:classes classes/transfer_all.qbk]
 [include:classes classes/transfer_at_least.qbk]
+[include:classes classes/transfer_exactly.qbk]
 [include:functions functions/read.qbk]
 [include:functions functions/async_read.qbk]
 [include:functions functions/write.qbk]

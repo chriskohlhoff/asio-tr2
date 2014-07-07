@@ -91,6 +91,7 @@
 
         class ``[link classes.transfer_all transfer_all]``;
         class ``[link classes.transfer_at_least transfer_at_least]``;
+        class ``[link classes.transfer_exactly transfer_exactly]``;
 
         ``// [link functions.read synchronous read operations]:``
 

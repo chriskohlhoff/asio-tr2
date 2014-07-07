@@ -4,17 +4,23 @@
     namespace experimental {
       inline namespace network_v1 {
 
-        class transfer_all :
-          public binary_function<error_code, size_t, bool>
+        class transfer_all
         {
         public:
-          bool operator()(const error_code& ec, size_t) const;
+          size_t operator()(const error_code& ec, size_t) const;
         };
 
       } // inline namespace network_v1
     } // namespace experimental
   } // namespace std
 
-`operator()` returns `!!ec`.
+The class `transfer_all` is a function object type for use as a
+`CompletionCondition` argument to [link functions.read synchronous read], [link
+functions.async_read asynchronous read], [link functions.write synchronous
+write], or [link functions.async_write asynchronous write] operations.
+
+  size_t operator()(const error_code& ec, size_t) const;
+
+[function_returns If `!ec`, an unspecified non-zero value. Otherwise `0`.]
 
 [endsect]
