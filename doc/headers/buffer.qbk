@@ -32,6 +32,11 @@
 
         class ``[link classes.const_buffers_1 const_buffers_1]``;
 
+        ``// [link functions.buffer buffer type traits]:``
+
+        template <class T> is_mutable_buffer_sequence;
+        template <class T> is_const_buffer_sequence;
+
         ``// [link functions.buffer buffer creation functions]:``
 
         mutable_buffers_1 buffer(void* p, size_t n);
