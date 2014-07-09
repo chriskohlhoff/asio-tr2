@@ -26,12 +26,12 @@ ambiguities when passing to functions that are overloaded on both
           typedef ``['unspecified]`` const_iterator;
 
           // constructors:
-          mutable_buffers_1(void* data, size_t size);
-          explicit mutable_buffers_1(const mutable_buffer& b);
+          mutable_buffers_1(void* p, size_t n) noexcept;
+          explicit mutable_buffers_1(const mutable_buffer& b) noexcept;
 
           // members:
-          const_iterator begin() const;
-          const_iterator end() const;
+          const_iterator begin() const noexcept;
+          const_iterator end() const noexcept;
         };
 
       } // inline namespace network_v1
@@ -43,12 +43,12 @@ An object of class `mutable_buffers_1` represents a sequence of exactly one
 
 [section [^mutable_buffers_1] constructors]
 
-  mutable_buffers_1(const void* data, size_t size);
+  mutable_buffers_1(const void* p, size_t n) noexcept;
 
 [function_effects Constructs an object of class `mutable_buffers_1`,
-initialising the base class with `mutable_buffer(data, size)`.]
+initialising the base class with `mutable_buffer(p, n)`.]
 
-  explicit mutable_buffers_1(const mutable_buffer& b);
+  explicit mutable_buffers_1(const mutable_buffer& b) noexcept;
 
 [function_effects Constructs an object of class `mutable_buffers_1`,
 initialising the base class with `mutable_buffer(b)`.]
@@ -57,12 +57,12 @@ initialising the base class with `mutable_buffer(b)`.]
 
 [section [^mutable_buffers_1] members]
 
-  const_iterator begin() const;
+  const_iterator begin() const noexcept;
 
 [function_returns An iterator referring to the first (and only)
 `mutable_buffer` object in the sequence.]
 
-  const_iterator end() const;
+  const_iterator end() const noexcept;
 
 [function_returns An iterator which is the past-the-end value.]
 

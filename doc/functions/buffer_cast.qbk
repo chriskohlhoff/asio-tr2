@@ -1,0 +1,8 @@
+[section:buffer_cast Function [^buffer_cast]]
+
+  template <class T> T buffer_cast(const mutable_buffer& b) noexcept;
+  template <class T> T buffer_cast(const const_buffer& b) noexcept;
+
+[function_returns `static_cast<T>(b.data_)`.]
+
+[endsect]

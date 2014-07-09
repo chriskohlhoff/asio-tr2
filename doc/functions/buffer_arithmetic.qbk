@@ -1,0 +1,43 @@
+[section:buffer_arithmetic Buffer arithmetic]
+
+  mutable_buffer operator+(const mutable_buffer& b, size_t n) noexcept;
+  mutable_buffer operator+(size_t n, const mutable_buffer& b) noexcept;
+
+[function_returns A `mutable_buffer` equivalent to
+``
+  mutable_buffer(
+    buffer_cast<char*>(b) + min(n, buffer_size(b)),
+    buffer_size(b) - min(n, buffer_size(b)));
+``]
+
+  const_buffer operator+(const const_buffer& b, size_t n) noexcept;
+  const_buffer operator+(size_t n, const const_buffer& b) noexcept;
+
+[function_returns A `const_buffer` equivalent to
+``
+  const_buffer(
+    buffer_cast<const char*>(b) + min(n, buffer_size(b)),
+    buffer_size(b) - min(n, buffer_size(b)));
+``]
+
+  mutable_buffers_1 operator+(const mutable_buffers_1& b, size_t n) noexcept;
+  mutable_buffers_1 operator+(size_t n, const mutable_buffers_1& b) noexcept;
+
+[function_returns A `mutable_buffers_1` equivalent to
+``
+  mutable_buffers_1(
+    buffer_cast<char*>(b) + min(n, buffer_size(b)),
+    buffer_size(b) - min(n, buffer_size(b)));
+``]
+
+  const_buffers_1 operator+(const const_buffers_1& b, size_t n) noexcept;
+  const_buffers_1 operator+(size_t n, const const_buffers_1& b) noexcept;
+
+[function_returns A `const_buffers_1` equivalent to
+``
+  const_buffers_1(
+    buffer_cast<const char*>(b) + min(n, buffer_size(b)),
+    buffer_size(b) - min(n, buffer_size(b)));
+``]
+
+[endsect]

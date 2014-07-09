@@ -17,12 +17,12 @@ requirements.convertible_to_const_buffer `ConvertibleToConstBuffer`].
           typedef ``['unspecified]`` const_iterator;
 
           // constructors:
-          const_buffers_1(const void* data, size_t size);
-          explicit const_buffers_1(const const_buffer& b);
+          const_buffers_1(const void* p, size_t n) noexcept;
+          explicit const_buffers_1(const const_buffer& b) noexcept;
 
           // members:
-          const_iterator begin() const;
-          const_iterator end() const;
+          const_iterator begin() const noexcept;
+          const_iterator end() const noexcept;
         };
 
       } // inline namespace network_v1
@@ -34,12 +34,12 @@ An object of class `const_buffers_1` represents a sequence of exactly one
 
 [section [^const_buffers_1] constructors]
 
-  const_buffers_1(const void* data, size_t size);
+  const_buffers_1(const void* p, size_t n) noexcept;
 
 [function_effects Constructs an object of class `const_buffers_1`, initialising
-the base class with `const_buffer(data, size)`.]
+the base class with `const_buffer(p, n)`.]
 
-  explicit const_buffers_1(const const_buffer& b);
+  explicit const_buffers_1(const const_buffer& b) noexcept;
 
 [function_effects Constructs an object of class `const_buffers_1`, initialising
 the base class with `const_buffer(b)`.]
@@ -48,12 +48,12 @@ the base class with `const_buffer(b)`.]
 
 [section [^const_buffers_1] members]
 
-  const_iterator begin() const;
+  const_iterator begin() const noexcept;
 
 [function_returns An iterator referring to the first (and only) `const_buffer`
 object in the sequence.]
 
-  const_iterator end() const;
+  const_iterator end() const noexcept;
 
 [function_returns An iterator which is the past-the-end value.]
 

@@ -10,16 +10,15 @@ requirements.convertible_to_const_buffer `ConvertibleToConstBuffer`].
         class const_buffer
         {
         public:
-          const_buffer();
-          const_buffer(const void* data, size_t size);
-          const_buffer(const mutable_buffer& b);
+          // constructors:
+          const_buffer() noexcept;
+          const_buffer(const void* p, size_t n) noexcept;
+          const_buffer(const mutable_buffer& b) noexcept;
+
+        private:
+          const void* data_; // ``['exposition only]``
+          size_t size_; // ``['exposition only]``
         };
-
-        template<class T> T buffer_cast(const const_buffer& b);
-        size_t buffer_size(const const_buffer& b);
-
-        const_buffer operator+(const const_buffer& b, size_t size);
-        const_buffer operator+(size_t size, const const_buffer& b);
 
       } // inline namespace network_v1
     } // namespace experimental
@@ -27,56 +26,17 @@ requirements.convertible_to_const_buffer `ConvertibleToConstBuffer`].
 
 [section [^const_buffer] constructors]
 
-  const_buffer();
+  const_buffer() noexcept;
 
-[function_postconditions `buffer_cast<const void*>(*this) == 0` and
-`buffer_size(*this) == 0`.]
+[function_postconditions `data_ == nullptr` and `size_t == 0`.]
 
-  const_buffer(const void* data, size_t size);
+  const_buffer(const void* p, size_t n) noexcept;
 
-[function_postconditions `buffer_cast<const void*>(*this) == data` and
-`buffer_size(*this) == size`.]
+[function_postconditions `data_ == p` and `size_ == n`.]
 
   const_buffer(const mutable_buffer& b);
 
-[function_postconditions `buffer_cast<const void*>(*this) ==
-buffer_cast<const void*>(b)` and `buffer_size(*this) == buffer_size(b)`.]
-
-[endsect]
-
-[section [^const_buffer] globals]
-
-  template<class T> T buffer_cast(const const_buffer& b);
-
-[function_returns A pointer to the memory area represented by the buffer `b`.
-`T` must be a pointer type such that the expression `static_cast<T>(p)` is
-valid, where `p` is of type `const void*`.]
-
-  size_t buffer_size(const const_buffer& b);
-
-[function_returns The size of the memory area represented by the buffer `b`.]
-
-[endsect]
-
-[section [^const_buffer] operators]
-
-  const_buffer operator+(const const_buffer& b, size_t size);
-
-[function_returns A `const_buffer` equivalent to
-``
-  const_buffer(
-    buffer_cast<const char*>(b) + min(size, buffer_size(b)),
-    buffer_size(b) - min(size, buffer_size(b)));
-``]
-
-  const_buffer operator+(size_t size, const const_buffer& b);
-
-[function_returns A `const_buffer` equivalent to
-``
-  const_buffer(
-    buffer_cast<const char*>(b) + min(size, buffer_size(b)),
-    buffer_size(b) - min(size, buffer_size(b)));
-``]
+[function_postconditions `data_ == b.data_` and `size_ == b.size_`.]
 
 [endsect]
 

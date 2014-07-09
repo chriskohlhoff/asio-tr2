@@ -12,19 +12,19 @@ For the function overloads below that accept an argument of type
 rules defined for invalidation of references, pointers and iterators referring
 to elements of the sequence (C++ Std, [string.require]).
 
-  mutable_buffers_1 buffer(void* p, size_t n);
+  mutable_buffers_1 buffer(void* p, size_t n) noexcept;
 
 [function_returns `mutable_buffers_1(p, n)`.]
 
-  const_buffers_1 buffer(const void* p, size_t n);
+  const_buffers_1 buffer(const void* p, size_t n) noexcept;
 
 [function_returns `const_buffers_1(p, n)`.]
 
-  mutable_buffers_1 buffer(const mutable_buffer& b);
+  mutable_buffers_1 buffer(const mutable_buffer& b) noexcept;
 
 [function_returns `mutable_buffers_1(b)`.]
 
-  mutable_buffers_1 buffer(const mutable_buffer& b, size_t n);
+  mutable_buffers_1 buffer(const mutable_buffer& b, size_t n) noexcept;
 
 [function_returns A `mutable_buffers_1` value equivalent to:
 ``
@@ -33,11 +33,11 @@ to elements of the sequence (C++ Std, [string.require]).
     min(buffer_size(b), n));
 ``]
 
-  const_buffers_1 buffer(const const_buffer& b);
+  const_buffers_1 buffer(const const_buffer& b) noexcept;
 
 [function_returns `const_buffers_1(b)`.]
 
-  const_buffers_1 buffer(const const_buffer& b, size_t n);
+  const_buffers_1 buffer(const const_buffer& b, size_t n) noexcept;
 
 [function_returns A `const_buffers_1` value equivalent to:
 ``
@@ -47,7 +47,7 @@ to elements of the sequence (C++ Std, [string.require]).
 ``]
 
   template<class T, size_t N>
-    mutable_buffers_1 buffer(T (&arr)[N]);
+    mutable_buffers_1 buffer(T (&arr)[N]) noexcept;
 
 [function_returns A `mutable_buffers_1` value equivalent to:
 ``
@@ -57,7 +57,7 @@ to elements of the sequence (C++ Std, [string.require]).
 ``]
 
   template<class T, size_t N>
-    mutable_buffers_1 buffer(T (&arr)[N], size_t n);
+    mutable_buffers_1 buffer(T (&arr)[N], size_t n) noexcept;
 
 [function_returns A `mutable_buffers_1` value equivalent to:
 ``
@@ -67,7 +67,7 @@ to elements of the sequence (C++ Std, [string.require]).
 ``]
 
   template<class T, size_t N>
-    const_buffers_1 buffer(const T (&arr)[N]);
+    const_buffers_1 buffer(const T (&arr)[N]) noexcept;
 
 [function_returns A `const_buffers_1` value equivalent to:
 ``
@@ -77,7 +77,7 @@ to elements of the sequence (C++ Std, [string.require]).
 ``]
 
   template<class T, size_t N>
-    const_buffers_1 buffer(const T (&arr)[N], size_t n);
+    const_buffers_1 buffer(const T (&arr)[N], size_t n) noexcept;
 
 [function_returns A `const_buffers_1` value equivalent to:
 ``
@@ -87,7 +87,7 @@ to elements of the sequence (C++ Std, [string.require]).
 ``]
 
   template<class T, size_t N>
-    mutable_buffers_1 buffer(array<T, N>& arr);
+    mutable_buffers_1 buffer(array<T, N>& arr) noexcept;
 
 [function_returns A `mutable_buffers_1` value equivalent to:
 ``
@@ -97,7 +97,7 @@ to elements of the sequence (C++ Std, [string.require]).
 ``]
 
   template<class T, size_t N>
-    mutable_buffers_1 buffer(array<T, N>& arr, size_t n);
+    mutable_buffers_1 buffer(array<T, N>& arr, size_t n) noexcept;
 
 [function_returns A `mutable_buffers_1` value equivalent to:
 ``
@@ -107,7 +107,7 @@ to elements of the sequence (C++ Std, [string.require]).
 ``]
 
   template<class T, size_t N>
-    const_buffers_1 buffer(array<const T, N>& arr);
+    const_buffers_1 buffer(array<const T, N>& arr) noexcept;
 
 [function_returns A `const_buffers_1` value equivalent to:
 ``
@@ -117,7 +117,7 @@ to elements of the sequence (C++ Std, [string.require]).
 ``]
 
   template<class T, size_t N>
-    const_buffers_1 buffer(array<const T, N>& arr, size_t n);
+    const_buffers_1 buffer(array<const T, N>& arr, size_t n) noexcept;
 
 [function_returns A `const_buffers_1` value equivalent to:
 ``
@@ -127,7 +127,7 @@ to elements of the sequence (C++ Std, [string.require]).
 ``]
 
   template<class T, size_t N>
-    const_buffers_1 buffer(const array<T, N>& arr);
+    const_buffers_1 buffer(const array<T, N>& arr) noexcept;
 
 [function_returns A `const_buffers_1` value equivalent to:
 ``
@@ -137,7 +137,7 @@ to elements of the sequence (C++ Std, [string.require]).
 ``]
 
   template<class T, size_t N>
-    const_buffers_1 buffer(const array<T, N>& arr, size_t n);
+    const_buffers_1 buffer(const array<T, N>& arr, size_t n) noexcept;
 
 [function_returns A `const_buffers_1` value equivalent to:
 ``
@@ -147,7 +147,7 @@ to elements of the sequence (C++ Std, [string.require]).
 ``]
 
   template<class T, class Allocator>
-    mutable_buffers_1 buffer(vector<T, Allocator>& vec);
+    mutable_buffers_1 buffer(vector<T, Allocator>& vec) noexcept;
 
 [function_returns A `mutable_buffers_1` value equivalent to:
 ``
@@ -157,7 +157,7 @@ to elements of the sequence (C++ Std, [string.require]).
 ``]
 
   template<class T, class Allocator>
-    mutable_buffers_1 buffer(vector<T, Allocator>& vec, size_t n);
+    mutable_buffers_1 buffer(vector<T, Allocator>& vec, size_t n) noexcept;
 
 [function_returns A `mutable_buffers_1` value equivalent to:
 ``
@@ -167,7 +167,7 @@ to elements of the sequence (C++ Std, [string.require]).
 ``]
 
   template<class T, class Allocator>
-    const_buffers_1 buffer(const vector<T, Allocator>& vec);
+    const_buffers_1 buffer(const vector<T, Allocator>& vec) noexcept;
 
 [function_returns A `const_buffers_1` value equivalent to:
 ``
@@ -177,7 +177,7 @@ to elements of the sequence (C++ Std, [string.require]).
 ``]
 
   template<class T, class Allocator>
-    const_buffers_1 buffer(const vector<T, Allocator>& vec, size_t n);
+    const_buffers_1 buffer(const vector<T, Allocator>& vec, size_t n) noexcept;
 
 [function_returns A `const_buffers_1` value equivalent to:
 ``
@@ -187,7 +187,7 @@ to elements of the sequence (C++ Std, [string.require]).
 ``]
 
   template<class CharT, class Traits, class Allocator>
-    mutable_buffers_1 buffer(basic_string<CharT, Traits, Allocator>& str);
+    mutable_buffers_1 buffer(basic_string<CharT, Traits, Allocator>& str) noexcept;
 
 [function_returns A `mutable_buffers_1` value equivalent to:
 ``
@@ -198,7 +198,7 @@ to elements of the sequence (C++ Std, [string.require]).
 
   template<class CharT, class Traits, class Allocator>
     mutable_buffers_1 buffer(basic_string<CharT, Traits, Allocator>& str,
-                             size_t n);
+                             size_t n) noexcept;
 
 [function_returns A `mutable_buffers_1` value equivalent to:
 ``
@@ -208,7 +208,7 @@ to elements of the sequence (C++ Std, [string.require]).
 ``]
 
   template<class CharT, class Traits, class Allocator>
-    const_buffers_1 buffer(const basic_string<CharT, Traits, Allocator>& str);
+    const_buffers_1 buffer(const basic_string<CharT, Traits, Allocator>& str) noexcept;
 
 [function_returns A `const_buffers_1` value equivalent to:
 ``
@@ -219,7 +219,7 @@ to elements of the sequence (C++ Std, [string.require]).
 
   template<class CharT, class Traits, class Allocator>
     const_buffers_1 buffer(const basic_string<CharT, Traits, Allocator>& str,
-                           size_t n);
+                           size_t n) noexcept;
 
 [function_returns A `const_buffers_1` value equivalent to:
 ``

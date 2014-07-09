@@ -1,0 +1,27 @@
+[section:buffer_size Function [^buffer_size]]
+
+  size_t buffer_size(const mutable_buffer& b) noexcept;
+  size_t buffer_size(const const_buffer& b) noexcept;
+
+[function_returns `b.size_`.]
+
+  template <class ConstBufferSequence>
+    size_t buffer_size(const ConstBufferSequence& buffers) noexcept;
+
+[function_returns The total size of all buffers in the sequence, as if computed
+as follows:\n
+``
+  size_t total_size = 0;
+  for (const auto& v: buffers)
+  {
+    const_buffer b(v);
+    total_size += b.size_;
+  }
+  return total_size;
+``]
+
+[function_remarks This function overload shall not participate in overload
+resolution unless `is_const_buffer_sequence<ConstBufferSequence>::value` is
+true.]
+
+[endsect]
