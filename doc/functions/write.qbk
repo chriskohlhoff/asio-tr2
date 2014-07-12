@@ -18,30 +18,30 @@
                    CompletionCondition completion_condition,
                    error_code& ec);
 
+[function_block A [link requirements.synchronous_write_operations synchronous
+write operation].]
+
 [function_effects Writes data to the [link requirements.sync_write_stream
-buffer-oriented synchronous write stream] object `stream` by performing one or
+buffer-oriented synchronous write stream] object `stream` by performing zero or
 more calls to the stream's `write_some` member function.]
 
-[function_block The [link requirements.const_buffers constant buffer sequence]
-`buffers` specifies memory where the data to be written is located. The
-synchronous write operation shall always write a buffer in the sequence
-completely before proceeding to the next.]
-
 [function_block The `completion_condition` parameter specifies a function
-object to be called after each call to the stream's `write_some` member
+object to be called prior to each call to the stream's `write_some` member
 function. The function object is passed the `error_code` value from the most
 recent `write_some` call, and the total number of bytes transferred in the
-synchronous write operation so far. Overloads where a completion condition is
-not specified behave as if called with an object of class `transfer_all`.]
+synchronous write operation so far. The function object return value specifies
+the maximum number of bytes to be write on the subsequent `write_some` call.
+Overloads where a completion condition is not specified behave as if called
+with an object of class `transfer_all`.]
 
 [function_block The synchronous write operation continues until:]
 
-[function_block [mdash] all buffers in the constant buffer sequence `buffers`
-have been written; or]
+[function_block [mdash] the total number of bytes transferred is equal to
+`buffer_size(buffers)`; or]
 
-[function_block [mdash] the completion condition returns true.]
+[function_block [mdash] the completion condition returns `0`.]
 
-[function_block On exit, `ec` contains the `error_code` value from the most
+[function_block On return, `ec` contains the `error_code` value from the most
 recent `write_some` call.]
 
 [function_returns The total number of bytes transferred in the synchronous
@@ -65,7 +65,7 @@ write operation.]
                    error_code& ec);
 
 [function_effects Writes data to the [link requirements.sync_write_stream
-synchronous write stream] object `stream` by performing one or more calls to
+synchronous write stream] object `stream` by performing zero or more calls to
 the stream's `write_some` member function.]
 
 [function_block Data is written from the `basic_fifobuf<>` object `fb`. A [link
@@ -86,9 +86,9 @@ not specified behave as if called with an object of class `transfer_all`.]
 [function_block [mdash] the `basic_fifobuf<>` object `fb` is empty, that is
 `fb.size() == 0`; or]
 
-[function_block [mdash] the completion condition returns true.]
+[function_block [mdash] the completion condition returns `0`.]
 
-[function_block On exit, `ec` contains the `error_code` value from the most
+[function_block On return, `ec` contains the `error_code` value from the most
 recent `write_some` call.]
 
 [function_returns The total number of bytes transferred in the synchronous

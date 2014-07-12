@@ -18,30 +18,30 @@
                   CompletionCondition completion_condition,
                   error_code& ec);
 
+[function_block A [link requirements.synchronous_read_operations synchronous
+read operation].]
+
 [function_effects Reads data from the [link requirements.sync_read_stream
-buffer-oriented synchronous read stream] object `stream` by performing one or
+buffer-oriented synchronous read stream] object `stream` by performing zero or
 more calls to the stream's `read_some` member function.]
 
-[function_block The [link requirements.mutable_buffers mutable buffer sequence]
-`buffers` specifies memory where the data should be placed. The synchronous
-read operation shall always fill a buffer in the sequence completely before
-proceeding to the next.]
-
 [function_block The `completion_condition` parameter specifies a function
-object to be called after each call to the stream's `read_some` member
+object to be called prior to each call to the stream's `read_some` member
 function. The function object is passed the `error_code` value from the most
 recent `read_some` call, and the total number of bytes transferred in the
-synchronous read operation so far. Overloads where a completion condition is
-not specified behave as if called with an object of class `transfer_all`.]
+synchronous read operation so far. The function object return value specifies
+the maximum number of bytes to be read on the subsequent `read_some` call.
+Overloads where a completion condition is not specified behave as if called
+with an object of class `transfer_all`.]
 
 [function_block The synchronous read operation continues until:]
 
-[function_block [mdash] all buffers in the mutable buffer sequence `buffers`
-have been filled; or]
+[function_block [mdash] the total number of bytes transferred is equal to
+`buffer_size(buffers)`; or]
 
-[function_block [mdash] the completion condition returns true.]
+[function_block [mdash] the completion condition returns `0`.]
 
-[function_block On exit, `ec` contains the `error_code` value from the most
+[function_block On return, `ec` contains the `error_code` value from the most
 recent `read_some` call.]
 
 [function_returns The total number of bytes transferred in the synchronous read
@@ -63,7 +63,7 @@ operation.]
                   error_code& ec);
 
 [function_effects Reads data from the [link requirements.sync_read_stream
-synchronous read stream] object `stream` by performing one or more calls to
+synchronous read stream] object `stream` by performing zero or more calls to
 the stream's `read_some` member function.]
 
 [function_block Data is placed into the `basic_fifobuf<>` object `fb`. A [link
@@ -74,20 +74,22 @@ the implementation performs `fb.commit(n)`, where `n` is the return value from
 `read_some`.]
 
 [function_block The `completion_condition` parameter specifies a function
-object to be called after each call to the stream's `read_some` member
+object to be called prior to each call to the stream's `read_some` member
 function. The function object is passed the `error_code` value from the most
 recent `read_some` call, and the total number of bytes transferred in the
-synchronous read operation so far. Overloads where a completion condition is
-not specified behave as if called with an object of class `transfer_all`.]
+synchronous read operation so far. The function object return value specifies
+the maximum number of bytes to be read on the subsequent `read_some` call.
+Overloads where a completion condition is not specified behave as if called
+with an object of class `transfer_all`.]
 
 [function_block The synchronous read operation continues until:]
 
 [function_block [mdash] the `basic_fifobuf<>` object `fb` is full, that is
 `fb.size() == fb.max_size()`; or]
 
-[function_block [mdash] the completion condition returns true.]
+[function_block [mdash] the completion condition returns `0`.]
 
-[function_block On exit, `ec` contains the `error_code` value from the most
+[function_block On return, `ec` contains the `error_code` value from the most
 recent `read_some` call.]
 
 [function_returns The total number of bytes transferred in the synchronous read
