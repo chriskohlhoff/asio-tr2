@@ -374,28 +374,28 @@ summarised in the table below:
   [[Subclause][Header(s)]]
   [
     [[link network.basic_io_services Basic I/O services]]
-    [`<io_service>`]
+    [`<experimental/io_service>`]
   ]
   [
     [[link network.timers Timers]]
-    [`<timer>`]
+    [`<experimental/timer>`]
   ]
   [
     [[link network.buffers Buffers]]
-    [`<buffer>`]
+    [`<experimental/buffer>`]
   ]
   [
     [
       [link network.sockets Sockets]\n
       [link network.socket_streams Socket streams]\n
     ]
-    [`<socket>`]
+    [`<experimental/socket>`]
   ]
   [
     [
       [link network.internet_protocol Internet protocol]\n
     ]
-    [`<internet>`]
+    [`<experimental/internet>`]
   ]
 ]
 
