@@ -14,4 +14,11 @@ boostbook proposal
     <format>onehtml
   ;
 
-# install html : design/membar.png ;
+make networking.html : proposal : @addstyle ;
+
+actions addstyle
+{
+  ./addstyle.pl $(>) $(<)
+}
+
+install html : networking.html design/membar.png ;

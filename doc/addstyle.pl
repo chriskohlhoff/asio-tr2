@@ -2,9 +2,9 @@
 
 use strict;
 
-if (@ARGV != 1)
+if (@ARGV != 2)
 {
-  print "Usage: addstyle <file>\n";
+  print "Usage: addstyle <input> <output>\n";
   exit;
 }
 
@@ -35,8 +35,10 @@ my $docno =
 my @lines = ();
 my $saw_h4 = 0;
 
-my $filename = ${ARGV}[0];
-open my $file_in, "<$filename" or die "Can't open $filename";
+my $filename_in = ${ARGV}[0];
+my $filename_out = ${ARGV}[1];
+
+open my $file_in, "<$filename_in" or die "Can't open $filename_out";
 while (my $line = <$file_in>)
 {
   $line =~ s~\<head\>~\<head\>$style~;
@@ -60,7 +62,7 @@ while (my $line = <$file_in>)
 }
 close $file_in;
 
-open my $file_out, ">$filename" or die "Can't open $filename";
+open my $file_out, ">$filename_out" or die "Can't open $filename_out";
 foreach my $line (@lines)
 {
   print $file_out $line;
