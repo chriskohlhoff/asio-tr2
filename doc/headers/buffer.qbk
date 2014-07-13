@@ -39,6 +39,35 @@
         template <class ConstBufferSequence>
           size_t buffer_size(const ConstBufferSequence& buffers) noexcept;
 
+        ``// [link functions.buffer_copy buffer copy]:``
+
+        size_t buffer_copy(const mutable_buffer& dest,
+                           const const_buffer& source) noexcept;
+        size_t buffer_copy(const mutable_buffer& dest,
+                           const const_buffer& source,
+                           size_t max_size) noexcept;
+        template <class ConstBufferSequence>
+          size_t buffer_copy(const mutable_buffer& dest,
+                             const ConstBufferSequence& source) noexcept;
+        template <class ConstBufferSequence>
+          size_t buffer_copy(const mutable_buffer& dest,
+                             const ConstBufferSequence& source,
+                             size_t max_size) noexcept;
+        template <class MutableBufferSequence>
+          size_t buffer_copy(const MutableBufferSequence& dest,
+                             const const_buffer& source) noexcept;
+        template <class MutableBufferSequence>
+          size_t buffer_copy(const MutableBufferSequence& dest,
+                             const const_buffer& source,
+                             size_t max_size) noexcept;
+        template <class MutableBufferSequence, class ConstBufferSequence>
+          size_t buffer_copy(const MutableBufferSequence& dest,
+                             const ConstBufferSequence& source) noexcept;
+        template <class MutableBufferSequence, class ConstBufferSequence>
+          size_t buffer_copy(const MutableBufferSequence& dest,
+                             const ConstBufferSequence& source,
+                             max_size) noexcept;
+
         ``// [link functions.buffer_arithmetic buffer arithmetic]:``
 
         mutable_buffer operator+(const mutable_buffer& b, size_t n) noexcept;
