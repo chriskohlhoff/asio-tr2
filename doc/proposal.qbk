@@ -137,91 +137,7 @@
 
 [section Overview]
 
-This document proposes a networking library for TR2. The library supports
-several levels of use, ranging from entry-level to advanced.
-
-To give some idea of the flavour of the proposed library, consider the
-following sample code. This is part of a server program that echoes characters
-it receives back to the client in upper case:
-
-  inline namespace network_v1 = std::experimental::network;
-
-  template <typename Iterator>
-  void uppercase(Iterator begin, Iterator end)
-  {
-    std::locale loc("");
-    for (Iterator iter = begin; iter != end; ++iter)
-      *iter = std::toupper(*iter, loc);
-  }
-
-  void do_sync(
-      sys::ip::tcp::socket& socket,
-      std::vector<char>& buffer_space)
-  {
-    try
-    {
-      for (;;)
-      {
-        std::size_t count = socket.read_some(sys::buffer(buffer_space));
-        uppercase(buffer_space.begin(), buffer_space.begin() + count);
-        sys::write(socket, sys::buffer(buffer_space, count));
-      }
-    }
-    catch (sys::system_error& e)
-    {
-    }
-  }
-
-The synchronous approach used above is straightforward to understand and easy
-for programmers at any level of ability to write.
-
-Next, the equivalent code developed using asynchronous operations:
-
-  void do_async(
-      sys::ip::tcp::socket& socket,
-      std::vector<char>& buffer_space)
-  {
-    socket.async_read_some(sys::buffer(buffer_space),
-        std::bind(handle_read, _1, _2,
-          std::ref(socket), std::ref(buffer_space)));
-  }
-
-  void handle_read(
-      sys::error_code ec,
-      std::size_t count,
-      sys::ip::tcp::socket& socket,
-      std::vector<char>& buffer_space)
-  {
-    if (!ec)
-    {
-      uppercase(buffer_space.begin(), buffer_space.begin() + count);
-      sys::async_write(socket, sys::buffer(buffer_space, count),
-          std::bind(handle_write, _1,
-            std::ref(socket), std::ref(buffer_space)));
-    }
-  }
-
-  void handle_write(
-      sys::error_code ec,
-      sys::ip::tcp::socket& socket,
-      std::vector<char>& buffer_space)
-  {
-    if (!ec)
-    {
-      socket.async_read_some(sys::buffer(buffer_space),
-          std::bind(handle_read, _1, _2,
-            std::ref(socket), std::ref(buffer_space)));
-    }
-  }
-
-This code may appear more complex due to the inverted flow of control, but it
-allows a knowledgeable programmer to write code that will scale to a great many
-concurrent connections. The synchronous code requires one thread for each
-connection, and on most platforms threads are a limited resource. The
-asynchronous approach described in this proposal has been exercised in
-production HTTP servers to thousands of concurrent connections, and similar
-echo servers have been tested to tens of thousands, while using only one
-thread.
+TBD.
 
 [endsect]
 
@@ -311,42 +227,7 @@ functions that lie outside the C++14 standard.
 
 [section Design Decisions]
 
-[include:design design/bsd_sockets.qbk]
-[include:design design/protocol_independence.qbk]
-[include:design design/async.qbk]
-[include:design design/iostreams.qbk]
-[include:design design/posix.qbk]
-[include:design design/threads.qbk]
-[include:design design/strands.qbk]
-[include:design design/buffers.qbk]
-[include:design design/allocation.qbk]
-[include:design design/line_based.qbk]
-[include:design design/eof.qbk]
-
-[section Other Design Decisions]
-
-The following list summarises some other design decisions made in the
-development of the library. Some further decisions are also included as
-commentary in the proposed text.
-
-[mdash] The implementation is separated into two layers: "services", and the
-object-oriented wrappers around them.
-
-[mdash] The `read`, `async_read`, `write` and `async_write` functions are
-included as a solution to the problem of partial reads and writes.
-
-[mdash] Signals and system call interruption are hidden in most cases.
-
-[mdash] No string constructors for IP address classes.
-
-[mdash] Monotonic timers are not included in the proposal, since they are
-difficult to implement portably, and __POSIX__ support for monotonic time is
-optional. A program can still add support for monotonic timers by using a
-custom `TimeTraits` implementation.
-
-Contact the author for more information.
-
-[endsect]
+TBD.
 
 [endsect]
 
