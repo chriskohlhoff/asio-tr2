@@ -1,0 +1,43 @@
+[section:async_completion Class template [^async_completion]]
+
+  namespace std {
+    namespace experimental {
+      inline namespace network_v1 {
+
+        template <class CompletionToken, class Signature>
+        struct async_completion {
+          typedef handler_type_t<CompletionToken, Signature> handler_type;
+
+          explicit async_completion(remove_reference_t<CompletionToken>& t);
+          async_completion(const async_completion&) = delete;
+          async_completion& operator=(const async_completion&) = delete;
+
+          ``['see below]`` handler;
+          async_result<handler_type> result;
+        };
+
+      } // inline namespace network_v1
+    } // namespace experimental
+  } // namespace std
+
+Template parameter `CompletionToken` specifies the model used to obtain the
+result of the asynchronous operation. Template parameter `Signature` is the
+call signature (C++ Std, [func.def]) for the handler type invoked on completion
+of the asynchronous operation.
+
+[section [^async_completion] members]
+
+  explicit async_completion(remove_reference_t<CompletionToken>& t);
+
+[function_effects If `CompletionToken` and `handler_type` are the same type,
+binds `handler` to `t`; otherwise, initializes `handler` with the result of
+`forward<CompletionToken>(t)`. Initializes `result` with `handler`.]
+
+  ``['see below]`` handler;
+
+[function_type `handler_type&` if `CompletionToken` and `handler_type` are the
+same type; otherwise, `handler_type`.]
+
+[endsect]
+
+[endsect]

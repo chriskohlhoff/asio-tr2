@@ -1,0 +1,39 @@
+[section:handler_type Struct template [^handler_type]]
+
+  namespace std {
+    namespace experimental {
+      inline namespace network_v1 {
+
+        template <class CompletionToken, class Signature, class = void>
+        struct handler_type {
+          typedef ``['see below]`` type;
+        };
+
+      } // inline namespace network_v1
+    } // namespace experimental
+  } // namespace std
+
+Template parameter `CompletionToken` specifies the model used to obtain the
+result of the asynchronous operation. Template parameter `Signature` is the
+call signature (C++ Std, [func.def]) for the handler type invoked on completion
+of the asynchronous operation.
+
+A program may specialize this trait if the `CompletionToken` template parameter
+in the specialization is a user-defined type.
+
+Specializations of `handler_type` shall define a nested handler type `type`
+that satisfies the `MoveConstructible` requirements, and objects of type `type`
+shall be constructible from an lvalue or rvalue of the type specified by the
+`CompletionToken` template parameter.
+
+[section [^handler_type] members]
+
+  typedef ``['see below]`` type;
+
+[function_type `CompletionToken` if `CompletionToken` and
+`decay_t<CompletionToken>` are the same type; otherwise,
+`handler_type_t<decay_t<CompletionToken>, Signature>`.]
+
+[endsect]
+
+[endsect]

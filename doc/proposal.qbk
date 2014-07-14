@@ -70,6 +70,10 @@
 '''&mdash;'''['end example]\]]
 ]
 
+[template function_type[text]
+[:['Type:] [text]]
+]
+
 [template commentary[text]
 [blurb [text]]
 ]
@@ -254,6 +258,10 @@ summarised in the table below:
 [table Networking library summary
   [[Subclause][Header(s)]]
   [
+    [[link network.async Asynchronous model]]
+    [`<experimental/async>`]
+  ]
+  [
     [[link network.basic_io_services Basic I/O services]]
     [`<experimental/io_service>`]
   ]
@@ -363,6 +371,13 @@ express type requirements, as listed in the table below.
 
 [include:definitions definitions.qbk]
 [include:error_reporting error_reporting.qbk]
+
+[section:async Asynchronous model]
+[include:headers headers/async.qbk]
+[include:classes classes/handler_type.qbk]
+[include:classes classes/async_result.qbk]
+[include:classes classes/async_completion.qbk]
+[endsect]
 
 [section:basic_io_services Basic I/O services]
 [include:headers headers/io_service.qbk]
