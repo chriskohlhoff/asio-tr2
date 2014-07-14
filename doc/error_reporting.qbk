@@ -74,7 +74,8 @@ operation is defined "as if" implemented by a __POSIX__ function, the
 
 [mdash] If the failure condition is one that is listed by __POSIX__ for that
 function, the `error_code` shall compare equal to the error's corresponding
-`enum class errc` constant (C++14 \[syserr\]).
+`enum class errc` (C++14 \[syserr\]) or [link classes.ip__resolver_errc `enum
+class resolver_errc`] constant.
 
 [mdash] Otherwise, the `error_code` shall be set to an implementation-defined
 value that reflects the underlying operating system error.
@@ -91,8 +92,5 @@ otherwise specified, this list is a subset of the failure conditions associated
 with the function.
 
 [endsect]
-
-[include:globals globals/getaddrinfo_errors.qbk]
-[include:globals globals/misc_errors.qbk]
 
 [endsect]

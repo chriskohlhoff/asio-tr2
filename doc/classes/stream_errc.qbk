@@ -1,4 +1,4 @@
-[section:error_codes Error codes]
+[section:stream_errc Error codes]
 
   const error_category& stream_category() noexcept;
 

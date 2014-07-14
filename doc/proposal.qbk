@@ -483,6 +483,7 @@ This subclause defines components for performing timer operations.
 [section:internet_protocol_requirements Requirements]
 [include:requirements requirements/internet_protocol.qbk]
 [endsect]
+[include:classes classes/ip__resolver_errc.qbk]
 [include:classes classes/ip__address.qbk]
 [include:classes classes/ip__address_v4.qbk]
 [include:classes classes/ip__address_v6.qbk]

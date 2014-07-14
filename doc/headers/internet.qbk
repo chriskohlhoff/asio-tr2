@@ -5,6 +5,17 @@
       inline namespace network_v1 {
         namespace ip {
 
+          enum class resolver_errc {
+            host_not_found = ``['implementation defined]``, // ``['EAI_NONAME]``
+            host_not_found_try_again = ``['implementation defined]``, // ``['EAI_AGAIN]``
+            service_not_found = ``['implementation defined]`` // ``['EAI_SERVICE]``
+          };
+
+          const error_category& resolver_category() noexcept;
+
+          error_code make_error_code(resolver_errc e) noexcept;
+          error_condition make_error_condition(resolver_errc e) noexcept;
+
           struct v4_mapped_t {};
           constexpr v4_mapped_t v4_mapped;
 
@@ -171,6 +182,10 @@
         } // namespace ip
       } // inline namespace network_v1
     } // namespace experimental
+
+    template <> struct is_error_condition_enum<
+      experimental::network_v1::ip::resolver_errc>
+        : public true_type {};
 
     // ``[link classes.hash hash support]``
     template <class T> struct hash;

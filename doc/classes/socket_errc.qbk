@@ -1,4 +1,4 @@
-[section:error_codes Error codes]
+[section:socket_errc Error codes]
 
   const error_category& socket_category() noexcept;
 
