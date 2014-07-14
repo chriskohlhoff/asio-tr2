@@ -459,10 +459,6 @@ express type requirements, as listed in the table below.
     [[link requirements.protocol protocol]]
   ]
   [
-    [`ReadHandler`]
-    [[link requirements.read_handler read handler]]
-  ]
-  [
     [`Service`]
     [[link requirements.service service]]
   ]
@@ -481,10 +477,6 @@ express type requirements, as listed in the table below.
   [
     [`WaitTraits`]
     [[link requirements.wait_traits wait traits]]
-  ]
-  [
-    [`WriteHandler`]
-    [[link requirements.write_handler write handler]]
   ]
 ]
 
@@ -585,8 +577,6 @@ This subclause defines components for performing timer operations.
 [include:requirements requirements/gettable_socket_option.qbk]
 [include:requirements requirements/settable_socket_option.qbk]
 [include:requirements requirements/io_control_command.qbk]
-[include:requirements requirements/read_handler.qbk]
-[include:requirements requirements/write_handler.qbk]
 [endsect]
 [include:classes classes/socket_errc.qbk]
 [include:classes classes/socket_base.qbk]

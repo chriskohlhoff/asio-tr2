@@ -177,26 +177,26 @@
         ``// [link functions.async_read asynchronous read operations]:``
 
         template <class AsyncReadStream, class MutableBufferSequence,
-          class ReadHandler>
-            size_t async_read(AsyncReadStream& stream,
-                              const MutableBufferSequence& buffers,
-                              ReadHandler handler);
+          class CompletionToken>
+            auto async_read(AsyncReadStream& stream,
+                            const MutableBufferSequence& buffers,
+                            CompletionToken&& token);
         template <class AsyncReadStream, class MutableBufferSequence,
-          class CompletionCondition, class ReadHandler>
-            size_t async_read(AsyncReadStream& stream,
-                              const MutableBufferSequence& buffers,
-                              CompletionCondition completion_condition,
-                              ReadHandler handler);
-        template <class AsyncReadStream, class Allocator, class ReadHandler>
-          size_t async_read(AsyncReadStream& stream,
-                            basic_fifobuf<Allocator>& fb,
-                            ReadHandler handler);
+          class CompletionCondition, class CompletionToken>
+            auto async_read(AsyncReadStream& stream,
+                            const MutableBufferSequence& buffers,
+                            CompletionCondition completion_condition,
+                            CompletionToken&& token);
+        template <class AsyncReadStream, class Allocator, class CompletionToken>
+          auto async_read(AsyncReadStream& stream,
+                          basic_fifobuf<Allocator>& fb,
+                          CompletionToken&& token);
         template <class AsyncReadStream, class Allocator,
-          class CompletionCondition, class ReadHandler>
-            size_t async_read(AsyncReadStream& stream,
-                              basic_fifobuf<Allocator>& fb,
-                              CompletionCondition completion_condition,
-                              ReadHandler handler);
+          class CompletionCondition, class CompletionToken>
+            auto async_read(AsyncReadStream& stream,
+                            basic_fifobuf<Allocator>& fb,
+                            CompletionCondition completion_condition,
+                            CompletionToken&& token);
 
         ``// [link functions.write synchronous write operations]:``
 
@@ -237,26 +237,26 @@
         ``// [link functions.async_write asynchronous write operations]:``
 
         template <class AsyncWriteStream, class ConstBufferSequence,
-          class WriteHandler>
-            size_t async_write(AsyncWriteStream& stream,
-                               const ConstBufferSequence& buffers,
-                               WriteHandler handler);
+          class CompletionToken>
+            auto async_write(AsyncWriteStream& stream,
+                             const ConstBufferSequence& buffers,
+                             CompletionToken&& token);
         template <class AsyncWriteStream, class ConstBufferSequence,
-          class CompletionCondition, class WriteHandler>
-            size_t async_write(AsyncWriteStream& stream,
-                               const ConstBufferSequence& buffers,
-                               CompletionCondition completion_condition,
-                               WriteHandler handler);
-        template <class AsyncWriteStream, class Allocator, class WriteHandler>
-          size_t async_write(AsyncWriteStream& stream,
-                             basic_fifobuf<Allocator>& fb,
-                             WriteHandler handler);
+          class CompletionCondition, class CompletionToken>
+            auto async_write(AsyncWriteStream& stream,
+                             const ConstBufferSequence& buffers,
+                             CompletionCondition completion_condition,
+                             CompletionToken&& token);
+        template <class AsyncWriteStream, class Allocator, class CompletionToken>
+          auto async_write(AsyncWriteStream& stream,
+                           basic_fifobuf<Allocator>& fb,
+                           CompletionToken&& token);
         template <class AsyncWriteStream, class Allocator,
-          class CompletionCondition, class WriteHandler>
-            size_t async_write(AsyncWriteStream& stream,
-                               basic_fifobuf<Allocator>& fb,
-                               CompletionCondition completion_condition,
-                               WriteHandler handler);
+          class CompletionCondition, class CompletionToken>
+            auto async_write(AsyncWriteStream& stream,
+                             basic_fifobuf<Allocator>& fb,
+                             CompletionCondition completion_condition,
+                             CompletionToken&& token);
 
         ``// [link functions.read_until synchronous delimited read operations]:``
 
@@ -275,14 +275,14 @@
 
         ``// [link functions.async_read_until asynchronous delimited read operations]:``
 
-        template <class AsyncReadStream, class Allocator, class ReadHandler>
-          void async_read_until(AsyncReadStream& s,
+        template <class AsyncReadStream, class Allocator, class CompletionToken>
+          auto async_read_until(AsyncReadStream& s,
                                 basic_fifobuf<Allocator>& fb, char delim,
-                                ReadHandler handler);
-        template <class AsyncReadStream, class Allocator, class ReadHandler>
-          void async_read_until(AsyncReadStream& s,
+                                CompletionToken&& token);
+        template <class AsyncReadStream, class Allocator, class CompletionToken>
+          auto async_read_until(AsyncReadStream& s,
                                 basic_fifobuf<Allocator>& fb,
-                                const string& delim, ReadHandler handler);
+                                const string& delim, CompletionToken&& token);
 
       } // inline namespace network_v1
     } // namespace experimental

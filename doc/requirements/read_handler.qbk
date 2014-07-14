@@ -1,8 +1,0 @@
-[section:read_handler Read handler requirements]
-
-A read handler must meet the requirements for a [link requirements.handler
-handler]. A value `h` of a read handler class should work correctly in the
-expression `h(ec, s)`, where `ec` is an lvalue of type `const error_code` and
-`s` is an lvalue of type `const size_t`.
-
-[endsect]

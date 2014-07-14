@@ -1,16 +1,16 @@
 [section:async_read Asynchronous read operations]
 
   template<class AsyncReadStream, class MutableBufferSequence,
-    class ReadHandler>
-      size_t async_read(AsyncReadStream& stream,
-                        const MutableBufferSequence& buffers,
-                        ReadHandler handler);
+    class CompletionToken>
+      auto async_read(AsyncReadStream& stream,
+                      const MutableBufferSequence& buffers,
+                      CompletionToken&& token);
   template<class AsyncReadStream, class MutableBufferSequence,
-    class CompletionCondition, class ReadHandler>
-      size_t async_read(AsyncReadStream& stream,
-                        const MutableBufferSequence& buffers,
-                        CompletionCondition completion_condition,
-                        ReadHandler handler);
+    class CompletionCondition, class CompletionToken>
+      auto async_read(AsyncReadStream& stream,
+                      const MutableBufferSequence& buffers,
+                      CompletionCondition completion_condition,
+                      CompletionToken&& token);
 
 [function_block An [link requirements.asynchronous_read_operations asynchronous
 read operation].]
@@ -46,16 +46,16 @@ is valid until the handler for the asynchronous operation is invoked.]
 `error_code` value from the most recent asynchronous read_some operation, and
 `n` is the total number of bytes transferred.]
 
-  template<class AsyncReadStream, class Allocator, class ReadHandler>
-    size_t async_read(AsyncReadStream& stream,
-                      basic_fifobuf<Allocator>& fb,
-                      ReadHandler handler);
+  template<class AsyncReadStream, class Allocator, class CompletionToken>
+    auto async_read(AsyncReadStream& stream,
+                    basic_fifobuf<Allocator>& fb,
+                    CompletionToken&& token);
   template<class AsyncReadStream, class Allocator,
-    class CompletionCondition, class ReadHandler>
-      size_t async_read(AsyncReadStream& stream,
-                        basic_fifobuf<Allocator>& fb,
-                        CompletionCondition completion_condition,
-                        ReadHandler handler);
+    class CompletionCondition, class CompletionToken>
+      auto async_read(AsyncReadStream& stream,
+                      basic_fifobuf<Allocator>& fb,
+                      CompletionCondition completion_condition,
+                      CompletionToken&& token);
 
 [function_block An [link requirements.asynchronous_operations asynchronous
 operation].]

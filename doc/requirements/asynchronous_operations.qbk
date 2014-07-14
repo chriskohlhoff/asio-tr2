@@ -81,8 +81,7 @@ bound completion handler forwards the `io_handler_allocate()`,
 functions for the program-defined handler. A bound completion handler meets the
 requirements for a [link requirements.completion_handler completion handler].
 
-[std_example A bound completion handler for a [link requirements.read_handler
-`ReadHandler`]:..
+[std_example A bound completion handler for a `ReadHandler`]:..
 ``
   template<class ReadHandler>
   struct bound_read_handler

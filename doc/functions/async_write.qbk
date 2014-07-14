@@ -1,16 +1,16 @@
 [section:async_write Asynchronous write operations]
 
   template<class AsyncWriteStream, class ConstBufferSequence,
-    class WriteHandler>
-      size_t async_write(AsyncWriteStream& stream,
-                         const ConstBufferSequence& buffers,
-                         WriteHandler handler);
+    class CompletionToken>
+      auto async_write(AsyncWriteStream& stream,
+                       const ConstBufferSequence& buffers,
+                       CompletionToken&& token);
   template<class AsyncWriteStream, class ConstBufferSequence,
-    class CompletionCondition, class WriteHandler>
-      size_t async_write(AsyncWriteStream& stream,
-                         const ConstBufferSequence& buffers,
-                         CompletionCondition completion_condition,
-                         WriteHandler handler);
+    class CompletionCondition, class CompletionToken>
+      auto async_write(AsyncWriteStream& stream,
+                       const ConstBufferSequence& buffers,
+                       CompletionCondition completion_condition,
+                       CompletionToken&& token);
 
 [function_block An [link requirements.asynchronous_write_operations asynchronous
 write operation].]
@@ -46,16 +46,16 @@ is valid until the handler for the asynchronous operation is invoked.]
 `error_code` value from the most recent asynchronous write_some operation, and
 `n` is the total number of bytes transferred.]
 
-  template<class AsyncWriteStream, class Allocator, class WriteHandler>
-    size_t async_write(AsyncWriteStream& stream,
-                       basic_fifobuf<Allocator>& fb,
-                       WriteHandler handler);
+  template<class AsyncWriteStream, class Allocator, class CompletionToken>
+    auto async_write(AsyncWriteStream& stream,
+                     basic_fifobuf<Allocator>& fb,
+                     CompletionToken&& token);
   template<class AsyncWriteStream, class Allocator,
-    class CompletionCondition, class WriteHandler>
-      size_t async_write(AsyncWriteStream& stream,
-                         basic_fifobuf<Allocator>& fb,
-                         CompletionCondition completion_condition,
-                         WriteHandler handler);
+    class CompletionCondition, class CompletionToken>
+      auto async_write(AsyncWriteStream& stream,
+                       basic_fifobuf<Allocator>& fb,
+                       CompletionCondition completion_condition,
+                       CompletionToken&& token);
 
 [function_block An [link requirements.asynchronous_operations asynchronous
 operation].]
@@ -94,9 +94,8 @@ behave as if called with an object of class `transfer_all`.]
 `stream` and the `basic_fifobuf<>` object `fb` are valid until the handler for
 the asynchronous operation is invoked.]
 
-[function_block On completion of the asynchronous operation, the [link
-requirements.write_handler `WriteHandler`] object `handler` is invoked with the
-`error_code` value from the most recent asynchronous write_some operation,
-and the total number of bytes transferred.]
+[function_block On completion of the asynchronous operation, `ec` is the
+`error_code` value from the most recent asynchronous write_some operation, and
+`n` is the total number of bytes transferred.]
 
 [endsect]
