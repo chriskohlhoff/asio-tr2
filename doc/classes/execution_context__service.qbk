@@ -1,0 +1,60 @@
+[section:execution_context__service Class [^execution_context::service]]
+
+  namespace std {
+    namespace experimental {
+      inline namespace network_v1 {
+
+        class execution_context::service
+        {
+        protected:
+          // construct / copy / destroy:
+
+          service(execution_context& owner);
+          service(const service&) = delete;
+          service& operator=(const service&) = delete;
+          virtual ~service();
+
+          // service observers:
+
+          execution_context& context() noexcept;
+
+        private:
+          friend class execution_context; // ``['exposition only]``
+
+          // service operations:
+
+          virtual void shutdown_service() = 0;
+          virtual void notify_fork(fork_event e);
+
+          execution_context& context_; // ``['exposition only]``
+        };
+
+      } // inline namespace network_v1
+    } // namespace experimental
+  } // namespace std
+
+[section [^execution_context::service] constructors]
+
+  service(execution_context& owner);
+
+[function_postconditions `&context_ == &owner`.]
+
+[endsect]
+
+[section [^execution_context::service] observers]
+
+  execution_context& context() noexcept;
+
+[function_returns `context_`.]
+
+[endsect]
+
+[section [^execution_context::service] operations]
+
+  void notify_fork(fork_event e);
+
+[function_effects Does nothing.]
+
+[endsect]
+
+[endsect]

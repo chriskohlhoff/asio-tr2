@@ -377,6 +377,8 @@ express type requirements, as listed in the table below.
 [include:classes classes/handler_type.qbk]
 [include:classes classes/async_result.qbk]
 [include:classes classes/async_completion.qbk]
+[include:classes classes/execution_context.qbk]
+[include:classes classes/execution_context__service.qbk]
 [endsect]
 
 [section:basic_io_services Basic I/O services]

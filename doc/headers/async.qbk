@@ -16,6 +16,21 @@
         template <class CompletionToken, class Signature>
           struct ``[link classes.async_completion async_completion]``;
 
+        enum class fork_event {
+          prepare,
+          parent,
+          child
+        };
+
+        class ``[link classes.execution_context execution_context]``;
+
+        class service_already_exists;
+
+        template <class Service> Service& use_service(execution_context& ctx);
+        template <class Service, class... Args> Service&
+          make_service(execution_context& ctx, Args&&... args);
+        template <class Service> bool has_service(execution_context& ctx);
+
       } // inline namespace network_v1
     } // namespace experimental
   } // namespace std
