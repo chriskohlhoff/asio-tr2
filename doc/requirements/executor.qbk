@@ -1,0 +1,92 @@
+[section:executor Executor requirements]
+
+The library describes a standard set of requirements for ['executors], which
+are class-type objects that encapsulate the information about an execution
+policy.
+
+An executor type `X` shall satisfy the requirements of `CopyConstructible` (C++
+Std, [copyconstructible]) types. No constructor, comparison operator, copy
+operation, move operation, or swap operation on these types shall exit via an
+exception.
+
+In the table below, `X` denotes an executor class, `x` denotes a value of type
+`X&`, `x1` and `x2` denote values of type `const X&`, `x3` denotes a value of
+type `X&&`, `f` denotes a `MoveConstructible` (C++ Std, [moveconstructible])
+function object callable with zero arguments, `a` denotes a value of type `A`
+meeting `Allocator` requirements (C++ Std, [allocator.requirements]), `t`
+denotes an object of type `T`, and `u` denotes an identifier.
+
+[table Executor requirements
+  [[expression] [type] [assertion/note\npre/post-conditions]]
+  [
+    [`X u(x1);`]
+    []
+    [Shall not exit via an exception.\n
+     post: `u == x1`]
+  ]
+  [
+    [`X u(x3);`]
+    []
+    [Shall not exit via an exception.\n
+     post: `u` equals the prior value of `x3`.]
+  ]
+  [
+    [`x1 == x2`]
+    [`bool`]
+    [Returns `true` only if `x1` and `x2` represent the same execution policy.
+     `operator==` shall be reflexive, symmetric, and transitive, and shall not
+     exit via an exception.]
+  ]
+  [
+    [`x1 != x2`]
+    [`bool`]
+    [Same as `!(x1 == x2)`.]
+  ]
+  [
+    [`x.work_started()`]
+    []
+    []
+  ]
+  [
+    [`x.work_finished()`]
+    []
+    []
+  ]
+  [
+    [`x.dispatch(std::move(f),a)`]
+    []
+    [Effects: Causes the function object to be invoked at most once. The
+     executor may invoke the function object within the current thread, prior to
+     returning from `dispatch`. Executor implementations are encouraged to use
+     the supplied allocator to allocate any memory required to store the
+     function object. The executor shall deallocate all memory prior to invoking
+     the function object.]
+  ]
+  [
+    [`x.post(std::move(f),a)`]
+    []
+    [Effects: Causes the function object to be invoked at most once. The
+     executor may not invoke the function object within the current thread,
+     prior to returning from `post`. Executor implementations are encouraged to
+     use the supplied allocator to allocate any memory required to store the
+     function object. The executor shall deallocate all memory prior to
+     invoking the function object.]
+  ]
+  [
+    [`x.defer(std::move(f),a)`]
+    []
+    [Effects: Causes the function object to be invoked at most once. The
+     executor may not invoke the function object within the current thread,
+     prior to returning from `defer`. Executor implementations are encouraged to
+     use the supplied allocator to allocate any memory required to store the
+     function object. The executor shall deallocate all memory prior to
+     invoking the function object.]
+  ]
+  [
+    [`x1.wrap(std::move(t))`]
+    [`executor_wrapper<T,X>`]
+    []
+  ]
+]
+
+[endsect]

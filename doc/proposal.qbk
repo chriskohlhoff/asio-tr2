@@ -374,6 +374,9 @@ express type requirements, as listed in the table below.
 
 [section:async Asynchronous model]
 [include:headers headers/async.qbk]
+[section:async_requirements Requirements]
+[include:requirements requirements/executor.qbk]
+[endsect]
 [include:classes classes/handler_type.qbk]
 [include:classes classes/async_result.qbk]
 [include:classes classes/async_completion.qbk]
