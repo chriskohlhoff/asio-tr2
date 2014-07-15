@@ -105,15 +105,21 @@ service object lifetime.]
 
 [section [^execution_context] globals]
 
+The functions `use_service`, `make_service` and `has_service` shall not
+introduce data races as a result of concurrent calls to those functions from
+different threads.
+
   template <class Service> Service& use_service(execution_context& ctx);
 
 [function_block Let `Key` be `Service::key_type` if the nested typedef
 `Service::key_type` exists; otherwise, let `Key` be `Service`.]
 
-[function_requires `Service` is a service class publicly derived from [link
-classes.execution_context__service `execution_context::service`]. If the nested
-typedef `Service::key_type` exists, `Service` is publicly derived from
-`Service::key_type`, and `Service::key_type` is publicly derived from
+[function_requires `Service` is a service class that is publicly and
+unambiguously derived from [link classes.execution_context__service
+`execution_context::service`]. If the nested typedef `Service::key_type`
+exists, `Service` is the same type as `Service::key_type`, or `Service` is
+publicly and unambiguously derived from `Service::key_type`, and
+`Service::key_type` is publicly and unambiguously derived from
 `execution_context::service`.]
 
 [function_effects If an object of type `Key` does not already exist in the
@@ -131,12 +137,14 @@ typedef `Service::key_type` exists, `Service` is publicly derived from
 [function_block Let `Key` be `Service::key_type` if the nested typedef
 `Service::key_type` exists; otherwise, let `Key` be `Service`.]
 
-[function_requires `Service` is a service class publicly derived from [link
-classes.execution_context__service `execution_context::service`]. If the nested
-typedef `Service::key_type` exists, `Service` is publicly derived from
-`Service::key_type`, and `Service::key_type` is publicly derived from
+[function_requires `Service` is a service class that is publicly and
+unambiguously derived from [link classes.execution_context__service
+`execution_context::service`]. If the nested typedef `Service::key_type`
+exists, `Service` is the same type as `Service::key_type`, or `Service` is
+publicly and unambiguously derived from `Service::key_type`, and
+`Service::key_type` is publicly and unambiguously derived from
 `execution_context::service`. A service object of type `Key` does not already
-exists in the `execution_context` set identified by `ctx`.]
+exist in the `execution_context` set identified by `ctx`.]
 
 [function_effects Creates an object as if by calling `new Service(ctx,
 forward<Args>(args)__dotdotdot__)` and adds it to the `execution_context`
@@ -145,15 +153,20 @@ set identified by `ctx`.]
 [function_throws `service_already_exists` if a corresponding service object of
 type `Key` is already present in the set.]
 
+[function_notes The reference returned remains valid until a call to
+`destroy_context`.]
+
   template <class Service> bool has_service(execution_context& ctx) const;
 
 [function_block Let `Key` be `Service::key_type` if the nested typedef
 `Service::key_type` exists; otherwise, let `Key` be `Service`.]
 
-[function_requires `Service` is a service class publicly derived from [link
-classes.execution_context__service `execution_context::service`]. If the nested
-typedef `Service::key_type` exists, `Service` is publicly derived from
-`Service::key_type`, and `Service::key_type` is publicly derived from
+[function_requires `Service` is a service class that is publicly and
+unambiguously derived from [link classes.execution_context__service
+`execution_context::service`]. If the nested typedef `Service::key_type`
+exists, `Service` is the same type as `Service::key_type`, or `Service` is
+publicly and unambiguously derived from `Service::key_type`, and
+`Service::key_type` is publicly and unambiguously derived from
 `execution_context::service`.]
 
 [function_returns If an object of type `Key` is present in `ctx`, `true`;
