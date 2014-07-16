@@ -1,0 +1,99 @@
+[section:executor_work Class template [^executor_work]]
+
+  namespace std {
+    namespace experimental {
+      inline namespace network_v1 {
+
+        template <class Executor>
+        class executor_work
+        {
+        public:
+          // types:
+
+          typedef Executor executor_type;
+
+          // construct / copy / destroy:
+
+          explicit executor_work(const executor_type& ex) noexcept;
+          executor_work(const executor_work& other) noexcept;
+          executor_work(executor_work&& other) noexcept;
+
+          executor_work operator=(const executor_type&) = delete;
+
+          ~executor_work();
+
+          // executor work observers:
+
+          executor_type get_executor() const noexcept;
+          bool owns_work() const noexcept;
+
+          // executor work modifiers:
+
+          void reset() noexcept;
+
+        private:
+          Executor ex_; // ``['exposition only]``
+          bool owns_; // ``['exposition only]``
+        };
+
+      } // inline namespace network_v1
+    } // namespace experimental
+  } // namespace std
+
+[section [^executor_work] constructors]
+
+  explicit executor_work(const executor_type& ex) noexcept;
+
+[function_effects Constructs an object of class `executor_work`, initializing
+`ex_` with `ex`, and then performing `ex_.work_started()`.]
+
+[function_postconditions `ex == ex_` and `owns_ == true`.]
+
+  executor_work(const executor_work& other) noexcept;
+
+[function_effects Constructs an object of class `executor_work`, initializing
+`ex_` with `other.ex`. If `other.owns_ == true`, performs
+`ex_.work_started()`.]
+
+[function_postconditions `ex == other.ex_` and `owns_ == other.owns_`.]
+
+  executor_work(executor_work&& other) noexcept;
+
+[function_effects Constructs an object of class `executor_work`, initializing
+`ex_` with `other.ex` and `owns_` with `other.owns_`.]
+
+[function_postconditions `ex` is equal to the prior value of `other.ex_`,
+`owns_` is equal to the prior value of `other.owns_`, and `other.owns_ ==
+false`.]
+
+[endsect]
+
+[section [^executor_work] destructor]
+
+[function_effects If `owns_` is true, performs `ex.work_finished()`.]
+
+[endsect]
+
+[section [^executor_work] observers]
+
+  executor_type get_executor() const noexcept;
+
+[function_returns `ex_`.]
+
+  bool owns_work() const noexcept;
+
+[function_returns `owns_`.]
+
+[endsect]
+
+[section [^executor_work] modifiers]
+
+  void reset() noexcept;
+
+[function_effects If `owns_` is true, performs `ex.work_finished()`.]
+
+[function_postconditions `owns_ == false`.]
+
+[endsect]
+
+[endsect]
