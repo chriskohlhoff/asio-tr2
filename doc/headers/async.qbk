@@ -51,6 +51,8 @@
         bool operator==(const system_executor&, const system_executor&);
         bool operator!=(const system_executor&, const system_executor&);
 
+        template <class Handler> struct ``[link classes.handler_traits handler_traits]``;
+
       } // inline namespace network_v1
     } // namespace experimental
   } // namespace std
