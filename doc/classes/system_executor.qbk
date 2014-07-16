@@ -1,0 +1,108 @@
+[section:system_executor Class [^system_executor]]
+
+  namespace std {
+    namespace experimental {
+      inline namespace network_v1 {
+
+        class system_executor
+        {
+        public:
+
+          // executor operations:
+
+          execution_context& context();
+
+          void work_started() noexcept;
+          void work_finished() noexcept;
+
+          template <class Func, class Alloc>
+            void dispatch(Func&& f, const Alloc& a);
+          template <class Func, class Alloc>
+            void post(Func&& f, const Alloc& a);
+          template <class Func, class Alloc>
+            void defer(Func&& f, const Alloc& a);
+
+          template <class T>
+            executor_wrapper<decay_t<T>, system_executor>
+              wrap(T&& t) const;
+        };
+
+        bool operator==(const system_executor&, const system_executor&);
+        bool operator!=(const system_executor&, const system_executor&);
+
+      } // inline namespace network_v1
+    } // namespace experimental
+  } // namespace std
+
+Class `system_executor` is a `DefaultConstructible` type (C++ Std,
+[defaultconstructible]) satisfying [link requirements.executor Executor
+requirements]. It represents an execution policy where function objects are
+permitted to execute on any thread.
+
+To satisfy the executor requirements for the `post` and `defer` member
+functions, the system executor is implemented in terms of a pool of threads of
+unspecified size (the ['system thread pool]). If `std::exit` is called, and
+there remain unexecuted functions objects that have been submitted using `post`
+or `defer`, the implementation shall discard these function objects without
+calling them.
+
+[section [^system_executor] operations]
+
+  execution_context& context();
+
+[function_returns A reference to a static-duration object of a type derived
+from `execution_context`.]
+
+  void work_started() noexcept;
+
+[function_effects Does nothing.]
+
+  void work_finished() noexcept;
+
+[function_effects Does nothing.]
+
+  template <class Func, class Alloc>
+    void dispatch(Func&& f, const Alloc& a);
+
+[function_effects Calls [^['DECAY_COPY]]`(forward<Func>(f))()`.]
+
+  template <class Func, class Alloc>
+    void post(Func&& f, const Alloc& a);
+
+[function_effects Calls [^['DECAY_COPY]]`(forward<Func>(f))()` as if in a
+thread of execution in the system thread pool, with the call to `DECAY_COPY()`
+being evaluated in the thread that called `post`. Any exception propagated from
+the execution of [^['DECAY_COPY]]`(forward<Func>(f))()` shall result in a call
+to `std::terminate`.]
+
+  template <class Func, class Alloc>
+    void defer(Func&& f, const Alloc& a);
+
+[function_effects Calls [^['DECAY_COPY]]`(forward<Func>(f))()` as if in a
+thread of execution in the system thread pool, with the call to `DECAY_COPY()`
+being evaluated in the thread that called `defer`. Any exception propagated
+from the execution of [^['DECAY_COPY]]`(forward<Func>(f))()` shall result in a
+call to `std::terminate`.]
+
+  template <class T>
+    executor_wrapper<decay_t<T>, system_executor>
+      wrap(T&& t) const;
+
+[function_returns `executor_wrapper<decay_t<T>, system_executor>(forward<T>(t),
+*this)`.]
+
+[endsect]
+
+[section [^system_executor] comparisons]
+
+  bool operator==(const system_executor&, const system_executor&);
+
+[function_returns `true`.]
+
+  bool operator!=(const system_executor&, const system_executor&);
+
+[function_returns `false`.]
+
+[endsect]
+
+[endsect]

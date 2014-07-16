@@ -46,6 +46,11 @@
 
         template <class T, class Executor> struct ``[link classes.executor_work executor_work]``;
 
+        class ``[link classes.system_executor system_executor]``;
+
+        bool operator==(const system_executor&, const system_executor&);
+        bool operator!=(const system_executor&, const system_executor&);
+
       } // inline namespace network_v1
     } // namespace experimental
   } // namespace std
