@@ -1,0 +1,19 @@
+[section Header [^<strand>] synopsis]
+
+  namespace std {
+    namespace experimental {
+      inline namespace network_v1 {
+
+        template <class Executor>
+          class ``[link classes.strand strand]``;
+
+        template <class Executor>
+          bool operator==(const strand<Executor>& a, const strand<Executor>& b);
+        template <class Executor>
+          bool operator!=(const strand<Executor>& a, const strand<Executor>& b);
+
+      } // inline namespace network_v1
+    } // namespace experimental
+  } // namespace std
+
+[endsect]

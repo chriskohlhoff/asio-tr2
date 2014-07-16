@@ -387,6 +387,8 @@ express type requirements, as listed in the table below.
 [include:classes classes/executor_wrapper.qbk]
 [include:classes classes/executor_work.qbk]
 [include:classes classes/system_executor.qbk]
+[include:headers headers/strand.qbk]
+[include:classes classes/strand.qbk]
 [endsect]
 
 [section:basic_io_services Basic I/O services]
