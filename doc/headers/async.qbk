@@ -31,6 +31,11 @@
           make_service(execution_context& ctx, Args&&... args);
         template <class Service> bool has_service(execution_context& ctx);
 
+        struct ``[link classes.executor_arg_t executor_arg_t]`` { };
+        constexpr executor_arg_t executor_arg = executor_arg_t();
+
+        template <class T, class Executor> struct ``[link classes.uses_executor uses_executor]``;
+
       } // inline namespace network_v1
     } // namespace experimental
   } // namespace std

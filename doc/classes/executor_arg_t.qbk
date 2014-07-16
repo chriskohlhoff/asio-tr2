@@ -1,0 +1,20 @@
+[section:executor_arg_t Executor argument tag]
+
+  namespace std {
+    namespace experimental {
+      inline namespace network_v1 {
+
+        struct executor_arg_t { };
+        constexpr executor_arg_t executor_arg = executor_arg_t();
+
+      } // inline namespace network_v1
+    } // namespace experimental
+  } // namespace std
+
+The `executor_arg_t` struct is an empty structure type used as a unique type to
+disambiguate constructor and function overloading. Specifically, types may have
+constructors with `executor_arg_t` as the first argument, immediately followed
+by an argument of a type that satisfies the [link requirements.executor
+Executor requirements].
+
+[endsect]
