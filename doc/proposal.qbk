@@ -259,7 +259,8 @@ summarised in the table below:
   [[Subclause][Header(s)]]
   [
     [[link network.async Asynchronous model]]
-    [`<experimental/async>`]
+    [`<experimental/async>`\n
+     `<experimental/strand>`]
   ]
   [
     [[link network.basic_io_services Basic I/O services]]
@@ -375,6 +376,7 @@ express type requirements, as listed in the table below.
 [section:async Asynchronous model]
 [include:headers headers/async.qbk]
 [section:async_requirements Requirements]
+[include:requirements requirements/asynchronous_operations.qbk]
 [include:requirements requirements/executor.qbk]
 [endsect]
 [include:classes classes/handler_type.qbk]
@@ -400,7 +402,6 @@ express type requirements, as listed in the table below.
 [include:requirements requirements/service.qbk]
 [include:requirements requirements/io_object_service.qbk]
 [include:requirements requirements/thread_safety.qbk]
-[include:requirements requirements/asynchronous_operations.qbk]
 [endsect]
 [include:classes classes/io_service.qbk]
 [include:classes classes/io_service__service.qbk]
