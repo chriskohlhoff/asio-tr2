@@ -1,0 +1,150 @@
+[section:io_service__executor_type Class [^io_service::executor_type]]
+
+  namespace std {
+    namespace experimental {
+      inline namespace network_v1 {
+
+        class io_service::executor_type
+        {
+        public:
+          // construct / copy / destroy:
+
+          executor_type(const executor_type& other);
+          executor_type(executor_type&& other);
+
+          executor_type& operator=(const executor_type& other);
+          executor_type& operator=(executor_type&& other);
+
+          ~executor_type();
+
+          // executor operations:
+
+          bool running_in_this_thread() const noexcept;
+
+          execution_context& context();
+
+          void work_started() noexcept;
+          void work_finished() noexcept;
+
+          template <class Func, class Alloc>
+            void dispatch(Func&& f, const Alloc& a);
+          template <class Func, class Alloc>
+            void post(Func&& f, const Alloc& a);
+          template <class Func, class Alloc>
+            void defer(Func&& f, const Alloc& a);
+
+          template <class T>
+            executor_wrapper<decay_t<T>, executor_type>
+              wrap(T&& t) const;
+        };
+
+        bool operator==(const io_service::executor_type& a, const io_service::executor_type& b);
+        bool operator!=(const io_service::executor_type& a, const io_service::executor_type& b);
+
+      } // inline namespace network_v1
+    } // namespace experimental
+  } // namespace std
+
+`io_service::executor_type` is a type satisfying [link requirements.executor
+Executor requirements]. Objects of type `io_service::executor_type` are
+associated with an `io_service`, and function objects submitted using the
+`dispatch`, `post` or `defer` member functions will be executed by the
+`io_service` from within the `run`, `run_for`, `run_until`, `run_one`,
+`run_one_for`, `run_one_until`, `poll` or `poll_one` functions.
+
+[section [^io_service::executor_type] constructors]
+
+  executor_type(const executor_type& other);
+
+[function_effects Constructs an object of class `io_service::executor_type`.]
+
+[function_postconditions `*this == other`.]
+
+  executor_type(executor_type&& other);
+
+[function_effects Constructs an object of class `io_service::executor_type`.]
+
+[function_postconditions `*this` is equal to the prior value of `other`.]
+
+[endsect]
+
+[section [^io_service::executor_type] assignment]
+
+  executor_type& operator=(const executor_type& other);
+
+[function_postconditions `*this == other`.]
+
+[function_returns `*this`.]
+
+  executor_type& operator=(executor_type&& other);
+
+[function_postconditions `*this` is equal to the prior value of `other`.]
+
+[function_returns `*this`.]
+
+[endsect]
+
+[section [^executor_type] operations]
+
+  bool running_in_this_thread() const noexcept;
+
+[function_returns `true` if the current thread of execution is invoking the
+`run`, `run_for`, `run_until`, `run_one`, `run_one_for`, `run_one_until`,
+`poll` or `poll_one` function of the associated `io_service` object.]
+
+  execution_context& context();
+
+[function_returns A reference to the `execution_context` base class of the
+associated `io_service` object.]
+
+  void work_started() noexcept;
+
+[function_effects Calls `inner_ex_.work_started()`.]
+
+  void work_finished() noexcept;
+
+[function_effects Calls `inner_ex_.work_finished()`.]
+
+  template <class Func, class Alloc>
+    void dispatch(Func&& f, const Alloc& a);
+
+[function_effects If `running_in_this_thread()` is true, calls
+[^['DECAY_COPY]]`(forward<Func>(f))()`. Otherwise, requests execution of `f`.]
+
+[function_block If `f` exits via an exception, and the execution of `f` is
+performed in the current thread and before `dispatch` returns, the exception
+shall propagate to the caller of `dispatch()`]
+
+  template <class Func, class Alloc>
+    void post(Func&& f, const Alloc& a);
+
+[function_effects Requests execution of `f`.]
+
+  template <class Func, class Alloc>
+    void defer(Func&& f, const Alloc& a);
+
+[function_effects Requests execution of `f`.]
+
+  template <class T>
+    executor_wrapper<decay_t<T>, executor_type<Executor>>
+      wrap(T&& t) const;
+
+[function_returns `executor_wrapper<decay_t<T>,
+executor_type<Executor>>(forward<T>(t), *this)`.]
+
+[endsect]
+
+[section [^executor_type] comparisons]
+
+  bool operator==(const io_service::executor_type& a, const io_service::executor_type& b);
+
+[function_returns `true`, if the `executor_type` objects are associated with
+the same `io_service` object. Otherwise `false`.]
+
+  bool operator!=(const io_service::executor_type& a, const io_service::executor_type& b);
+
+[function_returns `!(a == b)`.]
+
+[endsect]
+
+[endsect]

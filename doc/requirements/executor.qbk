@@ -54,7 +54,7 @@ denotes an object of type `T`, and `u` denotes an identifier.
   [
     [`x.work_finished()`]
     []
-    []
+    [Requires: A preceding call `x1.work_started()` where `x == x1`.]
   ]
   [
     [`x.dispatch(std::move(f),a)`]

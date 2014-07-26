@@ -4,144 +4,145 @@
     namespace experimental {
       inline namespace network_v1 {
 
-        class io_service
+        class io_service : public execution_context
         {
         public:
           // types:
-          class ``[link classes.io_service__service service]``;
-          class ``[link classes.io_service__id id]``;
-          class ``[link classes.io_service__work work]``;
-          class ``[link classes.io_service__strand strand]``;
 
-          // constructors/destructor:
+          class ``[link classes.io_service__executor_type executor_type]``;
+
+          // construct / copy / destroy:
+
           io_service();
-          ~io_service(); // non-virtual
+          explicit io_service(std::size_t concurrency_hint);
+          io_service(const io_service&) = delete;
+          io_service& operator=(const io_service&) = delete;
+          ~io_service();
 
-          // members:
+          // io_service operations:
+
+          executor_type get_executor() const noexcept;
+
           size_t run();
-          size_t run(error_code& ec);
+          template <class Rep, class Period>
+            size_t run_for(const chrono::duration<Rep, Period>& rel_time);
+          template <class Clock, class Duration>
+            size_t run_until(const chrono::time_point<Clock, Duration>& abs_time);
 
           size_t run_one();
-          size_t run_one(error_code& ec);
+          template <class Rep, class Period>
+            size_t run_one_for(const chrono::duration<Rep, Period>& rel_time);
+          template <class Clock, class Duration>
+            size_t run_one_until(const chrono::time_point<Clock, Duration>& abs_time);
 
           size_t poll();
-          size_t poll(error_code& ec);
 
           size_t poll_one();
-          size_t poll_one(error_code& ec);
 
           void stop();
 
-          void reset();
+          bool stopped() const;
 
-          template<class CompletionHandler>
-            void dispatch(CompletionHandler handler);
-
-          template<class CompletionHandler>
-            void post(CompletionHandler handler);
-
-          template<class Handler>
-            ``['unspecified]`` wrap(Handler handler);
-
-        private:
-          io_service(const io_service&);     // not defined
-          void operator=(const io_service&); // not defined
+          void restart();
         };
-
-        // service access:
-        template<class Service> Service& use_service(io_service& ios);
-        template<class Service> void add_service(io_service& ios, Service* svc);
-        template<class Service> bool has_service(io_service& ios) const;
-        class service_already_exists : public logic_error { ... };
-        class invalid_service_owner : public logic_error { ... };
 
       } // inline namespace network_v1
     } // namespace experimental
   } // namespace std
 
-Class `io_service` implements an extensible, type-safe, polymorphic set of I/O
-services, indexed by service /type/. An object of class `io_service` must be
-initialised before I/O objects such as sockets, resolvers and timers can be
-used. These I/O objects are distinguished by having constructors that accept an
-`io_service&` parameter.
-
-Access to the services of an `io_service` is via three function templates,
-`use_service<>`, `add_service<>` and `has_service<>`.
-
-In a call to `use_service<Service>()`, the type argument chooses a service,
-making available all members of the named type. If `Service` is not present in
-an `io_service`, an object of type `Service` is created and added to the
-io_service. A C++ program can check if an `io_service` implements a particular
-service with the function template `has_service<Service>()`.
-
-Service objects may be explicitly added to an `io_service` using the function
-template `add_service<Service>()`. If the `Service` is already present, the
-`service_already_exists` exception is thrown. If the owner of the service is
-not the same object as the `io_service` parameter, the `invalid_service_owner`
-exception is thrown.
-
-Once a service reference is obtained from an `io_service` object by calling
-`use_service<>`, that reference remains usable as long as the owning
-`io_service` object exists.
-
 [link definitions.synchronous_operation Synchronous operations] on I/O objects
 implicitly run the `io_service` object for an individual operation. The
-`io_service` functions `run()`, `run_one()`, `poll()` or `poll_one()` must be
-called for the `io_service` to perform [link definitions.asynchronous_operation
-asynchronous operations] on behalf of a C++ program. Notification that an
-asynchronous operation has completed is delivered by invocation of the
-associated [link requirements.handler handler]. Handlers are invoked only by
-a thread that is currently calling any overload of `run()`, `run_one()`,
-`poll()` or `poll_one()` for the `io_service`.
+`io_service` functions `run`, `run_for`, `run_until`, `run_one`, `run_one_for`,
+`run_one_until`, `poll` or `poll_one` must be called for the `io_service` to
+perform [link definitions.asynchronous_operation asynchronous operations] on
+behalf of a C++ program. Notification that an asynchronous operation has
+completed is delivered by execution of the associated handler function object,
+as determined by the requirements for [link
+requirements.asynchronous_operations asynchronous operations].
+
+An object of type `io_service` has an associated executor object, meeting the
+[link requirements.executor Executor type requirements], of type
+`io_service::executor_type` and obtainable via the `io_service` object's
+`get_executor` member function.
+
+For an object of type `io_service`, ['outstanding work] is defined as the sum
+of:
+
+[mdash] the total number of calls to the `io_service` executor's `work_started`
+function, less the total number of calls to the `work_finished` function;
+
+[mdash] the number of function objects that have been added to the `io_service`
+via the `io_service` executor, but not yet executed; and
+
+[mdash] the number of function objects that are currently being executed by the
+`io_service`.
+
+If at any time the outstanding work falls to `0`, the `io_service` is stopped
+as if by `stop()`.
+
+The `io_service` member functions `get_executor`, `run`, `run_for`,
+`run_until`, `run_one`, `run_one_for`, `run_one_until`, `poll`, `poll_one`,
+`stop`, and `stopped`, and the `io_service::executor_type` copy constructors,
+member functions and comparison operators, shall not introduce data races as a
+result of concurrent calls to those functions from different threads.
+[inline_note The `restart` member function is excluded from these thread safety
+requirements.]
 
 [section [^io_service] constructors/destructor]
 
   io_service();
+  explicit io_service(std::size_t concurrency_hint);
 
 [function_effects Creates an object of class `io_service`.]
 
+[function_remarks The `concurrency_hint` parameter is a suggestion to the
+implementation on the number of threads that should process asynchronous
+operations and execute function objects.]
+
   ~io_service();
 
-[function_effects Destroys an object of class `io_service`. For each service
-object `svc` in the `io_service` set, in reverse order of the beginning of
-service object lifetime (C++ Std, 3.8), performs `svc->shutdown_service()`.
-Then, uninvoked handler objects that were scheduled for deferred invocation on
-the `io_service`, or any associated `strand`, are destroyed. Then, for each
-service object `svc` in the `io_service` set, in reverse order of the beginning
-of service object lifetime, performs `delete
-static_cast<io_service::service*>(svc)`.]
-
-[commentary The destruction sequence described above permits programs to
-simplify their resource management by using `shared_ptr<>`. Where an object's
-lifetime is tied to the lifetime of a connection (or some other sequence of
-asynchronous operations), a `shared_ptr` to the object would be bound into the
-handlers for all asynchronous operations associated with it. This works as
-follows:\n
-\n
-[mdash] When a single connection ends, all associated asynchronous operations
-complete. The corresponding handler objects are destroyed, and all `shared_ptr`
-references to the objects are destroyed.\n
-\n
-[mdash] To shut down the whole program, the `io_service` function `stop()` is
-called to terminate any `run()` calls as soon as possible. The `io_service`
-destructor defined above destroys all handlers, causing all `shared_ptr`
-references to all connection objects to be destroyed.]
+[function_effects Destroys an object of class `io_service`.]
 
 [endsect]
 
 [section [^io_service] members]
 
+  executor_type get_executor() const noexcept;
+
+[function_returns An executor that may be used for submitting function objects
+to the `io_service`.]
+
   size_t run();
-  size_t run(error_code& ec);
 
 [function_requires Must not be called from a thread that is currently calling
-one of `run()`, `run_one()`, `poll()`, or `poll_one()`.]
+one of `run`, `run_for`, `run_until`, `run_one`, `run_one_for`,
+`run_one_until`, `poll`, or `poll_one`.]
 
-[function_effects Performs `io_service` work until there is no more work to do,
-or the `io_service` is explicitly stopped, as if implemented as follows:
+[function_effects Equivalent to:
 ``
   size_t n = 0;
-  while (run_one(ec))
+  while (run_one())
+    if (n != numeric_limits<size_t>::max())
+      ++n;
+``]
+
+[function_returns `n`.]
+
+  template <class Rep, class Period>
+    size_t run_for(const chrono::duration<Rep, Period>& rel_time);
+
+[function_effects Equivalent to:
+``
+  return run_until(chrono::steady_clock::now() + rel_time);
+``]
+
+  template <class Clock, class Duration>
+    size_t run_until(const chrono::time_point<Clock, Duration>& abs_time);
+
+[function_effects Equivalent to:
+``
+  size_t n = 0;
+  while (run_one_until(abs_time))
     if (n != numeric_limits<size_t>::max())
       ++n;
 ``]
@@ -149,51 +150,60 @@ or the `io_service` is explicitly stopped, as if implemented as follows:
 [function_returns `n`.]
 
   size_t run_one();
-  size_t run_one(error_code& ec);
 
 [function_requires Must not be called from a thread that is currently calling
-one of `run()`, `run_one()`, `poll()`, or `poll_one()`.]
+one of `run`, `run_for`, `run_until`, `run_one`, `run_one_for`,
+`run_one_until`, `poll`, or `poll_one`.]
 
-[function_effects Does not return until one of the following conditions is
-true:\n\n
+[function_effects If the `io_service` object has no oustanding work, performs
+`stop()`. Otherwise, blocks while the io_service has outstanding work, or until
+the `io_service` is stopped, or until one function object has been executed.]
 
-[mdash] An error has occurred. `ec` shall be set to the `error_code` value
-corresponding to the failure condition.\n\n
+[function_block If an executed function object throws an exception, the
+exception shall be allowed to propagate to the caller of `run_one()`. The
+`io_service` state shall be as if the function object had returned normally.]
 
-[mdash] The `io_service` has been explicitly stopped by a call to `stop()`.
-`ec` shall be set such that the expression `!ec` is true.\n\n
-
-[mdash] No object `w` of class `io_service::work` exists where
-`&w.get_io_service() == this`. The `io_service` shall be stopped as if by
-calling `stop()` and `ec` shall be set such that the expression `!ec` is
-true.\n\n
-
-[mdash] One handler `h` has been invoked by performing `io_handler_invoke(h,
-&h)`. `ec` shall be set such that the expression `!ec` is true.\n\n
-
-If the function can complete due to more than one of these conditions, the
-earliest condition listed is chosen, and the effects associated with the other
-conditions shall not be performed.]
-
-[function_block If the invoked handler throws an exception, the exception shall
-be allowed to propagate to the caller of `run_one()`. The `io_service` state
-shall be equivalent to if the handler had been successfully invoked without
-throwing an exception.]
-
-[function_returns `1` if a handler was invoked, otherwise `0`.]
+[function_returns `1` if a function object was executed, otherwise `0`.]
 
 [function_notes This function may invoke additional handlers through nested
-calls to `dispatch()`. These do not count towards the return value.]
+calls to the `io_service` executor's `dispatch` member function. These do not
+count towards the return value.]
+
+  template <class Rep, class Period>
+    size_t run_one_for(const chrono::duration<Rep, Period>& rel_time);
+
+[function_effects Equivalent to:
+``
+  return run_until(chrono::steady_clock::now() + rel_time);
+``]
+
+[function_returns `1` if a function object was executed, otherwise `0`.]
+
+  template <class Clock, class Duration>
+    size_t run_one_until(const chrono::time_point<Clock, Duration>& abs_time);
+
+[function_effects If the `io_service` object has no oustanding work, performs
+`stop()`. Otherwise, blocks while the io_service has outstanding work, or until
+the expiration of the absolute timeout (C++ Std, \[thread.req.timing\])
+specified by `abs_time`, or until the `io_service` is stopped, or until one
+function object has been executed.]
+
+[function_block If an executed function object throws an exception, the
+exception shall be allowed to propagate to the caller of `run_one()`. The
+`io_service` state shall be as if the function object had returned normally.]
+
+[function_returns `1` if a function object was executed, otherwise `0`.]
+
+[function_notes This function may invoke additional handlers through nested
+calls to the `io_service` executor's `dispatch` member function. These do not
+count towards the return value.]
 
   size_t poll();
-  size_t poll(error_code& ec);
 
-[function_effects Performs `io_service` work without blocking until there are
-no handlers ready to be dispatched immediately, or the `io_service` is stopped,
-as if implemented as follows:
+[function_effects Equivalent to:
 ``
   size_t n = 0;
-  while (poll_one(ec))
+  while (poll_one())
     if (n != numeric_limits<size_t>::max())
       ++n;
 ``]
@@ -201,245 +211,43 @@ as if implemented as follows:
 [function_returns `n`.]
 
   size_t poll_one();
-  size_t poll_one(error_code& ec);
 
-[function_effects Performs one of the following actions:\n\n
+[function_effects If the `io_service` object has no oustanding work, performs
+`stop()`. Otherwise, if there is a function object ready for immediate
+execution, executes it.]
 
-[mdash] If an error has occurred, sets `ec` to any `error_code` value such that
-the expression `!ec` is false.\n\n
-
-[mdash] If the `io_service` has been explicitly stopped by a call to `stop()`,
-sets `ec` shall such that the expression `!ec` is true.\n\n
-
-[mdash] If no object `w` of class `io_service::work` exists where
-`&w.get_io_service() == this`, stops the `io_service` as if by calling `stop()`
-and sets `ec` such that the expression `!ec` is true.\n\n
-
-[mdash] If a handler `h` is available for immediate invocation, invokes the
-handler by performing `io_handler_invoke(h, &h)`, and sets `ec` such that the
-expression `!ec` is true.\n\n
-
-[mdash] Otherwise, sets `ec` such that the expression `!ec` is true.\n\n
-
-If the function can succeed in more than one of these ways, the earliest
-condition listed is chosen, and the effects associated with the other
-conditions shall not be performed.]
-
-[function_block If the invoked handler throws an exception, the exception shall
-be allowed to propagate to the caller of `poll_one()`. The `io_service` state
-shall be equivalent to if the handler had been successfully invoked without
-throwing an exception.]
+[function_block If an executed function object throws an exception, the
+exception shall be allowed to propagate to the caller of `poll_one()`. The
+`io_service` state shall be as if the function object had returned normally.]
 
 [function_returns `1` if a handler was invoked, otherwise `0`.]
 
 [function_notes This function may invoke additional handlers through nested
-calls to `dispatch()`. These do not count towards the return value.]
+calls to the `io_service` executor's `dispatch` member function. These do not
+count towards the return value.]
 
   void stop();
 
-[function_effects Signals the `io_service` to enter the stopped state.
-Concurrent calls to any overload of `run()`, `run_one()`, `poll()` or
-`poll_one()` will end as soon as possible; calls to `run()`, `run_one()`,
-`poll()` or `poll_one()` that are currently dispatching a handler will end only
-after completion of that handler. The `stop()` call returns without waiting for
-concurrent calls to `run()`, `run_one()`, `poll()` or `poll_one()` to exit.
-While an `io_service` is in the stopped state, calls to `run()`, `run_one()`,
-`poll()` or `poll_one()` will exit immediately with a return value of `0`,
-without dispatching any handlers. An `io_service` remains in the stopped state
-until a call to `reset()`.]
+[function_effects Stops the `io_service`. Concurrent calls to `run`, `run_for`,
+`run_until`, `run_one`, `run_one_for`, `run_one_until`, `poll` or `poll_one`
+will end as soon as possible. If a call to `run`, `run_for`, `run_until`,
+`run_one`, `run_one_for`, `run_one_until`, `poll` or `poll_one` is currently
+executing a function object, the call will end only after completion of that
+function object. The call to `stop()` returns without waiting for concurrent
+calls to `run`, `run_for`, `run_until`, `run_one`, `run_one_for`,
+`run_one_until`, `poll` or `poll_one` to complete.]
 
-  void reset();
+[function_postconditions `stopped() == true`.]
 
-[function_requires There must be no concurrent call to any overload of `run()`,
-`run_one()`, `poll()`, `poll_one()` or `stop()`.]
+[function_note When `stopped() == true`, subsequent calls to `run`, `run_for`,
+`run_until`, `run_one`, `run_one_for`, `run_one_until`, `poll` or `poll_one`
+will exit immediately with a return value of `0`, without executing any
+function objects. An `io_service` remains in the stopped state until a call to
+`restart()`.]
 
-[function_effects Signals the `io_service` to leave the stopped state which was
-entered as an effect of a prior call to `stop()`.]
+  void restart();
 
-  template<class CompletionHandler>
-    void dispatch(CompletionHandler handler);
-
-[function_effects If the current thread is executing a call to any overload of
-`run()`, `run_one()`, `poll()` or `poll_one()` for the same `io_service`
-object, invokes the completion handler by performing
-`io_handler_invoke(handler, &handler)`. Otherwise, equivalent to calling
-`post(handler)`.]
-
-[function_block If the invoked handler throws an exception, the exception shall
-be allowed to propagate to the caller of `dispatch()`. The `io_service` state
-shall be equivalent to if the handler had been successfully invoked without
-throwing an exception.]
-
-  template<class CompletionHandler>
-    void post(CompletionHandler handler);
-
-[function_effects Requests invocation of the handler by the `io_service`. Does
-not invoke the handler from within the call to `post()`. The `io_service` makes
-a copy of the handler and maintains one or more copies of the handler until
-immediately after the handler has been invoked. The `io_service` shall have
-unfinished work, as if by maintaining the existence of one or more objects of
-class `io_service::work` constructed using the `io_service` object `*this`,
-until immediately after the handler has been invoked.]
-
-[function_block The `post()` function behaves according to the rules for [link
-requirements.asynchronous_operations asynchronous operations] with respect to
-the treatment of `handler` as a by-value parameter, storage allocation and
-memory visibility. The object `*this` is considered to be the associated
-`io_service`.]
-
-  template<class Handler>
-    ``['unspecified]`` wrap(Handler handler);
-
-[function_returns An object `f` of an unspecified type `F` meeting [link
-requirements.handler handler] requirements, and constructed using `F(*this,
-handler)`, where `F` behaves as if defined as follows:
-``
-  class F
-  {
-  public:
-    F(io_service& i, Handler h)
-      : io_service_(i), handler_(h) {}
-
-    template<class T1, class T2, __dotdotdot__, class TN>
-    class GN
-    {
-    public:
-      GN(Handler h, T1 t1, T2 t2, __dotdotdot__, TN tN)
-        : handler_(h), t1_(t1), t2_(t2), __dotdotdot__, tN_(tN) {}
-
-      void operator()() { handler_(t1_, t2_, __dotdotdot__, tN_); }
-
-      friend void* io_handler_allocate(size_t size, GN* this_g)
-      {
-        return io_handler_allocate(size, &this_g->handler_);
-      }
-
-      friend void io_handler_deallocate(void* pointer, size_t size, GN* this_g)
-      {
-        io_handler_deallocate(pointer, size, &this_g->handler_);
-      }
-
-      template<class Function>
-      friend void io_handler_invoke(Function func, GN* this_g)
-      {
-        io_handler_invoke(func, &this_g->handler_);
-      }
-
-    private:
-      Handler handler_;
-      T1 t1_; T2 t2_; __dotdotdot__; TN tN_;
-    };
-
-    template<class T1, class T2, __dotdotdot__, class TN>
-    void operator()(T1 t1, T2 t2, __dotdotdot__, TN tN)
-    {
-      io_service_.dispatch(GN<T1,T2,__dotdotdot__,TN>(handler_, t1, t2, __dotdotdot__, tN));
-    }
-
-    friend void* io_handler_allocate(size_t size, F* this_f)
-    {
-      return io_handler_allocate(size, &this_f->handler_);
-    }
-
-    friend void io_handler_deallocate(void* pointer, size_t size, F* this_f)
-    {
-      io_handler_deallocate(pointer, size, &this_f->handler_);
-    }
-
-    template<class Function>
-    class H
-    {
-    public:
-      H(Function f, Handler h)
-        : function_(f), handler_(h) {}
-
-      void operator()()
-      {
-        function_();
-      }
-
-      friend void* io_handler_allocate(size_t size, H* this_h)
-      {
-        return io_handler_allocate(size, &this_h->handler_);
-      }
-
-      friend void io_handler_deallocate(void* pointer, size_t size, H* this_h)
-      {
-        io_handler_deallocate(pointer, size, &this_h->handler_);
-      }
-
-      template<class Function1>
-      friend void io_handler_invoke(Function1 func, H* this_h)
-      {
-        io_handler_invoke(func, &this_h->handler_);
-      }
-
-    private:
-      Function function_;
-      Handler handler_;
-    };
-
-    template<class Function>
-    friend void io_handler_invoke(Function func, F* this_f)
-    {
-      this_f->io_service_.dispatch(H<Function>(func, this_f->handler_));
-    }
-
-  private:
-    io_service& io_service_;
-    Handler handler_;
-  };
-``]
-
-[function_block [inline_note In practical terms, the effect of `f(v1, v2,
-__dotdotdot__, vN)` is to cause the `io_service` to perform `handler(v1, v2,
-__dotdotdot__, vN)` from within a call to `run()`, `run_one()`, `poll()` or
-`poll_one()`.\n\n
-
-Similarly, the effect of `io_handler_invoke(g, &f)` is to cause the
-`io_service` to perform `g()` from within a call to `run()`, `run_one()`,
-`poll()` or `poll_one()`.]]
-
-[endsect]
-
-[section [^io_service] globals]
-
-  template<class Service> Service& use_service(io_service& ios);
-
-[function_requires `Service` is a service class whose definition contains the
-public static member `id` as defined [link classes.io_service__service below].]
-
-[function_effects If an object of type `Service` does not already exist in the
-`io_service` set identified by `ios`, creates an object as if by calling `new
-Service(ios)` and adds it to the set.]
-
-[function_returns A reference to the corresponding service of `ios`.]
-
-[function_notes The reference returned remains valid as long as the
-`io_service` object `ios` exists.]
-
-  template<class Service> void add_service(io_service& ios, Service* svc);
-
-[function_requires `Service` is a service class whose definition contains the
-public static member `id` as defined [link classes.io_service__service below].
-The argument `svc` is a non-null pointer to a service object, and the condition
-`&svc->get_io_service() == &ios` is true. A corresponding service object does
-not already exist in the `io_service` set identified by `ios`.]
-
-[function_effects Adds the service object `svc` to the `io_service` set.]
-
-[function_throws `service_already_exists` if a corresponding service object is
-already present in the `io_service` set identified by `ios`;
-`invalid_service_owner` if the condition `&svc->get_io_service() == &ios` is
-false.]
-
-  template<class Service> bool has_service(io_service& ios) const;
-
-[function_requires `Service` is a service class whose definition contains the
-public static member `id` as defined [link classes.io_service__service below].]
-
-[function_returns `true` if the service requested is present in `ios`,
-otherwise `false`.]
+[function_postconditions `stopped() == false`.]
 
 [endsect]
 

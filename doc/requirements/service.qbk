@@ -1,26 +1,32 @@
 [section:service Service requirements]
 
 A class is a service if it is publicly derived from another service, or if it
-is a class derived from `io_service::service` and contains a
-publicly-accessible declaration as follows:
-
-  static io_service::id id;
+is a class publicly derived from `execution_context::service`. A service may
+contain a publicly-accessible nested typedef named `key_type`.
 
 All services define a one-argument constructor that takes a reference to the
-`io_service` object that owns the service. This constructor is /explicit/,
-preventing its participation in automatic conversions. For example:
+`execution_context` object that owns the service. This constructor is
+/explicit/, preventing its participation in automatic conversions.
 
-  class my_service : public io_service::service
+A service may provide additional constructors with two or more arguments, where
+the first argument is a reference to the `execution_context` object that owns
+the service. [inline_note These constructors may be called by the
+`make_service` function.]
+
+['Example:
+``
+  class my_service : public execution_context::service
   {
   public:
-    static io_service::id id;
-    explicit my_service(io_service& ios);
+    typedef my_service key_type;
+    explicit my_service(execution_context& ctx);
   private:
     virtual void shutdown_service();
     ...
   };
+``]
 
 A service's `shutdown_service` member function must cause all copies of
-user-defined handler objects that are held by the service to be destroyed.
+user-defined function objects that are held by the service to be destroyed.
 
 [endsect]

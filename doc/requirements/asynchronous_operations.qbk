@@ -129,12 +129,14 @@ executor object `ex2` shall be obtained by
 [section Outstanding work]
 
 The implementation of an asynchronous operation shall maintain an object
-`work1` of type `executor_work<Executor1>`, initialized with `work1(ex1)`,
-until the effects of the asynchronous operation have been realized.
+`work1` of type `executor_work<Executor1>`, initialized with `work1(ex1)` and
+with `work1.owns_work() == true`, until the effects of the asynchronous
+operation have been realized.
 
 The implementation of an asynchronous operation shall maintain an object
-`work2` of type `executor_work<Executor2>`, initialized with `work2(ex2)`,
-until `handler` has been submitted for execution.
+`work2` of type `executor_work<Executor2>`, initialized with `work2(ex2)` and
+with `work2.owns_work() == true`, until `handler` has been submitted for
+execution.
 
 [endsect]
 

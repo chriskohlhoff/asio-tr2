@@ -303,10 +303,6 @@ express type requirements, as listed in the table below.
     [[link requirements.async_write_stream buffer-oriented asynchronous write stream]]
   ]
   [
-    [`CompletionHandler`]
-    [[link requirements.completion_handler completion handler]]
-  ]
-  [
     [`ConstBufferSequence`]
     [[link requirements.const_buffers constant buffer sequence]]
   ]
@@ -325,20 +321,12 @@ express type requirements, as listed in the table below.
     [[link requirements.gettable_socket_option gettable socket option]]
   ]
   [
-    [`Handler`]
-    [[link requirements.handler handler]]
-  ]
-  [
     [`InternetProtocol`]
     [[link requirements.internet_protocol Internet protocol]]
   ]
   [
     [`IoControlCommand`]
     [[link requirements.io_control_command I/O control command]]
-  ]
-  [
-    [`IoObjectService`]
-    [[link requirements.io_object_service I/O object service]]
   ]
   [
     [`MutableBufferSequence`]
@@ -378,6 +366,7 @@ express type requirements, as listed in the table below.
 [section:async_requirements Requirements]
 [include:requirements requirements/asynchronous_operations.qbk]
 [include:requirements requirements/executor.qbk]
+[include:requirements requirements/service.qbk]
 [endsect]
 [include:classes classes/handler_type.qbk]
 [include:classes classes/async_result.qbk]
@@ -396,20 +385,8 @@ express type requirements, as listed in the table below.
 
 [section:basic_io_services Basic I/O services]
 [include:headers headers/io_service.qbk]
-[section:basic_io_services_requirements Requirements]
-[include:requirements requirements/handler.qbk]
-[include:requirements requirements/completion_handler.qbk]
-[include:requirements requirements/service.qbk]
-[include:requirements requirements/io_object_service.qbk]
-[include:requirements requirements/thread_safety.qbk]
-[endsect]
 [include:classes classes/io_service.qbk]
-[include:classes classes/io_service__service.qbk]
-[include:classes classes/io_service__id.qbk]
-[include:classes classes/io_service__work.qbk]
-[include:classes classes/io_service__strand.qbk]
-[include:functions functions/handler_hooks.qbk]
-[include:classes classes/basic_io_object.qbk]
+[include:classes classes/io_service__executor_type.qbk]
 [endsect]
 
 [section:timers Timers]

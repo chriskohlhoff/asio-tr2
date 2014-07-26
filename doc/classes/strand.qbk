@@ -112,7 +112,7 @@ represents a unique ordered, non-concurrent state. Initializes `inner_ex_` with
   strand(const strand& other);
 
 [function_effects Constructs an object of class `strand<Executor>`. Initalizes
-`inner_ex_` with `inner_ex_(other.innner_ex_)`.]
+`inner_ex_` with `inner_ex_(other.inner_ex_)`.]
 
 [function_postconditions\n
 [mdash] `*this == other`\n
@@ -233,8 +233,9 @@ such that `s == *this`, using `dispatch`, `post` or `defer`; otherwise
 as if by forwarding the function object `f` and allocator `a` to the executor
 `inner_ex_`, such that the guarantees of ordering and non-concurrency are met.]
 
-[function_block If `f` exits via an exception, the exception shall propagate to
-the caller of `dispatch()`]
+[function_block If `f` exits via an exception, and the execution of `f` is
+performed in the current thread and before `dispatch` returns, the exception
+shall propagate to the caller of `dispatch()`]
 
   template <class Func, class Alloc>
     void post(Func&& f, const Alloc& a);
