@@ -1,10 +1,11 @@
-[section:handler_traits Struct template [^handler_traits]]
+[section:handler_traits Class template [^handler_traits]]
 
   namespace std {
     namespace experimental {
       inline namespace network_v1 {
 
-        template <class Handler> struct handler_traits {
+        template <class Handler> struct handler_traits
+        {
           typedef Handler handler_type;
 
           template <class E = system_executor>

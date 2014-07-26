@@ -1,11 +1,12 @@
-[section:handler_type Struct template [^handler_type]]
+[section:handler_type Class template [^handler_type]]
 
   namespace std {
     namespace experimental {
       inline namespace network_v1 {
 
         template <class CompletionToken, class Signature, class = void>
-        struct handler_type {
+        struct handler_type
+        {
           typedef ``['see below]`` type;
         };
 
