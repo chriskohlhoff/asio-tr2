@@ -1,0 +1,22 @@
+[section:is_executor Class template [^is_executor]]
+
+  namespace std {
+    namespace experimental {
+      inline namespace network_v1 {
+
+        template <class T> struct is_executor : false_type {};
+
+      } // inline namespace network_v1
+    } // namespace experimental
+  } // namespace std
+
+`is_executor` can be used to detect executor types satisfying the [link
+requirements.executor Executor type requirements].
+
+Instantiations of the `is_executor` template shall meet the UnaryTypeTrait
+requirements (C++ Std, [meta.rqmts]). A program may specialize this template
+for a user-defined type `T` to have a BaseCharacteristic of
+`integral_constant<int, `[^['N]]`>` with [^['N] > 0] to indicate that `T`
+should be treated as an executor type.
+
+[endsect]
