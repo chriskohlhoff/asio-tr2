@@ -4,7 +4,9 @@
     namespace experimental {
       inline namespace network_v1 {
 
-        template <class Handler> class async_result {
+        template <class Handler>
+        class async_result
+        {
         public:
           typedef void type;
           explicit async_result(Handler&);
