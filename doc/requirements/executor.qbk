@@ -6,8 +6,8 @@ policy.
 
 An executor type `X` shall satisfy the requirements of `CopyConstructible` (C++
 Std, [copyconstructible]) types. No constructor, comparison operator, copy
-operation, move operation, or swap operation on these types shall exit via an
-exception.
+operation, move operation, swap operation, or member functions `context`,
+`work_started` and `work_finished` on these types shall exit via an exception.
 
 The executor copy constructor, comparison operators, and member functions
 defined in these requirements shall not introduce data races as a result of
@@ -37,24 +37,32 @@ denotes an object of type `T`, and `u` denotes an identifier.
   [
     [`x1 == x2`]
     [`bool`]
-    [Returns `true` only if `x1` and `x2` represent the same execution policy.
+    [Shall not exit via an exception.\n
+     Returns `true` only if `x1` and `x2` represent the same execution policy.
      `operator==` shall be reflexive, symmetric, and transitive, and shall not
      exit via an exception.]
   ]
   [
     [`x1 != x2`]
     [`bool`]
-    [Same as `!(x1 == x2)`.]
+    [Shall not exit via an exception.\n
+     Same as `!(x1 == x2)`.]
+  ]
+  [
+    [`x.context()`]
+    [`execution_context&`, or a type that is convertible to `execution_context&`.]
+    [Shall not exit via an exception.]
   ]
   [
     [`x.work_started()`]
     []
-    []
+    [Shall not exit via an exception.]
   ]
   [
     [`x.work_finished()`]
     []
-    [Requires: A preceding call `x1.work_started()` where `x == x1`.]
+    [Shall not exit via an exception.\n
+     Requires: A preceding call `x1.work_started()` where `x == x1`.]
   ]
   [
     [`x.dispatch(std::move(f),a)`]

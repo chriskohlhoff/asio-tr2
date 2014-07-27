@@ -21,7 +21,7 @@
 
           bool running_in_this_thread() const noexcept;
 
-          execution_context& context();
+          io_service& context() noexcept;
 
           void work_started() noexcept;
           void work_finished() noexcept;
@@ -92,10 +92,9 @@ associated with an `io_service`, and function objects submitted using the
 `run`, `run_for`, `run_until`, `run_one`, `run_one_for`, `run_one_until`,
 `poll` or `poll_one` function of the associated `io_service` object.]
 
-  execution_context& context();
+  io_service& context() noexcept;
 
-[function_returns A reference to the `execution_context` base class of the
-associated `io_service` object.]
+[function_returns A reference to the associated `io_service` object.]
 
   void work_started() noexcept;
 
