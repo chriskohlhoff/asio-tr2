@@ -137,8 +137,7 @@ executor_type<Executor>>(forward<T>(t), *this)`.]
 
   bool operator==(const io_service::executor_type& a, const io_service::executor_type& b);
 
-[function_returns `true`, if the `executor_type` objects are associated with
-the same `io_service` object. Otherwise `false`.]
+[function_returns `&a.context() == &b.context()`.]
 
   bool operator!=(const io_service::executor_type& a, const io_service::executor_type& b);
 
