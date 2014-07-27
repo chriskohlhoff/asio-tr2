@@ -11,6 +11,7 @@
           public:
             // types:
 
+            typedef io_service::executor_type executor_type;
             typedef InternetProtocol protocol_type;
             typedef typename InternetProtocol::endpoint endpoint_type;
             typedef basic_resolver_query<InternetProtocol> query;
@@ -29,7 +30,7 @@
 
             // basic_resolver operations:
 
-            io_service& get_io_service();
+            executor_type get_executor() const noexcept;
 
             void cancel();
 
@@ -59,7 +60,7 @@
 [function_effects Constructs an object of class
 `basic_resolver<InternetProtocol>`.]
 
-[function_postconditions `&get_io_service() == &ios`.]
+[function_postconditions `get_executor() == ios.get_executor()`.]
 
   basic_resolver(basic_resolver&& rhs);
 
@@ -67,7 +68,7 @@
 `basic_resolver<InternetProtocol>` that refers to the state originally
 represented by `rhs`.]
 
-[function_postconditions `&get_io_service() == &rhs.get_io_service()`.]
+[function_postconditions `get_executor() == rhs.get_executor()`.]
 
 [endsect]
 
@@ -88,7 +89,7 @@ associated with the resolver as if by calling `cancel()`.]
 with `*this` as if by calling `cancel()`, then moves into `*this` the state
 originally represented by `rhs`.]
 
-[function_postconditions `&get_io_service() == &ios`.]
+[function_postconditions `get_executor() == ios.get_executor()`.]
 
 [function_returns `*this`.]
 
@@ -96,9 +97,9 @@ originally represented by `rhs`.]
 
 [section [^ip::basic_resolver] operations]
 
-  io_service& get_io_service();
+  executor_type& get_executor() const noexcept;
 
-[function_returns The associated `io_service`.]
+[function_returns The associated executor.]
 
   void cancel();
 
@@ -119,17 +120,16 @@ __getaddrinfo__.]
   template <class CompletionToken>
     auto async_resolve(const query& q, CompletionToken&& token);
 
+[function_block An [link requirements.asynchronous_operations asynchronous
+operation].]
+
 [function_completion_signature `void(error_code ec, iterator i)`.]
 
 [function_effects Initiates an asynchronous operation to translate a query into
 a sequence of `basic_resolver_entry<InternetProtocol>` objects, as if by
-__POSIX__ __getaddrinfo__. The operation is performed via the `io_service`
-object returned by `get_io_service()` and behaves according to [link
-requirements.asynchronous_operations asynchronous operation] requirements.]
-
-[function_block If the operation completes successfully, the handler is passed
-an iterator object `i` such that the condition `i != iterator()` holds.
-Otherwise, `i` is `iterator()`.]
+__POSIX__ __getaddrinfo__. If the operation completes successfully, the handler
+is passed an iterator object `i` such that the condition `i != iterator()`
+holds. Otherwise, `i` is `iterator()`.]
 
   iterator resolve(const endpoint_type& e);
   iterator resolve(const endpoint_type& e, error_code& ec);
@@ -145,18 +145,16 @@ __getnameinfo__.]
     auto async_resolve(const endpoint_type& e,
                        CompletionToken&& token);
 
+[function_block An [link requirements.asynchronous_operations asynchronous
+operation].]
+
 [function_completion_signature `void(error_code ec, iterator i)`.]
 
 [function_effects Initiates an asynchronous operation to translate an endpoint
 into a sequence of zero or one `basic_resolver_entry<InternetProtocol>`
-objects, as if by __POSIX__ __getnameinfo__. The operation is performed via the
-`io_service` object returned by `get_io_service()` and behaves according to
-[link requirements.asynchronous_operations asynchronous operation]
-requirements.]
-
-[function_block If the operation completes successfully, the handler is passed
-an iterator object `i` such that the condition `i != iterator()` holds.
-Otherwise, `i` is `iterator()`.]
+objects, as if by __POSIX__ __getnameinfo__. If the operation completes
+successfully, the handler is passed an iterator object `i` such that the
+condition `i != iterator()` holds. Otherwise, `i` is `iterator()`.]
 
 [endsect]
 

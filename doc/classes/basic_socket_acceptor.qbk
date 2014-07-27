@@ -11,6 +11,7 @@
         public:
           // types:
 
+          typedef io_service::executor_type executor_type;
           typedef ``['implementation defined]`` native_handle_type; // See ``[link requirements.native_handles native handles]``
           typedef Protocol protocol_type;
           typedef typename Protocol::endpoint endpoint_type;
@@ -37,7 +38,7 @@
 
           // basic_socket_acceptor operations:
 
-          io_service& get_io_service();
+          executor_type get_executor() const noexcept;
 
           native_handle_type native_handle(); // See ``[link requirements.native_handles native handles]``
 
@@ -127,7 +128,7 @@
 `basic_socket_acceptor<Protocol>`.]
 
 [function_postconditions\n
-[mdash] `&get_io_service() == &ios`.\n
+[mdash] `get_executor() == ios.get_executor()`.\n
 [mdash] `is_open() == false`.]
 
   basic_socket_acceptor(io_service& ios, const protocol_type& protocol);
@@ -137,7 +138,7 @@
 `open(protocol)`.]
 
 [function_postconditions\n
-[mdash] `&get_io_service() == &ios`.\n
+[mdash] `get_executor() == ios.get_executor()`.\n
 [mdash] `is_open() == true`.\n
 [mdash] `non_blocking() == false`.\n
 [mdash] `enable_connection_aborted() == false`.]
@@ -156,7 +157,7 @@ opening and binding the acceptor as if by calling:
 ``]
 
 [function_postconditions\n
-[mdash] `&get_io_service() == &ios`.\n
+[mdash] `get_executor() == ios.get_executor()`.\n
 [mdash] `is_open() == true`.\n
 [mdash] `non_blocking() == false`.\n
 [mdash] `enable_connection_aborted() == false`.]
@@ -172,7 +173,7 @@ servers, although there are some security implications in doing so.]
 the object as if by calling `assign(protocol, native_acceptor)`.]
 
 [function_postconditions\n
-[mdash] `&get_io_service() == &ios`.\n
+[mdash] `get_executor() == ios.get_executor()`.\n
 [mdash] `non_blocking() == false`.\n
 [mdash] `enable_connection_aborted() == false`.]
 
@@ -187,7 +188,7 @@ true` is dependent on the implementation-defined semantics of the
 represented by `rhs`.]
 
 [function_postconditions\n
-[mdash] `&get_io_service() == &rhs.get_io_service()`.\n
+[mdash] `get_executor() == rhs.get_executor()`.\n
 [mdash] `is_open()` returns the same value as `rhs.is_open()` prior to the
 constructor invocation.\n
 [mdash] `non_blocking()` returns the same value as `rhs.non_blocking()` prior
@@ -206,7 +207,7 @@ to the constructor invocation.\n
 represented by `rhs`.]
 
 [function_postconditions\n
-[mdash] `&get_io_service() == &rhs.get_io_service()`.\n
+[mdash] `get_executor() == rhs.get_executor()`.\n
 [mdash] `is_open()` returns the same value as `rhs.is_open()` prior to the
 constructor invocation.\n
 [mdash] `non_blocking()` returns the same value as `rhs.non_blocking()` prior
@@ -243,7 +244,7 @@ Handlers for cancelled operations shall be passed an error code `ec` such that
 `ec == errc::operation_canceled` holds true.]
 
 [function_postconditions\n
-[mdash] `&get_io_service() == &rhs.get_io_service()`.\n
+[mdash] `get_executor() == rhs.get_executor()`.\n
 [mdash] `is_open()` returns the same value as `rhs.is_open()` prior to the
 assignment.\n
 [mdash] `non_blocking()` returns the same value as `rhs.non_blocking()` prior
@@ -266,7 +267,7 @@ Handlers for cancelled operations shall be passed an error code `ec` such that
 `ec == errc::operation_canceled` holds true.]
 
 [function_postconditions\n
-[mdash] `&get_io_service() == &rhs.get_io_service()`.\n
+[mdash] `get_executor() == rhs.get_executor()`.\n
 [mdash] `is_open()` returns the same value as `rhs.is_open()` prior to the
 assignment.\n
 [mdash] `non_blocking()` returns the same value as `rhs.non_blocking()` prior
@@ -284,9 +285,9 @@ resolution unless `OtherProtocol` is implicitly convertible to `Protocol`.]
 
 [section [^basic_socket_acceptor] operations]
 
-  io_service& get_io_service();
+  executor_type get_executor() const noexcept;
 
-[function_returns The associated `io_service`.]
+[function_returns The associated executor.]
 
   native_handle_type native_handle();
 

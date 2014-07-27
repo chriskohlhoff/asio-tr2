@@ -10,6 +10,7 @@
         public:
           // types:
 
+          typedef io_service::executor_type executor_type;
           typedef Clock clock_type;
           typedef typename Clock::duration duration;
           typedef typename Clock::time_point time_point;
@@ -30,7 +31,7 @@
 
           // basic_waitable_timer operations:
 
-          io_service& get_io_service();
+          executor_type get_executor() const noexcept;
 
           size_t cancel();
           size_t cancel_one();
@@ -58,7 +59,7 @@
 WaitTraits>`.]
 
 [function_postconditions\n
-[mdash] `&get_io_service() == &ios`.\n
+[mdash] `get_executor() == ios.get_executor()`.\n
 [mdash] `expiry() == Clock::time_point()`.]
 
   basic_waitable_timer(io_service& ios, const time_point& t);
@@ -66,14 +67,14 @@ WaitTraits>`.]
 [function_effects Constructs an object of class `basic_waitable_timer<Clock,
 WaitTraits>`, setting the expiry time as if by calling `this->expires_at(t)`.]
 
-[function_postconditions `&get_io_service() == &ios`.]
+[function_postconditions `get_executor() == ios.get_executor()`.]
 
   basic_waitable_timer(io_service& ios, const duration& d);
 
 [function_effects Constructs an object of class `basic_waitable_timer<Clock,
 WaitTraits>`, setting the expiry time as if by calling `this->expires_at(d)`.]
 
-[function_postconditions `&get_io_service() == &ios`.]
+[function_postconditions `get_executor() == ios.get_executor()`.]
 
   basic_waitable_timer(basic_waitable_timer&& rhs);
 
@@ -82,7 +83,7 @@ WaitTraits>`, setting the expiry time as if by calling `this->expires_at(d)`.]
 represented by `rhs`.]
 
 [function_postconditions\n
-[mdash] `&get_io_service() == &rhs.get_io_service()`.\n
+[mdash] `get_executor() == rhs.get_executor()`.\n
 [mdash] `expiry()` returns the same value as `rhs.expiry()` prior to the
 constructor invocation.\n
 [mdash] `rhs.expiry() == Clock::time_point()`.]
@@ -107,7 +108,7 @@ with `*this` as if by calling `cancel()`, then moves into `*this` the state
 originally represented by `rhs`.]
 
 [function_postconditions\n
-[mdash] `&get_io_service() == &rhs.get_io_service()`.\n
+[mdash] `get_executor() == rhs.get_executor()`.\n
 [mdash] `expiry()` returns the same value as `rhs.expiry()` prior to the
 assignment.\n
 [mdash] `rhs.expiry() == Clock::time_point()`.]
@@ -118,9 +119,9 @@ assignment.\n
 
 [section [^basic_waitable_timer] operations]
 
-  io_service& get_io_service();
+  executor_type get_executor() const noexcept;
 
-[function_returns The associated `io_service`.]
+[function_returns The associated executor.]
 
   size_t cancel();
 
@@ -171,14 +172,13 @@ the calling thread for the relative time produced by
   template <class CompletionToken>
     auto async_wait(CompletionToken&& token);
 
+[function_block An [link requirements.asynchronous_operations asynchronous
+operation].]
+
 [function_completion_signature `void(error_code ec)`.]
 
-[function_effects Initiates an asynchronous wait operation that is performed
-via the `io_service` object returned by `get_io_service()` and behaves
-according to [link requirements.asynchronous_operations asynchronous operation]
-requirements.]
-
-[function_block The handler shall be posted only if the condition `!!ec ||
+[function_effects Initiates an asynchronous wait operation such that the
+handler is submitted for execution only when the condition `!!ec ||
 !(Clock::now() < expiry())` holds.]
 
 [endsect]

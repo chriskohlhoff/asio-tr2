@@ -106,15 +106,16 @@ object `q` of type `Protocol::resolver::query` by initialising the object with
 `q(forward<Args>(args)__dotdotdot__)`, then establishes a connection as if by
 performing:
 ``
-  typename Protocol::resolver resolver(this->get_io_service());
+  typename Protocol::resolver resolver(ios);
   typename Protocol::resolver::iterator i = resolver.resolve(q, ec_);
   if (!ec_)
     std::experimental::network_v1::async_connect(*this, i, __unspecified__);
 ``
-`ec_` is set to reflect the error code produced by the asynchronous operation.
-If the operation does not complete before the absolute timeout specified by
-`expiry_`, the socket is closed and `ec_` is set to
-`errc::operation_canceled`.]
+
+where `ios` is an unspecified object of class `io_service`. `ec_` is set to
+reflect the error code produced by the asynchronous operation. If the operation
+does not complete before the absolute timeout specified by `expiry_`, the
+socket is closed and `ec_` is set to `errc::operation_canceled`.]
 
 [function_returns if `!ec_`, `this`; otherwise, a null pointer.]
 

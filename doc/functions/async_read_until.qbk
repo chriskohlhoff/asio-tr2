@@ -18,9 +18,7 @@ operation].]
 [link requirements.async_read_stream buffer-oriented asynchronous read stream]
 object `stream` by performing zero or more asynchronous read_some operations on
 the stream, until the `basic_fifobuf<>` object's input sequence contains the
-specified delimiter `delim`. The operation is performed via the `io_service`
-object `stream.get_io_service()` and behaves according to [link
-requirements.asynchronous_operations asynchronous operation] requirements.]
+specified delimiter `delim`.]
 
 [function_block Data is placed into the `basic_fifobuf<>` object `fb`. A [link
 requirements.mutable_buffers mutable buffer sequence] is obtained prior to each
