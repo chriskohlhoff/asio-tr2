@@ -10,7 +10,7 @@ All initiating functions in this clause:
 
 [mdash] are function templates with template parameter `CompletionToken`;
 
-[mdash] accept, as the final parameter, a ['completion token'] object `token`
+[mdash] accept, as the final parameter, a ['completion token] object `token`
 of type `CompletionToken`;
 
 [mdash] specify a ['Completion signature] element that defines a call signature
