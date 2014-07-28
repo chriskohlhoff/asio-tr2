@@ -65,18 +65,18 @@ representation of a network interface.]
   outbound_interface();
 
 [function_effects For extensible implementations, both `v4_value_` and
-`v6_value_` are zero-initialised.]
+`v6_value_` are zero-initialized.]
 
   explicit outbound_interface(const address_v4& network_interface);
 
-[function_effects For extensible implementations, `v4_value_` is initialised to
+[function_effects For extensible implementations, `v4_value_` is initialized to
 correspond to the IPv4 address `network_interface`, and `v6_value_` is
-zero-initialised.]
+zero-initialized.]
 
   explicit outbound_interface(unsigned int network_interface);
 
-[function_effects For extensible implementations, `v6_value_` is initialised to
-`network_interface`, and `v4_value_` is zero-initialised.]
+[function_effects For extensible implementations, `v6_value_` is initialized to
+`network_interface`, and `v4_value_` is zero-initialized.]
 
 [endsect]
 

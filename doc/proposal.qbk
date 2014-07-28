@@ -247,13 +247,13 @@ operations.
 
 [commentary The Filesystem Library Proposal [N1975] adds introductory text to
 the TR to establish a relationship to __POSIX__ [POSIX]. This proposal uses the
-relationship to similarly define behaviour "as if" implemented by __POSIX__,
+relationship to similarly define behavior "as if" implemented by __POSIX__,
 except that the requirements for error reporting are stricter than those
 outlined in [N1975].]
 
 The following subclauses describe components for I/O services, timers, buffer
 management, sockets, endpoint resolution, iostreams, and internet protocol, as
-summarised in the table below:
+summarized in the table below:
 
 [table Networking library summary
   [[Subclause][Header(s)]]

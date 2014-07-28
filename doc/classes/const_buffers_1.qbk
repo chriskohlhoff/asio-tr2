@@ -36,12 +36,12 @@ An object of class `const_buffers_1` represents a sequence of exactly one
 
   const_buffers_1(const void* p, size_t n) noexcept;
 
-[function_effects Constructs an object of class `const_buffers_1`, initialising
+[function_effects Constructs an object of class `const_buffers_1`, initializing
 the base class with `const_buffer(p, n)`.]
 
   explicit const_buffers_1(const const_buffer& b) noexcept;
 
-[function_effects Constructs an object of class `const_buffers_1`, initialising
+[function_effects Constructs an object of class `const_buffers_1`, initializing
 the base class with `const_buffer(b)`.]
 
 [endsect]

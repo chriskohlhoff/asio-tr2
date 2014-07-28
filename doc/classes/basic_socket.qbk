@@ -386,7 +386,7 @@ shall block until complete.]
 [function_error_conditions\n
 [mdash] `errc::bad_file_descriptor` [mdash] if `is_open()` is false.]
 
-[function_note The non-blocking mode has no effect on the behaviour of
+[function_note The non-blocking mode has no effect on the behavior of
 asynchronous operations.]
 
   bool non_blocking() const;
@@ -398,7 +398,7 @@ asynchronous operations.]
 
 [function_effects Sets the non-blocking mode of the underlying native socket,
 as if by __POSIX__ __fcntl__ with command `F_SETFL` to add or clear the file
-status flag `O_NONBLOCK`. This mode shall have no effect on the behaviour of
+status flag `O_NONBLOCK`. This mode shall have no effect on the behavior of
 the synchronous or asynchronous operations specified in this clause.]
 
 [function_error_conditions\n
@@ -488,14 +488,14 @@ asynchronous operation to connect the socket to the specified remote endpoint,
 as if by __POSIX__ __connect__.]
 
 [function_block When multiple asynchronous connect operations are initiated
-such that the operations may logically be performed in parallel, the behaviour
+such that the operations may logically be performed in parallel, the behavior
 is unspecified. When an asynchronous connect operation and an asynchronous read
 or write operation are initiated such that they may logically be performed in
-parallel, the behaviour is unspecified.]
+parallel, the behavior is unspecified.]
 
 [function_block If a program performs a synchronous operation on the socket,
 other than `close` or `cancel`, while there is an incomplete asynchronous
-connect operation, the behaviour is unspecified.]
+connect operation, the behavior is unspecified.]
 
 [endsect]
 

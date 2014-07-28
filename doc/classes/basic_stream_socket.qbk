@@ -115,32 +115,32 @@ requirements.async_write_stream asynchronous write streams].
   explicit basic_stream_socket(io_service& ios);
 
 [function_effects Constructs an object of class
-`basic_stream_socket<Protocol>`, initialising the base class with
+`basic_stream_socket<Protocol>`, initializing the base class with
 `basic_socket<Protocol>(ios)`.]
 
   basic_stream_socket(io_service& ios, const protocol_type& protocol);
 
 [function_effects Constructs an object of class
-`basic_stream_socket<Protocol>`, initialising the base class with
+`basic_stream_socket<Protocol>`, initializing the base class with
 `basic_socket<Protocol>(ios, protocol)`.]
 
   basic_stream_socket(io_service& ios, const endpoint_type& endpoint);
 
 [function_effects Constructs an object of class
-`basic_stream_socket<Protocol>`, initialising the base class with
+`basic_stream_socket<Protocol>`, initializing the base class with
 `basic_socket<Protocol>(ios, endpoint)`.]
 
   basic_stream_socket(io_service& ios, const protocol_type& protocol,
                         const native_handle_type& native_socket);
 
 [function_effects Constructs an object of class
-`basic_stream_socket<Protocol>`, initialising the base class with
+`basic_stream_socket<Protocol>`, initializing the base class with
 `basic_socket<Protocol>(ios, protocol, native_socket)`.]
 
   basic_stream_socket(basic_stream_socket&& rhs);
 
 [function_effects Move constructs an object of class
-`basic_stream_socket<Protocol>`, initialising the base class with
+`basic_stream_socket<Protocol>`, initializing the base class with
 `basic_socket<Protocol>(static_cast<basic_socket<Protocol>&&>(rhs))`.]
 
   template<class OtherProtocol>
@@ -149,7 +149,7 @@ requirements.async_write_stream asynchronous write streams].
 [function_requires `OtherProtocol` is implicitly convertible to `Protocol`.]
 
 [function_effects Move constructs an object of class
-`basic_stream_socket<Protocol>`, initialising the base class with
+`basic_stream_socket<Protocol>`, initializing the base class with
 `basic_socket<Protocol>(static_cast<basic_socket<OtherProtocol>&&>(rhs))`.]
 
 [function_remarks This constructor shall not participate in overload resolution
@@ -241,11 +241,11 @@ the implementation shall fill the `buffers` in the order in which the
 operations were issued. The order of invocation of the handlers for these
 operations is unspecified. When multiple asynchronous receive operations with
 non-zero `flags` are initiated such that operations may logically be performed
-in parallel, the behaviour is unspecified.]
+in parallel, the behavior is unspecified.]
 
 [function_block If a program performs a synchronous operation on the socket,
 other than `close`, `cancel`, or `send`, while there is a pending asynchronous
-receive operation, the behaviour is unspecified.]
+receive operation, the behavior is unspecified.]
 
 [function_block If the operation completes successfully, `n` is the number of
 bytes received. Otherwise `n` is `0`.]
@@ -303,11 +303,11 @@ the implementation shall transmit the `buffers` in the order in which the
 operations were issued. The order of invocation of the handlers for these
 operations is unspecified. When multiple asynchronous send operations with
 non-zero `flags` are initiated such that operations may logically be performed
-in parallel, the behaviour is unspecified.]
+in parallel, the behavior is unspecified.]
 
 [function_block If a program performs a synchronous operation on the socket,
 other than `close`, `cancel`, or `receive`, while there is a pending
-asynchronous send operation, the behaviour is unspecified.]
+asynchronous send operation, the behavior is unspecified.]
 
 [function_block If the operation completes successfully, `n` is the number of
 bytes sent. Otherwise `n` is `0`.]

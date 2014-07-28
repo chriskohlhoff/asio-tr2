@@ -26,17 +26,17 @@ many threads in order to increase concurrency.]
 
 [:Implementation strategies such as thread-per-connection (which a
 synchronous-only approach would require) can degrade system performance, due to
-increased context switching, synchronisation and data movement among CPUs. With
+increased context switching, synchronization and data movement among CPUs. With
 asynchronous operations it is possible to avoid the cost of context switching
 by minimising the number of operating system threads [mdash] typically a
 limited resource [mdash] and only activating the logical threads of control
 that have events to process.]
 
-[mdash] Simplified application synchronisation.
+[mdash] Simplified application synchronization.
 
 [:Asynchronous operation completion handlers can be written as though they
 exist in a single-threaded environment, and so application logic can be
-developed with little or no concern for synchronisation issues.]
+developed with little or no concern for synchronization issues.]
 
 [mdash] Function composition.
 

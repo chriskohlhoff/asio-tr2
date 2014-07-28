@@ -62,7 +62,7 @@ not supported.
   basic_socket_streambuf();
 
 [function_effects Constructs an object of class
-`basic_socket_streambuf<Protocol>`, initialising the base classes with
+`basic_socket_streambuf<Protocol>`, initializing the base classes with
 `basic_streambuf<char>()` and `basic_socket<Protocol>(ios)`, where `ios` is an
 unspecified object of class `io_service` that has a longer lifetime than the
 `basic_socket<Protocol>` base.]
@@ -102,7 +102,7 @@ operation does not complete before the absolute timeout specified by
 requirements.internet_protocol internet protocol].]
 
 [function_effects Resets the `streambuf` get and put areas. Constructs an
-object `q` of type `Protocol::resolver::query` by initialising the object with
+object `q` of type `Protocol::resolver::query` by initializing the object with
 `q(forward<Args>(args)__dotdotdot__)`, then establishes a connection as if by
 performing:
 ``
@@ -154,7 +154,7 @@ then `close` fails.]
   virtual int_type underflow();
 
 [function_effects Behaves according to the description of
-`basic_streambuf<char>::underflow()`, with the specialisation that a sequence
+`basic_streambuf<char>::underflow()`, with the specialization that a sequence
 of characters is read from the input sequence as if by __POSIX__ __recvmsg__,
 and `ec_` is set to reflect the error code produced by the operation. If the
 operation does not complete before the absolute timeout specified by `expiry_`,
@@ -193,7 +193,7 @@ putback positions available as a result of any call.]
   virtual int_type overflow(int_type c = traits_type::eof());
 
 [function_effects Behaves according to the description of
-`basic_streambuf<char>::overflow(c)`, except that the behaviour of "consuming
+`basic_streambuf<char>::overflow(c)`, except that the behavior of "consuming
 characters" is performed by output of the characters to the socket as if by one
 or more calls to __POSIX__ __sendmsg__, and `ec_` is set to reflect the error
 code produced by the operation. If the operation does not complete before the

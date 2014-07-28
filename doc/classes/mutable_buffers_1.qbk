@@ -46,12 +46,12 @@ An object of class `mutable_buffers_1` represents a sequence of exactly one
   mutable_buffers_1(const void* p, size_t n) noexcept;
 
 [function_effects Constructs an object of class `mutable_buffers_1`,
-initialising the base class with `mutable_buffer(p, n)`.]
+initializing the base class with `mutable_buffer(p, n)`.]
 
   explicit mutable_buffers_1(const mutable_buffer& b) noexcept;
 
 [function_effects Constructs an object of class `mutable_buffers_1`,
-initialising the base class with `mutable_buffer(b)`.]
+initializing the base class with `mutable_buffer(b)`.]
 
 [endsect]
 

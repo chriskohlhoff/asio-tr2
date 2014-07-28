@@ -416,7 +416,7 @@ shall block until complete.]
 [function_error_conditions\n
 [mdash] `errc::bad_file_descriptor` [mdash] if `is_open()` is false.]
 
-[function_note The non-blocking mode has no effect on the behaviour of
+[function_note The non-blocking mode has no effect on the behavior of
 asynchronous operations.]
 
   bool non_blocking() const;
@@ -428,7 +428,7 @@ asynchronous operations.]
 
 [function_effects Sets the non-blocking mode of the underlying native acceptor,
 as if by __POSIX__ __fcntl__ with command `F_SETFL` to add or clear the file
-status flag `O_NONBLOCK`. This mode shall have no effect on the behaviour of
+status flag `O_NONBLOCK`. This mode shall have no effect on the behavior of
 the synchronous or asynchronous operations specified in this clause.]
 
 [function_error_conditions\n
@@ -530,7 +530,7 @@ with the first connection successfully extracted from the queue of pending
 connections of the acceptor, as if by __POSIX__ __accept__.]
 
 [function_block When multiple asynchronous accept operations are initiated such
-that the operations may logically be performed in parallel, the behaviour is
+that the operations may logically be performed in parallel, the behavior is
 unspecified.]
 
 [function_error_conditions\n
@@ -578,7 +578,7 @@ connections of the acceptor, as if by __POSIX__ __accept__. On success, sets
 `endpoint` to the remote endpoint of the accepted connection.]
 
 [function_block When multiple asynchronous accept operations are initiated such
-that the operations may logically be performed in parallel, the behaviour is
+that the operations may logically be performed in parallel, the behavior is
 unspecified.]
 
 [function_error_conditions\n

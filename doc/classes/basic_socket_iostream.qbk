@@ -57,8 +57,8 @@ presented here as:
   basic_socket_iostream();
 
 [function_effects Constructs an object of class
-`basic_socket_iostream<Protocol, Clock, WaitTraits>`, initialising the base
-class with `basic_iostream<char>(&sb_)`, initialising `sb_` with
+`basic_socket_iostream<Protocol, Clock, WaitTraits>`, initializing the base
+class with `basic_iostream<char>(&sb_)`, initializing `sb_` with
 `basic_socket_streambuf<Protocol, Clock, WaitTraits>()`, and performing
 `this->setf(std::ios_base::unitbuf)`.]
 
@@ -66,8 +66,8 @@ class with `basic_iostream<char>(&sb_)`, initialising `sb_` with
     explicit basic_socket_iostream(Args&&... args);
 
 [function_effects Constructs an object of class
-`basic_socket_iostream<Protocol, Clock, WaitTraits>`, initialising the base
-class with `basic_iostream<char>(&sb_)` initialising `sb_` with
+`basic_socket_iostream<Protocol, Clock, WaitTraits>`, initializing the base
+class with `basic_iostream<char>(&sb_)` initializing `sb_` with
 `basic_socket_streambuf<Protocol, Clock, WaitTraits>()`, and performing
 `this->setf(std::ios_base::unitbuf)`. Then calls
 `rdbuf()->connect(forward<Args>(args)__dotdotdot__)`. If that function returns

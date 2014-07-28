@@ -81,7 +81,7 @@ or `EINPROGRESS`; __Windows__ `WSAEWOULDBLOCK` or `WSAEINPROGRESS`].
 
 [section Error conditions]
 
-Unless otherwise specified, when the behaviour of a synchronous or asynchronous
+Unless otherwise specified, when the behavior of a synchronous or asynchronous
 operation is defined "as if" implemented by a __POSIX__ function, the
 `error_code` produced by the function shall meet the following requirements:
 

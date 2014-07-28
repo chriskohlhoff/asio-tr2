@@ -44,7 +44,7 @@ async_result<Handler>::type`.
 All initiating functions in this clause produce their return type as follows:
 
 [mdash] constructing an object `result` of type `async_result<Handler>`,
-initialising the object as `result(handler)`; and
+initializing the object as `result(handler)`; and
 
 [mdash] using `result.get()` as the return expression.
 

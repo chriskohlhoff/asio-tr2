@@ -222,7 +222,7 @@ sequence.]
 [function_requires `size() < max_size()`.]
 
 [function_effects Behaves according to the description of
-`basic_streambuf<char>::pbackfail()`, with the specialisation that
+`basic_streambuf<char>::pbackfail()`, with the specialization that
 `length_error` is thrown if prepending the character to the input sequence
 would require the condition `size() > max_size()` to be true.]
 
@@ -232,7 +232,7 @@ would require the condition `size() > max_size()` to be true.]
 max_size()`.]
 
 [function_effects Behaves according to the description of
-`basic_streambuf<char>::overflow()`, with the specialisation that
+`basic_streambuf<char>::overflow()`, with the specialization that
 `length_error` is thrown if appending the character to the input sequence would
 require the condition `size() > max_size()` to be true.]
 

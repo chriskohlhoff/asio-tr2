@@ -1,6 +1,6 @@
 [section:socket_base__linger Class [^socket_base::linger]]
 
-The `linger` class represents a socket option for controlling the behaviour
+The `linger` class represents a socket option for controlling the behavior
 when a socket is closed and unsent data is present.
 
 `linger` satisfies the requirements for `CopyConstructible`, `Assignable`,

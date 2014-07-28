@@ -1,4 +1,4 @@
-[section:time_traits [^time_traits] specialisations]
+[section:time_traits [^time_traits] specializations]
 
   namespace std {
     namespace experimental {

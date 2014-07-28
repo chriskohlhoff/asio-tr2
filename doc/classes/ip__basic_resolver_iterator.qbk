@@ -31,7 +31,7 @@
 
   basic_resolver_iterator();
 
-[function_effects Initialises an object of class
+[function_effects Initializes an object of class
 `basic_resolver_iterator<InternetProtocol>` so that it represents an end
 iterator.]
 

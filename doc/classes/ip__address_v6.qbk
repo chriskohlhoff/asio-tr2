@@ -257,7 +257,7 @@ method:
   constexpr bool is_multicast_org_local() const noexcept;
 
 [function_returns A boolean indicating whether the `address_v6` object
-represents a multicast organisation-local address, as if computed by the
+represents a multicast organization-local address, as if computed by the
 following method:
 ``
   bytes_type b = to_bytes();
