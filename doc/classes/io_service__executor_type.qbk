@@ -114,7 +114,7 @@ associated with an `io_service`, and function objects submitted using the
 
 [function_block If `f` exits via an exception, and the execution of `f` is
 performed in the current thread and before `dispatch` returns, the exception
-shall propagate to the caller of `dispatch()`]
+shall propagate to the caller of `dispatch`.]
 
   template <class Func, class Alloc>
     void post(Func&& f, const Alloc& a);
