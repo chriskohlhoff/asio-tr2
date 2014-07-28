@@ -4,19 +4,19 @@
     namespace experimental {
       inline namespace network_v1 {
 
-        template <class CompletionToken, class Signature, class = void>
+        template<class CompletionToken, class Signature, class = void>
           struct ``[link classes.handler_type handler_type]``;
 
-        template <class CompletionToken, class Signature>
+        template<class CompletionToken, class Signature>
           using handler_type_t =
             typename handler_type<CompletionToken, Signature>::type;
 
-        template <class Handler> class ``[link classes.async_result async_result]``;
+        template<class Handler> class ``[link classes.async_result async_result]``;
 
-        template <class CompletionToken, class Signature>
+        template<class CompletionToken, class Signature>
           struct ``[link classes.async_completion async_completion]``;
 
-        template <class Handler> struct ``[link classes.handler_traits handler_traits]``;
+        template<class Handler> struct ``[link classes.handler_traits handler_traits]``;
 
         enum class fork_event {
           prepare,
@@ -28,57 +28,57 @@
 
         class service_already_exists;
 
-        template <class Service> Service& use_service(execution_context& ctx);
-        template <class Service, class... Args> Service&
+        template<class Service> Service& use_service(execution_context& ctx);
+        template<class Service, class... Args> Service&
           make_service(execution_context& ctx, Args&&... args);
-        template <class Service> bool has_service(execution_context& ctx);
+        template<class Service> bool has_service(execution_context& ctx);
 
-        template <class T> struct ``[link classes.is_executor is_executor]`` : false_type {};
+        template<class T> struct ``[link classes.is_executor is_executor]`` : false_type {};
 
         struct ``[link classes.executor_arg_t executor_arg_t]`` { };
         constexpr executor_arg_t executor_arg = executor_arg_t();
 
-        template <class T, class Executor> struct ``[link classes.uses_executor uses_executor]``;
+        template<class T, class Executor> struct ``[link classes.uses_executor uses_executor]``;
 
-        template <class T, class Executor> struct ``[link classes.executor_wrapper executor_wrapper]``;
+        template<class T, class Executor> struct ``[link classes.executor_wrapper executor_wrapper]``;
 
-        template <class T, class Executor, class Signature>
+        template<class T, class Executor, class Signature>
           struct handler_type<executor_wrapper<T, Executor>, Signature>;
 
-        template <class T, class Executor>
+        template<class T, class Executor>
           class async_result<executor_wrapper<T, Executor>>;
 
-        template <class T, class Executor>
+        template<class T, class Executor>
           struct handler_traits<executor_wrapper<T, Executor>>;
 
-        template <class T, class Executor> struct ``[link classes.executor_work executor_work]``;
+        template<class T, class Executor> struct ``[link classes.executor_work executor_work]``;
 
         class ``[link classes.system_executor system_executor]``;
 
         bool operator==(const system_executor&, const system_executor&);
         bool operator!=(const system_executor&, const system_executor&);
 
-        template <> struct is_executor<system_executor> : true_type {};
+        template<> struct is_executor<system_executor> : true_type {};
 
         ``// [link functions.dispatch dispatch]:``
 
-        template <class CompletionToken>
+        template<class CompletionToken>
           auto dispatch(CompletionToken&& token);
-        template <class Executor, class CompletionToken>
+        template<class Executor, class CompletionToken>
           auto dispatch(const Executor& ex, CompletionToken&& token);
 
         ``// [link functions.post post]:``
 
-        template <class CompletionToken>
+        template<class CompletionToken>
           auto post(CompletionToken&& token);
-        template <class Executor, class CompletionToken>
+        template<class Executor, class CompletionToken>
           auto post(const Executor& ex, CompletionToken&& token);
 
         ``// [link functions.defer defer]:``
 
-        template <class CompletionToken>
+        template<class CompletionToken>
           auto defer(CompletionToken&& token);
-        template <class Executor, class CompletionToken>
+        template<class Executor, class CompletionToken>
           auto defer(const Executor& ex, CompletionToken&& token);
 
       } // inline namespace network_v1

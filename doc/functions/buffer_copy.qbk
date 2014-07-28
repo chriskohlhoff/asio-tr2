@@ -5,24 +5,24 @@
   size_t buffer_copy(const mutable_buffer& dest,
                      const const_buffer& source,
                      size_t max_size) noexcept;
-  template <class ConstBufferSequence>
+  template<class ConstBufferSequence>
     size_t buffer_copy(const mutable_buffer& dest,
                        const ConstBufferSequence& source) noexcept;
-  template <class ConstBufferSequence>
+  template<class ConstBufferSequence>
     size_t buffer_copy(const mutable_buffer& dest,
                        const ConstBufferSequence& source,
                        size_t max_size) noexcept;
-  template <class MutableBufferSequence>
+  template<class MutableBufferSequence>
     size_t buffer_copy(const MutableBufferSequence& dest,
                        const const_buffer& source) noexcept;
-  template <class MutableBufferSequence>
+  template<class MutableBufferSequence>
     size_t buffer_copy(const MutableBufferSequence& dest,
                        const const_buffer& source,
                        size_t max_size) noexcept;
-  template <class MutableBufferSequence, class ConstBufferSequence>
+  template<class MutableBufferSequence, class ConstBufferSequence>
     size_t buffer_copy(const MutableBufferSequence& dest,
                        const ConstBufferSequence& source) noexcept;
-  template <class MutableBufferSequence, class ConstBufferSequence>
+  template<class MutableBufferSequence, class ConstBufferSequence>
     size_t buffer_copy(const MutableBufferSequence& dest,
                        const ConstBufferSequence& source,
                        max_size) noexcept;

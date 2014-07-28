@@ -4,7 +4,7 @@
     namespace experimental {
       inline namespace network_v1 {
 
-        template <class CompletionToken, class Signature>
+        template<class CompletionToken, class Signature>
         struct async_completion
         {
           typedef handler_type_t<CompletionToken, Signature> handler_type;

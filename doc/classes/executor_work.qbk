@@ -4,7 +4,7 @@
     namespace experimental {
       inline namespace network_v1 {
 
-        template <class Executor>
+        template<class Executor>
         class executor_work
         {
         public:

@@ -37,13 +37,13 @@
             iterator resolve(const query& q);
             iterator resolve(const query& q, error_code& ec);
 
-            template <class CompletionToken>
+            template<class CompletionToken>
               auto async_resolve(const query& q, CompletionToken&& token);
 
             iterator resolve(const endpoint_type& e);
             iterator resolve(const endpoint_type& e, error_code& ec);
 
-            template <class CompletionToken>
+            template<class CompletionToken>
               auto async_resolve(const endpoint_type& e,
                                  CompletionToken&& token);
           };
@@ -117,7 +117,7 @@ __getaddrinfo__.]
 [function_returns On success, an iterator object `i` such that the condition `i
 != iterator()` holds. Otherwise `iterator()`.]
 
-  template <class CompletionToken>
+  template<class CompletionToken>
     auto async_resolve(const query& q, CompletionToken&& token);
 
 [function_block An [link requirements.asynchronous_operations asynchronous
@@ -141,7 +141,7 @@ __getnameinfo__.]
 [function_returns On success, an iterator object `i` such that the condition `i
 != iterator()` holds. Otherwise `iterator()`.]
 
-  template <class CompletionToken>
+  template<class CompletionToken>
     auto async_resolve(const endpoint_type& e,
                        CompletionToken&& token);
 

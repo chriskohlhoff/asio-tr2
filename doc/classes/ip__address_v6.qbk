@@ -15,7 +15,7 @@
             constexpr address_v6() noexcept;
             constexpr address_v6(const address_v6& a) noexcept;
             constexpr address_v6(const bytes_type& bytes, unsigned long scope);
-            template <class... T> explicit constexpr address(T&&... t);
+            template<class... T> explicit constexpr address(T&&... t);
 
             // assignment:
             address_v4& operator=(const address_v4& a) noexcept;
@@ -84,7 +84,7 @@
 
           struct address_v6::bytes_type : array<unsigned char, 16>
           {
-            template <class... T> explicit constexpr bytes_type(T... t)
+            template<class... T> explicit constexpr bytes_type(T... t)
               : array<unsigned char, 16>{{static_cast<unsigned char>(t)...}} {}
           };
 
@@ -129,7 +129,7 @@ out-of-range detection is needed.]]
 
 [function_postconditions `to_bytes() == bytes` and `scope_id() == scope`.]
 
-  template <class... T> explicit constexpr address_v6(T&&... t);
+  template<class... T> explicit constexpr address_v6(T&&... t);
 
 [function_remarks This constructor shall not participate in overload resolution
 unless the expression `make_address_v6(forward<T>(t).``.``.)` is valid and yields an

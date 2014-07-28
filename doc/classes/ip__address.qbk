@@ -11,8 +11,8 @@
             // constructors:
             constexpr address() noexcept;
             constexpr address(const address& a) noexcept;
-            template <class T> constexpr address(const T& t) noexcept(``['see below]``);
-            template <class... T> explicit constexpr address(T&&... t);
+            template<class T> constexpr address(const T& t) noexcept(``['see below]``);
+            template<class... T> explicit constexpr address(T&&... t);
 
             // assignment:
             address& operator=(const address& a) noexcept;
@@ -78,7 +78,7 @@ the table below.]
 
 [function_postconditions `*this == a`]
 
-  template <class T> constexpr address(const T& t) noexcept(``['see below]``);
+  template<class T> constexpr address(const T& t) noexcept(``['see below]``);
 
 [function_remarks This constructor shall not participate in overload resolution
 unless `is_same<T, address>::value` is `false`, and the expression
@@ -92,7 +92,7 @@ expression `address_cast<address>(t)`.]
 [function_throws Nothing unless the expression `address_cast<address>(t)`
 throws an exception.]
 
-  template <class... T> explicit constexpr address(T&&... t);
+  template<class... T> explicit constexpr address(T&&... t);
 
 [function_remarks This constructor shall not participate in overload resolution
 unless the expression `make_address(forward<T>(t).``.``.)` is valid and yields an

@@ -6,7 +6,7 @@
     namespace experimental {
       inline namespace network_v1 {
 
-        template <class T, class Executor> struct uses_executor;
+        template<class T, class Executor> struct uses_executor;
 
       } // inline namespace network_v1
     } // namespace experimental

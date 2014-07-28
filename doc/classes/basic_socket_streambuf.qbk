@@ -4,7 +4,7 @@
     namespace experimental {
       inline namespace network_v1 {
 
-        template <class Protocol, class Clock, class WaitTraits>
+        template<class Protocol, class Clock, class WaitTraits>
         class basic_socket_streambuf :
           public basic_streambuf<char>,
           public basic_socket<Protocol>

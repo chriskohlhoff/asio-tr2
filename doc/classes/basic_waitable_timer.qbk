@@ -4,7 +4,7 @@
     namespace experimental {
       inline namespace network_v1 {
 
-        template <class Clock, class WaitTraits = wait_traits<Clock>>
+        template<class Clock, class WaitTraits = wait_traits<Clock>>
         class basic_waitable_timer
         {
         public:
@@ -43,7 +43,7 @@
           void wait();
           void wait(error_code& ec);
 
-          template <class CompletionToken>
+          template<class CompletionToken>
             auto async_wait(CompletionToken&& token);
         };
 
@@ -169,7 +169,7 @@ the calling thread for the relative time produced by
 
 [function_postconditions `!!ec || !(Clock::now() < expiry())`.]
 
-  template <class CompletionToken>
+  template<class CompletionToken>
     auto async_wait(CompletionToken&& token);
 
 [function_block An [link requirements.asynchronous_operations asynchronous

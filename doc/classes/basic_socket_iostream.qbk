@@ -4,7 +4,7 @@
     namespace experimental {
       inline namespace network_v1 {
 
-        template <class Protocol, class Clock, class WaitTraits>
+        template<class Protocol, class Clock, class WaitTraits>
         class basic_socket_iostream :
           public basic_iostream<char>
         {
@@ -18,12 +18,12 @@
           // constructors:
 
           basic_socket_iostream();
-          template <class... Args>
+          template<class... Args>
             explicit basic_socket_iostream(Args&&... args);
 
           // members:
 
-          template <class... Args> void connect(Args&&... args);
+          template<class... Args> void connect(Args&&... args);
 
           void close();
 
@@ -62,7 +62,7 @@ class with `basic_iostream<char>(&sb_)`, initialising `sb_` with
 `basic_socket_streambuf<Protocol, Clock, WaitTraits>()`, and performing
 `this->setf(std::ios_base::unitbuf)`.]
 
-  template <class... Args>
+  template<class... Args>
     explicit basic_socket_iostream(Args&&... args);
 
 [function_effects Constructs an object of class
@@ -77,7 +77,7 @@ a null pointer, calls `setstate(failbit)`.]
 
 [section [^basic_socket_iostream] members]
 
-  template <class... Args>
+  template<class... Args>
     void connect(Args&&... args);
 
 [function_effects Calls `rdbuf()->connect(forward<Args>(args)__dotdotdot__)`.

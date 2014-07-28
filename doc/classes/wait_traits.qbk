@@ -4,7 +4,7 @@
     namespace experimental {
       inline namespace network_v1 {
 
-        template <class Clock>
+        template<class Clock>
         struct wait_traits
         {
           static typename Clock::duration to_duration(

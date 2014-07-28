@@ -15,14 +15,14 @@
           void work_started() noexcept;
           void work_finished() noexcept;
 
-          template <class Func, class Alloc>
+          template<class Func, class Alloc>
             void dispatch(Func&& f, const Alloc& a);
-          template <class Func, class Alloc>
+          template<class Func, class Alloc>
             void post(Func&& f, const Alloc& a);
-          template <class Func, class Alloc>
+          template<class Func, class Alloc>
             void defer(Func&& f, const Alloc& a);
 
-          template <class T>
+          template<class T>
             executor_wrapper<decay_t<T>, system_executor>
               wrap(T&& t) const;
         };
@@ -61,12 +61,12 @@ from `execution_context`.]
 
 [function_effects Does nothing.]
 
-  template <class Func, class Alloc>
+  template<class Func, class Alloc>
     void dispatch(Func&& f, const Alloc& a);
 
 [function_effects Calls [^['DECAY_COPY]]`(forward<Func>(f))()`.]
 
-  template <class Func, class Alloc>
+  template<class Func, class Alloc>
     void post(Func&& f, const Alloc& a);
 
 [function_effects Calls [^['DECAY_COPY]]`(forward<Func>(f))()` as if in a
@@ -75,7 +75,7 @@ being evaluated in the thread that called `post`. Any exception propagated from
 the execution of [^['DECAY_COPY]]`(forward<Func>(f))()` shall result in a call
 to `std::terminate`.]
 
-  template <class Func, class Alloc>
+  template<class Func, class Alloc>
     void defer(Func&& f, const Alloc& a);
 
 [function_effects Calls [^['DECAY_COPY]]`(forward<Func>(f))()` as if in a
@@ -84,7 +84,7 @@ being evaluated in the thread that called `defer`. Any exception propagated
 from the execution of [^['DECAY_COPY]]`(forward<Func>(f))()` shall result in a
 call to `std::terminate`.]
 
-  template <class T>
+  template<class T>
     executor_wrapper<decay_t<T>, system_executor>
       wrap(T&& t) const;
 

@@ -52,7 +52,7 @@ initialising the object as `result(handler)`; and
 `void(R1 r1, R2 r2)`, an initiating function meeting these requirements may be
 implemented as follows:
 
-  template <class CompletionToken>
+  template<class CompletionToken>
   auto async_xyz(T1 t1, T2 t2, CompletionToken&& token)
   {
     handler_type_t<CompletionToken, void(R1 r1, R2 r2)>
@@ -68,7 +68,7 @@ implemented as follows:
 For convenience, initiating functions may be implemented using the
 `async_completion` template:
 
-  template <class CompletionToken>
+  template<class CompletionToken>
   auto async_xyz(T1 t1, T2 t2, CompletionToken&& token)
   {
     async_completion<CompletionToken, void(R1 r1, R2 r2)> init(token);

@@ -88,9 +88,9 @@
               basic_ostream<CharT, Traits>&, const address_v6&);
 
           // ``[link functions.ip__address_cast address conversions]``:
-          template <class T> constexpr T address_cast(const address&) noexcept(``['see below]``);
-          template <class T> constexpr T address_cast(const address_v4&) noexcept(``['see below]``);
-          template <class T> constexpr T address_cast(const address_v6&) noexcept(``['see below]``);
+          template<class T> constexpr T address_cast(const address&) noexcept(``['see below]``);
+          template<class T> constexpr T address_cast(const address_v4&) noexcept(``['see below]``);
+          template<class T> constexpr T address_cast(const address_v6&) noexcept(``['see below]``);
 
           template<class InternetProtocol>
             class ``[link classes.ip__basic_endpoint basic_endpoint]``;
@@ -183,15 +183,15 @@
       } // inline namespace network_v1
     } // namespace experimental
 
-    template <> struct is_error_condition_enum<
+    template<> struct is_error_condition_enum<
       experimental::network_v1::ip::resolver_errc>
         : public true_type {};
 
     // ``[link classes.hash hash support]``
-    template <class T> struct hash;
-    template <> struct hash<experimental::network_v1::ip::address>;
-    template <> struct hash<experimental::network_v1::ip::address_v4>;
-    template <> struct hash<experimental::network_v1::ip::address_v6>;
+    template<class T> struct hash;
+    template<> struct hash<experimental::network_v1::ip::address>;
+    template<> struct hash<experimental::network_v1::ip::address_v4>;
+    template<> struct hash<experimental::network_v1::ip::address_v6>;
 
   } // namespace std
 

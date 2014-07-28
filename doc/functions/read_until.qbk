@@ -1,15 +1,15 @@
 [section:read_until Synchronous delimited read operations]
 
-  template <class SyncReadStream, class Allocator>
+  template<class SyncReadStream, class Allocator>
     size_t read_until(SyncReadStream& s, basic_fifobuf<Allocator>& fb,
                       char delim);
-  template <class SyncReadStream, class Allocator>
+  template<class SyncReadStream, class Allocator>
     size_t read_until(SyncReadStream& s, basic_fifobuf<Allocator>& fb,
                       char delim, error_code& ec);
-  template <class SyncReadStream, class Allocator>
+  template<class SyncReadStream, class Allocator>
     size_t read_until(SyncReadStream& s, basic_fifobuf<Allocator>& fb,
                       const string& delim);
-  template <class SyncReadStream, class Allocator>
+  template<class SyncReadStream, class Allocator>
     size_t read_until(SyncReadStream& s, basic_fifobuf<Allocator>& fb,
                       const string& delim, error_code& ec);
 

@@ -4,7 +4,7 @@
     namespace experimental {
       inline namespace network_v1 {
 
-        template <class Protocol>
+        template<class Protocol>
         class basic_socket :
           public socket_base
         {
@@ -39,19 +39,19 @@
           void cancel();
           void cancel(error_code& ec);
 
-          template <class SettableSocketOption>
+          template<class SettableSocketOption>
             void set_option(const SettableSocketOption& option);
-          template <class SettableSocketOption>
+          template<class SettableSocketOption>
             void set_option(const SettableSocketOption& option, error_code& ec);
 
-          template <class GettableSocketOption>
+          template<class GettableSocketOption>
             void get_option(GettableSocketOption& option) const;
-          template <class GettableSocketOption>
+          template<class GettableSocketOption>
             void get_option(GettableSocketOption& option, error_code& ec) const;
 
-          template <class IoControlCommand>
+          template<class IoControlCommand>
             void io_control(IoControlCommand& command);
-          template <class IoControlCommand>
+          template<class IoControlCommand>
             void io_control(IoControlCommand& command, error_code& ec);
 
           void non_blocking(bool mode);
@@ -83,7 +83,7 @@
           void connect(const endpoint_type& endpoint);
           void connect(const endpoint_type& endpoint, error_code& ec);
 
-          template <class CompletionToken>
+          template<class CompletionToken>
             auto async_connect(const endpoint_type& endpoint,
                                CompletionToken&& token);
 
@@ -97,14 +97,14 @@
                        const native_handle_type& native_socket); // See ``[link requirements.native_handles native handles]``
           basic_socket(const basic_socket&) = delete;
           basic_socket(basic_socket&& rhs);
-          template <class OtherProtocol>
+          template<class OtherProtocol>
             basic_socket(basic_socket<OtherProtocol>&& rhs);
 
           ~basic_socket();
 
           basic_socket& operator=(const basic_socket&) = delete;
           basic_socket& operator=(basic_socket&& rhs);
-          template <class OtherProtocol>
+          template<class OtherProtocol>
             basic_socket& operator=(basic_socket<OtherProtocol>&& rhs);
         };
 
@@ -174,7 +174,7 @@ constructor invocation.\n
 to the constructor invocation.\n
 [mdash] `rhs.is_open() == false`.]
 
-  template <class OtherProtocol>
+  template<class OtherProtocol>
     basic_socket(basic_socket<OtherProtocol>&& rhs);
 
 [function_requires `OtherProtocol` is implicitly convertible to `Protocol`.]
@@ -229,7 +229,7 @@ to the assignment.\n
 
 [function_returns `*this`.]
 
-  template <class OtherProtocol>
+  template<class OtherProtocol>
     basic_socket& operator=(basic_socket<OtherProtocol>&& rhs);
 
 [function_requires `OtherProtocol` is implicitly convertible to `Protocol`.]
@@ -342,25 +342,25 @@ cancel asynchronous operations started from the same thread. Vista provides
 `CancelIoEx` which may be used to cancel all asynchronous operations associated
 with a socket.]
 
-  template <class SettableSocketOption>
+  template<class SettableSocketOption>
     void set_option(const SettableSocketOption& option);
-  template <class SettableSocketOption>
+  template<class SettableSocketOption>
     void set_option(const SettableSocketOption& option, error_code& ec);
 
 [function_effects Sets an option on the socket, as if by __POSIX__
 __setsockopt__.]
 
-  template <class GettableSocketOption>
+  template<class GettableSocketOption>
     void get_option(GettableSocketOption& option);
-  template <class GettableSocketOption>
+  template<class GettableSocketOption>
     void get_option(GettableSocketOption& option, error_code& ec);
 
 [function_effects Gets an option from the socket, as if by __POSIX__
 __getsockopt__.]
 
-  template <class IoControlCommand>
+  template<class IoControlCommand>
     void io_control(IoControlCommand& command);
-  template <class IoControlCommand>
+  template<class IoControlCommand>
     void io_control(IoControlCommand& command, error_code& ec);
 
 [function_effects Executes an I/O control command on the socket, as if by
@@ -474,7 +474,7 @@ if by __POSIX__ __getpeername__.]
 `open(endpoint.protocol(), ec)`; then, if no error has occurred, connects the
 socket to the specified remote endpoint, as if by __POSIX__ __connect__.]
 
-  template <class CompletionToken>
+  template<class CompletionToken>
     auto async_connect(const endpoint_type& endpoint, CompletionToken&& token);
 
 [function_block An [link requirements.asynchronous_operations asynchronous

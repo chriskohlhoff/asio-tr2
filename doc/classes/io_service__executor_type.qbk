@@ -26,14 +26,14 @@
           void work_started() noexcept;
           void work_finished() noexcept;
 
-          template <class Func, class Alloc>
+          template<class Func, class Alloc>
             void dispatch(Func&& f, const Alloc& a);
-          template <class Func, class Alloc>
+          template<class Func, class Alloc>
             void post(Func&& f, const Alloc& a);
-          template <class Func, class Alloc>
+          template<class Func, class Alloc>
             void defer(Func&& f, const Alloc& a);
 
-          template <class T>
+          template<class T>
             executor_wrapper<decay_t<T>, executor_type>
               wrap(T&& t) const;
         };
@@ -41,7 +41,7 @@
         bool operator==(const io_service::executor_type& a, const io_service::executor_type& b);
         bool operator!=(const io_service::executor_type& a, const io_service::executor_type& b);
 
-        template <> struct is_executor<io_service::executor_type> : true_type {};
+        template<> struct is_executor<io_service::executor_type> : true_type {};
 
       } // inline namespace network_v1
     } // namespace experimental
@@ -106,7 +106,7 @@ associated with an `io_service`, and function objects submitted using the
 
 [function_effects Calls `inner_ex_.work_finished()`.]
 
-  template <class Func, class Alloc>
+  template<class Func, class Alloc>
     void dispatch(Func&& f, const Alloc& a);
 
 [function_effects If `running_in_this_thread()` is true, calls
@@ -116,17 +116,17 @@ associated with an `io_service`, and function objects submitted using the
 performed in the current thread and before `dispatch` returns, the exception
 shall propagate to the caller of `dispatch`.]
 
-  template <class Func, class Alloc>
+  template<class Func, class Alloc>
     void post(Func&& f, const Alloc& a);
 
 [function_effects Requests execution of `f`.]
 
-  template <class Func, class Alloc>
+  template<class Func, class Alloc>
     void defer(Func&& f, const Alloc& a);
 
 [function_effects Requests execution of `f`.]
 
-  template <class T>
+  template<class T>
     executor_wrapper<decay_t<T>, executor_type<Executor>>
       wrap(T&& t) const;
 

@@ -26,10 +26,10 @@
         };
 
         // service access:
-        template <class Service> Service& use_service(execution_context& ctx);
-        template <class Service, class... Args> Service&
+        template<class Service> Service& use_service(execution_context& ctx);
+        template<class Service, class... Args> Service&
           make_service(execution_context& ctx, Args&&... args);
-        template <class Service> bool has_service(execution_context& ctx) const;
+        template<class Service> bool has_service(execution_context& ctx) const;
         class service_already_exists : public logic_error { ... };
 
       } // inline namespace network_v1
@@ -109,7 +109,7 @@ The functions `use_service`, `make_service` and `has_service` shall not
 introduce data races as a result of concurrent calls to those functions from
 different threads.
 
-  template <class Service> Service& use_service(execution_context& ctx);
+  template<class Service> Service& use_service(execution_context& ctx);
 
 [function_block Let `Key` be `Service::key_type` if the nested typedef
 `Service::key_type` exists; otherwise, let `Key` be `Service`.]
@@ -131,7 +131,7 @@ publicly and unambiguously derived from `Service::key_type`, and
 [function_notes The reference returned remains valid until a call to
 `destroy_context`.]
 
-  template <class Service, class... Args> Service&
+  template<class Service, class... Args> Service&
     make_service(execution_context& ctx, Args&&... args);
 
 [function_block Let `Key` be `Service::key_type` if the nested typedef
@@ -156,7 +156,7 @@ type `Key` is already present in the set.]
 [function_notes The reference returned remains valid until a call to
 `destroy_context`.]
 
-  template <class Service> bool has_service(execution_context& ctx) const;
+  template<class Service> bool has_service(execution_context& ctx) const;
 
 [function_block Let `Key` be `Service::key_type` if the nested typedef
 `Service::key_type` exists; otherwise, let `Key` be `Service`.]

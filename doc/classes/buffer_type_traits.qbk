@@ -4,8 +4,8 @@
     namespace experimental {
       inline namespace network_v1 {
 
-        template <class T> is_mutable_buffer_sequence;
-        template <class T> is_const_buffer_sequence;
+        template<class T> is_mutable_buffer_sequence;
+        template<class T> is_const_buffer_sequence;
 
       } // inline namespace network_v1
     } // namespace experimental
@@ -19,7 +19,7 @@ corresponding condition is true, otherwise `false_type`.
 [table Buffer type traits
   [[Template][Condition][Preconditions]]
   [
-    [`template <class T> is_mutable_buffer_sequence`]
+    [`template<class T> is_mutable_buffer_sequence`]
     [
       `T` meets the requirements for [link requirements.mutable_buffers mutable
       buffer sequence].
@@ -29,7 +29,7 @@ corresponding condition is true, otherwise `false_type`.
     ]
   ]
   [
-    [`template <class T> is_const_buffer_sequence`]
+    [`template<class T> is_const_buffer_sequence`]
     [
       `T` meets the requirements for [link requirements.const_buffers constant
       buffer sequence].

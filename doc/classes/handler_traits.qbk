@@ -4,32 +4,32 @@
     namespace experimental {
       inline namespace network_v1 {
 
-        template <class Handler>
+        template<class Handler>
         struct handler_traits
         {
           typedef Handler handler_type;
 
-          template <class E = system_executor>
+          template<class E = system_executor>
           struct executor {
             typedef ``['see below]`` type;
           };
 
-          template <class E = system_executor>
+          template<class E = system_executor>
           using executor_t = typename executor<E>::type;
 
-          template <class E = system_executor>
+          template<class E = system_executor>
             static executor_t<E> get_executor(
               const Handler& h, const E& ex = E()) noexcept;
 
-          template <class A = allocator<void>>
+          template<class A = allocator<void>>
           struct allocator {
             typedef ``['see below]`` type;
           };
 
-          template <class A = allocator<void>>
+          template<class A = allocator<void>>
           using allocator_t = typename allocator<A>::type;
 
-          template <class A = allocator<void>>
+          template<class A = allocator<void>>
             static allocator_t<A> get_allocator(
               const Handler& h, const A& a = A()) noexcept;
         };
@@ -122,7 +122,7 @@ requirements (C++ Std, [allocator.requirements]).
 
 [section [^handler_traits] members]
 
-  template <class E = system_executor>
+  template<class E = system_executor>
   struct executor {
     typedef ``['see below]`` type;
   };
@@ -134,7 +134,7 @@ requirements (C++ Std, [allocator.requirements]).
 Handler::executor_type`;\n
 [mdash] otherwise `E`.]
 
-  template <class E = system_executor>
+  template<class E = system_executor>
     static executor_t<E> get_executor(
       const Handler& h, const E& ex = E()) noexcept;
 
@@ -145,7 +145,7 @@ Handler::executor_type`;\n
 `h.get_executor()`;\n
 [mdash] otherwise `ex`.]
 
-  template <class A = allocator<void>>
+  template<class A = allocator<void>>
   struct allocator {
     typedef ``['see below]`` type;
   };
@@ -157,7 +157,7 @@ Handler::executor_type`;\n
 Handler::allocator_type`;\n
 [mdash] otherwise `A`.]
 
-  template <class A = allocator<void>>
+  template<class A = allocator<void>>
     static allocator_t<A> get_allocator(
       const Handler& h, const A& a = A()) noexcept;
 

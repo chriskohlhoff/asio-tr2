@@ -1,6 +1,6 @@
 [section:defer Function [^defer]]
 
-  template <class CompletionToken>
+  template<class CompletionToken>
     auto defer(CompletionToken&& token);
 
 [function_block Let the type `Handler` be the handler function object type
@@ -23,7 +23,7 @@ initializing the object as `result(handler)`.\n
 
 [function_returns `result.get()`.]
 
-  template <class Executor, class CompletionToken>
+  template<class Executor, class CompletionToken>
     auto defer(const Executor& ex, CompletionToken&& token);
 
 [function_block Let the type `Handler` be the handler function object type

@@ -15,7 +15,7 @@
             constexpr address_v4() noexcept;
             constexpr address_v4(const address_v4& a) noexcept;
             constexpr address_v4(const bytes_type& bytes);
-            template <class... T> explicit constexpr address(T&&... t);
+            template<class... T> explicit constexpr address(T&&... t);
 
             // assignment:
             address_v4& operator=(const address_v4& a) noexcept;
@@ -76,7 +76,7 @@
 
           struct address_v4::bytes_type : array<unsigned char, 4>
           {
-            template <class... T> explicit constexpr bytes_type(T... t)
+            template<class... T> explicit constexpr bytes_type(T... t)
               : array<unsigned char, 4>{{static_cast<unsigned char>(t)...}} {}
           };
 
@@ -122,7 +122,7 @@ out-of-range detection is needed.]]
 [function_postconditions `to_bytes() == bytes` and `to_ulong() == (bytes[0]
 << 24) | (bytes[1] << 16) | (bytes[2] << 8) | bytes[3]`.]
 
-  template <class... T> explicit constexpr address_v4(T&&... t);
+  template<class... T> explicit constexpr address_v4(T&&... t);
 
 [function_remarks This constructor shall not participate in overload resolution
 unless the expression `make_address_v4(forward<T>(t).``.``.)` is valid and yields an

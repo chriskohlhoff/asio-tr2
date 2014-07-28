@@ -8,11 +8,11 @@
 
         // io_service specialized algorithms:
 
-        template <class CompletionToken>
+        template<class CompletionToken>
           auto dispatch(io_service& ios, CompletionToken&& token);
-        template <class CompletionToken>
+        template<class CompletionToken>
           auto post(io_service& ios, CompletionToken&& token);
-        template <class CompletionToken>
+        template<class CompletionToken>
           auto defer(io_service& ios, CompletionToken&& token);
 
       } // inline namespace network_v1

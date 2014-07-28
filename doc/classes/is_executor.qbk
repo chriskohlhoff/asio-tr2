@@ -4,7 +4,7 @@
     namespace experimental {
       inline namespace network_v1 {
 
-        template <class T> struct is_executor : false_type {};
+        template<class T> struct is_executor : false_type {};
 
       } // inline namespace network_v1
     } // namespace experimental

@@ -4,7 +4,7 @@
     namespace experimental {
       inline namespace network_v1 {
 
-        template <class Executor>
+        template<class Executor>
         class strand
         {
         public:
@@ -18,13 +18,13 @@
           explicit strand(Executor ex);
           strand(const strand& other);
           strand(strand&& other);
-          template <class OtherExecutor> strand(const strand<OtherExecutor>& other);
-          template <class OtherExecutor> strand(strand<OtherExecutor>&& other);
+          template<class OtherExecutor> strand(const strand<OtherExecutor>& other);
+          template<class OtherExecutor> strand(strand<OtherExecutor>&& other);
 
           strand& operator=(const strand& other);
           strand& operator=(strand&& other);
-          template <class OtherExecutor> strand& operator=(const strand<OtherExecutor>& other);
-          template <class OtherExecutor> strand& operator=(strand<OtherExecutor>&& other);
+          template<class OtherExecutor> strand& operator=(const strand<OtherExecutor>& other);
+          template<class OtherExecutor> strand& operator=(strand<OtherExecutor>&& other);
 
           ~strand();
 
@@ -39,14 +39,14 @@
           void work_started() noexcept;
           void work_finished() noexcept;
 
-          template <class Func, class Alloc>
+          template<class Func, class Alloc>
             void dispatch(Func&& f, const Alloc& a);
-          template <class Func, class Alloc>
+          template<class Func, class Alloc>
             void post(Func&& f, const Alloc& a);
-          template <class Func, class Alloc>
+          template<class Func, class Alloc>
             void defer(Func&& f, const Alloc& a);
 
-          template <class T>
+          template<class T>
             executor_wrapper<decay_t<T>, strand<Executor>>
               wrap(T&& t) const;
 
@@ -127,7 +127,7 @@ represents a unique ordered, non-concurrent state. Initializes `inner_ex_` with
 [mdash] `*this` is equal to the prior value of `other`\n
 [mdash] `get_inner_executor() == other.get_inner_executor()`]
 
-  template <class OtherExecutor> strand(const strand<OtherExecutor>& other);
+  template<class OtherExecutor> strand(const strand<OtherExecutor>& other);
 
 [function_requires `OtherExecutor` is convertible to `Executor`.]
 
@@ -136,7 +136,7 @@ represents a unique ordered, non-concurrent state. Initializes `inner_ex_` with
 
 [function_postconditions `*this == other`.]
 
-  template <class OtherExecutor> strand(strand<OtherExecutor>&& other);
+  template<class OtherExecutor> strand(strand<OtherExecutor>&& other);
 
 [function_requires `OtherExecutor` is convertible to `Executor`.]
 
@@ -169,7 +169,7 @@ represents a unique ordered, non-concurrent state. Initializes `inner_ex_` with
 
 [function_returns `*this`.]
 
-  template <class OtherExecutor> strand& operator=(const strand<OtherExecutor>& other);
+  template<class OtherExecutor> strand& operator=(const strand<OtherExecutor>& other);
 
 [function_requires `OtherExecutor` is convertible to `Executor`. `Executor` is
 `Assignable` (C++ Std \[assignable\]).]
@@ -178,7 +178,7 @@ represents a unique ordered, non-concurrent state. Initializes `inner_ex_` with
 
 [function_returns `*this`.]
 
-  template <class OtherExecutor> strand& operator=(strand<OtherExecutor>&& other);
+  template<class OtherExecutor> strand& operator=(strand<OtherExecutor>&& other);
 
 [function_requires `OtherExecutor` is convertible to `Executor`. `Executor` is
 `Assignable` (C++ Std \[assignable\]).]
@@ -225,7 +225,7 @@ such that `s == *this`, using `dispatch`, `post` or `defer`; otherwise
 
 [function_effects Calls `inner_ex_.work_finished()`.]
 
-  template <class Func, class Alloc>
+  template<class Func, class Alloc>
     void dispatch(Func&& f, const Alloc& a);
 
 [function_effects If `running_in_this_thread()` is true, calls
@@ -237,21 +237,21 @@ as if by forwarding the function object `f` and allocator `a` to the executor
 performed in the current thread and before `dispatch` returns, the exception
 shall propagate to the caller of `dispatch()`]
 
-  template <class Func, class Alloc>
+  template<class Func, class Alloc>
     void post(Func&& f, const Alloc& a);
 
 [function_effects Requests invocation of `f`, as if by forwarding the function
 object `f` and allocator `a` to the executor `inner_ex_`, such that the
 guarantees of ordering and non-concurrency are met.]
 
-  template <class Func, class Alloc>
+  template<class Func, class Alloc>
     void defer(Func&& f, const Alloc& a);
 
 [function_effects Requests invocation of `f`, as if by forwarding the function
 object `f` and allocator `a` to the executor `inner_ex_`, such that the
 guarantees of ordering and non-concurrency are met.]
 
-  template <class T>
+  template<class T>
     executor_wrapper<decay_t<T>, strand<Executor>>
       wrap(T&& t) const;
 

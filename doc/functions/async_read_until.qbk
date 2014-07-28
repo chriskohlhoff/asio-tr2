@@ -1,10 +1,10 @@
 [section:async_read_until Asynchronous delimited read operations]
 
-  template <class AsyncReadStream, class Allocator, class CompletionToken>
+  template<class AsyncReadStream, class Allocator, class CompletionToken>
     auto async_read_until(AsyncReadStream& s,
                           basic_fifobuf<Allocator>& fb, char delim,
                           CompletionToken&& token);
-  template <class AsyncReadStream, class Allocator, class CompletionToken>
+  template<class AsyncReadStream, class Allocator, class CompletionToken>
     auto async_read_until(AsyncReadStream& s,
                           basic_fifobuf<Allocator>& fb,
                           const string& delim, CompletionToken&& token);

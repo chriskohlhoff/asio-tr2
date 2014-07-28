@@ -1,9 +1,9 @@
 [section:connect Synchronous connect operations]
 
-  template <class Protocol, class InputIterator>
+  template<class Protocol, class InputIterator>
     InputIterator connect(basic_socket<Protocol>& s,
                           InputIterator first);
-  template <class Protocol, class InputIterator>
+  template<class Protocol, class InputIterator>
     InputIterator connect(basic_socket<Protocol>& s,
                           InputIterator first,
                           error_code& ec);
@@ -13,10 +13,10 @@ end-of-sequence iterator.]
 
 [function_returns `connect(s, first, InputIterator(), ec)`.]
 
-  template <class Protocol, class InputIterator>
+  template<class Protocol, class InputIterator>
     InputIterator connect(basic_socket<Protocol>& s,
                           InputIterator first, InputIterator last);
-  template <class Protocol, class InputIterator>
+  template<class Protocol, class InputIterator>
     InputIterator connect(basic_socket<Protocol>& s,
                           InputIterator first, InputIterator last,
                           error_code& ec);
@@ -30,11 +30,11 @@ by the last unsuccessful connect operation and the function returns `last`.]
 [function_error_conditions\n
 [mdash] `socket_errc::not_found` [mdash] if `first == last`.]
 
-  template <class Protocol, class InputIterator, class ConnectCondition>
+  template<class Protocol, class InputIterator, class ConnectCondition>
     InputIterator connect(basic_socket<Protocol>& s,
                           InputIterator first,
                           ConnectCondition c);
-  template <class Protocol, class InputIterator, class ConnectCondition>
+  template<class Protocol, class InputIterator, class ConnectCondition>
     InputIterator connect(basic_socket<Protocol>& s,
                           InputIterator first,
                           ConnectCondition c, error_code& ec);
@@ -44,11 +44,11 @@ end-of-sequence iterator.]
 
 [function_returns `connect(s, first, InputIterator(), c, ec)`.]
 
-  template <class Protocol, class InputIterator, class ConnectCondition>
+  template<class Protocol, class InputIterator, class ConnectCondition>
     InputIterator connect(basic_socket<Protocol>& s,
                           InputIterator first, InputIterator last,
                           ConnectCondition c);
-  template <class Protocol, class InputIterator, class ConnectCondition>
+  template<class Protocol, class InputIterator, class ConnectCondition>
     InputIterator connect(basic_socket<Protocol>& s,
                           InputIterator first, InputIterator last,
                           ConnectCondition c, error_code& ec);

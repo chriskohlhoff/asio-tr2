@@ -4,7 +4,7 @@
     namespace experimental {
       inline namespace network_v1 {
 
-        template <class CompletionToken, class Signature, class = void>
+        template<class CompletionToken, class Signature, class = void>
         struct handler_type
         {
           typedef ``['see below]`` type;

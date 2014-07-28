@@ -1,6 +1,6 @@
 [section:async_connect Asynchronous connect operations]
 
-  template <class Protocol, class InputIterator, class CompletionToken>
+  template<class Protocol, class InputIterator, class CompletionToken>
     auto async_connect(basic_socket<Protocol>& s,
                        InputIterator first,
                        CompletionToken&& token);
@@ -11,7 +11,7 @@ end-of-sequence iterator.]
 [function_returns `async_connect(s, first, InputIterator(),
 forward<CompletionToken>(token))`.]
 
-  template <class Protocol, class InputIterator, class CompletionToken>
+  template<class Protocol, class InputIterator, class CompletionToken>
     auto async_connect(basic_socket<Protocol>& s,
                        InputIterator first, InputIterator last,
                        CompletionToken&& token);
@@ -31,7 +31,7 @@ operation and `i` contains `last`.]
 [function_error_conditions\n
 [mdash] `socket_errc::not_found` [mdash] if `first == last`.]
 
-  template <class Protocol, class InputIterator,
+  template<class Protocol, class InputIterator,
     class ConnectCondition, class CompletionToken>
       auto async_connect(basic_socket<Protocol>& s,
                          InputIterator first,
@@ -44,7 +44,7 @@ end-of-sequence iterator.]
 [function_returns `async_connect(s, first, InputIterator(), c,
 forward<CompletionToken>(token))`.]
 
-  template <class Protocol, class InputIterator,
+  template<class Protocol, class InputIterator,
     class ConnectCondition, class CompletionToken>
       auto async_connect(basic_socket<Protocol>& s,
                          InputIterator first, InputIterator last,
