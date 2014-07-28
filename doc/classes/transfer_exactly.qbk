@@ -8,7 +8,7 @@
         {
         public:
           explicit transfer_exactly(size_t e);
-          bool operator()(const error_code& ec, size_t s) const;
+          size_t operator()(const error_code& ec, size_t s) const;
         private:
           size_t exact_; // ``['exposition only]``
         };
