@@ -41,6 +41,8 @@
         bool operator==(const io_service::executor_type& a, const io_service::executor_type& b);
         bool operator!=(const io_service::executor_type& a, const io_service::executor_type& b);
 
+        template <> struct is_executor<io_service::executor_type> : true_type {};
+
       } // inline namespace network_v1
     } // namespace experimental
   } // namespace std

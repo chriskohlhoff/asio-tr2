@@ -58,6 +58,8 @@
         bool operator==(const system_executor&, const system_executor&);
         bool operator!=(const system_executor&, const system_executor&);
 
+        template <> struct is_executor<system_executor> : true_type {};
+
         ``// [link functions.dispatch dispatch]:``
 
         template <class CompletionToken>
