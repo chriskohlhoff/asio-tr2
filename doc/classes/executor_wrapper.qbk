@@ -60,6 +60,9 @@
         template <class T, class Executor>
           class async_result<executor_wrapper<T, Executor>>;
 
+        template <class T, class Executor>
+          struct handler_traits<executor_wrapper<T, Executor>>;
+
       } // inline namespace network_v1
     } // namespace experimental
   } // namespace std
@@ -226,6 +229,68 @@ the [link classes.async_result `async_result` specialization requirements].
   type get();
 
 [function_returns `wrapped_.get()`.]
+
+[endsect]
+
+[section Class template specialization [^handler_traits]]
+
+  namespace std {
+    namespace experimental {
+      inline namespace network_v1 {
+
+        template <class T, class Executor>
+        struct handler_traits<executor_wrapper<T, Executor>>
+        {
+          typedef executor_wrapper<T, Executor> handler_type;
+
+          template <class E = system_executor>
+          struct executor {
+            typedef Executor executor;
+          };
+
+          template <class E = system_executor>
+          using executor_t = typename executor<E>::type;
+
+          template <class E = system_executor>
+            static executor_t<E> get_executor(
+              const executor_wrapper<T, Executor>& w,
+                const E& ex = E()) noexcept;
+
+          template <class A = allocator<void>>
+          struct allocator {
+            typedef typename handler_traits<T>::allocator<A>::type type;
+          };
+
+          template <class A = allocator<void>>
+          using allocator_t = typename allocator<A>::type;
+
+          template <class A = allocator<void>>
+            static allocator_t<A> get_allocator(
+              const executor_wrapper<T, Executor>& w,
+                const A& a = A()) noexcept;
+        };
+
+      } // inline namespace network_v1
+    } // namespace experimental
+  } // namespace std
+
+The implementation shall provide a specialization of `handler_traits` that
+meets the [link classes.handler_traits `handler_traits` specialization
+requirements].
+
+  template <class E = system_executor>
+    static executor_t<E> get_executor(
+      const executor_wrapper<T, Executor>& w,
+        const E& ex = E()) noexcept;
+
+[function_returns `w.get_executor()`.]
+
+  template <class A = allocator<void>>
+    static allocator_t<A> get_allocator(
+      const executor_wrapper<T, Executor>& w,
+        const A& a = A()) noexcept;
+
+[function_returns `handler_traits<T>::get_allocator(w.unwrap(), a)`.]
 
 [endsect]
 

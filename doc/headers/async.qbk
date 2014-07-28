@@ -16,6 +16,8 @@
         template <class CompletionToken, class Signature>
           struct ``[link classes.async_completion async_completion]``;
 
+        template <class Handler> struct ``[link classes.handler_traits handler_traits]``;
+
         enum class fork_event {
           prepare,
           parent,
@@ -46,14 +48,15 @@
         template <class T, class Executor>
           class async_result<executor_wrapper<T, Executor>>;
 
+        template <class T, class Executor>
+          struct handler_traits<executor_wrapper<T, Executor>>;
+
         template <class T, class Executor> struct ``[link classes.executor_work executor_work]``;
 
         class ``[link classes.system_executor system_executor]``;
 
         bool operator==(const system_executor&, const system_executor&);
         bool operator!=(const system_executor&, const system_executor&);
-
-        template <class Handler> struct ``[link classes.handler_traits handler_traits]``;
 
       } // inline namespace network_v1
     } // namespace experimental

@@ -4,7 +4,8 @@
     namespace experimental {
       inline namespace network_v1 {
 
-        template <class Handler> struct handler_traits
+        template <class Handler>
+        struct handler_traits
         {
           typedef Handler handler_type;
 
