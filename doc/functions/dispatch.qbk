@@ -1,0 +1,57 @@
+[section:dispatch Function [^dispatch]]
+
+  template <class CompletionToken>
+    auto dispatch(CompletionToken&& token);
+
+[function_block Let the type `Handler` be the handler function object type
+determined by performing `handler_type_t<CompletionToken, void()>`.]
+
+[function_requires The type `Handler` must satisfy the `MoveConstructible`
+requirements (C++ Std, \[moveconstructible\]) and be callable with zero
+arguments.]
+
+[function_effects\n
+[mdash] Constructs a function object `handler` of type `Handler`, initialized
+with `handler(forward<CompletionToken>(token))`.\n
+[mdash] Constructs an object `result` of type `async_result<Handler>`,
+initializing the object as `result(handler)`.\n
+[mdash] Obtains the handler's associated executor object `ex` by performing
+`handler_traits<Handler>::get_executor(handler)`.\n
+[mdash] Obtains the handler's associated allocator object `alloc` by performing
+`handler_traits<Handler>::get_allocator(handler)`.\n
+[mdash] Performs `ex.dispatch(std::move(handler), alloc)`.]
+
+[function_returns `result.get()`.]
+
+  template <class Executor, class CompletionToken>
+    auto dispatch(const Executor& ex, CompletionToken&& token);
+
+[function_block Let the type `Handler` be the handler function object type
+determined by performing `handler_type_t<CompletionToken, void()>`.]
+
+[function_requires The type `Handler` must satisfy the `MoveConstructible`
+requirements (C++ Std, \[moveconstructible\]) and be callable with zero
+arguments.]
+
+[function_effects\n
+[mdash] Constructs a function object `handler` of type `Handler`,
+initialized with `handler(forward<CompletionToken>(token))`.\n
+[mdash] Constructs an object `result` of type `async_result<Handler>`,
+initializing the object as `result(handler)`.\n
+[mdash] Obtains the handler's associated executor object `ex1` by performing
+`handler_traits<Handler>::get_executor(handler)`.\n
+[mdash] Constructs an object `w` of type
+`executor_work<handler_traits<Handler>::executor_t<>>`, initializing the object
+with `w(ex1)`.\n
+[mdash] Obtains the handler's associated allocator object `alloc` by performing
+`handler_traits<Handler>::get_allocator(handler)`.\n
+[mdash] Constructs a function object `f` with a function call operator that
+performs `ex1.dispatch(std::move(handler), alloc)` followed by `w.reset()`.\n
+[mdash] Performs `ex.dispatch(std::move(f), alloc)`.]
+
+[function_returns `result.get()`.]
+
+[function_remarks This function shall not participate in overload resolution
+unless `is_executor<Executor>::value` is true.]
+
+[endsect]

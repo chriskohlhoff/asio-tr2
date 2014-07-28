@@ -46,6 +46,15 @@
           void restart();
         };
 
+        // io_service specialized algorithms:
+
+        template <class CompletionToken>
+          auto dispatch(io_service& ios, CompletionToken&& token);
+        template <class CompletionToken>
+          auto post(io_service& ios, CompletionToken&& token);
+        template <class CompletionToken>
+          auto defer(io_service& ios, CompletionToken&& token);
+
       } // inline namespace network_v1
     } // namespace experimental
   } // namespace std
@@ -248,6 +257,28 @@ function objects. An `io_service` remains in the stopped state until a call to
   void restart();
 
 [function_postconditions `stopped() == false`.]
+
+[endsect]
+
+[section [^io_service] specialized algorithms]
+
+  template <class CompletionToken>
+    auto dispatch(io_service& ios, CompletionToken&& token);
+
+[function_returns `std::experimental::network_v1::dispatch(ios.get_executor(),
+forward<CompletionToken>(token))`.]
+
+  template <class CompletionToken>
+    auto post(io_service& ios, CompletionToken&& token);
+
+[function_returns `std::experimental::network_v1::post(ios.get_executor(),
+forward<CompletionToken>(token))`.]
+
+  template <class CompletionToken>
+    auto defer(io_service& ios, CompletionToken&& token);
+
+[function_returns `std::experimental::network_v1::defer(ios.get_executor(),
+forward<CompletionToken>(token))`.]
 
 [endsect]
 

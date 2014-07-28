@@ -58,6 +58,27 @@
         bool operator==(const system_executor&, const system_executor&);
         bool operator!=(const system_executor&, const system_executor&);
 
+        ``// [link functions.dispatch dispatch]:``
+
+        template <class CompletionToken>
+          auto dispatch(CompletionToken&& token);
+        template <class Executor, class CompletionToken>
+          auto dispatch(const Executor& ex, CompletionToken&& token);
+
+        ``// [link functions.post post]:``
+
+        template <class CompletionToken>
+          auto post(CompletionToken&& token);
+        template <class Executor, class CompletionToken>
+          auto post(const Executor& ex, CompletionToken&& token);
+
+        ``// [link functions.defer defer]:``
+
+        template <class CompletionToken>
+          auto defer(CompletionToken&& token);
+        template <class Executor, class CompletionToken>
+          auto defer(const Executor& ex, CompletionToken&& token);
+
       } // inline namespace network_v1
     } // namespace experimental
   } // namespace std
