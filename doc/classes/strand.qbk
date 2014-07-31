@@ -34,7 +34,7 @@
 
           bool running_in_this_thread() const noexcept;
 
-          execution_context& context();
+          execution_context& context() noexcept;
 
           void work_started() noexcept;
           void work_finished() noexcept;
@@ -213,7 +213,7 @@ function that was submitted to the strand, or to any other strand object `s`
 such that `s == *this`, using `dispatch`, `post` or `defer`; otherwise
 `false`.]
 
-  execution_context& context();
+  execution_context& context() noexcept;
 
 [function_returns `inner_ex_.context()`.]
 

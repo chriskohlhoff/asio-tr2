@@ -10,7 +10,7 @@
 
           // executor operations:
 
-          execution_context& context();
+          execution_context& context() noexcept;
 
           void work_started() noexcept;
           void work_finished() noexcept;
@@ -48,7 +48,7 @@ calling them.
 
 [section [^system_executor] operations]
 
-  execution_context& context();
+  execution_context& context() noexcept;
 
 [function_returns A reference to a static-duration object of a type derived
 from `execution_context`.]
