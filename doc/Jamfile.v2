@@ -1,24 +1,22 @@
 project asio-tr2-doc
   : build-dir ../bin
+  : requirements
+      <xsl:param>toc.section.depth=6
+      <xsl:param>section.autolabel=1
+      <xsl:param>toc.max.depth=6
   ;
 
 using quickbook ;
 
-boostbook proposal
-  :
-    proposal.qbk
-  :
-    <xsl:param>toc.section.depth=6
-    <xsl:param>section.autolabel=1
-    <xsl:param>toc.max.depth=6
-    <format>onehtml
-  ;
+html networking-pre-style.html : networking.qbk ;
+make networking.html : networking-pre-style.html : @addstyle ;
 
-make networking.html : proposal : @addstyle ;
+html concurrency-pre-style.html : concurrency.qbk ;
+make concurrency.html : concurrency-pre-style.html : @addstyle ;
 
 actions addstyle
 {
   ./addstyle.pl $(>) $(<)
 }
 
-install html : networking.html design/membar.png ;
+install html : networking.html concurrency.html design/membar.png ;

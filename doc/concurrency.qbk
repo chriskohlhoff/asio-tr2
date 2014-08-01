@@ -1,0 +1,172 @@
+[library Executors Proposal
+    [quickbook 1.1]
+    [id concurrency]
+]
+
+[/-----------------------------------------------------------------------------]
+
+[template std_note[text]
+\[['Note:] [text] '''&mdash;'''['end note]\]
+]
+
+[template inline_note[text] \[['Note:] [text] '''&mdash;'''['end note]\] ]
+
+[template std_example[text code]
+\[['Example:] [text]
+[code]
+'''&mdash;'''['end example]\]
+]
+
+[template function_block[text]
+[:[text]]
+]
+
+[template function_requires[text]
+[:['Requires:] [text]]
+]
+
+[template function_effects[text]
+[:['Effects:] [text]]
+]
+
+[template function_returns[text]
+[:['Returns:] [text]]
+]
+
+[template function_throws[text]
+[:['Throws:] [text]]
+]
+
+[template function_postconditions[text]
+[:['Postconditions:] [text]]
+]
+
+[template function_error_conditions[text]
+[:['Error conditions:] [text]]
+]
+
+[template function_completion_signature[text]
+[:['Completion signature:] [text]]
+]
+
+[template function_complexity[text]
+[:['Complexity:] [text]]
+]
+
+[template function_remarks[text]
+[:['Remarks:] [text]]
+]
+
+[template function_notes[text]
+[:['Notes:] [text]]
+]
+
+[template function_note[text]
+[:\[['Note:] [text] '''&mdash;'''['end note]\]]
+]
+
+[template function_example[text]
+[:\[['Example:] [text]
+'''&mdash;'''['end example]\]]
+]
+
+[template function_type[text]
+[:['Type:] [text]]
+]
+
+[template commentary[text]
+[blurb [text]]
+]
+
+[template mdash[] '''&mdash; ''']
+
+[template half_open_range[text] '''&#91;'''[text])]
+
+[/-----------------------------------------------------------------------------]
+
+[def __dotdotdot__ ...]
+[def __unspecified__ '''<emphasis>unspecified</emphasis>''']
+[def __versioned_ns__ concurrency_v1]
+[def __begin_versioned_ns__ inline namespace __versioned_ns__ {]
+[def __end_versioned_ns__ } // inline namespace __versioned_ns__]
+
+[/-----------------------------------------------------------------------------]
+
+[section Overview]
+
+TBD.
+
+[endsect]
+
+[/-----------------------------------------------------------------------------]
+
+[section Motivation and Scope]
+
+TBD.
+
+[section Reference Implementation]
+
+TBD.
+
+[endsect]
+
+[section Related Work]
+
+TBD.
+
+[endsect]
+
+[endsect]
+
+[/-----------------------------------------------------------------------------]
+
+[section Impact On the Standard]
+
+This is a pure library proposal. It does not add any new language features, nor
+does it alter any existing standard library headers.
+
+This library can be implemented using compilers that conform to the C++14
+standard. An implementation of this library requires operating system-specific
+functions that lie outside the C++14 standard.
+
+[endsect]
+
+[/-----------------------------------------------------------------------------]
+
+[section Design Decisions]
+
+TBD.
+
+[endsect]
+
+[/-----------------------------------------------------------------------------]
+
+[section Proposed Text for the Standard]
+
+[commentary Grey-shaded italic text is commentary on the proposal. It is not to
+be added to the TR.]
+
+[include:headers headers/executor.qbk]
+[section:async_requirements Requirements]
+[include:requirements requirements/executor.qbk]
+[include:requirements requirements/service.qbk]
+[endsect]
+[include:classes classes/handler_type.qbk]
+[include:classes classes/async_result.qbk]
+[include:classes classes/async_completion.qbk]
+[include:classes classes/handler_traits.qbk]
+[include:classes classes/execution_context.qbk]
+[include:classes classes/execution_context__service.qbk]
+[include:classes classes/is_executor.qbk]
+[include:classes classes/executor_arg_t.qbk]
+[include:classes classes/uses_executor.qbk]
+[include:classes classes/executor_wrapper.qbk]
+[include:classes classes/executor_work.qbk]
+[include:classes classes/system_executor.qbk]
+[include:functions functions/dispatch.qbk]
+[include:functions functions/post.qbk]
+[include:functions functions/defer.qbk]
+[include:headers headers/strand.qbk]
+[include:classes classes/strand.qbk]
+
+[endsect]
