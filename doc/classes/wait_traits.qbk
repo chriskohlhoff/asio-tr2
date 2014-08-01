@@ -2,7 +2,7 @@
 
   namespace std {
     namespace experimental {
-      inline namespace network_v1 {
+      __begin_versioned_ns__
 
         template<class Clock>
         struct wait_traits
@@ -14,7 +14,7 @@
             const typename Clock::time_point& t);
         };
 
-      } // inline namespace network_v1
+      __end_versioned_ns__
     } // namespace experimental
   } // namespace std
 

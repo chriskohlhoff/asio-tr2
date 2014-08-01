@@ -4,11 +4,11 @@
 
   namespace std {
     namespace experimental {
-      inline namespace network_v1 {
+      __begin_versioned_ns__
 
         template<class T, class Executor> struct uses_executor;
 
-      } // inline namespace network_v1
+      __end_versioned_ns__
     } // namespace experimental
   } // namespace std
 

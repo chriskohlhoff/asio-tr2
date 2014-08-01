@@ -2,7 +2,7 @@
 
   namespace std {
     namespace experimental {
-      inline namespace network_v1 {
+      __begin_versioned_ns__
 
         template<class Protocol, class Clock, class WaitTraits>
         class basic_socket_streambuf :
@@ -48,7 +48,7 @@
           time_point expiry_; // ``['exposition only]``
         };
 
-      } // inline namespace network_v1
+      __end_versioned_ns__
     } // namespace experimental
   } // namespace std
 
@@ -109,7 +109,7 @@ performing:
   typename Protocol::resolver resolver(ios);
   typename Protocol::resolver::iterator i = resolver.resolve(q, ec_);
   if (!ec_)
-    std::experimental::network_v1::async_connect(*this, i, __unspecified__);
+    std::experimental::__versioned_ns__::async_connect(*this, i, __unspecified__);
 ``
 
 where `ios` is an unspecified object of class `io_service`. `ec_` is set to

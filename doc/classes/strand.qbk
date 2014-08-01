@@ -2,7 +2,7 @@
 
   namespace std {
     namespace experimental {
-      inline namespace network_v1 {
+      __begin_versioned_ns__
 
         template<class Executor>
         class strand
@@ -57,7 +57,7 @@
         bool operator==(const strand<Executor>& a, const strand<Executor>& b);
         bool operator!=(const strand<Executor>& a, const strand<Executor>& b);
 
-      } // inline namespace network_v1
+      __end_versioned_ns__
     } // namespace experimental
   } // namespace std
 

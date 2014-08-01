@@ -2,7 +2,7 @@
 
   namespace std {
     namespace experimental {
-      inline namespace network_v1 {
+      __begin_versioned_ns__
 
         template<class Handler>
         struct handler_traits
@@ -34,7 +34,7 @@
               const Handler& h, const A& a = A()) noexcept;
         };
 
-      } // inline namespace network_v1
+      __end_versioned_ns__
     } // namespace experimental
   } // namespace std
 

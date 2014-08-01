@@ -2,7 +2,7 @@
 
   namespace std {
     namespace experimental {
-      inline namespace network_v1 {
+      __begin_versioned_ns__
 
         template<class Executor>
           class ``[link classes.strand strand]``;
@@ -15,7 +15,7 @@
         template<class Executor>
           struct is_executor<strand<Executor>> : true_type {};
 
-      } // inline namespace network_v1
+      __end_versioned_ns__
     } // namespace experimental
   } // namespace std
 

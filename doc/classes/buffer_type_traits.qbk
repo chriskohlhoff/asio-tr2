@@ -2,12 +2,12 @@
 
   namespace std {
     namespace experimental {
-      inline namespace network_v1 {
+      __begin_versioned_ns__
 
         template<class T> is_mutable_buffer_sequence;
         template<class T> is_const_buffer_sequence;
 
-      } // inline namespace network_v1
+      __end_versioned_ns__
     } // namespace experimental
   } // namespace std
 

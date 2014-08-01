@@ -6,7 +6,7 @@ requirements.convertible_to_mutable_buffer `ConvertibleToMutableBuffer`] and
 
   namespace std {
     namespace experimental {
-      inline namespace network_v1 {
+      __begin_versioned_ns__
 
         class mutable_buffer
         {
@@ -20,7 +20,7 @@ requirements.convertible_to_mutable_buffer `ConvertibleToMutableBuffer`] and
           size_t size_; // ``['exposition only]``
         };
 
-      } // inline namespace network_v1
+      __end_versioned_ns__
     } // namespace experimental
   } // namespace std
 

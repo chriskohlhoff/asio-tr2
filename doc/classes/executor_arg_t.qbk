@@ -2,12 +2,12 @@
 
   namespace std {
     namespace experimental {
-      inline namespace network_v1 {
+      __begin_versioned_ns__
 
         struct executor_arg_t { };
         constexpr executor_arg_t executor_arg = executor_arg_t();
 
-      } // inline namespace network_v1
+      __end_versioned_ns__
     } // namespace experimental
   } // namespace std
 

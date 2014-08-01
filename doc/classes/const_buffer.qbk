@@ -5,7 +5,7 @@ requirements.convertible_to_const_buffer `ConvertibleToConstBuffer`].
 
   namespace std {
     namespace experimental {
-      inline namespace network_v1 {
+      __begin_versioned_ns__
 
         class const_buffer
         {
@@ -20,7 +20,7 @@ requirements.convertible_to_const_buffer `ConvertibleToConstBuffer`].
           size_t size_; // ``['exposition only]``
         };
 
-      } // inline namespace network_v1
+      __end_versioned_ns__
     } // namespace experimental
   } // namespace std
 

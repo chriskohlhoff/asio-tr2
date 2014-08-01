@@ -4,7 +4,7 @@
 
   namespace std {
     namespace experimental {
-      inline namespace network_v1 {
+      __begin_versioned_ns__
 
         template<class Clock> struct ``[link classes.wait_traits wait_traits]``;
 
@@ -15,7 +15,7 @@
         typedef basic_waitable_timer<chrono::steady_clock> steady_timer;
         typedef basic_waitable_timer<chrono::high_resolution_clock> high_resolution_timer;
 
-      } // inline namespace network_v1
+      __end_versioned_ns__
     } // namespace experimental
   } // namespace std
 

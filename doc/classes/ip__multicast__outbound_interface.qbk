@@ -9,7 +9,7 @@ network interface to use for outgoing multicast datagrams.
 
   namespace std {
     namespace experimental {
-      inline namespace network_v1 {
+      __begin_versioned_ns__
         namespace ip {
           namespace multicast {
 
@@ -24,7 +24,7 @@ network interface to use for outgoing multicast datagrams.
 
           } // namespace multicast
         } // namespace ip
-      } // inline namespace network_v1
+      __end_versioned_ns__
     } // namespace experimental
   } // namespace std
 
@@ -32,7 +32,7 @@ Extensible implementations shall provide the following member functions:
 
   namespace std {
     namespace experimental {
-      inline namespace network_v1 {
+      __begin_versioned_ns__
         namespace ip {
           namespace multicast {
 
@@ -51,7 +51,7 @@ Extensible implementations shall provide the following member functions:
 
           } // namespace multicast
         } // namespace ip
-      } // inline namespace network_v1
+      __end_versioned_ns__
     } // namespace experimental
   } // namespace std
 

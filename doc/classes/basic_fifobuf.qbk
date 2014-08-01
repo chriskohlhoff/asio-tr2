@@ -2,7 +2,7 @@
 
   namespace std {
     namespace experimental {
-      inline namespace network_v1 {
+      __begin_versioned_ns__
 
         template<class Allocator = std::allocator<char> >
         class basic_fifobuf :
@@ -39,7 +39,7 @@
           void operator=(const basic_fifobuf&);  // not defined
         };
 
-      } // inline namespace network_v1
+      __end_versioned_ns__
     } // namespace experimental
   } // namespace std
 

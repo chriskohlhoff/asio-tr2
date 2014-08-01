@@ -2,7 +2,7 @@
 
   namespace std {
     namespace experimental {
-      inline namespace network_v1 {
+      __begin_versioned_ns__
         namespace ip {
 
           enum class resolver_errc {
@@ -180,18 +180,18 @@
 
           } // namespace multicast
         } // namespace ip
-      } // inline namespace network_v1
+      __end_versioned_ns__
     } // namespace experimental
 
     template<> struct is_error_condition_enum<
-      experimental::network_v1::ip::resolver_errc>
+      experimental::__versioned_ns__::ip::resolver_errc>
         : public true_type {};
 
     // ``[link classes.hash hash support]``
     template<class T> struct hash;
-    template<> struct hash<experimental::network_v1::ip::address>;
-    template<> struct hash<experimental::network_v1::ip::address_v4>;
-    template<> struct hash<experimental::network_v1::ip::address_v6>;
+    template<> struct hash<experimental::__versioned_ns__::ip::address>;
+    template<> struct hash<experimental::__versioned_ns__::ip::address_v4>;
+    template<> struct hash<experimental::__versioned_ns__::ip::address_v6>;
 
   } // namespace std
 

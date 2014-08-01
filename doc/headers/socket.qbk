@@ -2,7 +2,7 @@
 
   namespace std {
     namespace experimental {
-      inline namespace network_v1 {
+      __begin_versioned_ns__
 
         enum class socket_errc {
           already_open = ``['implementation defined]``,
@@ -104,11 +104,11 @@
                                ConnectCondition c,
                                CompletionToken&& token);
 
-      } // inline namespace network_v1
+      __end_versioned_ns__
     } // namespace experimental
 
     template<> struct is_error_code_enum<
-      experimental::network_v1::socket_errc>
+      experimental::__versioned_ns__::socket_errc>
         : public true_type {};
 
   } // namespace std

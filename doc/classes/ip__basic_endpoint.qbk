@@ -5,7 +5,7 @@ for an [link requirements.endpoint `Endpoint`].
 
   namespace std {
     namespace experimental {
-      inline namespace network_v1 {
+      __begin_versioned_ns__
         namespace ip {
 
           template<class InternetProtocol>
@@ -57,7 +57,7 @@ for an [link requirements.endpoint `Endpoint`].
               const basic_endpoint<InternetProtocol>& ep);
 
         } // namespace ip
-      } // inline namespace network_v1
+      __end_versioned_ns__
     } // namespace experimental
   } // namespace std
 
@@ -65,7 +65,7 @@ Extensible implementations shall provide the following member functions:
 
   namespace std {
     namespace experimental {
-      inline namespace network_v1 {
+      __begin_versioned_ns__
         namespace ip {
 
           template<class InternetProtocol>
@@ -83,7 +83,7 @@ Extensible implementations shall provide the following member functions:
           };
 
         } // namespace ip
-      } // inline namespace network_v1
+      __end_versioned_ns__
     } // namespace experimental
   } // namespace std
 

@@ -2,7 +2,7 @@
 
   namespace std {
     namespace experimental {
-      inline namespace network_v1 {
+      __begin_versioned_ns__
 
         template<class T, class Executor>
         class executor_wrapper
@@ -63,7 +63,7 @@
         template<class T, class Executor>
           struct handler_traits<executor_wrapper<T, Executor>>;
 
-      } // inline namespace network_v1
+      __end_versioned_ns__
     } // namespace experimental
   } // namespace std
 
@@ -197,7 +197,7 @@ through other means.]
 
   namespace std {
     namespace experimental {
-      inline namespace network_v1 {
+      __begin_versioned_ns__
 
         template<class T, class Executor>
         class async_result<executor_wrapper<T, Executor>>
@@ -215,7 +215,7 @@ through other means.]
           async_result<T> wrapped_; // ``['exposition only]``
         };
 
-      } // inline namespace network_v1
+      __end_versioned_ns__
     } // namespace experimental
   } // namespace std
 
@@ -236,7 +236,7 @@ the [link classes.async_result `async_result` specialization requirements].
 
   namespace std {
     namespace experimental {
-      inline namespace network_v1 {
+      __begin_versioned_ns__
 
         template<class T, class Executor>
         struct handler_traits<executor_wrapper<T, Executor>>
@@ -270,7 +270,7 @@ the [link classes.async_result `async_result` specialization requirements].
                 const A& a = A()) noexcept;
         };
 
-      } // inline namespace network_v1
+      __end_versioned_ns__
     } // namespace experimental
   } // namespace std
 

@@ -6,7 +6,7 @@ requirements.convertible_to_const_buffer `ConvertibleToConstBuffer`].
 
   namespace std {
     namespace experimental {
-      inline namespace network_v1 {
+      __begin_versioned_ns__
 
         class const_buffers_1 :
           public const_buffer
@@ -25,7 +25,7 @@ requirements.convertible_to_const_buffer `ConvertibleToConstBuffer`].
           const_iterator end() const noexcept;
         };
 
-      } // inline namespace network_v1
+      __end_versioned_ns__
     } // namespace experimental
   } // namespace std
 

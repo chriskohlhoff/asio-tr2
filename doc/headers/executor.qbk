@@ -2,7 +2,7 @@
 
   namespace std {
     namespace experimental {
-      inline namespace network_v1 {
+      __begin_versioned_ns__
 
         template<class CompletionToken, class Signature, class = void>
           struct ``[link classes.handler_type handler_type]``;
@@ -81,7 +81,7 @@
         template<class Executor, class CompletionToken>
           auto defer(const Executor& ex, CompletionToken&& token);
 
-      } // inline namespace network_v1
+      __end_versioned_ns__
     } // namespace experimental
   } // namespace std
 

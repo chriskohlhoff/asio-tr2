@@ -2,7 +2,7 @@
 
   namespace std {
     namespace experimental {
-      inline namespace network_v1 {
+      __begin_versioned_ns__
 
         class io_service : public execution_context
         {
@@ -55,7 +55,7 @@
         template<class CompletionToken>
           auto defer(io_service& ios, CompletionToken&& token);
 
-      } // inline namespace network_v1
+      __end_versioned_ns__
     } // namespace experimental
   } // namespace std
 
@@ -265,19 +265,19 @@ function objects. An `io_service` remains in the stopped state until a call to
   template<class CompletionToken>
     auto dispatch(io_service& ios, CompletionToken&& token);
 
-[function_returns `std::experimental::network_v1::dispatch(ios.get_executor(),
+[function_returns `std::experimental::__versioned_ns__::dispatch(ios.get_executor(),
 forward<CompletionToken>(token))`.]
 
   template<class CompletionToken>
     auto post(io_service& ios, CompletionToken&& token);
 
-[function_returns `std::experimental::network_v1::post(ios.get_executor(),
+[function_returns `std::experimental::__versioned_ns__::post(ios.get_executor(),
 forward<CompletionToken>(token))`.]
 
   template<class CompletionToken>
     auto defer(io_service& ios, CompletionToken&& token);
 
-[function_returns `std::experimental::network_v1::defer(ios.get_executor(),
+[function_returns `std::experimental::__versioned_ns__::defer(ios.get_executor(),
 forward<CompletionToken>(token))`.]
 
 [endsect]

@@ -2,7 +2,7 @@
 
   namespace std {
     namespace experimental {
-      inline namespace network_v1 {
+      __begin_versioned_ns__
         namespace ip {
 
           class bad_address_cast : bad_cast
@@ -12,7 +12,7 @@
           };
 
         } // namespace ip
-      } // inline namespace network_v1
+      __end_versioned_ns__
     } // namespace experimental
   } // namespace std
 

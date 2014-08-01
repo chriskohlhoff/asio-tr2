@@ -116,6 +116,9 @@
 [def __netinet_tcp_h__ [@http://www.opengroup.org/onlinepubs/000095399/basedefs/netinet/tcp.h.html `netinet/tcp.h`]]
 [def __dotdotdot__ ...]
 [def __unspecified__ '''<emphasis>unspecified</emphasis>''']
+[def __versioned_ns__ network_v1]
+[def __begin_versioned_ns__ inline namespace __versioned_ns__ {]
+[def __end_versioned_ns__ } // inline namespace __versioned_ns__]
 
 [/-----------------------------------------------------------------------------]
 

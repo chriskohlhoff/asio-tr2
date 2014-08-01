@@ -2,7 +2,7 @@
 
   namespace std {
     namespace experimental {
-      inline namespace network_v1 {
+      __begin_versioned_ns__
         namespace ip {
 
           class address_v6
@@ -66,7 +66,7 @@
               basic_ostream<CharT, Traits>& os, const address_v6& addr);
 
         } // namespace ip
-      } // inline namespace network_v1
+      __end_versioned_ns__
     } // namespace experimental
   } // namespace std
 
@@ -79,7 +79,7 @@
 
   namespace std {
     namespace experimental {
-      inline namespace network_v1 {
+      __begin_versioned_ns__
         namespace ip {
 
           struct address_v6::bytes_type : array<unsigned char, 16>
@@ -89,7 +89,7 @@
           };
 
         } // namespace ip
-      } // inline namespace network_v1
+      __end_versioned_ns__
     } // namespace experimental
   } // namespace std
 

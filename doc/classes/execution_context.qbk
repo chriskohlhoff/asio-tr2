@@ -2,7 +2,7 @@
 
   namespace std {
     namespace experimental {
-      inline namespace network_v1 {
+      __begin_versioned_ns__
 
         class execution_context
         {
@@ -32,7 +32,7 @@
         template<class Service> bool has_service(execution_context& ctx) const;
         class service_already_exists : public logic_error { ... };
 
-      } // inline namespace network_v1
+      __end_versioned_ns__
     } // namespace experimental
   } // namespace std
 

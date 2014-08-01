@@ -2,7 +2,7 @@
 
   namespace std {
     namespace experimental {
-      inline namespace network_v1 {
+      __begin_versioned_ns__
 
         class io_service::executor_type
         {
@@ -43,7 +43,7 @@
 
         template<> struct is_executor<io_service::executor_type> : true_type {};
 
-      } // inline namespace network_v1
+      __end_versioned_ns__
     } // namespace experimental
   } // namespace std
 
