@@ -144,7 +144,7 @@ TBD.
 [section Proposed Text for the Standard]
 
 [commentary Grey-shaded italic text is commentary on the proposal. It is not to
-be added to the TR.]
+be added to the TS.]
 
 [include:headers headers/executor.qbk]
 [section:async_requirements Requirements]
@@ -168,5 +168,8 @@ be added to the TR.]
 [include:functions functions/defer.qbk]
 [include:headers headers/strand.qbk]
 [include:classes classes/strand.qbk]
+[include:headers headers/loop_scheduler.qbk]
+[include:classes classes/loop_scheduler.qbk]
+[include:classes classes/loop_scheduler__executor_type.qbk]
 
 [endsect]
