@@ -6,15 +6,6 @@
 
         class ``[link classes.loop_scheduler loop_scheduler]``;
 
-        // loop_scheduler specialized algorithms:
-
-        template<class CompletionToken>
-          auto dispatch(loop_scheduler& s, CompletionToken&& token);
-        template<class CompletionToken>
-          auto post(loop_scheduler& s, CompletionToken&& token);
-        template<class CompletionToken>
-          auto defer(loop_scheduler& s, CompletionToken&& token);
-
       __end_versioned_ns__
     } // namespace experimental
   } // namespace std

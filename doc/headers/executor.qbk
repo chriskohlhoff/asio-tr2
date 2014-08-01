@@ -66,6 +66,8 @@
           auto dispatch(CompletionToken&& token);
         template<class Executor, class CompletionToken>
           auto dispatch(const Executor& ex, CompletionToken&& token);
+        template<class ExecutionContext, class CompletionToken>
+          auto dispatch(ExecutionContext& ctx, CompletionToken&& token);
 
         ``// [link functions.post post]:``
 
@@ -73,6 +75,8 @@
           auto post(CompletionToken&& token);
         template<class Executor, class CompletionToken>
           auto post(const Executor& ex, CompletionToken&& token);
+        template<class ExecutionContext, class CompletionToken>
+          auto defer(ExecutionContext& ctx, CompletionToken&& token);
 
         ``// [link functions.defer defer]:``
 
@@ -80,6 +84,8 @@
           auto defer(CompletionToken&& token);
         template<class Executor, class CompletionToken>
           auto defer(const Executor& ex, CompletionToken&& token);
+        template<class ExecutionContext, class CompletionToken>
+          auto defer(ExecutionContext& ctx, CompletionToken&& token);
 
       __end_versioned_ns__
     } // namespace experimental

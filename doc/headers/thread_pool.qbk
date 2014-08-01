@@ -6,15 +6,6 @@
 
         class ``[link classes.thread_pool thread_pool]``;
 
-        // thread_pool specialized algorithms:
-
-        template<class CompletionToken>
-          auto dispatch(thread_pool& tp, CompletionToken&& token);
-        template<class CompletionToken>
-          auto post(thread_pool& tp, CompletionToken&& token);
-        template<class CompletionToken>
-          auto defer(thread_pool& tp, CompletionToken&& token);
-
       __end_versioned_ns__
     } // namespace experimental
   } // namespace std

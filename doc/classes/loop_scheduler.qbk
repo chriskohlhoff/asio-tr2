@@ -46,15 +46,6 @@
           void restart();
         };
 
-        // loop_scheduler specialized algorithms:
-
-        template<class CompletionToken>
-          auto dispatch(loop_scheduler& s, CompletionToken&& token);
-        template<class CompletionToken>
-          auto post(loop_scheduler& s, CompletionToken&& token);
-        template<class CompletionToken>
-          auto defer(loop_scheduler& s, CompletionToken&& token);
-
       __end_versioned_ns__
     } // namespace experimental
   } // namespace std
@@ -247,28 +238,6 @@ to `restart()`.]
   void restart();
 
 [function_postconditions `stopped() == false`.]
-
-[endsect]
-
-[section [^loop_scheduler] specialized algorithms]
-
-  template<class CompletionToken>
-    auto dispatch(loop_scheduler& s, CompletionToken&& token);
-
-[function_returns `std::experimental::__versioned_ns__::dispatch(s.get_executor(),
-forward<CompletionToken>(token))`.]
-
-  template<class CompletionToken>
-    auto post(loop_scheduler& s, CompletionToken&& token);
-
-[function_returns `std::experimental::__versioned_ns__::post(s.get_executor(),
-forward<CompletionToken>(token))`.]
-
-  template<class CompletionToken>
-    auto defer(loop_scheduler& s, CompletionToken&& token);
-
-[function_returns `std::experimental::__versioned_ns__::defer(s.get_executor(),
-forward<CompletionToken>(token))`.]
 
 [endsect]
 

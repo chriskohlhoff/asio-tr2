@@ -46,15 +46,6 @@
           void restart();
         };
 
-        // io_service specialized algorithms:
-
-        template<class CompletionToken>
-          auto dispatch(io_service& ios, CompletionToken&& token);
-        template<class CompletionToken>
-          auto post(io_service& ios, CompletionToken&& token);
-        template<class CompletionToken>
-          auto defer(io_service& ios, CompletionToken&& token);
-
       __end_versioned_ns__
     } // namespace experimental
   } // namespace std
@@ -257,28 +248,6 @@ function objects. An `io_service` remains in the stopped state until a call to
   void restart();
 
 [function_postconditions `stopped() == false`.]
-
-[endsect]
-
-[section [^io_service] specialized algorithms]
-
-  template<class CompletionToken>
-    auto dispatch(io_service& ios, CompletionToken&& token);
-
-[function_returns `std::experimental::__versioned_ns__::dispatch(ios.get_executor(),
-forward<CompletionToken>(token))`.]
-
-  template<class CompletionToken>
-    auto post(io_service& ios, CompletionToken&& token);
-
-[function_returns `std::experimental::__versioned_ns__::post(ios.get_executor(),
-forward<CompletionToken>(token))`.]
-
-  template<class CompletionToken>
-    auto defer(io_service& ios, CompletionToken&& token);
-
-[function_returns `std::experimental::__versioned_ns__::defer(ios.get_executor(),
-forward<CompletionToken>(token))`.]
 
 [endsect]
 

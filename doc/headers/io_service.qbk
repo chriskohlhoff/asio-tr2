@@ -6,15 +6,6 @@
 
         class ``[link classes.io_service io_service]``;
 
-        // io_service specialized algorithms:
-
-        template<class CompletionToken>
-          auto dispatch(io_service& ios, CompletionToken&& token);
-        template<class CompletionToken>
-          auto post(io_service& ios, CompletionToken&& token);
-        template<class CompletionToken>
-          auto defer(io_service& ios, CompletionToken&& token);
-
       __end_versioned_ns__
     } // namespace experimental
   } // namespace std

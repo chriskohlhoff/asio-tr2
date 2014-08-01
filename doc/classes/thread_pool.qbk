@@ -28,15 +28,6 @@
           void join();
         };
 
-        // thread_pool specialized algorithms:
-
-        template<class CompletionToken>
-          auto dispatch(thread_pool& tp, CompletionToken&& token);
-        template<class CompletionToken>
-          auto post(thread_pool& tp, CompletionToken&& token);
-        template<class CompletionToken>
-          auto defer(thread_pool& tp, CompletionToken&& token);
-
       __end_versioned_ns__
     } // namespace experimental
   } // namespace std
@@ -110,28 +101,6 @@ synchronizes with (C++ Std, \[intro.multithread\]) the corresponding successful
 
 [function_postconditions The threads in the pool represented by `*this` have
 completed.]
-
-[endsect]
-
-[section [^thread_pool] specialized algorithms]
-
-  template<class CompletionToken>
-    auto dispatch(thread_pool& tp, CompletionToken&& token);
-
-[function_returns `std::experimental::__versioned_ns__::dispatch(tp.get_executor(),
-forward<CompletionToken>(token))`.]
-
-  template<class CompletionToken>
-    auto post(thread_pool& s, CompletionToken&& token);
-
-[function_returns `std::experimental::__versioned_ns__::post(tp.get_executor(),
-forward<CompletionToken>(token))`.]
-
-  template<class CompletionToken>
-    auto defer(thread_pool& s, CompletionToken&& token);
-
-[function_returns `std::experimental::__versioned_ns__::defer(tp.get_executor(),
-forward<CompletionToken>(token))`.]
 
 [endsect]
 
