@@ -18,7 +18,7 @@ requirements, and `ec` denotes an object of type `error_code`.
      ``]
   ]
   [
-    [`a.write_some(cb, ec);`]
+    [`a.write_some(cb,ec);`]
     [`size_t`]
     [
       Meets the requirements for a [link

@@ -18,7 +18,7 @@ sequence] requirements, and `ec` denotes an object of type `error_code`.
      ``]
   ]
   [
-    [`a.read_some(mb, ec);`]
+    [`a.read_some(mb,ec);`]
     [`size_t`]
     [
       Meets the requirements for a [link

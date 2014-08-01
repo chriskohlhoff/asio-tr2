@@ -12,7 +12,7 @@ sequence] requirements, and `t` is a completion token.
     [Returns the associated I/O executor.]
   ]
   [
-    [`a.async_read_some(mb, t);`]
+    [`a.async_read_some(mb,t);`]
     [
       The return type is determined according to the requirements for an
       [link requirements.asynchronous_operations asynchronous operation].
