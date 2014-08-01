@@ -1,8 +1,11 @@
 [section:service Service requirements]
 
 A class is a service if it is publicly derived from another service, or if it
-is a class publicly derived from `execution_context::service`. A service may
-contain a publicly-accessible nested typedef named `key_type`.
+is a class publicly derived from `execution_context::service`.
+
+A service may contain a publicly-accessible nested typedef named `key_type`. If
+the nested typedef `key_type` exists, the service class shall be the same type
+as `key_type`, or otherwise publicly and unambiguously derived from `key_type`.
 
 All services define a one-argument constructor that takes a reference to the
 `execution_context` object that owns the service. This constructor is
