@@ -1,0 +1,138 @@
+[section:thread_pool Class [^thread_pool]]
+
+  namespace std {
+    namespace experimental {
+      __begin_versioned_ns__
+
+        class thread_pool : public execution_context
+        {
+        public:
+          // types:
+
+          class ``[link classes.thread_pool__executor_type executor_type]``;
+
+          // construct / copy / destroy:
+
+          thread_pool();
+          explicit thread_pool(std::size_t num_threads);
+          thread_pool(const thread_pool&) = delete;
+          thread_pool& operator=(const thread_pool&) = delete;
+          ~thread_pool();
+
+          // thread_pool operations:
+
+          executor_type get_executor() const noexcept;
+
+          void stop();
+
+          void join();
+        };
+
+        // thread_pool specialized algorithms:
+
+        template<class CompletionToken>
+          auto dispatch(thread_pool& tp, CompletionToken&& token);
+        template<class CompletionToken>
+          auto post(thread_pool& tp, CompletionToken&& token);
+        template<class CompletionToken>
+          auto defer(thread_pool& tp, CompletionToken&& token);
+
+      __end_versioned_ns__
+    } // namespace experimental
+  } // namespace std
+
+Class `thread_pool` implements a fixed-size pool of threads.
+
+An object of type `thread_pool` has an associated executor object, meeting the
+[link requirements.executor Executor type requirements], of type
+`thread_pool::executor_type` and obtainable via the `thread_pool` object's
+`get_executor` member function.
+
+For an object of type `thread_pool`, ['outstanding work] is defined as the sum
+of:
+
+[mdash] the total number of calls to the `thread_pool` executor's `work_started`
+function, less the total number of calls to the `work_finished` function;
+
+[mdash] the number of function objects that have been added to the `thread_pool`
+via the `thread_pool` executor, but not yet executed; and
+
+[mdash] the number of function objects that are currently being executed by the
+`thread_pool`.
+
+The `thread_pool` member functions `get_executor`, `stop`, and `join`, and the
+`thread_pool::executor_type` copy constructors, member functions and comparison
+operators, shall not introduce data races as a result of concurrent calls to
+those functions from different threads.
+
+[section [^thread_pool] constructors/destructor]
+
+  thread_pool();
+  explicit thread_pool(std::size_t num_threads);
+
+[function_effects Creates an object of class `thread_pool` containing a number
+of threads of execution, each represented by a `thread` object. If specified,
+the number of threads in the pool is `num_threads`. Otherwise, the number of
+threads in the pool is implementation-defined. [inline_note A suggested value
+for the implementation-defined number of threads is
+`std::thread::hardware_concurrency() * 2`.]]
+
+  ~thread_pool();
+
+[function_effects Destroys an object of class `thread_pool`. Performs `stop()`
+followed by `join().]
+
+[endsect]
+
+[section [^thread_pool] members]
+
+  executor_type get_executor() const noexcept;
+
+[function_returns An executor that may be used for submitting function objects
+to the `thread_pool`.]
+
+  void stop();
+
+[function_effects Signals the threads in the pool to complete as soon as
+possible. If a thread is currently executing a function object, the thread will
+exit only after completion of that function object. The call to `stop()`
+returns without waiting for the threads to complete.]
+
+  void join();
+
+[function_effects If not already stopped, signals the threads in the pool to
+exit once the outstanding work is `0`. Blocks until all threads in the pool
+have completed.]
+
+[function_synchronization The completion of each thread in the pool
+synchronizes with (C++ Std, \[intro.multithread\]) the corresponding successful
+`join()` return.]
+
+[function_postconditions The threads in the pool represented by `*this` have
+completed.]
+
+[endsect]
+
+[section [^thread_pool] specialized algorithms]
+
+  template<class CompletionToken>
+    auto dispatch(thread_pool& tp, CompletionToken&& token);
+
+[function_returns `std::experimental::__versioned_ns__::dispatch(tp.get_executor(),
+forward<CompletionToken>(token))`.]
+
+  template<class CompletionToken>
+    auto post(thread_pool& s, CompletionToken&& token);
+
+[function_returns `std::experimental::__versioned_ns__::post(tp.get_executor(),
+forward<CompletionToken>(token))`.]
+
+  template<class CompletionToken>
+    auto defer(thread_pool& s, CompletionToken&& token);
+
+[function_returns `std::experimental::__versioned_ns__::defer(tp.get_executor(),
+forward<CompletionToken>(token))`.]
+
+[endsect]
+
+[endsect]
