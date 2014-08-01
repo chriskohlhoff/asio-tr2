@@ -14,9 +14,10 @@ my $style =
 "div.table { text-align: center; }\n" .
 ".sidebar { background-color: #e0e0e0; font-style: italic; }\n" .
 "p.tablecaption { font-weight: bold; }\n" .
-"table { margin: auto; border: 1px solid gray; border-collapse: collapse; }" .
-"th { border: 1px solid gray; }" .
-"td { border: 1px solid gray; }" .
+"table { margin: auto; border: 1px solid gray; border-collapse: collapse; }\n" .
+"th { border: 1px solid gray; }\n" .
+"td { border: 1px solid gray; }\n" .
+"h1, h2, h3, h4, h5, div.titlepage { page-break-after: avoid; }\n" .
 "</style>";
 
 my $rev = `git rev-parse HEAD`;
