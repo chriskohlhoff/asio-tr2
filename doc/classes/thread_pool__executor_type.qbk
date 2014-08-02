@@ -9,11 +9,11 @@
         public:
           // construct / copy / destroy:
 
-          executor_type(const executor_type& other);
-          executor_type(executor_type&& other);
+          executor_type(const executor_type& other) noexcept;
+          executor_type(executor_type&& other) noexcept;
 
-          executor_type& operator=(const executor_type& other);
-          executor_type& operator=(executor_type&& other);
+          executor_type& operator=(const executor_type& other) noexcept;
+          executor_type& operator=(executor_type&& other) noexcept;
 
           ~executor_type();
 
@@ -38,8 +38,10 @@
               wrap(T&& t) const;
         };
 
-        bool operator==(const thread_pool::executor_type& a, const thread_pool::executor_type& b);
-        bool operator!=(const thread_pool::executor_type& a, const thread_pool::executor_type& b);
+        bool operator==(const thread_pool::executor_type& a,
+                        const thread_pool::executor_type& b) noexcept;
+        bool operator!=(const thread_pool::executor_type& a,
+                        const thread_pool::executor_type& b) noexcept;
 
         template<> struct is_executor<thread_pool::executor_type> : true_type {};
 
@@ -55,13 +57,13 @@ associated with a `thread_pool`, and function objects submitted using the
 
 [section [^thread_pool::executor_type] constructors]
 
-  executor_type(const executor_type& other);
+  executor_type(const executor_type& other) noexcept;
 
 [function_effects Constructs an object of class `thread_pool::executor_type`.]
 
 [function_postconditions `*this == other`.]
 
-  executor_type(executor_type&& other);
+  executor_type(executor_type&& other) noexcept;
 
 [function_effects Constructs an object of class `thread_pool::executor_type`.]
 
@@ -71,13 +73,13 @@ associated with a `thread_pool`, and function objects submitted using the
 
 [section [^thread_pool::executor_type] assignment]
 
-  executor_type& operator=(const executor_type& other);
+  executor_type& operator=(const executor_type& other) noexcept;
 
 [function_postconditions `*this == other`.]
 
 [function_returns `*this`.]
 
-  executor_type& operator=(executor_type&& other);
+  executor_type& operator=(executor_type&& other) noexcept;
 
 [function_postconditions `*this` is equal to the prior value of `other`.]
 
@@ -135,11 +137,13 @@ executor_type<Executor>>(forward<T>(t), *this)`.]
 
 [section [^thread_pool::executor_type] comparisons]
 
-  bool operator==(const thread_pool::executor_type& a, const thread_pool::executor_type& b);
+  bool operator==(const thread_pool::executor_type& a,
+                  const thread_pool::executor_type& b) noexcept;
 
 [function_returns `&a.context() == &b.context()`.]
 
-  bool operator!=(const thread_pool::executor_type& a, const thread_pool::executor_type& b);
+  bool operator!=(const thread_pool::executor_type& a,
+                  const thread_pool::executor_type& b) noexcept;
 
 [function_returns `!(a == b)`.]
 

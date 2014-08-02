@@ -9,11 +9,11 @@
         public:
           // construct / copy / destroy:
 
-          executor_type(const executor_type& other);
-          executor_type(executor_type&& other);
+          executor_type(const executor_type& other) noexcept;
+          executor_type(executor_type&& other) noexcept;
 
-          executor_type& operator=(const executor_type& other);
-          executor_type& operator=(executor_type&& other);
+          executor_type& operator=(const executor_type& other) noexcept;
+          executor_type& operator=(executor_type&& other) noexcept;
 
           ~executor_type();
 
@@ -38,8 +38,10 @@
               wrap(T&& t) const;
         };
 
-        bool operator==(const io_service::executor_type& a, const io_service::executor_type& b);
-        bool operator!=(const io_service::executor_type& a, const io_service::executor_type& b);
+        bool operator==(const io_service::executor_type& a,
+                        const io_service::executor_type& b) noexcept;
+        bool operator!=(const io_service::executor_type& a,
+                        const io_service::executor_type& b) noexcept;
 
         template<> struct is_executor<io_service::executor_type> : true_type {};
 
@@ -56,13 +58,13 @@ associated with an `io_service`, and function objects submitted using the
 
 [section [^io_service::executor_type] constructors]
 
-  executor_type(const executor_type& other);
+  executor_type(const executor_type& other) noexcept;
 
 [function_effects Constructs an object of class `io_service::executor_type`.]
 
 [function_postconditions `*this == other`.]
 
-  executor_type(executor_type&& other);
+  executor_type(executor_type&& other) noexcept;
 
 [function_effects Constructs an object of class `io_service::executor_type`.]
 
@@ -72,13 +74,13 @@ associated with an `io_service`, and function objects submitted using the
 
 [section [^io_service::executor_type] assignment]
 
-  executor_type& operator=(const executor_type& other);
+  executor_type& operator=(const executor_type& other) noexcept;
 
 [function_postconditions `*this == other`.]
 
 [function_returns `*this`.]
 
-  executor_type& operator=(executor_type&& other);
+  executor_type& operator=(executor_type&& other) noexcept;
 
 [function_postconditions `*this` is equal to the prior value of `other`.]
 
@@ -137,11 +139,13 @@ executor_type<Executor>>(forward<T>(t), *this)`.]
 
 [section [^executor_type] comparisons]
 
-  bool operator==(const io_service::executor_type& a, const io_service::executor_type& b);
+  bool operator==(const io_service::executor_type& a,
+                  const io_service::executor_type& b) noexcept;
 
 [function_returns `&a.context() == &b.context()`.]
 
-  bool operator!=(const io_service::executor_type& a, const io_service::executor_type& b);
+  bool operator!=(const io_service::executor_type& a,
+                  const io_service::executor_type& b) noexcept;
 
 [function_returns `!(a == b)`.]
 

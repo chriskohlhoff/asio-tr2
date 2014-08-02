@@ -27,8 +27,8 @@
               wrap(T&& t) const;
         };
 
-        bool operator==(const system_executor&, const system_executor&);
-        bool operator!=(const system_executor&, const system_executor&);
+        bool operator==(const system_executor&, const system_executor&) noexcept;
+        bool operator!=(const system_executor&, const system_executor&) noexcept;
 
       __end_versioned_ns__
     } // namespace experimental
@@ -95,11 +95,11 @@ call to `std::terminate`.]
 
 [section [^system_executor] comparisons]
 
-  bool operator==(const system_executor&, const system_executor&);
+  bool operator==(const system_executor&, const system_executor&) noexcept;
 
 [function_returns `true`.]
 
-  bool operator!=(const system_executor&, const system_executor&);
+  bool operator!=(const system_executor&, const system_executor&) noexcept;
 
 [function_returns `false`.]
 
