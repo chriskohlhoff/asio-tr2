@@ -31,7 +31,7 @@
         template<class Service> Service& use_service(execution_context& ctx);
         template<class Service, class... Args> Service&
           make_service(execution_context& ctx, Args&&... args);
-        template<class Service> bool has_service(execution_context& ctx);
+        template<class Service> bool has_service(execution_context& ctx) noexcept;
 
         template<class T> struct ``[link classes.is_executor is_executor]`` : false_type {};
 

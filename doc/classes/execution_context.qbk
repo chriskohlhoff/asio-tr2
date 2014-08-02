@@ -16,20 +16,23 @@
           execution_context& operator=(const execution_context&) = delete;
           virtual ~execution_context(); // non-virtual
 
+          // execution context operations:
+
+          void notify_fork(fork_event e);
+
         protected:
 
-          // execution context operations:
+          // execution context protected operations:
 
           void shutdown_context();
           void destroy_context();
-          void notify_fork(fork_event e);
         };
 
         // service access:
         template<class Service> Service& use_service(execution_context& ctx);
         template<class Service, class... Args> Service&
           make_service(execution_context& ctx, Args&&... args);
-        template<class Service> bool has_service(execution_context& ctx) const;
+        template<class Service> bool has_service(execution_context& ctx) noexcept;
         class service_already_exists : public logic_error { ... };
 
       __end_versioned_ns__
@@ -75,6 +78,19 @@ calling `use_service<>`, that reference remains usable until a call to
 [endsect]
 
 [section [^execution_context] operations]
+
+  void notify_fork(fork_event e);
+
+[function_effects For each service object `svc` in the set:\n
+[mdash] If `e == fork_event::prepare`, performs `svc->notify_fork(e)` in
+reverse order of the beginning of service object lifetime (C++ Std,
+\[basic.life\]).\n
+[mdash] Otherwise, performs `svc->notify_fork(e)` in order of the beginning of
+service object lifetime.]
+
+[endsect]
+
+[section [^execution_context] protected operations]
 
   void shutdown_context();
 
@@ -156,7 +172,7 @@ type `Key` is already present in the set.]
 [function_notes The reference returned remains valid until a call to
 `destroy_context`.]
 
-  template<class Service> bool has_service(execution_context& ctx) const;
+  template<class Service> bool has_service(execution_context& ctx) noexcept;
 
 [function_block Let `Key` be `Service::key_type` if the nested typedef
 `Service::key_type` exists; otherwise, let `Key` be `Service`.]
