@@ -1,4 +1,4 @@
-[section Header [^<socket>] synopsis]
+[section Header [^<experimental/socket>] synopsis]
 
   namespace std {
     namespace experimental {

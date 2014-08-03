@@ -1,4 +1,4 @@
-[section Header [^<internet>] synopsis]
+[section Header [^<experimental/internet>] synopsis]
 
   namespace std {
     namespace experimental {

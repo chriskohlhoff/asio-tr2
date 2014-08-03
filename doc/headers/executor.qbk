@@ -1,4 +1,4 @@
-[section Header [^<executor>] synopsis]
+[section Header [^<experimental/executor>] synopsis]
 
   namespace std {
     namespace experimental {

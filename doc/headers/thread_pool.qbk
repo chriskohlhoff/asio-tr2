@@ -1,4 +1,4 @@
-[section Header [^<thread_pool>] synopsis]
+[section Header [^<experimental/thread_pool>] synopsis]
 
   namespace std {
     namespace experimental {

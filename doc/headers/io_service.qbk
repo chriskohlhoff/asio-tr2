@@ -1,4 +1,4 @@
-[section Header [^<io_service>] synopsis]
+[section Header [^<experimental/io_service>] synopsis]
 
   namespace std {
     namespace experimental {
