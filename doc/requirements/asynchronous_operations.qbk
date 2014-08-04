@@ -120,9 +120,9 @@ and `ex1` be the associated executor object obtained as described above.
 All handler objects have an associated executor object satisfying [link
 requirements.executor Executor requirements]. The type `Executor2` of the
 handler's associated executor shall be determined by
-`handler_traits<Handler>::executor_t<Executor1>`. The handler's associated
-executor object `ex2` shall be obtained by
-`handler_traits<Handler>::get_executor(handler, ex1)`.
+`associated_executor_t<Handler, Executor1>`. The handler's associated executor
+object `ex2` shall be obtained by performing `associated_executor<Handler,
+Executor1>::get(handler, ex1)`.
 
 [endsect]
 
@@ -153,9 +153,9 @@ allocation strategy. [inline_note Typically `std::allocator<void>`.] Let
 
 All handlers have an associated allocator object satisfying `Allocator`
 requirements. The type `Alloc2` of the handler's associated allocator shall be
-determined by `handler_traits<Handler>::allocator_t<Alloc1>`. The handler's
-associated allocator object `alloc2` shall be obtained by
-`handler_traits<Handler>::get_allocator(handler, alloc1)`.
+determined by `associated_allocator_t<Handler, Alloc1>`. The handler's
+associated allocator object `alloc2` shall be obtained by performing
+`associated_allocator<Handler, Executor1>::get(handler, alloc1)`.
 
 The asynchronous operations defined in this clause:
 

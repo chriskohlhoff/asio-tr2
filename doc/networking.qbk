@@ -263,6 +263,7 @@ summarized in the table below:
   [
     [[link network.async Asynchronous model]]
     [`<experimental/type_traits>`\n
+     `<experimental/memory>`\n
      `<experimental/executor>`\n
      `<experimental/strand>`]
   ]
@@ -367,6 +368,7 @@ express type requirements, as listed in the table below.
 
 [section:async Asynchronous model]
 [include:headers headers/type_traits.qbk]
+[include:headers headers/memory.qbk]
 [include:headers headers/executor.qbk]
 [include:headers headers/strand.qbk]
 [section:async_requirements Requirements]
@@ -377,12 +379,13 @@ express type requirements, as listed in the table below.
 [include:classes classes/handler_type.qbk]
 [include:classes classes/async_result.qbk]
 [include:classes classes/async_completion.qbk]
-[include:classes classes/handler_traits.qbk]
+[include:classes classes/associated_allocator.qbk]
 [include:classes classes/execution_context.qbk]
 [include:classes classes/execution_context__service.qbk]
 [include:classes classes/is_executor.qbk]
 [include:classes classes/executor_arg_t.qbk]
 [include:classes classes/uses_executor.qbk]
+[include:classes classes/associated_executor.qbk]
 [include:classes classes/executor_wrapper.qbk]
 [include:classes classes/executor_work.qbk]
 [include:classes classes/system_executor.qbk]

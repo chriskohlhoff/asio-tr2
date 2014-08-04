@@ -1,0 +1,62 @@
+[section:associated_allocator Class template [^associated_allocator]]
+
+  namespace std {
+    namespace experimental {
+      __begin_versioned_ns__
+
+        template<class T, class Alloc = allocator<void>>
+        struct associated_allocator
+        {
+          typedef ``['see below]`` type;
+
+          static type get(const T& t, const Alloc& a = Alloc()) noexcept;
+        };
+
+      __end_versioned_ns__
+    } // namespace experimental
+  } // namespace std
+
+A program may specialize this traits type if the `T` template parameter in the
+specialization is a user-defined type. The template parameter `Alloc` shall be
+a type meeting `Allocator` requirements (C++ Std, [allocator.requirements]).
+
+Specializations of `associated_allocator` shall satisfy the requirements in the
+table below. In this table, `X` is a specialization of `associated_allocator`
+for the template parameter `T`; `t` is a const reference to an object of type
+`T`; and `a` is an object of type `Alloc`.
+
+[table associated_allocator specialization requirements
+  [[Expression][Return type][Note]]
+  [
+    [`typename X::type`]
+    [A type meeting `Allocator` requirements (C++ Std, \[allocator.requirements\]).]
+    []
+  ]
+  [
+    [`X::get(t)`]
+    [`X::type`]
+    [Shall not exit via an exception.\n
+     Equivalent to `X::get(t, Alloc())`.]
+  ]
+  [
+    [`X::get(t, a)`]
+    [`X::type`]
+    [Shall not exit via an exception.]
+  ]
+]
+
+[section [^associated_allocator] members]
+
+  typedef ``['see below]`` type;
+
+[function_type If `T` has a nested type `allocator_type`, `typename
+T::allocator_type`. Otherwise `Alloc`.]
+
+  type get(const T& t, const Alloc& a = Alloc()) noexcept;
+
+[function_returns If `T` has a nested type `allocator_type`,
+`t.get_allocator()`. Otherwise `a`.]
+
+[endsect]
+
+[endsect]

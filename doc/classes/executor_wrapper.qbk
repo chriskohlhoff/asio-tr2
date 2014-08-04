@@ -60,8 +60,11 @@
         template<class T, class Executor>
           class async_result<executor_wrapper<T, Executor>>;
 
-        template<class T, class Executor>
-          struct handler_traits<executor_wrapper<T, Executor>>;
+        template<class T, class Executor, class Alloc>
+          struct associated_allocator<executor_wrapper<T, Executor>, Alloc>;
+
+        template<class T, class Executor, class Executor1>
+          struct associated_executor<executor_wrapper<T, Executor>, Executor1>;
 
       __end_versioned_ns__
     } // namespace experimental
@@ -232,65 +235,63 @@ the [link classes.async_result `async_result` specialization requirements].
 
 [endsect]
 
-[section Class template specialization [^handler_traits]]
+[section Class template specialization [^associated_allocator]]
 
   namespace std {
     namespace experimental {
       __begin_versioned_ns__
 
-        template<class T, class Executor>
-        struct handler_traits<executor_wrapper<T, Executor>>
+        template<class T, class Executor, class Alloc>
+          struct associated_allocator<executor_wrapper<T, Executor>, Alloc>
         {
-          typedef executor_wrapper<T, Executor> handler_type;
+          typedef associated_allocator_t<T, Alloc> type;
 
-          template<class E = system_executor>
-          struct executor {
-            typedef Executor executor;
-          };
-
-          template<class E = system_executor>
-          using executor_t = typename executor<E>::type;
-
-          template<class E = system_executor>
-            static executor_t<E> get_executor(
-              const executor_wrapper<T, Executor>& w,
-                const E& ex = E()) noexcept;
-
-          template<class A = allocator<void>>
-          struct allocator {
-            typedef typename handler_traits<T>::allocator<A>::type type;
-          };
-
-          template<class A = allocator<void>>
-          using allocator_t = typename allocator<A>::type;
-
-          template<class A = allocator<void>>
-            static allocator_t<A> get_allocator(
-              const executor_wrapper<T, Executor>& w,
-                const A& a = A()) noexcept;
+          static type get(const executor_wrapper<T, Executor>& w,
+                          const Alloc& a = Alloc()) noexcept;
         };
 
       __end_versioned_ns__
     } // namespace experimental
   } // namespace std
 
-The implementation shall provide a specialization of `handler_traits` that
-meets the [link classes.handler_traits `handler_traits` specialization
-requirements].
+The implementation shall provide a specialization of `associated_allocator`
+that meets the [link classes.associated_allocator `associated_allocator`
+specialization requirements].
 
-  template<class E = system_executor>
-    static executor_t<E> get_executor(
-      const executor_wrapper<T, Executor>& w,
-        const E& ex = E()) noexcept;
+  static type get(const executor_wrapper<T, Executor>& w,
+                  const Alloc& a = Alloc()) noexcept;
+
+[function_returns `associated_allocator<T, Alloc>::get(w.unwrap(), a)`.]
+
+[endsect]
+
+[section Class template specialization [^associated_executor]]
+
+  namespace std {
+    namespace experimental {
+      __begin_versioned_ns__
+
+        template<class T, class Executor, class Executor1>
+          struct associated_executor<executor_wrapper<T, Executor>, Executor1>
+        {
+          typedef Executor type;
+
+          static type get(const executor_wrapper<T, Executor>& w,
+                          const Executor1& e = Executor1()) noexcept;
+        };
+
+      __end_versioned_ns__
+    } // namespace experimental
+  } // namespace std
+
+The implementation shall provide a specialization of `associated_executor`
+that meets the [link classes.associated_executor `associated_executor`
+specialization requirements].
+
+  static type get(const executor_wrapper<T, Executor>& w,
+                  const Executor1& e = Executor1()) noexcept;
 
 [function_returns `w.get_executor()`.]
-
-  template<class A = allocator<void>>
-    static allocator_t<A> get_allocator(
-      const executor_wrapper<T, Executor>& w,
-        const A& a = A()) noexcept;
-
-[function_returns `handler_traits<T>::get_allocator(w.unwrap(), a)`.]
 
 [endsect]
 
