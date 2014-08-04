@@ -1,0 +1,23 @@
+[section Header [^<experimental/type_traits>] synopsis]
+
+  namespace std {
+    namespace experimental {
+      __begin_versioned_ns__
+
+        template<class CompletionToken, class Signature, class = void>
+          struct ``[link classes.handler_type handler_type]``;
+
+        template<class CompletionToken, class Signature>
+          using handler_type_t =
+            typename handler_type<CompletionToken, Signature>::type;
+
+        template<class Handler> class ``[link classes.async_result async_result]``;
+
+        template<class CompletionToken, class Signature>
+          struct ``[link classes.async_completion async_completion]``;
+
+      __end_versioned_ns__
+    } // namespace experimental
+  } // namespace std
+
+[endsect]

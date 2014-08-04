@@ -262,7 +262,8 @@ summarized in the table below:
   [[Subclause][Header(s)]]
   [
     [[link network.async Asynchronous model]]
-    [`<experimental/executor>`\n
+    [`<experimental/type_traits>`\n
+     `<experimental/executor>`\n
      `<experimental/strand>`]
   ]
   [
@@ -365,7 +366,9 @@ express type requirements, as listed in the table below.
 [include:error_reporting error_reporting.qbk]
 
 [section:async Asynchronous model]
+[include:headers headers/type_traits.qbk]
 [include:headers headers/executor.qbk]
+[include:headers headers/strand.qbk]
 [section:async_requirements Requirements]
 [include:requirements requirements/asynchronous_operations.qbk]
 [include:requirements requirements/executor.qbk]
@@ -386,7 +389,6 @@ express type requirements, as listed in the table below.
 [include:functions functions/dispatch.qbk]
 [include:functions functions/post.qbk]
 [include:functions functions/defer.qbk]
-[include:headers headers/strand.qbk]
 [include:classes classes/strand.qbk]
 [endsect]
 
