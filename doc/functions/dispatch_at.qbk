@@ -1,0 +1,74 @@
+[section:dispatch_at Function [^dispatch_at]]
+
+  template<class Clock, class Duration, class... CompletionTokens>
+    auto dispatch_at(const chrono::time_point<Clock, Duration>& abs_time,
+                     CompletionTokens&&... tokens);
+
+[function_block Let the type `Handler` be the handler function object type
+determined by performing `handler_type_t<CompletionToken, void()>`.]
+
+[function_requires The type `Handler` must satisfy the `MoveConstructible`
+requirements (C++ Std, \[moveconstructible\]) and be callable with zero
+arguments.]
+
+[function_effects\n
+[mdash] Constructs a function object `handler` of type `Handler`, initialized
+with `handler(forward<CompletionToken>(token))`.\n
+[mdash] Constructs an object `result` of type `async_result<Handler>`,
+initializing the object as `result(handler)`.\n
+[mdash] Obtains the handler's associated executor object `ex` by performing
+`associated_executor<Handler>::get(handler)`.\n
+[mdash] Obtains the handler's associated allocator object `alloc` by performing
+`associated_allocator<Handler>::get(handler)`.\n
+[mdash] Without blocking the current thread of execution, on expiration of the
+absolute timeout specified by `abs_time` performs
+`ex.dispatch(std::move(handler), alloc)`.]
+
+[function_returns `result.get()`.]
+
+  template<class Clock, class Duration, class Executor, class... CompletionTokens>
+    auto dispatch_at(const chrono::time_point<Clock, Duration>& abs_time,
+                     const Executor& e, CompletionTokens&&... tokens);
+
+[function_block Let the type `Handler` be the handler function object type
+determined by performing `handler_type_t<CompletionToken, void()>`.]
+
+[function_requires The type `Handler` must satisfy the `MoveConstructible`
+requirements (C++ Std, \[moveconstructible\]) and be callable with zero
+arguments.]
+
+[function_effects\n
+[mdash] Constructs a function object `handler` of type `Handler`,
+initialized with `handler(forward<CompletionToken>(token))`.\n
+[mdash] Constructs an object `result` of type `async_result<Handler>`,
+initializing the object as `result(handler)`.\n
+[mdash] Obtains the handler's associated executor object `ex1` by performing
+`associated_executor<Handler>::get(handler)`.\n
+[mdash] Constructs an object `w` of type
+`executor_work<associated_executor_t<Handler>>`, initializing the object with
+`w(ex1)`.\n
+[mdash] Obtains the handler's associated allocator object `alloc` by performing
+`associated_allocator<Handler>::get(handler)`.\n
+[mdash] Constructs a function object `f` with a function call operator that
+performs `ex1.dispatch(std::move(handler), alloc)` followed by `w.reset()`.\n
+[mdash] Without blocking the current thread of execution, on expiration of the
+absolute timeout specified by `abs_time` performs
+`ex.dispatch(std::move(handler), alloc)`.]
+
+[function_returns `result.get()`.]
+
+[function_remarks This function shall not participate in overload resolution
+unless `is_executor<Executor>::value` is true.]
+
+  template<class Clock, class Duration, class ExecutionContext, class... CompletionTokens>
+    auto dispatch_at(const chrono::time_point<Clock, Duration>& abs_time,
+                     const ExecutionContext& c, CompletionTokens&&... tokens);
+
+[function_returns
+`std::experimental::__versioned_ns__::dispatch_at(ctx.get_executor(),
+forward<CompletionToken>(token))`.]
+
+[function_remarks This function shall not participate in overload resolution
+unless `is_convertible<ExecutionContext&, execution_context&>::value` is true.]
+
+[endsect]

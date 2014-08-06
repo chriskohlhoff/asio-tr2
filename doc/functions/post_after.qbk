@@ -1,0 +1,33 @@
+[section:post_after Function [^post_after]]
+
+  template<class Rep, class Period, class... CompletionTokens>
+    auto post_after(const chrono::duration<Rep, Period>& rel_time,
+                    CompletionTokens&&... token);
+
+[function_returns
+`std::experimental::__versioned_ns__::post_at(chrono::steady_clock::now() +
+rel_time, forward<CompletionToken>(token))`.]
+
+  template<class Rep, class Period, class Executor, class... CompletionTokens>
+    auto post_after(const chrono::duration<Rep, Period>& rel_time,
+                    const Executor& e, CompletionTokens&&... tokens);
+
+[function_returns
+`std::experimental::__versioned_ns__::post_at(chrono::steady_clock::now() +
+rel_time, e, forward<CompletionToken>(token))`.]
+
+[function_remarks This function shall not participate in overload resolution
+unless `is_executor<Executor>::value` is true.]
+
+  template<class Rep, class Period, class ExecutionContext, class... CompletionTokens>
+    auto post_after(const chrono::duration<Rep, Period>& rel_time,
+                    const ExecutionContext& c, CompletionTokens&&... tokens);
+
+[function_returns
+`std::experimental::__versioned_ns__::post_at(chrono::steady_clock::now() +
+rel_time, ctx.get_executor(), forward<CompletionToken>(token))`.]
+
+[function_remarks This function shall not participate in overload resolution
+unless `is_convertible<ExecutionContext&, execution_context&>::value` is true.]
+
+[endsect]
