@@ -1,0 +1,83 @@
+[section:packaged_handler Class template [^packaged_handler]]
+
+  namespace std {
+    namespace experimental {
+      __begin_versioned_ns__
+
+        template <class Signature, class Alloc>
+        class packaged_handler
+          : public packaged_task<Signature>
+        {
+        public:
+          // packaged_handler types:
+
+          typedef Alloc allocator_type;
+
+          // packaged_handler constructors:
+
+          template <class Func>
+            explicit packaged_handler(packaged_token<Func, Alloc>&& token);
+
+          // packaged_handler operations:
+
+          allocator_type get_allocator() const noexcept;
+
+        private:
+          Alloc allocator_; // ``['exposition only]``
+        };
+
+        template <class Signature, class Alloc>
+          class async_result<packaged_handler<Signature, Alloc>>;
+
+      __end_versioned_ns__
+    } // namespace experimental
+  } // namespace std
+
+[section [^packaged_handler] constructors]
+
+  template <class Func>
+    explicit packaged_handler(packaged_token<Func, Alloc>&& token);
+
+[function_effects Constructs an object of class `packaged_handler<Signature,
+Alloc>`, initializing the base class with
+`packaged_task<Signature>(std::move(token.f_))` and initializing `allocator_`
+with `token.allocator_`.]
+
+[endsect]
+
+[section [^packaged_handler] operations]
+
+  allocator_type get_allocator() const noexcept;
+
+[function_returns `allocator_`.]
+
+[endsect]
+
+[section:async_result_packaged_handler Class template specialization [^async_result]]
+
+  namespace std {
+    namespace experimental {
+      __begin_versioned_ns__
+
+        template <class Signature, class Alloc>
+        class async_result<packaged_handler<Signature, Alloc>>
+          : public async_result<packaged_task<Signature>>
+        {
+        public:
+          explicit async_result(packaged_handler<Signature, Alloc>& h);
+        };
+
+      __end_versioned_ns__
+    } // namespace experimental
+  } // namespace std
+
+The implementation shall provide a specialization of `async_result` that meets
+the [link classes.async_result `async_result` specialization requirements].
+
+  explicit async_result(packaged_handler<Signature, Alloc>& h);
+
+[function_effects Initializes the base class with `h`.]
+
+[endsect]
+
+[endsect]

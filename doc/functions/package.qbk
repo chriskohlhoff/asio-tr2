@@ -1,0 +1,8 @@
+[section:package Function [^package]]
+
+  template <class Func, class Alloc = allocator<void>>
+    packaged_token<decay_t<Func>, Alloc> package(Func&& f, const Alloc& a = Alloc());
+
+[function_returns `packaged_token<decay_t<Func>, Alloc>(forward<Func>(f), a)`.]
+
+[endsect]

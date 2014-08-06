@@ -6,8 +6,23 @@
     namespace experimental {
       __begin_versioned_ns__
 
-      template <class _R, class... _Args>
-        class ``[link classes.async_result_packaged_task async_result<packaged_task<_R(_Args...)>>]``;
+      template <class R, class... Args>
+        class ``[link classes.async_result_packaged_task async_result<packaged_task<R(Args...)>>]``;
+
+      template <class Signature, class Alloc>
+        class ``[link classes.packaged_handler packaged_handler]``;
+
+      template <class Signature, class Alloc>
+        class async_result<packaged_handler<Signature, Alloc>>;
+
+      template <class Func, class Alloc = allocator<void>>
+        class ``[link classes.packaged_token packaged_token]``;
+
+      template <class Func, class Alloc, class R, class... Args>
+        struct handler_type<packaged_token<Func, Alloc>, R(Args...)>;
+
+      template <class Func, class Alloc = allocator<void>>
+        packaged_token<decay_t<Func>, Alloc> ``[link functions.package package]``(Func&& f, const Alloc& a = Alloc());
 
       __end_versioned_ns__
     } // namespace experimental
