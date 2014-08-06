@@ -71,7 +71,7 @@ for the implementation-defined number of threads is
   ~thread_pool();
 
 [function_effects Destroys an object of class `thread_pool`. Performs `stop()`
-followed by `join().]
+followed by `join()`.]
 
 [endsect]
 
