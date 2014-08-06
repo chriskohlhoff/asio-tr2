@@ -210,7 +210,7 @@ execution, executes it.]
 exception shall be allowed to propagate to the caller of `poll_one()`. The
 `loop_scheduler` state shall be as if the function object had returned normally.]
 
-[function_returns `1` if a handler was invoked, otherwise `0`.]
+[function_returns `1` if a handler was executed, otherwise `0`.]
 
 [function_notes This function may invoke additional handlers through nested
 calls to the `loop_scheduler` executor's `dispatch` member function. These do

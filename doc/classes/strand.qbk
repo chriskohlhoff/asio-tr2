@@ -84,7 +84,7 @@ The strand copy constructors, comparison operators, and member functions shall
 not introduce data races as a result of concurrent calls to those functions
 from different threads.
 
-If any function `f` invoked by the strand throws an exception, the subsequent
+If any function `f` executed by the strand throws an exception, the subsequent
 strand state shall be as if `f` had exited without throwing an exception.
 
 [section [^strand] constructors]
@@ -191,8 +191,9 @@ represents a unique ordered, non-concurrent state. Initializes `inner_ex_` with
   ~strand();
 
 [function_effects Destroys an object of class `strand<Executor>`. Function
-objects that were added to the strand but have not yet been invoked shall still
-be invoked in a way that meets the guarantees of ordering and non-concurrency.]
+objects that were added to the strand but have not yet been executed shall
+still be executed in a way that meets the guarantees of ordering and
+non-concurrency.]
 
 [endsect]
 
