@@ -32,10 +32,6 @@
             void post(Func&& f, const Alloc& a);
           template<class Func, class Alloc>
             void defer(Func&& f, const Alloc& a);
-
-          template<class T>
-            executor_wrapper<decay_t<T>, executor_type>
-              wrap(T&& t) const;
         };
 
         bool operator==(const io_service::executor_type& a,
@@ -127,13 +123,6 @@ shall propagate to the caller of `dispatch`.]
     void defer(Func&& f, const Alloc& a);
 
 [function_effects Requests execution of `f`.]
-
-  template<class T>
-    executor_wrapper<decay_t<T>, executor_type<Executor>>
-      wrap(T&& t) const;
-
-[function_returns `executor_wrapper<decay_t<T>,
-executor_type<Executor>>(forward<T>(t), *this)`.]
 
 [endsect]
 

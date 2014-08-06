@@ -1,0 +1,21 @@
+[section:wrap Function [^wrap]]
+
+  template<class Executor, class T>
+    executor_wrapper<decay_t<T>, Executor> wrap(const Executor& ex, T&& t);
+
+[function_returns `executor_wrapper<decay_t<T>, Executor>(forward<T>(t), ex)`.]
+
+[function_remarks This function shall not participate in overload resolution
+unless `is_executor<Executor>::value` is true.]
+
+  template<class ExecutionContext, class CompletionToken>
+    executor_wrapper<decay_t<T>, typename ExecutionContext::executor_type>
+      wrap(ExecutionContext& ctx, T&& t);
+
+[function_returns `executor_wrapper<decay_t<T>, typename
+ExecutionContext::executor_type>(forward<T>(t), ctx.get_executor())`.]
+
+[function_remarks This function shall not participate in overload resolution
+unless `is_convertible<ExecutionContext&, execution_context&>::value` is true.]
+
+[endsect]

@@ -109,11 +109,6 @@ denotes an object of type `T`, and `u` denotes an identifier.
      Synchronization: The invocation of `defer` synchronizes with (C++ Std,
      \[intro.multithread\]) the invocation of `f`.]
   ]
-  [
-    [`x1.wrap(std::move(t))`]
-    [`executor_wrapper<T,X>`]
-    []
-  ]
 ]
 
 [endsect]

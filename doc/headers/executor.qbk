@@ -55,6 +55,15 @@
 
         template<> struct is_executor<system_executor> : true_type {};
 
+        ``// [link functions.wrap wrap]:``
+
+        template<class Executor, class T>
+          executor_wrapper<decay_t<T>, Executor> wrap(const Executor& ex, T&& t);
+
+        template<class ExecutionContext, class CompletionToken>
+          executor_wrapper<decay_t<T>, typename ExecutionContext::executor_type>
+            wrap(ExecutionContext& ctx, T&& t);
+
         ``// [link functions.dispatch dispatch]:``
 
         template<class CompletionToken>

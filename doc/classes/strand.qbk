@@ -46,10 +46,6 @@
           template<class Func, class Alloc>
             void defer(Func&& f, const Alloc& a);
 
-          template<class T>
-            executor_wrapper<decay_t<T>, strand<Executor>>
-              wrap(T&& t) const;
-
         private:
           Executor inner_ex_; // ``['exposition only]``
         };
@@ -250,13 +246,6 @@ guarantees of ordering and non-concurrency are met.]
 [function_effects Requests invocation of `f`, as if by forwarding the function
 object `f` and allocator `a` to the executor `inner_ex_`, such that the
 guarantees of ordering and non-concurrency are met.]
-
-  template<class T>
-    executor_wrapper<decay_t<T>, strand<Executor>>
-      wrap(T&& t) const;
-
-[function_returns `executor_wrapper<decay_t<T>,
-strand<Executor>>(forward<T>(t), *this)`.]
 
 [endsect]
 

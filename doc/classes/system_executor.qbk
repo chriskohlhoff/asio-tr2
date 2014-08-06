@@ -21,10 +21,6 @@
             void post(Func&& f, const Alloc& a);
           template<class Func, class Alloc>
             void defer(Func&& f, const Alloc& a);
-
-          template<class T>
-            executor_wrapper<decay_t<T>, system_executor>
-              wrap(T&& t) const;
         };
 
         bool operator==(const system_executor&, const system_executor&) noexcept;
@@ -82,13 +78,6 @@ thread of execution represented by a `thread` object, with the call to
 `DECAY_COPY()` being evaluated in the thread that called `defer`. Any exception
 propagated from the execution of [^['DECAY_COPY]]`(forward<Func>(f))()` shall
 result in a call to `std::terminate`.]
-
-  template<class T>
-    executor_wrapper<decay_t<T>, system_executor>
-      wrap(T&& t) const;
-
-[function_returns `executor_wrapper<decay_t<T>, system_executor>(forward<T>(t),
-*this)`.]
 
 [endsect]
 
