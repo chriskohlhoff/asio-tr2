@@ -29,9 +29,10 @@ my $docno =
 "<pre>" .
 "Doc. no:  D???? " . $draft_info . "\n" .
 "Date:     2014-??-??\n" .
-"Revises:  N2175\n" .
 "Reply-To: Christopher Kohlhoff &lt;chris\@kohlhoff.com&gt;\n" .
 "</pre>\n";
+
+#"Revises:  N2175\n" .
 
 my @lines = ();
 my $saw_h4 = 0;
