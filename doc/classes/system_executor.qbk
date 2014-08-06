@@ -40,11 +40,10 @@ requirements]. It represents an execution policy where function objects are
 permitted to execute on any thread.
 
 To satisfy the executor requirements for the `post` and `defer` member
-functions, the system executor is implemented in terms of a pool of threads of
-unspecified size (the ['system thread pool]). If `std::exit` is called, and
-there remain unexecuted functions objects that have been submitted using `post`
-or `defer`, the implementation shall discard these function objects without
-calling them.
+functions, the system executor may allocate `thread` objects to run the
+submitted function objects. If `std::exit` is called, and there remain
+unexecuted functions objects that have been submitted using `post` or `defer`,
+the implementation shall discard these function objects without calling them.
 
 [section [^system_executor] operations]
 
@@ -70,19 +69,19 @@ from `execution_context`.]
     void post(Func&& f, const Alloc& a);
 
 [function_effects Calls [^['DECAY_COPY]]`(forward<Func>(f))()` as if in a
-thread of execution in the system thread pool, with the call to `DECAY_COPY()`
-being evaluated in the thread that called `post`. Any exception propagated from
-the execution of [^['DECAY_COPY]]`(forward<Func>(f))()` shall result in a call
-to `std::terminate`.]
+thread of execution represented by a `thread` object, with the call to
+`DECAY_COPY()` being evaluated in the thread that called `post`. Any exception
+propagated from the execution of [^['DECAY_COPY]]`(forward<Func>(f))()` shall
+result in a call to `std::terminate`.]
 
   template<class Func, class Alloc>
     void defer(Func&& f, const Alloc& a);
 
 [function_effects Calls [^['DECAY_COPY]]`(forward<Func>(f))()` as if in a
-thread of execution in the system thread pool, with the call to `DECAY_COPY()`
-being evaluated in the thread that called `defer`. Any exception propagated
-from the execution of [^['DECAY_COPY]]`(forward<Func>(f))()` shall result in a
-call to `std::terminate`.]
+thread of execution represented by a `thread` object, with the call to
+`DECAY_COPY()` being evaluated in the thread that called `defer`. Any exception
+propagated from the execution of [^['DECAY_COPY]]`(forward<Func>(f))()` shall
+result in a call to `std::terminate`.]
 
   template<class T>
     executor_wrapper<decay_t<T>, system_executor>
