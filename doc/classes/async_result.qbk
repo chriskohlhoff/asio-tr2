@@ -9,9 +9,11 @@
         {
         public:
           typedef void type;
+
           explicit async_result(Handler&);
           async_result(const async_result&) = delete;
           async_result& operator=(const async_result&) = delete;
+
           type get();
         };
 
