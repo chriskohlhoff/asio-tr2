@@ -1,0 +1,38 @@
+[section:async_result_packaged_task Class template specialization [^async_result] for [^packaged_task]]
+
+  namespace std {
+    namespace experimental {
+      __begin_versioned_ns__
+
+        template <class R, class... Args>
+        class async_result<packaged_task<R(Args...)>>
+        {
+        public:
+          typedef future<R> type;
+
+          async_result(packaged_task<_R(_Args...)>& t);
+          async_result(const async_result&) = delete;
+          async_result& operator=(const async_result&) = delete;
+
+          type get();
+
+        private:
+          type future_; // ``['exposition only]``
+        };
+
+      __end_versioned_ns__
+    } // namespace experimental
+  } // namespace std
+
+The implementation shall provide a specialization of `async_result` that meets
+the [link classes.async_result `async_result` specialization requirements].
+
+  async_result(packaged_task<_R(_Args...)>& t);
+
+[function_effects Initializes `future_` with `t.get_future()`.]
+
+  type get();
+
+[function_returns `std::move(future_)`.]
+
+[endsect]

@@ -1,0 +1,16 @@
+[section Header [^<experimental/future>] synopsis]
+
+  #include <future>
+
+  namespace std {
+    namespace experimental {
+      __begin_versioned_ns__
+
+      template <class _R, class... _Args>
+        class ``[link classes.async_result_packaged_task async_result<packaged_task<_R(_Args...)>>]``;
+
+      __end_versioned_ns__
+    } // namespace experimental
+  } // namespace std
+
+[endsect]
