@@ -1,0 +1,287 @@
+[section:executor Class [^executor]]
+
+  namespace std {
+    namespace experimental {
+      __begin_versioned_ns__
+
+        class executor
+        {
+        public:
+          // construct / copy / destroy:
+
+          executor() noexcept;
+          executor(nullptr_t) noexcept;
+          executor(const executor& e) noexcept;
+          executor(executor&& e) noexcept;
+          template<class Executor> executor(Executor e);
+          template<class Executor, class Alloc>
+            executor(allocator_arg_t, const Alloc& a, Executor e);
+
+          executor& operator=(const executor& e) noexcept;
+          executor& operator=(executor&& e) noexcept;
+          executor& operator=(nullptr_t) noexcept;
+          template<class Executor> executor& operator=(Executor e);
+
+          ~executor();
+
+          // executor modifiers:
+
+          void swap(executor& other) noexcept;
+          template<class Executor, class Alloc>
+            void assign(Executor e, const Alloc& e);
+
+          // executor operations:
+
+          execution_context& context() noexcept;
+
+          void work_started() noexcept;
+          void work_finished() noexcept;
+
+          template<class Func, class Alloc>
+            void dispatch(Func&& f, const Alloc& a);
+          template<class Func, class Alloc>
+            void post(Func&& f, const Alloc& a);
+          template<class Func, class Alloc>
+            void defer(Func&& f, const Alloc& a);
+
+          // executor capacity:
+
+          explicit operator bool() const noexcept;
+
+          // executor target access:
+
+          const type_info& target_type() const noexcept;
+          template<class Executor> Executor* target() noexcept;
+          template<class Executor> const Executor* target() const noexcept;
+        };
+
+        template<> struct is_executor<executor> : true_type {};
+
+        // executor comparisons:
+
+        bool operator==(const executor& a, const executor& b) noexcept;
+        bool operator==(const executor& e, nullptr_t) noexcept;
+        bool operator==(nullptr_t, const executor& e) noexcept;
+        bool operator!=(const executor& a, const executor& b) noexcept;
+        bool operator!=(const executor& e, nullptr_t) noexcept;
+        bool operator!=(nullptr_t, const executor& e) noexcept;
+
+        // executor specialized algorithms:
+
+        void swap(executor& a, executor& b) noexcept;
+
+      __end_versioned_ns__
+    } // namespace experimental
+
+    template<class Alloc>
+      struct uses_allocator<std::experimental::__versioned_ns__::executor, Alloc>
+        : true_type {};
+
+  } // namespace std
+
+The `executor` class provides a polymorphic wrapper for types that satisfy the
+[link requirements.executor Executor requirements]. The ['target object] is the
+executor object that is held by the wrapper. The `executor` type itself meets
+the requirements for an [link requirements.executor Executor].
+
+[std_note To meet the `noexcept` requirements for executor copy constructors
+and move constructors, implementations may share a target between two or more
+`executor` objects.]
+
+[section [^executor] constructors]
+
+  executor() noexcept;
+
+[function_postconditions `!*this`.]
+
+  executor(nullptr_t) noexcept;
+
+[function_postconditions `!*this`.]
+
+  executor(const executor& e) noexcept;
+
+[function_postconditions `!*this` if `!e`; otherwise, `*this` targets
+`e.target()` or a copy of `e.target()`.]
+
+  executor(executor&& e) noexcept;
+
+[function_effects If `!e`, `*this` has no target; otherwise, moves `e.target()`
+or move-constructs the target of `e` into the target of `*this`, leaving `e` in
+a valid state with an unspecified value.]
+
+  template<class Executor> executor(Executor e);
+
+[function_requires `Executor` shall satisfy the [link requirements.executor
+Executor requirements].]
+
+[function_effects `*this` targets a copy of `e` initialized with
+`std::move(e)`.]
+
+  template<class Executor, class Alloc>
+    executor(allocator_arg_t, const Alloc& a, Executor e);
+
+[function_requires `Executor` shall satisfy the [link requirements.executor
+Executor requirements]. `Allocator` conforms to the `Allocator` requirements
+(C++ Std, \[allocator.requirements\]).]
+
+[function_effects `*this` targets a copy of `e` initialized with
+`std::move(e)`.]
+
+[function_block A copy of the allocator argument is used to allocate memory, if
+necessary, for the internal data structures of the constructed `executor`
+object.]
+
+[endsect]
+
+[section [^executor] assignment]
+
+  executor& operator=(const executor& e) noexcept;
+
+[function_effects `executor(e).swap(*this)`.]
+
+[function_returns `*this`.]
+
+  executor& operator=(executor&& e) noexcept;
+
+[function_effects Replaces the target of `*this` with the target of `e`,
+leaving `e` in a valid state with an unspecified value.]
+
+[function_returns `*this`.]
+
+  executor& operator=(nullptr_t) noexcept;
+
+[function_effects `executor(nullptr).swap(*this)`.]
+
+[function_returns `*this`.]
+
+  template<class Executor> executor& operator=(Executor e);
+
+[function_effects `executor(std::move(e)).swap(*this)`.]
+
+[function_returns `*this`.]
+
+[endsect]
+
+[section [^executor] destructor]
+
+  ~executor();
+
+[function_effects If `*this != nullptr`, releases shared ownership of, or
+destroys, the target of `*this`.]
+
+[endsect]
+
+[section [^executor] modifiers]
+
+  void swap(executor& other) noexcept;
+
+[function_effects Interchanges the targets of `*this` and `other`.]
+
+  template<class Executor, class Alloc>
+    void assign(Executor e, const Alloc& e);
+
+[function_effects `executor(allocator_arg, a, std::move(e)).swap(*this)`.]
+
+[endsect]
+
+[section [^executor] operations]
+
+  execution_context& context() noexcept;
+
+[function_returns `e.context()`, where `e` is the target object of `*this`.]
+
+  void work_started() noexcept;
+
+[function_effects `e.work_started()`, where `e` is the target object of
+`*this`.]
+
+  void work_finished() noexcept;
+
+[function_effects `e.work_finished()`, where `e` is the target object of
+`*this`.]
+
+  template<class Func, class Alloc>
+    void dispatch(Func&& f, const Alloc& a);
+
+[function_effects `e.dispatch(g, a)`, where `e` is the target object of
+`*this`, and `g` is a function object of unspecified type that, when called as
+`g()`, performs `DECAY_COPY(f)()`.]
+
+  template<class Func, class Alloc>
+    void post(Func&& f, const Alloc& a);
+
+[function_effects `e.post(g, a)`, where `e` is the target object of `*this`,
+and `g` is a function object of unspecified type that, when called as `g()`,
+performs `DECAY_COPY(f)()`.]
+
+  template<class Func, class Alloc>
+    void defer(Func&& f, const Alloc& a);
+
+[function_effects `e.defer(g, a)`, where `e` is the target object of `*this`,
+and `g` is a function object of unspecified type that, when called as `g()`,
+performs `DECAY_COPY(f)()`.]
+
+[endsect]
+
+[section [^executor] capacity]
+
+  explicit operator bool() const noexcept;
+
+[function_returns `true` if `*this` has a target, otherwise `false`,]
+
+[endsect]
+
+[section [^executor] target access]
+
+  const type_info& target_type() const noexcept;
+
+[function_returns If `*this` has a target of type `T`, `typeid(T)`; otherwise,
+`typeid(void)`.]
+
+  template<class Executor> Executor* target() noexcept;
+  template<class Executor> const Executor* target() const noexcept;
+
+[function_requires `Executor` shall satisfy the [link requirements.executor
+Executor requirements].]
+
+[function_returns If `target_type() == typeid(Executor)` a pointer to the stored
+executor target; otherwise a null pointer.]
+
+[endsect]
+
+[section [^executor] comparisons]
+
+  bool operator==(const executor& a, const executor& b) noexcept;
+
+[function_returns\n
+[mdash] `true` if `!a` and `!b`;\n
+[mdash] `true` if `a` and `b` share a target;\n
+[mdash] `true` if `e` and `f` are the same type and `e == f`, where `e` is the
+target object of `a` and `f` is the target object of `b`;\n
+[mdash] otherwise `false`.]
+
+  bool operator==(const executor& e, nullptr_t) noexcept;
+  bool operator==(nullptr_t, const executor& e) noexcept;
+
+[function_returns `!e`.]
+
+  bool operator!=(const executor& a, const executor& b) noexcept;
+
+[function_returns `!(a == b)`.]
+
+  bool operator!=(const executor& e, nullptr_t) noexcept;
+  bool operator!=(nullptr_t, const executor& e) noexcept;
+
+[function_returns `(bool) e`.]
+
+[endsect]
+
+[section [^executor] specialized algorithms]
+
+  void swap(executor& a, executor& b) noexcept;
+
+[function_effects `a.swap(b)`.]
+
+[endsect]
+
+[endsect]

@@ -1,0 +1,29 @@
+[section:bad_executor Class [^bad_executor]]
+
+  namespace std {
+    namespace experimental {
+      __begin_versioned_ns__
+
+        class bad_executor : public exception
+        {
+        public:
+          // constructor:
+          bad_executor() noexcept;
+        };
+
+      __end_versioned_ns__
+    } // namespace experimental
+  } // namespace std
+
+An exception of type `bad_executor` is thrown by `executor` member functions
+`dispatch`, `post` and `defer` when the executor object has no target.
+
+[section [^bad_executor] constructor]
+
+  bad_executor() noexcept;
+
+[function_effects Constructs a `bad_executor` object.]
+
+[endsect]
+
+[endsect]
