@@ -79,7 +79,7 @@
         template<class Executor, class CompletionToken>
           auto post(const Executor& ex, CompletionToken&& token);
         template<class ExecutionContext, class CompletionToken>
-          auto defer(ExecutionContext& ctx, CompletionToken&& token);
+          auto post(ExecutionContext& ctx, CompletionToken&& token);
 
         ``// [link functions.defer defer]:``
 
