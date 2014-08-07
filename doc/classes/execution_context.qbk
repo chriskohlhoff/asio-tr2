@@ -14,7 +14,7 @@
           execution_context();
           execution_context(const execution_context&) = delete;
           execution_context& operator=(const execution_context&) = delete;
-          virtual ~execution_context(); // non-virtual
+          virtual ~execution_context();
 
           // execution context operations:
 
@@ -139,8 +139,8 @@ publicly and unambiguously derived from `Service::key_type`, and
 `execution_context::service`.]
 
 [function_effects If an object of type `Key` does not already exist in the
-`execution_context` set identified by `ctx`, creates an object as if by calling
-`new Service(ctx)` and adds it to the set.]
+`execution_context` set identified by `ctx`, creates an object of type
+`Service`, initializing it with `Service(ctx)`, and adds it to the set.]
 
 [function_returns A reference to the corresponding service of `ctx`.]
 
@@ -162,9 +162,9 @@ publicly and unambiguously derived from `Service::key_type`, and
 `execution_context::service`. A service object of type `Key` does not already
 exist in the `execution_context` set identified by `ctx`.]
 
-[function_effects Creates an object as if by calling `new Service(ctx,
-forward<Args>(args)__dotdotdot__)` and adds it to the `execution_context`
-set identified by `ctx`.]
+[function_effects Creates an object of type `Service`, initializing it with
+`Service(ctx, forward<Args>(args)__dotdotdot__)`, and adds it to the
+`execution_context` set identified by `ctx`.]
 
 [function_throws `service_already_exists` if a corresponding service object of
 type `Key` is already present in the set.]
