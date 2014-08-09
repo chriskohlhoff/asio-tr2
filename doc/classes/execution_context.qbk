@@ -58,7 +58,7 @@ the `service_already_exists` exception is thrown.
 
 Once a service reference is obtained from an `execution_context` object by
 calling `use_service<>`, that reference remains usable until a call to
-`destroy_context()`.]
+`destroy_context()`.
 
 [section [^execution_context] constructor]
 
