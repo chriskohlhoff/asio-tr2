@@ -23,8 +23,8 @@
 
           loop_scheduler& context() noexcept;
 
-          void work_started() noexcept;
-          void work_finished() noexcept;
+          void on_work_started() noexcept;
+          void on_work_finished() noexcept;
 
           template<class Func, class Alloc>
             void dispatch(Func&& f, const Alloc& a);
@@ -96,13 +96,15 @@ associated with a `loop_scheduler`, and function objects submitted using the
 
 [function_returns A reference to the associated `loop_scheduler` object.]
 
-  void work_started() noexcept;
+  void on_work_started() noexcept;
 
-[function_effects Calls `inner_ex_.work_started()`.]
+[function_effects Increases the count of outstanding work associated with the
+`loop_scheduler`.]
 
-  void work_finished() noexcept;
+  void on_work_finished() noexcept;
 
-[function_effects Calls `inner_ex_.work_finished()`.]
+[function_effects Decreases the count of outstanding work associated with the
+`loop_scheduler`.]
 
   template<class Func, class Alloc>
     void dispatch(Func&& f, const Alloc& a);

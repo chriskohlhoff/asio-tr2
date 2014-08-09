@@ -36,8 +36,8 @@
 
           execution_context& context() noexcept;
 
-          void work_started() noexcept;
-          void work_finished() noexcept;
+          void on_work_started() noexcept;
+          void on_work_finished() noexcept;
 
           template<class Func, class Alloc>
             void dispatch(Func&& f, const Alloc& a);
@@ -214,13 +214,13 @@ such that `s == *this`, using `dispatch`, `post` or `defer`; otherwise
 
 [function_returns `inner_ex_.context()`.]
 
-  void work_started() noexcept;
+  void on_work_started() noexcept;
 
-[function_effects Calls `inner_ex_.work_started()`.]
+[function_effects Calls `inner_ex_.on_work_started()`.]
 
-  void work_finished() noexcept;
+  void on_work_finished() noexcept;
 
-[function_effects Calls `inner_ex_.work_finished()`.]
+[function_effects Calls `inner_ex_.on_work_finished()`.]
 
   template<class Func, class Alloc>
     void dispatch(Func&& f, const Alloc& a);

@@ -34,8 +34,8 @@
 
           execution_context& context() noexcept;
 
-          void work_started() noexcept;
-          void work_finished() noexcept;
+          void on_work_started() noexcept;
+          void on_work_finished() noexcept;
 
           template<class Func, class Alloc>
             void dispatch(Func&& f, const Alloc& a);
@@ -190,14 +190,14 @@ destroys, the target of `*this`.]
 
 [function_returns `e.context()`, where `e` is the target object of `*this`.]
 
-  void work_started() noexcept;
+  void on_work_started() noexcept;
 
-[function_effects `e.work_started()`, where `e` is the target object of
+[function_effects `e.on_work_started()`, where `e` is the target object of
 `*this`.]
 
-  void work_finished() noexcept;
+  void on_work_finished() noexcept;
 
-[function_effects `e.work_finished()`, where `e` is the target object of
+[function_effects `e.on_work_finished()`, where `e` is the target object of
 `*this`.]
 
   template<class Func, class Alloc>

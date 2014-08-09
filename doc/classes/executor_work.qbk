@@ -45,7 +45,7 @@
   explicit executor_work(const executor_type& ex) noexcept;
 
 [function_effects Constructs an object of class `executor_work`, initializing
-`ex_` with `ex`, and then performing `ex_.work_started()`.]
+`ex_` with `ex`, and then performing `ex_.on_work_started()`.]
 
 [function_postconditions `ex == ex_` and `owns_ == true`.]
 
@@ -53,7 +53,7 @@
 
 [function_effects Constructs an object of class `executor_work`, initializing
 `ex_` with `other.ex`. If `other.owns_ == true`, performs
-`ex_.work_started()`.]
+`ex_.on_work_started()`.]
 
 [function_postconditions `ex == other.ex_` and `owns_ == other.owns_`.]
 
@@ -70,7 +70,7 @@ false`.]
 
 [section [^executor_work] destructor]
 
-[function_effects If `owns_` is true, performs `ex.work_finished()`.]
+[function_effects If `owns_` is true, performs `ex.on_work_finished()`.]
 
 [endsect]
 
@@ -90,7 +90,7 @@ false`.]
 
   void reset() noexcept;
 
-[function_effects If `owns_` is true, performs `ex.work_finished()`.]
+[function_effects If `owns_` is true, performs `ex.on_work_finished()`.]
 
 [function_postconditions `owns_ == false`.]
 

@@ -68,8 +68,9 @@ An object of type `io_service` has an associated executor object, meeting the
 For an object of type `io_service`, ['outstanding work] is defined as the sum
 of:
 
-[mdash] the total number of calls to the `io_service` executor's `work_started`
-function, less the total number of calls to the `work_finished` function;
+[mdash] the total number of calls to the `io_service` executor's
+`on_work_started` function, less the total number of calls to the
+`on_work_finished` function;
 
 [mdash] the number of function objects that have been added to the `io_service`
 via the `io_service` executor, but not yet executed; and

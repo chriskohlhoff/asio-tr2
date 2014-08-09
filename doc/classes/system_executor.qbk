@@ -12,8 +12,8 @@
 
           execution_context& context() noexcept;
 
-          void work_started() noexcept;
-          void work_finished() noexcept;
+          void on_work_started() noexcept;
+          void on_work_finished() noexcept;
 
           template<class Func, class Alloc>
             void dispatch(Func&& f, const Alloc& a);
@@ -48,11 +48,11 @@ the implementation shall discard these function objects without calling them.
 [function_returns A reference to a static-duration object of a type derived
 from `execution_context`.]
 
-  void work_started() noexcept;
+  void on_work_started() noexcept;
 
 [function_effects Does nothing.]
 
-  void work_finished() noexcept;
+  void on_work_finished() noexcept;
 
 [function_effects Does nothing.]
 

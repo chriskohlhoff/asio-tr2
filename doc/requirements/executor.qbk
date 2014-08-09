@@ -7,7 +7,8 @@ policy.
 An executor type `X` shall satisfy the requirements of `CopyConstructible` (C++
 Std, [copyconstructible]) types. No constructor, comparison operator, copy
 operation, move operation, swap operation, or member functions `context`,
-`work_started` and `work_finished` on these types shall exit via an exception.
+`on_work_started` and `on_work_finished` on these types shall exit via an
+exception.
 
 The executor copy constructor, comparison operators, and member functions
 defined in these requirements shall not introduce data races as a result of
@@ -54,15 +55,15 @@ denotes an object of type `T`, and `u` denotes an identifier.
     [Shall not exit via an exception.]
   ]
   [
-    [`x.work_started()`]
+    [`x.on_work_started()`]
     []
     [Shall not exit via an exception.]
   ]
   [
-    [`x.work_finished()`]
+    [`x.on_work_finished()`]
     []
     [Shall not exit via an exception.\n
-     Requires: A preceding call `x1.work_started()` where `x == x1`.]
+     Requires: A preceding call `x1.on_work_started()` where `x == x1`.]
   ]
   [
     [`x.dispatch(std::move(f),a)`]
