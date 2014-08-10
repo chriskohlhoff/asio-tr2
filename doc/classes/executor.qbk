@@ -117,6 +117,9 @@ Executor requirements].]
 [function_effects `*this` targets a copy of `e` initialized with
 `std::move(e)`.]
 
+[function_remarks This function shall not participate in overload resolution
+unless `is_executor<Executor>::value` is true.]
+
   template<class Executor, class Alloc>
     executor(allocator_arg_t, const Alloc& a, Executor e);
 
@@ -159,6 +162,9 @@ leaving `e` in a valid state with an unspecified value.]
 [function_effects `executor(std::move(e)).swap(*this)`.]
 
 [function_returns `*this`.]
+
+[function_remarks This function shall not participate in overload resolution
+unless `is_executor<Executor>::value` is true.]
 
 [endsect]
 
