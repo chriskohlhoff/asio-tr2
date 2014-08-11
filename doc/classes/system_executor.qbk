@@ -32,7 +32,7 @@
 
 Class `system_executor` is a `DefaultConstructible` type (C++ Std,
 [defaultconstructible]) satisfying [link requirements.executor Executor
-requirements]. It represents an execution policy where function objects are
+requirements]. It represents a set of rules where function objects are
 permitted to execute on any thread.
 
 To satisfy the executor requirements for the `post` and `defer` member

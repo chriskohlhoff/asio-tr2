@@ -1,8 +1,8 @@
 [section:executor Executor requirements]
 
-The library describes a standard set of requirements for ['executors], which
-are class-type objects that encapsulate the information about an execution
-policy.
+The library describes a standard set of requirements for ['executors]. A type
+meeting Executor requirements shall embody a set of rules for determining how
+submitted function objects are to be executed.
 
 An executor type `X` shall satisfy the requirements of `CopyConstructible` (C++
 Std, [copyconstructible]) types. No constructor, comparison operator, copy
