@@ -390,6 +390,7 @@ express type requirements, as listed in the table below.
 [include:classes classes/executor_work.qbk]
 [include:classes classes/system_executor.qbk]
 [include:functions functions/wrap.qbk]
+[include:functions functions/make_work.qbk]
 [include:functions functions/dispatch.qbk]
 [include:functions functions/post.qbk]
 [include:functions functions/defer.qbk]
