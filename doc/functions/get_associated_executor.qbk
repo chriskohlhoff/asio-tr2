@@ -1,0 +1,27 @@
+[section:get_associated_executor Function [^get_associated_executor]]
+
+  template<class T>
+    associated_executor_t<T> get_associated_executor(const T& t);
+
+[function_returns `associated_executor<T>::get(t)`.]
+
+  template<class T, class Executor>
+    associated_executor_t<T, Executor>
+      get_associated_executor(const T& t, const Executor& ex);
+
+[function_returns `associated_executor<T, Executor>::get(t, ex)`.]
+
+[function_remarks This function shall not participate in overload resolution
+unless `is_executor<Executor>::value` is true.]
+
+  template<class T, class ExecutionContext>
+    associated_executor_t<T, typename ExecutionContext::executor_type>
+      get_associated_executor(const T& t, ExecutionContext& ctx);
+
+[function_returns `associated_executor<T, typename
+ExecutionContext::executor_type>::get(t, ctx.get_executor())`.]
+
+[function_remarks This function shall not participate in overload resolution
+unless `is_convertible<ExecutionContext&, execution_context&>::value` is true.]
+
+[endsect]
