@@ -32,6 +32,17 @@
         template<class T, class Executor = system_executor>
           using associated_executor_t = typename associated_executor<T, Executor>::type;
 
+        ``// [link functions.get_associated_executor get_associated_executor]:``
+
+        template<class T>
+          associated_executor_t<T> get_associated_executor(const T& t);
+        template<class T, class Executor>
+          associated_executor_t<T, Executor>
+            get_associated_executor(const T& t, const Executor& ex);
+        template<class T, class ExecutionContext>
+          associated_executor_t<T, typename ExecutionContext::executor_type>
+            get_associated_executor(const T& t, ExecutionContext& ctx);
+
         template<class T, class Executor> struct ``[link classes.executor_wrapper executor_wrapper]``;
 
         template<class T, class Executor, class Signature>
@@ -46,15 +57,6 @@
         template<class T, class Executor, class Executor1>
           struct associated_executor<executor_wrapper<T, Executor>, Executor1>;
 
-        template<class T, class Executor> struct ``[link classes.executor_work executor_work]``;
-
-        class ``[link classes.system_executor system_executor]``;
-
-        bool operator==(const system_executor&, const system_executor&);
-        bool operator!=(const system_executor&, const system_executor&);
-
-        template<> struct is_executor<system_executor> : true_type {};
-
         ``// [link functions.wrap wrap]:``
 
         template<class Executor, class T>
@@ -63,16 +65,7 @@
           executor_wrapper<decay_t<T>, typename ExecutionContext::executor_type>
             wrap(ExecutionContext& ctx, T&& t);
 
-        ``// [link functions.get_associated_executor get_associated_executor]:``
-
-        template<class T>
-          associated_executor_t<T> get_associated_executor(const T& t);
-        template<class T, class Executor>
-          associated_executor_t<T, Executor>
-            get_associated_executor(const T& t, const Executor& ex);
-        template<class T, class ExecutionContext>
-          associated_executor_t<T, typename ExecutionContext::executor_type>
-            get_associated_executor(const T& t, ExecutionContext& ctx);
+        template<class T, class Executor> struct ``[link classes.executor_work executor_work]``;
 
         ``// [link functions.make_work make_work]:``
 
@@ -91,6 +84,13 @@
         template<class T, class ExecutionContext>
           executor_work<associated_executor_t<T, typename ExecutionContext::executor_type>>
             make_work(const T& t, ExecutionContext& ctx);
+
+        class ``[link classes.system_executor system_executor]``;
+
+        bool operator==(const system_executor&, const system_executor&);
+        bool operator!=(const system_executor&, const system_executor&);
+
+        template<> struct is_executor<system_executor> : true_type {};
 
         ``// [link functions.dispatch dispatch]:``
 
