@@ -28,8 +28,8 @@ unless `is_convertible<ExecutionContext&, execution_context&>::value` is true.]
 initialized with the result of `associated_executor<T>::get(t)`.]
 
 [function_remarks This function shall not participate in overload resolution
-unless `is_executor<Executor>::value` is false and
-`is_convertible<ExecutionContext&, execution_context&>::value` is false.]
+unless `is_executor<T>::value` is false and `is_convertible<T&,
+execution_context&>::value` is false.]
 
   template<class T, class Executor>
     executor_work<associated_executor_t<T, Executor>>
