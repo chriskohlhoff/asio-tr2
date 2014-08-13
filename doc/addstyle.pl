@@ -18,6 +18,7 @@ my $style =
 "th { border: 1px solid gray; }\n" .
 "td { border: 1px solid gray; }\n" .
 "h1, h2, h3, h4, h5, div.titlepage { page-break-after: avoid; }\n" .
+"dl { margin-top: 0px; margin-bottom: 0px; }\n" .
 "</style>";
 
 my $rev = `git rev-parse HEAD`;
