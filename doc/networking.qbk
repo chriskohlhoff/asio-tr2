@@ -380,6 +380,7 @@ express type requirements, as listed in the table below.
 [include:classes classes/async_result.qbk]
 [include:classes classes/async_completion.qbk]
 [include:classes classes/associated_allocator.qbk]
+[include:functions functions/get_associated_allocator.qbk]
 [include:classes classes/execution_context.qbk]
 [include:classes classes/execution_context__service.qbk]
 [include:classes classes/is_executor.qbk]

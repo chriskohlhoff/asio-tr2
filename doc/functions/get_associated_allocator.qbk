@@ -1,0 +1,14 @@
+[section:get_associated_allocator Function [^get_associated_allocator]]
+
+  template<class T>
+    associated_allocator_t<T> get_associated_allocator(const T& t);
+
+[function_returns `associated_allocator<T>::get(t)`.]
+
+  template<class T, class Alloc>
+    associated_allocator_t<T, Alloc>
+      get_associated_allocator(const T& t, const Alloc& a);
+
+[function_returns `associated_allocator<T, Alloc>::get(t, a)`.]
+
+[endsect]

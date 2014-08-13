@@ -10,6 +10,14 @@
         template<class T, class Alloc = allocator<void>>
           using associated_allocator_t = typename associated_allocator<T, Alloc>::type;
 
+        ``// [link functions.get_associated_allocator get_associated_allocator]:``
+
+        template<class T>
+          associated_allocator_t<T> get_associated_allocator(const T& t);
+        template<class T, class Alloc>
+          associated_allocator_t<T, Alloc>
+            get_associated_allocator(const T& t, const Alloc& a);
+
       __end_versioned_ns__
     } // namespace experimental
   } // namespace std
