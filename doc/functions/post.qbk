@@ -16,9 +16,9 @@ with `handler(forward<CompletionToken>(token))`.\n
 [mdash] Constructs an object `result` of type `async_result<Handler>`,
 initializing the object as `result(handler)`.\n
 [mdash] Obtains the handler's associated executor object `ex` by performing
-`associated_executor<Handler>::get(handler)`.\n
+`get_associated_executor(handler)`.\n
 [mdash] Obtains the handler's associated allocator object `alloc` by performing
-`associated_allocator<Handler>::get(handler)`.\n
+`get_associated_allocator(handler)`.\n
 [mdash] Performs `ex.post(std::move(handler), alloc)`.]
 
 [function_returns `result.get()`.]
@@ -39,12 +39,10 @@ initialized with `handler(forward<CompletionToken>(token))`.\n
 [mdash] Constructs an object `result` of type `async_result<Handler>`,
 initializing the object as `result(handler)`.\n
 [mdash] Obtains the handler's associated executor object `ex1` by performing
-`associated_executor<Handler>::get(handler)`.\n
-[mdash] Constructs an object `w` of type
-`executor_work<associated_executor_t<Handler>>`, initializing the object with
-`w(ex1)`.\n
+`get_associated_executor(handler)`.\n
+[mdash] Creates a work object `w` by performing `make_work(ex1)`.\n
 [mdash] Obtains the handler's associated allocator object `alloc` by performing
-`associated_allocator<Handler>::get(handler)`.\n
+`get_associated_allocator(handler)`.\n
 [mdash] Constructs a function object `f` with a function call operator that
 performs `ex1.dispatch(std::move(handler), alloc)` followed by `w.reset()`.\n
 [mdash] Performs `ex.post(std::move(f), alloc)`.]
