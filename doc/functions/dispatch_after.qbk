@@ -21,7 +21,7 @@ unless `is_executor<Executor>::value` is true.]
 
   template<class Rep, class Period, class ExecutionContext, class... CompletionTokens>
     auto dispatch_after(const chrono::duration<Rep, Period>& rel_time,
-                        const ExecutionContext& c, CompletionTokens&&... tokens);
+                        ExecutionContext& c, CompletionTokens&&... tokens);
 
 [function_returns
 `std::experimental::__versioned_ns__::dispatch_at(chrono::steady_clock::now() +

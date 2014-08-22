@@ -16,7 +16,7 @@
                          const Executor& ex, CompletionTokens&&... tokens);
       template<class Clock, class Duration, class ExecutionContext, class... CompletionTokens>
         auto dispatch_at(const chrono::time_point<Clock, Duration>& abs_time,
-                         const ExecutionContext& ctx, CompletionTokens&&... tokens);
+                         ExecutionContext& ctx, CompletionTokens&&... tokens);
 
       ``// [link functions.post_at post_at]:``
 
@@ -28,7 +28,7 @@
                      const Executor& ex, CompletionTokens&&... tokens);
       template<class Clock, class Duration, class ExecutionContext, class... CompletionTokens>
         auto post_at(const chrono::time_point<Clock, Duration>& abs_time,
-                     const ExecutionContext& ctx, CompletionTokens&&... tokens);
+                     ExecutionContext& ctx, CompletionTokens&&... tokens);
 
       ``// [link functions.defer_at defer_at]:``
 
@@ -40,7 +40,7 @@
           const Executor& ex, CompletionTokens&&... tokens);
       template<class Clock, class Duration, class ExecutionContext, class... CompletionTokens>
         auto defer_at(const chrono::time_point<Clock, Duration>& abs_time,
-                      const ExecutionContext& ctx, CompletionTokens&&... tokens);
+                      ExecutionContext& ctx, CompletionTokens&&... tokens);
 
       ``// [link functions.dispatch_after dispatch_after]:``
 
@@ -52,7 +52,7 @@
                             const Executor& ex, CompletionTokens&&... tokens);
       template<class Rep, class Period, class ExecutionContext, class... CompletionTokens>
         auto dispatch_after(const chrono::duration<Rep, Period>& rel_time,
-                            const ExecutionContext& ctx, CompletionTokens&&... tokens);
+                            ExecutionContext& ctx, CompletionTokens&&... tokens);
 
       ``// [link functions.post_after post_after]:``
 
@@ -64,7 +64,7 @@
                         const Executor& ex, CompletionTokens&&... tokens);
       template<class Rep, class Period, class ExecutionContext, class... CompletionTokens>
         auto post_after(const chrono::duration<Rep, Period>& rel_time,
-                        const ExecutionContext& ctx, CompletionTokens&&... tokens);
+                        ExecutionContext& ctx, CompletionTokens&&... tokens);
 
       ``// [link functions.defer_after defer_after]:``
 
@@ -76,7 +76,7 @@
                          const Executor& ex, CompletionTokens&&... tokens);
       template<class Rep, class Period, class ExecutionContext, class... CompletionTokens>
         auto defer_after(const chrono::duration<Rep, Period>& rel_time,
-                         const ExecutionContext& ctx, CompletionTokens&&... tokens);
+                         ExecutionContext& ctx, CompletionTokens&&... tokens);
 
       __end_versioned_ns__
     } // namespace experimental

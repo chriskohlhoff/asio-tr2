@@ -62,7 +62,7 @@ unless `is_executor<Executor>::value` is true.]
 
   template<class Clock, class Duration, class ExecutionContext, class... CompletionTokens>
     auto post_at(const chrono::time_point<Clock, Duration>& abs_time,
-                 const ExecutionContext& ctx, CompletionTokens&&... tokens);
+                 ExecutionContext& ctx, CompletionTokens&&... tokens);
 
 [function_returns
 `std::experimental::__versioned_ns__::post_at(ctx.get_executor(),
