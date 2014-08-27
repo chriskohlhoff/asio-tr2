@@ -108,15 +108,6 @@ in reverse order of the beginning of service object lifetime (C++ Std,
 
 [function_note `destroy_context` is an idempotent operation.]
 
-  void notify_fork(fork_event e);
-
-[function_effects For each service object `svc` in the set:\n
-[mdash] If `e == fork_event::prepare`, performs `svc->notify_fork(e)` in
-reverse order of the beginning of service object lifetime (C++ Std,
-\[basic.life\]).\n
-[mdash] Otherwise, performs `svc->notify_fork(e)` in order of the beginning of
-service object lifetime.]
-
 [endsect]
 
 [section [^execution_context] globals]
