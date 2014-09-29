@@ -21,7 +21,7 @@
 
           // thread_pool operations:
 
-          executor_type get_executor() const noexcept;
+          executor_type get_executor() noexcept;
 
           void stop();
 
@@ -78,7 +78,7 @@ followed by `join()`.]
 
 [section [^thread_pool] members]
 
-  executor_type get_executor() const noexcept;
+  executor_type get_executor() noexcept;
 
 [function_returns An executor that may be used for submitting function objects
 to the `thread_pool`.]

@@ -21,7 +21,7 @@
 
           // io_service operations:
 
-          executor_type get_executor() const noexcept;
+          executor_type get_executor() noexcept;
 
           size_t run();
           template<class Rep, class Period>
@@ -108,7 +108,7 @@ operations and execute function objects.]
 
 [section [^io_service] members]
 
-  executor_type get_executor() const noexcept;
+  executor_type get_executor() noexcept;
 
 [function_returns An executor that may be used for submitting function objects
 to the `io_service`.]

@@ -31,7 +31,7 @@
 
           // basic_waitable_timer operations:
 
-          executor_type get_executor() const noexcept;
+          executor_type get_executor() noexcept;
 
           size_t cancel();
           size_t cancel_one();
@@ -119,7 +119,7 @@ assignment.\n
 
 [section [^basic_waitable_timer] operations]
 
-  executor_type get_executor() const noexcept;
+  executor_type get_executor() noexcept;
 
 [function_returns The associated executor.]
 

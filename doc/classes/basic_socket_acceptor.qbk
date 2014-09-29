@@ -38,7 +38,7 @@
 
           // basic_socket_acceptor operations:
 
-          executor_type get_executor() const noexcept;
+          executor_type get_executor() noexcept;
 
           native_handle_type native_handle(); // See ``[link requirements.native_handles native handles]``
 
@@ -285,7 +285,7 @@ resolution unless `OtherProtocol` is implicitly convertible to `Protocol`.]
 
 [section [^basic_socket_acceptor] operations]
 
-  executor_type get_executor() const noexcept;
+  executor_type get_executor() noexcept;
 
 [function_returns The associated executor.]
 

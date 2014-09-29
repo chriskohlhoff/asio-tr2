@@ -30,7 +30,7 @@
 
             // basic_resolver operations:
 
-            executor_type get_executor() const noexcept;
+            executor_type get_executor() noexcept;
 
             void cancel();
 
@@ -97,7 +97,7 @@ originally represented by `rhs`.]
 
 [section [^ip::basic_resolver] operations]
 
-  executor_type& get_executor() const noexcept;
+  executor_type& get_executor() noexcept;
 
 [function_returns The associated executor.]
 
