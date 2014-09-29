@@ -165,7 +165,7 @@ cancels asynchronous wait operations, as if by calling `cancel()`.]
 
 [function_effects Establishes the postcondition as if by repeatedly blocking
 the calling thread for the relative time produced by
-`WaitTraits::to_duration(expiry())`.]
+`WaitTraits::to_wait_duration(expiry())`.]
 
 [function_postconditions `!!ec || !(Clock::now() < expiry())`.]
 

@@ -7,14 +7,14 @@ type `Clock::time_point`; and `d` denotes a value of type `Clock::duration`.
 [table WaitTraits requirements
   [[expression] [return type] [assertion/note\npre/post-condition]]
   [
-    [`X::to_duration(d);`]
+    [`X::to_wait_duration(d);`]
     [`Clock::duration`]
     [
       Returns a `Clock::duration` value that represents the duration `d`.
     ]
   ]
   [
-    [`X::to_duration(t);`]
+    [`X::to_wait_duration(t);`]
     [`Clock::duration`]
     [
       Returns a `Clock::duration` value that represents the time point `t`.
