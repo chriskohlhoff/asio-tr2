@@ -96,7 +96,7 @@ WaitTraits>*>(&sb_)`.]
 
   error_code error() const;
 
-[function_returns `rdbuf()->error()`.]
+[function_returns `rdbuf()->puberror()`.]
 
   time_point expiry() const;
 
