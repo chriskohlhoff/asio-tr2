@@ -103,6 +103,7 @@
 [def __listen__ [@http://www.opengroup.org/onlinepubs/000095399/functions/listen.html `listen()`]]
 [def __recvfrom__ [@http://www.opengroup.org/onlinepubs/000095399/functions/recvfrom.html `recvfrom()`]]
 [def __recvmsg__ [@http://www.opengroup.org/onlinepubs/000095399/functions/recvmsg.html `recvmsg()`]]
+[def __select__ [@http://www.opengroup.org/onlinepubs/000095399/functions/select.html `select()`]]
 [def __sendmsg__ [@http://www.opengroup.org/onlinepubs/000095399/functions/sendto.html `sendmsg()`]]
 [def __sendto__ [@http://www.opengroup.org/onlinepubs/000095399/functions/sendto.html `sendto()`]]
 [def __setsockopt__ [@http://www.opengroup.org/onlinepubs/000095399/functions/setsockopt.html `setsockopt()`]]

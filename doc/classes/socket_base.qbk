@@ -24,7 +24,12 @@
           static const shutdown_type shutdown_send;
           static const shutdown_type shutdown_both;
 
-          typedef ``['[*T2]]`` message_flags;
+          typedef ``['[*T2]]`` wait_type;
+          static const wait_type wait_read;
+          static const wait_type wait_write;
+          static const wait_type wait_error;
+
+          typedef ``['[*T3]]`` message_flags;
           static const message_flags message_peek;
           static const message_flags message_out_of_band;
           static const message_flags message_do_not_route;
@@ -48,6 +53,8 @@
 `send_low_watermark`;
 
 [mdash] an enumerated type, `shutdown_type`;
+
+[mdash] an enumerated type, `wait_type`;
 
 [mdash] a bitmask type, `message_flags`.
 

@@ -114,6 +114,12 @@
             auto async_accept(basic_socket<OtherProtocol>& socket,
                               endpoint_type& endpoint,
                               CompletionToken&& token);
+
+          void wait(wait_type w);
+          void wait(wait_type w, error_code& ec);
+
+          template<class CompletionToken>
+            auto async_wait(wait_type w, CompletionToken&& token);
         };
 
       __end_versioned_ns__
@@ -584,6 +590,26 @@ unspecified.]
 [function_error_conditions\n
 [mdash] `socket_errc::already_open` [mdash] if the requirement
 `!socket.is_open()` is unmet.]
+
+  void wait(wait_type w);
+  void wait(wait_type w, error_code& ec);
+
+[function_effects Waits for the acceptor to be ready to read, ready to write, or
+to have error conditions pending, as if by __POSIX__ __select__.]
+
+  template<class CompletionToken>
+    auto async_wait(wait_type w, CompletionToken&& token);
+
+[function_completion_signature `void(error_code ec)`.]
+
+[function_effects Initiates an asynchronous operation to wait for the acceptor
+to be ready to read, ready to write, or to have error conditions pending, as if
+by __POSIX__ __select__.]
+
+[function_block When multiple asynchronous wait operations are initiated with
+the same `wait_type` value, all operations shall complete when the acceptor
+enters the corresponding ready state. The order of invocation of the handlers
+for these operations is unspecified.]
 
 [endsect]
 
