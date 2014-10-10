@@ -26,20 +26,31 @@ chomp($rev);
 my $draft_info = " (as of commit $rev)";
 #$draft_info = "";
 
-my $docno =
-"<pre>" .
-"Doc. no:  D???? " . $draft_info . "\n" .
-"Date:     2014-??-??\n" .
-"Reply-To: Christopher Kohlhoff &lt;chris\@kohlhoff.com&gt;\n" .
-"</pre>\n";
+my $filename_in = ${ARGV}[0];
+my $filename_out = ${ARGV}[1];
 
-#"Revises:  N2175\n" .
+my $docno;
+if ($filename_in =~ /networking/)
+{
+  $docno = "<pre>" .
+           "Doc. no:  D???? " . $draft_info . "\n" .
+           "Date:     2014-??-??\n" .
+           "Revises:  N2175\n" .
+           "Reply-To: Christopher Kohlhoff &lt;chris\@kohlhoff.com&gt;\n" .
+           "</pre>\n";
+}
+else
+{
+  $docno = "<pre>" .
+           "Doc. no:  D???? " . $draft_info . "\n" .
+           "Date:     2014-??-??\n" .
+           "Revises:  N4046\n" .
+           "Reply-To: Christopher Kohlhoff &lt;chris\@kohlhoff.com&gt;\n" .
+           "</pre>\n";
+}
 
 my @lines = ();
 my $saw_h4 = 0;
-
-my $filename_in = ${ARGV}[0];
-my $filename_out = ${ARGV}[1];
 
 open my $file_in, "<$filename_in" or die "Can't open $filename_out";
 while (my $line = <$file_in>)
