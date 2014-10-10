@@ -124,11 +124,9 @@
 [/-----------------------------------------------------------------------------]
 
 [template POSIX[] \[[link ref-POSIX POSIX]\]]
-[template N1900[] \[[link ref-N1900 N1900]\]]
-[template N1975[] \[[link ref-N1975 N1975]\]]
-[template N2052[] \[[link ref-N2052 N2052]\]]
-[template N2066[] \[[link ref-N2066 N2066]\]]
-[template N2174[] \[[link ref-N2174 N2174]\]]
+[template N4045[] \[[link ref-N4045 N4045]\]]
+[template N4046[] \[[link ref-N4045 N4046]\]]
+[template N4099[] \[[link ref-N4099 N4099]\]]
 [template ACE[] \[[link ref-ACE ACE]\]]
 [template SYMBIAN[] \[[link ref-SYMBIAN SYMBIAN]\]]
 [template MSNET[] \[[link ref-MS-NET MS-NET]\]]
@@ -145,13 +143,77 @@
 
 [section Overview]
 
-TBD.
+This document proposes a networking library for C++.
+
+The [@http://www.boost.org/libs/asio Boost.Asio] library, from which this
+proposal is derived, has been deployed in numerous systems, from large
+(including internet-facing HTTP servers, instant messaging gateways and
+financial markets applications) to small (mobile phones and embedded systems).
+The Asio library supports, or has been ported to, many operating systems
+including Linux, Mac OS X, Windows (native), Windows Runtime, Solaris, FreeBSD,
+NetBSD, OpenBSD, HP-UX, Tru64, AIX, iOS, Android, WinCE, Symbian, vxWorks and
+QNX Neutrino.
+
+[section Reference implementation]
+
+An almost complete implementation of the proposal text may be found in a
+variant of Asio that stands alone from Boost. This variant is available at
+[@https://github.com/chriskohlhoff/asio/tree/master].
+
+[endsect]
+
+[section A quick tour of the library]
+
+[section Addressing simple use cases with I/O streams]
+
+In many applications, networking is not a core feature, nor is it seen as a
+core competency of the application’s programmers. To cater to these use cases,
+the proposal provides a high-level interface to TCP sockets that is designed
+around the familiar C++ I/O streams framework.
+
+Using the library in this way is as easy as constructing a stream object with
+the remote host’s details:
+
+  tcp::iostream s("www.boost.org", "http");
+
+Next, deciding whether you want the socket to give up if the host is
+non-responsive:
+
+  s.expires_after(std::chrono::seconds(60));
+
+Then, send and receive any data as needed. In this case you send a request:
+
+  s << "GET / HTTP/1.0\r\n";
+  s << "Host: www.boost.org\r\n";
+  s << "Accept: */*\r\n";
+  s << "Connection: close\r\n\r\n";
+
+And then receive and process the response:
+
+  std::string header;
+  while (std::getline(s, header) && header != "\r")
+  std::cout << header << "\n";
+  std::cout << s.rdbuf();
+
+If at any time there is an error, the tcp::iostream class’s error() member
+function may be used to obtain an `error_code` that identifies the reason for
+failure:
+
+  if (!s)
+  {
+    std::cout << "Socket error: " << s.error().message() << "\n";
+    return 1;
+  }
+
+[endsect]
+
+[endsect]
 
 [endsect]
 
 [/-----------------------------------------------------------------------------]
 
-[section Motivation and Scope]
+[section Motivation and scope]
 
 [section Scope]
 
@@ -176,7 +238,7 @@ Features that are considered outside the scope of this proposal include:
 
 [endsect]
 
-[section Target Audience]
+[section Target audience]
 
 The bulk of the library interface is intended for use by developers with at
 least some understanding of networking concepts (or a willingness to learn). A
@@ -185,22 +247,7 @@ develop network code without needing to get into too much depth.
 
 [endsect]
 
-[section Reference Implementation]
-
-The Boost.Asio library, from which this proposal is derived, has been deployed
-in a number of production systems, such as internet-facing HTTP servers,
-instant messaging gateways and finance applications.
-
-The Boost.Asio library supports, or has been ported to, many operating systems
-including Linux, Mac OS X, Windows (native), Windows Runtime, Solaris, FreeBSD,
-NetBSD, OpenBSD, HP-UX, Tru64, AIX, iOS, Android, WinCE, Symbian,
-vxWorks and QNX Neutrino.
-
-Boost.Asio may be obtained from [@http://www.boost.org].
-
-[endsect]
-
-[section Related Work]
+[section Related work]
 
 The interface is based on the BSD sockets API, which is widely implemented and
 supported by extensive literature. It is also used as the basis of networking
@@ -220,44 +267,62 @@ similar styles of network programming.
 
 [/-----------------------------------------------------------------------------]
 
-[section Impact On the Standard]
+[section Impact on the standard]
 
 This is a pure library proposal. It does not add any new language features, nor
-does it alter any existing standard library headers.
+does it alter any existing standard library headers. It makes additions to
+experimental headers that may also be modified by other Technical
+Specifications.
 
 This library can be implemented using compilers that conform to the C++14
 standard. An implementation of this library requires operating system-specific
 functions that lie outside the C++14 standard.
 
+[section Relationship to other proposals]
+
+The asynchronous operations defined in this proposal use the asynchronous model
+described in [N4045]. With the extensible asynchronous model presented in this
+paper, the user has the ability to select an asynchronous approach that is
+appropriate to each use case. With these library foundations, a single
+extensible asynchronous model can support a variety of composition methods,
+including:
+
+* Callbacks, where minimal runtime penalty is desirable.
+* Futures, and not just std::future but also future classes supplied by other
+  libraries.
+* Coroutines or resumable functions, without adding new keywords to the language.
+
+To facilitate the coordination of asynchronous operations in multithreaded
+programs, the asynchronous model also utilises the executors design described
+in [N4046].
+
+As executors and the extensible asynchronous model are a prerequisite for the
+networking library, the proposed text below incorporates a complete
+specification of these facilities.
+
+[endsect]
+
 [endsect]
 
 [/-----------------------------------------------------------------------------]
 
-[section Design Decisions]
-
-TBD.
-
-[endsect]
-
-[/-----------------------------------------------------------------------------]
-
-[section Proposed Text for the Standard]
+[section Proposed text for the standard]
 
 [commentary Grey-shaded italic text is commentary on the proposal. It is not to
-be added to the TR.]
+be added to the TS.]
 
 This clause describes components that C++ programs may use to perform network
 operations.
 
-[commentary The Filesystem Library Proposal [N1975] adds introductory text to
-the TR to establish a relationship to __POSIX__ [POSIX]. This proposal uses the
-relationship to similarly define behavior "as if" implemented by __POSIX__,
-except that the requirements for error reporting are stricter than those
-outlined in [N1975].]
+[commentary The Draft Filesystem Technical Specification [N4099] adds an
+introductory section on conformance to establish a relationship to __POSIX__
+[POSIX]. This proposal also requires a similar relationship to define behavior
+"as if" implemented by __POSIX__. It is expected that a section on conformance
+would be added here.]
 
-The following subclauses describe components for I/O services, timers, buffer
-management, sockets, endpoint resolution, iostreams, and internet protocol, as
-summarized in the table below:
+The following subclauses describe components for executors, I/O services,
+timers, buffer management, sockets, endpoint resolution, iostreams, and
+internet protocols, as summarized in the table below:
 
 [table Networking library summary
   [[Subclause][Header(s)]]
@@ -556,21 +621,14 @@ This subclause defines components for performing timer operations.
 Open Group Base Specifications, Issue 6]. Also known as ['The Single Unix
 Specification, Version 3].
 
-[#ref-N1900] \[N1900\] Garland, Jeff,
-['Proposal to Add Date-Time to the C++ Standard Library], 2006.
-Updated by N2058.
+[#ref-N4045] \[N4045\] Kohlhoff, Christopher,
+['Library Foundations for Asynchronous Operations, Revision 2], 2014.
 
-[#ref-N1975] \[N1975\] Dawes, Beman,
-['Filesystem Library Proposal for TR2 (Revision 3)], 2006.
+[#ref-N4046] \[N4046\] Kohlhoff, Christopher,
+['Executors and Asynchronous Operations], 2014.
 
-[#ref-N2052] \[N2052\] Nelson, Clark and Boehm, Hans-J.,
-['Sequencing and the Concurrency Memory Model], 2006.
-
-[#ref-N2066] \[N2066\] Dawes, Beman,
-['TR2 Diagnostics Enhancements], 2006.
-
-[#ref-N2174] \[N2174\] Dawes, Beman,
-['Diagnostics Enhancements for C++0x], 2007.
+[#ref-N4099] \[N4099\]
+['Draft Filesystem Technical Specification], 2014.
 
 [#ref-ACE] \[ACE\] Schmidt, Douglas C.,
 ['ADAPTIVE Communication Environment],
