@@ -86,6 +86,8 @@
 
 [template half_open_range[text] '''&#91;'''[text])]
 
+[template sub[x]'''<subscript>'''[x]'''</subscript>''']
+
 [/-----------------------------------------------------------------------------]
 
 [def __dotdotdot__ ...]
@@ -190,6 +192,7 @@ be added to the TS.]
 [include:functions functions/post_after.qbk]
 [include:functions functions/defer_after.qbk]
 [include:headers headers/common/future.qbk]
+[include:classes classes/use_future_t.qbk]
 [include:classes classes/async_result_packaged_task.qbk]
 [include:classes classes/packaged_handler.qbk]
 [include:classes classes/packaged_token.qbk]

@@ -82,6 +82,8 @@
 
 [template half_open_range[text] '''&#91;'''[text])]
 
+[template sub[x]'''<subscript>'''[x]'''</subscript>''']
+
 [/-----------------------------------------------------------------------------]
 
 [def __POSIX__ /POSIX/]
@@ -471,6 +473,7 @@ express type requirements, as listed in the table below.
 [include:functions functions/post.qbk]
 [include:functions functions/defer.qbk]
 [include:classes classes/strand.qbk]
+[include:classes classes/use_future_t.qbk]
 [include:classes classes/async_result_packaged_task.qbk]
 [include:classes classes/packaged_handler.qbk]
 [include:classes classes/packaged_token.qbk]

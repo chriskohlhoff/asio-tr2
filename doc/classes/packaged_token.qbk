@@ -4,7 +4,7 @@
     namespace experimental {
       __begin_versioned_ns__
 
-        template <class Func, class Alloc = allocator<void>>
+        template<class Func, class Alloc = allocator<void>>
         class packaged_token
         {
         public:
@@ -26,7 +26,7 @@
           Alloc allocator_; // ``['exposition only]``
         };
 
-        template <class Func, class Alloc, class R, class... Args>
+        template<class Func, class Alloc, class R, class... Args>
         struct handler_type<packaged_token<Func, Alloc>, R(Args...)>
         {
           typedef packaged_handler<result_of_t<Func(Args...)>(Args...), Alloc> type;

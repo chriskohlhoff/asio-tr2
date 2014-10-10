@@ -4,7 +4,7 @@
     namespace experimental {
       __begin_versioned_ns__
 
-        template <class Signature, class Alloc>
+        template<class Signature, class Alloc>
         class packaged_handler
           : public packaged_task<Signature>
         {
@@ -15,7 +15,7 @@
 
           // packaged_handler constructors:
 
-          template <class Func>
+          template<class Func>
             explicit packaged_handler(packaged_token<Func, Alloc>&& token);
 
           // packaged_handler operations:
@@ -26,7 +26,7 @@
           Alloc allocator_; // ``['exposition only]``
         };
 
-        template <class Signature, class Alloc>
+        template<class Signature, class Alloc>
           class async_result<packaged_handler<Signature, Alloc>>;
 
       __end_versioned_ns__
@@ -35,7 +35,7 @@
 
 [section [^packaged_handler] constructors]
 
-  template <class Func>
+  template<class Func>
     explicit packaged_handler(packaged_token<Func, Alloc>&& token);
 
 [function_effects Constructs an object of class `packaged_handler<Signature,
@@ -59,7 +59,7 @@ with `token.allocator_`.]
     namespace experimental {
       __begin_versioned_ns__
 
-        template <class Signature, class Alloc>
+        template<class Signature, class Alloc>
         class async_result<packaged_handler<Signature, Alloc>>
           : public async_result<packaged_task<Signature>>
         {

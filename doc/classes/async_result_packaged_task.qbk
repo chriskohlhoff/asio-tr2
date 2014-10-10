@@ -4,7 +4,7 @@
     namespace experimental {
       __begin_versioned_ns__
 
-        template <class R, class... Args>
+        template<class R, class... Args>
         class async_result<packaged_task<R(Args...)>>
         {
         public:

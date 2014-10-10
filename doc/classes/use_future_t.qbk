@@ -1,0 +1,174 @@
+[section:use_future_t Class template [^use_future_t]]
+
+  namespace std {
+    namespace experimental {
+      __begin_versioned_ns__
+
+        template<class Allocator = allocator<void>>
+        class use_future_t
+        {
+        public:
+          // use_future_t types:
+          typedef Allocator allocator_type;
+
+          // use_future_t members:
+          constexpr use_future_t() noexcept;
+          explicit use_future_t(const Allocator& a) noexcept;
+          template<class OtherAllocator> use_future_t<OtherAllocator>
+            operator[](const OtherAllocator& a) const noexcept;
+          allocator_type get_allocator() const noexcept;
+        };
+
+      __end_versioned_ns__
+    } // namespace experimental
+  } // namespace std
+
+The class template `use_future_t` defines a set of [link classes.handler_type
+completion token types] for use with asynchronous operations.
+
+[section [^use_future_t] constructors]
+
+  constexpr use_future_t() noexcept;
+
+[function_effects Constructs a `use_future_t` with default-constructed
+allocator.]
+
+  explicit use_future_t(const Allocator& a) noexcept;
+
+[function_effects Constructs an object of type `use_future_t` with
+post-condition `get_allocator() == a`.]
+
+[endsect]
+
+[section [^use_future_t] members]
+
+  template<class OtherAllocator> use_future_t<OtherAllocator>
+    operator[](const OtherAllocator& a) const noexcept;
+
+[function_returns A `use_future_t` object where `get_allocator() == a`.]
+
+  allocator_type get_allocator() const noexcept;
+
+[function_returns The associated allocator object.]
+
+[endsect]
+
+[section:use_future_t_traits [^use_future_t] traits]
+
+  template<class Allocator, class R, class... Args>
+  struct handler_type<use_future_t<Allocator>, R(Args...)>
+  {
+    typedef ``['see below]`` type;
+  };
+
+An object `t1` of the nested function object type `type` is an asynchronous
+provider with an associated shared state (C++Std, [futures.state]). The type
+`type` provides `type::operator()` such that the expression
+`t1(declval<Args>()...)` is well formed.
+
+The implementation shall specialize `associated_executor` for `type`. For
+function objects executed using the associated executor's `dispatch()`,
+`post()` or `defer()` functions, any exception thrown is caught by the executor
+and stored in the associated shared state.
+
+The implementation shall specialize `async_result` for `type` such that, when
+an `async_result` object `r1` is constructed from `t1`, the expression
+`r1.get()` returns a future with the same shared state as `t1`.
+
+The semantics of `async_result::type` and `type::operator()` are defined in the
+table below. In this table, [^N] is the value of `sizeof...(Args)`; let [^['i]]
+be in the range \[[^0]..[^N]) and let [^T[sub ['i]]] be the [^['i]]th type in
+`Args`; let [^U[sub ['i]]] be [^decay<T[sub ['i]]>::type] for each type [^T[sub
+['i]]] in `Args`; and let [^a[sub ['i]]] be the [^['i]]th argument to
+`type::operator()`.
+
+[table handler_type<use_future_t<Allocator>, R(Args...)>::type semantics
+  [
+    [[^N]]
+    [[^U[sub ['0]]]]
+    [`async_result::type`]
+    [`type::operator` effects]
+  ]
+  [
+    [0]
+    []
+    [[^future<void>]]
+    [Makes the shared state ready.]
+  ]
+  [
+    [1]
+    [`error_code`]
+    [[^future<void>]]
+    [If [^a[sub ['0]]] evaluates to `true`, atomically stores the exception
+     pointer produced by [^make_exception_ptr(system_error(a[sub ['0]]))] in the
+     shared state. The shared state is made ready.]
+  ]
+  [
+    [1]
+    [`exception_ptr`]
+    [[^future<void>]]
+    [If [^a[sub ['0]]] is non-null, atomically stores the exception pointer
+     [^a[sub ['0]]] in the shared state. The shared state is made ready.]
+  ]
+  [
+    [1]
+    [all other types]
+    [[^future<U[sub ['0]]>]]
+    [Atomically stores [^a[sub ['0]]] in the shared state and makes that state
+     ready.]
+  ]
+  [
+    [2]
+    [`error_code`]
+    [[^future<U[sub ['1]]>]]
+    [If [^a[sub ['0]]] evaluates to `true`, atomically stores the exception
+     pointer produced by [^make_exception_ptr(system_error(a[sub ['0]]))] in the
+     shared state; otherwise, atomically stores [^a[sub ['1]]] in the shared
+     state. The shared state is made ready.]
+  ]
+  [
+    [2]
+    [`exception_ptr`]
+    [[^future<U[sub ['1]]>]]
+    [If [^a[sub ['0]]] is non-null, atomically stores the exception pointer in
+     the shared state; otherwise, atomically stores [^a[sub ['1]]] in the shared
+     state. The shared state is made ready.]
+  ]
+  [
+    [2]
+    [all other types]
+    [[^future<tuple<U[sub ['0]],U[sub ['1]]>]]
+    [Atomically stores the result of [^make_tuple(a[sub ['0]],a[sub ['1]])] in
+     the shared state and makes that state ready.]
+  ]
+  [
+    [>2]
+    [`error_code`]
+    [[^future<U[sub ['1]],...,U[sub ['N-1]]>]]
+    [If [^a[sub ['0]]] evaluates to `true`, atomically stores the exception
+     pointer produced by [^make_exception_ptr(system_error(a[sub ['0]]))] in the
+     shared state; otherwise, atomically stores the result of [^make_tuple(a[sub
+     ['1]],...,a[sub ['N-1]])] in the shared state. The shared state is made
+     ready.]
+  ]
+  [
+    [>2]
+    [`exception_ptr`]
+    [[^future<U[sub ['1]],...,U[sub ['N-1]]>]]
+    [If [^a[sub ['0]]] is non-null, atomically stores the exception pointer in
+     the shared state; otherwise, atomically stores the result of
+     [^make_tuple(a[sub ['1]],...,a[sub ['N-1]])] in the shared state. The
+     shared state is made ready.]
+  ]
+  [
+    [>2]
+    [all other types]
+    [[^future<tuple<U[sub ['0]],...,U[sub ['N-1]]>]]
+    [Atomically stores the result of [^make_tuple(a[sub ['0]],...,a[sub
+     ['N-1]])] in the shared state and makes that state ready.]
+  ]
+]
+
+[endsect]
+
+[endsect]
