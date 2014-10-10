@@ -266,7 +266,8 @@ summarized in the table below:
     [`<experimental/type_traits>`\n
      `<experimental/memory>`\n
      `<experimental/executor>`\n
-     `<experimental/strand>`]
+     `<experimental/strand>`\n
+     `<experimental/future>`]
   ]
   [
     [[link network.basic_io_services Basic I/O services]]
@@ -374,8 +375,9 @@ express type requirements, as listed in the table below.
 [section:async Asynchronous model]
 [include:headers headers/common/type_traits.qbk]
 [include:headers headers/common/memory.qbk]
-[include:headers headers/networking/executor.qbk]
+[include:headers headers/common/executor.qbk]
 [include:headers headers/common/strand.qbk]
+[include:headers headers/common/future.qbk]
 [section:async_requirements Requirements]
 [include:requirements requirements/asynchronous_operations.qbk]
 [include:requirements requirements/executor.qbk]
@@ -398,10 +400,16 @@ express type requirements, as listed in the table below.
 [include:classes classes/executor_work.qbk]
 [include:functions functions/make_work.qbk]
 [include:classes classes/system_executor.qbk]
+[include:classes classes/bad_executor.qbk]
+[include:classes classes/executor.qbk]
 [include:functions functions/dispatch.qbk]
 [include:functions functions/post.qbk]
 [include:functions functions/defer.qbk]
 [include:classes classes/strand.qbk]
+[include:classes classes/async_result_packaged_task.qbk]
+[include:classes classes/packaged_handler.qbk]
+[include:classes classes/packaged_token.qbk]
+[include:functions functions/package.qbk]
 [endsect]
 
 [section:basic_io_services Basic I/O services]
