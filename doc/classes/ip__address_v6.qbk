@@ -14,8 +14,7 @@
             // constructors:
             constexpr address_v6() noexcept;
             constexpr address_v6(const address_v6& a) noexcept;
-            constexpr address_v6(const bytes_type& bytes, unsigned long scope);
-            template<class... T> explicit constexpr address(T&&... t);
+            constexpr address_v6(const bytes_type& bytes, unsigned long scope = 0);
 
             // assignment:
             address_v4& operator=(const address_v4& a) noexcept;
@@ -119,7 +118,7 @@ the table below.]
 
 [function_postconditions `*this == a`]
 
-  constexpr address_v6(const bytes_type& bytes, unsigned long scope);
+  constexpr address_v6(const bytes_type& bytes, unsigned long scope = 0);
 
 [function_requires Each element of `bytes` is in the range `[0, 0xFF]`.]
 
@@ -128,15 +127,6 @@ the table below.]
 out-of-range detection is needed.]]
 
 [function_postconditions `to_bytes() == bytes` and `scope_id() == scope`.]
-
-  template<class... T> explicit constexpr address_v6(T&&... t);
-
-[function_remarks This constructor shall not participate in overload resolution
-unless the expression `make_address_v6(forward<T>(t).``.``.)` is valid and yields an
-rvalue of type `address_v6`.]
-
-[function_effects Constructs an object of type `address_v6` with the result of
-the expression `make_address_v6(forward<T>(t).``.``.)`.]
 
 [endsect]
 

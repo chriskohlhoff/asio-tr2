@@ -12,7 +12,6 @@
             constexpr address() noexcept;
             constexpr address(const address& a) noexcept;
             template<class T> constexpr address(const T& t) noexcept(``['see below]``);
-            template<class... T> explicit constexpr address(T&&... t);
 
             // assignment:
             address& operator=(const address& a) noexcept;
@@ -91,15 +90,6 @@ expression `address_cast<address>(t)`.]
 
 [function_throws Nothing unless the expression `address_cast<address>(t)`
 throws an exception.]
-
-  template<class... T> explicit constexpr address(T&&... t);
-
-[function_remarks This constructor shall not participate in overload resolution
-unless the expression `make_address(forward<T>(t).``.``.)` is valid and yields an
-rvalue of type `address`.]
-
-[function_effects Constructs an object of type `address` with the result of the
-expression `make_address(forward<T>(t).``.``.)`.]
 
 [endsect]
 
