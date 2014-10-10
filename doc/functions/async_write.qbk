@@ -73,10 +73,9 @@ operations on the stream.]
 
 [function_block Data is written from the [link requirements.dynamic_buffers
 dynamic buffer sequence] object `b`. A [link requirements.const_buffers
-constant buffer sequence] is obtained prior to each `async_write_some` call
-using `b.data()`. After the completion of each asynchronous write_some
-operation, the implementation performs `b.consume(n)`, where `n` is the value
-passed to the asynchronous write_some operation's completion handler.]
+constant buffer sequence] is obtained using `b.data()`. After the data has been
+written to the stream, the implementation performs `b.consume(n)`, where `n` is
+the number of bytes successfully written.]
 
 [function_block The `completion_condition` parameter specifies a function
 object to be called prior to each asynchronous write_some operation. The
