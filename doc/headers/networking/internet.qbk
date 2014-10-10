@@ -92,6 +92,48 @@
           template<class T> constexpr T address_cast(const address_v4&) noexcept(``['see below]``);
           template<class T> constexpr T address_cast(const address_v6&) noexcept(``['see below]``);
 
+          class ``[link classes.ip__address_iterator_v4 address_iterator_v4]``;
+          class ``[link classes.ip__address_iterator_v6 address_iterator_v6]``;
+
+          class ``[link classes.ip__address_range_v4 address_range_v4]``;
+          class ``[link classes.ip__address_range_v6 address_range_v6]``;
+
+          class ``[link classes.ip__network_v4 network_v4]``;
+          class ``[link classes.ip__network_v6 network_v6]``;
+
+          // ``[link classes.ip__network_v4__comparisons network_v4 comparisons]``:
+          bool operator==(const network_v4&, const network_v4&) noexcept;
+          bool operator!=(const network_v4&, const network_v4&) noexcept;
+
+          // ``[link classes.ip__network_v6__comparisons network_v6 comparisons]``:
+          bool operator==(const network_v6&, const network_v6&) noexcept;
+          bool operator!=(const network_v6&, const network_v6&) noexcept;
+
+          // ``[link classes.ip__network_v4__creation network_v4 creation]``:
+          network_v4 make_network_v4(const address_v4&, unsigned short);
+          network_v4 make_network_v4(const address_v4&, const address_v4&);
+          network_v4 make_network_v4(const char*);
+          network_v4 make_network_v4(const char*, error_code&) noexcept;
+          network_v4 make_network_v4(const string&);
+          network_v4 make_network_v4(const string&, error_code&) noexcept;
+
+          // ``[link classes.ip__network_v6__creation network_v6 creation]``:
+          network_v6 make_network_v6(const address_v6&, unsigned short);
+          network_v6 make_network_v6(const char*);
+          network_v6 make_network_v6(const char*, error_code&) noexcept;
+          network_v6 make_network_v6(const string&);
+          network_v6 make_network_v6(const string&, error_code&) noexcept;
+
+          // ``[link classes.ip__network_v4__io network_v4 I/O]``:
+          template<class CharT, class Traits>
+            basic_ostream<CharT, Traits>& operator<<(
+              basic_ostream<CharT, Traits>&, const network_v4&);
+
+          // ``[link classes.ip__network_v6__io network_v6 I/O]``:
+          template<class CharT, class Traits>
+            basic_ostream<CharT, Traits>& operator<<(
+              basic_ostream<CharT, Traits>&, const network_v6&);
+
           template<class InternetProtocol>
             class ``[link classes.ip__basic_endpoint basic_endpoint]``;
 

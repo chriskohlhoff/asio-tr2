@@ -1,0 +1,174 @@
+[section:ip__network_v6 Class template [^ip::network_v6]]
+
+  namespace std {
+    namespace experimental {
+      __begin_versioned_ns__
+        namespace ip {
+
+          class network_v6
+          {
+          public:
+            // constructors:
+            network_v6() noexcept;
+            network_v6(const address_v6& addr, unsigned short prefix_len);
+
+            // members:
+            address_v6 address() const noexcept;
+            unsigned short prefix_length() const noexcept;
+            address_v6 network() const noexcept;
+            address_range_v6 hosts() const noexcept;
+            network_v6 canonical() const noexcept;
+            bool is_host() const noexcept;
+            bool is_subnet_of(const network_v6& other) const noexcept;
+            string to_string() const;
+            string to_string(error_code& ec) const;
+          };
+
+          // network_v6 comparisons:
+          bool operator==(const network_v6& a, const network_v6& b) noexcept;
+          bool operator!=(const network_v6& a, const network_v6& b) noexcept;
+
+          // network_v6 creation:
+          network_v6 make_network_v6(const address_v6& addr, unsigned short prefix_len);
+          network_v6 make_network_v6(const char* str);
+          network_v6 make_network_v6(const char* str, error_code& ec) noexcept;
+          network_v6 make_network_v6(const string& str);
+          network_v6 make_network_v6(const string& str, error_code& ec) noexcept;
+
+          // network_v6 I/O:
+          template<class CharT, class Traits>
+            basic_ostream<CharT, Traits>& operator<<(
+              basic_ostream<CharT, Traits>& os, const network_v6& addr);
+
+        } // namespace ip
+      __end_versioned_ns__
+    } // namespace experimental
+  } // namespace std
+
+[section [^ip::network_v6] constructors]
+
+  network_v6() noexcept;
+
+[function_postconditions `address().is_unspecified() == true` and
+`prefix_length() == 0`.]
+
+  network_v6(const address_v6& addr, unsigned short prefix_len);
+
+[function_requires `prefix_len <= 128`.]
+
+[function_postconditions `address() == addr` and
+`prefix_length() == prefix_len`.]
+
+[function_throws `out_of_range` if `prefix_len > 128`.]
+
+[endsect]
+
+[section [^ip::network_v6] members]
+
+  address_v6 address() const noexcept;
+
+[function_returns The address specified when the `network_v6` object was
+constructed.]
+
+  unsigned short prefix_length() const noexcept;
+
+[function_returns The prefix length of the network.]
+
+  address_v6 network() const noexcept;
+
+[function_returns An `address_v6` object with the first `prefix_length()` bits,
+starting from the most significant bit in network byte order, set to the
+corresponding bit value of `address()`. All other bits are zero.]
+
+  address_range_v6 hosts() const noexcept;
+
+[function_returns If `is_host() == true`, an `address_range_v6` object
+representing the single address `address().` Otherwise, an `address_range_v6`
+object representing the range of unique host IP addresses in the network.]
+
+  network_v6 canonical() const noexcept;
+
+[function_returns `network_v6(network(), prefix_length())`.]
+
+  bool is_host() const noexcept;
+
+[function_returns `true` if `prefix_length() == 128`, otherwise `false`.]
+
+  bool is_subnet_of(const network_v6& other) const noexcept;
+
+[function_returns `true` if `other.prefix_length() < prefix_length()` and
+`network_v6(address(), other.prefix_length()).canonical() ==
+other.canonical()`.]
+
+  string to_string() const;
+  string to_string(error_code& ec) const;
+
+[function_returns A string `s` computed as if by:\n
+``
+  std::string s = address().to_string(ec);
+  if (!ec)
+    s += '/' + to_string(prefix_length());
+``]
+
+[endsect]
+
+[section:ip__network_v6__comparisons [^ip::network_v6] comparisons]
+
+  bool operator==(const network_v6& a, const network_v6& b) noexcept;
+
+[function_returns `true` if `a.address() == b.address()` and `a.prefix_length()
+== b.prefix_length()`, otherwise `false`.]
+
+  bool operator!=(const network_v6& a, const network_v6& b) noexcept;
+
+[function_returns `!(a == b)`.]
+
+[endsect]
+
+[section:ip__network_v6__creation [^ip::network_v6] creation]
+
+  network_v6 make_network_v6(const address_v6& addr, unsigned short prefix_len);
+
+[function_returns `network_v6(addr, prefix_len)`.]
+
+  network_v6 make_network_v6(const char* str);
+  network_v6 make_network_v6(const char* str, error_code& ec) noexcept;
+  network_v6 make_network_v6(const string& str);
+  network_v6 make_network_v6(const string& str, error_code& ec) noexcept;
+
+[function_returns If `str` contains a value of the form ['address] `'/'`
+['prefix-length], a `network_v6` object constructed with the result of applying
+`make_address_v6()` to the ['address] portion of the string, and the result of
+converting ['prefix-length] to an integer of type `unsigned short`. Otherwise
+returns `network_v6()` and sets `ec` to reflect the error.]
+
+[endsect]
+
+[section:ip__network_v6__io [^ip::network_v6] I/O]
+
+  template<class CharT, class Traits>
+    basic_ostream<CharT, Traits>& operator<<(
+      basic_ostream<CharT, Traits>& os, const network_v6& net);
+
+[function_effects Outputs the string representation of the network to the
+stream, as if it were implemented as follows:
+``
+  error_code ec;
+  string s = net.to_string(ec);
+  if (ec)
+  {
+    if (os.exceptions() & ios_base::failbit)
+      throw system_error(ec);
+    else
+      os.setstate(ios_base::failbit);
+  }
+  else
+    for (string::iterator i = s.begin(); i != s.end(); ++i)
+      os << os.widen(*i);
+``]
+
+[function_returns `os`.]
+
+[endsect]
+
+[endsect]
