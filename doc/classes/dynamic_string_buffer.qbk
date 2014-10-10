@@ -1,0 +1,111 @@
+[section:dynamic_string_buffer Class template [^dynamic_string_buffer]]
+
+The `dynamic_string_buffer` class template meets the requirements for [link
+requirements.dynamic_buffers `DynamicBufferSequence`].
+
+  namespace std {
+    namespace experimental {
+      __begin_versioned_ns__
+
+        template<class CharT, class Traits, class Allocator>
+        class dynamic_string_buffer
+        {
+        public:
+          // types:
+          typedef const_buffers_1 const_buffers_type;
+          typedef mutable_buffers_1 mutable_buffers_type;
+
+          // constructors:
+          explicit dynamic_string_buffer(basic_string<CharT, Traits, Allocator>& str) noexcept;
+          dynamic_string_buffer(basic_string<CharT, Traits, Allocator>& str,
+                                size_t maximum_size) noexcept;
+          dynamic_string_buffer(dynamic_string_buffer&&) = default;
+
+          // members:
+          size_t size() const noexcept;
+          size_t max_size() const noexcept;
+          size_t capacity() const noexcept;
+          const_buffers_type data() const noexcept;
+          mutable_buffers_type prepare(size_t n);
+          void commit(size_t n) noexcept;
+          void consume(size_t n);
+
+        private:
+          basic_string<CharT, Traits, Allocator>& str_; // ``['exposition only]``
+          size_t size_; // ``['exposition only]``
+          const size_t max_size_; // ``['exposition only]``
+        };
+
+      __end_versioned_ns__
+    } // namespace experimental
+  } // namespace std
+
+The `dynamic_string_buffer` class template requires that `sizeof(CharT) == 1`.
+
+[section [^dynamic_string_buffer] constructors]
+
+  explicit dynamic_string_buffer(basic_string<CharT, Traits, Allocator>& str) noexcept;
+
+[function_effects Constructs an object of type `dynamic_string_buffer`, binding
+`str_` to `str`, initializing `size_` with `str.size()`, and initializing
+`max_size_` with `str.max_size()`.]
+
+  dynamic_string_buffer(basic_string<CharT, Traits, Allocator>& str,
+                        size_t maximum_size) noexcept;
+
+[function_requires `str.size() <= maximum_size`.]
+
+[function_effects Constructs an object of type `dynamic_string_buffer`, binding
+`str_` to `str`, initializing `size_` with `str.size()`, and initializing
+`max_size_` with `maximum_size`.]
+
+[endsect]
+
+[section [^dynamic_string_buffer] members]
+
+  size_t size() const noexcept;
+
+[function_returns `size_`.]
+
+  size_t max_size() const noexcept;
+
+[function_returns `max_size_`.]
+
+  size_t capacity() const noexcept;
+
+[function_returns `str_.capacity()`.]
+
+  const_buffers_type data() const noexcept;
+
+[function_returns `buffer(str_, size_)`.]
+
+  mutable_buffers_type prepare(size_t n);
+
+[function_requires `size() + n <= max_size()`.]
+
+[function_effects Performs `str.resize(size_ + n)`.]
+
+[function_returns `buffer(buffer(str_) + size_, n)`.]
+
+[function_throws `length_error` if `size() + n > max_size()`.]
+
+  void commit(size_t n) noexcept;
+
+[function_effects Performs:\n
+``
+  size_ += min(n, str_.size() - size_);
+  str_.resize(size_);
+``]
+
+  void consume(size_t n);
+
+[function_effects Performs:\n
+``
+  size_t m = min(n, size_);
+  str_.erase(m);
+  size_ -= m;
+``]
+
+[endsect]
+
+[endsect]

@@ -1,0 +1,112 @@
+[section:dynamic_vector_buffer Class template [^dynamic_vector_buffer]]
+
+The `dynamic_vector_buffer` class template meets the requirements for [link
+requirements.dynamic_buffers `DynamicBufferSequence`].
+
+  namespace std {
+    namespace experimental {
+      __begin_versioned_ns__
+
+        template<class T, class Allocator>
+        class dynamic_vector_buffer
+        {
+        public:
+          // types:
+          typedef const_buffers_1 const_buffers_type;
+          typedef mutable_buffers_1 mutable_buffers_type;
+
+          // constructors:
+          explicit dynamic_vector_buffer(vector<T, Allocator>& vec) noexcept;
+          dynamic_vector_buffer(vector<T, Allocator>& vec,
+                                size_t maximum_size) noexcept;
+          dynamic_vector_buffer(dynamic_vector_buffer&&) = default;
+
+          // members:
+          size_t size() const noexcept;
+          size_t max_size() const noexcept;
+          size_t capacity() const noexcept;
+          const_buffers_type data() const noexcept;
+          mutable_buffers_type prepare(size_t n);
+          void commit(size_t n);
+          void consume(size_t n);
+
+        private:
+          vector<T, Allocator>& vec_; // ``['exposition only]``
+          size_t size_; // ``['exposition only]``
+          const size_t max_size_; // ``['exposition only]``
+        };
+
+      __end_versioned_ns__
+    } // namespace experimental
+  } // namespace std
+
+The `dynamic_vector_buffer` class template requires that `T` is a ['POD type]
+and that `sizeof(T) == 1`.
+
+[section [^dynamic_vector_buffer] constructors]
+
+  explicit dynamic_vector_buffer(vector<T, Allocator>& vec) noexcept;
+
+[function_effects Constructs an object of type `dynamic_vector_buffer`, binding
+`vec_` to `vec`, initializing `size_` with `vec.size()`, and initializing
+`max_size_` with `vec.max_size()`.]
+
+  dynamic_vector_buffer(vector<T, Allocator>& vec,
+                        size_t maximum_size) noexcept;
+
+[function_requires `vec.size() <= maximum_size`.]
+
+[function_effects Constructs an object of type `dynamic_vector_buffer`, binding
+`vec_` to `vec`, initializing `size_` with `vec.size()`, and initializing
+`max_size_` with `maximum_size`.]
+
+[endsect]
+
+[section [^dynamic_vector_buffer] members]
+
+  size_t size() const noexcept;
+
+[function_returns `size_`.]
+
+  size_t max_size() const noexcept;
+
+[function_returns `max_size_`.]
+
+  size_t capacity() const noexcept;
+
+[function_returns `vec_.capacity()`.]
+
+  const_buffers_type data() const noexcept;
+
+[function_returns `buffer(vec_, size_)`.]
+
+  mutable_buffers_type prepare(size_t n);
+
+[function_requires `size() + n <= max_size()`.]
+
+[function_effects Performs `str.resize(size_ + n)`.]
+
+[function_returns `buffer(buffer(vec_) + size_, n)`.]
+
+[function_throws `length_error` if `size() + n > max_size()`.]
+
+  void commit(size_t n);
+
+[function_effects Performs:\n
+``
+  size_ += min(n, vec_.size() - size_);
+  vec_.resize(size_);
+``]
+
+  void consume(size_t n);
+
+[function_effects Performs:\n
+``
+  size_t m = min(n, size_);
+  vec_.erase(vec_.begin(), vec_.begin() + m);
+  size_ -= m;
+``]
+
+[endsect]
+
+[endsect]

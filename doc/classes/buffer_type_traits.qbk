@@ -6,6 +6,7 @@
 
         template<class T> is_mutable_buffer_sequence;
         template<class T> is_const_buffer_sequence;
+        template<class T> is_dynamic_buffer_sequence;
 
       __end_versioned_ns__
     } // namespace experimental
@@ -32,6 +33,16 @@ corresponding condition is true, otherwise `false_type`.
     [`template<class T> is_const_buffer_sequence`]
     [
       `T` meets the requirements for [link requirements.const_buffers constant
+      buffer sequence].
+    ]
+    [
+      `T` is a complete type.
+    ]
+  ]
+  [
+    [`template<class T> is_dynamic_buffer_sequence`]
+    [
+      `T` meets the requirements for [link requirements.dynamic_buffers dynamic
       buffer sequence].
     ]
     [

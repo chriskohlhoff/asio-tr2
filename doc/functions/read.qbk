@@ -47,18 +47,21 @@ recent `read_some` call.]
 [function_returns The total number of bytes transferred in the synchronous read
 operation.]
 
-  template<class SyncReadStream, class Allocator>
-    size_t read(SyncReadStream& stream, basic_fifobuf<Allocator>& fb);
-  template<class SyncReadStream, class Allocator>
-    size_t read(SyncReadStream& stream, basic_fifobuf<Allocator>& fb,
+[function_remarks This function shall not participate in overload resolution
+unless `is_mutable_buffer_sequence<MutableBufferSequence>::value` is true.]
+
+  template<class SyncReadStream, class DynamicBufferSequence>
+    size_t read(SyncReadStream& stream, DynamicBufferSequence&& b);
+  template<class SyncReadStream, class DynamicBufferSequence>
+    size_t read(SyncReadStream& stream, DynamicBufferSequence&& b,
                 error_code& ec);
-  template<class SyncReadStream, class Allocator,
+  template<class SyncReadStream, class DynamicBufferSequence,
     class CompletionCondition>
-      size_t read(SyncReadStream& stream, basic_fifobuf<Allocator>& fb,
+      size_t read(SyncReadStream& stream, DynamicBufferSequence&& b,
                   CompletionCondition completion_condition);
-  template<class SyncReadStream, class Allocator,
+  template<class SyncReadStream, class DynamicBufferSequence,
     class CompletionCondition>
-      size_t read(SyncReadStream& stream, basic_fifobuf<Allocator>& fb,
+      size_t read(SyncReadStream& stream, DynamicBufferSequence&& b,
                   CompletionCondition completion_condition,
                   error_code& ec);
 
@@ -66,12 +69,14 @@ operation.]
 synchronous read stream] object `stream` by performing zero or more calls to
 the stream's `read_some` member function.]
 
-[function_block Data is placed into the `basic_fifobuf<>` object `fb`. A [link
-requirements.mutable_buffers mutable buffer sequence] is obtained prior to each
-`read_some` call using `fb.prepare(min(N, fb.max_size() - fb.size()))`, where
-`N` is a suitable implementation-defined value. After each `read_some` call,
-the implementation performs `fb.commit(n)`, where `n` is the return value from
-`read_some`.]
+[function_block Data is placed into the [link requirements.dynamic_buffers
+dynamic buffer sequence] object `b`. A [link requirements.mutable_buffers
+mutable buffer sequence] is obtained prior to each `read_some` call using
+`b.prepare(N)`, where `N` is an unspecified value such that `N <= max_size() -
+size()`. [inline_note Implementations are encouraged to use `b.capacity()` when
+determining `N`, to minimize the number of `read_some` calls performed on the
+stream.] After each `read_some` call, the implementation performs
+`b.commit(n)`, where `n` is the return value from `read_some`.]
 
 [function_block The `completion_condition` parameter specifies a function
 object to be called prior to each call to the stream's `read_some` member
@@ -84,8 +89,7 @@ with an object of class `transfer_all`.]
 
 [function_block The synchronous read operation continues until:]
 
-[function_block [mdash] the `basic_fifobuf<>` object `fb` is full, that is
-`fb.size() == fb.max_size()`; or]
+[function_block [mdash] `b.size() == b.max_size()`; or]
 
 [function_block [mdash] the completion condition returns `0`.]
 
@@ -94,5 +98,8 @@ recent `read_some` call.]
 
 [function_returns The total number of bytes transferred in the synchronous read
 operation.]
+
+[function_remarks This function shall not participate in overload resolution
+unless `is_dynamic_buffer_sequence<DynamicBufferSequence>::value` is true.]
 
 [endsect]

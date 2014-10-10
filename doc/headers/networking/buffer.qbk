@@ -26,6 +26,7 @@
 
         template<class T> is_mutable_buffer_sequence;
         template<class T> is_const_buffer_sequence;
+        template<class T> is_dynamic_buffer_sequence;
 
         ``// [link functions.buffer_cast buffer conversions]:``
 
@@ -112,29 +113,46 @@
           const_buffers_1 buffer(const array<T, N>& arr, size_t n) noexcept;
 
         template<class T, class Allocator>
-          mutable_buffers_1 buffer(vector<T, Allocator>&) noexcept;
+          mutable_buffers_1 buffer(vector<T, Allocator>& vec) noexcept;
         template<class T, class Allocator>
-          mutable_buffers_1 buffer(vector<T, Allocator>&, size_t n) noexcept;
+          mutable_buffers_1 buffer(vector<T, Allocator>& vec, size_t n) noexcept;
         template<class T, class Allocator>
-          const_buffers_1 buffer(const vector<T, Allocator>&) noexcept;
+          const_buffers_1 buffer(const vector<T, Allocator>& vec) noexcept;
         template<class T, class Allocator>
-          const_buffers_1 buffer(const vector<T, Allocator>&, size_t n) noexcept;
+          const_buffers_1 buffer(const vector<T, Allocator>& vec, size_t n) noexcept;
 
         template<class CharT, class Traits, class Allocator>
-          mutable_buffers_1 buffer(basic_string<CharT, Traits, Allocator>&) noexcept;
+          mutable_buffers_1 buffer(basic_string<CharT, Traits, Allocator>& str) noexcept;
         template<class CharT, class Traits, class Allocator>
-          mutable_buffers_1 buffer(basic_string<CharT, Traits, Allocator>&,
+          mutable_buffers_1 buffer(basic_string<CharT, Traits, Allocator>& str,
                                    size_t n) noexcept;
         template<class CharT, class Traits, class Allocator>
-          const_buffers_1 buffer(const basic_string<CharT, Traits, Allocator>&) noexcept;
+          const_buffers_1 buffer(const basic_string<CharT, Traits, Allocator>& str) noexcept;
         template<class CharT, class Traits, class Allocator>
-          const_buffers_1 buffer(const basic_string<CharT, Traits, Allocator>&,
+          const_buffers_1 buffer(const basic_string<CharT, Traits, Allocator>& str,
                                  size_t n) noexcept;
 
-        template<class Allocator = std::allocator<char> >
-          class ``[link classes.basic_fifobuf basic_fifobuf]``;
+        template<class T, Allocator>
+          class ``[link classes.dynamic_vector_buffer dynamic_vector_buffer]``;
 
-        typedef basic_fifobuf<> fifobuf;
+        template<class CharT, class Traits, Allocator>
+          class ``[link classes.dynamic_string_buffer dynamic_string_buffer]``;
+
+        ``// [link functions.dynamic_buffer dynamic buffer creation]:``
+
+        template<class T, class Allocator>
+          dynamic_vector_buffer<T, Allocator>
+            dynamic_buffer(vector<T, Allocator>& vec) noexcept;
+        template<class T, class Allocator>
+          dynamic_vector_buffer<T, Allocator>
+            dynamic_buffer(vector<T, Allocator>& vec, size_t n) noexcept;
+
+        template<class CharT, class Traits, class Allocator>
+          dynamic_string_buffer<CharT, Traits, Allocator>
+            dynamic_buffer(basic_string<CharT, Traits, Allocator>& str) noexcept;
+        template<class CharT, class Traits, class Allocator>
+          dynamic_string_buffer<CharT, Traits, Allocator>
+            dynamic_buffer(basic_string<CharT, Traits, Allocator>& str, size_t n) noexcept;
 
         class ``[link classes.transfer_all transfer_all]``;
         class ``[link classes.transfer_at_least transfer_at_least]``;
@@ -159,18 +177,18 @@
                         const MutableBufferSequence& buffers,
                         CompletionCondition completion_condition,
                         error_code& ec);
-        template<class SyncReadStream, class Allocator>
-          size_t read(SyncReadStream& stream, basic_fifobuf<Allocator>& fb);
-        template<class SyncReadStream, class Allocator>
-          size_t read(SyncReadStream& stream, basic_fifobuf<Allocator>& fb,
+        template<class SyncReadStream, class DynamicBufferSequence>
+          size_t read(SyncReadStream& stream, DynamicBufferSequence&& b);
+        template<class SyncReadStream, class DynamicBufferSequence>
+          size_t read(SyncReadStream& stream, DynamicBufferSequence&& b,
                       error_code& ec);
-        template<class SyncReadStream, class Allocator,
+        template<class SyncReadStream, class DynamicBufferSequence,
           class CompletionCondition>
-            size_t read(SyncReadStream& stream, basic_fifobuf<Allocator>& fb,
+            size_t read(SyncReadStream& stream, DynamicBufferSequence&& b,
                         CompletionCondition completion_condition);
-        template<class SyncReadStream, class Allocator,
+        template<class SyncReadStream, class DynamicBufferSequence,
           class CompletionCondition>
-            size_t read(SyncReadStream& stream, basic_fifobuf<Allocator>& fb,
+            size_t read(SyncReadStream& stream, DynamicBufferSequence&& b,
                         CompletionCondition completion_condition,
                         error_code& ec);
 
@@ -187,14 +205,15 @@
                             const MutableBufferSequence& buffers,
                             CompletionCondition completion_condition,
                             CompletionToken&& token);
-        template<class AsyncReadStream, class Allocator, class CompletionToken>
-          auto async_read(AsyncReadStream& stream,
-                          basic_fifobuf<Allocator>& fb,
-                          CompletionToken&& token);
-        template<class AsyncReadStream, class Allocator,
+        template<class AsyncReadStream, class DynamicBufferSequence,
+          class CompletionToken>
+            auto async_read(AsyncReadStream& stream,
+                            DynamicBufferSequence&& b,
+                            CompletionToken&& token);
+        template<class AsyncReadStream, class DynamicBufferSequence,
           class CompletionCondition, class CompletionToken>
             auto async_read(AsyncReadStream& stream,
-                            basic_fifobuf<Allocator>& fb,
+                            DynamicBufferSequence&& b,
                             CompletionCondition completion_condition,
                             CompletionToken&& token);
 
@@ -217,20 +236,20 @@
                          const ConstBufferSequence& buffers,
                          CompletionCondition completion_condition,
                          error_code& ec);
-        template<class SyncWriteStream, class Allocator>
-          size_t write(SyncWriteStream& stream, basic_fifobuf<Allocator>& fb);
-        template<class SyncWriteStream, class Allocator>
-          size_t write(SyncWriteStream& stream, basic_fifobuf<Allocator>& fb,
+        template<class SyncWriteStream, class DynamicBufferSequence>
+          size_t write(SyncWriteStream& stream, DynamicBufferSequence&& b);
+        template<class SyncWriteStream, class DynamicBufferSequence>
+          size_t write(SyncWriteStream& stream, DynamicBufferSequence&& b,
                        error_code& ec);
-        template<class SyncWriteStream, class Allocator,
+        template<class SyncWriteStream, class DynamicBufferSequence,
           class CompletionCondition>
             size_t write(SyncWriteStream& stream,
-                         basic_fifobuf<Allocator>& fb,
+                         DynamicBufferSequence&& b,
                          CompletionCondition completion_condition);
-        template<class SyncWriteStream, class Allocator,
+        template<class SyncWriteStream, class DynamicBufferSequence,
           class CompletionCondition>
             size_t write(SyncWriteStream& stream,
-                         basic_fifobuf<Allocator>& fb,
+                         DynamicBufferSequence&& b,
                          CompletionCondition completion_condition,
                          error_code& ec);
 
@@ -247,42 +266,45 @@
                              const ConstBufferSequence& buffers,
                              CompletionCondition completion_condition,
                              CompletionToken&& token);
-        template<class AsyncWriteStream, class Allocator, class CompletionToken>
-          auto async_write(AsyncWriteStream& stream,
-                           basic_fifobuf<Allocator>& fb,
-                           CompletionToken&& token);
-        template<class AsyncWriteStream, class Allocator,
+        template<class AsyncWriteStream, class DynamicBufferSequence,
+          class CompletionToken>
+            auto async_write(AsyncWriteStream& stream,
+                             DynamicBufferSequence&& b,
+                             CompletionToken&& token);
+        template<class AsyncWriteStream, class DynamicBufferSequence,
           class CompletionCondition, class CompletionToken>
             auto async_write(AsyncWriteStream& stream,
-                             basic_fifobuf<Allocator>& fb,
+                             DynamicBufferSequence&& b,
                              CompletionCondition completion_condition,
                              CompletionToken&& token);
 
         ``// [link functions.read_until synchronous delimited read operations]:``
 
-        template<class SyncReadStream, class Allocator>
-          size_t read_until(SyncReadStream& s, basic_fifobuf<Allocator>& fb,
+        template<class SyncReadStream, class DynamicBufferSequence>
+          size_t read_until(SyncReadStream& s, DynamicBufferSequence&& b,
                             char delim);
-        template<class SyncReadStream, class Allocator>
-          size_t read_until(SyncReadStream& s, basic_fifobuf<Allocator>& fb,
+        template<class SyncReadStream, class DynamicBufferSequence>
+          size_t read_until(SyncReadStream& s, DynamicBufferSequence&& b,
                             char delim, error_code& ec);
-        template<class SyncReadStream, class Allocator>
-          size_t read_until(SyncReadStream& s, basic_fifobuf<Allocator>& fb,
+        template<class SyncReadStream, class DynamicBufferSequence>
+          size_t read_until(SyncReadStream& s, DynamicBufferSequence&& b,
                             const string& delim);
-        template<class SyncReadStream, class Allocator>
-          size_t read_until(SyncReadStream& s, basic_fifobuf<Allocator>& fb,
+        template<class SyncReadStream, class DynamicBufferSequence>
+          size_t read_until(SyncReadStream& s, DynamicBufferSequence&& b,
                             const string& delim, error_code& ec);
 
         ``// [link functions.async_read_until asynchronous delimited read operations]:``
 
-        template<class AsyncReadStream, class Allocator, class CompletionToken>
-          auto async_read_until(AsyncReadStream& s,
-                                basic_fifobuf<Allocator>& fb, char delim,
-                                CompletionToken&& token);
-        template<class AsyncReadStream, class Allocator, class CompletionToken>
-          auto async_read_until(AsyncReadStream& s,
-                                basic_fifobuf<Allocator>& fb,
-                                const string& delim, CompletionToken&& token);
+        template<class AsyncReadStream, class DynamicBufferSequence,
+          class CompletionToken>
+            auto async_read_until(AsyncReadStream& s,
+                                  DynamicBufferSequence&& b, char delim,
+                                  CompletionToken&& token);
+        template<class AsyncReadStream, class DynamicBufferSequence,
+          class CompletionToken>
+            auto async_read_until(AsyncReadStream& s,
+                                  DynamicBufferSequence&& b,
+                                  const string& delim, CompletionToken&& token);
 
       __end_versioned_ns__
     } // namespace experimental

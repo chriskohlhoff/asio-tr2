@@ -46,14 +46,18 @@ is valid until the handler for the asynchronous operation is invoked.]
 `error_code` value from the most recent asynchronous write_some operation, and
 `n` is the total number of bytes transferred.]
 
-  template<class AsyncWriteStream, class Allocator, class CompletionToken>
-    auto async_write(AsyncWriteStream& stream,
-                     basic_fifobuf<Allocator>& fb,
-                     CompletionToken&& token);
-  template<class AsyncWriteStream, class Allocator,
+[function_remarks This function shall not participate in overload resolution
+unless `is_const_buffer_sequence<ConstBufferSequence>::value` is true.]
+
+  template<class AsyncWriteStream, class DynamicBufferSequence,
+    class CompletionToken>
+      auto async_write(AsyncWriteStream& stream,
+                       DynamicBufferSequence&& b,
+                       CompletionToken&& token);
+  template<class AsyncWriteStream, class DynamicBufferSequence,
     class CompletionCondition, class CompletionToken>
       auto async_write(AsyncWriteStream& stream,
-                       basic_fifobuf<Allocator>& fb,
+                       DynamicBufferSequence&& b,
                        CompletionCondition completion_condition,
                        CompletionToken&& token);
 
@@ -67,12 +71,12 @@ operation].]
 stream] object `stream` by performing zero or more asynchronous write_some
 operations on the stream.]
 
-[function_block Data is written from the `basic_fifobuf<>` object `fb`. A [link
-requirements.const_buffers constant buffer sequence] is obtained prior to each
-`async_write_some` call using `fb.data()`. After the completion of each
-asynchronous write_some operation, the implementation performs
-`fb.consume(n)`, where `n` is the value passed to the asynchronous write_some
-operation's completion handler.]
+[function_block Data is written from the [link requirements.dynamic_buffers
+dynamic buffer sequence] object `b`. A [link requirements.const_buffers
+constant buffer sequence] is obtained prior to each `async_write_some` call
+using `b.data()`. After the completion of each asynchronous write_some
+operation, the implementation performs `b.consume(n)`, where `n` is the value
+passed to the asynchronous write_some operation's completion handler.]
 
 [function_block The `completion_condition` parameter specifies a function
 object to be called prior to each asynchronous write_some operation. The
@@ -85,17 +89,19 @@ behave as if called with an object of class `transfer_all`.]
 
 [function_block The asynchronous write operation continues until:]
 
-[function_block [mdash] the `basic_fifobuf<>` object `fb` is empty, that is
-`fb.size() == 0`; or]
+[function_block [mdash] `b.size() == 0`; or]
 
 [function_block [mdash] the completion condition returns `0`.]
 
 [function_block The program must ensure both the `AsyncWriteStream` object
-`stream` and the `basic_fifobuf<>` object `fb` are valid until the handler for
-the asynchronous operation is invoked.]
+`stream` and the memory associated with the dynamic buffer sequence `b` are
+valid until the handler for the asynchronous operation is invoked.]
 
 [function_block On completion of the asynchronous operation, `ec` is the
 `error_code` value from the most recent asynchronous write_some operation, and
 `n` is the total number of bytes transferred.]
+
+[function_remarks This function shall not participate in overload resolution
+unless `is_dynamic_buffer_sequence<DynamicBufferSequence>::value` is true.]
 
 [endsect]

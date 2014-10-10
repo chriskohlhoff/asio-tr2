@@ -1,47 +1,49 @@
 [section:read_until Synchronous delimited read operations]
 
-  template<class SyncReadStream, class Allocator>
-    size_t read_until(SyncReadStream& s, basic_fifobuf<Allocator>& fb,
+  template<class SyncReadStream, class DynamicBufferSequence>
+    size_t read_until(SyncReadStream& s, DynamicBufferSequence&& b,
                       char delim);
-  template<class SyncReadStream, class Allocator>
-    size_t read_until(SyncReadStream& s, basic_fifobuf<Allocator>& fb,
+  template<class SyncReadStream, class DynamicBufferSequence>
+    size_t read_until(SyncReadStream& s, DynamicBufferSequence&& b,
                       char delim, error_code& ec);
-  template<class SyncReadStream, class Allocator>
-    size_t read_until(SyncReadStream& s, basic_fifobuf<Allocator>& fb,
+  template<class SyncReadStream, class DynamicBufferSequence>
+    size_t read_until(SyncReadStream& s, DynamicBufferSequence&& b,
                       const string& delim);
-  template<class SyncReadStream, class Allocator>
-    size_t read_until(SyncReadStream& s, basic_fifobuf<Allocator>& fb,
+  template<class SyncReadStream, class DynamicBufferSequence>
+    size_t read_until(SyncReadStream& s, DynamicBufferSequence&& b,
                       const string& delim, error_code& ec);
 
 [function_effects Reads data from the [link requirements.sync_read_stream
 buffer-oriented synchronous read stream] object `stream` by performing zero or
-more calls to the stream's `read_some` member function, until the
-`basic_fifobuf<>` object's input sequence contains the specified delimiter
-`delim`.]
+more calls to the stream's `read_some` member function, until the input
+sequence of the [link requirements.dynamic_buffers dynamic buffer sequence]
+object `b` contains the specified delimiter `delim`.]
 
-[function_block Data is placed into the `basic_fifobuf<>` object `fb`. A [link
-requirements.mutable_buffers mutable buffer sequence] is obtained prior to each
-`read_some` call using `fb.prepare(min(N, fb.max_size() - fb.size()))`, where
-`N` is a suitable implementation-defined value. After each `read_some` call,
-the implementation performs `fb.commit(n)`, where `n` is the return value from
+[function_block Data is placed into the dynamic buffer sequence object `b`. A
+[link requirements.mutable_buffers mutable buffer sequence] is obtained prior
+to each `read_some` call using `b.prepare(N)`, where `N` is an unspecified
+value such that `N <= max_size() - size()`. [inline_note Implementations are
+encouraged to use `b.capacity()` when determining `N`, to minimize the number
+of `read_some` calls performed on the stream.] After each `read_some` call, the
+implementation performs `b.commit(n)`, where `n` is the return value from
 `read_some`.]
 
-[function_block The synchronous read operation continues until:]
+[function_block The synchronous read_until operation continues until:]
 
-[function_block [mdash] the `basic_fifobuf<>` object's input sequence contains
-the delimiter `delim`; or]
+[function_block [mdash] the input sequence of `b` contains the delimiter
+`delim`; or]
 
-[function_block [mdash] the `basic_fifobuf<>` object `fb` is full, that is
-`fb.size() == fb.max_size()`.]
+[function_block [mdash] `b.size() == b.max_size()`; or]
 
-[function_block On exit, if the `basic_fifobuf<>` object's input sequence
-contains the delimiter, `ec` shall contain a value such that the expression
-`!ec` is true. Otherwise, if the `basic_fifobuf<>` object is full, `ec` shall
-contain the `error_code` value `stream_errc::not_found`. If the
-`basic_fifobuf<>` object is not full, `ec` contains the `error_code` from the
-most recent `read_some` call.]
+[function_block [mdash] an synchronous read_some operation fails.]
 
-[function_returns The number of bytes in the `basic_fifobuf<>` object's input
-sequence up to and including the delimiter, if present. Otherwise returns `0`.]
+[function_block On exit, if the input sequence of `b` contains the delimiter,
+`ec` is set such that `!ec` is true. Otherwise, if `b.size() == b.max_size()`,
+`ec` is set such that `ec == stream_errc::not_found`. If `b.size() <
+b.max_size()`, `ec` contains the `error_code` from the most recent `read_some`
+call.]
+
+[function_returns The number of bytes in the input sequence of `b` up to and
+including the delimiter, if present. Otherwise returns `0`.]
 
 [endsect]
