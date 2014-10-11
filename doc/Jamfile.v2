@@ -8,15 +8,15 @@ project asio-tr2-doc
 
 using quickbook ;
 
-html networking-pre-style.html : networking.qbk ;
-make networking.html : networking-pre-style.html : @addstyle ;
+boostbook concurrency : concurrency.qbk : <format>onehtml ;
+boostbook networking : networking.qbk : <format>onehtml ;
 
-html concurrency-pre-style.html : concurrency.qbk ;
-make concurrency.html : concurrency-pre-style.html : @addstyle ;
+make styled/concurrency.html : concurrency : @addstyle ;
+make styled/networking.html : networking : @addstyle ;
 
 actions addstyle
 {
   ./addstyle.pl $(>) $(<)
 }
 
-install html : networking.html concurrency.html design/membar.png ;
+install html : styled/concurrency.html styled/networking.html design/membar.png ;
