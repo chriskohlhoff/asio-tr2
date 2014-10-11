@@ -137,14 +137,14 @@ be in the range \[[^0]..[^N]) and let [^T[sub ['i]]] be the [^['i]]th type in
   [
     [2]
     [all other types]
-    [[^future<tuple<U[sub ['0]],U[sub ['1]]>]]
+    [[^future<tuple<U[sub ['0]],U[sub ['1]]>>]]
     [Atomically stores the result of [^make_tuple(a[sub ['0]],a[sub ['1]])] in
      the shared state and makes that state ready.]
   ]
   [
     [>2]
     [`error_code`]
-    [[^future<U[sub ['1]],...,U[sub ['N-1]]>]]
+    [[^future<tuple<U[sub ['1]],...,U[sub ['N-1]]>>]]
     [If [^a[sub ['0]]] evaluates to `true`, atomically stores the exception
      pointer produced by [^make_exception_ptr(system_error(a[sub ['0]]))] in the
      shared state; otherwise, atomically stores the result of [^make_tuple(a[sub
@@ -154,7 +154,7 @@ be in the range \[[^0]..[^N]) and let [^T[sub ['i]]] be the [^['i]]th type in
   [
     [>2]
     [`exception_ptr`]
-    [[^future<U[sub ['1]],...,U[sub ['N-1]]>]]
+    [[^future<tuple<U[sub ['1]],...,U[sub ['N-1]]>>]]
     [If [^a[sub ['0]]] is non-null, atomically stores the exception pointer in
      the shared state; otherwise, atomically stores the result of
      [^make_tuple(a[sub ['1]],...,a[sub ['N-1]])] in the shared state. The
@@ -163,7 +163,7 @@ be in the range \[[^0]..[^N]) and let [^T[sub ['i]]] be the [^['i]]th type in
   [
     [>2]
     [all other types]
-    [[^future<tuple<U[sub ['0]],...,U[sub ['N-1]]>]]
+    [[^future<tuple<U[sub ['0]],...,U[sub ['N-1]]>>]]
     [Atomically stores the result of [^make_tuple(a[sub ['0]],...,a[sub
      ['N-1]])] in the shared state and makes that state ready.]
   ]
