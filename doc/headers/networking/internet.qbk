@@ -185,20 +185,12 @@
           // tcp comparisons:
           bool operator==(const tcp& a, const tcp& b);
           bool operator!=(const tcp& a, const tcp& b);
-          bool operator< (const tcp& a, const tcp& b);
-          bool operator> (const tcp& a, const tcp& b);
-          bool operator<=(const tcp& a, const tcp& b);
-          bool operator>=(const tcp& a, const tcp& b);
 
           class ``[link classes.ip__udp udp]``;
 
           // udp comparisons:
           bool operator==(const udp& a, const udp& b);
           bool operator!=(const udp& a, const udp& b);
-          bool operator< (const udp& a, const udp& b);
-          bool operator> (const udp& a, const udp& b);
-          bool operator<=(const udp& a, const udp& b);
-          bool operator>=(const udp& a, const udp& b);
 
           class ``[link classes.ip__v6_only v6_only]``;
 
