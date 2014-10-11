@@ -4,6 +4,9 @@ project asio-tr2-doc
       <xsl:param>toc.section.depth=6
       <xsl:param>section.autolabel=1
       <xsl:param>toc.max.depth=6
+      <xsl:param>generate.section.toc.level=1
+      <xsl:param>generate.toc="chapter nop section toc"
+      <xsl:param>alignment="justify"
   ;
 
 using quickbook ;

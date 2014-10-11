@@ -9,14 +9,18 @@ if (@ARGV != 2)
 }
 
 my $style =
-"<style>" .
+"<style>\n" .
+"body { font-family: \"Book Antiqua\", serif; padding: 2em; }\n" .
+".programlisting, .computeroutput, .literal { font-family: \"Consolas\", monospace; font-size: 90%; }\n" .
 "blockquote pre.programlisting { margin-left: 1em; padding-left: 1em; }\n" .
 "div.table { text-align: center; }\n" .
 ".sidebar { background-color: #e0e0e0; font-style: italic; }\n" .
-"p.tablecaption { font-weight: bold; }\n" .
+"p { text-align: justify; }\n" .
+"p.tablecaption { font-weight: bold; text-align: center; }\n" .
+"p.title { font-weight: bold; text-align: center; }\n" .
 "table { margin: auto; border: 1px solid gray; border-collapse: collapse; }\n" .
-"th { border: 1px solid gray; }\n" .
-"td { border: 1px solid gray; }\n" .
+"th { border: 1px solid gray; padding: 0.5em; }\n" .
+"td { border: 1px solid gray; padding: 0.5em; }\n" .
 "h1, h2, h3, h4, h5, div.titlepage { page-break-after: avoid; }\n" .
 "dl { margin-top: 0px; margin-bottom: 0px; }\n" .
 "</style>";
