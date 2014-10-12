@@ -10,7 +10,7 @@ if (@ARGV != 2)
 
 my $style =
 "<style>\n" .
-"body { font-family: \"Book Antiqua\", serif; padding: 2em; }\n" .
+"body { font-family: \"Book Antiqua\", \"Times New Roman\", \"Times\", serif; padding: 2em; }\n" .
 ".programlisting, .computeroutput, .literal { font-family: \"Consolas\", monospace; font-size: 90%; }\n" .
 "blockquote pre.programlisting { margin-left: 1em; padding-left: 1em; }\n" .
 "div.table { text-align: center; }\n" .
