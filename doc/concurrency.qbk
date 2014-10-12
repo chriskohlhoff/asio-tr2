@@ -1,4 +1,4 @@
-[library Executors Proposal
+[library Executors and Asynchronous Operations, Revision 1
     [quickbook 1.1]
     [id concurrency]
 ]
@@ -83,10 +83,14 @@
 ]
 
 [template mdash[] '''&mdash; ''']
+[template arrow[] '''&rarr; ''']
 
 [template half_open_range[text] '''&#91;'''[text])]
 
+[template sup[x]'''<superscript>'''[x]'''</superscript>''']
 [template sub[x]'''<subscript>'''[x]'''</subscript>''']
+
+[template footnote[text]'''<footnote>'''text'''</footnote>''']
 
 [/-----------------------------------------------------------------------------]
 
@@ -99,27 +103,964 @@
 
 [/-----------------------------------------------------------------------------]
 
-[section Overview]
+[section Introduction]
 
-TBD.
+N3785 ['Executors and schedulers, revision 3] describes a framework for
+executors. Unfortunately, this framework is built around some deliberate design
+choices that make it unsuited to the execution of fine grained tasks and, in
+particular, asynchronous operations. Primary among these choices is the use of
+abstract base classes and type erasure, but it is not the only such issue. The
+sum effect of these choices is that the framework is unable to exploit the full
+potential of the C++ language.
+
+In this document, we will look at an alternative executors design that uses a
+lightweight, template-based policy approach. To describe the approach in a
+nutshell:
+
+[:['An executor is to function execution as an allocator is to allocation.]]
+
+This proposal builds on the type traits described in N4045 ['Library
+Foundations for Asynchronous Operations, Revision 2] to outline a design that
+unifies the following areas:
+
+* Executors and schedulers.
+* Support for resumable functions or coroutines.
+* A model for asynchronous operations.
+* A flexible alternative to `std::async()`.
+
+In doing so, it takes concepts from Boost.Asio, many of which have been
+unchanged since its inclusion in Boost, and repackages them in a way that is
+more suited to C++14 language facilities.
 
 [endsect]
 
 [/-----------------------------------------------------------------------------]
 
-[section Motivation and Scope]
+[section Changes in this revision]
 
-TBD.
-
-[section Reference Implementation]
-
-TBD.
+N4046 introduced a comprehensive library that covered included support for
+composition and coordination of chains of operations. In this revision we
+present a minimal subset of the proposal. This includes the facilities required
+to support a model for asynchronous operations, as required by the networking
+proposal. It also includes features that enable the use cases supported by
+N3785.
 
 [endsect]
 
-[section Related Work]
+[/-----------------------------------------------------------------------------]
 
-TBD.
+[section Reference implementation]
+
+A standalone reference implementation of the proposed library can be found at
+['[@http://github.com/chriskohlhoff/executors]]. This implementation requires a
+C++14 compiler.
+
+To better illustrate how the executors library interacts with asynchronous
+operations, and to allow the facility to be used in production code, the
+library has been backported into the variant of Asio that stands alone from
+Boost. This variant is available at
+['[@https://github.com/chriskohlhoff/asio/tree/master]].
+
+[endsect]
+
+[/-----------------------------------------------------------------------------]
+
+[section A two minute introduction to the library]
+
+Run a function asynchronously:
+
+  post([]{
+      // ...
+    });
+
+Run a function asynchronously, on your own thread pool:
+
+  thread_pool pool;
+
+  post(pool, []{
+      // ...
+    });
+
+  pool.join();
+
+Run a function asynchronously and wait for the result:
+
+  std::future<int> f =
+    post(package([]{
+      // ...
+      return 42;
+    }));
+
+  std::cout << f.get() << std::endl;
+
+Run a function asynchronously, on your own thread pool, and wait for the
+result:
+
+  thread_pool pool;
+
+  std::future<int> f =
+    post(pool, package([]{
+      // ...
+      return 42;
+    }));
+
+  std::cout << f.get() << std::endl;
+
+Run a function in the future and wait for the result:
+
+  std::future<int> f =
+    post_after(
+      std::chrono::seconds(1),
+      package([]{
+        // ...
+        return 42;
+      }));
+
+  std::cout << f.get() << std::endl;
+
+[endsect]
+
+[/-----------------------------------------------------------------------------]
+
+[section Library vocabulary]
+
+The central concept of this library is the ['executor] as a policy. An executor
+embodies a set of rules about where, when and how to run a function object.
+For example:
+
+[table
+  [[Executor type][Executor rules]]
+  [
+    [`system_executor`]
+    [Function objects are allowed to run on any thread in the process.]
+  ]
+  [
+    [`thread_pool::executor_type`]
+    [Function objects are allowed to run on any thread in the pool, and
+    nowhere else.]
+  ]
+  [
+    [`strand<Executor>`]
+    [Run function objects according to the underlying executor's rules, but
+    also run them in FIFO order and not concurrently.]
+  ]
+]
+
+Executors are ultimately defined by a set of type requirements, so the set of
+executors isn't limited to those listed here. Like allocators, library users
+can develop custom executor types to implement their own rules. Executors allow
+us to encapsulate all sorts of additional information and behaviour on a
+fine-grained basis, such as:
+
+* Priority.
+* Preferred CPU affinity.
+* Security credentials or impersonation context.
+* How exceptions should be handled.
+
+Certain objects may have an ['associated executor], which specifies how any
+function objects related to the object should be executed. For example, we may
+want to say that all event callbacks associated with a network protocol
+implementation should execute on a particular thread, or that a task should run
+at a particular priority. The notion of an associated executor allows us to
+decouple the specification of execution behaviour from the actual point of
+execution.
+
+An ['execution context] is a place where function objects are executed. Where
+executors are lightweight and cheap to copy, an execution context is typically
+long-lived and non-copyable. It may contain additional state such as timer
+queues, socket reactors, or hidden threads to emulate asynchronous
+functionality. Examples of execution contexts include `thread_pool`,
+`loop_scheduler`, a Boost.Asio `io_service`, and the set of all threads in the
+process.
+
+We say that a `thread_pool` ['is] an execution context, and that it ['has] an
+executor. The thread pool contains long-lived state, namely the threads that
+persist until the pool is shut down. The thread pool's executor embodies the
+rule "run functions in the pool and nowhere else". The thread pool's executor
+may be obtained by calling its `get_executor()` member function.
+
+To submit a function object to an executor or execution context, we can choose
+from one of three fundamental operations: ['dispatch], ['post] and ['defer].
+These operations differ in the eagerness with which they run the submitted
+function.
+
+A dispatch operation is the most eager.
+
+  dispatch(ex, []{ ... });
+
+It means: run the function immediately, in the calling thread, if the rules
+allow it; otherwise, submit for later execution.
+
+[table
+  [[Executor type][Executor rules][Behaviour of dispatch]]
+  [
+    [`system_executor`]
+    [Function objects are allowed to run on any thread in the process.]
+    [Always runs the function object before returning from `dispatch()`.]
+  ]
+  [
+    [`thread_pool::executor_type`]
+    [Function objects are allowed to run on any thread in the pool, and
+    nowhere else.]
+    [If we are inside the thread pool, runs the function object before
+    returning from `dispatch()`. Otherwise, adds to the thread pool's work
+    queue.]
+  ]
+  [
+    [`strand<Executor>`]
+    [Run function objects according to the underlying executor's rules, but
+    also run them in FIFO order and not concurrently.]
+    [If we are inside the strand, or if the strand queue is empty, runs the
+    function object before returning from dispatch(). Otherwise, adds to the
+    strand's work queue.]
+  ]
+]
+
+A consequence of calling `dispatch()` is that, if the executor’s rules allow
+it, the compiler is able to inline the function object call.
+
+A post operation, on the other hand, is not permitted to run the function
+object itself.
+
+  post(ex, []{ ... });
+
+Instead, a posted function is scheduled for execution as soon as possible,
+according to the rules of the executor.
+
+[table
+  [[Executor type][Executor rules][Behaviour of post]]
+  [
+    [`system_executor`]
+    [Function objects are allowed to run on any thread in the process.]
+    [Like `std::async()`, the system executor may allocate `std::thread`
+    objects to run the submitted function objects. A typical implementation may
+    be to use a hidden system-wide thread pool.]
+  ]
+  [
+    [`thread_pool::executor_type`]
+    [Function objects are allowed to run on any thread in the pool, and
+    nowhere else.]
+    [Adds the function object to the thread pool's work queue.]
+  ]
+  [
+    [`strand<Executor>`]
+    [Run function objects according to the underlying executor's rules, but
+    also run them in FIFO order and not concurrently.]
+    [Adds the function object to the strand's work queue.]
+  ]
+]
+
+Finally, the defer operation is the least eager of the three.
+
+  defer(ex, []{ ... });
+
+A defer operation is similar to a post operation, except that it implies a
+relationship between the caller and the function object being submitted. It is
+intended for use when submitting a function object that represents a
+continuation of the caller.
+
+[table
+  [[Executor type][Executor rules][Behaviour of defer]]
+  [
+    [`system_executor`]
+    [Function objects are allowed to run on any thread in the process.]
+    [If the caller is executing within the system-wide thread pool, saves the
+    function object to a thread-local queue. Once control returns to the system
+    thread pool, the function object is scheduled for execution as soon as
+    possible.\n
+    \n
+    If the caller is not inside the system thread pool, behaves as a post
+    operation.]
+  ]
+  [
+    [`thread_pool::executor_type`]
+    [Function objects are allowed to run on any thread in the pool, and
+    nowhere else.]
+    [If the caller is executing within the thread pool, saves the function
+    object to a thread-local queue. Once control returns to the thread pool,
+    the function object is scheduled for execution as soon as possible.\n
+    \n
+    If the caller is not inside the specified thread pool, behaves as a post
+    operation.]
+  ]
+  [
+    [`strand<Executor>`]
+    [Run function objects according to the underlying executor's rules, but
+    also run them in FIFO order and not concurrently.]
+    [Adds the function object to the strand's work queue.]
+  ]
+]
+
+[endsect]
+
+[/-----------------------------------------------------------------------------]
+
+[section Library examples]
+
+In this section we will examine a selection of examples, to see how the
+proposed executors library supports a range of use cases.
+
+[section Emulating [^std::async()]]
+
+The behaviour of `std::async()` function, when used with `std::launch::async`,
+may be trivially emulated as follows:
+
+  template <class F, class... Args>
+  auto async(F&& f, Args&&... args)
+  {
+    return post(
+      package(
+        std::bind(std::forward<F>(f),
+          std::forward<Args>(args)...)));
+  }
+
+Starting from the inside out, the expression:
+
+  std::bind(std::forward<F>(f),
+    std::forward<Args>(args)...)
+
+creates a function object that will invoke `f` with the specified arguments. Next:
+
+  package(...)
+
+returns an object that will be lazily converted into a `std::packaged_task<>`.
+We could also have used `std::packaged_task<>` directly, as in:
+
+  std::packaged_task<
+    std::result_of_t<
+      std::decay_t<F>(std::decay_t<Args>...)>>(...)
+
+In this example, the `package()` function saves on typing by determining the
+return type of `F` for us. Finally:
+
+  post(...)
+
+submits the function object for execution on another thread, and then returns
+immediately. When we submit a `std::packaged_task<>`, `post()` automatically
+deduces its return type to be the `std::future<>` type produced by the task.
+This future object is then returned from our version of `async()`. Note that,
+unlike `std::async()`, the returned future object's destructor will not block.
+
+[commentary See complete example at:\n
+[@https://github.com/chriskohlhoff/executors/blob/master/src/examples/executor/async_1.cpp]]
+
+[endsect]
+
+[section Active objects]
+
+In the Active Object design pattern, all operations associated with an object
+are run in its own private thread.
+
+To implement an active object, we begin by defining a class member that is a
+thread pool containing a single thread.
+
+  class bank_account
+  {
+    int balance_ = 0;
+    mutable thread_pool pool_{1};
+    // ...
+  };
+
+We then define each public member function so that it posts its implementation
+to the thread pool.
+
+  class bank_account
+  {
+    // ...
+    void deposit(int amount)
+    {
+      post(pool_,
+        package([=]
+          {
+            balance_ += amount;
+          })).get();
+    }
+    // ...
+  };
+
+In more detail, to implement an active object operation we begin by defining
+the body of the function:
+
+  [=]
+  {
+    balance_ += amount;
+  }
+
+which we then wrap in a lazily created `std::packaged_task<>`:
+
+  package(...)
+
+Finally, we submit the packaged task to the pool and wait for it to complete.
+When we submit a `std::packaged_task<>`, `post()` automatically deduces its
+return type to be the `std::future<>` type produced by the task. We can use
+this future to block until the operation is complete.
+
+  post(...).get();
+
+[commentary See complete example at:\n
+[@https://github.com/chriskohlhoff/executors/blob/master/src/examples/executor/bank_account_2.cpp]]
+
+[endsect]
+
+[section Activatable objects]
+
+An Activatable object is a variant of the Active Object pattern where the
+object does not have a private thread of its own. Instead, it can borrow one of
+the calling threads to process operations[footnote The concept itself is not
+new, however the term is taken from [@http://accu.org/index.php/journals/1956
+Holgate, Len, ['Activatable Object], ACCU Overload Journal #122, August 2014]].
+However, like Active Object, it ensures that all member state changes do not
+occur on more than one thread at a time.
+
+To implement an activatable object, we create a strand on the system executor.
+
+  class bank_account
+  {
+    int balance_ = 0;
+    mutable strand<system_executor strand_;
+    // ...
+  };
+
+We then define each public member function so that it dispatches its
+implementation to the strand.
+
+  class bank_account
+  {
+    // ...
+    void deposit(int amount)
+    {
+      dispatch(strand_,
+        package([=]
+          {
+            balance_ += amount;
+          })).get();
+    }
+    // ...
+  };
+
+Recall that a `system_executor` object embodies this rule:
+
+[:['Function objects are allowed to run on any thread in the process.]]
+
+while a strand embodies this rule:
+
+[:['Run function objects according to the underlying executor's rules, but also
+run them in FIFO order and not concurrently.]]
+
+Finally, the call to `dispatch()` means:
+
+[:['Run the function immediately, in the calling thread, if the rules allow it;
+otherwise, submit for later execution.]]
+
+Thus, when we combine `system_executor`, `strand` and `dispatch()`:
+
+  dispatch(strand_, []{ ... });
+
+we are effectively saying: ['if the strand is not busy, run the function object
+immediately]. If there is no contention on the strand, latency is minimised. If
+there is contention, the strand still ensures that the function object never
+runs concurrently with any other function object submitted through the same
+strand.
+
+[commentary See complete example at:\n
+[@https://github.com/chriskohlhoff/executors/blob/master/src/examples/executor/bank_account_3.cpp]]
+
+[endsect]
+
+[section Leader/Followers pattern]
+
+The Leader/Followers design pattern is a model where multiple threads take
+turns to wait on event sources in order to dispatch and process incoming
+events.
+
+Consider an example where a connection handler is responsible for receiving
+messages from a client via UDP. The Leader/Followers pattern is implemented
+using a `thread_pool` object:
+
+  class connection_handler
+  {
+    // ...
+  private:
+    udp_socket socket_;
+    thread_pool thread_pool_;
+    // ...
+  };
+
+and involves the sequence of operations below.
+
+  void connection_handler::receive_and_dispatch()
+  {
+
+The leader thread waits for the next message to arrive.
+
+  ``''''''``  char buffer[1024];
+  ``''''''``  std::size_t length = socket_.receive(buffer, sizeof(buffer));
+
+A new message has arrived. The leader thread promotes a follower to become the
+new leader.
+
+  ``''''''``  std::experimental::post(thread_pool_,
+  ``''''''``      [this]{ receive_and_dispatch(); });
+
+The now former leader processes the message.
+
+    // Process the new message and pass it to the order management bus.
+    std::istringstream is(std::string(buffer, length));
+    order_management::new_order event;
+    if (is >> event)
+      order_management_bus_.dispatch_event(event);
+  }
+
+When the function returns, the former leader automatically returns to the pool
+as a follower thread.
+
+[commentary See complete example at:\n
+[@https://github.com/chriskohlhoff/executors/blob/master/src/examples/trading/server/]]
+
+[endsect]
+
+[section Asynchronous operations]
+
+Asynchronous operations are often chained, and in many cases an object may be
+associated with two or more chains. For example, an object to manage a
+connection may contain one chain to do the writing, and another to do the
+reading:
+
+  class connection
+  {
+    tcp::socket socket_;
+    mutable_buffers_1 in_buffer_;
+    mutable_buffers_1 out_buffer_;
+
+    // ...
+
+    void do_read()
+    {
+      socket_.async_read_some(in_buffer_,
+        [this](error_code ec, size_t n)
+        {
+          // ... process input data ...
+          if (!ec) do_read();
+        });
+    }
+
+    void do_write()
+    {
+      // ... generate output data ...
+      async_write(socket_, out_buffer_,
+        [this](error_code ec, size_t n)
+        {
+          if (!ec) do_write();
+        });
+    }
+  };
+
+When these chains are run on a single-threaded event loop, it is not possible
+for more than one completion handler to run at any given time. This means that
+no synchronisation is required to protected shared data. However, if handlers
+are executed on a thread pool then some form of synchronisation will be
+required to avoid introducing data races.
+
+The proposed library provides the `strand<>` template to synchronise handlers.
+A strand ensures that completion handlers never run concurrently, and explicit
+synchronisation (such as a mutex) is still not required to protect shared data.
+To implement this, we use the one strand for all asynchronous operations
+associated with the object.
+
+  class connection
+  {
+    tcp::socket socket_;
+    mutable_buffers_1 in_buffer_;
+    mutable_buffers_1 out_buffer_;
+    strand<io_service::executor_type> strand_;
+
+    // ...
+
+    void do_read()
+    {
+      socket_.async_read_some(in_buffer_,
+        wrap(strand_, [this](error_code ec, size_t n)
+          {
+            // ... process input data ...
+            if (!ec) do_read();
+          }));
+    }
+
+    void do_write()
+    {
+      // ... generate output data ...
+      async_write(socket_, out_buffer_,
+        wrap(strand_, [this](error_code ec, size_t n)
+          {
+            if (!ec) do_write();
+          }));
+    }
+  };
+
+The `wrap` function is used to associated an executor with an object. In this
+example, we used `wrap` to associated the strand with each of the lambdas. The
+`wrap` function works with any executor or execution context. For example, here
+we associate a thread pool with a lamdba:
+
+  async_getline(std::cin,
+      wrap(pool, [](std::string line)
+        {
+          std::cout << "Line: " << line << "\n";
+        }));
+
+Rather than using the `wrap` function, the associated executor may be manually
+specified by providing a nested `executor_type` typedef and `get_executor()`
+member function.
+
+  class line_printer
+  {
+  public:
+    typedef loop_scheduler::executor_type executor_type;
+
+    explicit line_printer(loop_scheduler& s)
+      : executor_(s.get_executor())
+    {
+    }
+
+    executor_type get_executor() const noexcept
+    {
+      return executor_;
+    }
+
+    void operator()(std::string line)
+    {
+      std::cout << "Line: " << line << "\n";
+    }
+
+  private:
+    loop_scheduler::executor_type executor_;
+  };
+
+  // ...
+
+  async_getline(std::cin, line_printer(scheduler));
+
+For this to work correctly, the `async_getline` asynchronous operation must
+participate in an executor-aware model. To be executor-aware, an asynchronous
+operation must:
+
+* Ask the completion handler for its associated executor, by calling
+ `get_associated_executor`.
+
+* While pending, maintain an `executor_work` object for the associated
+  executor. This tells the executor to expect a function object to be submitted
+  in the future. A thread pool, for example, will know that it still has work to
+  do and needs to keep running.
+
+* Dispatch, post or defer any intermediate handlers, and the final completion
+  handler, through the associated executor. This ensures that all handlers are
+  executed according to the executors rules.
+
+Our `async_getline` operation can then be written as follows:
+
+  template <class Handler>
+  void async_getline(std::istream& is, Handler handler)
+  {
+
+The `make_work` function automatically obtains the associated executor and
+creates an `executor_work` object for it.
+
+  ``''''''``  auto work = make_work(handler);
+
+The asynchronous operation itself is posted outside of the associated executor.
+This is because we want the line reading to be performed asynchronously with
+respect to the caller.
+
+  ``''''''``  post([&is, work, handler=std::move(handler)]() mutable
+  ``''''''``      {
+  ``''''''``        std::string line;
+  ``''''''``        std::getline(is, line);
+
+Once the asynchronous work is complete, we execute the completion handler via
+its associated executor.
+
+          // Pass the result to the handler, via the associated executor.
+          dispatch(work.get_executor(),
+              [line=std::move(line), handler=std::move(handler)]() mutable
+              {
+                handler(std::move(line));
+              });
+        });
+  }
+
+[commentary See complete example at:\n
+[@https://github.com/chriskohlhoff/executors/blob/master/src/examples/executor/async_op_1.cpp]]
+
+When composing asynchronous operations, intermediate operations can simply
+reuse the associated executor of the final handler.
+
+  template <class Handler>
+  void async_getlines(std::istream& is, std::string init, Handler handler)
+  {
+    // Get the final handler's associated executor.
+    auto ex = get_associated_executor(handler);
+
+    // Use the associated executor for each operation in the composition.
+    async_getline(is,
+        wrap(ex, [&is, lines=std::move(init), handler=std::move(handler)]
+          (std::string line) mutable
+          {
+            if (line.empty())
+              handler(lines);
+            else
+              async_getlines(is, lines + line + "\n", std::move(handler));
+          }));
+  }
+
+This ensures that all intermediate completion handlers are correctly executed
+according to the caller's executor's rules.
+
+[commentary See complete example at:\n
+[@https://github.com/chriskohlhoff/executors/blob/master/src/examples/executor/async_op_2.cpp]]
+
+[endsect]
+
+[section Pipelines]
+
+A pipeline is a sequence of two or more long-running functions, known as
+stages, with each stage passing data to the next via a queue. The initial stage
+acts as a source of data, the intermediate stages act as filters, and the final
+stage as a sink.
+
+As an example, let us consider a small framework for implementing pipelines.
+The function used to construct a pipeline is declared as:
+
+  template <class F, class... Tail>
+    std::future<void> pipeline(F f, Tail... t);
+
+This function returns a `future` that can be used to wait until the pipeline is
+complete. The initial stage of the pipeline must be a function with signature:
+
+  void initial(queue_front<T``[sub ['0]]``> out);
+
+The intermediate stages have signature:
+
+  void intermediate(queue_back<T``[sub ['n]]``> in, queue_front<T``[sub ['n+1]]``> out);
+
+The pipeline's final stage has the signature:
+
+  void final(queue_back<T``[sub ['N]]``> in);
+
+By default, we want each stage of a pipeline to have its own thread. The
+pipeline framework achieves this by calling `get_associated_executor` with two
+arguments:
+
+  template <class F, class... Tail>
+  std::future<void> pipeline(F f, Tail... t)
+  {
+    // ...
+    auto ex = get_associated_executor(f, thread_executor());
+    // ...
+  }
+
+The `thread_executor` class is a custom executor type defined for the example.
+It starts a new thread for every function passed to `dispatch`, `post` or
+`defer`. If the function object type `F` already has an associated executor
+then that executor will be used. The `thread_executor` is used for types that
+do not specify an associated executor.
+
+So, when we construct and run a pipeline like this:
+
+  void reader(queue_front<std::string> out);
+  void filter(queue_back<std::string> in, queue_front<std::string> out);
+  void upper(queue_back<std::string> in, queue_front<std::string> out);
+  void writer(queue_back<std::string> in);
+
+  // ...
+
+  thread_pool pool;
+  auto f = pipeline(reader, filter, wrap(pool, upper), writer);
+  f.wait();
+
+we are specifying that the the `upper` stage should run on the thread pool,
+while `reader`, `filter` and `writer` should use the default behaviour of
+launching a new thread.
+
+[commentary See complete example at:\n
+[@https://github.com/chriskohlhoff/executors/blob/master/src/examples/executor/pipeline.cpp]]
+
+[endsect]
+
+[section Actors]
+
+The Actor model is a model for concurrency where objects, known as actors,
+communicate only by sending and receiving messages. Each actor's state is
+accessed only by its own internal thread or strand. This means that actors are
+inherently thread-safe.
+
+To illustrate how executors may be used to facilitate actors, a tiny actor
+framework is included with the executors reference implementation. This
+framework is loosely based on the Theron library[footnote
+[@http://theron-library.com]].
+
+To implement an actor using this framework, we start by deriving a class from
+`actor`:
+
+  class member : public actor
+  {
+    // ...
+
+When constructing an actor, we specify the executor to be used:
+
+  ``''''''``  explicit member(executor e)
+  ``''''''``    : actor(std::move(e))
+  ``''''''``  {
+  ``''''''``    // ...
+  ``''''''``  }
+
+The polymorphic type `executor` is used to allow the selection of an actor's
+executor to be delayed until runtime. All of an actor's message handlers are
+executed according to that policy. This could be a thread pool executor, but we
+may equally construct actors with an executor that [link
+concurrency.priority_scheduler knows about priorities].
+
+The actor's message handlers are member functions, identified by argument type,
+and may be arbitrarily registered or deregistered:
+
+  ``''''''``  void init_handler(actor_address next, actor_address from)
+  ``''''''``  {
+  ``''''''``    // ...
+  ``''''''``    register_handler(&member::token_handler);
+  ``''''''``    deregister_handler(&member::init_handler);
+  ``''''''``  }
+
+Internally, the actor framework uses a per-actor `strand` to ensure that
+the member functions are never called concurrently.
+
+To send a message between actors we use either `actor::send()` or
+`actor::tail_send()`. The `send()` operation is implemented in terms of the
+actor's executor's `post()` member function. The `tail_send()` function is a
+distinct operation and conveys additional information about the caller's intent
+which may be used to optimise inter-actor messaging. It is implemented in terms
+of `defer()`.
+
+    void token_handler(int token, actor_address /*from*/)
+    {
+      // ...
+      tail_send(msg, to);
+    }
+
+    // ...
+  };
+
+[commentary See complete example at:\n
+[@https://github.com/chriskohlhoff/executors/blob/master/src/examples/executor/actor.cpp]]
+
+[endsect]
+
+[section Priority scheduler]
+
+Executor objects are lightweight and copyable to allow us to encapsulate all
+sorts of additional information and behaviour on a fine-grained basis. One use
+case for this is attaching priorities to function objects or tasks.
+
+We begin by defining our priority scheduler class as an execution context.
+Internally, this class uses a priority queue to store pending function objects.
+
+  class priority_scheduler : public execution_context
+  {
+    // ...
+
+  private:
+
+    // ...
+
+    struct item_comp
+    {
+      bool operator()(
+          const std::shared_ptr<item_base>& a,
+          const std::shared_ptr<item_base>& b)
+      {
+        return a->priority_ < b->priority_;
+      }
+    };
+
+    std::mutex mutex_;
+    std::condition_variable condition_;
+    std::priority_queue<
+      std::shared_ptr<item_base>,
+      std::vector<std::shared_ptr<item_base>>,
+      item_comp> queue_;
+    bool stopped_ = false;
+  };
+
+The `priority_scheduler` class provides a nested class `executor_type` which
+satisfies the executor type requirements, and a member function `get_executor()
+to obtain an executor object. On construction, an `executor_type` object
+captures a reference to the priority scheduler, as well as the specified
+priority value.
+
+  class priority_scheduler : public execution_context
+  {
+  public:
+    class executor_type
+    {
+    public:
+      executor_type(priority_scheduler& ctx, int pri) noexcept
+        : context_(ctx), priority_(pri)
+      {
+      }
+
+      // ...
+
+    private:
+      priority_scheduler& context_;
+      int priority_;
+    };
+
+    executor_type get_executor(int pri = 0) noexcept
+    {
+      return executor_type(*this, pri);
+    }
+
+    // ...
+  };
+
+When a function object is submitted, the executor uses its stored priority to
+insert the function into the correct position in the priority queue:
+
+  class priority_scheduler : public execution_context
+  {
+  public:
+    class executor_type
+    {
+    public:
+
+      // ...
+
+      template <class Func, class Alloc>
+      void post(Func f, const Alloc& a)
+      {
+        auto p(std::allocate_shared<item<Func>>(a, priority_, std::move(f)));
+        std::lock_guard<std::mutex> lock(context_.mutex_);
+        context_.queue_.push(p);
+        context_.condition_.notify_one();
+      }
+
+      // ...
+    };
+
+    // ...
+  };
+
+The priority scheduler's executors can then be used like any other:
+
+  priority_scheduler sched;
+  auto low = sched.get_executor(0);
+  auto med = sched.get_executor(1);
+  auto high = sched.get_executor(2);
+  // ...
+  dispatch(low, []{ std::cout << "1\n"; });
+  dispatch(med, []{ std::cout << "2\n"; });
+  dispatch(high, []{ std::cout << "3\n"; });
+
+[commentary See complete example at:\n
+[@https://github.com/chriskohlhoff/executors/blob/master/src/examples/executor/priority_scheduler.cpp]]
 
 [endsect]
 
@@ -127,10 +1068,632 @@ TBD.
 
 [/-----------------------------------------------------------------------------]
 
-[section Impact On the Standard]
+[section Summary of library facilities]
+
+[table
+  [[Header][Name][Description]]
+  [
+    [[^type_traits]]
+    [Class template [^handler_type]]
+    [Transforms a completion token into a completion handler.]
+  ]
+  [
+    [[^type_traits]]
+    [Class template [^async_result]]
+    [Determines the result of an asynchronous operation’s initiating function.]
+  ]
+  [
+    [[^type_traits]]
+    [Class template [^async_completion]]
+    [Helper to simplify implementation of an asynchronous operation.]
+  ]
+  [
+    [[^memory]]
+    [Class template [^associated_allocator]]
+    [Used to determine a handler’s associated allocator.]
+  ]
+  [
+    [[^memory]]
+    [Function [^get_associated_allocator]]
+    [Obtain a handler’s associated allocator.]
+  ]
+  [
+    [[^executor]]
+    [Class template [^execution_context]]
+    [Base class for execution context types.]
+  ]
+  [
+    [[^executor]]
+    [Class template [^associated_executor]]
+    [Used to determine a handler’s associated executor.]
+  ]
+  [
+    [[^executor]]
+    [Function [^get_associated_executor]]
+    [Obtain a handler’s associated executor.]
+  ]
+  [
+    [[^executor]]
+    [Class template [^executor_wrapper]]
+    [Associates an executor with an object.]
+  ]
+  [
+    [[^executor]]
+    [Function [^wrap]]
+    [Associate an executor with an object.]
+  ]
+  [
+    [[^executor]]
+    [Class template [^executor_work]]
+    [Tracks outstanding work against an executor.]
+  ]
+  [
+    [[^executor]]
+    [Function [^make_work]]
+    [Create work to track an outstanding operation.]
+  ]
+  [
+    [[^executor]]
+    [Class [^system_executor]]
+    [Executor representing all threads in system.]
+  ]
+  [
+    [[^executor]]
+    [Class [^executor]]
+    [Polymorphic wrapper for executors.]
+  ]
+  [
+    [[^executor]]
+    [Functions [^dispatch], [^post] and [^defer]]
+    [Execute a function object.]
+  ]
+  [
+    [[^strand]]
+    [Class template [^strand]]
+    [Executor adapter than runs function objects non-concurrently and in FIFO
+     order.]
+  ]
+  [
+    [[^timer]]
+    [Functions [^dispatch_at], [^post_at] and [^defer_at]]
+    [Execute a function object at an absolute time.]
+  ]
+  [
+    [[^timer]]
+    [Functions [^dispatch_after], [^post_after] and [^defer_after]]
+    [Execute a function object after a relative time.]
+  ]
+  [
+    [[^future]]
+    [Class template [^use_future_t]]
+    [Completion token to enable futures with asynchronous operations.]
+  ]
+  [
+    [[^future]]
+    [Class template specialization of [^async_result] for [^packaged_task]]
+    [Supports use of packaged_task with dispatch, post, defer, and asynchronous
+     operations.]
+  ]
+  [
+    [[^future]]
+    [Class templates [^packaged_token] and [^packaged_handler]]
+    [Implements lazy creation of a packaged_task.]
+  ]
+  [
+    [[^future]]
+    [Function [^package]]
+    [Return a [^packaged_token] for use with dispatch, post, defer, and
+     asynchronous operations.]
+  ]
+  [
+    [[^thread_pool]]
+    [Class [^thread_pool]]
+    [A fixed size thread pool.]
+  ]
+  [
+    [[^loop_scheduler]]
+    [Class [^loop_scheduler]]
+    [A thread pool where threads are explicitly donated by the caller.]
+  ]
+]
+
+[endsect]
+
+[/-----------------------------------------------------------------------------]
+
+[section On the naming of executors]
+
+There has been some confusion due to the reuse of the term ['executor] in N3785
+and this proposal, but with slightly different meanings. In N3785, an
+"executor" refers to a heavyweight, non-copyable object, such as a thread pool.
+In this proposal, an "executor" is a lightweight, copyable policy object. This
+is distinct from a heavyweight object such as a thread pool, which is known as
+an "execution context".
+
+N3785's API is superficially similar to Java executors, so it is interesting to
+examine the Java prior art in this area. What we find is that N3785 misses a
+key concept: the separation of `Executor` and `ExecutorService`. On the other
+hand, it turns out that this proposal's "executor" mirrors the concept ['and]
+terminology of Java executors.
+
+Let us start by reviewing a couple of the core interfaces of the Java executor
+framework:
+['[@http://docs.oracle.com/javase/7/docs/api/java/util/concurrent/package-summary.html]]
+
+First, we have interface `Executor`. This interface provides a way of
+submitting a `Runnable` (i.e. the equivalent of a function object) for
+execution, and it decouples the submission from the concrete mechanism which
+runs the function.
+
+Second, we have interface `ExecutorService`. This extends `Executor`, i.e.
+`ExecutorService` ['is-a] Executor. It adds some additional functionality, such
+as the ability to request that it be shut down.
+
+A thread pool ['is-a] `ExecutorService`. A fork/join pool ['is-a]
+`ExecutorService`. An `ExecutorService` represents a heavyweight entity where
+`Runnable` items are run.
+
+A `SerialExecutor` ['is-a] `Executor`. A thread-per-task executor ['is-a]
+`Executor`. An executor represents a policy. Where there is a customisation
+point (as in the `ExecutorCompletionService` class) it is specified as an
+`Executor`.
+
+When we want to create our own policy, we do it by implementing the `Executor`
+interface. Our `Executor` policy object can be short lived, or it can be long
+lived. As we are using Java, the object is newed and we let the garbage
+collector take care of it. In fact, we don't really have a choice.
+
+Java is not C++. Java references are not C++ references, nor are they C++
+pointers. We do not have the garbage collector to clean up after us. Yet, and
+this is especially true of concurrent code, correctly managing object lifetime
+is critical. How do we address this in C++? The idiomatic approach is to use
+value semantics.
+
+Thus our `Executor` policy object should use value semantics. We should be able
+to copy it and move it freely. Where a particular concrete `Executor` uses some
+allocated resource, the constructors and destructors can manage the resource
+lifetime, just as we do in other standard library components.
+
+Of course, we do want to be able to use a heavyweight thread pool as an
+`Executor`. In Java, the thread pool ['is-a] `ExecutorService` which ['is-a]
+`Executor`, so we are able to use the heavyweight object in the same way as a
+lightweight one. Once again, this is because of Java's reference semantics,
+where basically all objects are treated the same, whether light or heavy.
+
+In C++, however, our heavyweight thread pool may be best represented by a
+non-copyable type. This presents a challenge: how do we establish a pattern
+where we can pass either a noncopyable type or a type with value semantics?
+That is, how can we have an interface where we can pass either a heavyweight
+`ExecutorService` or a lightweight `Executor`?
+
+The solution is to change the relationship between `ExecutorService` and
+`Executor`. Rather than saying an `ExecutorService` ['is-a] `Executor`, we
+instead say an `ExecutorService` [*['has-a]] `Executor`. Every
+`ExecutorService` has an associated lightweight `Executor` policy which
+encapsulates the submission logic. This lightweight `Executor` provides the
+necessary value semantics.
+
+Thus we can see that this proposal's "executor" is in fact the same concept as
+the Java `Executor`. It is just that it is packaged in a way that is more
+idiomatic C++, i.e. it uses value semantics. This proposal's "execution
+context" concept is the equivalent of Java's `ExecutorService`. The executor is
+the "how", a policy, and it logically performs the execution. The execution
+context or `ExecutorService` is the "where", a venue if you like.
+
+As we are using C++, and not Java, we get the same level of abstraction but
+with the benefits of compile time polymorphism, inlining, control over memory
+use, and using fewer allocations (i.e. we create less garbage). The reasons
+we are using C++ in the first place.
+
+As we can see, the separation of executor from execution context clearly exists
+in the prior art represented by Java. However, this proposal's design is
+derived from Boost.Asio, and is very much driven by what is required to make
+asynchronous operations work, but with a desire to have a clean separation of
+concerns. The Java executors framework did not inform the design, yet it is not
+surprising that Java represents an example of convergent evolution, once we
+make a deeper analysis of the library.
+
+[endsect]
+
+[/-----------------------------------------------------------------------------]
+
+[section On the need for dispatch, post and defer]
+
+Let us take another look at the specification of the Java `Executor` class and
+its `execute` method:
+['[@http://docs.oracle.com/javase/7/docs/api/java/util/concurrent/Executor.html]]
+
+It says:
+
+[:`void execute(Runnable command)`\n
+\n
+['Executes the given command at some time in the future. The command may
+execute in a new thread, in a pooled thread, or in the calling thread, at the
+discretion of the Executor implementation.]]
+
+Note that the wording includes "in the calling thread". In fact, the
+specification of the execute method is essentially the same as the `dispatch`
+function of this proposal.
+
+As it is the only available `Executor` method, this specification of `execute`
+is a problem. Clearly there are times when we want to guarantee that a function
+will ['not] run in the calling thread, such as when we want launch a long
+running function. Unfortunately, if we are using an `Executor` in a polymorphic
+context we have no way of knowing what behaviour we will get. We have to know
+the concrete executor type to ensure that it doesn't run in the calling thread.
+
+Thus, we wish to introduce a function with slightly different semantics:
+
+[:['Executes the given command at some time in the future. The command may
+execute in a new thread, in a pooled thread, at the discretion of the Executor
+implementation.]]
+
+This is the `post` function of this proposal, and it lets us as the caller
+ensure that a function does not run in the calling thread.
+
+However, this does not obviate the need for the original semantics (i.e.
+the current Java semantics). There are times when it is to our advantage
+to allow a function to run in the calling thread. Some examples:
+
+* When using a strand (or a serial executor, in Java terminology) to ensure
+non-concurrent function execution. If the strand is not contended, we want to
+execute the function in the current thread. This will minimise latency and
+avoid the cost of a context switch.
+
+* At the end of an asynchronous operation. We are unwrapping layers of
+composition and handing the result back through a stack of callbacks. A
+callback needs to run on its correct executor, but we do not want to
+unnecessarily incur a context switch or a cycle through the scheduler, as doing
+so significantly adds to the latency in processing the event.
+
+Interestingly, the specification of `future::then` (now removed from the
+concurrency TS) that took an executor would also suffer from this extra cost
+unless it had access to dispatch semantics.
+
+The `defer` operation, like `post`, does not allow the function to run in the
+calling thread. Where it differs is in the expression of the intent of the
+caller. Using `defer` states that there is a relationship between the caller
+and callee. An executor can make use of this to do smarter, more efficient
+scheduling.
+
+For example, consider a chain of asynchronous read operations on a socket:
+
+  void read_loop(Socket socket, Buffer buffer)
+  {
+    async_read(socket, buffer,
+      [&](error_code, size_t n) {
+        process_data(buffer, n);
+        read_loop(socket, buffer);
+      });
+  }
+
+where an individual read operation is implemented something like this:
+
+  template <class Handler>
+  void async_read(Socket socket, Buffer buffer, Handler handler)
+  {
+    // Perform a speculative read first.
+    n = non_blocking_read(socket, buffer, ec);
+    if (ec != would_block)
+    {
+      // Read completed immediately, post handler.
+      ex = get_associated_executor(handler);
+      post(ex, [=]{ handler(ec, n); });
+    }
+    else
+    {
+      // Wait for socket to become readable.
+      // ...
+    }
+  }
+
+In certain circumstances the read operation will always complete immediately,
+such as when the data is already available in the kernel buffers. When this
+occurs, the sequence of operations is essentially equivalent to:
+
+  void read_loop(socket, buffer)
+  {
+    // ...
+    ex.post([&]{ // #1 ``[#post1]``
+        read_loop(socket, buffer);
+      });
+    // ...
+  }
+
+Let us assume that our executor `ex` uses a thread pool with a mutex-protected
+queue:
+
+  class my_thread_pool
+  {
+  public:
+    class executor_type
+    {
+    public:
+      // ...
+
+      template <class Func, class Alloc>
+      void post(Func f, const Alloc& a)
+      {
+        auto p(std::allocate_shared<item<Func>>(a, std::move(f)));
+        std::lock_guard<std::mutex> lock(pool_.mutex_); // #2 ``[#post2]``
+        pool_.queue_.push_back(std::move(p)); // #3 ``[#post3]``
+        pool_.condition_.notify_one(); // #4 ``[#post4]``
+        // #5 ``[#post5]``
+      }
+
+      // ...
+    };
+
+    // ...
+
+    void run()
+    {
+      for (;;)
+      {
+        std::unique_lock<std::mutex> lock(mutex_); // #6 ``[#post6]``
+        condition_.wait(lock, [&]{ !queue_.empty(); });
+        auto p(std::move(queue_.front())); // #7 ``[#post7]``
+        queue_.pop_front();
+        lock.unlock(); // #8 ``[#post8]``
+        p->execute_(p); // #9 ``[#post9]``
+      }
+    }
+
+  private:
+    std::mutex mutex_;
+    std::condition_variable condition_;
+    std::deque<std::shared_ptr<item_base>> queue_;
+  };
+
+There are two performance issues at play here. First, each "cycle" of
+`read_loop` involves two lock/unlock pairs. Second, a condition variable may be
+used to wake a sleeping thread when the queue is non-empty. If we step through
+the code we will see the following:
+
+* [link post6 #6] [mdash] lock
+* [link post7 #7] [mdash] dequeue `read_loop`
+* [link post8 #8] [mdash] unlock
+* [link post9 #9] [mdash] call `read_loop`
+  * [link post1 #1] [mdash] call `post`
+    * [link post2 #2] [mdash] lock
+    * [link post3 #3] [mdash] enqueue `read_loop`
+    * [link post4 #4] [mdash] notify
+    * [link post5 #5] [mdash] unlock
+* ['(start of next cycle)]
+* [link post6 #6] [mdash] lock
+* [link post7 #7] [mdash] dequeue `read_loop`
+* [link post8 #8] [mdash] unlock
+* [link post9 #9] [mdash] call `read_loop`
+* ...
+
+On the other hand, with `defer` we are telling the executor that the submitted
+function is a continuation of the current one. That is, the executor does not
+have to eagerly schedule the function because we have told it that one function
+follows the other.
+
+  void read_loop(socket, buffer)
+  {
+    // ...
+    ex.defer([&]{ // #1 ``[#defer1]``
+        read_loop(socket, buffer);
+      });
+    // ...
+  }
+
+  class my_thread_pool
+  {
+  public:
+    class executor_type
+    {
+    public:
+      // ...
+
+      template <class Func, class Alloc>
+      void defer(Func f, const Alloc& a)
+      {
+        if (pool_.thread_local_queue_)
+        {
+          auto p(std::allocate_shared<item<Func>>(a, std::move(f)));
+          pool_.thread_local_queue_->push_back(std::move(p)); // #2 ``[#defer2]``
+        }
+        else
+          post(std::move(f), a);
+      }
+
+      // ...
+    };
+
+    // ...
+
+    void run()
+    {
+      std::deque<std::shared_ptr<item_base>> local_queue;
+      thread_local_queue_ = &local_queue;
+      for (;;)
+      {
+        std::unique_lock<std::mutex> lock(mutex_); // #3 ``[#defer3]``
+        while (!local_queue.empty()) // #4 ``[#defer4]``
+        {
+          queue_.push(std::move(local_queue.front()));
+          local_queue.pop_front();
+        }
+        condition_.wait(lock, [&]{ !queue_.empty(); });
+        auto p(std::move(queue_.front())); // #5 ``[#defer5]``
+        queue_.pop_front();
+        lock.unlock(); // #6 ``[#defer6]``
+        p->execute_(p); // #7 ``[#defer7]``
+      }
+    }
+
+  private:
+    std::mutex mutex_;
+    std::condition_variable condition_;
+    std::deque<std::shared_ptr<item_base>> queue_;
+    static thread_local std::deque<std::shared_ptr<item_base>>* thread_local_queue_;
+  };
+
+Now when we step through the code:
+
+* [link defer3 #3] [mdash] lock
+* [link defer4 #4] [mdash] copy contents of thread-local queue to main queue
+* [link defer5 #5] [mdash] dequeue `read_loop`
+* [link defer6 #6] [mdash] unlock
+* [link defer7 #7] [mdash] call `read_loop`
+  * [link defer1 #1] [mdash] call `defer`
+    * [link defer2 #2] [mdash] enqueue `read_loop` to thread-local queue
+* ['(start of next cycle)]
+* [link defer3 #3] [mdash] lock
+* [link defer4 #4] [mdash] copy contents of thread-local queue to main queue
+* [link defer5 #5] [mdash] dequeue `read_loop`
+* [link defer6 #6] [mdash] unlock
+* [link defer7 #7] [mdash] call `read_loop`
+* ...
+
+we see that we have eliminated one lock/unlock pair, and we also no longer need
+to wake another thread. We are able to do this because of the additional
+information imparted by `defer`.
+
+On recent hardware we can observe a lock/unlock cost of some 10 to 15
+nanoseconds, compared with 1 to 2 nanoseconds for accessing a thread-local
+queue. There is also a significant (and often larger) benefit in avoiding the
+unnecessary thread wakeup and the ensuing lock contention, particularly when
+dealing with bursty traffic profiles. Either way, this is a latency win.
+
+With asynchronous operations, the rules are that if an operation completes
+immediately it posts the result (rather than dispatch, which may result in
+unfairness, starvation or stack overflow). If it finishes later, it
+dispatches the result (to minimise latency).
+
+By default, an individual low-level asynchronous operation, such as
+`async_read` shown above, doesn't know if the operation represents a
+continuation of the current function, or a new fork in the control flow. Either
+one is possible, so we conservatively assume that every operation represents a
+new fork and use `post`.
+
+However, once we move to a higher layer of abstraction, like a composed
+operation to read a message frame, we can start to make certain assertions. We
+know that within the operation it consists of a single chain of asynchronous
+reads.
+
+As an example, let us consider a hypothetical composed operation to read a
+message frame, implemented in terms of `async_read` above. Each message frame
+consists of a header, a body in several chunks, and a trailer. In this
+scenario, the header and body are immediately available in the kernel buffers,
+but we have to wait for the trailer to arrive. The sequence of executor
+operations used by the asynchronous chain looks like this:
+
+* header available immediately [arrow] `post()`
+* first body chunk available immediately [arrow] `post()`
+* second body chunk available immediately [arrow] `post()`
+* ['... waiting for trailer ...]
+* trailer available [arrow] `dispatch()`
+
+One of the motivating reasons for having lightweight, copyable executors,
+distinct from the execution context, is that they let us remap the executor
+operations as required. Thus, within the composed operation we can remap post
+to defer. We can do this with a lightweight wrapper around the composed
+operation's handler's associated executor:
+
+  template <class Executor>
+  class remap_post_to_defer
+  {
+    ...
+    template <class F, class A>
+    void post(F f, const A& a)
+    {
+      ex_.defer(std::move(f), a);
+    }
+    ...
+    Executor ex_;
+  };
+
+We can then apply this wrapper to optimise the intermediate steps of the chain:
+
+* header available immediately [arrow] `post()`
+* first body chunk available immediately [arrow] `defer()`
+* second body chunk available immediately [arrow] `defer()`
+* ['... waiting for trailer ...]
+* trailer available [arrow] `dispatch()`
+
+If we had a limited vocabulary that only consisted of dispatch:
+
+* header available immediately [arrow] `dispatch()`
+* first body chunk available immediately [arrow] `dispatch()`
+* second body chunk available immediately [arrow] `dispatch()`
+* ['... waiting for trailer ...]
+* trailer available [arrow] `dispatch()`
+
+then traffic bursts can lead to unfairness and starvation. We are susceptible
+to denial of service attacks.
+
+If our vocabulary only consisted of post:
+
+* header available immediately [arrow] `post()`
+* first body chunk available immediately [arrow] `post()`
+* second body chunk available immediately [arrow] `post()`
+* ['... waiting for trailer ...]
+* trailer available [arrow] `post()`
+
+then every operation in the chain can incur otherwise avoidable synchronisation
+costs, context switches, and cycles through the scheduler, resulting in higher
+latency.
+
+If our vocabulary only consisted of defer:
+
+* header available immediately [arrow] `defer()`
+* first body chunk available immediately [arrow] `defer()`
+* second body chunk available immediately [arrow] `defer()`
+* ['... waiting for trailer ...]
+* trailer available [arrow] `defer()`
+
+then we almost get away with it, apart from the additional latency introduced
+by `defer` at the end of the operation. However, we are also limiting the
+opportunities for concurrency. This may not be an issue in this example with a
+single chain of operations, but can be a problem where your asynchronous
+control flow really does fork, such as in a typical accept "loop":
+
+  void handle_accept()
+  {
+    new_socket->start(); // starts asynchronous reads and writes
+    async_accept(..., &handle_accept); // accepts next connection
+  }
+
+Thus we need all three operations to complete the set:
+
+* `post` [mdash] the default choice, guaranteeing non-blocking calls and
+  maximising concurrency
+
+* `dispatch` [mdash] for minimising latency when we are prepared to accept
+  blocking
+
+* `defer` [mdash] to link sequences of related operations
+
+Note that, when implementing the executor type requirements, it is perfectly
+fine to start by implementing `dispatch` and `defer` in terms of `post`. This
+is in keeping with the specified semantics. Then, we can optimise the
+implementation of these functions as we are able to.
+
+However, are these three operations sufficient? Might there be more things that
+a user wants to communicate to the executor, about how a function or task
+should be launched? For example, a priority or a hard real-time deadline.
+
+The proposed library meets these needs by giving a function object or task an
+associated executor. As lightweight, copyable objects, executors allow us to
+encapsulate all sorts of additional information and behaviour on a fine-grained
+basis, such as priority. The associated executor determines how it should be
+executed, and the point of association may be distant in time and space from
+the point where a function is submitted using `dispatch`, `post` and `defer`.
+
+[endsect]
+
+[/-----------------------------------------------------------------------------]
+
+[section Impact on the standard]
 
 This is a pure library proposal. It does not add any new language features, nor
-does it alter any existing standard library headers.
+does it alter any existing standard library headers. It makes additions to
+experimental headers that may also be modified by other Technical
+Specifications.
 
 This library can be implemented using compilers that conform to the C++14
 standard. An implementation of this library requires operating system-specific
@@ -140,17 +1703,211 @@ functions that lie outside the C++14 standard.
 
 [/-----------------------------------------------------------------------------]
 
-[section Design Decisions]
+[section Relationship to other proposals]
 
-TBD.
+This proposal builds on the type traits defined in N4045 ['Library Foundations
+for Asynchronous Operations]. This paper is intended as an alternative proposal
+to N3785 ['Executors and schedulers].
+
+A substantial subset of the executors library specified below is a prerequisite
+for the networking library. For this reason, the networking library's proposed
+text also incorporates a specification of these facilities.
 
 [endsect]
 
 [/-----------------------------------------------------------------------------]
 
-[section Proposed Text for the Standard]
+[section Conclusion]
 
-[commentary Grey-shaded italic text is commentary on the proposal. It is not to
+The type traits introduced in N4045 ['Library Foundations for Asynchronous
+Operations] define an extensible asynchronous model that can support a variety
+of composition methods, including:
+
+* Callbacks, where minimal runtime penalty is desirable.
+* Futures, and not just `std::future` but also future classes supplied by other
+  libraries.
+* Coroutines or resumable functions, without adding new keywords to the
+  language.
+
+The library introduced in this paper applies this asynchronous model, and its
+design philosophy, to executors. Rather than a design that is restricted to
+runtime polymorphism, we can allow users to choose the approach that is
+appropriate to their use case.
+
+[endsect]
+
+[/-----------------------------------------------------------------------------]
+
+[section Acknowledgements]
+
+The author would like to thank Jamie Allsop and Arash Partow for providing
+feedback, corrections and suggestions on both the library implementation and
+this proposal.
+
+[endsect]
+
+[/-----------------------------------------------------------------------------]
+
+[section Appendix: Design issues in N3785]
+
+[section Use of inheritance and polymorphism]
+
+[:['The interface is based on inheritance and polymorphism, rather than on
+templates, for two reasons. First, executors are often passed as function
+arguments, often to functions that have no other reason to be templates, so
+this makes it possible to change executor type without code restructuring.
+Second, a non-template design makes it possible to pass executors across a
+binary interface: a precompiled library can export a function one of whose
+parameters is an executor.]]
+
+As we will see in this proposal, a template-based design does not preclude the
+inclusion of a runtime polymorphic wrapper. Such a wrapper still allows users
+to write non-template code for use with executors, and makes it possible to
+pass executors across a binary interface. On the other hand, it is not possible
+to undo the performance impact of a type-erased interface.
+
+[:['The cost of an additional virtual dispatch is almost certainly negligible
+compared to the other operations involved.]]
+
+This claim might be true when passing coarse-grained tasks across threads.
+However, use cases for executors are not limited to this. As outlined in N4045,
+composition of asynchronous operations may entail multiple layers of
+abstraction. The ability to leverage function inlining is a key part of
+delivering a low abstraction penalty, but the compiler is unable to see through
+a virtual interface.
+
+[endsect]
+
+[section Use of std::function<void()>]
+
+[:['Most fundamentally, of course, executor is an abstract base class and add()
+is a virtual member function, and function templates can’t be virtual. Another
+reason is that a template parameter would complicate the interface without
+adding any real generality. In the end an executor class is going to need some
+kind of type erasure to handle all the different kinds of function objects with
+void() signature, and that’s exactly what std::function already does.]]
+
+By forcing type erasure at the executor interface, an executor implementer is
+denied the opportunity to choose a more appropriate form of type erasure. For
+example, an implementer may wish to store pending work items in a linked list.
+With a template-based approach, the function object and the “next pointer” can
+be stored in the same object. This is not possible if type erasure has already
+occurred[footnote Unless a small-object optimisation is employed by
+`std::function`, but this is not guaranteed.].
+
+[:['One theoretical advantage of a template-based interface is that the
+executor might sometimes decide to execute the work item inline, rather than
+enqueueing it for asynchronous, in which case it could avoid the expense of
+converting it to a closure. In practice this would be very difficult, however:
+the executor would somehow have to know which work items would execute quickly
+enough for this to be worthwhile.]]
+
+There is a key use case for wanting to execute work items inline: delivering
+the result of an asynchronous operation, possibly across multiple layers of
+abstraction. Rather than relying on the executor to “somehow have to know”, we
+can allow the user to choose. This is the approach taken in this proposal.
+
+Finally, another disadvantage of `std::function` is that it prevents the use of
+move-only function objects.
+
+Of course, as N3785 states, the need for a type-erased function object is
+itself a consequence of the use of inheritance and polymorphism.
+
+[endsect]
+
+[section Scheduled work]
+
+[:['There are several important design decisions involving that time-based
+functionality. First: how do we handle executors that aren’t able to provide
+it? The issue is that add_at and add_after involve significant implementation
+complexity. In Microsoft’s experience it’s important to allow very simple and
+lightweight executor classes that don’t need such complicated functionality.]]
+
+N3785 couples timer-based operations to executors via the `scheduled_executor`
+base class. This proposal avoids this coupling by distinguishing between the
+executor as a lightweight policy object, and an execution context where the
+“implementation complexity” of timers can be housed in a reusable way. Thus,
+timer operations are independent of executor types, and can be used with any
+executor.
+
+[:['Second, how should we specify time? \[__dotdotdot__\] Some standard
+functionality, like sleep_until and sleep_for, is templatized to deal with
+arbitrary duration and time_point specializations. That’s not an option for an
+executor library that uses virtual functions, however, since virtual member
+functions can’t be function templates. There are a number of possible
+options:\n
+\n
+1. Redesign the library to make executor a concept rather than an abstract base
+class. We believe that this would be invention rather than existing practice,
+and that it would make the library more complicated, and less convenient for
+users, for little gain.\n
+\n
+2. Make executor a class template, parameterized on the clock. As discussed
+above, we believe that a template-based design would be less convenient than
+one based on inheritance and runtime polymorphism.\n
+\n
+3. Pick a single clock and use its duration and time_point.\n
+\n
+We chose the last of those options, largely for simplicity.]]
+
+Unfortunately, N3785 chooses `system_clock` as that single clock. As the system
+clock is susceptible to clock changes it may be inappropriate for use cases
+that require a periodic timer. In those instances, `steady_clock` is the better
+choice.
+
+In any case, by decoupling timers from executors, this proposal provides timer
+operations that are indeed templates, and can work with arbitrary clock types.
+
+[endsect]
+
+[section Exception handling]
+
+[:['A more interesting question is what happens if a user closure throws an
+exception. The exception will in general be thrown by a different thread than
+the one that added the closure or the thread that started the executor, and may
+be far separated from it in time and in code location. As such, unhandled
+exceptions are considered a program error because they are difficult to signal
+to the caller. The decision we made is that an exception from a closure is
+ill-formed and the implementation must call std::terminate.]]
+
+Rather than apply a blanket rule, this proposal includes exception handling as
+part of an executor’s policy. While `std::terminate` is likely to be the best
+choice for unhandled exceptions inside a thread pool, users may prefer greater
+control when using something like `loop_executor`. For example, the approach
+taken by Boost.Asio’s `io_service` and this proposal’s `loop_scheduler` is to
+allow exceptions to escape from the “event loop”, where the user can handle
+them as appropriate.
+
+[endsect]
+
+[section Inline executors and the single add function]
+
+[:['\[__dotdotdot__\] Inline executors, which execute inline to the thread
+which calls add(). This has no queuing and behaves like a normal executor, but
+always uses the caller’s thread to execute.]]
+
+Since the executor interface is defined by an abstract base class, code that
+calls the `add()` function has to assume that the underlying executor may
+execute the function object inline. As a consequence, extra care must be taken
+in situations such as:
+
+* If using mutexes, avoiding calls to `add()` while holding the lock.
+* If iterating over a container and calling `add()` for each element, ensuring
+  the added function object cannot invalidate the iterators.
+
+This proposal instead makes an explicit distinction between operations that can
+execute inline, and those that cannot. The library user is then able to choose
+the appropriate operation for their use case.
+
+[endsect]
+
+[endsect]
+
+[/-----------------------------------------------------------------------------]
+
+[section Appendix: Proposed text]
+
+[/commentary Grey-shaded italic text is commentary on the proposal. It is not to
 be added to the TS.]
 
 [include:headers headers/common/type_traits.qbk]
