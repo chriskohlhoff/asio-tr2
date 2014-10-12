@@ -117,7 +117,13 @@ denotes an object of type `T`, and `u` denotes an identifier.
      shall deallocate all memory prior to invoking the function object.\n
      \n
      Synchronization: The invocation of `defer` synchronizes with (C++ Std,
-     \[intro.multithread\]) the invocation of `f`.]
+     \[intro.multithread\]) the invocation of `f`.\n
+     \n
+     Note: Although the requirements placed on defer are identical to post, a
+     separate function is used to convey the intention of the caller that the
+     submitted function is a continuation of the current call context. The
+     executor may use this information to optimize or otherwise adjust the way
+     in which `f` is invoked.]
   ]
 ]
 
