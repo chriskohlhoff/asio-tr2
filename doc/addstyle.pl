@@ -41,7 +41,7 @@ if ($filename_in =~ /networking/)
            "Date:     2014-??-??\n" .
            "Revises:  N2175\n" .
            "Reply-To: Christopher Kohlhoff &lt;chris\@kohlhoff.com&gt;\n" .
-           "</pre>\n";
+           "</pre>";
 }
 else
 {
@@ -50,7 +50,7 @@ else
            "Date:     2014-??-??\n" .
            "Revises:  N4046\n" .
            "Reply-To: Christopher Kohlhoff &lt;chris\@kohlhoff.com&gt;\n" .
-           "</pre>\n";
+           "</pre>";
 }
 
 my @lines = ();
@@ -59,8 +59,8 @@ my $saw_h4 = 0;
 open my $file_in, "<$filename_in" or die "Can't open $filename_out";
 while (my $line = <$file_in>)
 {
-  $line =~ s~\<head\>~\<head\>$style~;
-  $line =~ s~\<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"\>~\<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"\>$docno~;
+  $line =~ s~\<head\>~\<head\>\n$style\n~;
+  $line =~ s~\<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"\>~\<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"\>\n$docno\n~;
   $line =~ s/\240/ /g;
   if ($line =~ /<h4>/)
   {
