@@ -200,9 +200,9 @@ characters it receives back to the client in upper case.
       std::vector<char> buffer_space(1024);
       for (;;)
       {
-        std::size_t count = socket.read_some(buffer(buffer_space));
-        uppercase(buffer_space.begin(), buffer_space.begin() + count);
-        write(socket, buffer(buffer_space, count));
+        std::size_t length = socket.read_some(buffer(buffer_space));
+        uppercase(buffer_space.begin(), buffer_space.begin() + length);
+        write(socket, buffer(buffer_space, length));
       }
     }
     catch (std::system_error& e)
@@ -246,6 +246,7 @@ something like this:
           {
             if (!ec)
             {
+              uppercase(buffer_space_.begin(), buffer_space_.begin() + length);
               do_write(length);
             }
           });
@@ -297,6 +298,7 @@ and, through library extensions, coroutines:
       for (;;)
       {
         std::size_t length = socket.async_read_some(buffer(buffer_space), yield);
+        uppercase(buffer_space.begin(), buffer_space.begin() + length);
         async_write(socket, buffer(buffer_space, length), yield);
       }
     }
