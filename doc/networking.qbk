@@ -143,9 +143,14 @@
 
 [/-----------------------------------------------------------------------------]
 
-[section Overview]
+[section Introduction]
 
-This document proposes a networking library for C++.
+In the June 2014 committee meeting in Rapperswil, LEWG requested that
+Boost.Asio-based N2175 ['Networking Library Proposal for TR2 (Revision 1)] be
+updated for C++14 and brought forward as a proposed Networking Technical
+Specification. This document is that revision. As well as updating the proposal
+for C++14, it incorporates improvements to Asio that are based on the
+widespread field experience accumulated since 2007.
 
 The [@http://www.boost.org/libs/asio Boost.Asio] library, from which this
 proposal is derived, has been deployed in numerous systems, from large
@@ -156,6 +161,10 @@ including Linux, Mac OS X, Windows (native), Windows Runtime, Solaris, FreeBSD,
 NetBSD, OpenBSD, HP-UX, Tru64, AIX, iOS, Android, WinCE, Symbian, vxWorks and
 QNX Neutrino.
 
+[endsect]
+
+[/-----------------------------------------------------------------------------]
+
 [section Reference implementation]
 
 An almost complete implementation of the proposal text may be found in a
@@ -164,58 +173,181 @@ variant of Asio that stands alone from Boost. This variant is available at
 
 [endsect]
 
-[section A quick tour of the library]
+[/-----------------------------------------------------------------------------]
 
-[section Addressing simple use cases with I/O streams]
+[section Library examples]
 
-In many applications, networking is not a core feature, nor is it seen as a
-core competency of the application’s programmers. To cater to these use cases,
-the proposal provides a high-level interface to TCP sockets that is designed
-around the familiar C++ I/O streams framework.
+Unfamiliar readers are encouraged to look to the
+[@http://www.boost.org/libs/asio Boost.Asio] documentation and examples for a
+more complete picture of the use of the libary.
 
-Using the library in this way is as easy as constructing a stream object with
+However, to give some idea of the flavour of the proposed library, consider the
+following sample code. This is part of a server program that echoes the
+characters it receives back to the client in upper case.
+
+  template <typename Iterator>
+  void uppercase(Iterator begin, Iterator end)
+  {
+    std::locale loc("");
+    for (Iterator iter = begin; iter != end; ++iter)
+      *iter = std::toupper(*iter, loc);
+  }
+
+  void sync_connection(tcp::socket& socket)
+  {
+    try
+    {
+      std::vector<char> buffer_space(1024);
+      for (;;)
+      {
+        std::size_t count = socket.read_some(buffer(buffer_space));
+        uppercase(buffer_space.begin(), buffer_space.begin() + count);
+        write(socket, buffer(buffer_space, count));
+      }
+    }
+    catch (std::system_error& e)
+    {
+      // ...
+    }
+  }
+
+The synchronous operations used above are functions that do not return control
+to the caller until the corresponding operating system operation completes. In
+Asio-based programs their use cases typically fall into two categories:
+
+* Simple programs that do not care about timeouts, or are happy to rely on the
+  timeout behaviour provided by the underlying operating system.
+* Programs that require fine grained control over system calls, and are aware
+  of the conditions under which synchronous operations will or will not block.
+
+Next, the equivalent code developed using asynchronous operations might look
+something like this:
+
+  class async_connection
+    : public std::enable_shared_from_this<async_connection>
+  {
+  public:
+    async_connection(tcp::socket socket)
+      : socket_(std::move(socket))
+    {
+    }
+
+    void start()
+    {
+      do_read();
+    }
+
+  private:
+    void do_read()
+    {
+      auto self(shared_from_this());
+      socket_.async_read_some(buffer(buffer_space_),
+          [this, self](std::error_code ec, std::size_t length)
+          {
+            if (!ec)
+            {
+              do_write(length);
+            }
+          });
+    }
+
+    void do_write(std::size_t length)
+    {
+      auto self(shared_from_this());
+      async_write(socket_, buffer(buffer_space_, length),
+          [this, self](std::error_code ec, std::size_t /*length*/)
+          {
+            if (!ec)
+            {
+              do_read();
+            }
+          });
+    }
+
+    tcp::socket socket_;
+    std::vector<char> buffer_space_{1024};
+  };
+
+Asynchronous operations do not block the caller, but instead involve the
+delivery of a notification to the program when the corresponding operating
+system operation completes. Most non-trivial Asio-based programs will make use
+of asynchronous operations.
+
+While the code may appear more complex due to the inverted flow of control, it
+allows a knowledgeable programmer to write code that will scale to a great many
+concurrent connections. However, this proposal uses the asynchronous model
+described in [N4045]. This is an extensible model that allows the asynchronous
+operations to support a variety of composition and notification mechanisms, and
+these mechanisms may alleviate this complexity. This includes futures:
+
+  std::future<std::size_t> fut =
+    socket.async_read_some(buffer(buffer_space), use_future);
+
+  // ...
+
+  std::size_t length = fut.get();
+
+and, through library extensions, coroutines:
+
+  void coro_connection(tcp::socket& socket, yield_context yield)
+  {
+    try
+    {
+      std::vector<char> buffer_space(1024);
+      for (;;)
+      {
+        std::size_t length = socket.async_read_some(buffer(buffer_space), yield);
+        async_write(socket, buffer(buffer_space, length), yield);
+      }
+    }
+    catch (std::system_error& e)
+    {
+      // ...
+    }
+  }
+
+Finally, for many applications, networking is not a core feature, nor is it
+seen as a core competency of the application’s programmers. To cater to these
+use cases, the proposal provides a high-level interface to TCP sockets that is
+designed around the familiar C++ I/O streams framework.
+
+Using the library in this way is as easy as opening a stream object with
 the remote host’s details:
 
   tcp::iostream s("www.boost.org", "http");
 
-Next, deciding whether you want the socket to give up if the host is
-non-responsive:
-
-  s.expires_after(std::chrono::seconds(60));
-
-Then, send and receive any data as needed. In this case you send a request:
+Once connected, you send and receive any data as needed. In this case you send
+a request:
 
   s << "GET / HTTP/1.0\r\n";
   s << "Host: www.boost.org\r\n";
   s << "Accept: */*\r\n";
   s << "Connection: close\r\n\r\n";
 
-And then receive and process the response:
+Then receive and process the response:
 
   std::string header;
   while (std::getline(s, header) && header != "\r")
-  std::cout << header << "\n";
+    std::cout << header << "\n";
   std::cout << s.rdbuf();
 
-If at any time there is an error, the tcp::iostream class’s error() member
+You can set a timeout to detect unresponsive connections:
+
+  s.expires_after(std::chrono::seconds(60));
+
+And, if at any time there is an error, the `tcp::iostream` class’s `error()` member
 function may be used to obtain an `error_code` that identifies the reason for
 failure:
 
   if (!s)
   {
-    std::cout << "Socket error: " << s.error().message() << "\n";
+    std::cout << "Unable to connect: " << s.error().message() << "\n";
     return 1;
   }
 
 [endsect]
 
-[endsect]
-
-[endsect]
-
 [/-----------------------------------------------------------------------------]
-
-[section Motivation and scope]
 
 [section Scope]
 
@@ -240,6 +372,8 @@ Features that are considered outside the scope of this proposal include:
 
 [endsect]
 
+[/-----------------------------------------------------------------------------]
+
 [section Target audience]
 
 The bulk of the library interface is intended for use by developers with at
@@ -248,6 +382,8 @@ high level iostreams interface supports simple use cases and permits novices to
 develop network code without needing to get into too much depth.
 
 [endsect]
+
+[/-----------------------------------------------------------------------------]
 
 [section Related work]
 
@@ -265,8 +401,6 @@ similar styles of network programming.
 
 [endsect]
 
-[endsect]
-
 [/-----------------------------------------------------------------------------]
 
 [section Impact on the standard]
@@ -280,10 +414,14 @@ This library can be implemented using compilers that conform to the C++14
 standard. An implementation of this library requires operating system-specific
 functions that lie outside the C++14 standard.
 
+[endsect]
+
+[/-----------------------------------------------------------------------------]
+
 [section Relationship to other proposals]
 
 The asynchronous operations defined in this proposal use the asynchronous model
-described in [N4045]. With the extensible asynchronous model presented in this
+described in [N4045]. With the extensible asynchronous model presented in that
 paper, the user has the ability to select an asynchronous approach that is
 appropriate to each use case. With these library foundations, a single
 extensible asynchronous model can support a variety of composition methods,
@@ -304,11 +442,9 @@ specification of these facilities.
 
 [endsect]
 
-[endsect]
-
 [/-----------------------------------------------------------------------------]
 
-[section Proposed text for the standard]
+[section Proposed text]
 
 [commentary Grey-shaded italic text is commentary on the proposal. It is not to
 be added to the TS.]
