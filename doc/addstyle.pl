@@ -27,8 +27,8 @@ my $style =
 
 my $rev = `git rev-parse HEAD`;
 chomp($rev);
-my $draft_info = " (as of commit $rev)";
-#$draft_info = "";
+#my $draft_info = " (as of commit $rev)";
+$draft_info = "";
 
 my $filename_in = ${ARGV}[0];
 my $filename_out = ${ARGV}[1];
@@ -37,8 +37,8 @@ my $docno;
 if ($filename_in =~ /networking/)
 {
   $docno = "<pre>" .
-           "Doc. no:  D???? " . $draft_info . "\n" .
-           "Date:     2014-??-??\n" .
+           "Doc. no:  N???? " . $draft_info . "\n" .
+           "Date:     2014-10-13\n" .
            "Revises:  N2175\n" .
            "Reply-To: Christopher Kohlhoff &lt;chris\@kohlhoff.com&gt;\n" .
            "</pre>";
@@ -46,8 +46,8 @@ if ($filename_in =~ /networking/)
 else
 {
   $docno = "<pre>" .
-           "Doc. no:  D???? " . $draft_info . "\n" .
-           "Date:     2014-??-??\n" .
+           "Doc. no:  N???? " . $draft_info . "\n" .
+           "Date:     2014-10-13\n" .
            "Revises:  N4046\n" .
            "Reply-To: Christopher Kohlhoff &lt;chris\@kohlhoff.com&gt;\n" .
            "</pre>";
