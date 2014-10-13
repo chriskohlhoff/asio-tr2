@@ -517,7 +517,7 @@ To implement an activatable object, we create a strand on the system executor.
   class bank_account
   {
     int balance_ = 0;
-    mutable strand<system_executor strand_;
+    mutable strand<system_executor> strand_;
     // ...
   };
 
