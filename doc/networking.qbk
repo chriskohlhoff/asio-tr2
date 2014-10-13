@@ -169,7 +169,7 @@ QNX Neutrino.
 
 An almost complete implementation of the proposal text may be found in a
 variant of Asio that stands alone from Boost. This variant is available at
-[@https://github.com/chriskohlhoff/asio/tree/master].
+['[@https://github.com/chriskohlhoff/asio/tree/master]].
 
 [endsect]
 

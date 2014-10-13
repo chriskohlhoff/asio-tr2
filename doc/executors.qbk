@@ -276,7 +276,7 @@ process.
 We say that a `thread_pool` ['is] an execution context, and that it ['has] an
 executor. The thread pool contains long-lived state, namely the threads that
 persist until the pool is shut down. The thread pool's executor embodies the
-rule "run functions in the pool and nowhere else". The thread pool's executor
+rule: ['run functions in the pool and nowhere else]. The thread pool's executor
 may be obtained by calling its `get_executor()` member function.
 
 To submit a function object to an executor or execution context, we can choose
@@ -288,8 +288,8 @@ A dispatch operation is the most eager.
 
   dispatch(ex, []{ ... });
 
-It means: run the function immediately, in the calling thread, if the rules
-allow it; otherwise, submit for later execution.
+It means: ['run the function immediately, in the calling thread, if the rules
+allow it; otherwise, submit for later execution].
 
 [table
   [[Executor type][Executor rules][Behaviour of dispatch]]
@@ -311,7 +311,7 @@ allow it; otherwise, submit for later execution.
     [Run function objects according to the underlying executor's rules, but
     also run them in FIFO order and not concurrently.]
     [If we are inside the strand, or if the strand queue is empty, runs the
-    function object before returning from dispatch(). Otherwise, adds to the
+    function object before returning from `dispatch()`. Otherwise, adds to the
     strand's work queue.]
   ]
 ]
@@ -324,8 +324,9 @@ object itself.
 
   post(ex, []{ ... });
 
-Instead, a posted function is scheduled for execution as soon as possible,
-according to the rules of the executor.
+It means: ['submit the function for later execution; never run the function
+object immediately]. A posted function is scheduled for execution as soon as
+possible, according to the rules of the executor.
 
 [table
   [[Executor type][Executor rules][Behaviour of post]]
@@ -354,10 +355,11 @@ Finally, the defer operation is the least eager of the three.
 
   defer(ex, []{ ... });
 
-A defer operation is similar to a post operation, except that it implies a
-relationship between the caller and the function object being submitted. It is
-intended for use when submitting a function object that represents a
-continuation of the caller.
+A defer operation is similar to a post operation, in that it means: ['submit the
+function for later execution; never run the function object immediately].
+However, a defer operation also ['implies a relationship between the caller and
+the function object being submitted]. It is intended for use when submitting a
+function object that represents a continuation of the caller.
 
 [table
   [[Executor type][Executor rules][Behaviour of defer]]
@@ -990,7 +992,7 @@ Internally, this class uses a priority queue to store pending function objects.
   };
 
 The `priority_scheduler` class provides a nested class `executor_type` which
-satisfies the executor type requirements, and a member function `get_executor()
+satisfies the executor type requirements, and a member function `get_executor()`
 to obtain an executor object. On construction, an `executor_type` object
 captures a reference to the priority scheduler, as well as the specified
 priority value.
@@ -1554,8 +1556,8 @@ we see that we have eliminated one lock/unlock pair, and we also no longer need
 to wake another thread. We are able to do this because of the additional
 information imparted by `defer`.
 
-On recent hardware we can observe a lock/unlock cost of some 10 to 15
-nanoseconds, compared with 1 to 2 nanoseconds for accessing a thread-local
+On recent hardware we can observe an uncontended lock/unlock cost of some 10 to
+15 nanoseconds, compared with 1 to 2 nanoseconds for accessing a thread-local
 queue. There is also a significant (and often larger) benefit in avoiding the
 unnecessary thread wakeup and the ensuing lock contention, particularly when
 dealing with bursty traffic profiles. Either way, this is a latency win.
