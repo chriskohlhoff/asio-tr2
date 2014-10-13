@@ -1353,8 +1353,8 @@ unless it had access to dispatch semantics.
 The `defer` operation, like `post`, does not allow the function to run in the
 calling thread. Where it differs is in the expression of the intent of the
 caller. Using `defer` states that there is a relationship between the caller
-and callee. An executor can make use of this to do smarter, more efficient
-scheduling.
+and callee, such as being consecutive links in a chain of function objects. An
+executor can make use of this to do smarter, more efficient scheduling.
 
 For example, consider a chain of asynchronous read operations on a socket:
 
@@ -1373,7 +1373,8 @@ where an individual read operation is implemented something like this:
   void async_read(Socket socket, Buffer buffer, Handler handler)
   {
     // Perform a speculative read first.
-    n = non_blocking_read(socket, buffer, ec);
+    error_code ec;
+    size_t n = non_blocking_read(socket, buffer, ec);
     if (ec != would_block)
     {
       // Read completed immediately, post handler.
