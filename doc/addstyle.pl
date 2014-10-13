@@ -37,7 +37,7 @@ my $docno;
 if ($filename_in =~ /networking/)
 {
   $docno = "<pre>" .
-           "Doc. no:  N???? " . $draft_info . "\n" .
+           "Doc. no:  N4243 " . $draft_info . "\n" .
            "Date:     2014-10-13\n" .
            "Revises:  N2175\n" .
            "Reply-To: Christopher Kohlhoff &lt;chris\@kohlhoff.com&gt;\n" .
@@ -46,7 +46,7 @@ if ($filename_in =~ /networking/)
 else
 {
   $docno = "<pre>" .
-           "Doc. no:  N???? " . $draft_info . "\n" .
+           "Doc. no:  N4242 " . $draft_info . "\n" .
            "Date:     2014-10-13\n" .
            "Revises:  N4046\n" .
            "Reply-To: Christopher Kohlhoff &lt;chris\@kohlhoff.com&gt;\n" .
