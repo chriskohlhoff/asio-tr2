@@ -1593,8 +1593,8 @@ operations used by the asynchronous chain looks like this:
 
 One of the motivating reasons for having lightweight, copyable executors,
 distinct from the execution context, is that they let us remap the executor
-operations as required. Thus, within the composed operation we can remap post
-to defer. We can do this with a lightweight wrapper around the composed
+operations as required. Thus, within the composed operation we can remap `post`
+to `defer`. We can do this with a lightweight wrapper around the composed
 operation's handler's associated executor:
 
   template <class Executor>
