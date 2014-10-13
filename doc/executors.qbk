@@ -1,6 +1,6 @@
 [library Executors and Asynchronous Operations, Revision 1
     [quickbook 1.1]
-    [id concurrency]
+    [id executors]
 ]
 
 [/-----------------------------------------------------------------------------]
@@ -917,7 +917,7 @@ The polymorphic type `executor` is used to allow the selection of an actor's
 executor to be delayed until runtime. All of an actor's message handlers are
 executed according to that policy. This could be a thread pool executor, but we
 may equally construct actors with an executor that [link
-concurrency.priority_scheduler knows about priorities].
+executors.priority_scheduler knows about priorities].
 
 The actor's message handlers are member functions, identified by argument type,
 and may be arbitrarily registered or deregistered:

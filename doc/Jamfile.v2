@@ -11,10 +11,10 @@ project asio-tr2-doc
 
 using quickbook ;
 
-boostbook concurrency : concurrency.qbk : <format>onehtml ;
+boostbook executors : executors.qbk : <format>onehtml ;
 boostbook networking : networking.qbk : <format>onehtml ;
 
-make styled/concurrency.html : concurrency : @addstyle ;
+make styled/executors.html : executors : @addstyle ;
 make styled/networking.html : networking : @addstyle ;
 
 actions addstyle
@@ -22,4 +22,4 @@ actions addstyle
   ./addstyle.pl $(>) $(<)
 }
 
-install html : styled/concurrency.html styled/networking.html design/membar.png ;
+install html : styled/executors.html styled/networking.html ;

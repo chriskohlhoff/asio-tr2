@@ -27,7 +27,7 @@ my $style =
 
 my $rev = `git rev-parse HEAD`;
 chomp($rev);
-#my $draft_info = " (as of commit $rev)";
+my $draft_info = " (as of commit $rev)";
 $draft_info = "";
 
 my $filename_in = ${ARGV}[0];
