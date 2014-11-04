@@ -371,6 +371,8 @@ Features that are considered outside the scope of this proposal include:
 * QoS-enabled sockets.
 * Other TCP/IP protocols such as ICMP.
 * Functions and classes for enumerating network interfaces.
+* Other forms of asynchronous I/O, such as files. (However, the asynchronous
+  model defined below is capable of supporting these facilities.)
 
 [endsect]
 
