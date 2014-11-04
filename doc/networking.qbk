@@ -468,11 +468,7 @@ internet protocols, as summarized in the table below:
   [[Subclause][Header(s)]]
   [
     [[link network.async Asynchronous model]]
-    [`<experimental/type_traits>`\n
-     `<experimental/memory>`\n
-     `<experimental/executor>`\n
-     `<experimental/strand>`\n
-     `<experimental/future>`]
+    [`<experimental/executor>`]
   ]
   [
     [[link network.basic_io_services Basic I/O services]]
@@ -578,11 +574,7 @@ express type requirements, as listed in the table below.
 [include:error_reporting error_reporting.qbk]
 
 [section:async Asynchronous model]
-[include:headers headers/common/type_traits.qbk]
-[include:headers headers/common/memory.qbk]
-[include:headers headers/common/executor.qbk]
-[include:headers headers/common/strand.qbk]
-[include:headers headers/common/future.qbk]
+[include:headers headers/networking/executor.qbk]
 [section:async_requirements Requirements]
 [include:requirements requirements/asynchronous_operations.qbk]
 [include:requirements requirements/executor.qbk]
