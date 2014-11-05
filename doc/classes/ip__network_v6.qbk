@@ -32,8 +32,8 @@
           network_v6 make_network_v6(const address_v6& addr, unsigned short prefix_len);
           network_v6 make_network_v6(const char* str);
           network_v6 make_network_v6(const char* str, error_code& ec) noexcept;
-          network_v6 make_network_v6(const string& str);
-          network_v6 make_network_v6(const string& str, error_code& ec) noexcept;
+          network_v6 make_network_v6(const string_v6& str);
+          network_v6 make_network_v6(const string_v6& str, error_code& ec) noexcept;
 
           // network_v6 I/O:
           template<class CharT, class Traits>
@@ -133,8 +133,8 @@ other.canonical()`.]
 
   network_v6 make_network_v6(const char* str);
   network_v6 make_network_v6(const char* str, error_code& ec) noexcept;
-  network_v6 make_network_v6(const string& str);
-  network_v6 make_network_v6(const string& str, error_code& ec) noexcept;
+  network_v6 make_network_v6(const string_v6& str);
+  network_v6 make_network_v6(const string_v6& str, error_code& ec) noexcept;
 
 [function_returns If `str` contains a value of the form ['address] `'/'`
 ['prefix-length], a `network_v6` object constructed with the result of applying

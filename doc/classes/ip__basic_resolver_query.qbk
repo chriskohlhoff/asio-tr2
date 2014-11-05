@@ -15,17 +15,17 @@
 
             // constructors:
             basic_resolver_query();
-            basic_resolver_query(const string& service_name,
+            basic_resolver_query(const string_view& service_name,
                                  flags f = passive | address_configured);
             basic_resolver_query(const InternetProtocol& proto,
-                                 const string& service_name,
+                                 const string_view& service_name,
                                  flags f = passive | address_configured);
-            basic_resolver_query(const string& host_name, 
-                                 const string& service_name,
+            basic_resolver_query(const string_view& host_name,
+                                 const string_view& service_name,
                                  flags f = address_configured);
             basic_resolver_query(const InternetProtocol& proto,
-                                 const string& host_name, 
-                                 const string& service_name,
+                                 const string_view& host_name,
+                                 const string_view& service_name,
                                  flags f = address_configured);
           };
 

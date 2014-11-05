@@ -56,8 +56,8 @@
           constexpr address_v6 make_address_v6(v4_mapped_t, const address_v4& a) noexcept;
           address_v6 make_address_v6(const char* str);
           address_v6 make_address_v6(const char* str, error_code& ec) noexcept;
-          address_v6 make_address_v6(const string& str);
-          address_v6 make_address_v6(const string& str, error_code& ec) noexcept;
+          address_v6 make_address_v6(const string_view& str);
+          address_v6 make_address_v6(const string_vew& str, error_code& ec) noexcept;
 
           // address_v6 I/O:
           template<class CharT, class Traits>
@@ -346,8 +346,8 @@ method:
 
   address_v6 make_address_v6(const char* str);
   address_v6 make_address_v6(const char* str, error_code& ec) noexcept;
-  address_v6 make_address_v6(const string& str);
-  address_v6 make_address_v6(const string& str, error_code& ec) noexcept;
+  address_v6 make_address_v6(const string_view& str);
+  address_v6 make_address_v6(const string_view& str, error_code& ec) noexcept;
 
 [function_effects Converts a string representation of an address into a
 corresponding `address_v6` value. The format is either ['`address`] or
