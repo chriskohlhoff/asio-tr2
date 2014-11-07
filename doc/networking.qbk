@@ -473,6 +473,10 @@ internet protocols, as summarized in the table below:
     [`<experimental/networking>`]
   ]
   [
+    [[link network.forward Forward declarations]]
+    [`<experimental/netfwd>`]
+  ]
+  [
     [[link network.async Asynchronous model]]
     [`<experimental/executor>`]
   ]
@@ -581,6 +585,10 @@ express type requirements, as listed in the table below.
 
 [section:convenience Convenience header]
 [include:headers headers/networking/networking.qbk]
+[endsect]
+
+[section:forward Forward declarations]
+[include:headers headers/networking/netfwd.qbk]
 [endsect]
 
 [section:async Asynchronous model]
