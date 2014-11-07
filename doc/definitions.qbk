@@ -1,15 +1,15 @@
 [section Definitions]
 
 [section:host_byte_order host byte order]
-See section 1.4 of
-[@http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2013/n3783.pdf N3783
-Network Byte Order Conversion].
+See section 3.194 of __POSIX__ Base Definitions,
+[@http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap03.html#tag_03_194
+Host Byte Order].
 [endsect]
 
 [section:network_byte_order network byte order]
-See section 1.4 of
-[@http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2013/n3783.pdf N3783
-Network Byte Order Conversion].
+See section 3.238 of __POSIX__ Base Definitions,
+[@http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap03.html#tag_03_238
+Network Byte Order].
 [endsect]
 
 [section:synchronous_operation synchronous operation]
