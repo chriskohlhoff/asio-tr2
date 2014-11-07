@@ -469,6 +469,10 @@ internet protocols, as summarized in the table below:
 [table Networking library summary
   [[Subclause][Header(s)]]
   [
+    [[link network.convenience Convenience header]]
+    [`<experimental/networking>`]
+  ]
+  [
     [[link network.async Asynchronous model]]
     [`<experimental/executor>`]
   ]
@@ -574,6 +578,10 @@ express type requirements, as listed in the table below.
 
 [include:definitions definitions.qbk]
 [include:error_reporting error_reporting.qbk]
+
+[section:convenience Convenience header]
+[include:headers headers/networking/networking.qbk]
+[endsect]
 
 [section:async Asynchronous model]
 [include:headers headers/networking/executor.qbk]
