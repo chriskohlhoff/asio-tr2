@@ -23,7 +23,6 @@
             constexpr bool is_v4() const noexcept;
             constexpr bool is_v6() const noexcept;
             string to_string() const;
-            string to_string(error_code& ec) const;
           };
 
           // address comparisons:
@@ -132,11 +131,10 @@ throws an exception.]
 [function_returns `true` if the object contains an IP version 6 address.]
 
   string to_string() const;
-  string to_string(error_code& ec) const;
 
 [function_returns If `is_v4() == true`, returns
-`address_cast<address_v4>(*this).to_string(ec)`. If `is_v6() == true`, returns
-`address_cast<address_v6>(*this).to_string(ec)`. Otherwise throws `bad_address_cast`.]
+`address_cast<address_v4>(*this).to_string()`. If `is_v6() == true`, returns
+`address_cast<address_v6>(*this).to_string()`. Otherwise throws `bad_address_cast`.]
 
 [endsect]
 
@@ -211,18 +209,9 @@ of class `address`, as if by calling:
 [function_effects Outputs the string representation of the address to the
 stream, as if it were implemented as follows:
 ``
-  error_code ec;
-  string s = addr.to_string(ec);
-  if (ec)
-  {
-    if (os.exceptions() & ios_base::failbit)
-      throw system_error(ec);
-    else
-      os.setstate(ios_base::failbit);
-  }
-  else
-    for (string::iterator i = s.begin(); i != s.end(); ++i)
-      os << os.widen(*i);
+  string s = addr.to_string();
+  for (string::iterator i = s.begin(); i != s.end(); ++i)
+    os << os.widen(*i);
 ``]
 
 [function_returns `os`.]

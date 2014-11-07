@@ -24,7 +24,6 @@
             bool is_host() const noexcept;
             bool is_subnet_of(const network_v4& other) const noexcept;
             string to_string() const;
-            string to_string(error_code& ec) const;
           };
 
           // network_v4 comparisons:
@@ -129,13 +128,12 @@ object representing the range of unique host IP addresses in the network.]
 other.canonical()`.]
 
   string to_string() const;
-  string to_string(error_code& ec) const;
 
 [function_returns A string `s` computed as if by:\n
 ``
-  std::string s = address().to_string(ec);
-  if (!ec)
-    s += '/' + to_string(prefix_length());
+  std::string s = address().to_string();
+  s += '/';
+  s += to_string(prefix_length());
 ``]
 
 [endsect]
@@ -185,18 +183,9 @@ returns `network_v4()` and sets `ec` to reflect the error.]
 [function_effects Outputs the string representation of the network to the
 stream, as if it were implemented as follows:
 ``
-  error_code ec;
-  string s = net.to_string(ec);
-  if (ec)
-  {
-    if (os.exceptions() & ios_base::failbit)
-      throw system_error(ec);
-    else
-      os.setstate(ios_base::failbit);
-  }
-  else
-    for (string::iterator i = s.begin(); i != s.end(); ++i)
-      os << os.widen(*i);
+  string s = net.to_string();
+  for (string::iterator i = s.begin(); i != s.end(); ++i)
+    os << os.widen(*i);
 ``]
 
 [function_returns `os`.]

@@ -30,7 +30,6 @@
             constexpr bytes_type to_bytes() const noexcept;
             constexpr unsigned long to_ulong() const noexcept;
             string to_string() const;
-            string to_string(error_code& ec) const;
 
             // static members:
             static constexpr address_v4 any() noexcept;
@@ -182,7 +181,6 @@ definitions.network_byte_order network byte order].]
 definitions.host_byte_order host byte order].]
 
   string to_string() const;
-  string to_string(error_code& ec) const;
 
 [function_effects Converts an address into a string representation, as if by
 __POSIX__ __inet_ntop__ when invoked with address family `AF_INET`.]
@@ -287,18 +285,9 @@ string `str`. Otherwise `address_v4()`.]
 [function_effects Outputs the string representation of the address to the
 stream, as if it were implemented as follows:
 ``
-  error_code ec;
-  string s = addr.to_string(ec);
-  if (ec)
-  {
-    if (os.exceptions() & ios_base::failbit)
-      throw system_error(ec);
-    else
-      os.setstate(ios_base::failbit);
-  }
-  else
-    for (string::iterator i = s.begin(); i != s.end(); ++i)
-      os << os.widen(*i);
+  string s = addr.to_string();
+  for (string::iterator i = s.begin(); i != s.end(); ++i)
+    os << os.widen(*i);
 ``]
 
 [function_returns `os`.]
