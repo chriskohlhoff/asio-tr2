@@ -1,6 +1,9 @@
 #!/usr/bin/perl -w
 
 use strict;
+use File::Basename;
+use File::Slurp;
+use MIME::Base64;
 
 if (@ARGV != 2)
 {
@@ -32,6 +35,7 @@ my $draft_info = " (as of commit $rev)";
 
 my $filename_in = ${ARGV}[0];
 my $filename_out = ${ARGV}[1];
+my $working_dir = dirname($filename_in);
 
 my $docno;
 if ($filename_in =~ /networking/)
@@ -75,6 +79,14 @@ while (my $line = <$file_in>)
   if ($line =~ /<div class="sidebar"><p>/)
   {
     $line =~ s/<div class="sidebar"><p>/<div class="sidebar"><p class="sidebar">/;
+  }
+  if ($line =~ /<img src="([^"]*)"/)
+  {
+    my $png_file = $working_dir . "/" . $1;
+    my $png_data = read_file($png_file);
+    my $img_data = encode_base64($png_data);
+    $img_data =~ s/\n//g;
+    $line =~ s/<img src="([^"]*)"/<img style="width:60%;" src="data:image\/png;base64,$img_data"/;
   }
   push @lines, $line;
 }

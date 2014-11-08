@@ -1,0 +1,79 @@
+digraph G {
+  rankdir = "BT";
+
+  node [
+    shape = "box";
+    fontname = "Consolas";
+    labeljust = "l";
+  ];
+
+  socket_base [
+    label = "socket_base"
+  ];
+
+  basic_socket [
+    label = "template<class Protocol>\nbasic_socket"
+  ];
+
+  basic_datagram_socket [
+    label = "template<class Protocol>\nbasic_datagram_socket"
+  ];
+
+  basic_stream_socket [
+    label = "template<class Protocol>\nbasic_stream_socket"
+  ];
+
+  basic_socket_acceptor [
+    label = "template<class Protocol>\nbasic_socket_acceptor"
+  ];
+
+  basic_socket_streambuf [
+    label = "template<class Protocol,\nclass Clock = chrono::steady_clock,\nclass WaitTraits = wait_traits<Clock>>\nbasic_socket_streambuf"
+  ];
+
+  basic_socket_iostream [
+    label = "template<class Protocol,\nclass Clock = chrono::steady_clock,\nclass WaitTraits = wait_traits<Clock>>\nbasic_socket_iostream"
+  ];
+
+  subgraph T {
+    rank = "same";
+
+    udp_socket [
+      label = "&laquo;typedef&raquo;\nudp::socket"
+    ];
+
+    tcp_socket [
+      label = "&laquo;typedef&raquo;\ntcp::socket"
+    ];
+
+    tcp_acceptor [
+      label = "&laquo;typedef&raquo;\ntcp::acceptor"
+    ];
+
+    tcp_iostream [
+      label = "&laquo;typedef&raquo;\ntcp::iostream"
+    ];
+  }
+
+  {
+    edge [ arrowhead = "onormal" ];
+    basic_socket -> socket_base;
+    basic_socket_acceptor -> socket_base;
+    basic_stream_socket -> basic_socket;
+    basic_datagram_socket -> basic_socket;
+    basic_socket_streambuf -> basic_socket;
+  }
+
+  {
+    edge [ arrowtail = "diamond", dir = "both" ];
+    basic_socket_iostream -> basic_socket_streambuf;
+  }
+
+  {
+    edge [ arrowhead = "open", style = "dotted", fontname = "Consolas" ];
+    tcp_socket -> basic_stream_socket [ label = "Protocol = tcp" ];
+    tcp_acceptor -> basic_socket_acceptor [ label = "Protocol = tcp" ];
+    tcp_iostream -> basic_socket_iostream [ label = "Protocol = tcp" ];
+    udp_socket -> basic_datagram_socket [ label = "Protocol = udp" ];
+  }
+}
