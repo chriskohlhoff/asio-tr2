@@ -165,6 +165,24 @@ QNX Neutrino.
 
 [/-----------------------------------------------------------------------------]
 
+[section Changes in this revision]
+
+Revision 3 addresses issues raised by LEWG in Urbana and includes the following
+changes:
+
+* String conversions and string parameters have been updated and use
+ `string_view` where appropriate.
+
+* The header arrangement has been altered to reduce the number of header files,
+  add a convenience header, and add a forward declarations header.
+
+* A diagram has been added to show the relationship between the core socket
+  class templates.
+
+[endsect]
+
+[/-----------------------------------------------------------------------------]
+
 [section Reference implementation]
 
 An almost complete implementation of the proposal text may be found in a
@@ -771,6 +789,20 @@ This subclause defines components for performing timer operations.
 [include:classes classes/ip__multicast__hops.qbk]
 [include:classes classes/ip__multicast__enable_loopback.qbk]
 [endsect]
+
+[endsect]
+
+[/-----------------------------------------------------------------------------]
+
+[section Acknowledgements]
+
+In the eleven years since Asio's inception, hundreds of people have contributed
+to its development through design review, patches, feature suggestions, bug
+reports, and usage feedback from the field. With respect to the 2014 refresh of
+the Networking Library Proposal, the author would particularly like to thank
+Jamie Allsop for providing feedback during the drafting process, and Oliver
+Kowalke for contributing towards the design and implementation of the CIDR
+support.
 
 [endsect]
 
