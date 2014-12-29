@@ -24,7 +24,7 @@ Boolean socket option classes shall be defined as follows:
 
     bool value() const;
 
-    operator bool() const;
+    explicit operator bool() const;
     bool operator!() const;
   };
 
@@ -133,7 +133,7 @@ in the __POSIX__ header file __sys_socket_h__.]
 [function_returns The stored socket option value. For extensible
 implementations, returns `value_ != 0`.]
 
-  operator bool() const;
+  explicit operator bool() const;
 
 [function_returns `value()`.]
 
