@@ -52,8 +52,8 @@
           // ``[link classes.ip__address__creation address creation]``:
           address make_address(const char*);
           address make_address(const char*, error_code&) noexcept;
-          address make_address(const string_view&);
-          address make_address(const string_view&, error_code&) noexcept;
+          address make_address(string_view);
+          address make_address(string_view, error_code&) noexcept;
 
           // ``[link classes.ip__address_v4__creation address_v4 creation]``:
           constexpr address_v4 make_address_v4(const address_v4::bytes_type&);
@@ -61,16 +61,16 @@
           constexpr address_v4 make_address_v4(v4_mapped_t, const address_v6&);
           address_v4 make_address_v4(const char*);
           address_v4 make_address_v4(const char*, error_code&) noexcept;
-          address_v4 make_address_v4(const string_view&);
-          address_v4 make_address_v4(const string_view&, error_code&) noexcept;
+          address_v4 make_address_v4(string_view);
+          address_v4 make_address_v4(string_view, error_code&) noexcept;
 
           // ``[link classes.ip__address_v6__creation address_v6 creation]``:
           constexpr address_v6 make_address_v6(const address_v6::bytes_type&, unsigned long = 0);
           constexpr address_v6 make_address_v6(v4_mapped_t, const address_v4&) noexcept;
           address_v6 make_address_v6(const char*);
           address_v6 make_address_v6(const char*, error_code&) noexcept;
-          address_v6 make_address_v6(const string_view&);
-          address_v6 make_address_v6(const string_view&, error_code&) noexcept;
+          address_v6 make_address_v6(string_view);
+          address_v6 make_address_v6(string_view, error_code&) noexcept;
 
           // ``[link classes.ip__address__io address I/O]``:
           template<class CharT, class Traits>
@@ -114,15 +114,15 @@
           network_v4 make_network_v4(const address_v4&, const address_v4&);
           network_v4 make_network_v4(const char*);
           network_v4 make_network_v4(const char*, error_code&) noexcept;
-          network_v4 make_network_v4(const string_view&);
-          network_v4 make_network_v4(const string_view&, error_code&) noexcept;
+          network_v4 make_network_v4(string_view);
+          network_v4 make_network_v4(string_view, error_code&) noexcept;
 
           // ``[link classes.ip__network_v6__creation network_v6 creation]``:
           network_v6 make_network_v6(const address_v6&, unsigned short);
           network_v6 make_network_v6(const char*);
           network_v6 make_network_v6(const char*, error_code&) noexcept;
-          network_v6 make_network_v6(const string_view&);
-          network_v6 make_network_v6(const string_view&, error_code&) noexcept;
+          network_v6 make_network_v6(string_view);
+          network_v6 make_network_v6(string_view, error_code&) noexcept;
 
           // ``[link classes.ip__network_v4__io network_v4 I/O]``:
           template<class CharT, class Traits>

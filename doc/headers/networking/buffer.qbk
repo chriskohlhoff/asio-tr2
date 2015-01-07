@@ -133,9 +133,9 @@
                                  size_t n) noexcept;
 
         template<class CharT, class Traits>
-          const_buffers_1 buffer(const basic_string_view<CharT, Traits>& str) noexcept;
+          const_buffers_1 buffer(basic_string_view<CharT, Traits> str) noexcept;
         template<class CharT, class Traits, class Allocator>
-          const_buffers_1 buffer(const basic_string_view<CharT, Traits>& str,
+          const_buffers_1 buffer(basic_string_view<CharT, Traits> str,
                                  size_t n) noexcept;
 
         template<class T, Allocator>
@@ -294,10 +294,10 @@
                             char delim, error_code& ec);
         template<class SyncReadStream, class DynamicBufferSequence>
           size_t read_until(SyncReadStream& s, DynamicBufferSequence&& b,
-                            const string_view& delim);
+                            string_view delim);
         template<class SyncReadStream, class DynamicBufferSequence>
           size_t read_until(SyncReadStream& s, DynamicBufferSequence&& b,
-                            const string_view& delim, error_code& ec);
+                            string_view delim, error_code& ec);
 
         ``// [link functions.async_read_until asynchronous delimited read operations]:``
 
@@ -310,7 +310,7 @@
           class CompletionToken>
             auto async_read_until(AsyncReadStream& s,
                                   DynamicBufferSequence&& b,
-                                  const string_view& delim,
+                                  string_view delim,
                                   CompletionToken&& token);
 
       __end_versioned_ns__

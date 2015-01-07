@@ -53,8 +53,8 @@
           constexpr address_v4 make_address_v4(v4_mapped_t, const address_v6& a);
           address_v4 make_address_v4(const char* str);
           address_v4 make_address_v4(const char* str, error_code& ec) noexcept;
-          address_v4 make_address_v4(const string_view& str);
-          address_v4 make_address_v4(const string_view& str, error_code& ec) noexcept;
+          address_v4 make_address_v4(string_view str);
+          address_v4 make_address_v4(string_view str, error_code& ec) noexcept;
 
           // address_v4 I/O:
           template<class CharT, class Traits>
@@ -264,8 +264,8 @@ address, as if computed by the following method:
 
   address_v4 make_address_v4(const char* str);
   address_v4 make_address_v4(const char* str, error_code& ec) noexcept;
-  address_v4 make_address_v4(const string_view& str);
-  address_v4 make_address_v4(const string_view& str, error_code& ec) noexcept;
+  address_v4 make_address_v4(string_view str);
+  address_v4 make_address_v4(string_view str, error_code& ec) noexcept;
 
 [function_effects Converts a string representation of an address into a
 corresponding `address_v4` value, as if by __POSIX__ __inet_pton__ when invoked

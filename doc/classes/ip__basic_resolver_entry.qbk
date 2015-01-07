@@ -16,8 +16,8 @@
             // constructors:
             basic_resolver_entry();
             basic_resolver_entry(const endpoint_type& ep,
-                                 const string_view& h,
-                                 const string_view& s);
+                                 string_view h,
+                                 string_view s);
 
             // members:
             endpoint_type endpoint() const;
@@ -58,8 +58,8 @@ the table below.]
 ]
 
   basic_resolver_entry(const endpoint_type& ep,
-                       const string_view& h,
-                       const string_view& s);
+                       string_view h,
+                       string_view s);
 
 [function_effects Constructs an object of class
 `basic_resolver_entry<InternetProtocol>` with the specified endpoint, host name

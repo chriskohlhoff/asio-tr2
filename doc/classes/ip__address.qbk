@@ -36,8 +36,8 @@
           // address creation:
           address make_address(const char* str);
           address make_address(const char* str, error_code& ec) noexcept;
-          address make_address(const string_view& str);
-          address make_address(const string_view& str, error_code& ec) noexcept;
+          address make_address(string_view str);
+          address make_address(string_view str, error_code& ec) noexcept;
 
           // address I/O:
           template<class CharT, class Traits>
@@ -178,8 +178,8 @@ throws an exception.]
 
   address make_address(const char* str);
   address make_address(const char* str, error_code& ec) noexcept;
-  address make_address(const string_view& str);
-  address make_address(const string_view& str, error_code& ec) noexcept;
+  address make_address(string_view str);
+  address make_address(string_view str, error_code& ec) noexcept;
 
 [function_effects Converts a string representation of an address into an object
 of class `address`, as if by calling:

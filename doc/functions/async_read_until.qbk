@@ -9,7 +9,7 @@
     class CompletionToken>
       auto async_read_until(AsyncReadStream& s,
                             DynamicBufferSequence&& b,
-                            const string_view& delim,
+                            string_view delim,
                             CompletionToken&& token);
 
 [function_block An [link requirements.asynchronous_operations asynchronous
