@@ -218,7 +218,7 @@ Otherwise `string()`.]
 
   bool operator!=(const address_v4& a, const address_v4& b) noexcept;
 
-[function_returns `a.to_ulong() != b.to_ulong()`.]
+[function_returns `!(a == b)`.]
 
   bool operator< (const address_v4& a, const address_v4& b) noexcept;
 
@@ -226,15 +226,15 @@ Otherwise `string()`.]
 
   bool operator> (const address_v4& a, const address_v4& b) noexcept;
 
-[function_returns `a.to_ulong() > b.to_ulong()`.]
+[function_returns `b < a`.]
 
   bool operator<=(const address_v4& a, const address_v4& b) noexcept;
 
-[function_returns `a.to_ulong() <= b.to_ulong()`.]
+[function_returns `!(b < a)`.]
 
   bool operator>=(const address_v4& a, const address_v4& b) noexcept;
 
-[function_returns `a.to_ulong() >= b.to_ulong()`.]
+[function_returns `!(a < b)`.]
 
 [endsect]
 
