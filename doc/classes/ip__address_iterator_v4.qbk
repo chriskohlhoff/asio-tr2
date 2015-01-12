@@ -19,8 +19,8 @@
             address_iterator_v4(const address_v4& a) noexcept;
 
             // members:
-            const address_v4& operator*() const noexcept;
-            const address_v4* operator->() const noexcept;
+            reference operator*() const noexcept;
+            pointer operator->() const noexcept;
             address_iterator_v4& operator++() noexcept;
             address_iterator_v4& operator++(int) noexcept;
             address_iterator_v4& operator--() noexcept;
@@ -48,11 +48,11 @@ initializing `address_` with `a`.]
 
 [section [^ip::address_iterator_v4] members]
 
-  const address_v4& operator*() const noexcept;
+  reference operator*() const noexcept;
 
 [function_returns `address_`.]
 
-  const address_v4* operator->() const noexcept;
+  pointer operator->() const noexcept;
 
 [function_returns `&address_`.]
 
