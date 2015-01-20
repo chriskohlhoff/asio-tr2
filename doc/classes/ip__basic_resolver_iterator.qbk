@@ -1,5 +1,9 @@
 [section:ip__basic_resolver_iterator Class template [^ip::basic_resolver_iterator]]
 
+An object of type `basic_resolver_iterator<InternetProtocol>` provides an
+iterator for a sequence of `basic_resolver_entry<InternetProtocol>` elements
+representing the result of a single name resolution operation.
+
   namespace std {
     namespace experimental {
       __begin_versioned_ns__
@@ -29,13 +33,28 @@
     } // namespace experimental
   } // namespace std
 
+`basic_resolver_iterator` satisfies the requirements of a forward iterator (C++
+Std [forward.iterators]).
+
+The `basic_resolver_iterator` default constructor shall create an iterator
+equal to the end iterator value, and this shall be the only valid iterator for
+the end condition. Non-end iterators may be obtained only via the
+`basic_resolver::resolve()` and `basic_resolver::async_resolve()` operations.
+
+The result of `operator*` on an end iterator is undefined behavior. For any
+other iterator value a `const basic_resolver_entry<InternetProtocol>&` is
+returned. The result of `operator->` on an end iterator is undefined behavior.
+For any other iterator value a `const basic_resolver_entry<InternetProtocol>*`
+is returned.
+
+Two end iterators are always equal. An end iterator shall not be equal to a
+non-end iterator.
+
 [section [^ip::basic_resolver_iterator] constructors]
 
   basic_resolver_iterator();
 
-[function_effects Initializes an object of class
-`basic_resolver_iterator<InternetProtocol>` so that it represents an end
-iterator.]
+[function_effects Constructs the end iterator.]
 
 [endsect]
 
