@@ -15,7 +15,7 @@ h1, h2, h3, h4, h5, div.titlepage { page-break-after: avoid; }
 dl { margin-top: 0px; margin-bottom: 0px; }
 </style>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII"><title>Networking Library Proposal (Revision 4)</title><meta name="generator" content="DocBook XSL Stylesheets V1.75.2"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
-<pre>Doc. no:  D????  (as of commit 339b6b6cf570ceb088dd6a9d30c25cd19a67c26b)
+<pre>Doc. no:  D????  (as of commit 95c89d9c5f66fc8288dd651b583cde87f0dba140)
 Date:     2015-??-??
 Revises:  N4332
 Reply-To: Christopher Kohlhoff &lt;chris@kohlhoff.com&gt;
@@ -13025,7 +13025,11 @@ Reply-To: Christopher Kohlhoff &lt;chris@kohlhoff.com&gt;
 </pre><div class="blockquote"><blockquote class="blockquote"><p>
               <span class="emphasis"><em>Returns:</em></span> The service name associated with the
               resolver entry.
-            </p></blockquote></div></div></div><div class="section" title="10.13.19.&#160;Class template ip::basic_resolver_iterator"><div class="titlepage"><div><div><h4 class="title"><a name="classes.ip__basic_resolver_iterator"></a>10.13.19.&#160;Class template <code class="literal">ip::basic_resolver_iterator</code></h4></div></div></div><pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">std</span> <span class="special">{</span>
+            </p></blockquote></div></div></div><div class="section" title="10.13.19.&#160;Class template ip::basic_resolver_iterator"><div class="titlepage"><div><div><h4 class="title"><a name="classes.ip__basic_resolver_iterator"></a>10.13.19.&#160;Class template <code class="literal">ip::basic_resolver_iterator</code></h4></div></div></div><p>
+          An object of type <code class="computeroutput"><span class="identifier">basic_resolver_iterator</span><span class="special">&lt;</span><span class="identifier">InternetProtocol</span><span class="special">&gt;</span></code> provides an iterator for a sequence
+          of <code class="computeroutput"><span class="identifier">basic_resolver_entry</span><span class="special">&lt;</span><span class="identifier">InternetProtocol</span><span class="special">&gt;</span></code> elements representing the result of
+          a single name resolution operation.
+        </p><pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">std</span> <span class="special">{</span>
   <span class="keyword">namespace</span> <span class="identifier">experimental</span> <span class="special">{</span>
     inline namespace network_v1 {
       <span class="keyword">namespace</span> <span class="identifier">ip</span> <span class="special">{</span>
@@ -13053,10 +13057,26 @@ Reply-To: Christopher Kohlhoff &lt;chris@kohlhoff.com&gt;
     } // inline namespace network_v1
   <span class="special">}</span> <span class="comment">// namespace experimental</span>
 <span class="special">}</span> <span class="comment">// namespace std</span>
-</pre><div class="section" title="10.13.19.1.&#160;ip::basic_resolver_iterator constructors"><div class="titlepage"><div><div><h5 class="title"><a name="classes.__ip__basic_resolver_iterator__constructors"></a>10.13.19.1.&#160;<code class="literal">ip::basic_resolver_iterator</code> constructors</h5></div></div></div><pre class="programlisting"><span class="identifier">basic_resolver_iterator</span><span class="special">();</span>
+</pre><p>
+          <code class="computeroutput"><span class="identifier">basic_resolver_iterator</span></code>
+          satisfies the requirements of a forward iterator (C++ Std [forward.iterators]).
+        </p><p>
+          The <code class="computeroutput"><span class="identifier">basic_resolver_iterator</span></code>
+          default constructor shall create an iterator equal to the end iterator
+          value, and this shall be the only valid iterator for the end condition.
+          Non-end iterators may be obtained only via the <code class="computeroutput"><span class="identifier">basic_resolver</span><span class="special">::</span><span class="identifier">resolve</span><span class="special">()</span></code> and <code class="computeroutput"><span class="identifier">basic_resolver</span><span class="special">::</span><span class="identifier">async_resolve</span><span class="special">()</span></code> operations.
+        </p><p>
+          The result of <code class="computeroutput"><span class="keyword">operator</span><span class="special">*</span></code>
+          on an end iterator is undefined behavior. For any other iterator value
+          a <code class="computeroutput"><span class="keyword">const</span> <span class="identifier">basic_resolver_entry</span><span class="special">&lt;</span><span class="identifier">InternetProtocol</span><span class="special">&gt;&amp;</span></code> is returned. The result of <code class="computeroutput"><span class="keyword">operator</span><span class="special">-&gt;</span></code>
+          on an end iterator is undefined behavior. For any other iterator value
+          a <code class="computeroutput"><span class="keyword">const</span> <span class="identifier">basic_resolver_entry</span><span class="special">&lt;</span><span class="identifier">InternetProtocol</span><span class="special">&gt;*</span></code> is returned.
+        </p><p>
+          Two end iterators are always equal. An end iterator shall not be equal
+          to a non-end iterator.
+        </p><div class="section" title="10.13.19.1.&#160;ip::basic_resolver_iterator constructors"><div class="titlepage"><div><div><h5 class="title"><a name="classes.__ip__basic_resolver_iterator__constructors"></a>10.13.19.1.&#160;<code class="literal">ip::basic_resolver_iterator</code> constructors</h5></div></div></div><pre class="programlisting"><span class="identifier">basic_resolver_iterator</span><span class="special">();</span>
 </pre><div class="blockquote"><blockquote class="blockquote"><p>
-              <span class="emphasis"><em>Effects:</em></span> Initializes an object of class <code class="computeroutput"><span class="identifier">basic_resolver_iterator</span><span class="special">&lt;</span><span class="identifier">InternetProtocol</span><span class="special">&gt;</span></code>
-              so that it represents an end iterator.
+              <span class="emphasis"><em>Effects:</em></span> Constructs the end iterator.
             </p></blockquote></div></div></div><div class="section" title="10.13.20.&#160;Class template ip::basic_resolver_query"><div class="titlepage"><div><div><h4 class="title"><a name="classes.ip__basic_resolver_query"></a>10.13.20.&#160;Class template <code class="literal">ip::basic_resolver_query</code></h4></div></div></div><pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">std</span> <span class="special">{</span>
   <span class="keyword">namespace</span> <span class="identifier">experimental</span> <span class="special">{</span>
     inline namespace network_v1 {
