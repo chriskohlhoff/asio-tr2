@@ -23,6 +23,11 @@
             constexpr bool is_v4() const noexcept;
             constexpr bool is_v6() const noexcept;
             string to_string() const;
+
+          private:
+            enum { none_ = 0, is_v4_, is_v6_ } type_; // ``['exposition only]``
+            address_v4 v4_; // ``['exposition only]``
+            address_v6 v6_; // ``['exposition only]``
           };
 
           // address comparisons:
@@ -49,11 +54,16 @@
     } // namespace experimental
   } // namespace std
 
+The class `address` is a version-independent representation for an IP address.
+An object of class `address` holds either an IPv4 address, an IPv6 address, or
+no valid address.
+
 [section [^ip::address] constructors]
 
   constexpr address() noexcept;
 
-[function_effects Constructs an object of class `address`.]
+[function_effects Constructs an object of class `address`, initializing `type_`
+with value `none_`.]
 
 [function_postconditions The postconditions of this function are indicated in
 the table below.]
@@ -106,35 +116,31 @@ throws an exception.]
 
   constexpr bool is_unspecified() const noexcept;
 
-[function_returns If `is_v4() == true`, returns
-`address_cast<address_v4>(*this).is_unspecified()`. If `is_v6() == true`, returns
-`address_cast<address_v6>(*this).is_unspecified()`. Otherwise returns `false`.]
+[function_returns If `type_ == is_v4_`, returns `v4_.is_unspecified()`. If
+`type_ == is_v6_`, returns `v6_.is_unspecified()`. Otherwise returns `false`.]
 
   constexpr bool is_loopback() const noexcept;
 
-[function_returns If `is_v4() == true`, returns
-`address_cast<address_v4>(*this).is_loopback()`. If `is_v6() == true`, returns
-`address_cast<address_v6>(*this).is_loopback()`. Otherwise returns `false`.]
+[function_returns If `type_ == is_v4_`, returns `v4_.is_loopback()`. If `type_
+== is_v6_`, returns `v6_.is_loopback()`. Otherwise returns `false`.]
 
   constexpr bool is_multicast() const noexcept;
 
-[function_returns If `is_v4() == true`, returns
-`address_cast<address_v4>(*this).is_multicast()`. If `is_v6() == true`, returns
-`address_cast<address_v6>(*this).is_multicast()`. Otherwise returns `false`.]
+[function_returns If `type_ == is_v4_`, returns `v4_.is_multicast()`. If `type_
+== is_v6_`, returns `v6_.is_multicast()`. Otherwise returns `false`.]
 
   constexpr bool is_v4() const noexcept;
 
-[function_returns `true` if the object contains an IP version 4 address.]
+[function_returns `type_ == is_v4_`.]
 
   constexpr bool is_v6() const noexcept;
 
-[function_returns `true` if the object contains an IP version 6 address.]
+[function_returns `type_ == is_v6_`.]
 
   string to_string() const;
 
-[function_returns If `is_v4() == true`, returns
-`address_cast<address_v4>(*this).to_string()`. If `is_v6() == true`, returns
-`address_cast<address_v6>(*this).to_string()`. Otherwise throws `bad_address_cast`.]
+[function_returns If `type_ == is_v4_`, returns `v4_.to_string()`. If `type_ ==
+is_v6_`, returns `v6_.to_string()`. Otherwise throws `bad_address_cast`.]
 
 [endsect]
 
@@ -142,11 +148,11 @@ throws an exception.]
 
   bool operator==(const address& a, const address& b) noexcept;
 
-[function_returns `a_v4 == b_v4 && a_v6 == b_v6`, where:[br]
- [mdash] `a_v4` is the value of `a.is_v4() ? address_cast<address_v4>(a) : address_v4()`;[br]
- [mdash] `b_v4` is `b.is_v4() ? address_cast<address_v4>(b) : address_v4()`;[br]
- [mdash] `a_v6` is `a.is_v6() ? address_cast<address_v6>(a) : address_v6()`; and[br]
- [mdash] `b_v6` is `b.is_v6() ? address_cast<address_v6>(b) : address_v6()`.]
+[function_returns [br]
+ [mdash] if `a.type_ != b.type_`, `false`;[br]
+ [mdash] if `a.type_ == is_v4_`, the result of `a.v4_ == b.v4_`;[br]
+ [mdash] if `a.type_ == is_v6_`, the result of `a.v6_ == b.v6_`;[br]
+ [mdash] otherwise, `true`.]
 
   bool operator!=(const address& a, const address& b) noexcept;
 
@@ -154,11 +160,12 @@ throws an exception.]
 
   bool operator< (const address& a, const address& b) noexcept;
 
-[function_returns `a_v6 < b_v6 || a_v6 == b_v6 && a_v4 < b_v4`, where:[br]
- [mdash] `a_v4` is the value of `a.is_v4() ? address_cast<address_v4>(a) : address_v4()`;[br]
- [mdash] `b_v4` is `b.is_v4() ? address_cast<address_v4>(b) : address_v4()`;[br]
- [mdash] `a_v6` is `a.is_v6() ? address_cast<address_v6>(a) : address_v6()`; and[br]
- [mdash] `b_v6` is `b.is_v6() ? address_cast<address_v6>(b) : address_v6()`.]
+[function_returns [br]
+ [mdash] if `a.type_ < b.type_`, `true`;[br]
+ [mdash] if `a.type_ > b.type_`, `false`;[br]
+ [mdash] if `a.type_ == is_v4_`, the result of `a.v4_ < b.v4_`;[br]
+ [mdash] if `a.type_ == is_v6_`, the result of `a.v6_ < b.v6_`;[br]
+ [mdash] otherwise, `false`.]
 
   bool operator> (const address& a, const address& b) noexcept;
 
