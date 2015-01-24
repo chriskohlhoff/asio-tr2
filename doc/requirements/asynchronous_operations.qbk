@@ -1,10 +1,12 @@
 [section:asynchronous_operations Requirements on asynchronous operations]
+[xrefid async.reqmts.async]
 
 In this clause, an asynchronous operation is initiated by a function that is
 named with the prefix `async_`. These functions shall be known as ['initiating
 functions].
 
 [section Completion tokens and handlers]
+[xrefid async.reqmts.async.token]
 
 All initiating functions in this clause:
 
@@ -32,6 +34,7 @@ the result of an asynchronous operation is specified in terms of these names.
 [endsect]
 
 [section Automatic deduction of initiating function return type]
+[xrefid async.reqmts.async.return.type]
 
 All initiating functions in this clause are specified using automatic return
 type deduction. The function return type shall be determined as if by `typename
@@ -40,6 +43,7 @@ async_result<Handler>::type`.
 [endsect]
 
 [section Production of initiating function return value]
+[xrefid async.reqmts.async.return.value]
 
 All initiating functions in this clause produce their return type as follows:
 
@@ -83,6 +87,7 @@ For convenience, initiating functions may be implemented using the
 [endsect]
 
 [section Lifetime of initiating function arguments]
+[xrefid async.reqmts.async.lifetime]
 
 Unless otherwise specified, the lifetime of arguments to initiating functions
 shall be treated as follows:
@@ -103,6 +108,7 @@ guarantee the validity of the argument until the handler is invoked.]
 [endsect]
 
 [section I/O executor]
+[xrefid async.reqmts.async.io.exec]
 
 All asynchronous operations in this clause have an associated executor object
 satisfying [link requirements.executor Executor requirements]. Where the
@@ -116,6 +122,7 @@ and `ex1` be the associated executor object obtained as described above.
 [endsect]
 
 [section Handler executor]
+[xrefid async.reqmts.async.handler.exec]
 
 All handler objects have an associated executor object satisfying [link
 requirements.executor Executor requirements]. The type `Executor2` of the
@@ -127,6 +134,7 @@ Executor1>::get(handler, ex1)`.
 [endsect]
 
 [section Outstanding work]
+[xrefid async.reqmts.async.work]
 
 The implementation of an asynchronous operation shall maintain an object
 `work1` of type `executor_work<Executor1>`, initialized with `work1(ex1)` and
@@ -141,6 +149,7 @@ execution.
 [endsect]
 
 [section Allocation of intermediate storage]
+[xrefid async.reqmts.async.alloc]
 
 Asynchronous operations may allocate memory. [inline_note Such as a data
 structure to store copies of the `handler` object and the initiating function's
@@ -171,6 +180,7 @@ a way that would introduce a data race.
 [endsect]
 
 [section Execution of handler on completion of asynchronous operation]
+[xrefid async.reqmts.async.completion]
 
 When an asynchronous operation completes, the implementation constructs a
 zero-argument function object `bound_handler` to invoke `handler` with results

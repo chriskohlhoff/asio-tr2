@@ -1,4 +1,5 @@
 [section:async_write Asynchronous write operations]
+[xrefid buffer.async.write]
 
   template<class AsyncWriteStream, class ConstBufferSequence,
     class CompletionToken>

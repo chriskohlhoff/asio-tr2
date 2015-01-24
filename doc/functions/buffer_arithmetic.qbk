@@ -1,4 +1,5 @@
 [section:buffer_arithmetic Buffer arithmetic]
+[xrefid buffer.arithmetic]
 
   mutable_buffer operator+(const mutable_buffer& b, size_t n) noexcept;
   mutable_buffer operator+(size_t n, const mutable_buffer& b) noexcept;

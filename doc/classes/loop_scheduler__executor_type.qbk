@@ -1,4 +1,5 @@
 [section:loop_scheduler__executor_type Class [^loop_scheduler::executor_type]]
+[xrefid loop_scheduler.exec]
 
   namespace std {
     namespace experimental {
@@ -53,6 +54,7 @@ associated with a `loop_scheduler`, and function objects submitted using the
 `run_one_for`, `run_one_until`, `poll` or `poll_one` functions.
 
 [section [^loop_scheduler::executor_type] constructors]
+[xrefid loop_scheduler.exec.cons]
 
   executor_type(const executor_type& other) noexcept;
 
@@ -69,6 +71,7 @@ associated with a `loop_scheduler`, and function objects submitted using the
 [endsect]
 
 [section [^loop_scheduler::executor_type] assignment]
+[xrefid loop_scheduler.exec.assign]
 
   executor_type& operator=(const executor_type& other) noexcept;
 
@@ -85,6 +88,7 @@ associated with a `loop_scheduler`, and function objects submitted using the
 [endsect]
 
 [section [^loop_scheduler::executor_type] operations]
+[xrefid loop_scheduler.exec.ops]
 
   bool running_in_this_thread() const noexcept;
 
@@ -129,6 +133,7 @@ shall propagate to the caller of `dispatch`.]
 [endsect]
 
 [section [^loop_scheduler::executor_type] comparisons]
+[xrefid loop_scheduler.exec.comparisons]
 
   bool operator==(const loop_scheduler::executor_type& a,
                   const loop_scheduler::executor_type& b) noexcept;

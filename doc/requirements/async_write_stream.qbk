@@ -1,4 +1,5 @@
 [section:async_write_stream Buffer-oriented asynchronous write stream requirements]
+[xrefid buffer.reqmts.asyncwritestream]
 
 In the table below, `a` denotes an asynchronous write stream object, `cb`
 denotes an object satisfying [link requirements.const_buffers constant buffer

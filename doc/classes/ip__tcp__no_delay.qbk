@@ -1,4 +1,5 @@
 [section:ip__tcp__no_delay Class [^ip::tcp::no_delay]]
+[xrefid internet.tcp.nodelay]
 
 The `no_delay` class represents a socket option for disabling the Nagle
 algorithm for coalescing small segments. It shall be defined as a [link

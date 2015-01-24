@@ -1,4 +1,5 @@
 [section Header [^<experimental/executor>] synopsis]
+[xrefid async.synop]
 
   namespace std {
     namespace experimental {

@@ -1,4 +1,5 @@
 [section:ip__basic_resolver_entry Class template [^ip::basic_resolver_entry]]
+[xrefid internet.resolver.entry]
 
   namespace std {
     namespace experimental {
@@ -32,6 +33,7 @@
   } // namespace std
 
 [section [^ip::basic_resolver_entry] constructors]
+[xrefid internet.resolver.entry.cons]
 
   basic_resolver_entry();
 
@@ -87,6 +89,7 @@ the table below.]
 [endsect]
 
 [section [^ip::basic_resolver_entry] members]
+[xrefid internet.resolver.entry.members]
 
   endpoint_type endpoint() const;
 

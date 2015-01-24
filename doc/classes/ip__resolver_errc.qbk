@@ -1,4 +1,5 @@
 [section:ip__resolver_errc Error codes]
+[xrefid internet.resolver.err]
 
   const error_category& resolver_category() noexcept;
 

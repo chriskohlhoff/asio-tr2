@@ -1,4 +1,5 @@
 [section:thread_pool__executor_type Class [^thread_pool::executor_type]]
+[xrefid thread.pool.exec]
 
   namespace std {
     namespace experimental {
@@ -52,6 +53,7 @@ associated with a `thread_pool`, and function objects submitted using the
 `thread_pool`.
 
 [section [^thread_pool::executor_type] constructors]
+[xrefid thread.pool.exec.cons]
 
   executor_type(const executor_type& other) noexcept;
 
@@ -68,6 +70,7 @@ associated with a `thread_pool`, and function objects submitted using the
 [endsect]
 
 [section [^thread_pool::executor_type] assignment]
+[xrefid thread.pool.exec.assign]
 
   executor_type& operator=(const executor_type& other) noexcept;
 
@@ -84,6 +87,7 @@ associated with a `thread_pool`, and function objects submitted using the
 [endsect]
 
 [section [^thread_pool::executor_type] operations]
+[xrefid thread.pool.exec.ops]
 
   bool running_in_this_thread() const noexcept;
 
@@ -127,6 +131,7 @@ shall propagate to the caller of `dispatch`.]
 [endsect]
 
 [section [^thread_pool::executor_type] comparisons]
+[xrefid thread.pool.exec.comparisons]
 
   bool operator==(const thread_pool::executor_type& a,
                   const thread_pool::executor_type& b) noexcept;

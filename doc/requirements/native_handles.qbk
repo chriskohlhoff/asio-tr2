@@ -1,4 +1,5 @@
 [section Native handles]
+[xrefid socket.reqmts.native]
 
 Several classes described in this Clause have a member type
 `native_handle_type`, a member function `native_handle`, and member functions

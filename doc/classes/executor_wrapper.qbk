@@ -1,4 +1,5 @@
 [section:executor_wrapper Class template [^executor_wrapper]]
+[xrefid async.exec.wrapper]
 
   namespace std {
     namespace experimental {
@@ -108,6 +109,7 @@ represents the member function’s cv-qualifiers); the type `T1` is [^['cv]]
 `T2` is `T::second_argument_type`.
 
 [section [^executor_wrapper] constructors]
+[xrefid async.exec.wrapper.cons]
 
   executor_wrapper(T t, const Executor& ex);
 
@@ -168,6 +170,7 @@ initializes `wrapped_` with `wrapped_(std::move(other.unwrap()))`.]
 [endsect]
 
 [section [^executor_wrapper] access]
+[xrefid async.exec.wrapper.access]
 
   T& unwrap() noexcept;
   const T& unwrap() const noexcept;
@@ -181,6 +184,7 @@ initializes `wrapped_` with `wrapped_(std::move(other.unwrap()))`.]
 [endsect]
 
 [section [^executor_wrapper] invocation]
+[xrefid async.exec.wrapper.invocation]
 
   template<class... Args>
     result_of_t<``['cv]`` T&(Args&&...)> operator()(Args&&... args) ``['cv]``;
@@ -197,6 +201,7 @@ through other means.]
 [endsect]
 
 [section Class template specialization [^async_result]]
+[xrefid async.exec.wrapper.async.result]
 
   namespace std {
     namespace experimental {
@@ -236,6 +241,7 @@ the [link classes.async_result `async_result` specialization requirements].
 [endsect]
 
 [section Class template specialization [^associated_allocator]]
+[xrefid async.exec.wrapper.assoc.alloc]
 
   namespace std {
     namespace experimental {
@@ -266,6 +272,7 @@ specialization requirements].
 [endsect]
 
 [section Class template specialization [^associated_executor]]
+[xrefid async.exec.wrapper.assoc.exec]
 
   namespace std {
     namespace experimental {

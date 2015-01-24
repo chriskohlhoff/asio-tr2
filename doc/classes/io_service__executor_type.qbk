@@ -1,4 +1,5 @@
 [section:io_service__executor_type Class [^io_service::executor_type]]
+[xrefid io_service.exec]
 
   namespace std {
     namespace experimental {
@@ -53,6 +54,7 @@ associated with an `io_service`, and function objects submitted using the
 `run_one_for`, `run_one_until`, `poll` or `poll_one` functions.
 
 [section [^io_service::executor_type] constructors]
+[xrefid io_service.exec.cons]
 
   executor_type(const executor_type& other) noexcept;
 
@@ -69,6 +71,7 @@ associated with an `io_service`, and function objects submitted using the
 [endsect]
 
 [section [^io_service::executor_type] assignment]
+[xrefid io_service.exec.assign]
 
   executor_type& operator=(const executor_type& other) noexcept;
 
@@ -84,7 +87,8 @@ associated with an `io_service`, and function objects submitted using the
 
 [endsect]
 
-[section [^executor_type] operations]
+[section [^io_service::executor_type] operations]
+[xrefid io_service.exec.ops]
 
   bool running_in_this_thread() const noexcept;
 
@@ -128,7 +132,8 @@ shall propagate to the caller of `dispatch`.]
 
 [endsect]
 
-[section [^executor_type] comparisons]
+[section [^io_service::executor_type] comparisons]
+[xrefid io_service.exec.comparisons]
 
   bool operator==(const io_service::executor_type& a,
                   const io_service::executor_type& b) noexcept;

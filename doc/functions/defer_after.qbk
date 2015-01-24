@@ -1,4 +1,5 @@
 [section:defer_after Function [^defer_after]]
+[xrefid async.defer.after]
 
   template<class Rep, class Period, class... CompletionTokens>
     auto defer_after(const chrono::duration<Rep, Period>& rel_time,

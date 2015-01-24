@@ -1,4 +1,5 @@
 [section Header [^<experimental/timer>] synopsis]
+[xrefid timer.synop]
 
   #include <chrono>
 

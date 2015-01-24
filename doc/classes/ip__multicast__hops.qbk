@@ -1,4 +1,5 @@
 [section:ip__multicast__hops Class [^ip::multicast::hops]]
+[xrefid internet.multicast.hops]
 
 The `hops` class represents a socket option for specifying the default number
 of hops (also known as time-to-live or TTL) on outbound multicast datagrams. It

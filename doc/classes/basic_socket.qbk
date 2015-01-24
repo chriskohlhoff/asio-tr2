@@ -1,4 +1,5 @@
 [section:basic_socket Class template [^basic_socket]]
+[xrefid socket.basic]
 
   namespace std {
     namespace experimental {
@@ -119,6 +120,7 @@
   } // namespace std
 
 [section [^basic_socket] constructors]
+[xrefid socket.basic.cons]
 
   explicit basic_socket(io_service& ios);
 
@@ -202,6 +204,7 @@ unless `OtherProtocol` is implicitly convertible to `Protocol`.]
 [endsect]
 
 [section [^basic_socket] destructor]
+[xrefid socket.basic.dtor]
 
   ~basic_socket();
 
@@ -215,6 +218,7 @@ true.]
 [endsect]
 
 [section [^basic_socket] assignment]
+[xrefid socket.basic.assign]
 
   basic_socket& operator=(basic_socket&& rhs);
 
@@ -263,6 +267,7 @@ resolution unless `OtherProtocol` is implicitly convertible to `Protocol`.]
 [endsect]
 
 [section [^basic_socket] operations]
+[xrefid socket.basic.ops]
 
   executor_type get_executor() noexcept;
 

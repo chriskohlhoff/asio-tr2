@@ -1,4 +1,5 @@
 [section:dynamic_buffers Dynamic buffer sequence requirements]
+[xrefid buffer.reqmts.dynamicbuffersequence]
 
 A dynamic buffer sequence encapsulates memory storage that may be automatically
 resized as required, where the memory is divided into an input sequence

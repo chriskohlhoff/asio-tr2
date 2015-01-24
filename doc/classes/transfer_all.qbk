@@ -1,4 +1,5 @@
 [section:transfer_all Class [^transfer_all]]
+[xrefid buffer.transfer.all]
 
   namespace std {
     namespace experimental {

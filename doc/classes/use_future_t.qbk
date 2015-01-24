@@ -1,4 +1,5 @@
 [section:use_future_t Class template [^use_future_t]]
+[xrefid async.use.future]
 
   namespace std {
     namespace experimental {
@@ -27,6 +28,7 @@ The class template `use_future_t` defines a set of [link classes.handler_type
 completion token types] for use with asynchronous operations.
 
 [section [^use_future_t] constructors]
+[xrefid async.use.future.cons]
 
   constexpr use_future_t() noexcept;
 
@@ -41,6 +43,7 @@ post-condition `get_allocator() == a`.]
 [endsect]
 
 [section [^use_future_t] members]
+[xrefid async.use.future.members]
 
   template<class OtherAllocator> use_future_t<OtherAllocator>
     operator[](const OtherAllocator& a) const noexcept;
@@ -54,6 +57,7 @@ post-condition `get_allocator() == a`.]
 [endsect]
 
 [section:use_future_t_traits [^use_future_t] traits]
+[xrefid async.use.future.traits]
 
   template<class Allocator, class R, class... Args>
   struct handler_type<use_future_t<Allocator>, R(Args...)>

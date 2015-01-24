@@ -1,4 +1,5 @@
 [section:basic_waitable_timer Class template [^basic_waitable_timer]]
+[xrefid timer.waitable]
 
   namespace std {
     namespace experimental {
@@ -52,6 +53,7 @@
   } // namespace std
 
 [section [^basic_waitable_timer] constructors]
+[xrefid timer.waitable.cons]
 
   explicit basic_waitable_timer(io_service& ios);
 
@@ -91,6 +93,7 @@ constructor invocation.\n
 [endsect]
 
 [section [^basic_waitable_timer] destructor]
+[xrefid timer.waitable.dtor]
 
   ~basic_waitable_timer();
 
@@ -100,6 +103,7 @@ operations associated with the timer as if by calling `cancel()`.]
 [endsect]
 
 [section [^basic_waitable_timer] assignment]
+[xrefid timer.waitable.assign]
 
   basic_waitable_timer& operator=(basic_waitable_timer&& rhs);
 
@@ -118,6 +122,7 @@ assignment.\n
 [endsect]
 
 [section [^basic_waitable_timer] operations]
+[xrefid timer.waitable.ops]
 
   executor_type get_executor() noexcept;
 

@@ -1,4 +1,5 @@
 [section Header [^<experimental/networking>] synopsis]
+[xrefid convenience.hdr.synop]
 
   #include <experimental/executor>
   #include <experimental/io_service>

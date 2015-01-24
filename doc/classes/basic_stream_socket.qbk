@@ -1,4 +1,5 @@
 [section:basic_stream_socket Class template [^basic_stream_socket]]
+[xrefid socket.stream]
 
   namespace std {
     namespace experimental {
@@ -111,6 +112,7 @@ requirements.async_read_stream asynchronous read streams], and [link
 requirements.async_write_stream asynchronous write streams].
 
 [section [^basic_stream_socket] constructors]
+[xrefid socket.stream.cons]
 
   explicit basic_stream_socket(io_service& ios);
 
@@ -158,6 +160,7 @@ unless `OtherProtocol` is implicitly convertible to `Protocol`.]
 [endsect]
 
 [section [^basic_stream_socket] assignment]
+[xrefid socket.stream.assign]
 
   basic_stream_socket& operator=(basic_stream_socket&& rhs);
 
@@ -182,6 +185,7 @@ resolution unless `OtherProtocol` is implicitly convertible to `Protocol`.]
 [endsect]
 
 [section [^basic_stream_socket] operations]
+[xrefid socket.stream.ops]
 
   template<class MutableBufferSequence>
     size_t receive(const MutableBufferSequence& buffers);

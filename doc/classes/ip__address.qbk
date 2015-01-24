@@ -1,4 +1,5 @@
 [section:ip__address Class [^ip::address]]
+[xrefid internet.address]
 
   namespace std {
     namespace experimental {
@@ -59,6 +60,7 @@ An object of class `address` holds either an IPv4 address, an IPv6 address, or
 no valid address.
 
 [section [^ip::address] constructors]
+[xrefid internet.address.cons]
 
   constexpr address() noexcept;
 
@@ -103,6 +105,7 @@ throws an exception.]
 [endsect]
 
 [section [^ip::address] assignment]
+[xrefid internet.address.assign]
 
   address& operator=(const address& a) noexcept;
 
@@ -113,6 +116,7 @@ throws an exception.]
 [endsect]
 
 [section [^ip::address] members]
+[xrefid internet.address.members]
 
   constexpr bool is_unspecified() const noexcept;
 
@@ -145,6 +149,7 @@ is_v6_`, returns `v6_.to_string()`. Otherwise throws `bad_address_cast`.]
 [endsect]
 
 [section:ip__address__comparisons [^ip::address] comparisons]
+[xrefid internet.address.comparisons]
 
   bool operator==(const address& a, const address& b) noexcept;
 
@@ -182,6 +187,7 @@ is_v6_`, returns `v6_.to_string()`. Otherwise throws `bad_address_cast`.]
 [endsect]
 
 [section:ip__address__creation [^ip::address] creation]
+[xrefid internet.address.creation]
 
   address make_address(const char* str);
   address make_address(const char* str, error_code& ec) noexcept;
@@ -208,6 +214,7 @@ of class `address`, as if by calling:
 [endsect]
 
 [section:ip__address__io [^ip::address] I/O]
+[xref internet.address.io]
 
   template<class CharT, class Traits>
     basic_ostream<CharT, Traits>& operator<<(

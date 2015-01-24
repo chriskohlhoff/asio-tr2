@@ -1,4 +1,5 @@
 [section:convertible_to_const_buffer Convertible to const buffer requirements]
+[xrefid buffer.reqmts.convertibletoconstbuffer]
 
 A type that meets the requirements for convertibility to a const buffer must
 meet the requirements of `CopyConstructible` types (C++ Std, 20.1.3), and the

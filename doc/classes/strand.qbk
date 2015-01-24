@@ -1,4 +1,5 @@
 [section:strand Class template [^strand]]
+[xrefid async.strand]
 
   namespace std {
     namespace experimental {
@@ -88,6 +89,7 @@ If any function `f` executed by the strand throws an exception, the subsequent
 strand state shall be as if `f` had exited without throwing an exception.
 
 [section [^strand] constructors]
+[xrefid async.strand.cons]
 
   strand();
 
@@ -144,6 +146,7 @@ represents a unique ordered, non-concurrent state. Initializes `inner_ex_` with
 [endsect]
 
 [section [^strand] assignment]
+[xrefid async.strand.assign]
 
   strand& operator=(const strand& other);
 
@@ -187,6 +190,7 @@ represents a unique ordered, non-concurrent state. Initializes `inner_ex_` with
 [endsect]
 
 [section [^strand] destructor]
+[xrefid async.strand.dtor]
 
   ~strand();
 
@@ -198,6 +202,7 @@ non-concurrency.]
 [endsect]
 
 [section [^strand] operations]
+[xrefid async.strand.ops]
 
   inner_executor_type get_inner_executor() const noexcept;
 
@@ -251,6 +256,7 @@ guarantees of ordering and non-concurrency are met.]
 [endsect]
 
 [section [^strand] comparisons]
+[xrefid async.strand.comparisons]
 
   bool operator==(const strand<Executor>& a, const strand<Executor>& b);
 

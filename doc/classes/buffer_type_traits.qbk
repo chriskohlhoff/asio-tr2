@@ -1,4 +1,5 @@
 [section:buffer_type_traits Buffer type traits]
+[xrefid buffer.traits]
 
   namespace std {
     namespace experimental {

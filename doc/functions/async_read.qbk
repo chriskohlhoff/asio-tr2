@@ -1,4 +1,5 @@
 [section:async_read Asynchronous read operations]
+[xrefid buffer.async.read]
 
   template<class AsyncReadStream, class MutableBufferSequence,
     class CompletionToken>

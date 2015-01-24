@@ -1,4 +1,5 @@
 [section:const_buffers_1 Class [^const_buffers_1]]
+[xrefid buffer.const.1]
 
 The `const_buffers_1` class meets the requirements for [link
 requirements.const_buffers `ConstBufferSequence`], and [link
@@ -33,6 +34,7 @@ An object of class `const_buffers_1` represents a sequence of exactly one
 `const_buffer` object.
 
 [section [^const_buffers_1] constructors]
+[xrefid buffer.const.1.cons]
 
   const_buffers_1(const void* p, size_t n) noexcept;
 
@@ -47,6 +49,7 @@ the base class with `const_buffer(b)`.]
 [endsect]
 
 [section [^const_buffers_1] members]
+[xrefid buffer.const.1.members]
 
   const_iterator begin() const noexcept;
 

@@ -1,4 +1,5 @@
 [section:executor Executor requirements]
+[xrefid async.reqmts.executor]
 
 The library describes a standard set of requirements for ['executors]. A type
 meeting Executor requirements shall embody a set of rules for determining how

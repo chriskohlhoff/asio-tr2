@@ -1,4 +1,5 @@
 [section:buffer_size Function [^buffer_size]]
+[xrefid buffer.size]
 
   size_t buffer_size(const mutable_buffer& b) noexcept;
   size_t buffer_size(const const_buffer& b) noexcept;

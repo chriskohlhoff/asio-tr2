@@ -1,4 +1,5 @@
 [section:io_control_command I/O control command requirements]
+[xrefid socket.reqmts.iocontrolcommand]
 
 In the table below, `a` denotes a value of an I/O control command class.
 

@@ -78,6 +78,12 @@
 [blurb [text]]
 ]
 
+[template xrefid[text] '''<phrase role="xrefid">
+<anchor id="'''[text]'''"/>
+<link linkend="'''[text]'''">'''\[[text]\]'''</link>
+<indexterm><primary>'''[text]'''</primary></indexterm>
+</phrase>''']
+
 [template mdash[] '''&mdash; ''']
 
 [template half_open_range[text] '''&#91;'''[text])]
@@ -606,16 +612,20 @@ express type requirements, as listed in the table below.
 [include:error_reporting error_reporting.qbk]
 
 [section:convenience Convenience header]
+[xrefid convenience.hdr]
 [include:headers headers/networking/networking.qbk]
 [endsect]
 
 [section:forward Forward declarations]
+[xrefid fwd.decl]
 [include:headers headers/networking/netfwd.qbk]
 [endsect]
 
 [section:async Asynchronous model]
+[xrefid async]
 [include:headers headers/networking/executor.qbk]
 [section:async_requirements Requirements]
+[xrefid async.reqmts]
 [include:requirements requirements/asynchronous_operations.qbk]
 [include:requirements requirements/executor.qbk]
 [include:requirements requirements/service.qbk]
@@ -651,12 +661,14 @@ express type requirements, as listed in the table below.
 [endsect]
 
 [section:basic_io_services Basic I/O services]
+[xrefid io_service]
 [include:headers headers/networking/io_service.qbk]
 [include:classes classes/io_service.qbk]
 [include:classes classes/io_service__executor_type.qbk]
 [endsect]
 
 [section:timers Timers]
+[xrefid timer]
 This subclause defines components for performing timer operations.
 [std_example Performing a synchronous wait operation on a timer:
 ``
@@ -677,6 +689,7 @@ This subclause defines components for performing timer operations.
 ``]
 [include:headers headers/networking/timer.qbk]
 [section:timers_requirements Requirements]
+[xrefid timer.reqmts]
 [include:requirements requirements/wait_traits.qbk]
 [endsect]
 [include:classes classes/wait_traits.qbk]
@@ -684,8 +697,10 @@ This subclause defines components for performing timer operations.
 [endsect]
 
 [section:buffers Buffers]
+[xrefid buffer]
 [include:headers headers/networking/buffer.qbk]
 [section:buffers_requirements Requirements]
+[xrefid buffer.reqmts]
 [include:requirements requirements/convertible_to_mutable_buffer.qbk]
 [include:requirements requirements/mutable_buffers.qbk]
 [include:requirements requirements/convertible_to_const_buffer.qbk]
@@ -725,8 +740,10 @@ This subclause defines components for performing timer operations.
 [endsect]
 
 [section:sockets Sockets]
+[xrefid socket]
 [include:headers headers/networking/socket.qbk]
 [section:sockets_requirements Requirements]
+[xrefid socket.reqmts]
 [include:requirements requirements/native_handles.qbk]
 [include:requirements requirements/extensibility.qbk]
 [include:requirements requirements/endpoint.qbk]
@@ -747,16 +764,22 @@ This subclause defines components for performing timer operations.
 [endsect]
 
 [section:socket_streams Socket streams]
+[xrefid socket.iostreams]
 [include:classes classes/basic_socket_streambuf.qbk]
 [include:classes classes/basic_socket_iostream.qbk]
 [endsect]
 
+[section:socket_algorithms Socket algorithms]
+[xrefid socket.algo]
 [include:functions functions/connect.qbk]
 [include:functions functions/async_connect.qbk]
+[endsect]
 
 [section:internet_protocol Internet protocol]
+[xrefid internet]
 [include:headers headers/networking/internet.qbk]
 [section:internet_protocol_requirements Requirements]
+[xrefid internet.reqmts]
 [include:requirements requirements/internet_protocol.qbk]
 [endsect]
 [include:classes classes/ip__resolver_errc.qbk]
@@ -788,6 +811,10 @@ This subclause defines components for performing timer operations.
 [include:classes classes/ip__multicast__outbound_interface.qbk]
 [include:classes classes/ip__multicast__hops.qbk]
 [include:classes classes/ip__multicast__enable_loopback.qbk]
+[endsect]
+
+[section Index]
+'''<index><title>Cross references</title></index>'''
 [endsect]
 
 [endsect]

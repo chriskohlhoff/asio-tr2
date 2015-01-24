@@ -1,4 +1,5 @@
 [section:ip__basic_resolver Class template [^ip::basic_resolver]]
+[xrefid internet.resolver]
 
   namespace std {
     namespace experimental {
@@ -54,6 +55,7 @@
   } // namespace std
 
 [section [^ip::basic_resolver] constructors]
+[xrefid internet.resolver.cons]
 
   explicit basic_resolver(io_service& ios);
 
@@ -73,6 +75,7 @@ represented by `rhs`.]
 [endsect]
 
 [section [^ip::basic_resolver] destructor]
+[xrefid internet.resolver.dtor]
 
   ~basic_resolver();
 
@@ -82,6 +85,7 @@ associated with the resolver as if by calling `cancel()`.]
 [endsect]
 
 [section [^ip::basic_resolver] assignment]
+[xrefid internet.resolver.assign]
 
   basic_resolver& operator=(basic_resolver&& rhs);
 
@@ -96,6 +100,7 @@ originally represented by `rhs`.]
 [endsect]
 
 [section [^ip::basic_resolver] operations]
+[xrefid internet.resolver.ops]
 
   executor_type& get_executor() noexcept;
 

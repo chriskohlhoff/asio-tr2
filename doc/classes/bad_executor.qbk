@@ -1,4 +1,5 @@
 [section:bad_executor Class [^bad_executor]]
+[xrefid async.bad.exec]
 
   namespace std {
     namespace experimental {
@@ -19,6 +20,7 @@ An exception of type `bad_executor` is thrown by `executor` member functions
 `dispatch`, `post` and `defer` when the executor object has no target.
 
 [section [^bad_executor] constructor]
+[xrefid async.bad.exec.cons]
 
   bad_executor() noexcept;
 

@@ -1,4 +1,5 @@
 [section:settable_socket_option Settable socket option requirements]
+[xrefid socket.reqmts.settablesocketoption]
 
 In the table below, `X` denotes a socket option class, `a` denotes a value of
 `X`, `p` denotes a value that meets the [link requirements.protocol protocol]

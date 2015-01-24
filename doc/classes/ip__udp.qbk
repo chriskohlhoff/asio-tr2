@@ -1,4 +1,5 @@
 [section:ip__udp Class [^ip::udp]]
+[xrefid internet.udp]
 
 The `udp` class meets the requirements for an [link
 requirements.internet_protocol `InternetProtocol`].
@@ -89,6 +90,7 @@ the __POSIX__ header file __sys_socket_h__. The constant `IPPROTO_UDP` is
 defined in the __POSIX__ header file __netinet_in_h__.]
 
 [section [^ip::udp] comparisons]
+[xrefid internet.udp.comparisons]
 
   bool operator==(const udp& a, const udp& b);
 

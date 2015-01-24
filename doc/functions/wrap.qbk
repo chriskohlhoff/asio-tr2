@@ -1,4 +1,5 @@
 [section:wrap Function [^wrap]]
+[xrefid async.wrap]
 
   template<class Executor, class T>
     executor_wrapper<decay_t<T>, Executor> wrap(const Executor& ex, T&& t);

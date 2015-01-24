@@ -1,4 +1,5 @@
 [section:ip__multicast__outbound_interface Class [^ip::multicast::outbound_interface]]
+[xrefid internet.multicast.outbound]
 
 The `outbound_interface` class represents a socket option that specifies the
 network interface to use for outgoing multicast datagrams.
@@ -61,6 +62,7 @@ to avoid the need for additional classes that provide a protocol independent
 representation of a network interface.]
 
 [section [^ip::multicast::outbound_interface] constructors]
+[xrefid internet.multicast.outbound.cons]
 
   outbound_interface();
 
@@ -81,6 +83,7 @@ zero-initialized.]
 [endsect]
 
 [section [^ip::multicast::outbound_interface] members (extensible implementations)]
+[xrefid internet.multicast.outbound.extensible]
 
   template<class Protocol> int level(const Protocol& p) const;
 

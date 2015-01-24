@@ -1,4 +1,5 @@
 [section:basic_socket_acceptor Class template [^basic_socket_acceptor]]
+[xrefid socket.acceptor]
 
   namespace std {
     namespace experimental {
@@ -127,6 +128,7 @@
   } // namespace std
 
 [section [^basic_socket_acceptor] constructors]
+[xrefid socket.acceptor.cons]
 
   explicit basic_socket_acceptor(io_service& ios);
 
@@ -228,6 +230,7 @@ unless `OtherProtocol` is implicitly convertible to `Protocol`.]
 [endsect]
 
 [section [^basic_socket_acceptor] destructor]
+[xrefid socket.acceptor.dtor]
 
   ~basic_socket_acceptor();
 
@@ -240,6 +243,7 @@ holds true.]
 [endsect]
 
 [section [^basic_socket_acceptor] assignment]
+[xrefid socket.acceptor.assign]
 
   basic_socket_acceptor& operator=(basic_socket_acceptor&& rhs);
 
@@ -290,6 +294,7 @@ resolution unless `OtherProtocol` is implicitly convertible to `Protocol`.]
 [endsect]
 
 [section [^basic_socket_acceptor] operations]
+[xrefid socket.acceptor.ops]
 
   executor_type get_executor() noexcept;
 

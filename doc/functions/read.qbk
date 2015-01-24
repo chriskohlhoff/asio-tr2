@@ -1,4 +1,5 @@
 [section:read Synchronous read operations]
+[xrefid buffer.read]
 
   template<class SyncReadStream, class MutableBufferSequence>
     size_t read(SyncReadStream& stream,

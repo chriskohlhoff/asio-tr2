@@ -1,4 +1,5 @@
 [section:socket_base__linger Class [^socket_base::linger]]
+[xrefid socket.opt.linger]
 
 The `linger` class represents a socket option for controlling the behavior
 when a socket is closed and unsent data is present.
@@ -55,6 +56,7 @@ Extensible implementations shall provide the following member functions:
   } // namespace std
 
 [section [^socket_base::linger] constructors]
+[xrefid socket.opt.linger.cons]
 
   linger();
 
@@ -67,6 +69,7 @@ Extensible implementations shall provide the following member functions:
 [endsect]
 
 [section [^socket_base::linger] members]
+[xrefid socket.opt.linger.members]
 
   bool enabled() const;
 
@@ -89,6 +92,7 @@ seconds. For extensible implementations, returns `value_.l_linger`.]
 [endsect]
 
 [section [^socket_base::linger] members (extensible implementations)]
+[xrefid socket.opt.linger.extensible]
 
   template<class Protocol> int level(const Protocol& p) const;
 

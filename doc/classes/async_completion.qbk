@@ -1,4 +1,5 @@
 [section:async_completion Class template [^async_completion]]
+[xrefid async.async.completion]
 
   namespace std {
     namespace experimental {
@@ -27,6 +28,7 @@ call signature (C++ Std, [func.def]) for the handler type invoked on completion
 of the asynchronous operation.
 
 [section [^async_completion] members]
+[xrefid async.async.completion.members]
 
   explicit async_completion(remove_reference_t<CompletionToken>& t);
 

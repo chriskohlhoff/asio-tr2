@@ -1,4 +1,5 @@
 [section:buffer_cast Function [^buffer_cast]]
+[xrefid buffer.cast]
 
   template<class T> T buffer_cast(const mutable_buffer& b) noexcept;
   template<class T> T buffer_cast(const const_buffer& b) noexcept;

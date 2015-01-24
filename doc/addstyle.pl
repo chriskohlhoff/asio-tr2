@@ -21,6 +21,8 @@ my $style =
 "p { text-align: justify; }\n" .
 "p.tablecaption { font-weight: bold; text-align: center; }\n" .
 "p.title { font-weight: bold; text-align: center; }\n" .
+"div.section { position: relative; }\n" .
+"span.xrefid { position: absolute; right: 0em; top: 0em; }\n" .
 "table { margin: auto; border: 1px solid gray; border-collapse: collapse; }\n" .
 "th { border: 1px solid gray; padding: 0.5em; }\n" .
 "td { border: 1px solid gray; padding: 0.5em; }\n" .

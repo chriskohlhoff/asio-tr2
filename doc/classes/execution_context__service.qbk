@@ -1,4 +1,5 @@
 [section:execution_context__service Class [^execution_context::service]]
+[xrefid async.exec.ctx.svc]
 
   namespace std {
     namespace experimental {
@@ -34,6 +35,7 @@
   } // namespace std
 
 [section [^execution_context::service] constructors]
+[xrefid async.exec.ctx.svc.cons]
 
   service(execution_context& owner);
 
@@ -42,6 +44,7 @@
 [endsect]
 
 [section [^execution_context::service] observers]
+[xrefid async.exec.ctx.svc.obs]
 
   execution_context& context() noexcept;
 
@@ -50,6 +53,7 @@
 [endsect]
 
 [section [^execution_context::service] operations]
+[xrefid async.exec.ctx.svc.ops]
 
   void notify_fork(fork_event e);
 

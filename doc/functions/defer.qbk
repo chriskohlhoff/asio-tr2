@@ -1,4 +1,5 @@
 [section:defer Function [^defer]]
+[xrefid async.defer]
 
   template<class CompletionToken>
     auto defer(CompletionToken&& token);

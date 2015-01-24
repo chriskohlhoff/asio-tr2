@@ -1,4 +1,5 @@
 [section Header [^<experimental/buffer>] synopsis]
+[xrefid buffer.synop]
 
   namespace std {
     namespace experimental {

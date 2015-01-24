@@ -1,4 +1,5 @@
 [section:write Synchronous write operations]
+[xrefid buffer.write]
 
   template<class SyncWriteStream, class ConstBufferSequence>
     size_t write(SyncWriteStream& stream,

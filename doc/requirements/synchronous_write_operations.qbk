@@ -1,4 +1,5 @@
 [section:synchronous_write_operations Requirements on synchronous write operations]
+[xrefid buffer.reqmts.sync.write]
 
 In this clause, a ['synchronous write operation] is a function that writes data
 from a ['constant buffer sequence] argument of a type meeting [link

@@ -1,4 +1,5 @@
 [section:post Function [^post]]
+[xrefid async.post]
 
   template<class CompletionToken>
     auto post(CompletionToken&& token);

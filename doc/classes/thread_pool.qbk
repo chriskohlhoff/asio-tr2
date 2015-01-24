@@ -1,4 +1,5 @@
 [section:thread_pool Class [^thread_pool]]
+[xrefid thread.pool]
 
   namespace std {
     namespace experimental {
@@ -58,6 +59,7 @@ operators, shall not introduce data races as a result of concurrent calls to
 those functions from different threads.
 
 [section [^thread_pool] constructors/destructor]
+[xrefid thread.pool.cons]
 
   thread_pool();
   explicit thread_pool(std::size_t num_threads);
@@ -77,6 +79,7 @@ followed by `join()`.]
 [endsect]
 
 [section [^thread_pool] members]
+[xrefid thread.pool.members]
 
   executor_type get_executor() noexcept;
 

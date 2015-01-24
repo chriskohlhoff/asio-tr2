@@ -1,4 +1,5 @@
 [section:handler_type Class template [^handler_type]]
+[xrefid async.handler.type]
 
   namespace std {
     namespace experimental {
@@ -28,6 +29,7 @@ shall be constructible from an lvalue or rvalue of the type specified by the
 `CompletionToken` template parameter.
 
 [section [^handler_type] members]
+[xrefid async.handler.type.members]
 
   typedef ``['see below]`` type;
 

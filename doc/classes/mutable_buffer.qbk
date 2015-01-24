@@ -1,4 +1,5 @@
 [section:mutable_buffer Class [^mutable_buffer]]
+[xrefid buffer.mutable]
 
 The `mutable_buffer` class meets the requirements for [link
 requirements.convertible_to_mutable_buffer `ConvertibleToMutableBuffer`] and
@@ -25,6 +26,7 @@ requirements.convertible_to_mutable_buffer `ConvertibleToMutableBuffer`] and
   } // namespace std
 
 [section [^mutable_buffer] constructors]
+[xrefid buffer.mutable.cons]
 
   mutable_buffer() noexcept;
 

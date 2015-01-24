@@ -1,6 +1,8 @@
 [section Error reporting]
+[xrefid err.report]
 
 [section Synchronous operations]
+[xrefid err.report.sync]
 
 Synchronous network library functions often provide two overloads, one that
 throws an exception to report system errors, and another that sets an
@@ -61,6 +63,7 @@ as if:
 [endsect]
 
 [section Asynchronous operations]
+[xrefid err.report.async]
 
 Asynchronous network library functions are identified by having the prefix
 `async_`. These asynchronous operations report errors as follows:
@@ -80,6 +83,7 @@ or `EINPROGRESS`; __Windows__ `WSAEWOULDBLOCK` or `WSAEINPROGRESS`].
 [endsect]
 
 [section Error conditions]
+[xrefid err.report.conditions]
 
 Unless otherwise specified, when the behavior of a synchronous or asynchronous
 operation is defined "as if" implemented by a __POSIX__ function, the

@@ -1,4 +1,5 @@
 [section:async_read_stream Buffer-oriented asynchronous read stream requirements]
+[xrefid buffer.reqmts.asyncreadstream]
 
 In the table below, `a` denotes an asynchronous read stream object, `mb`
 denotes an object satisfying [link requirements.mutable_buffers mutable buffer

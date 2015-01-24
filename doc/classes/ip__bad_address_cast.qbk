@@ -1,4 +1,5 @@
 [section:ip__bad_address_cast Class [^ip::bad_address_cast]]
+[xrefid internet.bad.address.cast]
 
   namespace std {
     namespace experimental {

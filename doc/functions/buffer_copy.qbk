@@ -1,4 +1,5 @@
 [section:buffer_copy Function [^buffer_copy]]
+[xrefid buffer.copy]
 
   size_t buffer_copy(const mutable_buffer& dest,
                      const const_buffer& source) noexcept;

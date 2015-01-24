@@ -1,4 +1,5 @@
 [section:async_result Class template [^async_result]]
+[xrefid async.async.result]
 
   namespace std {
     namespace experimental {
@@ -54,6 +55,7 @@ modifiable lvalue of type `Handler`.
 ]
 
 [section [^async_result] members]
+[xrefid async.async.result.members]
 
   explicit async_result(Handler&);
 

@@ -1,4 +1,5 @@
 [section:ip__address_cast Function [^ip::address_cast]]
+[xrefid internet.address.cast]
 
   template<class T> constexpr T address_cast(const address& a) noexcept(``['see below]``);
 

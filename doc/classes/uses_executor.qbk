@@ -1,6 +1,8 @@
 [section:uses_executor [^uses_executor]]
+[xrefid async.uses.executor]
 
 [section [^uses_executor] trait]
+[xrefid async.uses.executor.trait]
 
   namespace std {
     namespace experimental {
@@ -28,6 +30,7 @@ second argument has type `Executor`; or
 [endsect]
 
 [section uses-executor construction]
+[xrefid async.uses.executor.cons]
 
 ['Uses-executor construction] with executor `Executor` refers to the
 construction of an object `obj` of type `T`, using constructor arguments `v1,

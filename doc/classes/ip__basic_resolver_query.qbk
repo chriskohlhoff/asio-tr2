@@ -1,4 +1,5 @@
 [section:ip__basic_resolver_query Class template [^ip::basic_resolver_query]]
+[xrefid internet.resolver.query]
 
   namespace std {
     namespace experimental {

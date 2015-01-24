@@ -1,4 +1,5 @@
 [section:dynamic_buffer Dynamic buffer creation functions]
+[xrefid buffer.dynamic.creation]
 
   template<class T, class Allocator>
     dynamic_vector_buffer<T, Allocator>

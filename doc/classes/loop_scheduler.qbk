@@ -1,4 +1,5 @@
 [section:loop_scheduler Class [^loop_scheduler]]
+[xrefid loop_scheduler]
 
   namespace std {
     namespace experimental {
@@ -80,6 +81,7 @@ result of concurrent calls to those functions from different threads.
 requirements.]
 
 [section [^loop_scheduler] constructors/destructor]
+[xrefid loop_scheduler.cons]
 
   loop_scheduler();
   explicit loop_scheduler(std::size_t concurrency_hint);
@@ -97,6 +99,7 @@ operations and execute function objects.]
 [endsect]
 
 [section [^loop_scheduler] members]
+[xrefid loop_scheduler.members]
 
   executor_type get_executor() noexcept;
 

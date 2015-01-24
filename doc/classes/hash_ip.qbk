@@ -1,4 +1,5 @@
 [section:hash Hash support]
+[xrefid internet.hash]
 
   template<> struct hash<experimental::__versioned_ns__::ip::address>;
   template<> struct hash<experimental::__versioned_ns__::ip::address_v4>;

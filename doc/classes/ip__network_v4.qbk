@@ -1,4 +1,5 @@
 [section:ip__network_v4 Class template [^ip::network_v4]]
+[xrefid internet.network.v4]
 
   namespace std {
     namespace experimental {
@@ -49,6 +50,7 @@
   } // namespace std
 
 [section [^ip::network_v4] constructors]
+[xrefid internet.network.v4.cons]
 
   network_v4() noexcept;
 
@@ -79,6 +81,7 @@ bits, or if the most significant bit is zero and any other bits are non-zero.]
 [endsect]
 
 [section [^ip::network_v4] members]
+[xrefid internet.network.v4.members]
 
   address_v4 address() const noexcept;
 
@@ -139,6 +142,7 @@ other.canonical()`.]
 [endsect]
 
 [section:ip__network_v4__comparisons [^ip::network_v4] comparisons]
+[xrefid internet.network.v4.comparisons]
 
   bool operator==(const network_v4& a, const network_v4& b) noexcept;
 
@@ -152,6 +156,7 @@ other.canonical()`.]
 [endsect]
 
 [section:ip__network_v4__creation [^ip::network_v4] creation]
+[xrefid internet.network.v4.creation]
 
   network_v4 make_network_v4(const address_v4& addr, unsigned short prefix_len);
 
@@ -175,6 +180,7 @@ returns `network_v4()` and sets `ec` to reflect the error.]
 [endsect]
 
 [section:ip__network_v4__io [^ip::network_v4] I/O]
+[xrefid internet.network.v4.io]
 
   template<class CharT, class Traits>
     basic_ostream<CharT, Traits>& operator<<(

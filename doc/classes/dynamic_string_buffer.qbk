@@ -1,4 +1,5 @@
 [section:dynamic_string_buffer Class template [^dynamic_string_buffer]]
+[xrefid buffer.dynamic.string]
 
 The `dynamic_string_buffer` class template meets the requirements for [link
 requirements.dynamic_buffers `DynamicBufferSequence`].
@@ -43,6 +44,7 @@ requirements.dynamic_buffers `DynamicBufferSequence`].
 The `dynamic_string_buffer` class template requires that `sizeof(CharT) == 1`.
 
 [section [^dynamic_string_buffer] constructors]
+[xrefid buffer.dynamic.string.cons]
 
   explicit dynamic_string_buffer(basic_string<CharT, Traits, Allocator>& str) noexcept;
 
@@ -62,6 +64,7 @@ The `dynamic_string_buffer` class template requires that `sizeof(CharT) == 1`.
 [endsect]
 
 [section [^dynamic_string_buffer] members]
+[xrefid buffer.dynamic.string.members]
 
   size_t size() const noexcept;
 

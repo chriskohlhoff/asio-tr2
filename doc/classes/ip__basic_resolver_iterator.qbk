@@ -1,4 +1,5 @@
 [section:ip__basic_resolver_iterator Class template [^ip::basic_resolver_iterator]]
+[xrefid internet.resolver.iter]
 
 An object of type `basic_resolver_iterator<InternetProtocol>` provides an
 iterator for a sequence of `basic_resolver_entry<InternetProtocol>` elements
@@ -51,6 +52,7 @@ Two end iterators are always equal. An end iterator shall not be equal to a
 non-end iterator.
 
 [section [^ip::basic_resolver_iterator] constructors]
+[xrefid internet.resolver.iter.cons]
 
   basic_resolver_iterator();
 

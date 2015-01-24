@@ -1,4 +1,5 @@
 [section:post_at Function [^post_at]]
+[xrefid async.post.at]
 
   template<class Clock, class Duration, class... CompletionTokens>
     auto post_at(const chrono::time_point<Clock, Duration>& abs_time,

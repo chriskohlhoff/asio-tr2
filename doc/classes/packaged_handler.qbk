@@ -1,4 +1,5 @@
 [section:packaged_handler Class template [^packaged_handler]]
+[xrefid async.package.handler]
 
   namespace std {
     namespace experimental {
@@ -34,6 +35,7 @@
   } // namespace std
 
 [section [^packaged_handler] constructors]
+[xrefid async.package.handler.cons]
 
   template<class Func>
     explicit packaged_handler(packaged_token<Func, Alloc>&& token);
@@ -46,6 +48,7 @@ with `token.allocator_`.]
 [endsect]
 
 [section [^packaged_handler] operations]
+[xrefid async.package.handler.ops]
 
   allocator_type get_allocator() const noexcept;
 
@@ -54,6 +57,7 @@ with `token.allocator_`.]
 [endsect]
 
 [section:async_result_packaged_handler Class template specialization [^async_result]]
+[xrefid async.package.handler.async.result]
 
   namespace std {
     namespace experimental {

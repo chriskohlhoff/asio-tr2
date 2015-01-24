@@ -1,4 +1,5 @@
 [section:make_work Function [^make_work]]
+[xrefid async.make.work]
 
   template<class Executor>
     executor_work<Executor>

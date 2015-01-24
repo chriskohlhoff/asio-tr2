@@ -1,4 +1,5 @@
 [section:convertible_to_mutable_buffer Convertible to mutable buffer requirements]
+[xrefid buffer.reqmts.convertibletomutablebuffer]
 
 A type that meets the requirements for convertibility to a mutable buffer must
 meet the requirements of `CopyConstructible` types (C++ Std, 20.1.3), and the

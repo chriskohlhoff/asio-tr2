@@ -1,4 +1,5 @@
 [section:socket_base__bool_socket_options Boolean socket options]
+[xrefid socket.opt.bool]
 
 The `socket_base::broadcast`, `socket_base::debug`,
 `socket_base::do_not_route`, `socket_base::keep_alive`,
@@ -109,6 +110,7 @@ classes are described in the table below.
 in the __POSIX__ header file __sys_socket_h__.]
 
 [section Boolean socket option constructors]
+[xrefid socket.opt.bool.cons]
 
   ``['[*C]]``();
 
@@ -121,6 +123,7 @@ in the __POSIX__ header file __sys_socket_h__.]
 [endsect]
 
 [section Boolean socket option members]
+[xrefid socket.opt.bool.members]
 
   ``['[*C]]``& operator=(bool v);
 
@@ -144,6 +147,7 @@ implementations, returns `value_ != 0`.]
 [endsect]
 
 [section Boolean socket option members (extensible implementations)]
+[xrefid socket.opt.bool.extensible]
 
   template<class Protocol> int level(const Protocol& p) const;
 

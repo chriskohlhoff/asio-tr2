@@ -1,4 +1,5 @@
 [section:system_executor Class [^system_executor]]
+[xrefid async.system.exec]
 
   namespace std {
     namespace experimental {
@@ -42,6 +43,7 @@ unexecuted functions objects that have been submitted using `post` or `defer`,
 the implementation shall discard these function objects without calling them.
 
 [section [^system_executor] operations]
+[xrefid async.system.exec.ops]
 
   execution_context& context() noexcept;
 
@@ -82,6 +84,7 @@ result in a call to `std::terminate`.]
 [endsect]
 
 [section [^system_executor] comparisons]
+[xrefid async.system.exec.comparisons]
 
   bool operator==(const system_executor&, const system_executor&) noexcept;
 

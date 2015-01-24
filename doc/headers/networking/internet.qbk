@@ -1,4 +1,5 @@
 [section Header [^<experimental/internet>] synopsis]
+[xrefid internet.synop]
 
   namespace std {
     namespace experimental {

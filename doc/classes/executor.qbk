@@ -1,4 +1,5 @@
 [section:executor Class [^executor]]
+[xrefid async.executor]
 
   namespace std {
     namespace experimental {
@@ -89,6 +90,7 @@ and move constructors, implementations may share a target between two or more
 `executor` objects.]
 
 [section [^executor] constructors]
+[xrefid async.executor.cons]
 
   executor() noexcept;
 
@@ -137,6 +139,7 @@ object.]
 [endsect]
 
 [section [^executor] assignment]
+[xrefid async.executor.assign]
 
   executor& operator=(const executor& e) noexcept;
 
@@ -169,6 +172,7 @@ unless `is_executor<Executor>::value` is true.]
 [endsect]
 
 [section [^executor] destructor]
+[xrefid async.executor.dtor]
 
   ~executor();
 
@@ -178,6 +182,7 @@ destroys, the target of `*this`.]
 [endsect]
 
 [section [^executor] modifiers]
+[xrefid async.executor.modifiers]
 
   void swap(executor& other) noexcept;
 
@@ -191,6 +196,7 @@ destroys, the target of `*this`.]
 [endsect]
 
 [section [^executor] operations]
+[xrefid async.executor.ops]
 
   execution_context& context() noexcept;
 
@@ -230,6 +236,7 @@ performs `DECAY_COPY(f)()`.]
 [endsect]
 
 [section [^executor] capacity]
+[xrefid async.executor.capacity]
 
   explicit operator bool() const noexcept;
 
@@ -238,6 +245,7 @@ performs `DECAY_COPY(f)()`.]
 [endsect]
 
 [section [^executor] target access]
+[xrefid async.executor.target]
 
   const type_info& target_type() const noexcept;
 
@@ -256,6 +264,7 @@ executor target; otherwise a null pointer.]
 [endsect]
 
 [section [^executor] comparisons]
+[xrefid async.executor.comparisons]
 
   bool operator==(const executor& a, const executor& b) noexcept;
 
@@ -283,6 +292,7 @@ target object of `a` and `f` is the target object of `b`;\n
 [endsect]
 
 [section [^executor] specialized algorithms]
+[xrefid async.executor.algo]
 
   void swap(executor& a, executor& b) noexcept;
 

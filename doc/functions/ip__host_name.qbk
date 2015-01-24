@@ -1,4 +1,5 @@
 [section:ip__host_name Host name functions]
+[xrefid internet.host.name]
 
   string host_name();
   string host_name(error_code&);

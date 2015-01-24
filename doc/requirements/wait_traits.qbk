@@ -1,4 +1,5 @@
 [section:wait_traits Wait traits requirements]
+[xrefid timer.reqmts.waittraits]
 
 In the table below, `X` denotes a wait traits class for a type `Clock` meeting
 the `Clock` requirements (C++ Std [time.clock.req]); `t` denotes a value of

@@ -1,4 +1,5 @@
 [section:internet_protocol Internet protocol requirements]
+[xrefid internet.reqmts.protocol]
 
 An internet protocol must meet the requirements for a [link
 requirements.protocol protocol] as well as the additional requirements listed

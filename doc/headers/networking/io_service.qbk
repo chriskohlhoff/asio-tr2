@@ -1,4 +1,5 @@
 [section Header [^<experimental/io_service>] synopsis]
+[xrefid io_service.synop]
 
   namespace std {
     namespace experimental {

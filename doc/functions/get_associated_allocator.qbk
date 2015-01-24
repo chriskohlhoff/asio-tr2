@@ -1,4 +1,5 @@
 [section:get_associated_allocator Function [^get_associated_allocator]]
+[xrefid async.assoc.alloc.get]
 
   template<class T>
     associated_allocator_t<T> get_associated_allocator(const T& t);

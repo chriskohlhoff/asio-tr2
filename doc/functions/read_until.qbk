@@ -1,4 +1,5 @@
 [section:read_until Synchronous delimited read operations]
+[buffer buffer.read.until]
 
   template<class SyncReadStream, class DynamicBufferSequence>
     size_t read_until(SyncReadStream& s, DynamicBufferSequence&& b,

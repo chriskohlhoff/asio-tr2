@@ -1,4 +1,5 @@
 [section:dispatch_at Function [^dispatch_at]]
+[xrefid async.dispatch.at]
 
   template<class Clock, class Duration, class... CompletionTokens>
     auto dispatch_at(const chrono::time_point<Clock, Duration>& abs_time,

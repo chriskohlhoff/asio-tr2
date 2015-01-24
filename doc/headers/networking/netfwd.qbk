@@ -1,4 +1,5 @@
 [section Header [^<experimental/netfwd>] synopsis]
+[xrefid fwd.decl.synop]
 
   namespace std {
     namespace experimental {

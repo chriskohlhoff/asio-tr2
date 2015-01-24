@@ -1,4 +1,5 @@
 [section:ip__address_v6 Class [^ip::address_v6]]
+[xrefid internet.address.v6]
 
   namespace std {
     namespace experimental {
@@ -74,6 +75,7 @@
 `is_multicast_org_local` and `is_multicast_global` are determined by \[RFC4291\].]
 
 [section Struct [^ip::address_v6::bytes_type]]
+[xrefid internet.address.v6.bytes]
 
   namespace std {
     namespace experimental {
@@ -97,6 +99,7 @@ byte-level representation of an IPv6 address in network byte order.
 [endsect]
 
 [section [^ip::address_v6] constructors]
+[xrefid internet.address.v6.cons]
 
   constexpr address_v6() noexcept;
 
@@ -130,6 +133,7 @@ out-of-range detection is needed.]]
 [endsect]
 
 [section [^ip::address_v6] assignment]
+[xrefid internet.address.v6.assign]
 
   address_v6& operator=(const address_v6& a) noexcept;
 
@@ -140,6 +144,7 @@ out-of-range detection is needed.]]
 [endsect]
 
 [section [^ip::address_v6] members]
+[xrefid internet.address.v6.members]
 
   void scope_id(unsigned long id) noexcept;
 
@@ -282,6 +287,7 @@ Otherwise `string()`.]
 [endsect]
 
 [section [^ip::address_v6] static members]
+[xrefid internet.address.v6.static]
 
   static constexpr address_v6 any() noexcept;
 
@@ -294,6 +300,7 @@ holds.]
 [endsect]
 
 [section:ip__address_v6__comparisons [^ip::address_v6] comparisons]
+[xrefid internet.address.v6.comparisons]
 
   bool operator==(const address_v6& a, const address_v6& b) noexcept;
 
@@ -324,6 +331,7 @@ a.to_bytes()) && a.scope_id() < b.scope_id())`.]
 [endsect]
 
 [section:ip__address_v6__creation [^ip::address_v6] creation]
+[xrefid internet.address.v6.creation]
 
   constexpr address_v6 make_address_v6(const address_v6::bytes_type& bytes,
                                        unsigned long scope_id);
@@ -364,6 +372,7 @@ string `str`. Otherwise returns `address_v6()`.]
 [endsect]
 
 [section:ip__address_v6__io [^ip::address_v6] I/O]
+[xrefid internet.address.v6.io]
 
   template<class CharT, class Traits>
     basic_ostream<CharT, Traits>& operator<<(

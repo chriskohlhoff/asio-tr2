@@ -1,4 +1,5 @@
 [section:mutable_buffers_1 Class [^mutable_buffers_1]]
+[xrefid buffer.mutable.1]
 
 The `mutable_buffers_1` class meets the requirements for [link
 requirements.mutable_buffers `MutableBufferSequence`], [link
@@ -42,6 +43,7 @@ An object of class `mutable_buffers_1` represents a sequence of exactly one
 `mutable_buffer` object.
 
 [section [^mutable_buffers_1] constructors]
+[xrefid buffer.mutable.1.cons]
 
   mutable_buffers_1(const void* p, size_t n) noexcept;
 
@@ -56,6 +58,7 @@ initializing the base class with `mutable_buffer(b)`.]
 [endsect]
 
 [section [^mutable_buffers_1] members]
+[xrefid buffer.mutable.1.members]
 
   const_iterator begin() const noexcept;
 

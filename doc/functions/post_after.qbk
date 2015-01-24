@@ -1,4 +1,5 @@
 [section:post_after Function [^post_after]]
+[xrefid async.post.after]
 
   template<class Rep, class Period, class... CompletionTokens>
     auto post_after(const chrono::duration<Rep, Period>& rel_time,

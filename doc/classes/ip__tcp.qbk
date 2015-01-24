@@ -1,4 +1,5 @@
 [section:ip__tcp Class [^ip::tcp]]
+[xrefid internet.tcp]
 
 The `tcp` class meets the requirements for an [link
 requirements.internet_protocol `InternetProtocol`].
@@ -92,6 +93,7 @@ the __POSIX__ header file __sys_socket_h__. The constant `IPPROTO_TCP` is
 defined in the __POSIX__ header file __netinet_in_h__.]
 
 [section [^ip::tcp] comparisons]
+[xrefid internet.tcp.comparisons]
 
   bool operator==(const tcp& a, const tcp& b);
 

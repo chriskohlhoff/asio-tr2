@@ -1,4 +1,5 @@
 [section:const_buffers Constant buffer sequence requirements]
+[xrefid buffer.reqmts.constbuffersequence]
 
 In the table below, `X` denotes a class containing objects of type `T`, `a`
 denotes a value of type `X` and `u` denotes an identifier.

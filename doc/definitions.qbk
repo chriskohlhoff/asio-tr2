@@ -1,24 +1,29 @@
 [section Definitions]
+[xrefid defs]
 
 [section:host_byte_order host byte order]
+[xrefid defs.host.byte.order]
 See section 3.194 of __POSIX__ Base Definitions,
 [@http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap03.html#tag_03_194
 Host Byte Order].
 [endsect]
 
 [section:network_byte_order network byte order]
+[xrefid defs.net.byte.order]
 See section 3.238 of __POSIX__ Base Definitions,
 [@http://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap03.html#tag_03_238
 Network Byte Order].
 [endsect]
 
 [section:synchronous_operation synchronous operation]
+[xrefid defs.sync.op]
 A synchronous operation is logically executed in the context of the initiating
 thread. Control is not returned to the initiating thread until the operation
 completes.
 [endsect]
 
 [section:asynchronous_operation asynchronous operation]
+[xrefid defs.async.op]
 An asynchronous operation is logically executed in parallel to the context of
 the initiating thread. Control is returned immediately to the initiating thread
 without waiting for the operation to complete. Multiple asynchronous operations

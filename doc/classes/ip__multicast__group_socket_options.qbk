@@ -1,4 +1,5 @@
 [section:ip__multicast__group_socket_options Multicast group management socket options]
+[xrefid internet.multicast.group]
 
 The `ip::multicast::join_group` and `ip::multicast::leave_group` classes are
 socket options for multicast group management.
@@ -78,6 +79,7 @@ __POSIX__ header file __netinet_in_h__. The constants `IPV6_JOIN_GROUP` and
 __POSIX__?]
 
 [section Multicast group management socket option constructors]
+[xrefid internet.multicast.group.cons]
 
   ``['[*C]]``();
 
@@ -114,6 +116,7 @@ is initialized to correspond to the address `multicast_group`,
 [endsect]
 
 [section Multicast group management socket option members (extensible implementations)]
+[xrefid internet.multicast.group.extensible]
 
   template<class Protocol> int level(const Protocol& p) const;
 

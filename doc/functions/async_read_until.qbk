@@ -1,4 +1,5 @@
 [section:async_read_until Asynchronous delimited read operations]
+[xrefid buffer.async.read.until]
 
   template<class AsyncReadStream, class DynamicBufferSequence,
     class CompletionToken>

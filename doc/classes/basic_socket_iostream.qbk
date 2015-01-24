@@ -1,4 +1,5 @@
 [section:basic_socket_iostream Class template [^basic_socket_iostream]]
+[xrefid socket.iostream]
 
   namespace std {
     namespace experimental {
@@ -53,6 +54,7 @@ presented here as:
 [mdash] `sb_`, the `basic_socket_streambuf` object.
 
 [section [^basic_socket_iostream] constructors]
+[xrefid socket.iostream.cons]
 
   basic_socket_iostream();
 
@@ -76,6 +78,7 @@ a null pointer, calls `setstate(failbit)`.]
 [endsect]
 
 [section [^basic_socket_iostream] members]
+[xrefid socket.iostream.members]
 
   template<class... Args>
     void connect(Args&&... args);

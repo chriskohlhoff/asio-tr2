@@ -1,4 +1,5 @@
 [section:defer_at Function [^defer_at]]
+[xrefid async.defer.at]
 
   template<class Clock, class Duration, class... CompletionTokens>
     auto defer_at(const chrono::time_point<Clock, Duration>& abs_time,

@@ -1,4 +1,5 @@
 [section:ip__address_range_v4 Class template [^ip::address_range_v4]]
+[xrefid internet.address.range.v4]
 
   namespace std {
     namespace experimental {
@@ -30,6 +31,7 @@
   } // namespace std
 
 [section [^ip::address_range_v4] constructors]
+[xrefid internet.address.range.v4.cons]
 
   address_range_v4() noexcept;
 
@@ -45,6 +47,7 @@ the half open range [half_open_range `first`,`last`].]
 [endsect]
 
 [section [^ip::address_range_v4] members]
+[xrefid internet.address.range.v4.members]
 
   iterator begin() const noexcept;
 

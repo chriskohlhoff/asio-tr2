@@ -1,4 +1,5 @@
 [section:connect Synchronous connect operations]
+[xrefid socket.algo.connect]
 
   template<class Protocol, class InputIterator>
     InputIterator connect(basic_socket<Protocol>& s,

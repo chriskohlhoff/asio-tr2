@@ -1,4 +1,5 @@
 [section:executor_work Class template [^executor_work]]
+[xrefid async.exec.work]
 
   namespace std {
     namespace experimental {
@@ -41,6 +42,7 @@
   } // namespace std
 
 [section [^executor_work] constructors]
+[xrefid async.exec.work.cons]
 
   explicit executor_work(const executor_type& ex) noexcept;
 
@@ -69,12 +71,14 @@ false`.]
 [endsect]
 
 [section [^executor_work] destructor]
+[xrefid async.exec.work.dtor]
 
 [function_effects If `owns_` is true, performs `ex.on_work_finished()`.]
 
 [endsect]
 
 [section [^executor_work] observers]
+[xrefid async.exec.work.obs]
 
   executor_type get_executor() const noexcept;
 
@@ -87,6 +91,7 @@ false`.]
 [endsect]
 
 [section [^executor_work] modifiers]
+[xrefid async.exec.work.modifiers]
 
   void reset() noexcept;
 

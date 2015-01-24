@@ -1,4 +1,5 @@
 [section:execution_context Class [^execution_context]]
+[xrefid async.exec.ctx]
 
   namespace std {
     namespace experimental {
@@ -61,6 +62,7 @@ calling `use_service<>`, that reference remains usable until a call to
 `destroy_context()`.
 
 [section [^execution_context] constructor]
+[xrefid async.exec.ctx.cons]
 
   execution_context();
 
@@ -69,6 +71,7 @@ calling `use_service<>`, that reference remains usable until a call to
 [endsect]
 
 [section [^execution_context] destructor]
+[xrefid async.exec.ctx.dtor]
 
   ~execution_context();
 
@@ -78,6 +81,7 @@ calling `use_service<>`, that reference remains usable until a call to
 [endsect]
 
 [section [^execution_context] operations]
+[xrefid async.exec.ctx.ops]
 
   void notify_fork(fork_event e);
 
@@ -91,6 +95,7 @@ service object lifetime.]
 [endsect]
 
 [section [^execution_context] protected operations]
+[xrefid async.exec.ctx.protected]
 
   void shutdown_context();
 
@@ -111,6 +116,7 @@ in reverse order of the beginning of service object lifetime (C++ Std,
 [endsect]
 
 [section [^execution_context] globals]
+[xrefid async.exec.ctx.globals]
 
 The functions `use_service`, `make_service` and `has_service` shall not
 introduce data races as a result of concurrent calls to those functions from

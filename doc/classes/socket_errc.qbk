@@ -1,4 +1,5 @@
 [section:socket_errc Error codes]
+[xrefid socket.err]
 
   const error_category& socket_category() noexcept;
 

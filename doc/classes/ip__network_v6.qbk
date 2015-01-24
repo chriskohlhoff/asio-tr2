@@ -1,4 +1,5 @@
 [section:ip__network_v6 Class template [^ip::network_v6]]
+[xrefid internet.network.v6]
 
   namespace std {
     namespace experimental {
@@ -45,6 +46,7 @@
   } // namespace std
 
 [section [^ip::network_v6] constructors]
+[xrefid internet.network.v6.cons]
 
   network_v6() noexcept;
 
@@ -63,6 +65,7 @@
 [endsect]
 
 [section [^ip::network_v6] members]
+[xrefid internet.network.v6.members]
 
   address_v6 address() const noexcept;
 
@@ -111,6 +114,7 @@ other.canonical()`.]
 [endsect]
 
 [section:ip__network_v6__comparisons [^ip::network_v6] comparisons]
+[xrefid internet.network.v6.comparisons]
 
   bool operator==(const network_v6& a, const network_v6& b) noexcept;
 
@@ -124,6 +128,7 @@ other.canonical()`.]
 [endsect]
 
 [section:ip__network_v6__creation [^ip::network_v6] creation]
+[xrefid internet.network.v6.creation]
 
   network_v6 make_network_v6(const address_v6& addr, unsigned short prefix_len);
 
@@ -143,6 +148,7 @@ returns `network_v6()` and sets `ec` to reflect the error.]
 [endsect]
 
 [section:ip__network_v6__io [^ip::network_v6] I/O]
+[xrefid internet.network.v6.io]
 
   template<class CharT, class Traits>
     basic_ostream<CharT, Traits>& operator<<(

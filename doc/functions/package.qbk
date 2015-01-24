@@ -1,4 +1,5 @@
 [section:package Function [^package]]
+[xrefid async.package]
 
   template<class Func, class Alloc = allocator<void>>
     packaged_token<decay_t<Func>, Alloc> package(Func&& f, const Alloc& a = Alloc());

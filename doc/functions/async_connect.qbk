@@ -1,4 +1,5 @@
 [section:async_connect Asynchronous connect operations]
+[xrefid socket.algo.async.connect]
 
   template<class Protocol, class InputIterator, class CompletionToken>
     auto async_connect(basic_socket<Protocol>& s,

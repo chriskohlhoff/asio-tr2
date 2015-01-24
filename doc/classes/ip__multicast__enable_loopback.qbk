@@ -1,4 +1,5 @@
 [section:ip__multicast__enable_loopback Class [^ip::multicast::enable_loopback]]
+[xrefid internet.multicast.enable.loopback]
 
 The `enable_loopback` class represents a socket option for determining whether
 multicast datagrams are delivered back to the local application. It shall be

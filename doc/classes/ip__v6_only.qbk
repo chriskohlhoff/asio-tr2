@@ -1,4 +1,5 @@
 [section:ip__v6_only Class [^ip::v6_only]]
+[xrefid internet.v6only]
 
 The `v6_only` class represents a socket option for determining whether a socket
 created for an IPv6 protocol is restricted to IPv6 communications only. It

@@ -1,4 +1,5 @@
 [section:ip__basic_endpoint Class template [^ip::basic_endpoint]]
+[xrefid internet.endpoint]
 
 Instances of the `basic_endpoint` class template meet the requirements
 for an [link requirements.endpoint `Endpoint`].
@@ -88,6 +89,7 @@ Extensible implementations shall provide the following member functions:
   } // namespace std
 
 [section [^ip::basic_endpoint] constructors]
+[xrefid internet.endpoint.cons]
 
   basic_endpoint();
 
@@ -157,6 +159,7 @@ the table below.]
 [endsect]
 
 [section [^ip::basic_endpoint] members]
+[xrefid internet.endpoint.members]
 
   InternetProtocol protocol() const;
 
@@ -186,6 +189,7 @@ true, otherwise `Protocol::v4()`.]
 [endsect]
 
 [section [^ip::basic_endpoint] comparisons]
+[xrefid internet.endpoint.comparisons]
 
   template<class InternetProtocol>
     bool operator==(const basic_endpoint<InternetProtocol>& a,
@@ -227,6 +231,7 @@ true, otherwise `Protocol::v4()`.]
 [endsect]
 
 [section [^ip::basic_endpoint] I/O]
+[xrefid internet.endpoint.io]
 
   template<class CharT, class Traits, class InternetProtocol>
     basic_ostream<CharT, Traits>& operator<<(
@@ -253,6 +258,7 @@ address is based on [RFC2732].]
 [endsect]
 
 [section [^ip::basic_endpoint] members (extensible implementations)]
+[xrefid internet.endpoint.extensible]
 
   ``['unspecified]``* data();
 

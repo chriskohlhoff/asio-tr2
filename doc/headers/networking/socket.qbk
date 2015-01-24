@@ -1,4 +1,5 @@
 [section Header [^<experimental/socket>] synopsis]
+[xrefid socket.synop]
 
   namespace std {
     namespace experimental {

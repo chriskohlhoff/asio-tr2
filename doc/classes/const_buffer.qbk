@@ -1,4 +1,5 @@
 [section:const_buffer Class [^const_buffer]]
+[xrefid buffer.const]
 
 The `const_buffer` class meets the requirements for [link
 requirements.convertible_to_const_buffer `ConvertibleToConstBuffer`].
@@ -25,6 +26,7 @@ requirements.convertible_to_const_buffer `ConvertibleToConstBuffer`].
   } // namespace std
 
 [section [^const_buffer] constructors]
+[xrefid buffer.const.cons]
 
   const_buffer() noexcept;
 

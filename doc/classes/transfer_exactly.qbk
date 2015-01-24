@@ -1,4 +1,5 @@
 [section:transfer_exactly Class [^transfer_exactly]]
+[xrefid buffer.transfer.exactly]
 
   namespace std {
     namespace experimental {

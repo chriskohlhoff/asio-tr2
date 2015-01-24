@@ -1,4 +1,5 @@
 [section:service Service requirements]
+[xrefid async.reqmts.service]
 
 A class is a service if it is publicly derived from another service, or if it
 is a class publicly derived from `execution_context::service`.

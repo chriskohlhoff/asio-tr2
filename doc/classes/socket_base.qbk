@@ -1,4 +1,5 @@
 [section:socket_base Class [^socket_base]]
+[xrefid socket.base]
 
   namespace std {
     namespace experimental {

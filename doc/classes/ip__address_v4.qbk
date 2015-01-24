@@ -1,4 +1,5 @@
 [section:ip__address_v4 Class [^ip::address_v4]]
+[xrefid internet.address.v4]
 
   namespace std {
     namespace experimental {
@@ -67,6 +68,7 @@
   } // namespace std
 
 [section Struct [^ip::address_v4::bytes_type]]
+[xrefid internet.address.v4.bytes]
 
   namespace std {
     namespace experimental {
@@ -90,6 +92,7 @@ byte-level representation of an IPv4 address in network byte order.
 [endsect]
 
 [section [^ip::address_v4] constructors]
+[xrefid internet.address.v4.cons]
 
   constexpr address_v4() noexcept;
 
@@ -135,6 +138,7 @@ out-of-range detection is needed.]]
 [endsect]
 
 [section [^ip::address_v4] assignment]
+[xrefid internet.address.v4.assign]
 
   address_v4& operator=(const address_v4& a) noexcept;
 
@@ -145,6 +149,7 @@ out-of-range detection is needed.]]
 [endsect]
 
 [section [^ip::address_v4] members]
+[xrefid internet.address.v4.members]
 
   constexpr bool is_unspecified() const noexcept;
 
@@ -191,6 +196,7 @@ Otherwise `string()`.]
 [endsect]
 
 [section [^ip::address_v4] static members]
+[xrefid internet.address.v4.static]
 
   static constexpr address_v4 any() noexcept;
 
@@ -211,6 +217,7 @@ Otherwise `string()`.]
 [endsect]
 
 [section:ip__address_v4__comparisons [^ip::address_v4] comparisons]
+[xrefid internet.address.v4.comparisons]
 
   bool operator==(const address_v4& a, const address_v4& b) noexcept;
 
@@ -239,6 +246,7 @@ Otherwise `string()`.]
 [endsect]
 
 [section:ip__address_v4__creation [^ip::address_v4] creation]
+[xrefid internet.address.v4.creation]
 
   constexpr address_v4 make_address_v4(const address_v4::bytes_type& bytes);
 
@@ -277,6 +285,7 @@ string `str`. Otherwise `address_v4()`.]
 [endsect]
 
 [section:ip__address_v4__io [^ip::address_v4] I/O]
+[xrefid internet.address.v4.io]
 
   template<class CharT, class Traits>
     basic_ostream<CharT, Traits>& operator<<(

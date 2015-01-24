@@ -1,4 +1,5 @@
 [section:associated_allocator Class template [^associated_allocator]]
+[xrefid async.assoc.alloc]
 
   namespace std {
     namespace experimental {
@@ -46,6 +47,7 @@ for the template parameter `T`; `t` is a const reference to an object of type
 ]
 
 [section [^associated_allocator] members]
+[xrefid async.assoc.alloc.members]
 
   typedef ``['see below]`` type;
 
