@@ -134,7 +134,7 @@
 
         template<class CharT, class Traits>
           const_buffers_1 buffer(basic_string_view<CharT, Traits> str) noexcept;
-        template<class CharT, class Traits, class Allocator>
+        template<class CharT, class Traits>
           const_buffers_1 buffer(basic_string_view<CharT, Traits> str,
                                  size_t n) noexcept;
 
