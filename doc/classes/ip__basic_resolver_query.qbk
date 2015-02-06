@@ -36,7 +36,10 @@
   } // namespace std
 
 The `basic_resolver_query` class encapsulates values used in name resolution.
-The meanings of the constructor arguments are defined below as if the name
+An object of type basic_resolver_query represents an opaque parameter bundle
+for the operating system's name resolution function that underlies
+`basic_resolver<>::resolve()` and `basic_resolver<>::async_resolve()`. The
+meanings of the constructor arguments are defined below as if the name
 resolution is performed using __POSIX__ __getaddrinfo__:
 
 [mdash] /proto/ is used to populate the `ai_family`, `ai_socktype` and
@@ -54,5 +57,9 @@ structure passed as the /hints/ argument to __POSIX__ __getaddrinfo__.
 
 If a default-constructed `basic_resolver_query` object is used in a call to
 `basic_resolver<>::resolve()`, the results are undefined.
+
+[commentary The `basic_resolver_query` class exists to limit the number of
+overloads required for `basic_resolver<>::resolve()` and
+`basic_resolver<>::async_resolve()`.]
 
 [endsect]
