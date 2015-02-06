@@ -194,4 +194,13 @@ for execution as if by performing `ex2.dispatch(bound_handler, alloc2)`.
 
 [endsect]
 
+[section Handlers and exceptions]
+[xrefid async.reqmts.async.exceptions]
+
+Handlers are permitted to throw exceptions. The effect of any exception
+propagated from the execution of a handler is determined by the executor which
+is executing the handler.
+
+[endsect]
+
 [endsect]
