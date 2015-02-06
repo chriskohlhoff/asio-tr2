@@ -24,7 +24,8 @@ result of an asynchronous operation.
 An initiating function determines the type `Handler` of its handler function
 object by performing `handler_type_t<CompletionToken, Signature>`. The handler
 object `handler` is initialized with
-`handler(forward<CompletionToken>(token))`.
+`handler(forward<CompletionToken>(token))`. [inline_note No other requirements
+are placed on the type `CompletionToken`.]
 
 The type `Handler` must satisfy the `MoveConstructible` requirements (C++ Std,
 [moveconstructible]) and be callable with the specified completion signature.
