@@ -43,8 +43,8 @@ my $docno;
 if ($filename_in =~ /networking/)
 {
   $docno = "<pre>" .
-           "Doc. no:  D???? " . $draft_info . "\n" .
-           "Date:     2015-??-??\n" .
+           "Doc. no:  D4370 " . $draft_info . "\n" .
+           "Date:     2015-02-06\n" .
            "Revises:  N4332\n" .
            "Reply-To: Christopher Kohlhoff &lt;chris\@kohlhoff.com&gt;\n" .
            "</pre>";
