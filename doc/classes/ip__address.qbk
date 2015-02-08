@@ -214,7 +214,7 @@ of class `address`, as if by calling:
 [endsect]
 
 [section:ip__address__io [^ip::address] I/O]
-[xref internet.address.io]
+[xrefid internet.address.io]
 
   template<class CharT, class Traits>
     basic_ostream<CharT, Traits>& operator<<(
