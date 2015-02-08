@@ -135,7 +135,7 @@
 
 [template POSIX[] \[[link ref-POSIX POSIX]\]]
 [template N4045[] \[[link ref-N4045 N4045]\]]
-[template N4046[] \[[link ref-N4045 N4046]\]]
+[template N4242[] \[[link ref-N4045 N4242]\]]
 [template N4099[] \[[link ref-N4099 N4099]\]]
 [template ACE[] \[[link ref-ACE ACE]\]]
 [template SYMBIAN[] \[[link ref-SYMBIAN SYMBIAN]\]]
@@ -486,7 +486,7 @@ including:
 
 To facilitate the coordination of asynchronous operations in multithreaded
 programs, the asynchronous model also utilises the executors design described
-in [N4046].
+in [N4242].
 
 As executors and the extensible asynchronous model are a prerequisite for the
 networking library, the proposed text below incorporates a complete
@@ -871,8 +871,8 @@ Specification, Version 3].
 [#ref-N4045] \[N4045\] Kohlhoff, Christopher,
 ['Library Foundations for Asynchronous Operations, Revision 2], 2014.
 
-[#ref-N4046] \[N4046\] Kohlhoff, Christopher,
-['Executors and Asynchronous Operations], 2014.
+[#ref-N4242] \[N4242\] Kohlhoff, Christopher,
+['Executors and Asynchronous Operations, Revision 1], 2014.
 
 [#ref-N4099] \[N4099\]
 ['Draft Filesystem Technical Specification], 2014.
