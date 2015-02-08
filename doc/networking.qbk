@@ -84,6 +84,8 @@
 <indexterm><primary>'''[text]'''</primary></indexterm>
 </phrase>''']
 
+[template xref[text]'''<link linkend="'''[text]'''">'''\[[text]\]'''</link>''']
+
 [template mdash[] '''&mdash; ''']
 
 [template half_open_range[text] '''&#91;'''[text])]
@@ -173,17 +175,39 @@ QNX Neutrino.
 
 [section Changes in this revision]
 
-Revision 3 addresses issues raised by LEWG in Urbana and includes the following
-changes:
+Revision 4 includes the following changes to the proposed text:
 
-* String conversions and string parameters have been updated and use
- `string_view` where appropriate.
+* Boolean socket operations have been changed to use the `explicit operator
+  bool` ([xref socket.opt.bool]).
 
-* The header arrangement has been altered to reduce the number of header files,
-  add a convenience header, and add a forward declarations header.
+* `ip::address_v4` comparison operators are now specified in terms of `==` and
+  `<` ([xref internet.address.v4]).
 
-* A diagram has been added to show the relationship between the core socket
-  class templates.
+* All `string_view` arguments are now taken by value.
+
+* Changed the address iterator classes to use the `reference` and `pointer`
+  member typedefs when specifying member function return types ([xref
+  internet.address.iter.v4], [xref internet.address.iter.v6]).
+
+* Added some explanatory text for `ip::basic_resolver_iterator` ([xref
+  internet.resolver.iter]).
+
+* Removed an unused `Allocator` template parameter from `buffer()` overload
+  ([xref buffer.synop]).
+
+* Corrected and simplified the specification of `ip::address` by using
+  exposition-only members ([xref internet.address]).
+
+* Added section names.
+
+* Added explanatory text to clarify purpose of `ip::basic_resolver_query`
+  ([xref internet.resolver.query]).
+
+* Explicitly documented that handlers may throw exceptions ([xref
+  async.reqmts.async.exceptions]).
+
+* Added a note about `CompletionToken` requirements ([xref
+  async.reqmts.async.token]).
 
 [endsect]
 
@@ -830,6 +854,9 @@ the Networking Library Proposal, the author would particularly like to thank
 Jamie Allsop for providing feedback during the drafting process, and Oliver
 Kowalke for contributing towards the design and implementation of the CIDR
 support.
+
+Thanks go to Ville Voutilainen, Marshall Clow and Arash Partow for the
+suggestions and corrections included in Revision 4 of this proposal.
 
 [endsect]
 
