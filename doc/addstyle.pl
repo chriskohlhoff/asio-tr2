@@ -33,7 +33,7 @@ my $style =
 my $rev = `git rev-parse HEAD`;
 chomp($rev);
 my $draft_info = " (as of commit $rev)";
-#$draft_info = "";
+$draft_info = "";
 
 my $filename_in = ${ARGV}[0];
 my $filename_out = ${ARGV}[1];
@@ -43,7 +43,7 @@ my $docno;
 if ($filename_in =~ /networking/)
 {
   $docno = "<pre>" .
-           "Doc. no:  D4370 " . $draft_info . "\n" .
+           "Doc. no:  N4370 " . $draft_info . "\n" .
            "Date:     2015-02-06\n" .
            "Revises:  N4332\n" .
            "Reply-To: Christopher Kohlhoff &lt;chris\@kohlhoff.com&gt;\n" .
