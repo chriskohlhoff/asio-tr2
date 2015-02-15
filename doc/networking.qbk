@@ -227,7 +227,7 @@ variant of Asio that stands alone from Boost. This variant is available at
 
 Unfamiliar readers are encouraged to look to the
 [@http://www.boost.org/libs/asio Boost.Asio] documentation and examples for a
-more complete picture of the use of the libary.
+more complete picture of the use of the library.
 
 However, to give some idea of the flavour of the proposed library, consider the
 following sample code. This is part of a server program that echoes the
