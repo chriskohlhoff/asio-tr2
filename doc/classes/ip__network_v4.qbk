@@ -116,6 +116,12 @@ corresponding bit value of `address()`. All other bits are non-zero.]
 representing the single address `address().` Otherwise, an `address_range_v4`
 object representing the range of unique host IP addresses in the network.]
 
+[function_note For IPv4, the network address and the broadcast address are not
+included in the range of host IP addresses. For example, given a network
+`192.168.1.0/24`, the range returned by `hosts()` is from `192.168.1.1` to
+`192.168.1.254` inclusive, and neither `192.168.1.0` nor the broadcast address
+`192.168.1.255` are in the range.]
+
   network_v4 canonical() const noexcept;
 
 [function_returns `network_v4(network(), prefix_length())`.]
