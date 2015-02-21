@@ -87,7 +87,7 @@ and that `sizeof(T) == 1`.
 
 [function_requires `size() + n <= max_size()`.]
 
-[function_effects Performs `str.resize(size_ + n)`.]
+[function_effects Performs `vec_.resize(size_ + n)`.]
 
 [function_returns `buffer(buffer(vec_) + size_, n)`.]
 
