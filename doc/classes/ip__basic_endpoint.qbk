@@ -243,7 +243,7 @@ it were implemented as follows:
 ``
   basic_ostringstream<CharT, Traits> ss;
   if (ep.protocol() == Protocol::v6())
-    ss << ss.widen('[') << ss.address() << ss.widen(']');
+    ss << ss.widen('[') << ep.address() << ss.widen(']');
   else
     ss << ep.address();
   ss << ss.widen(':') << ep.port();
