@@ -855,8 +855,8 @@ Jamie Allsop for providing feedback during the drafting process, and Oliver
 Kowalke for contributing towards the design and implementation of the CIDR
 support.
 
-Thanks go to Ville Voutilainen, Marshall Clow and Arash Partow for the
-suggestions and corrections included in Revision 4 of this proposal.
+Thanks go to Jonathan Wakely and Roger Orr for the suggestions and corrections
+included in Revision 5 of this proposal.
 
 [endsect]
 
