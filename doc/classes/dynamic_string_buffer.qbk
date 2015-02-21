@@ -86,7 +86,7 @@ The `dynamic_string_buffer` class template requires that `sizeof(CharT) == 1`.
 
 [function_requires `size() + n <= max_size()`.]
 
-[function_effects Performs `str.resize(size_ + n)`.]
+[function_effects Performs `str_.resize(size_ + n)`.]
 
 [function_returns `buffer(buffer(str_) + size_, n)`.]
 
