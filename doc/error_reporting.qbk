@@ -4,9 +4,11 @@
 [section Synchronous operations]
 [xrefid err.report.sync]
 
-Synchronous network library functions often provide two overloads, one that
+Most synchronous network library functions provide two overloads, one that
 throws an exception to report system errors, and another that sets an
 `error_code`.
+
+[commentary Check whether it is "most" overloads, "some" or "all".]
 
 [std_note This supports two common use cases:[br][br]
 
