@@ -16,7 +16,7 @@ All initiating functions in this clause:
 of type `CompletionToken`;
 
 [mdash] specify a ['Completion signature] element that defines a call signature
-`Signature`.
+`Signature` (C++ Std [func.def]).
 
 A ['completion handler] is a function object that will be invoked, at most
 once, with the result of an asynchronous operation.
