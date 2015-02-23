@@ -93,7 +93,7 @@
           executor_wrapper<decay_t<T>, typename ExecutionContext::executor_type>
             wrap(ExecutionContext& ctx, T&& t);
 
-        template<class T, class Executor>
+        template<class Executor>
           class ``[link classes.executor_work executor_work]``;
 
         ``// [link functions.make_work make_work]:``
