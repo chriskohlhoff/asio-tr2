@@ -93,28 +93,38 @@ For convenience, initiating functions may be implemented using the
 Unless otherwise specified, the lifetime of arguments to initiating functions
 shall be treated as follows:
 
-[mdash] If the parameter is declared as a const reference, rvalue reference, or
-by-value, the implementation must not assume the validity of the argument after
-the initiating function completes. [inline_note In other words, the program is
-not required to guarantee the validity of the argument after the initiating
-function completes.] The implementation may make copies of the argument, and
-all copies shall be destroyed no later than immediately after invocation of the
-handler.
+[mdash] If the parameter is declared as a non-const lvalue reference or
+pointer, the implementation may assume the validity of the argument until the
+completion handler is invoked. [inline_note In other words, the program must
+guarantee the validity of the argument until the completion handler is
+invoked.]
 
-[mdash] If the parameter is declared as a non-const reference, const pointer or
-non-const pointer, the implementation may assume the validity of the argument
-until the handler is invoked. [inline_note In other words, the program must
-guarantee the validity of the argument until the handler is invoked.]
+[mdash] Otherwise, the implementation must not assume the validity of the
+argument after the initiating function completes. [inline_note In other words,
+the program is not required to guarantee the validity of the argument after the
+initiating function completes.] The implementation may make copies of the
+argument, and all copies shall be destroyed no later than immediately after
+invocation of the completion handler.
 
 [endsect]
+
+[section Associated executor]
+[xrefid async.reqmts.async.assoc.exec]
+
+Certain objects that participate in asynchronous operations have an
+['associated executor]. These are obtained as specified below.
+
+[endsect]
+
+[section]
 
 [section I/O executor]
 [xrefid async.reqmts.async.io.exec]
 
 All asynchronous operations in this clause have an associated executor object
-satisfying [link requirements.executor Executor requirements]. Where the
+satisfying the [link requirements.executor Executor requirements]. If the
 initiating function is a member function, the associated executor is that
-returned by the `get_executor` member function on the same object. Where the
+returned by the `get_executor` member function on the same object. If the
 initiating function is not a member function, the associated executor is that
 returned by the `get_executor` member function of the first argument to the
 initiating function. Let `Executor1` be the type of the associated executor,
@@ -122,10 +132,10 @@ and `ex1` be the associated executor object obtained as described above.
 
 [endsect]
 
-[section Handler executor]
+[section Completion handler executor]
 [xrefid async.reqmts.async.handler.exec]
 
-All handler objects have an associated executor object satisfying [link
+All completion handler objects have an associated executor object satisfying the [link
 requirements.executor Executor requirements]. The type `Executor2` of the
 handler's associated executor shall be determined by
 `associated_executor_t<Handler, Executor1>`. The handler's associated executor
