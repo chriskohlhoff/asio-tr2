@@ -569,6 +569,10 @@ express type requirements, as listed in the table below.
     [[link requirements.async_write_stream buffer-oriented asynchronous write stream]]
   ]
   [
+    [`CompletionToken`]
+    [[link requirements.completion_token completion token]]
+  ]
+  [
     [`ConstBufferSequence`]
     [[link requirements.const_buffers constant buffer sequence]]
   ]

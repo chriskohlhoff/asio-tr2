@@ -5,7 +5,7 @@ In this clause, an asynchronous operation is initiated by a function that is
 named with the prefix `async_`. These functions shall be known as ['initiating
 functions].
 
-[section Completion tokens and handlers]
+[section:completion_token Completion tokens and handlers]
 [xrefid async.reqmts.async.token]
 
 All initiating functions in this clause:
