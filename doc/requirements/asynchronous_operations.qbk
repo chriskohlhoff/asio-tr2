@@ -180,14 +180,15 @@ associated allocator object `alloc2` shall be obtained by performing
 
 The asynchronous operations defined in this clause:
 
-[mdash] May allocate memory using the handler's associated allocator.
+[mdash] If required, allocates memory using only the completion handler's
+associated allocator.
 
-[mdash] Shall deallocate all memory allocated using the handler's associated
-allocator prior to handler execution.
+[mdash] Prior to completion handler execution, deallocates any memory allocated.
 
-[mdash] Shall ensure that calls to the handler's associated allocator, or to
-copies of the handler's associated allocator, are not performed concurrently in
-a way that would introduce a data race.
+[std_note The implementation may perform operating system or underlying API
+calls that perform memory allocations not using the associated allocator.
+Invocations of the allocator functions may not introduce data races (See C++
+Std, \[res.on.data.races\]).]
 
 [endsect]
 
@@ -195,14 +196,15 @@ a way that would introduce a data race.
 [xrefid async.reqmts.async.completion]
 
 When an asynchronous operation completes, the implementation constructs a
-zero-argument function object `bound_handler` to invoke `handler` with results
-of the operation.
+zero-argument function object `f` to invoke `handler` with the results of the
+operation.
 
 If an asynchonous operation completes immediately (that is, within the thread
-calling the initiating function, and before the initiating function returns),
-the handler shall be submitted for execution as if by performing
-`ex2.post(bound_handler, alloc2)`. Otherwise, the handler shall be submitted
-for execution as if by performing `ex2.dispatch(bound_handler, alloc2)`.
+of execution calling the initiating function, and before the initiating
+function returns), the handler shall be submitted for execution as if by
+performing `ex2.post(std::move(f), alloc2)`. Otherwise, the handler shall be
+submitted for execution as if by performing `ex2.dispatch(std::move(f),
+alloc2)`.
 
 [endsect]
 
