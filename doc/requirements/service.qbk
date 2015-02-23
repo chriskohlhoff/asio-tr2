@@ -1,21 +1,17 @@
 [section:service Service requirements]
 [xrefid async.reqmts.service]
 
-A class is a service if it is publicly derived from another service, or if it
-is a class publicly derived from `execution_context::service`.
+A class is a ['service] if it is publicly and unambiguously derived from
+`execution_context::service`, or if it is publicly and unambiguously derived
+from another service. For a service `S`, `S::key_type` is valid and denotes a
+type (C++Std, [temp.deduct]), and `is_base_of_v<typename S::key_type, S>` is
+true.
 
-A service may contain a publicly-accessible nested typedef named `key_type`. If
-the nested typedef `key_type` exists, the service class shall be the same type
-as `key_type`, or otherwise publicly and unambiguously derived from `key_type`.
-
-All services define a one-argument constructor that takes a reference to the
-`execution_context` object that owns the service. This constructor is
-/explicit/, preventing its participation in automatic conversions.
-
-A service may provide additional constructors with two or more arguments, where
-the first argument is a reference to the `execution_context` object that owns
-the service. [inline_note These constructors may be called by the
-`make_service` function.]
+A service defines an explicit constructor that can be invoked with a single
+lvalue argument referring to the `execution_context` object that will own the
+service. Any additional constructors shall take a first lvalue argument
+referring to the `execution_context` object that will own the service.
+[inline_note These constructors may be called by the `make_service` function.]
 
 [std_example \n..
 ``
@@ -24,13 +20,14 @@ the service. [inline_note These constructors may be called by the
   public:
     typedef my_service key_type;
     explicit my_service(execution_context& ctx);
+    my_service(execution_context&, int some_value);
   private:
     virtual void shutdown_service();
     __dotdotdot__
   };
 ``]
 
-A service's `shutdown_service` member function must cause all copies of
-user-defined function objects that are held by the service to be destroyed.
+A service's `shutdown_service` member function shall destroy all copies of
+user-defined function objects that are held by the service.
 
 [endsect]
