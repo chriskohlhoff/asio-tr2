@@ -21,9 +21,9 @@ of type `CompletionToken`;
 A ['completion handler] is a function object that will be invoked, at most
 once, with the result of an asynchronous operation.
 
-An initiating function determines the type `Handler` of its handler function
-object by performing `handler_type_t<CompletionToken, Signature>`. The handler
-object `handler` is initialized with
+An initiating function determines the type `Handler` of its completion handler
+function object by performing `handler_type_t<CompletionToken, Signature>`. The
+handler object `handler` is initialized with
 `handler(forward<CompletionToken>(token))`. [inline_note No other requirements
 are placed on the type `CompletionToken`.]
 
@@ -51,7 +51,7 @@ All initiating functions in this clause produce their return type as follows:
 [mdash] constructing an object `result` of type `async_result<Handler>`,
 initializing the object as `result(handler)`; and
 
-[mdash] using `result.get()` as the return expression.
+[mdash] using `result.get()` as the operand of the return statement.
 
 \[['Example:] Given an asynchronous operation with ['Completion signature]
 `void(R1 r1, R2 r2)`, an initiating function meeting these requirements may be

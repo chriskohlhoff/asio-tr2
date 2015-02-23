@@ -50,7 +50,8 @@ modifiable lvalue of type `Handler`.
   [
     [`r.get()`]
     [`R::type`]
-    [The `get()` member function shall be used only as a return expression.]
+    [The `get()` member function shall be used only as the operand of a return
+     statement.]
   ]
 ]
 
