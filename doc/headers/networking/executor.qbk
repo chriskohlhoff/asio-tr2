@@ -202,7 +202,7 @@
     } // namespace experimental
 
     template<class Alloc>
-      struct uses_allocator<std::experimental::__versioned_ns__::executor, Alloc>
+      struct uses_allocator<experimental::__versioned_ns__::executor, Alloc>
         : true_type {};
 
   } // namespace std
