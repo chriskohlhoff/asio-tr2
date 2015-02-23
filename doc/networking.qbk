@@ -543,7 +543,7 @@ iostreams, and internet protocols, as summarized in the table below:
   [
     [
       [link network.sockets Sockets]\n
-      [link network.socket_streams Socket streams]\n
+      [link network.socket_streams Socket iostreams]\n
     ]
     [`<experimental/socket>`]
   ]
@@ -787,7 +787,7 @@ This subclause defines components for performing timer operations.
 [include:classes classes/basic_socket_acceptor.qbk]
 [endsect]
 
-[section:socket_streams Socket streams]
+[section:socket_streams Socket iostreams]
 [xrefid socket.iostreams]
 [include:classes classes/basic_socket_streambuf.qbk]
 [include:classes classes/basic_socket_iostream.qbk]
