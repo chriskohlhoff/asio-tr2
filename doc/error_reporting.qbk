@@ -81,10 +81,11 @@ from meeting its specifications, the completion handler is invoked with an
 Otherwise, the `error_code` value `ec` is set such that `!ec` is true.
 
 [mdash] Asynchronous operations shall not fail with an error condition that
-indicates interruption by a signal [inline_note Such as __POSIX__ `EINTR`].
-Asynchronous operations shall not fail with any error condition associated with
-non-blocking operations [inline_note Such as __POSIX__ `EWOULDBLOCK`, `EAGAIN`
-or `EINPROGRESS`; __Windows__ `WSAEWOULDBLOCK` or `WSAEINPROGRESS`].
+indicates interruption of an operating system or underlying API by a signal
+[inline_note Such as __POSIX__ error number `EINTR`]. Asynchronous operations
+shall not fail with any error condition associated with non-blocking operations
+[inline_note Such as __POSIX__ error numbers `EWOULDBLOCK`, `EAGAIN`, or
+`EINPROGRESS`; __Windows__ error numbers `WSAEWOULDBLOCK` or `WSAEINPROGRESS`].
 
 [endsect]
 
