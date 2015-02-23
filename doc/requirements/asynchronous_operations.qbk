@@ -18,8 +18,8 @@ of type `CompletionToken`;
 [mdash] specify a ['Completion signature] element that defines a call signature
 `Signature`.
 
-A ['handler] is a function object that will be invoked, at most once, with the
-result of an asynchronous operation.
+A ['completion handler] is a function object that will be invoked, at most
+once, with the result of an asynchronous operation.
 
 An initiating function determines the type `Handler` of its handler function
 object by performing `handler_type_t<CompletionToken, Signature>`. The handler

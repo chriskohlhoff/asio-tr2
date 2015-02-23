@@ -70,11 +70,12 @@ except that the type thrown may differ as specified above.
 [xrefid err.report.async]
 
 Asynchronous network library functions are identified by having the prefix
-`async_`. These asynchronous operations report errors as follows:
+`async_` and take a completion handler [xref async.reqmts.async.token]. These
+asynchronous operations report errors as follows:
 
 [mdash] If a call by the implementation to an operating system or other
 underlying API results in an error that prevents the asynchronous operation
-from meeting its specifications, the handler shall be invoked with an
+from meeting its specifications, the completion handler is invoked with an
 `error_code` value `ec` that is set as appropriate for the specific error.
 Otherwise, the `error_code` value `ec` is set such that `!ec` is true.
 
