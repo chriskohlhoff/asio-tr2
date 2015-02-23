@@ -6,7 +6,7 @@
 
 Most synchronous network library functions provide two overloads, one that
 throws an exception to report system errors, and another that sets an
-`error_code`.
+`error_code` (C++ Std, [syserr]).
 
 [commentary Check whether it is "most" overloads, "some" or "all".]
 
