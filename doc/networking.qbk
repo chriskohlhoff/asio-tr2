@@ -510,9 +510,9 @@ introductory section on conformance to establish a relationship to __POSIX__
 "as if" implemented by __POSIX__. It is expected that a section on conformance
 would be added here.]
 
-The following subclauses describe components for executors, I/O services,
-timers, buffer management, sockets, endpoint resolution, iostreams, and
-internet protocols, as summarized in the table below:
+The following subclauses describe components for an asynchronous model, I/O
+services, timers, buffer management, sockets, endpoint resolution, socket
+iostreams, and internet protocols, as summarized in the table below:
 
 [table Networking library summary
   [[Subclause][Header(s)]]
