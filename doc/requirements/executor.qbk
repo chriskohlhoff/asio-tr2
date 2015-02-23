@@ -2,25 +2,25 @@
 [xrefid async.reqmts.executor]
 
 The library describes a standard set of requirements for ['executors]. A type
-meeting Executor requirements shall embody a set of rules for determining how
+meeting the Executor requirements embodies a set of rules for determining how
 submitted function objects are to be executed.
 
 An executor type `X` shall satisfy the requirements of `CopyConstructible` (C++
 Std, [copyconstructible]) types. No constructor, comparison operator, copy
 operation, move operation, swap operation, or member functions `context`,
-`on_work_started` and `on_work_finished` on these types shall exit via an
+`on_work_started`, and `on_work_finished` on these types shall exit via an
 exception.
 
-The executor copy constructor, comparison operators, and member functions
+The executor copy constructor, comparison operators, and other member functions
 defined in these requirements shall not introduce data races as a result of
 concurrent calls to those functions from different threads.
 
-In the table below, `X` denotes an executor class, `x` denotes a value of type
-`X&`, `x1` and `x2` denote values of type `const X&`, `x3` denotes a value of
-type `X&&`, `f` denotes a `MoveConstructible` (C++ Std, [moveconstructible])
-function object callable with zero arguments, `a` denotes a value of type `A`
-meeting `Allocator` requirements (C++ Std, [allocator.requirements]), `t`
-denotes an object of type `T`, and `u` denotes an identifier.
+In the table below, `X` denotes an executor class, `x` denotes an lvalue of
+type `X`, `x1` and `x2` denote values of type (possibly const) `X`, `x3`
+denotes an xvalue of type `X`, `f` denotes a `MoveConstructible` (C++ Std,
+[moveconstructible]) function object callable with zero arguments, `a` denotes
+a value of type `A` meeting the `Allocator` requirements (C++ Std,
+[allocator.requirements]), and `u` denotes an identifier.
 
 [table Executor requirements
   [[expression] [type] [assertion/note\npre/post-conditions]]
@@ -41,12 +41,10 @@ denotes an object of type `T`, and `u` denotes an identifier.
   [
     [`x1 == x2`]
     [`bool`]
-    [Shall not exit via an exception.\n
-     \n
-     Returns `true` only if `x1` and `x2` can be interchanged with identical
+    [ Returns `true` only if `x1` and `x2` can be interchanged with identical
      effects in any of the expressions defined in these type requirements.
-     [inline_note `false` does not necessarily imply that the effects are not
-     identical.]\n
+     [inline_note Returning `false` does not necessarily imply that the effects
+     are not identical.]\n
      \n
      `operator==` shall be reflexive, symmetric, and transitive, and shall not
      exit via an exception.]
@@ -54,9 +52,7 @@ denotes an object of type `T`, and `u` denotes an identifier.
   [
     [`x1 != x2`]
     [`bool`]
-    [Shall not exit via an exception.\n
-     \n
-     Same as `!(x1 == x2)`.]
+    [Same as `!(x1 == x2)`.]
   ]
   [
     [`x.context()`]
@@ -73,59 +69,64 @@ denotes an object of type `T`, and `u` denotes an identifier.
     []
     [Shall not exit via an exception.\n
      \n
-     Requires: A preceding call `x1.on_work_started()` where `x == x1`.]
+     Precondition: A preceding call `x1.on_work_started()` where `x == x1`.]
   ]
   [
     [`x.dispatch(std::move(f),a)`]
     []
-    [Effects: Calls [^['DECAY_COPY]]`(forward<Func>(f))()` at most once. The
-     executor may invoke `f` in the current thread, prior to returning from
-     `dispatch`. The call to `DECAY_COPY()` is evaluated in the thread that
-     called `dispatch`.\n
+    [Effects: Creates an object `f1` initialized with
+     [^['DECAY_COPY]]`(forward<Func>(f))` in the current thread of execution.
+     Calls `f1()` at most once. The executor may invoke `f1` prior to returning
+     from `dispatch`.\n
      \n
-     Executor implementations are encouraged to use the supplied allocator to
-     allocate any memory required to store the function object. The executor
-     shall deallocate all memory prior to invoking the function object.\n
+     Executor implementations should use the supplied allocator to allocate any
+     memory required to store the function object. Prior to invoking the
+     function object, the executor shall deallocate any memory allocated.
+     [inline_note Executors defined in this clause always use the supplied
+     allocator.]\n
      \n
      Synchronization: The invocation of `dispatch` synchronizes with (C++ Std,
-     \[intro.multithread\]) the invocation of `f`.]
+     \[intro.multithread\]) the invocation of `f1`.]
   ]
   [
     [`x.post(std::move(f),a)`]
     []
-    [Effects: Calls [^['DECAY_COPY]]`(forward<Func>(f))()` at most once. The
-     executor may not invoke `f` in the current thread, prior to returning from
-     `post`. The call to `DECAY_COPY()` is evaluated in the thread that called
-     `post`.\n
+    [Effects: Creates an object `f1` initialized with
+     [^['DECAY_COPY]]`(forward<Func>(f))` in the current thread of execution.
+     Calls `f1()` at most once. The executor shall not invoke `f1` in the
+     current thread of execution prior to returning from `post`.\n
      \n
-     Executor implementations are encouraged to use the supplied allocator to
-     allocate any memory required to store the function object. The executor
-     shall deallocate all memory prior to invoking the function object.\n
+     Executor implementations should use the supplied allocator to allocate any
+     memory required to store the function object. Prior to invoking the
+     function object, the executor shall deallocate any memory allocated.
+     [inline_note Executors defined in this clause always use the supplied
+     allocator.]\n
      \n
      Synchronization: The invocation of `post` synchronizes with (C++ Std,
-     \[intro.multithread\]) the invocation of `f`.]
+     \[intro.multithread\]) the invocation of `f1`.]
   ]
   [
     [`x.defer(std::move(f),a)`]
     []
-    [Effects: Calls [^['DECAY_COPY]]`(forward<Func>(f))()` at most once. The
-     executor may not invoke `f` in the current thread, prior to returning from
-     `defer`. The call to `DECAY_COPY()` is evaluated in the thread that called
-     `defer`.\n
+    [Effects: Creates an object `f1` initialized with
+     [^['DECAY_COPY]]`(forward<Func>(f))` in the current thread of execution.
+     Calls `f1()` at most once. The executor shall not invoke `f1` in the
+     current thread of execution prior to returning from `defer`.\n
      \n
-     Executor implementations are encouraged to use the supplied allocator to
-     allocate any memory required to store the function object. The executor
-     shall deallocate all memory prior to invoking the function object.\n
+     Executor implementations should use the supplied allocator to allocate any
+     memory required to store the function object. Prior to invoking the
+     function object, the executor shall deallocate any memory allocated.
+     [inline_note Executors defined in this clause always use the supplied
+     allocator.]\n
      \n
      Synchronization: The invocation of `defer` synchronizes with (C++ Std,
-     \[intro.multithread\]) the invocation of `f`.\n
-     \n
-     Note: Although the requirements placed on `defer` are identical to `post`,
-     a separate function is used to convey the intention of the caller that the
-     submitted function is a continuation of the current call context. The
-     executor may use this information to optimize or otherwise adjust the way
-     in which `f` is invoked.]
+     \[intro.multithread\]) the invocation of `f1`.]
   ]
 ]
+
+Although the requirements placed on `defer` are identical to `post`, `defer` is
+used to convey the intention of the caller that the submitted function is a
+continuation of the current call context. The executor may use this information
+to optimize or otherwise adjust the way in which `f` is invoked.
 
 [endsect]
