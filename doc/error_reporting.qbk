@@ -28,9 +28,6 @@ underlying API results in an error that prevents the function from meeting its
 specifications, the function exits via an exception of a type that would match
 a handler of type `system_error`.
 
-[mdash] Failure to allocate storage is reported by throwing an exception as
-described in the C++ standard (C++14 \[res.on.exception.handling\]).
-
 [mdash] Destructors throw nothing.
 
 Functions having an argument of type `error_code&` report errors as follows,
@@ -38,8 +35,8 @@ unless otherwise specified:
 
 [mdash] If a call by the implementation to an operating system or other
 underlying API results in an error that prevents the function from meeting its
-specifications, the `error_code&` argument is set as appropriate for the
-specific error. Otherwise, `clear()` is called on the `error_code&` argument.
+specifications, the `error_code&` argument `ec` is set as appropriate for the
+specific error. Otherwise, the `ec` argument is set such that `!ec` is true.
 
 Where a function is specified as two overloads, with and without an argument
 of type `error_code&`:
@@ -63,6 +60,10 @@ as if:
   if (ec) throw system_error(ec, __func__);
 
 except that the type thrown may differ as specified above.
+
+For both overloads, failure to allocate storage is reported by throwing an
+exception as described in the C++ standard (C++14
+\[res.on.exception.handling\]).
 
 [endsect]
 
