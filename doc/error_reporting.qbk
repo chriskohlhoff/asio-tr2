@@ -25,7 +25,8 @@ follows, unless otherwise specified:
 
 [mdash] When a call by the implementation to an operating system or other
 underlying API results in an error that prevents the function from meeting its
-specifications, an exception of type `system_error` shall be thrown.
+specifications, the function exits via an exception of a type that would match
+a handler of type `system_error`.
 
 [mdash] Failure to allocate storage is reported by throwing an exception as
 described in the C++ standard (C++14 \[res.on.exception.handling\]).
@@ -46,7 +47,7 @@ of type `error_code&`:
   ``[*['R f]]``(``['[*A1]]`` a1, ``['[*A2]]`` a2, ..., ``['[*AN]]`` aN);
   ``[*['R f]]``(``['[*A1]]`` a1, ``['[*A2]]`` a2, ..., ``['[*AN]]`` aN, error_code& ec);
 
-then, when [*['R]] is non-`void`, the effects of the first overload shall be as
+then, when [*['R]] is non-`void`, the effects of the first overload are as
 if:
 
   error_code ec;
@@ -54,12 +55,14 @@ if:
   if (ec) throw system_error(ec, __func__);
   return r;
 
-Otherwise, when [*['R]] is `void`, the effects of the first overload shall be
+otherwise, when [*['R]] is `void`, the effects of the first overload are
 as if:
 
   error_code ec;
   ``['[*f]]``(a1, a2, ..., aN, ec);
   if (ec) throw system_error(ec, __func__);
+
+except that the type thrown may differ as specified above.
 
 [endsect]
 
