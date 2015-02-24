@@ -17,15 +17,13 @@
 ['Remark:] Detects whether `T` has a nested `executor_type` that is convertible
 from `Executor`. Meets the `BinaryTypeTrait` requirements (C++ Std,
 [meta.rqmts]). The implementation shall provide a definition that is derived
-from `false_type`. A program may specialize this template to derive from
-`true_type` for a user-defined type `T` that does not have a nested
-`executor_type` but nonetheless can be constructed with an executor where
-either:
-
-[mdash] the first argument of a constructor has type `executor_type` and the
-second argument has type `Executor`; or
-
-[mdash] the last argument of a constructor has type `Executor`.
+from `true_type` if a type `T::executor_type` exists and
+`is_convertible<Executor, T::executor_type>::value != false`, otherwise it
+shall be derived from `false_type`. A program may specialize this template to
+derive from `true_type` for a user-defined type `T` that does not have a nested
+`executor_type` but nonetheless can be constructed with an executor if the
+first argument of a constructor has type `executor_arg_t` and the second
+argument has type `Executor`.
 
 [endsect]
 
@@ -37,22 +35,11 @@ construction of an object `obj` of type `T`, using constructor arguments `v1,
 v2, ..., vN` of types `V1, V2, ..., VN`, respectively, and an executor `ex` of
 type `Executor`, according to the following rules:
 
-[mdash] if `uses_executor<T, Executor>::value` is false and
-`is_constructible<T, V1, V2, ..., VN>::value` is true, then `obj` is
-initialized as `obj(v1, v2, ..., vN)`;
-
-[mdash] otherwise, if `uses_executor<T, Executor>::value` is true and
+[mdash] if `uses_executor<T, Executor>::value` is true and
 `is_constructible<T, executor_arg_t, Executor, V1, V2, ..., VN>::value` is
 true, then `obj` is initialized as `obj(executor_arg, ex, v1, v2, ..., vN)`;
 
-[mdash] otherwise, if `uses_executor<T, Executor>::value` is true and
-`is_constructible<T, V1, V2, ..., VN, Executor>::value` is true, then `obj` is
-initialized as `obj(v1, v2, ..., vN, ex)`;
-
-[mdash] otherwise, the request for uses-executor construction is ill-formed.
-[inline_note An error will result if `uses_executor<T, Executor>::value` is
-true but the specific constructor does not take an executor. This definition
-prevents a silent failure to pass the executor to an element.]
+[mdash] otherwise, `obj` is initialized as `obj(v1, v2, ..., vN)`.
 
 [endsect]
 
