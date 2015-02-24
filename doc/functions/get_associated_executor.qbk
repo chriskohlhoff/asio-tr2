@@ -19,8 +19,7 @@ unless `is_executor<Executor>::value` is true.]
     associated_executor_t<T, typename ExecutionContext::executor_type>
       get_associated_executor(const T& t, ExecutionContext& ctx);
 
-[function_returns `associated_executor<T, typename
-ExecutionContext::executor_type>::get(t, ctx.get_executor())`.]
+[function_returns `get_associated_executor(t, ctx.get_executor())`.]
 
 [function_remarks This function shall not participate in overload resolution
 unless `is_convertible<ExecutionContext&, execution_context&>::value` is true.]
