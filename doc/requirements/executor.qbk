@@ -6,10 +6,10 @@ meeting the Executor requirements embodies a set of rules for determining how
 submitted function objects are to be executed.
 
 An executor type `X` shall satisfy the requirements of `CopyConstructible` (C++
-Std, [copyconstructible]) types. No constructor, comparison operator, copy
-operation, move operation, swap operation, or member functions `context`,
-`on_work_started`, and `on_work_finished` on these types shall exit via an
-exception.
+Std, [copyconstructible]) and `Destructible` (C++ Std, [destructible]) types.
+No constructor, comparison operator, copy operation, move operation, swap
+operation, or member functions `context`, `on_work_started`, and
+`on_work_finished` on these types shall exit via an exception.
 
 The executor copy constructor, comparison operators, and other member functions
 defined in these requirements shall not introduce data races as a result of
