@@ -12,38 +12,19 @@ based on a `Signature`.
         template<class CompletionToken, class Signature, class = void>
         struct handler_type
         {
-          typedef ``['see below]`` type;
+          typedef CompletionToken type;
         };
 
       __end_versioned_ns__
     } // namespace experimental
   } // namespace std
 
-The template parameter `Signature` shall be a call signature (C++Std,
-[func.def]).
+The template parameter `CompletionToken` shall be an object type. The template
+parameter `Signature` shall be a call signature (C++Std, [func.def]).
 
 Specializations of `handler_type` shall define a nested type `type` that
 satisfies the `MoveConstructible` requirements. An object of type `type` shall
-be a function object with call signature `Signature`, and:
-
-[mdash] if `CompletionToken` is an object type, `type` shall be constructible
-from a prvalue of type `CompletionToken`;
-
-[mdash] if `CompletionToken` is an lvalue reference to non-const, `type` shall
-be constructible from an lvalue of type `remove_reference_t<CompletionToken>`;
-
-[mdash] if `CompletionToken` is an rvalue reference type, `type` shall be
-constructible from an rvalue of type `remove_reference_t<CompletionToken>`.
-
-[section [^handler_type] members]
-[xrefid async.handler.type.members]
-
-  typedef ``['see below]`` type;
-
-[function_type `CompletionToken` if `CompletionToken` and
-`decay_t<CompletionToken>` are the same type; otherwise,
-`handler_type_t<decay_t<CompletionToken>, Signature>`.]
-
-[endsect]
+be a function object with call signature `Signature`, and `type` shall be
+constructible from a rvalue of type `CompletionToken`.
 
 [endsect]
