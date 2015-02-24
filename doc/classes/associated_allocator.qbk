@@ -17,13 +17,9 @@
     } // namespace experimental
   } // namespace std
 
-A program may specialize this traits type if the `T` template parameter in the
-specialization is a user-defined type. The template parameter `Alloc` shall be
-a type meeting `Allocator` requirements (C++ Std, [allocator.requirements]).
-
 Specializations of `associated_allocator` shall satisfy the requirements in the
 table below. In this table, `X` is a specialization of `associated_allocator`
-for the template parameter `T`; `t` is a const reference to an object of type
+for the template parameters `T` and `Alloc`; `t` is a value of (possibly const)
 `T`; and `a` is an object of type `Alloc`.
 
 [table associated_allocator specialization requirements
