@@ -1,6 +1,9 @@
 [section:executor Class [^executor]]
 [xrefid async.executor]
 
+The `executor` class provides a polymorphic wrapper for types that satisfy the
+[link requirements.executor Executor requirements].
+
   namespace std {
     namespace experimental {
       __begin_versioned_ns__
@@ -80,10 +83,9 @@
 
   } // namespace std
 
-The `executor` class provides a polymorphic wrapper for types that satisfy the
-[link requirements.executor Executor requirements]. The ['target object] is the
-executor object that is held by the wrapper. The `executor` type itself meets
-the requirements for an [link requirements.executor Executor].
+The ['target] is the executor object that is held by the wrapper. The
+`executor` type itself meets the requirements for an [link
+requirements.executor Executor].
 
 [std_note To meet the `noexcept` requirements for executor copy constructors
 and move constructors, implementations may share a target between two or more
@@ -113,21 +115,11 @@ a valid state with an unspecified value.]
 
   template<class Executor> executor(Executor e);
 
-[function_requires `Executor` shall satisfy the [link requirements.executor
-Executor requirements].]
-
 [function_effects `*this` targets a copy of `e` initialized with
 `std::move(e)`.]
 
-[function_remarks This function shall not participate in overload resolution
-unless `is_executor<Executor>::value` is true.]
-
   template<class Executor, class Alloc>
     executor(allocator_arg_t, const Alloc& a, Executor e);
-
-[function_requires `Executor` shall satisfy the [link requirements.executor
-Executor requirements]. `Allocator` conforms to the `Allocator` requirements
-(C++ Std, \[allocator.requirements\]).]
 
 [function_effects `*this` targets a copy of `e` initialized with
 `std::move(e)`.]
@@ -165,9 +157,6 @@ leaving `e` in a valid state with an unspecified value.]
 [function_effects `executor(std::move(e)).swap(*this)`.]
 
 [function_returns `*this`.]
-
-[function_remarks This function shall not participate in overload resolution
-unless `is_executor<Executor>::value` is true.]
 
 [endsect]
 
@@ -240,7 +229,7 @@ performs `DECAY_COPY(f)()`.]
 
   explicit operator bool() const noexcept;
 
-[function_returns `true` if `*this` has a target, otherwise `false`,]
+[function_returns `true` if `*this` has a target, otherwise `false`.]
 
 [endsect]
 
@@ -255,11 +244,8 @@ performs `DECAY_COPY(f)()`.]
   template<class Executor> Executor* target() noexcept;
   template<class Executor> const Executor* target() const noexcept;
 
-[function_requires `Executor` shall satisfy the [link requirements.executor
-Executor requirements].]
-
 [function_returns If `target_type() == typeid(Executor)` a pointer to the stored
-executor target; otherwise a null pointer.]
+executor target; otherwise a null pointer value.]
 
 [endsect]
 
@@ -272,7 +258,7 @@ executor target; otherwise a null pointer.]
 [mdash] `true` if `!a` and `!b`;\n
 [mdash] `true` if `a` and `b` share a target;\n
 [mdash] `true` if `e` and `f` are the same type and `e == f`, where `e` is the
-target object of `a` and `f` is the target object of `b`;\n
+target of `a` and `f` is the target of `b`;\n
 [mdash] otherwise `false`.]
 
   bool operator==(const executor& e, nullptr_t) noexcept;
