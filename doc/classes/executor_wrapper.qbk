@@ -1,6 +1,10 @@
 [section:executor_wrapper Class template [^executor_wrapper]]
 [xrefid async.exec.wrapper]
 
+`executor_wrapper<T, Executor>` is a wrapper around an object or function of
+type `T`, and an executor object of type `Executor` satisfying [link
+requirements.executor Executor requirements].
+
   namespace std {
     namespace experimental {
       __begin_versioned_ns__
@@ -13,10 +17,6 @@
 
           typedef T wrapped_type;
           typedef Executor executor_type;
-          typedef ``['see below]`` result_type;          // ``['not always defined]``
-          typedef ``['see below]`` argument_type;        // ``['not always defined]``
-          typedef ``['see below]`` first_argument_type;  // ``['not always defined]``
-          typedef ``['see below]`` second_argument_type; // ``['not always defined]``
 
           // construct / copy / destroy:
 
@@ -45,7 +45,9 @@
           // executor wrapper invocation:
 
           template<class... Args>
-            result_of_t<``['cv]`` T&(Args&&...)> operator()(Args&&... args) ``['cv]``;
+            result_of_t<T&(Args&&...)> operator()(Args&&... args);
+          template<class... Args>
+            result_of_t<const T&(Args&&...)> operator()(Args&&... args) const;
 
         private:
           Executor ex_; // ``['exposition only]``
@@ -71,89 +73,48 @@
     } // namespace experimental
   } // namespace std
 
-`executor_wrapper<T, Executor>` is a wrapper around an object or function of
-type `T`, and an executor object of type `Executor` satisfying [link
-requirements.executor Executor requirements].
-
-`executor_wrapper<T, Executor>` has a weak result type (C++ Std,
-[func.require]). If `T` is a function type, `result_type` shall be a synonym
-for the return type of `T`.
-
-The template instantiation `executor_wrapper<T, Executor>` shall define a
-nested type named `argument_type` as a synonym for `T1` only if the type `T` is
-any of the following:
-
-[mdash] a function type or a pointer to function type taking one argument of
-type `T1`
-
-[mdash] a pointer to member function `R T0::f` [^['cv]] (where [^['cv]]
-represents the member function’s cv-qualifiers); the type `T1` is [^['cv]]
-`T0*`
-
-[mdash] a class type with a member type `argument_type`; the type `T1` is
-`T::argument_type`.
-
-The template instantiation `executor_wrapper<T, Executor>` shall define two
-nested types named `first_argument_type` and `second_argument_type` as synonyms
-for `T1` and `T2`, respectively, only if the type `T` is any of the following:
-
-[mdash] a function type or a pointer to function type taking two arguments of
-types `T1` and `T2`
-
-[mdash] a pointer to member function `R T0::f(T2)` [^['cv]] (where [^['cv]]
-represents the member function’s cv-qualifiers); the type `T1` is [^['cv]]
-`T0*`
-
-[mdash] a class type with member types `first_argument_type` and
-`second_argument_type`; the type `T1` is `T::first_argument_type`. and the type
-`T2` is `T::second_argument_type`.
-
 [section [^executor_wrapper] constructors]
 [xrefid async.exec.wrapper.cons]
 
   executor_wrapper(T t, const Executor& ex);
 
 [function_effects Constructs an object of type `executor_wrapper<T, Executor>`.
-Initializes `ex_` with the value `ex`. If `uses_executor<T, Executor>::value`
-is true, performs uses-executor construction to initialize `wrapped_` with
-`wrapped_(executor_arg, ex_, std::move(t))`; otherwise, initializes `wrapped_`
-with `wrapped_(std::move(t))`.]
+Initializes `ex_` with the value `ex`. Initializes `wrapped_` by performing
+uses-executor construction, using the constructor argument `std::move(t)` and
+the executor `ex_`.]
 
   template<class U, class OtherExecutor>
     executor_wrapper(const executor_wrapper<U, OtherExecutor>& other);
 
-[function_requires `U` is `T` or convertible to `T`. `OtherExecutor` is
-`Executor` or convertible to `Executor`.]
+[function_requires If `U` is not convertible to `T`, or if `OtherExecutor` is
+not convertible to `Executor`, the program is ill-formed.]
 
 [function_effects Constructs an object of type `executor_wrapper<T, Executor>`.
-Initializes `ex_` with `other.get_executor()`. If `uses_executor<T,
-Executor>::value` is true, performs uses-executor construction to initialize
-`wrapped_` with `wrapped_(executor_arg, ex_, other.unwrap())`; otherwise,
-initializes `wrapped_` with `wrapped_(other.unwrap())`.]
+Initializes `ex_` with `other.get_executor()`. Initializes `wrapped_` by
+performing uses-executor construction, using the constructor argument
+`other.unwrap()` and the executor `ex_`.]
 
   template<class U, class OtherExecutor>
     executor_wrapper(executor_wrapper<U, OtherExecutor>&& other);
 
-[function_requires `U` is `T` or convertible to `T`. `OtherExecutor` is
-`Executor` or convertible to `Executor`.]
+[function_requires If `U` is not convertible to `T`, or if `OtherExecutor` is
+not convertible to `Executor`, the program is ill-formed.]
 
 [function_effects Constructs an object of type `executor_wrapper<T, Executor>`.
-Initializes `ex_` with `other.get_executor()`. If `uses_executor<T,
-Executor>::value` is true, performs uses-executor construction to initialize
-`wrapped_` with `wrapped_(executor_arg, ex_, std::move(other.unwrap()))`;
-otherwise, initializes `wrapped_` with `wrapped_(std::move(other.unwrap()))`.]
+Initializes `ex_` with `other.get_executor()`. Initializes `wrapped_` by
+performing uses-executor construction, using the constructor argument
+`std::move(other.unwrap())` and the executor `ex_`.]
 
   template<class U, class OtherExecutor>
     executor_wrapper(executor_arg_t, const Executor& ex,
       const executor_wrapper<U, OtherExecutor>& other);
 
-[function_requires `U` is `T` or convertible to `T`.]
+[function_requires If `U` is not convertible to `T` the program is ill-formed.]
 
 [function_effects Constructs an object of type `executor_wrapper<T, Executor>`.
-Initializes `ex_` with `ex`. If `uses_executor<T, Executor>::value` is true,
-performs uses-executor construction to initialize `wrapped_` with
-`wrapped_(executor_arg, ex_, other.unwrap())`; otherwise, initializes
-`wrapped_` with `wrapped_(other.unwrap())`.]
+Initializes `ex_` with `ex`. Initializes `wrapped_` by performing uses-executor
+construction, using the constructor argument `other.unwrap()` and the executor
+`ex_`.]
 
   template<class U, class OtherExecutor>
     executor_wrapper(executor_arg_t, const Executor& ex,
@@ -162,10 +123,9 @@ performs uses-executor construction to initialize `wrapped_` with
 [function_requires `U` is `T` or convertible to `T`.]
 
 [function_effects Constructs an object of type `executor_wrapper<T, Executor>`.
-Initializes `ex_` with `ex`. If `uses_executor<T, Executor>::value` is true,
-performs uses-executor construction to initialize `wrapped_` with
-`wrapped_(executor_arg, ex_, std::move(other.unwrap()))`; otherwise,
-initializes `wrapped_` with `wrapped_(std::move(other.unwrap()))`.]
+Initializes `ex_` with `ex`. Initializes `wrapped_` by performing uses-executor
+construction, using the constructor argument `std::move(other.unwrap())` and
+the executor `ex_`.]
 
 [endsect]
 
@@ -187,20 +147,16 @@ initializes `wrapped_` with `wrapped_(std::move(other.unwrap()))`.]
 [xrefid async.exec.wrapper.invocation]
 
   template<class... Args>
-    result_of_t<``['cv]`` T&(Args&&...)> operator()(Args&&... args) ``['cv]``;
+    result_of_t<T&(Args&&...)> operator()(Args&&... args);
+  template<class... Args>
+    result_of_t<const T&(Args&&...)> operator()(Args&&... args) const;
 
 [function_returns [^['INVOKE]]`(unwrap(), forward<Args>(args)__dotdotdot__)`
 (C++ Std, \[func.require\]).]
 
-[function_remarks `operator()` is described for exposition only.
-Implementations are not required to provide an actual
-`executor_wrapper::operator()`. Implementations are permitted to support
-`executor_wrapper` function invocation through multiple overloaded operators or
-through other means.]
-
 [endsect]
 
-[section Class template specialization [^async_result]]
+[section Class template partial specialization [^async_result]]
 [xrefid async.exec.wrapper.async.result]
 
   namespace std {
@@ -227,12 +183,9 @@ through other means.]
     } // namespace experimental
   } // namespace std
 
-The implementation shall provide a specialization of `async_result` that meets
-the [link classes.async_result `async_result` specialization requirements].
-
   explicit async_result(executor_wrapper<T, Executor>& wrapper);
 
-[function_effects Initializes `wrapped_` with `wrapped_(wrapper.unwrap())`.]
+[function_effects Initializes `wrapped_` as `wrapped_(wrapper.unwrap())`.]
 
   type get();
 
@@ -240,7 +193,7 @@ the [link classes.async_result `async_result` specialization requirements].
 
 [endsect]
 
-[section Class template specialization [^associated_allocator]]
+[section Class template partial specialization [^associated_allocator]]
 [xrefid async.exec.wrapper.assoc.alloc]
 
   namespace std {
@@ -260,10 +213,6 @@ the [link classes.async_result `async_result` specialization requirements].
     } // namespace experimental
   } // namespace std
 
-The implementation shall provide a specialization of `associated_allocator`
-that meets the [link classes.associated_allocator `associated_allocator`
-specialization requirements].
-
   static type get(const executor_wrapper<T, Executor>& w,
                   const Alloc& a = Alloc()) noexcept;
 
@@ -271,7 +220,7 @@ specialization requirements].
 
 [endsect]
 
-[section Class template specialization [^associated_executor]]
+[section Class template partial specialization [^associated_executor]]
 [xrefid async.exec.wrapper.assoc.exec]
 
   namespace std {
@@ -290,10 +239,6 @@ specialization requirements].
       __end_versioned_ns__
     } // namespace experimental
   } // namespace std
-
-The implementation shall provide a specialization of `associated_executor`
-that meets the [link classes.associated_executor `associated_executor`
-specialization requirements].
 
   static type get(const executor_wrapper<T, Executor>& w,
                   const Executor1& e = Executor1()) noexcept;
