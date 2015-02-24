@@ -19,7 +19,7 @@
           executor_work(const executor_work& other) noexcept;
           executor_work(executor_work&& other) noexcept;
 
-          executor_work operator=(const executor_type&) = delete;
+          executor_work& operator=(const executor_work&) = delete;
 
           ~executor_work();
 
@@ -41,8 +41,8 @@
     } // namespace experimental
   } // namespace std
 
-[section [^executor_work] constructors]
-[xrefid async.exec.work.cons]
+[section [^executor_work] members]
+[xrefid async.exec.work.members]
 
   explicit executor_work(const executor_type& ex) noexcept;
 
@@ -54,31 +54,20 @@
   executor_work(const executor_work& other) noexcept;
 
 [function_effects Constructs an object of class `executor_work`, initializing
-`ex_` with `other.ex`. If `other.owns_ == true`, performs
+`ex_` with `other.ex_`. If `other.owns_ == true`, performs
 `ex_.on_work_started()`.]
 
-[function_postconditions `ex == other.ex_` and `owns_ == other.owns_`.]
+[function_postconditions `ex_ == other.ex_` and `owns_ == other.owns_`.]
 
   executor_work(executor_work&& other) noexcept;
 
 [function_effects Constructs an object of class `executor_work`, initializing
-`ex_` with `other.ex` and `owns_` with `other.owns_`.]
+`ex_` with `std::move(other.ex_)` and `owns_` with `other.owns_`, and sets
+`other.owns_` to false.]
 
-[function_postconditions `ex` is equal to the prior value of `other.ex_`,
-`owns_` is equal to the prior value of `other.owns_`, and `other.owns_ ==
-false`.]
+  ~executor_work();
 
-[endsect]
-
-[section [^executor_work] destructor]
-[xrefid async.exec.work.dtor]
-
-[function_effects If `owns_` is true, performs `ex.on_work_finished()`.]
-
-[endsect]
-
-[section [^executor_work] observers]
-[xrefid async.exec.work.obs]
+[function_effects If `owns_` is true, performs `ex_.on_work_finished()`.]
 
   executor_type get_executor() const noexcept;
 
@@ -88,14 +77,9 @@ false`.]
 
 [function_returns `owns_`.]
 
-[endsect]
-
-[section [^executor_work] modifiers]
-[xrefid async.exec.work.modifiers]
-
   void reset() noexcept;
 
-[function_effects If `owns_` is true, performs `ex.on_work_finished()`.]
+[function_effects If `owns_` is true, performs `ex_.on_work_finished()`.]
 
 [function_postconditions `owns_ == false`.]
 
