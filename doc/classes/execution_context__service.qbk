@@ -10,7 +10,7 @@
         protected:
           // construct / copy / destroy:
 
-          service(execution_context& owner);
+          explicit service(execution_context& owner);
           service(const service&) = delete;
           service& operator=(const service&) = delete;
           virtual ~service();
@@ -20,12 +20,10 @@
           execution_context& context() noexcept;
 
         private:
-          friend class execution_context; // ``['exposition only]``
-
           // service operations:
 
           virtual void shutdown_service() = 0;
-          virtual void notify_fork(fork_event e);
+          virtual void notify_fork(fork_event e) {}
 
           execution_context& context_; // ``['exposition only]``
         };
@@ -34,30 +32,16 @@
     } // namespace experimental
   } // namespace std
 
-[section [^execution_context::service] constructors]
-[xrefid async.exec.ctx.svc.cons]
+[section [^execution_context::service] members]
+[xrefid async.exec.ctx.svc.members]
 
-  service(execution_context& owner);
+  explicit service(execution_context& owner);
 
-[function_postconditions `&context_ == &owner`.]
-
-[endsect]
-
-[section [^execution_context::service] observers]
-[xrefid async.exec.ctx.svc.obs]
+[function_postconditions `std::addressof(context_) == std::addressof(owner)`.]
 
   execution_context& context() noexcept;
 
 [function_returns `context_`.]
-
-[endsect]
-
-[section [^execution_context::service] operations]
-[xrefid async.exec.ctx.svc.ops]
-
-  void notify_fork(fork_event e);
-
-[function_effects Does nothing.]
 
 [endsect]
 

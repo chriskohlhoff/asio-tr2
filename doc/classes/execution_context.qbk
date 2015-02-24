@@ -1,6 +1,9 @@
 [section:execution_context Class [^execution_context]]
 [xrefid async.exec.ctx]
 
+Class `execution_context` implements an extensible, type-safe, polymorphic set of
+services, indexed by service type.
+
   namespace std {
     namespace experimental {
       __begin_versioned_ns__
@@ -33,29 +36,25 @@
         template<class Service> Service& use_service(execution_context& ctx);
         template<class Service, class... Args> Service&
           make_service(execution_context& ctx, Args&&... args);
-        template<class Service> bool has_service(execution_context& ctx) noexcept;
-        class service_already_exists : public logic_error { ... };
+        template<class Service> bool has_service(const execution_context& ctx) noexcept;
+        class service_already_exists : public logic_error { };
 
       __end_versioned_ns__
     } // namespace experimental
   } // namespace std
 
-Class `execution_context` implements an extensible, type-safe, polymorphic set of
-services, indexed by service /type/.
-
 Access to the services of an `execution_context` is via three function
 templates, `use_service<>`, `make_service<>` and `has_service<>`.
 
-In a call to `use_service<Service>()`, the type argument chooses a service,
-making available all members of the named type. If the service is not present
-in an `execution_context`, an object of type `Service` is created and added to
-the `execution_context`. A C++ program can check if an `execution_context`
-implements a particular service with the function template
-`has_service<Service>()`.
+In a call to `use_service<Service>()`, the type argument chooses a service. If
+the service is not present in an `execution_context`, an object of type
+`Service` is created and added to the `execution_context`. A program can check
+if an `execution_context` implements a particular service with the function
+template `has_service<Service>()`.
 
 Service objects may be explicitly added to an `execution_context` using the
 function template `make_service<Service>()`. If the service is already present,
-the `service_already_exists` exception is thrown.
+`make_service` exits via an exception of type `service_already_exists`.
 
 Once a service reference is obtained from an `execution_context` object by
 calling `use_service<>`, that reference remains usable until a call to
@@ -66,7 +65,9 @@ calling `use_service<>`, that reference remains usable until a call to
 
   execution_context();
 
-[function_effects Creates an object of class `execution_context`.]
+[function_effects Creates an object of class `execution_context` which contains
+no services. [inline_note An implementation might preload service of internal
+service types for its own use.]]
 
 [endsect]
 
@@ -87,10 +88,9 @@ calling `use_service<>`, that reference remains usable until a call to
 
 [function_effects For each service object `svc` in the set:\n
 [mdash] If `e == fork_event::prepare`, performs `svc->notify_fork(e)` in
-reverse order of the beginning of service object lifetime (C++ Std,
-\[basic.life\]).\n
-[mdash] Otherwise, performs `svc->notify_fork(e)` in order of the beginning of
-service object lifetime.]
+reverse order of addition to the set.\n
+[mdash] Otherwise, performs `svc->notify_fork(e)` in order of addition to the
+set.]
 
 [endsect]
 
@@ -100,44 +100,29 @@ service object lifetime.]
   void shutdown_context();
 
 [function_effects For each service object `svc` in the `execution_context` set,
-in reverse order of the beginning of service object lifetime (C++ Std,
-\[basic.life\]), performs `svc->shutdown_service()`.]
-
-[function_note `shutdown_context` is an idempotent operation.]
+in reverse order of addition to the set, performs `svc->shutdown_service()`.
+For each service in the set, `shutdown_service` is called only once
+irrespective of the number of calls to `shutdown_context`.]
 
   void destroy_context();
 
 [function_effects Destroys each service object in the `execution_context` set,
-in reverse order of the beginning of service object lifetime (C++ Std,
-\[basic.life\]).]
-
-[function_note `destroy_context` is an idempotent operation.]
+and removes it from the set, in reverse order of addition to the set.
 
 [endsect]
 
 [section [^execution_context] globals]
 [xrefid async.exec.ctx.globals]
 
-The functions `use_service`, `make_service` and `has_service` shall not
+The functions `use_service`, `make_service`, and `has_service` shall not
 introduce data races as a result of concurrent calls to those functions from
 different threads.
 
   template<class Service> Service& use_service(execution_context& ctx);
 
-[function_block Let `Key` be `Service::key_type` if the nested typedef
-`Service::key_type` exists; otherwise, let `Key` be `Service`.]
-
-[function_requires `Service` is a service class that is publicly and
-unambiguously derived from [link classes.execution_context__service
-`execution_context::service`]. If the nested typedef `Service::key_type`
-exists, `Service` is the same type as `Service::key_type`, or `Service` is
-publicly and unambiguously derived from `Service::key_type`, and
-`Service::key_type` is publicly and unambiguously derived from
-`execution_context::service`.]
-
-[function_effects If an object of type `Key` does not already exist in the
-`execution_context` set identified by `ctx`, creates an object of type
-`Service`, initializing it with `Service(ctx)`, and adds it to the set.]
+[function_effects If an object of type `Service::key_type` does not already
+exist in the `execution_context` set identified by `ctx`, creates an object of
+type `Service`, initialized as `Service(ctx)`, and adds it to the set.]
 
 [function_returns A reference to the corresponding service of `ctx`.]
 
@@ -147,19 +132,10 @@ publicly and unambiguously derived from `Service::key_type`, and
   template<class Service, class... Args> Service&
     make_service(execution_context& ctx, Args&&... args);
 
-[function_block Let `Key` be `Service::key_type` if the nested typedef
-`Service::key_type` exists; otherwise, let `Key` be `Service`.]
+[function_requires A service object of type `Service::key_type` does not
+already exist in the `execution_context` set identified by `ctx`.]
 
-[function_requires `Service` is a service class that is publicly and
-unambiguously derived from [link classes.execution_context__service
-`execution_context::service`]. If the nested typedef `Service::key_type`
-exists, `Service` is the same type as `Service::key_type`, or `Service` is
-publicly and unambiguously derived from `Service::key_type`, and
-`Service::key_type` is publicly and unambiguously derived from
-`execution_context::service`. A service object of type `Key` does not already
-exist in the `execution_context` set identified by `ctx`.]
-
-[function_effects Creates an object of type `Service`, initializing it with
+[function_effects Creates an object of type `Service`, initialized as
 `Service(ctx, forward<Args>(args)__dotdotdot__)`, and adds it to the
 `execution_context` set identified by `ctx`.]
 
@@ -169,21 +145,10 @@ type `Key` is already present in the set.]
 [function_notes The reference returned remains valid until a call to
 `destroy_context`.]
 
-  template<class Service> bool has_service(execution_context& ctx) noexcept;
+  template<class Service> bool has_service(const execution_context& ctx) noexcept;
 
-[function_block Let `Key` be `Service::key_type` if the nested typedef
-`Service::key_type` exists; otherwise, let `Key` be `Service`.]
-
-[function_requires `Service` is a service class that is publicly and
-unambiguously derived from [link classes.execution_context__service
-`execution_context::service`]. If the nested typedef `Service::key_type`
-exists, `Service` is the same type as `Service::key_type`, or `Service` is
-publicly and unambiguously derived from `Service::key_type`, and
-`Service::key_type` is publicly and unambiguously derived from
-`execution_context::service`.]
-
-[function_returns If an object of type `Key` is present in `ctx`, `true`;
-otherwise, `false`.]
+[function_returns `true` if an object of type `Service::key_type` is present in
+`ctx`, otherwise `false`.]
 
 [endsect]
 
