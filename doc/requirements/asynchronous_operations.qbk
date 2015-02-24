@@ -116,8 +116,6 @@ Certain objects that participate in asynchronous operations have an
 
 [endsect]
 
-[section]
-
 [section I/O executor]
 [xrefid async.reqmts.async.io.exec]
 
