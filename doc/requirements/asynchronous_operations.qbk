@@ -46,10 +46,10 @@ async_result<Handler>::type`.
 [section Production of initiating function return value]
 [xrefid async.reqmts.async.return.value]
 
-All initiating functions in this clause produce their return type as follows:
+An initiating function in this clause produces its return type as follows:
 
 [mdash] constructing an object `result` of type `async_result<Handler>`,
-initializing the object as `result(handler)`; and
+initialized as `result(handler)`; and
 
 [mdash] using `result.get()` as the operand of the return statement.
 
@@ -60,7 +60,7 @@ implemented as follows:
   template<class CompletionToken>
   auto async_xyz(T1 t1, T2 t2, CompletionToken&& token)
   {
-    handler_type_t<CompletionToken, void(R1 r1, R2 r2)>
+    handler_type_t<decay_t<CompletionToken>, void(R1 r1, R2 r2)>
       handler(forward<CompletionToken>(token));
 
     async_result<decltype(handler)> result(handler);
