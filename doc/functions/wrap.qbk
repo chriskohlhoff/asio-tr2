@@ -13,8 +13,7 @@ unless `is_executor<Executor>::value` is true.]
     executor_wrapper<decay_t<T>, typename ExecutionContext::executor_type>
       wrap(ExecutionContext& ctx, T&& t);
 
-[function_returns `executor_wrapper<decay_t<T>, typename
-ExecutionContext::executor_type>(forward<T>(t), ctx.get_executor())`.]
+[function_returns `wrap(ctx.get_executor(), forward<T>(t))`.]
 
 [function_remarks This function shall not participate in overload resolution
 unless `is_convertible<ExecutionContext&, execution_context&>::value` is true.]
