@@ -33,7 +33,8 @@ services, indexed by service type.
         };
 
         // service access:
-        template<class Service> Service& use_service(execution_context& ctx);
+        template<class Service> typename Service::key_type&
+          use_service(execution_context& ctx);
         template<class Service, class... Args> Service&
           make_service(execution_context& ctx, Args&&... args);
         template<class Service> bool has_service(const execution_context& ctx) noexcept;
@@ -118,7 +119,8 @@ The functions `use_service`, `make_service`, and `has_service` shall not
 introduce data races as a result of concurrent calls to those functions from
 different threads.
 
-  template<class Service> Service& use_service(execution_context& ctx);
+  template<class Service> typename Service::key_type&
+    use_service(execution_context& ctx);
 
 [function_effects If an object of type `Service::key_type` does not already
 exist in the `execution_context` set identified by `ctx`, creates an object of
