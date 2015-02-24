@@ -1,6 +1,12 @@
 [section:async_completion Class template [^async_completion]]
 [xrefid async.async.completion]
 
+[/ TODO]
+Template parameter `CompletionToken` specifies the model used to obtain the
+result of the asynchronous operation. Template parameter `Signature` is the
+call signature (C++ Std, [func.def]) for the handler type invoked on completion
+of the asynchronous operation.
+
   namespace std {
     namespace experimental {
       __begin_versioned_ns__
@@ -8,9 +14,9 @@
         template<class CompletionToken, class Signature>
         struct async_completion
         {
-          typedef handler_type_t<CompletionToken, Signature> handler_type;
+          typedef handler_type_t<decay_t<CompletionToken>, Signature> handler_type;
 
-          explicit async_completion(remove_reference_t<CompletionToken>& t);
+          explicit async_completion(CompletionToken& t);
           async_completion(const async_completion&) = delete;
           async_completion& operator=(const async_completion&) = delete;
 
@@ -22,15 +28,13 @@
     } // namespace experimental
   } // namespace std
 
-Template parameter `CompletionToken` specifies the model used to obtain the
-result of the asynchronous operation. Template parameter `Signature` is the
-call signature (C++ Std, [func.def]) for the handler type invoked on completion
-of the asynchronous operation.
+The template parameter `Signature` shall be a call signature (C++Std,
+[func.def]).
 
 [section [^async_completion] members]
 [xrefid async.async.completion.members]
 
-  explicit async_completion(remove_reference_t<CompletionToken>& t);
+  explicit async_completion(CompletionToken& t);
 
 [function_effects If `CompletionToken` and `handler_type` are the same type,
 binds `handler` to `t`; otherwise, initializes `handler` with the result of
