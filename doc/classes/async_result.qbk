@@ -1,6 +1,10 @@
 [section:async_result Class template [^async_result]]
 [xrefid async.async.result]
 
+[/ TODO reword as introduction]
+The template parameter `Handler` is a handler type produced by `handler_type_t<T,
+S>` for some completion token type `T` and call signature `S`.
+
   namespace std {
     namespace experimental {
       __begin_versioned_ns__
@@ -11,25 +15,19 @@
         public:
           typedef void type;
 
-          explicit async_result(Handler&);
+          explicit async_result(Handler&) {}
           async_result(const async_result&) = delete;
           async_result& operator=(const async_result&) = delete;
 
-          type get();
+          type get() {}
         };
 
       __end_versioned_ns__
     } // namespace experimental
   } // namespace std
 
-Template argument `Handler` is a handler type produced by `handler_type_t<T,
-S>` for some completion token type `T` and call signature `S`.
-
-A program may specialize this template if the `Handler` template parameter in
-the specialization is a user-defined type.
-
 Specializations of `async_result` shall satisfy the `Destructible` requirements
-(C++ Std, [destructible]) in addition to the requirements in the table below.
+(C++Std, [destructible]) in addition to the requirements in the table below.
 In this table, `R` is a specialization of `async_result` for the template
 parameter `Handler`; `r` is a modifiable lvalue of type `R`; and `h` is a
 modifiable lvalue of type `Handler`.
@@ -54,18 +52,5 @@ modifiable lvalue of type `Handler`.
      statement.]
   ]
 ]
-
-[section [^async_result] members]
-[xrefid async.async.result.members]
-
-  explicit async_result(Handler&);
-
-[function_effects Does nothing.]
-
-  type get();
-
-[function_effects Does nothing.]
-
-[endsect]
 
 [endsect]
