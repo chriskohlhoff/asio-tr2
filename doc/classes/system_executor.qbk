@@ -1,6 +1,9 @@
 [section:system_executor Class [^system_executor]]
 [xrefid async.system.exec]
 
+Class `system_executor` represents a set of rules where function objects are
+permitted to execute on any thread.
+
   namespace std {
     namespace experimental {
       __begin_versioned_ns__
@@ -8,13 +11,16 @@
         class system_executor
         {
         public:
+          // constructors:
+
+          system_executor() {}
 
           // executor operations:
 
           execution_context& context() noexcept;
 
-          void on_work_started() noexcept;
-          void on_work_finished() noexcept;
+          void on_work_started() noexcept {}
+          void on_work_finished() noexcept {}
 
           template<class Func, class Alloc>
             void dispatch(Func&& f, const Alloc& a);
@@ -31,32 +37,22 @@
     } // namespace experimental
   } // namespace std
 
-Class `system_executor` is a `DefaultConstructible` type (C++ Std,
-[defaultconstructible]) satisfying [link requirements.executor Executor
-requirements]. It represents a set of rules where function objects are
-permitted to execute on any thread.
+Class `system_executor` satisfies the [link requirements.executor Executor
+requirements].
 
 To satisfy the executor requirements for the `post` and `defer` member
-functions, the system executor may allocate `thread` objects to run the
-submitted function objects. If `std::exit` is called, and there remain
+functions, the system executor may create `thread` objects to run the submitted
+function objects. If the program is terminated by any means, and there remain
 unexecuted functions objects that have been submitted using `post` or `defer`,
-the implementation shall discard these function objects without calling them.
+these function objects are discarded without calling them.
 
 [section [^system_executor] operations]
 [xrefid async.system.exec.ops]
 
   execution_context& context() noexcept;
 
-[function_returns A reference to a static-duration object of a type derived
-from `execution_context`.]
-
-  void on_work_started() noexcept;
-
-[function_effects Does nothing.]
-
-  void on_work_finished() noexcept;
-
-[function_effects Does nothing.]
+[function_returns A reference to an object with static storage duration whose
+type is derived from `execution_context`.]
 
   template<class Func, class Alloc>
     void dispatch(Func&& f, const Alloc& a);
@@ -65,21 +61,14 @@ from `execution_context`.]
 
   template<class Func, class Alloc>
     void post(Func&& f, const Alloc& a);
-
-[function_effects Calls [^['DECAY_COPY]]`(forward<Func>(f))()` as if in a
-thread of execution represented by a `thread` object, with the call to
-`DECAY_COPY()` being evaluated in the thread that called `post`. Any exception
-propagated from the execution of [^['DECAY_COPY]]`(forward<Func>(f))()` shall
-result in a call to `std::terminate`.]
-
   template<class Func, class Alloc>
     void defer(Func&& f, const Alloc& a);
 
-[function_effects Calls [^['DECAY_COPY]]`(forward<Func>(f))()` as if in a
-thread of execution represented by a `thread` object, with the call to
-`DECAY_COPY()` being evaluated in the thread that called `defer`. Any exception
-propagated from the execution of [^['DECAY_COPY]]`(forward<Func>(f))()` shall
-result in a call to `std::terminate`.]
+[function_effects Creates an object `f1` initialized with
+[^['DECAY_COPY]]`(forward<Func>(f))`, and calls `f1` as if in a thread of
+execution represented by a `thread` object. Any exception propagated from the
+execution of [^['DECAY_COPY]]`(forward<Func>(f))()` shall result in a call to
+`std::terminate`.]
 
 [endsect]
 
