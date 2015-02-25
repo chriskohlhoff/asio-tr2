@@ -32,7 +32,7 @@ The `executor` class provides a polymorphic wrapper for types that satisfy the
 
           void swap(executor& other) noexcept;
           template<class Executor, class Alloc>
-            void assign(Executor e, const Alloc& e);
+            void assign(Executor e, const Alloc& a);
 
           // executor operations:
 
@@ -178,7 +178,7 @@ destroys, the target of `*this`.]
 [function_effects Interchanges the targets of `*this` and `other`.]
 
   template<class Executor, class Alloc>
-    void assign(Executor e, const Alloc& e);
+    void assign(Executor e, const Alloc& a);
 
 [function_effects `executor(allocator_arg, a, std::move(e)).swap(*this)`.]
 
@@ -189,14 +189,20 @@ destroys, the target of `*this`.]
 
   execution_context& context() noexcept;
 
+[function_requires `*this != nullptr`.]
+
 [function_returns `e.context()`, where `e` is the target object of `*this`.]
 
   void on_work_started() noexcept;
+
+[function_requires `*this != nullptr`.]
 
 [function_effects `e.on_work_started()`, where `e` is the target object of
 `*this`.]
 
   void on_work_finished() noexcept;
+
+[function_requires `*this != nullptr`.]
 
 [function_effects `e.on_work_finished()`, where `e` is the target object of
 `*this`.]
