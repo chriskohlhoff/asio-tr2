@@ -1,6 +1,9 @@
 [section:strand Class template [^strand]]
 [xrefid async.strand]
 
+The class template `strand` is a wrapper around an object of type `Executor`
+satisfying the [link requirements.executor Executor requirements].
+
   namespace std {
     namespace experimental {
       __begin_versioned_ns__
@@ -17,15 +20,15 @@
 
           strand();
           explicit strand(Executor ex);
-          strand(const strand& other);
-          strand(strand&& other);
-          template<class OtherExecutor> strand(const strand<OtherExecutor>& other);
-          template<class OtherExecutor> strand(strand<OtherExecutor>&& other);
+          strand(const strand& other) noexcept;
+          strand(strand&& other) noexcept;
+          template<class OtherExecutor> strand(const strand<OtherExecutor>& other) noexcept;
+          template<class OtherExecutor> strand(strand<OtherExecutor>&& other) noexcept;
 
-          strand& operator=(const strand& other);
-          strand& operator=(strand&& other);
-          template<class OtherExecutor> strand& operator=(const strand<OtherExecutor>& other);
-          template<class OtherExecutor> strand& operator=(strand<OtherExecutor>&& other);
+          strand& operator=(const strand& other) noexcept;
+          strand& operator=(strand&& other) noexcept;
+          template<class OtherExecutor> strand& operator=(const strand<OtherExecutor>& other) noexcept;
+          template<class OtherExecutor> strand& operator=(strand<OtherExecutor>&& other) noexcept;
 
           ~strand();
 
@@ -58,9 +61,7 @@
     } // namespace experimental
   } // namespace std
 
-`strand<Executor>` is a wrapper around an object of type `Executor` satisfying
-[link requirements.executor Executor requirements]. `strand<Executor>`
-satisfies the Executor requirements.
+`strand<Executor>` satisfies the Executor requirements.
 
 A strand provides guarantees of ordering and non-concurrency. Given:
 
@@ -72,7 +73,7 @@ A strand provides guarantees of ordering and non-concurrency. Given:
 [mdash] a function object `f2` added to the strand `s2` using `post` or
 `defer`, or using `dispatch` when `s2.running_in_this_thread() == false`
 
-then the implementation shall invoke `f1` and `f2` such that:
+then the implementation invokes `f1` and `f2` such that:
 
 [mdash] the invocation of `f1` is not concurrent with the invocation of `f2`
 
@@ -81,12 +82,13 @@ then the implementation shall invoke `f1` and `f2` such that:
 Furthermore, if the addition of `f1` happens before the addition of `f2`, then
 the invocation of `f1` happens before the invocation of `f2`.
 
-The strand copy constructors, comparison operators, and member functions shall
-not introduce data races as a result of concurrent calls to those functions
-from different threads.
+All member functions, except for the assignment operators and the destructor,
+do not introduce data races on `*this`, including its ordered,
+non-concurrent state. Additionally, constructors and assignment operators
+do not introduce data races on lvalue arguments.
 
 If any function `f` executed by the strand throws an exception, the subsequent
-strand state shall be as if `f` had exited without throwing an exception.
+strand state is as if `f` had exited without throwing an exception.
 
 [section [^strand] constructors]
 [xrefid async.strand.cons]
@@ -104,42 +106,42 @@ unless `Executor` satisfies the `DefaultConstructible` requirements (C++ Std,
   explicit strand(Executor ex);
 
 [function_effects Constructs an object of class `strand<Executor>` that
-represents a unique ordered, non-concurrent state. Initializes `inner_ex_` with
+represents a unique ordered, non-concurrent state. Initializes `inner_ex_` as
 `inner_ex_(ex)`.]
 
-  strand(const strand& other);
+  strand(const strand& other) noexcept;
 
-[function_effects Constructs an object of class `strand<Executor>`. Initalizes
-`inner_ex_` with `inner_ex_(other.inner_ex_)`.]
+[function_effects Constructs an object of class `strand<Executor>`. Initializes
+`inner_ex_` as `inner_ex_(other.inner_ex_)`.]
 
 [function_postconditions\n
 [mdash] `*this == other`\n
 [mdash] `get_inner_executor() == other.get_inner_executor()`]
 
-  strand(strand&& other);
+  strand(strand&& other) noexcept;
 
-[function_effects Constructs an object of class `strand<Executor>`. Initalizes
+[function_effects Constructs an object of class `strand<Executor>`. Initializes
 `inner_ex_` with `inner_ex_(std::move(other.inner_ex_))`.]
 
 [function_postconditions\n
 [mdash] `*this` is equal to the prior value of `other`\n
 [mdash] `get_inner_executor() == other.get_inner_executor()`]
 
-  template<class OtherExecutor> strand(const strand<OtherExecutor>& other);
+  template<class OtherExecutor> strand(const strand<OtherExecutor>& other) noexcept;
 
 [function_requires `OtherExecutor` is convertible to `Executor`.]
 
-[function_effects Constructs an object of class `strand<Executor>`. Initalizes
+[function_effects Constructs an object of class `strand<Executor>`. Initializes
 `inner_ex_` with `inner_ex_(other.inner_ex_)`.]
 
 [function_postconditions `*this == other`.]
 
-  template<class OtherExecutor> strand(strand<OtherExecutor>&& other);
+  template<class OtherExecutor> strand(strand<OtherExecutor>&& other) noexcept;
 
 [function_requires `OtherExecutor` is convertible to `Executor`.]
 
-[function_effects Constructs an object of class `strand<Executor>`. Initalizes
-`inner_ex_` with `inner_ex_(other.inner_ex_)`.]
+[function_effects Constructs an object of class `strand<Executor>`. Initializes
+`inner_ex_` with `inner_ex_(std::move(other.inner_ex_))`.]
 
 [function_postconditions `*this` is equal to the prior value of `other`.]
 
@@ -148,7 +150,7 @@ represents a unique ordered, non-concurrent state. Initializes `inner_ex_` with
 [section [^strand] assignment]
 [xrefid async.strand.assign]
 
-  strand& operator=(const strand& other);
+  strand& operator=(const strand& other) noexcept;
 
 [function_requires `Executor` is `Assignable` (C++ Std \[assignable\]).]
 
@@ -158,7 +160,7 @@ represents a unique ordered, non-concurrent state. Initializes `inner_ex_` with
 
 [function_returns `*this`.]
 
-  strand& operator=(strand&& other);
+  strand& operator=(strand&& other) noexcept;
 
 [function_requires `Executor` is `Assignable` (C++ Std \[assignable\]).]
 
@@ -168,22 +170,25 @@ represents a unique ordered, non-concurrent state. Initializes `inner_ex_` with
 
 [function_returns `*this`.]
 
-  template<class OtherExecutor> strand& operator=(const strand<OtherExecutor>& other);
+  template<class OtherExecutor> strand& operator=(const strand<OtherExecutor>& other) noexcept;
 
 [function_requires `OtherExecutor` is convertible to `Executor`. `Executor` is
 `Assignable` (C++ Std \[assignable\]).]
 
-[function_effects Equivalent to `strand<Executor>::operator=(Executor(other))`.]
+[function_effects Assigns `other.inner_ex_` to `inner_ex_`.]
+
+[function_postconditions `*this == other`.]
 
 [function_returns `*this`.]
 
-  template<class OtherExecutor> strand& operator=(strand<OtherExecutor>&& other);
+  template<class OtherExecutor> strand& operator=(strand<OtherExecutor>&& other) noexcept;
 
 [function_requires `OtherExecutor` is convertible to `Executor`. `Executor` is
 `Assignable` (C++ Std \[assignable\]).]
 
-[function_effects Equivalent to
-`strand<Executor>::operator=(Executor(std::move(other)))`.]
+[function_effects Assigns `std::move(other.inner_ex_)` to `inner_ex_`.]
+
+[function_postconditions `*this` is equal to the prior value of `other`.]
 
 [function_returns `*this`.]
 
@@ -194,10 +199,10 @@ represents a unique ordered, non-concurrent state. Initializes `inner_ex_` with
 
   ~strand();
 
-[function_effects Destroys an object of class `strand<Executor>`. Function
-objects that were added to the strand but have not yet been executed shall
-still be executed in a way that meets the guarantees of ordering and
-non-concurrency.]
+[function_effects Destroys an object of class `strand<Executor>`. After this
+destructor completes, objects that were added to the strand but have not yet
+been executed will be executed in a way that meets the guarantees of ordering
+and non-concurrency.]
 
 [endsect]
 
@@ -210,10 +215,11 @@ non-concurrency.]
 
   bool running_in_this_thread() const noexcept;
 
-[function_returns `true` if the current thread of execution is invoking a
+[function_returns `true` if the current thread of execution is running a
 function that was submitted to the strand, or to any other strand object `s`
-such that `s == *this`, using `dispatch`, `post` or `defer`; otherwise
-`false`.]
+such that `s == *this`, using `dispatch`, `post` or `defer`; otherwise `false`.
+[inline_note That is, the current thread of execution's call chain includes a
+function that was submitted to the strand.]]
 
   execution_context& context() noexcept;
 
@@ -230,14 +236,14 @@ such that `s == *this`, using `dispatch`, `post` or `defer`; otherwise
   template<class Func, class Alloc>
     void dispatch(Func&& f, const Alloc& a);
 
-[function_effects If `running_in_this_thread()` is true, calls
+[function_effects If `running_in_this_thread() == true`, calls
 [^['DECAY_COPY]]`(forward<Func>(f))()`. Otherwise, requests invocation of `f`,
 as if by forwarding the function object `f` and allocator `a` to the executor
 `inner_ex_`, such that the guarantees of ordering and non-concurrency are met.]
 
-[function_block If `f` exits via an exception, and the execution of `f` is
-performed in the current thread and before `dispatch` returns, the exception
-shall propagate to the caller of `dispatch()`]
+[function_block If the execution of `f` is performed in the current thread and
+before `dispatch` returns, and `f` exits via an exception, the exception shall
+propagate to the caller of `dispatch()`]
 
   template<class Func, class Alloc>
     void post(Func&& f, const Alloc& a);
