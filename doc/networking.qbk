@@ -94,8 +94,8 @@
 
 [/-----------------------------------------------------------------------------]
 
-[def __POSIX__ /POSIX/]
-[def __Windows__ /Windows/]
+[def __POSIX__ POSIX]
+[def __Windows__ Windows]
 [def __accept__ [@http://www.opengroup.org/onlinepubs/9699919799/functions/accept.html `accept()`]]
 [def __bind__ [@http://www.opengroup.org/onlinepubs/9699919799/functions/bind.html `bind()`]]
 [def __close__ [@http://www.opengroup.org/onlinepubs/9699919799/functions/close.html `close()`]]
