@@ -18,7 +18,8 @@ type `Clock::time_point`; and `d` denotes a value of type `Clock::duration`.
     [`X::to_wait_duration(t);`]
     [`Clock::duration`]
     [
-      Returns a `Clock::duration` value that represents the time point `t`.
+      Returns a `Clock::duration` value that represents the duration until the
+      time point `t`.
     ]
   ]
 ]
