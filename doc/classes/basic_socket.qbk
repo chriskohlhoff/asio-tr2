@@ -313,7 +313,7 @@ true` is dependent on the implementation-defined semantics of the
 `native_handle` type.]
 
 [commentary The main source of errors for `assign` would be a call to register
-the socket with an OS-specific event demultiplexor, such as a `kqueue`, an
+the socket with an OS-specific event demultiplexer, such as a `kqueue`, an
 `epoll` descriptor, a `/dev/poll` device, or a __Windows__ I/O completion port.
 These errors may also be produced by `open`, since that function would perform
 the same registration.]
