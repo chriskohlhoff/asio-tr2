@@ -316,14 +316,13 @@ bytes sent. Otherwise `n` is `0`.]
     size_t read_some(const MutableBufferSequence& buffers,
                      error_code& ec);
 
-[function_returns `receive(buffers, 0, ec)`.]
+[function_returns `receive(buffers, ec)`.]
 
   template<class MutableBufferSequence, class CompletionToken>
     auto async_read_some(const MutableBufferSequence& buffers,
                          CompletionToken&& token);
 
-[function_returns `async_receive(buffers, 0,
-forward<CompletionToken>(token))`.]
+[function_returns `async_receive(buffers, forward<CompletionToken>(token))`.]
 
   template<class ConstBufferSequence>
     size_t write_some(const ConstBufferSequence& buffers);
@@ -331,13 +330,13 @@ forward<CompletionToken>(token))`.]
     size_t write_some(const ConstBufferSequence& buffers,
                       error_code& ec);
 
-[function_returns `send(buffers, 0, ec)`.]
+[function_returns `send(buffers, ec)`.]
 
   template<class ConstBufferSequence, class CompletionToken>
     auto async_write_some(const ConstBufferSequence& buffers,
                           CompletionToken&& token);
 
-[function_returns `async_send(buffers, 0, forward<CompletionToken>(token))`.]
+[function_returns `async_send(buffers, forward<CompletionToken>(token))`.]
 
 [endsect]
 

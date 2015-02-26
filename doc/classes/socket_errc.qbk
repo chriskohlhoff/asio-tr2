@@ -4,7 +4,7 @@
   const error_category& socket_category() noexcept;
 
 [function_returns A reference to an object of a type derived from class
-error_category.]
+`error_category`.]
 
 [function_block The object’s `default_error_condition` and `equivalent` virtual
 functions shall behave as specified for the class `error_category`. The

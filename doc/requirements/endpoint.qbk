@@ -1,27 +1,18 @@
 [section:endpoint Endpoint requirements]
 [xrefid socket.reqmts.endpoint]
 
-An endpoint must meet the requirements of `CopyConstructible` types (C++ Std,
-20.1.3), and the requirements of `Assignable` types (C++ Std, 23.1).
+An endpoint must meet the requirements of `DefaultConstructible` types (C++
+Std, [defaultconstructible]), `CopyConstructible` types (C++ Std, 20.1.3),
+and the requirements of `Assignable` types (C++ Std, 23.1).
 
-In the table below, `X` denotes an endpoint class, `a` denotes a value of type
-`X`, and `u` denotes an identifier.
+In the table below, `X` denotes an endpoint class, `a` denotes a (possibly
+const) value of type `X`, and `u` denotes an identifier.
 
 [table Endpoint requirements
   [[expression] [type] [assertion/note\npre/post-conditions]]
   [
     [`X::protocol_type`]
     [type meeting [link requirements.protocol protocol] requirements]
-    []
-  ]
-  [
-    [`X u;`]
-    []
-    []
-  ]
-  [
-    [`X();`]
-    []
     []
   ]
   [
@@ -32,13 +23,14 @@ In the table below, `X` denotes an endpoint class, `a` denotes a value of type
 ]
 
 In the table below, `X` denotes an endpoint class, `a` denotes a value of `X`,
-`s` denotes a size in bytes, and `u` denotes an identifier.
+`s` is a value of a type that is convertible to `size_t` and denotes a size
+in bytes, and `u` denotes an identifier.
 
 [table Endpoint requirements for extensible implementations
   [[expression] [type] [assertion/note\npre/post-conditions]]
   [
     [`a.data();`]
-    [a pointer]
+    [`void*`]
     [
       Returns a pointer suitable for passing as the /address/ argument to
       __POSIX__ functions such as __accept__, __getpeername__, __getsockname__
@@ -72,6 +64,7 @@ In the table below, `X` denotes an endpoint class, `a` denotes a value of `X`,
     [`a.resize(s);`]
     []
     [
+      pre: `s >= 0`\n
       post: `a.size() == s`\n
       Passed the value contained in the /address_len/ argument to __POSIX__
       functions such as __accept__, __getpeername__, __getsockname__ and

@@ -13,9 +13,12 @@
         public:
           // types:
 
-          typedef typename Protocol::endpoint endpoint_type;
-          typedef typename Clock::time_point time_point;
-          typedef typename Clock::duration duration;
+          typedef Protocol protocol_type;
+          typedef typename protocol_type::endpoint endpoint_type;
+          typedef Clock clock_type;
+          typedef typename clock_type::time_point time_point;
+          typedef typename clock_type::duration duration;
+          typedef WaitTraits traits_type;
 
           // construct / destroy:
 
@@ -24,11 +27,10 @@
 
           // members:
 
-          basic_socket_streambuf<Protocol>* connect(const endpoint_type& e);
-          template<class... Args>
-            basic_socket_streambuf<Protocol>* connect(Args&&... );
+          basic_socket_streambuf* connect(const endpoint_type& e);
+          template<class... Args> basic_socket_streambuf* connect(Args&&... );
 
-          basic_socket_streambuf<Protocol>* close();
+          basic_socket_streambuf<protocol_type>* close();
 
           error_code puberror() const;
 
@@ -54,7 +56,7 @@
     } // namespace experimental
   } // namespace std
 
-The class `basic_socket_streambuf<Protocol>` associates both the input sequence
+The class `basic_socket_streambuf<protocol_type>` associates both the input sequence
 and the output sequence with a socket. The input and output sequences are
 independent and do not support seeking. Multibyte/wide character conversion is
 not supported.
@@ -65,32 +67,32 @@ not supported.
   basic_socket_streambuf();
 
 [function_effects Constructs an object of class
-`basic_socket_streambuf<Protocol>`, initializing the base classes with
-`basic_streambuf<char>()` and `basic_socket<Protocol>(ios)`, where `ios` is an
+`basic_socket_streambuf<protocol_type>`, initializing the base classes with
+`basic_streambuf<char>()` and `basic_socket<protocol_type>(ios)`, where `ios` is an
 unspecified object of class `io_service` that has a longer lifetime than the
-`basic_socket<Protocol>` base.]
+`basic_socket<protocol_type>` base.]
 
-[function_postconditions `expiry() == Clock::max()`.]
+[function_postconditions `expiry() == clock_type::max()`.]
 
   virtual ~basic_socket_streambuf();
 
 [function_effects Destroys an object of class
-`basic_socket_streambuf<Protocol>`. If a put area exists, calls
+`basic_socket_streambuf<protocol_type>`. If a put area exists, calls
 `overflow(traits_type::eof())` to flush characters. [inline_note The socket is
-closed by the `basic_socket<Protocol>` destructor.]]
+closed by the `basic_socket<protocol_type>` destructor.]]
 
 [endsect]
 
 [section [^basic_socket_streambuf] members]
 [xrefid socket.streambuf.members]
 
-  basic_socket_streambuf<Protocol>* connect(const endpoint_type& e);
+  basic_socket_streambuf<protocol_type>* connect(const endpoint_type& e);
 
 [function_effects Resets the `streambuf` get and put areas, closes the socket
-as if by calling `basic_socket<Protocol>::close(ec_)`, then establishes a
+as if by calling `basic_socket<protocol_type>::close(ec_)`, then establishes a
 connection as if by performing:
 ``
-  basic_socket<Protocol>::async_connect(e, __unspecified__);
+  basic_socket<protocol_type>::async_connect(e, __unspecified__);
 ``
 `ec_` is set to reflect the error code produced by the operation. If the
 operation does not complete before the absolute timeout specified by
@@ -100,18 +102,15 @@ operation does not complete before the absolute timeout specified by
 [function_returns if `!ec_`, `this`; otherwise, a null pointer.]
 
   template<class... Args>
-    basic_socket_streambuf<Protocol>* connect(Args&&... args);
-
-[function_requires The `Protocol` type must meet the requirements for an [link
-requirements.internet_protocol internet protocol].]
+    basic_socket_streambuf* connect(Args&&... args);
 
 [function_effects Resets the `streambuf` get and put areas. Constructs an
-object `q` of type `Protocol::resolver::query` by initializing the object with
+object `q` of type `protocol_type::resolver::query` by initializing the object with
 `q(forward<Args>(args)__dotdotdot__)`, then establishes a connection as if by
 performing:
 ``
-  typename Protocol::resolver resolver(ios);
-  typename Protocol::resolver::iterator i = resolver.resolve(q, ec_);
+  typename protocol_type::resolver resolver(ios);
+  typename protocol_type::resolver::iterator i = resolver.resolve(q, ec_);
   if (!ec_)
     std::experimental::__versioned_ns__::async_connect(*this, i, __unspecified__);
 ``
@@ -123,12 +122,16 @@ socket is closed and `ec_` is set to `errc::operation_canceled`.]
 
 [function_returns if `!ec_`, `this`; otherwise, a null pointer.]
 
-  basic_socket_streambuf<Protocol>* close();
+[function_remarks This function shall not participate in overload resolution
+unless `Protocol` meets the requirements for an [link
+requirements.internet_protocol internet protocol].]
+
+  basic_socket_streambuf* close();
 
 [function_effects If a put area exists, calls `overflow(traits_type::eof())` to
 flush characters. Calls:
 ``
-  this->basic_socket<Protocol>::close(ec_);
+  basic_socket<protocol_type>::close(ec_);
 ``
 then resets the get and put areas. If the call to `overflow` fails, or if `!ec_`,
 then `close` fails.]
@@ -149,7 +152,7 @@ then `close` fails.]
 
   void expires_after(const duration& d);
 
-[function_effects Calls `expires_at(Clock::now() + d)`.]
+[function_effects Calls `expires_at(clock_type::now() + d)`.]
 
 [endsect]
 

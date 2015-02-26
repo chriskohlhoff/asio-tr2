@@ -25,7 +25,7 @@ requirements, and `u` denotes an identifier.
   ]
   [
     [`a.data(p);`]
-    [a pointer, convertible to `void*`]
+    [`void*`]
     [
       Returns a pointer suitable for passing as the /option_value/ argument to
       __POSIX__ __getsockopt__ (or equivalent).

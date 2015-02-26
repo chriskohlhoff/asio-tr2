@@ -15,7 +15,7 @@ In the table below, `a` denotes a value of an I/O control command class.
   ]
   [
     [`a.data();`]
-    [a pointer, convertible to `void*`]
+    [`void*`]
     [
     ]
   ]

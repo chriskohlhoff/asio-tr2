@@ -86,7 +86,7 @@
           void bind(const endpoint_type& endpoint);
           void bind(const endpoint_type& endpoint, error_code& ec);
 
-          void listen(int backlog = max_connections);
+          void listen(int backlog = max_listen_connections);
           void listen(int backlog, error_code& ec);
 
           endpoint_type local_endpoint() const;
@@ -481,8 +481,6 @@ acceptor, as if by __POSIX__ __getsockname__.]
 
   void enable_connection_aborted(bool mode);
 
-[function_requires `is_open()`.]
-
 [function_effects If `mode` is true, subsequent synchronous or asynchronous
 accept operations are permitted to fail with error condition
 `errc::connection_aborted`. If `mode` is false, subsequent accept operations
@@ -509,18 +507,14 @@ re-enable the error.]
   template<class OtherProtocol>
     void accept(basic_socket<OtherProtocol>& socket, error_code& ec);
 
-[function_requires\n
-[mdash] `!socket.is_open()`.\n
-[mdash] `Protocol` and `OtherProtocol` are the same type, or `Protocol` is
-convertible to `OtherProtocol`.]
+[function_requires `Protocol` is convertible to `OtherProtocol`.]
 
 [function_effects Associates `socket` with the first connection successfully
 extracted from the queue of pending connections of the acceptor, as if by
 __POSIX__ __accept__.]
 
 [function_error_conditions\n
-[mdash] `socket_errc::already_open` [mdash] if the requirement
-`!socket.is_open()` is unmet.]
+[mdash] `socket_errc::already_open` [mdash] if `socket.is_open()` is false.]
 
   template<class OtherProtocol, class CompletionToken>
     auto async_accept(basic_socket<OtherProtocol>& socket,
@@ -528,10 +522,7 @@ __POSIX__ __accept__.]
 
 [function_completion_signature `void(error_code ec)`.]
 
-[function_requires\n
-[mdash] `!socket.is_open()`.\n
-[mdash] `Protocol` and `OtherProtocol` are the same type, or `Protocol` is
-convertible to `OtherProtocol`.]
+[function_requires `Protocol` is convertible to `OtherProtocol`.]
 
 [function_effects Initiates an asynchronous operation to associate `socket`
 with the first connection successfully extracted from the queue of pending
@@ -542,8 +533,7 @@ that the operations may logically be performed in parallel, the behavior is
 unspecified.]
 
 [function_error_conditions\n
-[mdash] `socket_errc::already_open` [mdash] if the requirement
-`!socket.is_open()` is unmet.]
+[mdash] `socket_errc::already_open` [mdash] if `socket.is_open()` is false.]
 
   template<class OtherProtocol>
     void accept(basic_socket<OtherProtocol>& socket,

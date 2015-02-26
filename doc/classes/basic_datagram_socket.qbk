@@ -6,15 +6,14 @@
       __begin_versioned_ns__
 
         template<class Protocol>
-        class basic_datagram_socket :
-          public basic_socket<Protocol>
+        class basic_datagram_socket : public basic_socket<Protocol>
         {
         public:
           // types:
 
           typedef ``['implementation defined]`` native_handle_type; // See ``[link requirements.native_handles native handles]``
           typedef Protocol protocol_type;
-          typedef typename Protocol::endpoint endpoint_type;
+          typedef typename protocol_type::endpoint endpoint_type;
 
           // construct / copy / destroy:
 
@@ -35,7 +34,7 @@
           template<class OtherProtocol>
             basic_datagram_socket& operator=(basic_datagram_socket<OtherProtocol>&& rhs);
 
-          // basic_datagram_socket operations::
+          // basic_datagram_socket operations:
 
           template<class MutableBufferSequence>
             size_t receive(const MutableBufferSequence& buffers);
@@ -145,34 +144,30 @@
 
   explicit basic_datagram_socket(io_service& ios);
 
-[function_effects Constructs an object of class
-`basic_datagram_socket<Protocol>`, initializing the base class with
+[function_effects Initializes the base class with
 `basic_socket<Protocol>(ios)`.]
 
   basic_datagram_socket(io_service& ios, const protocol_type& protocol);
 
-[function_effects Constructs an object of class
-`basic_datagram_socket<Protocol>`, initializing the base class with
-`basic_socket<Protocol>(ios, protocol)`.]
+[function_effects Initializes the base class with `basic_socket<Protocol>(ios,
+protocol)`.]
 
   basic_datagram_socket(io_service& ios, const endpoint_type& endpoint);
 
-[function_effects Constructs an object of class
-`basic_datagram_socket<Protocol>`, initializing the base class with
+[function_effects Initializes the base class with
 `basic_socket<Protocol>(ios, endpoint)`.]
 
   basic_datagram_socket(io_service& ios, const protocol_type& protocol,
                         const native_handle_type& native_socket);
 
-[function_effects Constructs an object of class
-`basic_datagram_socket<Protocol>`, initializing the base class with
+[function_effects Initializes the base class with
 `basic_socket<Protocol>(ios, protocol, native_socket)`.]
 
   basic_datagram_socket(basic_datagram_socket&& rhs);
 
 [function_effects Move constructs an object of class
 `basic_datagram_socket<Protocol>`, initializing the base class with
-`basic_socket<Protocol>(static_cast<basic_socket<Protocol>&&>(rhs))`.]
+`basic_socket<Protocol>(std::move(rhs))`.]
 
   template<class OtherProtocol>
     basic_datagram_socket(basic_datagram_socket<OtherProtocol>&& rhs);
@@ -181,7 +176,7 @@
 
 [function_effects Move constructs an object of class
 `basic_datagram_socket<Protocol>`, initializing the base class with
-`basic_socket<Protocol>(static_cast<basic_socket<OtherProtocol>&&>(rhs))`.]
+`basic_socket<Protocol>(std::move(rhs))`.]
 
 [function_remarks This constructor shall not participate in overload resolution
 unless `OtherProtocol` is implicitly convertible to `Protocol`.]
@@ -194,7 +189,7 @@ unless `OtherProtocol` is implicitly convertible to `Protocol`.]
   basic_datagram_socket& operator=(basic_datagram_socket&& rhs);
 
 [function_effects Calls
-`basic_socket<Protocol>::operator=(static_cast<basic_socket<Protocol>&&>(rhs))`.]
+`basic_socket<Protocol>::operator=(std::move(rhs))`.]
 
 [function_returns `*this`.]
 
@@ -204,7 +199,7 @@ unless `OtherProtocol` is implicitly convertible to `Protocol`.]
 [function_requires `OtherProtocol` is implicitly convertible to `Protocol`.]
 
 [function_effects Calls
-`basic_socket<Protocol>::operator=(static_cast<basic_socket<OtherProtocol>&&>(rhs))`.]
+`basic_socket<Protocol>::operator=(std::move(rhs))`.]
 
 [function_returns `*this`.]
 
@@ -222,7 +217,7 @@ resolution unless `OtherProtocol` is implicitly convertible to `Protocol`.]
     size_t receive(const MutableBufferSequence& buffers,
                    error_code& ec);
 
-[function_returns `receive(buffers, 0, ec)`.]
+[function_returns `receive(buffers, socket_base::message_flags(), ec)`.]
 
   template<class MutableBufferSequence>
     size_t receive(const MutableBufferSequence& buffers,
@@ -246,7 +241,7 @@ endpoint of received data.]]
     auto async_receive(const MutableBufferSequence& buffers,
                        CompletionToken&& token);
 
-[function_returns `async_receive(buffers, 0,
+[function_returns `async_receive(buffers, socket_base::message_flags(),
 forward<CompletionToken>(token))`.]
 
   template<class MutableBufferSequence, class CompletionToken>
@@ -256,8 +251,6 @@ forward<CompletionToken>(token))`.]
 
 [function_completion_signature `void(error_code ec, size_t n)`.]
 
-[function_requires `(flags & socket_base::message_peek) == 0`.]
-
 [function_effects Initiates an asynchronous operation to read data from a
 connection-mode or connectionless-mode socket, as if by __POSIX__ __recvmsg__,
 where `flags` specifies the type of message reception. [inline_note It is
@@ -265,23 +258,23 @@ normally used with connection-mode sockets because it does not permit the
 application to retrieve the source endpoint of received data.]]
 
 [function_block When multiple asynchronous receive operations with zero `flags`
-are initiated such that the operations may logically be performed in parallel,
-the implementation shall fill the `buffers` in the order in which the
-operations were issued. The order of invocation of the handlers for these
-operations is unspecified. When multiple asynchronous receive operations with
-non-zero `flags` are initiated such that operations may logically be performed
-in parallel, the behavior is unspecified.]
+are initiated such that the outstanding operations may logically be performed
+in parallel, the `buffers` are filled in the order in which the operations were
+issued. The order of invocation of the handlers for these operations is
+unspecified. When multiple asynchronous receive operations with non-zero
+`flags` are initiated such that operations may logically be performed in
+parallel, the behavior is undefined.]
 
 [function_block If a program performs a synchronous operation on the socket,
-other than `close`, `cancel`, `send` or `send_to`, while there is a pending
+other than `close`, `cancel`, `send`, or `send_to`, while there is a pending
 asynchronous receive operation, the behavior is unspecified.]
 
 [function_block If the operation completes successfully, `n` is the number of
 bytes received. Otherwise `n` is `0`.]
 
 [function_error_conditions\n
-[mdash] `errc::invalid_argument` [mdash] if `(flags &
-socket_base::message_peek) != 0`.]
+[mdash] `errc::invalid_argument` [mdash] if `socket_base::message_peek` is set
+in flags.]
 
   template<class MutableBufferSequence>
     size_t receive_from(const MutableBufferSequence& buffers,
@@ -290,7 +283,8 @@ socket_base::message_peek) != 0`.]
     size_t receive_from(const MutableBufferSequence& buffers,
                         endpoint_type& sender, error_code& ec);
 
-[function_returns `receive_from(buffers, endpoint, 0, ec)`.]
+[function_returns `receive_from(buffers, endpoint,
+socket_base::message_flags(), ec)`.]
 
   template<class MutableBufferSequence>
     size_t receive_from(const MutableBufferSequence& buffers,
@@ -318,8 +312,8 @@ permits the application to retrieve the source endpoint of received data.]]
                             endpoint_type& sender,
                             CompletionToken&& token);
 
-[function_effects Returns `async_receive_from(buffers, sender, 0,
-forward<CompletionToken>(token))`.]
+[function_effects Returns `async_receive_from(buffers, sender,
+socket_base::message_flags(), forward<CompletionToken>(token))`.]
 
   template<class MutableBufferSequence, class CompletionToken>
     auto async_receive_from(const MutableBufferSequence& buffers,
@@ -328,8 +322,6 @@ forward<CompletionToken>(token))`.]
                             CompletionToken&& token);
 
 [function_completion_signature `void(error_code ec, size_t n)`.]
-
-[function_requires `(flags & socket_base::message_peek) == 0`.]
 
 [function_effects Initiates an asynchronous operation to read data from a
 connection-mode or connectionless-mode socket, as if by __POSIX__ __recvmsg__,
@@ -342,27 +334,28 @@ source endpoint of received data.]]
 are initiated such that the operations may logically be performed in parallel,
 the implementation shall fill the `buffers` in the order in which the
 operations were issued. The order of invocation of the handlers for these
-operations is unspecified. When multiple asynchronous receive operations with
-non-zero `flags` are initiated such that operations may logically be performed
-in parallel, the behavior is unspecified.]
+operations is unspecified. When multiple asynchronous receive operations on
+this socket, where at least one has non-zero `flags`, are initiated such that
+operations may logically be performed in parallel, the behavior is
+unspecified.]
 
 [function_block If a program performs a synchronous operation on the socket,
-other than `close`, `cancel`, `send` or `send_to`, while there is a pending
-asynchronous receive operation, the behavior is unspecified.]
+other than `close`, `cancel`, `send`, or `send_to`, while there is a pending
+asynchronous receive operation, the behavior is undefined.]
 
 [function_block If the operation completes successfully, `n` is the number of
 bytes received. Otherwise `n` is `0`.]
 
 [function_error_conditions\n
-[mdash] `errc::invalid_argument` [mdash] if `(flags &
-socket_base::message_peek) != 0`.]
+[mdash] `errc::invalid_argument` [mdash] if `socket_base::message_peek` is set
+in flags.]
 
   template<class ConstBufferSequence>
     size_t send(const ConstBufferSequence& buffers);
   template<class ConstBufferSequence>
     size_t send(const ConstBufferSequence& buffers, error_code& ec);
 
-[function_returns `send(buffers, 0, ec)`.]
+[function_returns `send(buffers, socket_base::message_flags(), ec)`.]
 
   template<class ConstBufferSequence>
     size_t send(const ConstBufferSequence& buffers,
@@ -374,15 +367,16 @@ socket_base::message_peek) != 0`.]
 [function_block A [link requirements.synchronous_write_operations synchronous
 write operation].]
 
-[function_effects Writes data to a connected socket, as if by __POSIX__
-__sendmsg__, where `flags` specifies the type of message transmission.]
+[function_effects Writes data to this socket, as if by __POSIX__ __sendmsg__,
+where `flags` specifies the type of message transmission.]
 
 [function_returns On success, the number of bytes sent. Otherwise `0`.]
 
   template<class ConstBufferSequence, class CompletionToken>
     auto async_send(const ConstBufferSequence& buffers, CompletionToken&& token);
 
-[function_returns `async_send(buffers, 0, forward<CompletionToken>(token))`.]
+[function_returns `async_send(buffers, socket_base::message_flags(),
+forward<CompletionToken>(token))`.]
 
   template<class ConstBufferSequence, class CompletionToken>
     auto async_send(const ConstBufferSequence& buffers,
@@ -391,20 +385,21 @@ __sendmsg__, where `flags` specifies the type of message transmission.]
 
 [function_completion_signature `void(error_code ec, size_t n)`.]
 
-[function_effects Initiates an asynchronous operation to write data to a
-connected socket, as if by __POSIX__ __sendmsg__, where `flags` specifies the
+[function_effects Initiates an asynchronous operation to write data to this
+socket, as if by __POSIX__ __sendmsg__, where `flags` specifies the
 type of message transmission.]
 
 [function_block When multiple asynchronous send operations with zero `flags`
 are initiated such that the operations may logically be performed in parallel,
 the implementation shall transmit the `buffers` in the order in which the
 operations were issued. The order of invocation of the handlers for these
-operations is unspecified. When multiple asynchronous send operations with
-non-zero `flags` are initiated such that operations may logically be performed
-in parallel, the behavior is unspecified.]
+operations is unspecified.
+When multiple asynchronous send operations, where at
+least one has non-zero `flags`, are initiated such that operations may
+logically be performed in parallel, the behavior is unspecified.]
 
 [function_block If a program performs a synchronous operation on the socket,
-other than `close`, `cancel`, `receive` or `receive_from`, while there is a
+other than `close`, `cancel`, `receive`, or `receive_from`, while there is a
 pending asynchronous send operation, the behavior is unspecified.]
 
 [function_block If the operation completes successfully, `n` is the number of
@@ -417,7 +412,7 @@ bytes sent. Otherwise `n` is `0`.]
     size_t send_to(const ConstBufferSequence& buffers,
                    const endpoint_type& destination, error_code& ec);
 
-[function_returns `send_to(buffers, destination, 0, ec)`.]
+[function_returns `send_to(buffers, destination, socket_base::message_flags(), ec)`.]
 
   template<class ConstBufferSequence>
     size_t send_to(const ConstBufferSequence& buffers,
@@ -425,38 +420,37 @@ bytes sent. Otherwise `n` is `0`.]
                    socket_base::message_flags flags);
   template<class ConstBufferSequence>
     size_t send_to(const ConstBufferSequence& buffers,
-                   const endpoint_type& destination,
+                   const endpoint_type& recipient,
                    socket_base::message_flags flags, error_code& ec);
 
 [function_block A [link requirements.synchronous_write_operations synchronous
 write operation].]
 
-[function_effects Writes data to a connection-mode or connectionless-mode
-socket, as if by __POSIX__ __sendmsg__, where `destination` is the destination
-endpoint of the data, and `flags` specifies the type of message transmission.]
+[function_effects Writes data to this socket, as if by __POSIX__ __sendmsg__,
+where `recipient` is the destination endpoint of the data, and `flags`
+specifies the type of message transmission.]
 
 [function_returns On success, the number of bytes sent. Otherwise `0`.]
 
   template<class ConstBufferSequence, class CompletionToken>
     auto async_send_to(const ConstBufferSequence& buffers,
-                       const endpoint_type& destination,
+                       const endpoint_type& recipient,
                        CompletionToken&& token);
 
-[function_returns `async_send_to(buffers, destination, 0,
+[function_returns `async_send_to(buffers, recipient, socket_base::message_flags(),
 forward<CompletionToken>(token))`.]
 
   template<class ConstBufferSequence, class CompletionToken>
     auto async_send_to(const ConstBufferSequence& buffers,
-                       const endpoint_type& destination,
+                       const endpoint_type& recipient,
                        socket_base::message_flags flags,
                        CompletionToken&& token);
 
 [function_completion_signature `void(error_code ec, size_t n)`.]
 
-[function_effects Initiates an asynchronous operation to write data to a
-connection-mode or connectionless-mode socket, as if by __POSIX__ __sendmsg__,
-where `destination` is the destination endpoint of the data, and `flags`
-specifies the type of message reception.]
+[function_effects Initiates an asynchronous operation to write data to this
+socket, as if by __POSIX__ __sendmsg__, where `recipient` is the destination
+endpoint of the data, and `flags` specifies the type of message reception.]
 
 [function_block When multiple asynchronous send operations with zero `flags`
 are initiated such that the operations may logically be performed in parallel,
@@ -467,7 +461,7 @@ non-zero `flags` are initiated such that operations may logically be performed
 in parallel, the behavior is unspecified.]
 
 [function_block If a program performs a synchronous operation on the socket,
-other than `close`, `cancel`, `receive` or `receive_from`, while there is a
+other than `close`, `cancel`, `receive`, or `receive_from`, while there is a
 pending asynchronous send operation, the behavior is unspecified.]
 
 [function_block If the operation completes successfully, `n` is the number of
