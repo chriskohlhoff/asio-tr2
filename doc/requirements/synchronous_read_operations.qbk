@@ -2,7 +2,7 @@
 [xrefid buffer.reqmts.sync.read]
 
 In this clause, a ['synchronous read operation] is a function that reads data
-into a ['mutable buffer sequence] argument of a type meeting [link
+into a mutable buffer sequence argument of a type meeting [link
 requirements.mutable_buffers MutableBufferSequence] requirements.
 
 The mutable buffer sequence specifies memory where the data should be placed.
