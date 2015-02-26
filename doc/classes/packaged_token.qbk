@@ -1,6 +1,11 @@
 [section:packaged_token Class template [^packaged_token]]
 [xrefid async.package.token]
 
+Class template `packaged_handler` is an adapter to enable the use of packaged
+tasks with asynchronous operations as a completion token. The specification of
+the packaged task's `Signature` is deferred until the completion token is
+transformed into a completion handler.
+
   namespace std {
     namespace experimental {
       __begin_versioned_ns__
@@ -37,23 +42,18 @@
     } // namespace experimental
   } // namespace std
 
-[section [^packaged_token] constructors]
-[xrefid async.package.token.cons]
+[section [^packaged_token] members]
+[xrefid async.package.token.members]
 
   explicit packaged_token(Func f);
 
-[function_effects Constructs an object of class `packaged_token<Func, Alloc>`,
-initializing `f_` with `std::move(f)` and default constructing `allocator_`.]
+[function_effects Initializes `f_` with `std::move(f)` and default constructs
+`allocator_`.]
 
   packaged_token(Func f, const Alloc& a);
 
-[function_effects Constructs an object of class `packaged_token<Func, Alloc>`,
-initializing `f_` with `std::move(f)` and `allocator_` with `a`.]
-
-[endsect]
-
-[section [^packaged_token] operations]
-[xrefid async.package.token.ops]
+[function_effects Initializes `f_` with `std::move(f)` and `allocator_` with
+`a`.]
 
   allocator_type get_allocator() const noexcept;
 
