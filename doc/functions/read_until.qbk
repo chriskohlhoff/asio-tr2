@@ -1,5 +1,5 @@
 [section:read_until Synchronous delimited read operations]
-[buffer buffer.read.until]
+[xrefid buffer.read.until]
 
   template<class SyncReadStream, class DynamicBufferSequence>
     size_t read_until(SyncReadStream& s, DynamicBufferSequence&& b,
@@ -45,6 +45,7 @@ b.max_size()`, `ec` contains the `error_code` from the most recent `read_some`
 call.]
 
 [function_returns The number of bytes in the input sequence of `b` up to and
-including the delimiter, if present. Otherwise returns `0`.]
+including the delimiter, if present. [inline_note On completion, the buffer may
+contain additional bytes following the delimiter.] Otherwise returns `0`.]
 
 [endsect]

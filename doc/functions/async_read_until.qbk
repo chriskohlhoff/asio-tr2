@@ -47,8 +47,8 @@ asynchronous read_some operation's completion handler.]
 `stream` and the memory associated with the dynamic buffer sequence `b` are
 valid until the handler for the asynchronous operation is invoked.]
 
-[function_block If `delim` is of type `string_view`, the implementation shall
-copy the underlying sequence of characters prior to initiating an asynchronous
+[function_block If `delim` is of type `string_view`, the implementation copies
+the underlying sequence of characters prior to initiating an asynchronous
 read_some operation on the stream. [inline_note This means that the caller is
 not required to guarantee the validity of the delimiter string after the call
 to `async_read_until` returns.]]

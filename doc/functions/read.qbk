@@ -22,9 +22,10 @@
 [function_block A [link requirements.synchronous_read_operations synchronous
 read operation].]
 
-[function_effects Reads data from the [link requirements.sync_read_stream
-buffer-oriented synchronous read stream] object `stream` by performing zero or
-more calls to the stream's `read_some` member function.]
+[function_effects Clears `ec`, then reads data from the [link
+requirements.sync_read_stream buffer-oriented synchronous read stream] object
+`stream` by performing zero or more calls to the stream's `read_some` member
+function.]
 
 [function_block The `completion_condition` parameter specifies a function
 object to be called prior to each call to the stream's `read_some` member
@@ -66,17 +67,17 @@ unless `is_mutable_buffer_sequence<MutableBufferSequence>::value` is true.]
                   CompletionCondition completion_condition,
                   error_code& ec);
 
-[function_effects Reads data from the [link requirements.sync_read_stream
-synchronous read stream] object `stream` by performing zero or more calls to
-the stream's `read_some` member function.]
+[function_effects Clears `ec`, then reads data from the [link
+requirements.sync_read_stream synchronous read stream] object `stream` by
+performing zero or more calls to the stream's `read_some` member function.]
 
 [function_block Data is placed into the [link requirements.dynamic_buffers
 dynamic buffer sequence] object `b`. A [link requirements.mutable_buffers
 mutable buffer sequence] is obtained prior to each `read_some` call using
-`b.prepare(N)`, where `N` is an unspecified value such that `N <= max_size() -
-size()`. [inline_note Implementations are encouraged to use `b.capacity()` when
-determining `N`, to minimize the number of `read_some` calls performed on the
-stream.] After each `read_some` call, the implementation performs
+`b.prepare(N)`, where `N` is an unspecified value less than or equal to `b.max_size()
+- b.size()`. [inline_note Implementations are encouraged to use `b.capacity()`
+when determining `N`, to minimize the number of `read_some` calls performed
+on the stream.] After each `read_some` call, the implementation performs
 `b.commit(n)`, where `n` is the return value from `read_some`.]
 
 [function_block The `completion_condition` parameter specifies a function
