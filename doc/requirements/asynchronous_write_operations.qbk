@@ -12,12 +12,12 @@ sequence completely before proceeding to the next.
 
 The write operation's implementation shall maintain one or more copies of the
 buffer sequence until such time as the write operation no longer requires
-access to the memory specified by the buffers in the sequence. The program must
-ensure the memory is valid until:
+access to the memory specified by the buffers in the sequence. The program shall
+ensure the memory remains valid until:
 
 [mdash] the last copy of the buffer sequence is destroyed, or
 
-[mdash] the handler for the asynchronous operation is invoked,
+[mdash] the completion handler for the asynchronous operation is invoked,
 
 whichever comes first.
 
