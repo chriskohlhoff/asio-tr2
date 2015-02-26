@@ -1,11 +1,8 @@
 [section:mutable_buffers_1 Class [^mutable_buffers_1]]
 [xrefid buffer.mutable.1]
 
-The `mutable_buffers_1` class meets the requirements for [link
-requirements.mutable_buffers `MutableBufferSequence`], [link
-requirements.mutable_buffers `ConstBufferSequence`], [link
-requirements.convertible_to_mutable_buffer `ConvertibleToMutableBuffer`], and
-[link requirements.convertible_to_mutable_buffer `ConvertibleToConstBuffer`].
+An object of class `mutable_buffers_1` represents a sequence of exactly one
+`mutable_buffer` object.
 
 [commentary `mutable_buffers_1` is derived from `mutable_buffer` so that it is
 convertible to both `mutable_buffer` and `const_buffer`, while ensuring that
@@ -18,8 +15,7 @@ ambiguities when passing to functions that are overloaded on both
     namespace experimental {
       __begin_versioned_ns__
 
-        class mutable_buffers_1 :
-          public mutable_buffer
+        class mutable_buffers_1 : public mutable_buffer
         {
         public:
           // types:
@@ -39,8 +35,11 @@ ambiguities when passing to functions that are overloaded on both
     } // namespace experimental
   } // namespace std
 
-An object of class `mutable_buffers_1` represents a sequence of exactly one
-`mutable_buffer` object.
+The `mutable_buffers_1` class meets the requirements for [link
+requirements.mutable_buffers `MutableBufferSequence`], [link
+requirements.mutable_buffers `ConstBufferSequence`], [link
+requirements.convertible_to_mutable_buffer `ConvertibleToMutableBuffer`], and
+[link requirements.convertible_to_mutable_buffer `ConvertibleToConstBuffer`].
 
 [section [^mutable_buffers_1] constructors]
 [xrefid buffer.mutable.1.cons]
