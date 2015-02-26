@@ -20,13 +20,12 @@ denotes a value of type `X` and `u` denotes an identifier.
   ]
   [
     [``
-      X(a);
       X u(a);
     ``]
     []
     [post:\n
      ``
-       equal(begin(), end(), a.begin(), a.end(),
+       equal(u.begin(), u.end(), a.begin(), a.end(),
          [](const typename X::value_type& v1,
             const typename X::value_type& v2)
           {
@@ -35,23 +34,23 @@ denotes a value of type `X` and `u` denotes an identifier.
             return buffer_cast<void*>(b1)
               == buffer_cast<void*>(b2)
                 && buffer_size(b1) == buffer_size(b2);
-          });
+          })
      ``]
   ]
   [
-    [`(&a)->~X();`]
+    [`(&a)->~X()`]
     [`void`]
     [note: the destructor is applied to every element of `a`; all the memory
      is deallocated.]
   ]
   [
-    [`a.begin();`]
-    [`const_iterator` or convertible to `const_iterator`]
+    [`a.begin()`]
+    [convertible to `const_iterator`]
     []
   ]
   [
-    [`a.end();`]
-    [`const_iterator` or convertible to `const_iterator`]
+    [`a.end()`]
+    [convertible to `const_iterator`]
     []
   ]
 ]
