@@ -13,8 +13,8 @@
 
           typedef io_service::executor_type executor_type;
           typedef Clock clock_type;
-          typedef typename Clock::duration duration;
-          typedef typename Clock::time_point time_point;
+          typedef typename clock_type::duration duration;
+          typedef typename clock_type::time_point time_point;
           typedef WaitTraits traits_type;
 
           // construct / copy / destroy:
@@ -23,7 +23,7 @@
           basic_waitable_timer(io_service& ios, const time_point& t);
           basic_waitable_timer(io_service& ios, const duration& d);
           basic_waitable_timer(const basic_waitable_timer&) = delete;
-          basic_waitable_timer(basic_waitable_timer&& rhs);
+          basic_waitable_timer(basic_waitable_timer&& rhs) noexcept;
 
           ~basic_waitable_timer();
 
@@ -57,38 +57,31 @@
 
   explicit basic_waitable_timer(io_service& ios);
 
-[function_effects Constructs an object of class `basic_waitable_timer<Clock,
-WaitTraits>`.]
-
-[function_postconditions\n
-[mdash] `get_executor() == ios.get_executor()`.\n
-[mdash] `expiry() == Clock::time_point()`.]
+[function_effects Equivalent to `basic_waitable_timer(ios, time_point())`.]
 
   basic_waitable_timer(io_service& ios, const time_point& t);
 
-[function_effects Constructs an object of class `basic_waitable_timer<Clock,
-WaitTraits>`, setting the expiry time as if by calling `this->expires_at(t)`.]
-
-[function_postconditions `get_executor() == ios.get_executor()`.]
+[function_postconditions\n
+[mdash] `get_executor() == ios.get_executor()`.\n
+[mdash] `expiry() == t`.]
 
   basic_waitable_timer(io_service& ios, const duration& d);
 
-[function_effects Constructs an object of class `basic_waitable_timer<Clock,
-WaitTraits>`, setting the expiry time as if by calling `this->expires_at(d)`.]
+[function_effects Sets the expiry time as if by calling `expires_after(d)`.]
 
 [function_postconditions `get_executor() == ios.get_executor()`.]
 
-  basic_waitable_timer(basic_waitable_timer&& rhs);
+  basic_waitable_timer(basic_waitable_timer&& rhs) noexcept;
 
 [function_effects Move constructs an object of class
 `basic_waitable_timer<Clock, WaitTraits>` that refers to the state originally
 represented by `rhs`.]
 
 [function_postconditions\n
-[mdash] `get_executor() == rhs.get_executor()`.\n
+[mdash] `get_executor()` is equal to the prior value of `rhs.get_executor()`.\n
 [mdash] `expiry()` returns the same value as `rhs.expiry()` prior to the
 constructor invocation.\n
-[mdash] `rhs.expiry() == Clock::time_point()`.]
+[mdash] `rhs.expiry() == time_point()`.]
  
 [endsect]
 
@@ -112,10 +105,10 @@ with `*this` as if by calling `cancel()`, then moves into `*this` the state
 originally represented by `rhs`.]
 
 [function_postconditions\n
-[mdash] `get_executor() == rhs.get_executor()`.\n
+[mdash] `get_executor()` is equal to the prior value of `rhs.get_executor()`.\n
 [mdash] `expiry()` returns the same value as `rhs.expiry()` prior to the
 assignment.\n
-[mdash] `rhs.expiry() == Clock::time_point()`.]
+[mdash] `rhs.expiry() == time_point()`.]
 
 [function_returns `*this`.]
  
@@ -131,39 +124,37 @@ assignment.\n
   size_t cancel();
 
 [function_effects Causes any outstanding asynchronous wait operations to
-complete as soon as possible. Handlers for cancelled operations shall be passed
-an error code `ec` such that `ec == errc::operation_canceled` holds true.]
+complete. Completion handlers for canceled operations are passed an error code
+`ec` such that `ec == errc::operation_canceled` yields true.]
 
-[function_returns The number of operations that were cancelled.]
+[function_returns The number of operations that were canceled.]
 
   size_t cancel_one();
 
-[function_effects Causes the oldest outstanding asynchronous wait operation, if
-any, to complete as soon as possible. The handler for the cancelled operation
-shall be passed an error code `ec` such that `ec == errc::operation_canceled`
-holds true.]
+[function_effects Causes the outstanding asynchronous wait operation that was
+initiated first, if any, to complete as soon as possible. The completion
+handler for the canceled operation is passed an error code `ec` such that `ec
+== errc::operation_canceled` yields true.]
 
-[function_returns The number of operations that were cancelled.]
+[function_returns `1` if an operation was cancelled, otherwise `0`.]
 
   time_point expiry() const;
 
 [function_returns The expiry time associated with the timer, as previously set
 using `expires_at()` or `expires_after()`.]
 
-[function_returns `this->service.expires_at(this->implementation)`.]
-
   size_t expires_at(const time_point& t);
 
-[function_effects Sets the expiry time associated with the timer. Implicitly
-cancels asynchronous wait operations, as if by calling `cancel()`.]
+[function_effects Cancels outstanding asynchronous wait operations, as if by
+calling `cancel()`. Sets the expiry time associated with the timer. ]
 
-[function_returns The number of operations that were cancelled.]
+[function_returns The number of operations that were canceled.]
 
 [function_postconditions `expiry() == t`.]
 
   size_t expires_after(const duration& d);
 
-[function_returns `expires_at(Clock::now() + d)`.]
+[function_returns `expires_at(clock_type::now() + d)`.]
 
   void wait();
   void wait(error_code& ec);
@@ -172,19 +163,16 @@ cancels asynchronous wait operations, as if by calling `cancel()`.]
 the calling thread for the relative time produced by
 `WaitTraits::to_wait_duration(expiry())`.]
 
-[function_postconditions `!!ec || !(Clock::now() < expiry())`.]
+[function_postconditions `ec || !(clock_type::now() < expiry())`.]
 
   template<class CompletionToken>
     auto async_wait(CompletionToken&& token);
 
-[function_block An [link requirements.asynchronous_operations asynchronous
-operation].]
-
 [function_completion_signature `void(error_code ec)`.]
 
 [function_effects Initiates an asynchronous wait operation such that the
-handler is submitted for execution only when the condition `!!ec ||
-!(Clock::now() < expiry())` holds.]
+completion handler is submitted for execution only when the condition `ec ||
+!(clock_type::now() < expiry())` holds.]
 
 [endsect]
 
