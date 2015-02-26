@@ -16,8 +16,6 @@
           executor_type& operator=(const executor_type& other) noexcept;
           executor_type& operator=(executor_type&& other) noexcept;
 
-          ~executor_type();
-
           // executor operations:
 
           bool running_in_this_thread() const noexcept;
@@ -49,7 +47,7 @@
 `io_service::executor_type` is a type satisfying [link requirements.executor
 Executor requirements]. Objects of type `io_service::executor_type` are
 associated with an `io_service`, and function objects submitted using the
-`dispatch`, `post` or `defer` member functions will be executed by the
+`dispatch`, `post`, or `defer` member functions will be executed by the
 `io_service` from within the `run`, `run_for`, `run_until`, `run_one`,
 `run_one_for`, `run_one_until`, `poll` or `poll_one` functions.
 
@@ -58,13 +56,9 @@ associated with an `io_service`, and function objects submitted using the
 
   executor_type(const executor_type& other) noexcept;
 
-[function_effects Constructs an object of class `io_service::executor_type`.]
-
 [function_postconditions `*this == other`.]
 
   executor_type(executor_type&& other) noexcept;
-
-[function_effects Constructs an object of class `io_service::executor_type`.]
 
 [function_postconditions `*this` is equal to the prior value of `other`.]
 
@@ -92,9 +86,11 @@ associated with an `io_service`, and function objects submitted using the
 
   bool running_in_this_thread() const noexcept;
 
-[function_returns `true` if the current thread of execution is invoking the
+[function_returns `true` if the current thread of execution is running the
 `run`, `run_for`, `run_until`, `run_one`, `run_one_for`, `run_one_until`,
-`poll` or `poll_one` function of the associated `io_service` object.]
+`poll` or `poll_one` function of the associated `io_service` object.
+[inline_note That is, the current thread of execution's call chain includes a
+run function.]]
 
   io_service& context() noexcept;
 
@@ -102,33 +98,31 @@ associated with an `io_service`, and function objects submitted using the
 
   void on_work_started() noexcept;
 
-[function_effects Increases the count of outstanding work associated with the
+[function_effects Increment the count of outstanding work associated with the
 `io_service`.]
 
   void on_work_finished() noexcept;
 
-[function_effects Decreases the count of outstanding work associated with the
+[function_effects Decrement the count of outstanding work associated with the
 `io_service`.]
 
   template<class Func, class Alloc>
     void dispatch(Func&& f, const Alloc& a);
 
 [function_effects If `running_in_this_thread()` is true, calls
-[^['DECAY_COPY]]`(forward<Func>(f))()`. Otherwise, requests execution of `f`.]
-
-[function_block If `f` exits via an exception, and the execution of `f` is
-performed in the current thread and before `dispatch` returns, the exception
-shall propagate to the caller of `dispatch`.]
+[^['DECAY_COPY]]`(forward<Func>(f))()`. [inline_note If `f` exits via an
+exception, the exception propagates to the caller of `dispatch()`.] Otherwise,
+calls `post(forward<Func>(f), a)`.]
 
   template<class Func, class Alloc>
     void post(Func&& f, const Alloc& a);
 
-[function_effects Requests execution of `f`.]
+[function_effects Adds `f` to the `io_service`.]
 
   template<class Func, class Alloc>
     void defer(Func&& f, const Alloc& a);
 
-[function_effects Requests execution of `f`.]
+[function_effects Adds `f` to the `io_service`.]
 
 [endsect]
 
@@ -138,7 +132,7 @@ shall propagate to the caller of `dispatch`.]
   bool operator==(const io_service::executor_type& a,
                   const io_service::executor_type& b) noexcept;
 
-[function_returns `&a.context() == &b.context()`.]
+[function_returns `addressof(a.context()) == addressof(b.context())`.]
 
   bool operator!=(const io_service::executor_type& a,
                   const io_service::executor_type& b) noexcept;
