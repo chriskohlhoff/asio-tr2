@@ -37,9 +37,9 @@ the result of an asynchronous operation is specified in terms of these names.
 [section Automatic deduction of initiating function return type]
 [xrefid async.reqmts.async.return.type]
 
-All initiating functions in this clause are specified using automatic return
-type deduction. The function return type shall be determined as if by `typename
-async_result<Handler>::type`.
+The return type of initiating functions is `typename
+async_result<Handler>::type`. For presentation convenience, this clause
+abbreviates this using `auto`.
 
 [endsect]
 
