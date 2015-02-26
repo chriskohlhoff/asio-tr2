@@ -1,6 +1,9 @@
 [section:use_future_t Class template [^use_future_t]]
 [xrefid async.use.future]
 
+The class template `use_future_t` defines a set of [link classes.handler_type
+completion token types] for use with asynchronous operations.
+
   namespace std {
     namespace experimental {
       __begin_versioned_ns__
@@ -16,7 +19,7 @@
           constexpr use_future_t() noexcept;
           explicit use_future_t(const Allocator& a) noexcept;
           template<class OtherAllocator> use_future_t<OtherAllocator>
-            operator[](const OtherAllocator& a) const noexcept;
+            rebind(const OtherAllocator& a) const noexcept;
           allocator_type get_allocator() const noexcept;
         };
 
@@ -24,21 +27,19 @@
     } // namespace experimental
   } // namespace std
 
-The class template `use_future_t` defines a set of [link classes.handler_type
-completion token types] for use with asynchronous operations.
-
 [section [^use_future_t] constructors]
 [xrefid async.use.future.cons]
 
   constexpr use_future_t() noexcept;
 
-[function_effects Constructs a `use_future_t` with default-constructed
+[function_effects Constructs a `use_future_t` with a default-constructed
 allocator.]
 
   explicit use_future_t(const Allocator& a) noexcept;
 
-[function_effects Constructs an object of type `use_future_t` with
-post-condition `get_allocator() == a`.]
+[function_effects Constructs an object of type `use_future_t`.]
+
+[function_postconditions `get_allocator() == a`.]
 
 [endsect]
 
@@ -46,7 +47,7 @@ post-condition `get_allocator() == a`.]
 [xrefid async.use.future.members]
 
   template<class OtherAllocator> use_future_t<OtherAllocator>
-    operator[](const OtherAllocator& a) const noexcept;
+    rebind(const OtherAllocator& a) const noexcept;
 
 [function_returns A `use_future_t` object where `get_allocator() == a`.]
 
@@ -75,14 +76,14 @@ function objects executed using the associated executor's `dispatch()`,
 `post()` or `defer()` functions, any exception thrown is caught by the executor
 and stored in the associated shared state.
 
-The implementation shall specialize `async_result` for `type` such that, when
-an `async_result` object `r1` is constructed from `t1`, the expression
-`r1.get()` returns a future with the same shared state as `t1`.
+`async_result<type>` is valid and when an object `r1` of type
+`async_result<type>` is constructed from `t1`, the expression `r1.get()`
+returns a future with the same shared state as `t1`.
 
 The semantics of `async_result::type` and `type::operator()` are defined in the
 table below. In this table, [^N] is the value of `sizeof...(Args)`; let [^['i]]
 be in the range \[[^0]..[^N]) and let [^T[sub ['i]]] be the [^['i]]th type in
-`Args`; let [^U[sub ['i]]] be [^decay<T[sub ['i]]>::type] for each type [^T[sub
+`Args`; let [^U[sub ['i]]] be [^decay_t<T[sub ['i]]>] for each type [^T[sub
 ['i]]] in `Args`; and let [^a[sub ['i]]] be the [^['i]]th argument to
 `type::operator()`.
 
@@ -90,8 +91,8 @@ be in the range \[[^0]..[^N]) and let [^T[sub ['i]]] be the [^['i]]th type in
   [
     [[^N]]
     [[^U[sub ['0]]]]
-    [`async_result::type`]
-    [`type::operator` effects]
+    [`async_result<type>::type`]
+    [`type::operator()` effects]
   ]
   [
     [0]
