@@ -5,15 +5,11 @@
     dynamic_vector_buffer<T, Allocator>
       dynamic_buffer(vector<T, Allocator>& vec) noexcept;
 
-[function_requires `T` is a ['POD type] and `sizeof(T) == 1`.]
-
 [function_returns `dynamic_vector_buffer<T, Allocator>(vec)`.]
 
   template<class T, class Allocator>
     dynamic_vector_buffer<T, Allocator>
       dynamic_buffer(vector<T, Allocator>& vec, size_t n) noexcept;
-
-[function_requires `T` is a ['POD type] and `sizeof(T) == 1`.]
 
 [function_returns `dynamic_vector_buffer<T, Allocator>(vec, n)`.]
 
@@ -21,15 +17,11 @@
     dynamic_string_buffer<CharT, Traits, Allocator>
       dynamic_buffer(basic_string<CharT, Traits, Allocator>& str) noexcept;
 
-[function_requires `sizeof(CharT) == 1`.]
-
 [function_returns `dynamic_string_buffer<CharT, Traits, Allocator>(str)`.]
 
   template<class CharT, class Traits, class Allocator>
     dynamic_string_buffer<CharT, Traits, Allocator>
       dynamic_buffer(basic_string<CharT, Traits, Allocator>& str, size_t n) noexcept;
-
-[function_requires `sizeof(CharT) == 1`.]
 
 [function_returns `dynamic_string_buffer<CharT, Traits, Allocator>(str, n)`.]
 

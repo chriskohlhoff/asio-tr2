@@ -41,16 +41,15 @@ requirements.dynamic_buffers `DynamicBufferSequence`].
     } // namespace experimental
   } // namespace std
 
-The `dynamic_vector_buffer` class template requires that `T` is a ['POD type]
-and that `sizeof(T) == 1`.
+The `dynamic_vector_buffer` class template requires that `T` is a trivially
+copyable type and that `sizeof(T) == 1`.
 
 [section [^dynamic_vector_buffer] constructors]
 [xrefid buffer.dynamic.vector.cons]
 
   explicit dynamic_vector_buffer(vector<T, Allocator>& vec) noexcept;
 
-[function_effects Constructs an object of type `dynamic_vector_buffer`, binding
-`vec_` to `vec`, initializing `size_` with `vec.size()`, and initializing
+[function_effects Initializes `vec_` with `vec`, `size_` with `vec.size()`, and
 `max_size_` with `vec.max_size()`.]
 
   dynamic_vector_buffer(vector<T, Allocator>& vec,
@@ -58,8 +57,7 @@ and that `sizeof(T) == 1`.
 
 [function_requires `vec.size() <= maximum_size`.]
 
-[function_effects Constructs an object of type `dynamic_vector_buffer`, binding
-`vec_` to `vec`, initializing `size_` with `vec.size()`, and initializing
+[function_effects Initializes `vec_` with `vec`, `size_` with `vec.size()`, and
 `max_size_` with `maximum_size`.]
 
 [endsect]
@@ -85,13 +83,11 @@ and that `sizeof(T) == 1`.
 
   mutable_buffers_type prepare(size_t n);
 
-[function_requires `size() + n <= max_size()`.]
-
 [function_effects Performs `vec_.resize(size_ + n)`.]
 
 [function_returns `buffer(buffer(vec_) + size_, n)`.]
 
-[function_throws `length_error` if `size() + n > max_size()`.]
+[function_throws `length_error` if `size() + n` exceeds `max_size()`.]
 
   void commit(size_t n);
 

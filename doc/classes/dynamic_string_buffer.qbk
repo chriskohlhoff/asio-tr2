@@ -48,8 +48,7 @@ The `dynamic_string_buffer` class template requires that `sizeof(CharT) == 1`.
 
   explicit dynamic_string_buffer(basic_string<CharT, Traits, Allocator>& str) noexcept;
 
-[function_effects Constructs an object of type `dynamic_string_buffer`, binding
-`str_` to `str`, initializing `size_` with `str.size()`, and initializing
+[function_effects Initializes `str_` with `str`, `size_` with `str.size()`, and
 `max_size_` with `str.max_size()`.]
 
   dynamic_string_buffer(basic_string<CharT, Traits, Allocator>& str,
@@ -57,8 +56,7 @@ The `dynamic_string_buffer` class template requires that `sizeof(CharT) == 1`.
 
 [function_requires `str.size() <= maximum_size`.]
 
-[function_effects Constructs an object of type `dynamic_string_buffer`, binding
-`str_` to `str`, initializing `size_` with `str.size()`, and initializing
+[function_effects Initializes `str_` with `str`, `size_` with `str.size()`, and
 `max_size_` with `maximum_size`.]
 
 [endsect]
@@ -84,13 +82,11 @@ The `dynamic_string_buffer` class template requires that `sizeof(CharT) == 1`.
 
   mutable_buffers_type prepare(size_t n);
 
-[function_requires `size() + n <= max_size()`.]
-
 [function_effects Performs `str_.resize(size_ + n)`.]
 
 [function_returns `buffer(buffer(str_) + size_, n)`.]
 
-[function_throws `length_error` if `size() + n > max_size()`.]
+[function_throws `length_error` if `size() + n` exceeds `max_size()`.]
 
   void commit(size_t n) noexcept;
 
