@@ -26,7 +26,7 @@
   template<class MutableBufferSequence, class ConstBufferSequence>
     size_t buffer_copy(const MutableBufferSequence& dest,
                        const ConstBufferSequence& source,
-                       max_size) noexcept;
+                       size_t max_size) noexcept;
 
 [function_effects Copies bytes from the buffer or buffer sequence `source` to
 the buffer or buffer sequence `dest`, as if by calls to `memcpy`.]
@@ -37,12 +37,12 @@ the buffer or buffer sequence `dest`, as if by calls to `memcpy`.]
 [mdash] `max_size`, if specified.]
 
 [function_block The mutable buffer or mutable buffer sequence `dest` specifies
-memory where the data should be placed. The operation shall always fill a
+memory where the data should be placed. The operation always fills a
 buffer in the sequence completely before proceeding to the next.]
 
 [function_block The constant buffer or constant buffer sequence `source`
-specifies memory where the data to be written is located. The operation shall
-always copy a buffer in the sequence completely before proceeding to the next.]
+specifies memory where the data to be written is located. The operation always
+copies a buffer in the sequence completely before proceeding to the next.]
 
 [function_returns The number of bytes copied from `source` to `dest`.]
 
