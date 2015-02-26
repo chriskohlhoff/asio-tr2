@@ -11,7 +11,7 @@
         public:
           typedef future<R> type;
 
-          async_result(packaged_task<R(Args...)>& t);
+          explicit async_result(packaged_task<R(Args...)>& t);
           async_result(const async_result&) = delete;
           async_result& operator=(const async_result&) = delete;
 
@@ -25,10 +25,7 @@
     } // namespace experimental
   } // namespace std
 
-The implementation shall provide a specialization of `async_result` that meets
-the [link classes.async_result `async_result` specialization requirements].
-
-  async_result(packaged_task<R(Args...)>& t);
+  explicit async_result(packaged_task<R(Args...)>& t);
 
 [function_effects Initializes `future_` with `t.get_future()`.]
 
