@@ -488,9 +488,6 @@ socket to the specified remote endpoint, as if by __POSIX__ __connect__.]
   template<class CompletionToken>
     auto async_connect(const endpoint_type& endpoint, CompletionToken&& token);
 
-[function_block An [link requirements.asynchronous_operations asynchronous
-operation].]
-
 [function_completion_signature `void(error_code ec)`.]
 
 [function_effects If `is_open()` is false, opens the socket by performing

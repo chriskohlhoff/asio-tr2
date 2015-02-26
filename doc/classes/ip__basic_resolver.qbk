@@ -125,9 +125,6 @@ __getaddrinfo__.]
   template<class CompletionToken>
     auto async_resolve(const query& q, CompletionToken&& token);
 
-[function_block An [link requirements.asynchronous_operations asynchronous
-operation].]
-
 [function_completion_signature `void(error_code ec, iterator i)`.]
 
 [function_effects Initiates an asynchronous operation to translate a query into
@@ -149,9 +146,6 @@ __getnameinfo__.]
   template<class CompletionToken>
     auto async_resolve(const endpoint_type& e,
                        CompletionToken&& token);
-
-[function_block An [link requirements.asynchronous_operations asynchronous
-operation].]
 
 [function_completion_signature `void(error_code ec, iterator i)`.]
 

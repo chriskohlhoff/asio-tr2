@@ -254,9 +254,6 @@ forward<CompletionToken>(token))`.]
                        socket_base::message_flags flags,
                        CompletionToken&& token);
 
-[function_block An [link requirements.asynchronous_read_operations asynchronous
-read operation].]
-
 [function_completion_signature `void(error_code ec, size_t n)`.]
 
 [function_requires `(flags & socket_base::message_peek) == 0`.]
@@ -330,9 +327,6 @@ forward<CompletionToken>(token))`.]
                             socket_base::message_flags flags,
                             CompletionToken&& token);
 
-[function_block An [link requirements.asynchronous_read_operations asynchronous
-read operation].]
-
 [function_completion_signature `void(error_code ec, size_t n)`.]
 
 [function_requires `(flags & socket_base::message_peek) == 0`.]
@@ -395,9 +389,6 @@ __sendmsg__, where `flags` specifies the type of message transmission.]
                     socket_base::message_flags flags,
                     CompletionToken&& token);
 
-[function_block An [link requirements.asynchronous_write_operations asynchronous
-write operation].]
-
 [function_completion_signature `void(error_code ec, size_t n)`.]
 
 [function_effects Initiates an asynchronous operation to write data to a
@@ -459,9 +450,6 @@ forward<CompletionToken>(token))`.]
                        const endpoint_type& destination,
                        socket_base::message_flags flags,
                        CompletionToken&& token);
-
-[function_block An [link requirements.asynchronous_write_operations asynchronous
-write operation].]
 
 [function_completion_signature `void(error_code ec, size_t n)`.]
 

@@ -526,9 +526,6 @@ __POSIX__ __accept__.]
     auto async_accept(basic_socket<OtherProtocol>& socket,
                       CompletionToken&& token);
 
-[function_block An [link requirements.asynchronous_operations asynchronous
-operation].]
-
 [function_completion_signature `void(error_code ec)`.]
 
 [function_requires\n
@@ -572,9 +569,6 @@ accepted connection.]
   template<class OtherProtocol, class CompletionToken>
     auto async_accept(basic_socket<OtherProtocol>& socket,
                       endpoint_type& endpoint, CompletionToken&& token);
-
-[function_block An [link requirements.asynchronous_operations asynchronous
-operation].]
 
 [function_completion_signature `void(error_code ec)`.]
 
