@@ -59,14 +59,12 @@ value of type `size_t`, and `u` denotes an identifier.
   [
     [`x.prepare(n)`]
     [`X::mutable_buffers_type`]
-    [Requires: `size() + n <= max_size()`.\n
-     \n
-     Returns a mutable buffer sequence `u` representing the output sequence, and
+    [Returns a mutable buffer sequence `u` representing the output sequence, and
      where `buffer_size(u) == n`. The dynamic buffer sequence reallocates
      memory as required. All constant or mutable buffer sequences previously
      obtained using `data()` or `prepare()` are invalidated.\n
      \n
-     Throws: `length_error` if `size() + n > max_size()`.]
+     Throws: `length_error` if `size() + n` exceeds `max_size()`.]
   ]
   [
     [`x.commit(n)`]

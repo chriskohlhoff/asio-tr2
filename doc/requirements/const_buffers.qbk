@@ -1,6 +1,9 @@
 [section:const_buffers Constant buffer sequence requirements]
 [xrefid buffer.reqmts.constbuffersequence]
 
+A ['constant buffer sequence] is a type that satisfies the requirements given
+in the table below.
+
 In the table below, `X` denotes a class containing objects of type `T`, `a`
 denotes a value of type `X` and `u` denotes an identifier.
 
