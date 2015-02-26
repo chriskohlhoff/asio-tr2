@@ -184,6 +184,7 @@
                         const MutableBufferSequence& buffers,
                         CompletionCondition completion_condition,
                         error_code& ec);
+
         template<class SyncReadStream, class DynamicBufferSequence>
           size_t read(SyncReadStream& stream, DynamicBufferSequence&& b);
         template<class SyncReadStream, class DynamicBufferSequence>
@@ -212,6 +213,7 @@
                             const MutableBufferSequence& buffers,
                             CompletionCondition completion_condition,
                             CompletionToken&& token);
+
         template<class AsyncReadStream, class DynamicBufferSequence,
           class CompletionToken>
             auto async_read(AsyncReadStream& stream,
@@ -243,6 +245,7 @@
                          const ConstBufferSequence& buffers,
                          CompletionCondition completion_condition,
                          error_code& ec);
+
         template<class SyncWriteStream, class DynamicBufferSequence>
           size_t write(SyncWriteStream& stream, DynamicBufferSequence&& b);
         template<class SyncWriteStream, class DynamicBufferSequence>
@@ -273,6 +276,7 @@
                              const ConstBufferSequence& buffers,
                              CompletionCondition completion_condition,
                              CompletionToken&& token);
+
         template<class AsyncWriteStream, class DynamicBufferSequence,
           class CompletionToken>
             auto async_write(AsyncWriteStream& stream,
