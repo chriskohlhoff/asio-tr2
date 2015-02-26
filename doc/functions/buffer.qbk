@@ -1,7 +1,7 @@
 [section:buffer Buffer creation functions]
 [xrefid buffer.creation]
 
-In the functions below, `T` must be a ['POD type].
+In the functions below, `T` must be a trivially copyable type.
 
 For the function overloads below that accept an argument of type `vector<>`,
 the buffer objects returned are invalidated by any vector operation that also
@@ -214,7 +214,7 @@ to elements of the sequence (C++ Std, [string.require]).
 [function_returns A `const_buffers_1` value equivalent to:
 ``
   const_buffers_1(
-    str.data()
+    str.data(),
     str.size() * sizeof(CharT));
 ``]
 
@@ -225,7 +225,7 @@ to elements of the sequence (C++ Std, [string.require]).
 [function_returns A `const_buffers_1` value equivalent to:
 ``
   const_buffers_1(
-    str.data()
+    str.data(),
     min(str.size() * sizeof(CharT), n));
 ``]
 
@@ -235,7 +235,7 @@ to elements of the sequence (C++ Std, [string.require]).
 [function_returns A `const_buffers_1` value equivalent to:
 ``
   const_buffers_1(
-    str.data()
+    str.data(),
     str.size() * sizeof(CharT));
 ``]
 
@@ -246,7 +246,7 @@ to elements of the sequence (C++ Std, [string.require]).
 [function_returns A `const_buffers_1` value equivalent to:
 ``
   const_buffers_1(
-    str.data()
+    str.data(),
     min(str.size() * sizeof(CharT), n));
 ``]
 
