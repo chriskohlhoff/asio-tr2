@@ -17,7 +17,7 @@ An implementation's level of conformance shall be documented.
 functions, where possible. It is intended that __POSIX__ and __Windows__
 implementations will provide them.]
 
-For the purposes of this clause, implementations that provide the additional
-member functions are known as /extensible implementations/.
+For the purposes of this clause, implementations that provide all of the
+additional member functions are known as /extensible implementations/.
 
 [endsect]
