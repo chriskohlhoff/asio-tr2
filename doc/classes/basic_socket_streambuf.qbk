@@ -97,7 +97,7 @@ connection as if by performing:
 `ec_` is set to reflect the error code produced by the operation. If the
 operation does not complete before the absolute timeout specified by
 `expiry_`, the socket is closed and `ec_` is set to
-`errc::operation_canceled`.]
+`errc::timed_out`.]
 
 [function_returns if `!ec_`, `this`; otherwise, a null pointer.]
 
@@ -118,7 +118,7 @@ performing:
 where `ios` is an unspecified object of class `io_service`. `ec_` is set to
 reflect the error code produced by the asynchronous operation. If the operation
 does not complete before the absolute timeout specified by `expiry_`, the
-socket is closed and `ec_` is set to `errc::operation_canceled`.]
+socket is closed and `ec_` is set to `errc::timed_out`.]
 
 [function_returns if `!ec_`, `this`; otherwise, a null pointer.]
 
@@ -166,7 +166,7 @@ then `close` fails.]
 of characters is read from the input sequence as if by __POSIX__ __recvmsg__,
 and `ec_` is set to reflect the error code produced by the operation. If the
 operation does not complete before the absolute timeout specified by `expiry_`,
-the socket is closed and `ec_` is set to `errc::operation_canceled`.]
+the socket is closed and `ec_` is set to `errc::timed_out`.]
 
 [function_effects Returns `traits_type::eof()` to indicate failure. Otherwise
 returns `traits_type::to_int_type(*gptr())`.]
@@ -206,7 +206,7 @@ characters" is performed by output of the characters to the socket as if by one
 or more calls to __POSIX__ __sendmsg__, and `ec_` is set to reflect the error
 code produced by the operation. If the operation does not complete before the
 absolute timeout specified by `expiry_`, the socket is closed and `ec_` is set
-to `errc::operation_canceled`.]
+to `errc::timed_out`.]
 
 [function_returns `traits_type::not_eof(c)` to indicate success, and
 `traits_type::eof()` to indicate failure.]
@@ -218,7 +218,7 @@ flush characters.]
 
   virtual streambuf* setbuf(char_type* s, streamsize n);
 
-[function_effects If `setbuf(0,0)` is called on a stream before any I/O has
+[function_effects If `setbuf(nullptr, 0)` is called on a stream before any I/O has
 occurred on that stream, the stream becomes unbuffered. Otherwise the results
 are unspecified. "Unbuffered" means that `pbase()` and `pptr()` always return
 null and output to the socket should appear as soon as possible.]

@@ -1,20 +1,27 @@
 [section:basic_socket_iostream Class template [^basic_socket_iostream]]
 [xrefid socket.iostream]
 
+The class template `basic_socket_iostream<Protocol, Clock, WaitTraits>`
+supports reading and writing on sockets. It uses a
+`basic_socket_streambuf<Protocol, Clock, WaitTraits>` object to control the
+associated sequences.
+
   namespace std {
     namespace experimental {
       __begin_versioned_ns__
 
         template<class Protocol, class Clock, class WaitTraits>
-        class basic_socket_iostream :
-          public basic_iostream<char>
+        class basic_socket_iostream : public basic_iostream<char>
         {
         public:
           // types:
 
-          typedef typename Protocol::endpoint endpoint_type;
-          typedef typename Clock::time_point time_point;
-          typedef typename Clock::duration duration;
+          typedef Protocol protocol_type;
+          typedef typename protocol_type::endpoint endpoint_type;
+          typedef Clock clock_type;
+          typedef typename clock_type::time_point time_point;
+          typedef typename clock_type::duration duration;
+          typedef WaitTraits traits_type;
 
           // constructors:
 
@@ -28,7 +35,7 @@
 
           void close();
 
-          basic_socket_streambuf<Protocol, StreamSocketService>* rdbuf() const;
+          basic_socket_streambuf<protocol_type, clock_type, traits_type>* rdbuf() const;
 
           error_code error() const;
 
@@ -37,43 +44,30 @@
           void expires_after(const duration& d);
 
         private:
-          basic_socket_streambuf<Protocol,
-            Clock, WaitTraits> sb_; // ``['exposition only]``
+          basic_socket_streambuf<protocol_type, clock_type, traits_type> sb_; // ``['exposition only]``
         };
 
       __end_versioned_ns__
     } // namespace experimental
   } // namespace std
 
-The class template `basic_socket_iostream<Protocol, Clock, WaitTraits>`
-supports reading and writing from sockets. It uses a
-`basic_socket_streambuf<Protocol, Clock, WaitTraits>` object to control the
-associated sequences. For the sake of exposition, the maintained data is
-presented here as:
-
-[mdash] `sb_`, the `basic_socket_streambuf` object.
-
 [section [^basic_socket_iostream] constructors]
 [xrefid socket.iostream.cons]
 
   basic_socket_iostream();
 
-[function_effects Constructs an object of class
-`basic_socket_iostream<Protocol, Clock, WaitTraits>`, initializing the base
-class with `basic_iostream<char>(&sb_)`, initializing `sb_` with
-`basic_socket_streambuf<Protocol, Clock, WaitTraits>()`, and performing
-`this->setf(std::ios_base::unitbuf)`.]
+[function_effects Initializes the base class with `basic_iostream<char>(&sb_)`,
+`sb_` with `basic_socket_streambuf<Protocol, Clock, WaitTraits>()`, and
+performs `setf(std::ios_base::unitbuf)`.]
 
   template<class... Args>
     explicit basic_socket_iostream(Args&&... args);
 
-[function_effects Constructs an object of class
-`basic_socket_iostream<Protocol, Clock, WaitTraits>`, initializing the base
-class with `basic_iostream<char>(&sb_)` initializing `sb_` with
-`basic_socket_streambuf<Protocol, Clock, WaitTraits>()`, and performing
-`this->setf(std::ios_base::unitbuf)`. Then calls
-`rdbuf()->connect(forward<Args>(args)__dotdotdot__)`. If that function returns
-a null pointer, calls `setstate(failbit)`.]
+[function_effects Initializes the base class with `basic_iostream<char>(&sb_)`,
+initializes  `sb_` with `basic_socket_streambuf<Protocol, Clock,
+WaitTraits>()`, and performs `setf(std::ios_base::unitbuf)`. Then calls
+`rdbuf()->connect(forward<Args>(args)__dotdotdot__)`. If that function
+returns a null pointer, calls `setstate(failbit)`.]
 
 [endsect]
 
@@ -92,10 +86,10 @@ throw `ios_base::failure`).]
 [function_effects Calls `rdbuf()->close()`. If that function returns a null
 pointer, calls `setstate(failbit)` (which may throw `ios_base::failure`).]
 
-  basic_socket_streambuf<Protocol, StreamSocketService>* rdbuf() const;
+  basic_socket_streambuf<protocol_type, clock_type, traits_type>* rdbuf() const;
 
-[function_returns `const_cast<basic_socket_streambuf<Protocol, Clock,
-WaitTraits>*>(&sb_)`.]
+[function_returns `const_cast<basic_socket_streambuf<protocol_type, clock_type,
+traits_type>*>(std::addressof(sb_))`.]
 
   error_code error() const;
 
@@ -107,11 +101,11 @@ WaitTraits>*>(&sb_)`.]
 
   void expires_at(const time_point& t);
 
-[function_effects Calls `rdbuf()->expires_at(t)`.]
+[function_effects Equivalent to `rdbuf()->expires_at(t)`.]
 
   void expires_after(const duration& d);
 
-[function_effects Calls `rdbuf()->expires_after(d)`.]
+[function_effects Equivalent to `rdbuf()->expires_after(d)`.]
 
 [endsect]
 
