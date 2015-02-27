@@ -21,8 +21,7 @@ requirements.internet_protocol `InternetProtocol`].
             static udp v4();
             static udp v6();
 
-          private:
-            udp(); // not defined
+            udp() = delete;
           };
 
           // udp comparisons:

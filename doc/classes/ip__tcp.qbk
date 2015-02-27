@@ -24,8 +24,7 @@ requirements.internet_protocol `InternetProtocol`].
             static tcp v4();
             static tcp v6();
 
-          private:
-            tcp(); // not defined
+            tcp() = delete;
           };
 
           // tcp comparisons:
