@@ -54,25 +54,19 @@
 
   network_v4() noexcept;
 
-[function_postconditions `address().is_unspecified() == true` and
+[function_postconditions `this->address().is_unspecified() == true` and
 `prefix_length() == 0`.]
 
   network_v4(const address_v4& addr, unsigned short prefix_len);
 
-[function_requires `prefix_len <= 32`.]
-
-[function_postconditions `address() == addr` and
+[function_postconditions `this->address() == addr` and
 `prefix_length() == prefix_len`.]
 
 [function_throws `out_of_range` if `prefix_len > 32`.]
 
   network_v4(const address_v4& addr, const address_v4& mask);
 
-[function_requires Starting from the most significant bit in network byte
-order, `mask` contains zero or more contiguous non-zero bits. All other bits
-are zero.]
-
-[function_postconditions `address() == addr` and `prefix_length()` is equal to
+[function_postconditions `this->address() == addr` and `prefix_length()` is equal to
 the number of contiguous non-zero bits.]
 
 [function_throws `invalid_argument` if `mask` contains non-contiguous non-zero
@@ -102,19 +96,20 @@ order. All other bits are zero.]
 
 [function_returns An `address_v4` object with the first `prefix_length()` bits,
 starting from the most significant bit in network byte order, set to the
-corresponding bit value of `address()`. All other bits are zero.]
+corresponding bit value of `this->address()`. All other bits are zero.]
 
   address_v4 broadcast() const noexcept;
 
 [function_returns An `address_v4` object with the first `prefix_length()` bits,
 starting from the most significant bit in network byte order, set to the
-corresponding bit value of `address()`. All other bits are non-zero.]
+corresponding bit value of `this->address()`. All other bits are non-zero.]
 
   address_range_v4 hosts() const noexcept;
 
 [function_returns If `is_host() == true`, an `address_range_v4` object
-representing the single address `address().` Otherwise, an `address_range_v4`
-object representing the range of unique host IP addresses in the network.]
+representing the single address `this->address().` Otherwise, an
+`address_range_v4` object representing the range of unique host IP addresses in
+the network.]
 
 [function_note For IPv4, the network address and the broadcast address are not
 included in the range of host IP addresses. For example, given a network
@@ -128,22 +123,18 @@ included in the range of host IP addresses. For example, given a network
 
   bool is_host() const noexcept;
 
-[function_returns `true` if `prefix_length() == 32`, otherwise `false`.]
+[function_returns `prefix_length() == 32`.]
 
   bool is_subnet_of(const network_v4& other) const noexcept;
 
 [function_returns `true` if `other.prefix_length() < prefix_length()` and
-`network_v4(address(), other.prefix_length()).canonical() ==
-other.canonical()`.]
+`network_v4(this->address(), other.prefix_length()).canonical() ==
+other.canonical()`, otherwise `false`.]
 
   string to_string() const;
 
-[function_returns A string `s` computed as if by:\n
-``
-  std::string s = address().to_string();
-  s += '/';
-  s += to_string(prefix_length());
-``]
+[function_returns `this->address().to_string() + '/' +
+to_string(prefix_length())`.]
 
 [endsect]
 

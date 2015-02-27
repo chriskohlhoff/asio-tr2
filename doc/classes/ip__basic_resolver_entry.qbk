@@ -37,9 +37,6 @@
 
   basic_resolver_entry();
 
-[function_effects Constructs an object of class
-`basic_resolver_entry<InternetProtocol>`.]
-
 [function_postconditions The postconditions of this function are indicated in
 the table below.]
 
@@ -62,10 +59,6 @@ the table below.]
   basic_resolver_entry(const endpoint_type& ep,
                        string_view h,
                        string_view s);
-
-[function_effects Constructs an object of class
-`basic_resolver_entry<InternetProtocol>` with the specified endpoint, host name
-and service name.]
 
 [function_postconditions The postconditions of this function are indicated in
 the table below.]

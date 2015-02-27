@@ -1,4 +1,4 @@
-[section:ip__address_iterator_v4 Class template [^ip::address_iterator_v4]]
+[section:ip__address_iterator_v4 Class [^ip::address_iterator_v4]]
 [xrefid internet.address.iter.v4]
 
   namespace std {
@@ -57,7 +57,7 @@ initializing `address_` with `a`.]
 
   pointer operator->() const noexcept;
 
-[function_returns `&address_`.]
+[function_returns `std::addressof(address_)`.]
 
   address_iterator_v4& operator++() noexcept;
 

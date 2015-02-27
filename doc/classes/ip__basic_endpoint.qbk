@@ -18,13 +18,13 @@ for an [link requirements.endpoint `Endpoint`].
 
             // constructors:
             basic_endpoint();
-            basic_endpoint(const InternetProtocol& proto,
+            basic_endpoint(const protocol_type& proto,
                            unsigned short port_num);
             basic_endpoint(const ip::address& addr,
                            unsigned short port_num);
 
             // members:
-            InternetProtocol protocol() const;
+            protocol_type protocol() const;
             ip::address address() const;
             void address(const ip::address& addr);
             unsigned short port() const;
@@ -102,7 +102,7 @@ the table below.]
 [table basic_endpoint<InternetProtocol>::basic_endpoint() effects
   [[expression][value]]
   [
-    [`address()`]
+    [`this->address()`]
     [`ip::address(ip::address_v4())`]
   ]
   [
@@ -111,7 +111,7 @@ the table below.]
   ]
 ]
 
-  basic_endpoint(const InternetProtocol& proto,
+  basic_endpoint(const protocol_type& proto,
                  unsigned short port_num);
 
 [function_effects Constructs an object of class
@@ -124,7 +124,7 @@ the table below.]
 [table basic_endpoint<InternetProtocol>::basic_endpoint(const InternetProtocol&, unsigned short) effects
   [[expression][value]]
   [
-    [`address()`]
+    [`this->address()`]
 
     [`ip::address(ip::address_v6())` if `proto == Protocol::v6()`, otherwise
     `ip::address(ip::address_v4())`]
@@ -147,7 +147,7 @@ the table below.]
 [table basic_endpoint<InternetProtocol>::basic_endpoint(const ip::address&, unsigned short) effects
   [[expression][value]]
   [
-    [`address()`]
+    [`this->address()`]
     [`addr`]
   ]
   [
@@ -161,9 +161,9 @@ the table below.]
 [section [^ip::basic_endpoint] members]
 [xrefid internet.endpoint.members]
 
-  InternetProtocol protocol() const;
+  protocol_type protocol() const;
 
-[function_returns `Protocol::v6()` if the expression `address().is_v6()` is
+[function_returns `Protocol::v6()` if the expression `this->address().is_v6()` is
 true, otherwise `Protocol::v4()`.]
 
   ip::address address() const;
@@ -174,7 +174,7 @@ true, otherwise `Protocol::v4()`.]
 
 [function_effects Modifies the address associated with the endpoint.]
 
-[function_postconditions `address() == addr`.]
+[function_postconditions `this->address() == addr`.]
 
   unsigned short port() const;
 
@@ -262,22 +262,22 @@ address is based on [RFC2732].]
 
   ``['unspecified]``* data();
 
-[function_returns `&data_`.]
+[function_returns `std::addressof(data_)`.]
 
   const ``['unspecified]``* data() const;
 
-[function_returns `&data_`.]
+[function_returns `std::addressof(data_)`.]
 
   size_t size() const;
 
-[function_returns `sizeof(sockaddr_in6)` if `protocol().family() == AF_INET`,
+[function_returns `sizeof(sockaddr_in6)` if `protocol().family() == AF_INET6`,
 otherwise `sizeof(sockaddr_in)`.]
 
   void resize(size_t s);
 
 [function_throws `length_error` if the condition
 `protocol().family() == AF_INET6 && s != sizeof(sockaddr_in6)` `||`
-`protocol().family() != AF_INET6 && s != sizeof(sockaddr_in)` is true.]
+`protocol().family() == AF_INET4 && s != sizeof(sockaddr_in)` is true.]
 
   size_t capacity() const;
 

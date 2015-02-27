@@ -98,14 +98,8 @@ byte-level representation of an IPv4 address in network byte order.
 
 [function_effects Constructs an object of class `address_v4`.]
 
-[function_postconditions The postconditions of this function are indicated in
-the table below.]
-
-[table address_v4::address_v4() effects
-  [[expression][value]]
-  [[`to_bytes()`][`{0, 0, 0, 0}`]]
-  [[`to_ulong()`][`0`]]
-]
+[function_postconditions `to_bytes()` yields `{0, 0, 0, 0}` and `to_ulong() ==
+0`.]
 
   constexpr address_v4(const address_v4& a) noexcept;
 
@@ -115,22 +109,18 @@ the table below.]
 
   constexpr address_v4(const bytes_type& bytes);
 
-[function_requires Each element of `bytes` is in the range `[0, 0xFF]`.]
-
 [function_throws `out_of_range` if any element of `bytes` is not in the range
-`[0, 0xFF]`. [inline_note For implementations where `UCHAR_MAX == 0xFF`, no
-out-of-range detection is needed.]]
+`[0, 0xFF]`. [inline_note For implementations where `numeric_limits<unsigned
+char>::max() == 0xFF`, no out-of-range detection is needed.]]
 
 [function_postconditions `to_bytes() == bytes` and `to_ulong() == (bytes[0]
 << 24) | (bytes[1] << 16) | (bytes[2] << 8) | bytes[3]`.]
 
   explicit constexpr address_v4(unsigned long val);
 
-[function_requires `val` is in the range `[0, 0xFFFFFFFF]`.]
-
 [function_throws `out_of_range` if `val` is not in the range `[0, 0xFFFFFFFF]`.
-[inline_note For implementations where `ULONG_MAX == 0xFFFFFFFF`, no
-out-of-range detection is needed.]]
+[inline_note For implementations where `numeric_limits<unsigned long>::max() ==
+0xFFFFFFFF`, no out-of-range detection is needed.]]
 
 [function_postconditions `to_ulong() == val` and `to_bytes()` is `{ (val >> 24)
 & 0xFF, (val >> 16) & 0xFF, (val >> 8) & 0xFF, val & 0xFF }`.]
@@ -187,11 +177,8 @@ definitions.host_byte_order host byte order].]
 
   string to_string() const;
 
-[function_effects Converts an address into a string representation, as if by
-__POSIX__ __inet_ntop__ when invoked with address family `AF_INET`.]
-
-[function_returns If successful, the string representation of the address.
-Otherwise `string()`.]
+[function_returns A string representation of the address, as if by __POSIX__
+__inet_ntop__ when invoked with address family `AF_INET`.]
 
 [endsect]
 
@@ -257,8 +244,6 @@ Otherwise `string()`.]
 [function_returns `address_v4(val)`.]
 
   constexpr address_v4 make_address_v4(v4_mapped_t, const address_v6& a);
-
-[function_requires `a.is_v4_mapped()`.]
 
 [function_returns An `address_v4` object corresponding to the IPv4-mapped IPv6
 address, as if computed by the following method:

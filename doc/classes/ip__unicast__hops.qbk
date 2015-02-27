@@ -2,9 +2,9 @@
 [xrefid internet.unicast.hops]
 
 The `hops` class represents a socket option for specifying the default number
-of hops (also known as time-to-live or TTL) on outbound datagrams. It shall be
-defined as an [link classes.socket_base__int_socket_options integral socket
-option] with the name and values in the table below:
+of hops (also known as time-to-live or TTL) on outbound datagrams. It is an
+[link classes.socket_base__int_socket_options integral socket option] with the
+name and values in the table below:
 
 [table hops integral socket option
   [[['C]][['L]][['N]]]

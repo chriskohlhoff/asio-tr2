@@ -105,8 +105,8 @@ header file __netinet_in_h__.]
 
   template<class Protocol> const ``['unspecified]``* data(const Protocol& p) const;
 
-[function_returns `&v6_value_` if `p.family() == AF_INET6`, otherwise
-`&v4_value_`.]
+[function_returns `std::addressof(v6_value_)` if `p.family() == AF_INET6`,
+otherwise `std::addressof(v4_value_)`.]
 
   template<class Protocol> size_t size(const Protocol& p) const;
 

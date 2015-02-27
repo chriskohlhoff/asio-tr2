@@ -1,10 +1,10 @@
 [section:ip__address_cast Function [^ip::address_cast]]
 [xrefid internet.address.cast]
 
-  template<class T> constexpr T address_cast(const address& a) noexcept(``['see below]``);
+[:This implementation shall specialize `address_cast` for the types `T` listed
+in the tables below.]
 
-[:This function template shall participate in overload resolution only for the
- types `T` listed in the table below.]
+  template<class T> constexpr T address_cast(const address& a) noexcept(``['see below]``);
 
 [table template<class T> constexpr T address_cast(const address&) effects
   [[T][noexcept][remarks]]
@@ -16,14 +16,14 @@
   [
     [`address_v4`]
     [`false`]
-    [If `a.is_v4()` is `true`, returns the IP version 4 address specified in the
-     version-independent address object `a`. Otherwise, throws `bad_address_cast`.]
+    [If `a.is_v4()` is `true`, returns the IP version 4 address specified in
+     `a`. Otherwise, throws `bad_address_cast`.]
   ]
   [
     [`address_v6`]
     [`false`]
-    [If `a.is_v6()` is `true`, returns the IP version 6 address specified in the
-     version-independent address object `a`. Otherwise, throws `bad_address_cast`.]
+    [If `a.is_v6()` is `true`, returns the IP version 6 address specified in
+     `a`. Otherwise, throws `bad_address_cast`.]
   ]
 ]
 

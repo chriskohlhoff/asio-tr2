@@ -28,51 +28,51 @@
     } // namespace experimental
   } // namespace std
 
-`resolver_query_base` defines a bitmask type, `flags`. The flags constants have
-bitwise-distinct values. The meanings and __POSIX__ equivalents for each flag
-are defined in the table below.
+`resolver_query_base` defines a bitmask type, `flags`, with the bitmask
+elements shown above. The meanings and __POSIX__ equivalents for each flag are
+defined in the table below.
 
 [table resolver flags
-  [[flag] [meaning] [__POSIX__ equivalent]]
+  [[flag] [__POSIX__ equivalent] [notes]]
   [
     [`passive`]
-    [Returned endpoints are intended for use as locally bound socket endpoints.]
     [`AI_PASSIVE`]
+    [Returned endpoints are intended for use as locally bound socket endpoints.]
   ]
   [
     [`canonical_name`]
-    [Determine the canonical name of the host specified in the query.]
     [`AI_CANONNAME`]
+    [Determine the canonical name of the host specified in the query.]
   ]
   [
     [`numeric_host`]
+    [`AI_NUMERICHOST`]
     [Host name should be treated as a numeric string defining an IPv4 or IPv6
      address and no host name resolution should be attempted.]
-    [`AI_NUMERICHOST`]
   ]
   [
     [`numeric_service`]
+    [`AI_NUMERICSERV`]
     [Service name should be treated as a numeric string defining a port number
      and no service name resolution should be attempted.]
-    [`AI_NUMERICSERV`]
   ]
   [
     [`v4_mapped`]
+    [`AI_V4MAPPED`]
     [If the query protocol is specified as an IPv6 protocol, return IPv4-mapped
      IPv6 addresses on finding no IPv6 addresses.]
-    [`AI_V4MAPPED`]
   ]
   [
     [`all_matching`]
-    [If used with `v4_mapped`, return all matching IPv6 and IPv4 addresses.]
     [`AI_ALL`]
+    [If used with `v4_mapped`, return all matching IPv6 and IPv4 addresses.]
   ]
   [
     [`address_configured`]
+    [`AI_ADDRCONFIG`]
     [Only return IPv4 addresses if a non-loopback IPv4 address is configured for
      the system. Only return IPv6 addresses if a non-loopback IPv6 address is
      configured for the system.]
-    [`AI_ADDRCONFIG`]
   ]
 ]
 

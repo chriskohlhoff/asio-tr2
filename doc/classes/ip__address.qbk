@@ -1,6 +1,10 @@
 [section:ip__address Class [^ip::address]]
 [xrefid internet.address]
 
+The class `address` is a version-independent representation for an IP address.
+An object of class `address` holds either an IPv4 address, an IPv6 address, or
+no valid address.
+
   namespace std {
     namespace experimental {
       __begin_versioned_ns__
@@ -18,11 +22,11 @@
             address& operator=(const address& a) noexcept;
 
             // members:
+            constexpr bool is_v4() const noexcept;
+            constexpr bool is_v6() const noexcept;
             constexpr bool is_unspecified() const noexcept;
             constexpr bool is_loopback() const noexcept;
             constexpr bool is_multicast() const noexcept;
-            constexpr bool is_v4() const noexcept;
-            constexpr bool is_v6() const noexcept;
             string to_string() const;
 
           private:
@@ -55,10 +59,6 @@
     } // namespace experimental
   } // namespace std
 
-The class `address` is a version-independent representation for an IP address.
-An object of class `address` holds either an IPv4 address, an IPv6 address, or
-no valid address.
-
 [section [^ip::address] constructors]
 [xrefid internet.address.cons]
 
@@ -67,33 +67,17 @@ no valid address.
 [function_effects Constructs an object of class `address`, initializing `type_`
 with value `none_`.]
 
-[function_postconditions The postconditions of this function are indicated in
-the table below.]
-
-[table address::address() effects
-  [[expression][value]]
-  [
-    [`is_v4()`]
-    [`false`]
-  ]
-  [
-    [`is_v6()`]
-    [`false`]
-  ]
-]
+[function_postconditions `is_v4() == false` and `is_v6() === false`.]
 
   constexpr address(const address& a) noexcept;
-
-[function_effects Constructs an object of class `address`.]
 
 [function_postconditions `*this == a`]
 
   template<class T> constexpr address(const T& t) noexcept(``['see below]``);
 
 [function_remarks This constructor shall not participate in overload resolution
-unless `is_same<T, address>::value` is `false`, and the expression
-`address_cast<address>(t)` is valid and yields an rvalue of type `address`. The
-expression inside `noexcept` shall be equivalent to
+unless `address_cast<address>(t)` is valid and yields an rvalue of type
+`address`. The expression inside `noexcept` shall be equivalent to
 `noexcept(address_cast<address>(t))`.]
 
 [function_effects Constructs an object of type `address` with the result of the
@@ -118,21 +102,6 @@ throws an exception.]
 [section [^ip::address] members]
 [xrefid internet.address.members]
 
-  constexpr bool is_unspecified() const noexcept;
-
-[function_returns If `type_ == is_v4_`, returns `v4_.is_unspecified()`. If
-`type_ == is_v6_`, returns `v6_.is_unspecified()`. Otherwise returns `false`.]
-
-  constexpr bool is_loopback() const noexcept;
-
-[function_returns If `type_ == is_v4_`, returns `v4_.is_loopback()`. If `type_
-== is_v6_`, returns `v6_.is_loopback()`. Otherwise returns `false`.]
-
-  constexpr bool is_multicast() const noexcept;
-
-[function_returns If `type_ == is_v4_`, returns `v4_.is_multicast()`. If `type_
-== is_v6_`, returns `v6_.is_multicast()`. Otherwise returns `false`.]
-
   constexpr bool is_v4() const noexcept;
 
 [function_returns `type_ == is_v4_`.]
@@ -141,10 +110,25 @@ throws an exception.]
 
 [function_returns `type_ == is_v6_`.]
 
+  constexpr bool is_unspecified() const noexcept;
+
+[function_returns If `is_v4()`, returns `v4_.is_unspecified()`. If `is_v6()`,
+returns `v6_.is_unspecified()`. Otherwise returns `false`.]
+
+  constexpr bool is_loopback() const noexcept;
+
+[function_returns If `is_v4()`, returns `v4_.is_loopback()`. If `is_v6()`,
+returns `v6_.is_loopback()`. Otherwise returns `false`.]
+
+  constexpr bool is_multicast() const noexcept;
+
+[function_returns If `is_v4()`, returns `v4_.is_multicast()`. If `is_v6()`,
+returns `v6_.is_multicast()`. Otherwise returns `false`.]
+
   string to_string() const;
 
-[function_returns If `type_ == is_v4_`, returns `v4_.to_string()`. If `type_ ==
-is_v6_`, returns `v6_.to_string()`. Otherwise throws `bad_address_cast`.]
+[function_returns If `is_v4()`, returns `v4_.to_string()`. If `is_v6()`,
+returns `v6_.to_string()`. Otherwise throws `bad_address_cast`.]
 
 [endsect]
 
@@ -155,8 +139,8 @@ is_v6_`, returns `v6_.to_string()`. Otherwise throws `bad_address_cast`.]
 
 [function_returns [br]
  [mdash] if `a.type_ != b.type_`, `false`;[br]
- [mdash] if `a.type_ == is_v4_`, the result of `a.v4_ == b.v4_`;[br]
- [mdash] if `a.type_ == is_v6_`, the result of `a.v6_ == b.v6_`;[br]
+ [mdash] if `a.is_v4()`, the result of `a.v4_ == b.v4_`;[br]
+ [mdash] if `a.is_v6()`, the result of `a.v6_ == b.v6_`;[br]
  [mdash] otherwise, `true`.]
 
   bool operator!=(const address& a, const address& b) noexcept;
@@ -168,8 +152,8 @@ is_v6_`, returns `v6_.to_string()`. Otherwise throws `bad_address_cast`.]
 [function_returns [br]
  [mdash] if `a.type_ < b.type_`, `true`;[br]
  [mdash] if `a.type_ > b.type_`, `false`;[br]
- [mdash] if `a.type_ == is_v4_`, the result of `a.v4_ < b.v4_`;[br]
- [mdash] if `a.type_ == is_v6_`, the result of `a.v6_ < b.v6_`;[br]
+ [mdash] if `a.is_v4()`, the result of `a.v4_ < b.v4_`;[br]
+ [mdash] if `a.is_v6()`, the result of `a.v6_ < b.v6_`;[br]
  [mdash] otherwise, `false`.]
 
   bool operator> (const address& a, const address& b) noexcept;

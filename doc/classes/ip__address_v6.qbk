@@ -18,7 +18,7 @@
             constexpr address_v6(const bytes_type& bytes, unsigned long scope = 0);
 
             // assignment:
-            address_v4& operator=(const address_v4& a) noexcept;
+            address_v6& operator=(const address_v6& a) noexcept;
 
             // members:
             void scope_id(unsigned long id) noexcept;
@@ -103,30 +103,17 @@ byte-level representation of an IPv6 address in network byte order.
 
   constexpr address_v6() noexcept;
 
-[function_effects Constructs an object of class `address_v6`.]
-
-[function_postconditions The postconditions of this function are indicated in
-the table below.]
-
-[table address_v6::address_v6() effects
-  [[expression][value]]
-  [[`is_unspecified()`][`true`]]
-  [[`scope_id()`][`0`]]
-]
+[function_postconditions `is_unspecified() == true` and `scope_id() == 0`.]
 
   constexpr address_v6(const address_v6& a) noexcept;
-
-[function_effects Constructs an object of class `address_v6`.]
 
 [function_postconditions `*this == a`]
 
   constexpr address_v6(const bytes_type& bytes, unsigned long scope = 0);
 
-[function_requires Each element of `bytes` is in the range `[0, 0xFF]`.]
-
 [function_throws `out_of_range` if any element of `bytes` is not in the range
-`[0, 0xFF]`. [inline_note For implementations where `UCHAR_MAX == 0xFF`, no
-out-of-range detection is needed.]]
+`[0, 0xFF]`. [inline_note For implementations where `numeric_limit<unsigned
+char>::max() == 0xFF`, no out-of-range detection is needed.]]
 
 [function_postconditions `to_bytes() == bytes` and `scope_id() == scope`.]
 
@@ -156,27 +143,11 @@ out-of-range detection is needed.]]
 
   constexpr bool is_unspecified() const noexcept;
 
-[function_returns A boolean indicating whether the `address_v6` object
-represents an unspecified address, as if computed by the following method:
-``
-  bytes_type b = to_bytes();
-  return b[ 0] == 0 && b[ 1] == 0 && b[ 2] == 0 && b[ 3] == 0
-      && b[ 4] == 0 && b[ 5] == 0 && b[ 6] == 0 && b[ 7] == 0
-      && b[ 8] == 0 && b[ 9] == 0 && b[10] == 0 && b[11] == 0
-      && b[12] == 0 && b[13] == 0 && b[14] == 0 && b[15] == 0;
-``]
+[function_returns `*this == make_address_v6("::")`.]
 
   constexpr bool is_loopback() const noexcept;
 
-[function_returns A boolean indicating whether the `address_v6` object
-represents a loopback address, as if computed by the following method:
-``
-  bytes_type b = to_bytes();
-  return b[ 0] == 0 && b[ 1] == 0 && b[ 2] == 0 && b[ 3] == 0
-      && b[ 4] == 0 && b[ 5] == 0 && b[ 6] == 0 && b[ 7] == 0
-      && b[ 8] == 0 && b[ 9] == 0 && b[10] == 0 && b[11] == 0
-      && b[12] == 0 && b[13] == 0 && b[14] == 0 && b[15] == 1;
-``]
+[function_returns `*this == make_address_v6("::1")`.]
 
   constexpr bool is_multicast() const noexcept;
 
@@ -225,7 +196,7 @@ represents a multicast node-local address, as if computed by the following
 method:
 ``
   bytes_type b = to_bytes();
-  return b[0] == 0xFF && (b[1] & 0x0F) == 0x01;
+  return is_multicast() && (b[1] & 0x0F) == 0x01;
 ``]
 
   constexpr bool is_multicast_link_local() const noexcept;
@@ -235,7 +206,7 @@ represents a multicast link-local address, as if computed by the following
 method:
 ``
   bytes_type b = to_bytes();
-  return b[0] == 0xFF && (b[1] & 0x0F) == 0x02;
+  return is_multicast() && (b[1] & 0x0F) == 0x02;
 ``]
 
   constexpr bool is_multicast_site_local() const noexcept;
@@ -245,7 +216,7 @@ represents a multicast site-local address, as if computed by the following
 method:
 ``
   bytes_type b = to_bytes();
-  return b[0] == 0xFF && (b[1] & 0x0F) == 0x05;
+  return is_multicast() && (b[1] & 0x0F) == 0x05;
 ``]
 
   constexpr bool is_multicast_org_local() const noexcept;
@@ -255,7 +226,7 @@ represents a multicast organization-local address, as if computed by the
 following method:
 ``
   bytes_type b = to_bytes();
-  return b[0] == 0xFF && (b[1] & 0x0F) == 0x08;
+  return is_multicast() && (b[1] & 0x0F) == 0x08;
 ``]
 
   constexpr bool is_multicast_global() const noexcept;
@@ -291,12 +262,14 @@ Otherwise `string()`.]
 
   static constexpr address_v6 any() noexcept;
 
-[function_returns `address_v6()`.]
+[function_returns An address `a` such that the `a.is_unspecified() == true`
+and `a.scope_id() == 0`.]
 
   static constexpr address_v6 loopback() noexcept;
 
-[function_returns An address `a` such that the condition `a.is_loopback()`
-holds.]
+[function_returns An address `a` such that the `a.is_loopback() == true`
+and `a.scope_id() == 0`.]
+
 [endsect]
 
 [section:ip__address_v6__comparisons [^ip::address_v6] comparisons]

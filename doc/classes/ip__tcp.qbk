@@ -37,7 +37,7 @@ requirements.internet_protocol `InternetProtocol`].
     } // namespace experimental
   } // namespace std
 
-Extensible implementations shall provide the following member functions:
+Extensible implementations provide the following member functions:
 
   namespace std {
     namespace experimental {
@@ -60,7 +60,7 @@ Extensible implementations shall provide the following member functions:
 
 In the table below, `u` denotes an identifier.
 
-[table Behaviour of extensible implementations
+[table Behavior of extensible implementations
   [[expression] [value]]
   [
     [`tcp u(tcp::v4()); u.family();`]

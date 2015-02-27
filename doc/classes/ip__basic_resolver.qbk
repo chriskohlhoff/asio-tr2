@@ -22,7 +22,7 @@
 
             explicit basic_resolver(io_service& ios);
             basic_resolver(const basic_resolver&) = delete;
-            basic_resolver(basic_resolver&& rhs);
+            basic_resolver(basic_resolver&& rhs) noexcept;
 
             ~basic_resolver();
 
@@ -59,12 +59,9 @@
 
   explicit basic_resolver(io_service& ios);
 
-[function_effects Constructs an object of class
-`basic_resolver<InternetProtocol>`.]
-
 [function_postconditions `get_executor() == ios.get_executor()`.]
 
-  basic_resolver(basic_resolver&& rhs);
+  basic_resolver(basic_resolver&& rhs) noexcept;
 
 [function_effects Move constructs an object of class
 `basic_resolver<InternetProtocol>` that refers to the state originally
@@ -109,8 +106,9 @@ originally represented by `rhs`.]
   void cancel();
 
 [function_effects Causes any outstanding asynchronous resolve operations to
-complete as soon as possible. Handlers for cancelled operations shall be passed
-an error code `ec` such that `ec == errc::operation_canceled` holds true.]
+complete as soon as possible. Completion handlers for cancelled operations
+shall be passed an error code `ec` such that `ec == errc::operation_canceled`
+holds true.]
 
   iterator resolve(const query& q);
   iterator resolve(const query& q, error_code& ec);
