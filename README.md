@@ -23,7 +23,7 @@ A C++ standard library proposal based on Asio.
     cd tools/quickbook
     ../../b2
 
-3 Set the `BOOST_ROOT` environment variable.
+3.  Set the `BOOST_ROOT` environment variable.
 
     export BOOST_ROOT=/path/to/boost
 
