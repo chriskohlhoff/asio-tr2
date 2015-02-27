@@ -7,9 +7,8 @@
 `error_category`.]
 
 [function_block The object’s `default_error_condition` and `equivalent` virtual
-functions shall behave as specified for the class `error_category`. The
-object’s `name` virtual function shall return a pointer to the string
-`"socket"`.]
+functions behave as specified for the class `error_category`. The object’s
+`name` virtual function returns a pointer to the string `"socket"`.]
 
   error_code make_error_code(socket_errc e) noexcept;
 

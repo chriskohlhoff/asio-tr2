@@ -4,12 +4,11 @@
   const error_category& resolver_category() noexcept;
 
 [function_returns A reference to an object of a type derived from class
-error_category.]
+`error_category`.]
 
 [function_block The object’s `default_error_condition` and `equivalent` virtual
-functions shall behave as specified for the class `error_category`. The
-object’s `name` virtual function shall return a pointer to the string
-`"resolver"`.]
+functions behave as specified for the class `error_category`. The object’s
+`name` virtual function returns a pointer to the string `"resolver"`.]
 
   error_code make_error_code(resolver_errc e) noexcept;
 
