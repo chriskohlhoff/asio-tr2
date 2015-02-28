@@ -97,9 +97,9 @@ defined in the __POSIX__ header file __netinet_in_h__.]
   bool operator==(const tcp& a, const tcp& b);
 
 [function_returns A boolean indicating whether two objects of class `tcp` are
-equal, such that the expression `tcp::v4() == tcp::v4()` is true, the
-expression `tcp::v6() == tcp::v6()` is true, and the expression `tcp::v4() ==
-tcp::v6()` is false.]
+equal, such that the expression `tcp::v4() == tcp::v4()` is `true`, the
+expression `tcp::v6() == tcp::v6()` is `true`, and the expression `tcp::v4() ==
+tcp::v6()` is `false`.]
 
   bool operator!=(const tcp& a, const tcp& b);
 

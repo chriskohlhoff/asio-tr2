@@ -22,7 +22,7 @@ end-of-sequence iterator.]
                           InputIterator first, InputIterator last,
                           error_code& ec);
 
-[function_effects If `s.is_open()` is true, performs `s.close(ec)`. Performs
+[function_effects If `s.is_open()` is `true`, performs `s.close(ec)`. Performs
 `ec.clear()`. Returns the first iterator `i` in the range [half_open_range
 `first`,`last`] for which the synchronous operation `s.connect(*i, ec)`
 succeeds. If no such iterator is found, `ec` contains the error code produced
@@ -57,7 +57,7 @@ end-of-sequence iterator.]
 [function_requires `ConnectCondition` is a function object type meeting
 CopyConstructible requirements (C++ Std \[copyconstructible\]).]
 
-[function_effects If `s.is_open()` is true, performs `s.close(ec)`. Performs
+[function_effects If `s.is_open()` is `true`, performs `s.close(ec)`. Performs
 `ec.clear()`. Returns the first iterator `i` in the range [half_open_range
 `first`,`last`] for which `c(ec, *i)` holds and, if so, for which the
 synchronous operation `s.connect(*i, ec)` succeeds. If no such iterator is
@@ -66,6 +66,6 @@ operation and the function returns `last`.]
 
 [function_error_conditions\n
 [mdash] `socket_errc::not_found` [mdash] if `first == last` or if the function
-object `c` returned false for all iterators in the range.]
+object `c` returned `false` for all iterators in the range.]
 
 [endsect]

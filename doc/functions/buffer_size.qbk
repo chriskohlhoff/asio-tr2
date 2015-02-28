@@ -23,6 +23,6 @@ as follows:\n
 
 [function_remarks This function overload shall not participate in overload
 resolution unless `is_const_buffer_sequence<ConstBufferSequence>::value` is
-true.]
+`true`.]
 
 [endsect]

@@ -164,7 +164,7 @@ the table below.]
   protocol_type protocol() const;
 
 [function_returns `Protocol::v6()` if the expression `this->address().is_v6()` is
-true, otherwise `Protocol::v4()`.]
+`true`, otherwise `Protocol::v4()`.]
 
   ip::address address() const;
 
@@ -277,7 +277,7 @@ otherwise `sizeof(sockaddr_in)`.]
 
 [function_throws `length_error` if the condition
 `protocol().family() == AF_INET6 && s != sizeof(sockaddr_in6)` `||`
-`protocol().family() == AF_INET4 && s != sizeof(sockaddr_in)` is true.]
+`protocol().family() == AF_INET4 && s != sizeof(sockaddr_in)` is `true`.]
 
   size_t capacity() const;
 

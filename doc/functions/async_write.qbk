@@ -48,7 +48,7 @@ is valid until the handler for the asynchronous operation is invoked.]
 `n` is the total number of bytes transferred.]
 
 [function_remarks This function shall not participate in overload resolution
-unless `is_const_buffer_sequence<ConstBufferSequence>::value` is true.]
+unless `is_const_buffer_sequence<ConstBufferSequence>::value` is `true`.]
 
   template<class AsyncWriteStream, class DynamicBufferSequence,
     class CompletionToken>
@@ -102,6 +102,6 @@ valid until the handler for the asynchronous operation is invoked.]
 `n` is the total number of bytes transferred.]
 
 [function_remarks This function shall not participate in overload resolution
-unless `is_dynamic_buffer_sequence<DynamicBufferSequence>::value` is true.]
+unless `is_dynamic_buffer_sequence<DynamicBufferSequence>::value` is `true`.]
 
 [endsect]

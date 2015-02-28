@@ -18,7 +18,7 @@ rel_time, forward<CompletionToken>(token))`.]
 rel_time, e, forward<CompletionToken>(token))`.]
 
 [function_remarks This function shall not participate in overload resolution
-unless `is_executor<Executor>::value` is true.]
+unless `is_executor<Executor>::value` is `true`.]
 
   template<class Rep, class Period, class ExecutionContext, class... CompletionTokens>
     auto defer_after(const chrono::duration<Rep, Period>& rel_time,
@@ -29,6 +29,6 @@ unless `is_executor<Executor>::value` is true.]
 rel_time, ctx.get_executor(), forward<CompletionToken>(token))`.]
 
 [function_remarks This function shall not participate in overload resolution
-unless `is_convertible<ExecutionContext&, execution_context&>::value` is true.]
+unless `is_convertible<ExecutionContext&, execution_context&>::value` is `true`.]
 
 [endsect]

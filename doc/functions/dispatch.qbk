@@ -51,7 +51,7 @@ performs `ex1.dispatch(std::move(handler), alloc)` followed by `w.reset()`.\n
 [function_returns `result.get()`.]
 
 [function_remarks This function shall not participate in overload resolution
-unless `is_executor<Executor>::value` is true.]
+unless `is_executor<Executor>::value` is `true`.]
 
   template<class ExecutionContext, class CompletionToken>
     auto dispatch(ExecutionContext& ctx, CompletionToken&& token);
@@ -60,6 +60,6 @@ unless `is_executor<Executor>::value` is true.]
 forward<CompletionToken>(token))`.]
 
 [function_remarks This function shall not participate in overload resolution
-unless `is_convertible<ExecutionContext&, execution_context&>::value` is true.]
+unless `is_convertible<ExecutionContext&, execution_context&>::value` is `true`.]
 
 [endsect]

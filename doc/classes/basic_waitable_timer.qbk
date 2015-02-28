@@ -82,7 +82,7 @@ represented by `rhs`.]
 [mdash] `expiry()` returns the same value as `rhs.expiry()` prior to the
 constructor invocation.\n
 [mdash] `rhs.expiry() == time_point()`.]
- 
+
 [endsect]
 
 [section [^basic_waitable_timer] destructor]
@@ -111,7 +111,7 @@ assignment.\n
 [mdash] `rhs.expiry() == time_point()`.]
 
 [function_returns `*this`.]
- 
+
 [endsect]
 
 [section [^basic_waitable_timer] operations]
@@ -125,7 +125,7 @@ assignment.\n
 
 [function_effects Causes any outstanding asynchronous wait operations to
 complete. Completion handlers for canceled operations are passed an error code
-`ec` such that `ec == errc::operation_canceled` yields true.]
+`ec` such that `ec == errc::operation_canceled` yields `true`.]
 
 [function_returns The number of operations that were canceled.]
 
@@ -134,7 +134,7 @@ complete. Completion handlers for canceled operations are passed an error code
 [function_effects Causes the outstanding asynchronous wait operation that was
 initiated first, if any, to complete as soon as possible. The completion
 handler for the canceled operation is passed an error code `ec` such that `ec
-== errc::operation_canceled` yields true.]
+== errc::operation_canceled` yields `true`.]
 
 [function_returns `1` if an operation was cancelled, otherwise `0`.]
 

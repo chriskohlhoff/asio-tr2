@@ -253,7 +253,7 @@ address, as if computed by the following method:
   return address_v4(v4b);
 ``]
 
-[function_throws `bad_address_cast` if `a.is_v4_mapped()` is false.]
+[function_throws `bad_address_cast` if `a.is_v4_mapped()` is `false`.]
 
   address_v4 make_address_v4(const char* str);
   address_v4 make_address_v4(const char* str, error_code& ec) noexcept;

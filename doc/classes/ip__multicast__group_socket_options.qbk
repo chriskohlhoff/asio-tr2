@@ -89,7 +89,7 @@ __POSIX__?]
   explicit ``['[*C]]``(const address& multicast_group);
 
 [function_effects For extensible implementations, if `multicast_group.is_v6()`
-is true then `v6_value_.ipv6mr_multiaddr` is initialized to correspond to the
+is `true` then `v6_value_.ipv6mr_multiaddr` is initialized to correspond to the
 IPv6 address returned by `multicast_group.to_v6()`,
 `v6_value_.ipv6mr_interface` is set to `0`, and `v4_value_` is
 zero-initialized; otherwise, `v4_value_.imr_multiaddr` is initialized to

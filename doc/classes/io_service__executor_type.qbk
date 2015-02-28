@@ -109,7 +109,7 @@ run function.]]
   template<class Func, class Alloc>
     void dispatch(Func&& f, const Alloc& a);
 
-[function_effects If `running_in_this_thread()` is true, calls
+[function_effects If `running_in_this_thread()` is `true`, calls
 [^['DECAY_COPY]]`(forward<Func>(f))()`. [inline_note If `f` exits via an
 exception, the exception propagates to the caller of `dispatch()`.] Otherwise,
 calls `post(forward<Func>(f), a)`.]

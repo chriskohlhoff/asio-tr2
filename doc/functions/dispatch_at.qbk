@@ -59,7 +59,7 @@ alloc)` followed by `w.reset()`.]
 [function_returns `result.get()`.]
 
 [function_remarks This function shall not participate in overload resolution
-unless `is_executor<Executor>::value` is true.]
+unless `is_executor<Executor>::value` is `true`.]
 
   template<class Clock, class Duration, class ExecutionContext, class... CompletionTokens>
     auto dispatch_at(const chrono::time_point<Clock, Duration>& abs_time,
@@ -70,6 +70,6 @@ unless `is_executor<Executor>::value` is true.]
 forward<CompletionToken>(token))`.]
 
 [function_remarks This function shall not participate in overload resolution
-unless `is_convertible<ExecutionContext&, execution_context&>::value` is true.]
+unless `is_convertible<ExecutionContext&, execution_context&>::value` is `true`.]
 
 [endsect]

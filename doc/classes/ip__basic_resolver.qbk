@@ -108,7 +108,7 @@ originally represented by `rhs`.]
 [function_effects Causes any outstanding asynchronous resolve operations to
 complete as soon as possible. Completion handlers for cancelled operations
 shall be passed an error code `ec` such that `ec == errc::operation_canceled`
-holds true.]
+is `true`.]
 
   iterator resolve(const query& q);
   iterator resolve(const query& q, error_code& ec);

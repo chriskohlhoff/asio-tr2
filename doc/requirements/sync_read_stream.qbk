@@ -18,8 +18,8 @@ sequence] requirements, and `ec` denotes an object of type `error_code`.
       Reads one or more bytes of data from the stream `a`.\n
       \n
       If successful, returns the number of bytes read and sets `ec` such that
-      `!ec` is true. If an error occurred, returns `0` and sets `ec` such that
-      `!!ec` is true. If all data has been read from the stream and the stream
+      `!ec` is `true`. If an error occurred, returns `0` and sets `ec` such that
+      `!!ec` is `true`. If all data has been read from the stream and the stream
       has been shut down in an orderly manner, sets `ec` such that `ec ==
       stream_errc::eof`.\n
       \n
