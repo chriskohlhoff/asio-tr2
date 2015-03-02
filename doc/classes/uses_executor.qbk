@@ -35,9 +35,9 @@ construction of an object `obj` of type `T`, using constructor arguments `v1,
 v2, ..., vN` of types `V1, V2, ..., VN`, respectively, and an executor `ex` of
 type `Executor`, according to the following rules:
 
-[mdash] if `uses_executor<T, Executor>::value` is true and
+[mdash] if `uses_executor<T, Executor>::value` is `true` and
 `is_constructible<T, executor_arg_t, Executor, V1, V2, ..., VN>::value` is
-true, then `obj` is initialized as `obj(executor_arg, ex, v1, v2, ..., vN)`;
+`true`, then `obj` is initialized as `obj(executor_arg, ex, v1, v2, ..., vN)`;
 
 [mdash] otherwise, `obj` is initialized as `obj(v1, v2, ..., vN)`.
 

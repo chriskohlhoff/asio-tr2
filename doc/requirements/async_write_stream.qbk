@@ -27,8 +27,8 @@ sequence] requirements, and `t` is a completion token.
       the stream `a`.\n
       \n
       If successful, `n` is the number of bytes written and `ec` is set such
-      that `!ec` is true. If an error occurred, `n` is `0` and `ec` is set such
-      that `!!ec` is true.\n
+      that `!ec` is `true`. If an error occurred, `n` is `0` and `ec` is set such
+      that `!!ec` is `true`.\n
       \n
       The operation shall complete immediately if `buffer_size(cb) == 0`.
     ]

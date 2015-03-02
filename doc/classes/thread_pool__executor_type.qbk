@@ -111,7 +111,7 @@ pool; otherwise `false`.]
   template<class Func, class Alloc>
     void dispatch(Func&& f, const Alloc& a);
 
-[function_effects If `running_in_this_thread()` is true, calls
+[function_effects If `running_in_this_thread()` is `true`, calls
 [^['DECAY_COPY]]`(forward<Func>(f))()`. Otherwise, requests execution of `f`.]
 
 [function_block If `f` exits via an exception, and the execution of `f` is

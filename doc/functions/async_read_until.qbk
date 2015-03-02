@@ -54,7 +54,7 @@ not required to guarantee the validity of the delimiter string after the call
 to `async_read_until` returns.]]
 
 [function_block On completion of the asynchronous operation, if the input
-sequence of `b` contains the delimiter, `ec` is set such that `!ec` is true.
+sequence of `b` contains the delimiter, `ec` is set such that `!ec` is `true`.
 Otherwise, if `b.size() == b.max_size()`, `ec` is set such that `ec ==
 stream_errc::not_found`. If `b.size() < b.max_size()`, `ec` contains the
 `error_code` from the most recent asynchronous read_some operation. `n` shall

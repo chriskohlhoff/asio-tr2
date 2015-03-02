@@ -49,7 +49,7 @@ recent `write_some` call.]
 write operation.]
 
 [function_remarks This function shall not participate in overload resolution
-unless `is_const_buffer_sequence<ConstBufferSequence>::value` is true.]
+unless `is_const_buffer_sequence<ConstBufferSequence>::value` is `true`.]
 
   template<class SyncWriteStream, class DynamicBufferSequence>
     size_t write(SyncWriteStream& stream, DynamicBufferSequence&& b);
@@ -98,6 +98,6 @@ recent `write_some` call.]
 write operation.]
 
 [function_remarks This function shall not participate in overload resolution
-unless `is_dynamic_buffer_sequence<DynamicBufferSequence>::value` is true.]
+unless `is_dynamic_buffer_sequence<DynamicBufferSequence>::value` is `true`.]
 
 [endsect]

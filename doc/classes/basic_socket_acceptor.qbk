@@ -234,11 +234,11 @@ unless `OtherProtocol` is implicitly convertible to `Protocol`.]
 
   ~basic_socket_acceptor();
 
-[function_effects If `is_open()` is true, cancels any asynchronous operations
+[function_effects If `is_open()` is `true`, cancels any asynchronous operations
 associated with the acceptor, and releases acceptor resources as if by
 __POSIX__ __close__. Otherwise, no effect. Handlers for cancelled operations
 shall be passed an error code `ec` such that `ec == errc::operation_canceled`
-holds true.]
+yields `true`.]
 
 [endsect]
 
@@ -247,11 +247,11 @@ holds true.]
 
   basic_socket_acceptor& operator=(basic_socket_acceptor&& rhs);
 
-[function_effects If `is_open()` is true, cancels any asynchronous operations
+[function_effects If `is_open()` is `true`, cancels any asynchronous operations
 associated with the acceptor, and releases acceptor resources as if by __POSIX__
 __close__. Then moves into `*this` the state originally represented by `rhs`.
 Handlers for cancelled operations shall be passed an error code `ec` such that
-`ec == errc::operation_canceled` holds true.]
+`ec == errc::operation_canceled` yields `true`.]
 
 [function_postconditions\n
 [mdash] `get_executor() == rhs.get_executor()`.\n
@@ -270,11 +270,11 @@ to the assignment.\n
 
 [function_requires `OtherProtocol` is implicitly convertible to `Protocol`.]
 
-[function_effects If `is_open()` is true, cancels any asynchronous operations
+[function_effects If `is_open()` is `true`, cancels any asynchronous operations
 associated with the acceptor, and releases acceptor resources as if by __POSIX__
 __close__. Then moves into `*this` the state originally represented by `rhs`.
 Handlers for cancelled operations shall be passed an error code `ec` such that
-`ec == errc::operation_canceled` holds true.]
+`ec == errc::operation_canceled` yields `true`.]
 
 [function_postconditions\n
 [mdash] `get_executor() == rhs.get_executor()`.\n
@@ -356,21 +356,21 @@ previous call to `open` or `assign`.]
   void close();
   void close(error_code& ec);
 
-[function_effects If `is_open()` is true, cancels any asynchronous operations
+[function_effects If `is_open()` is `true`, cancels any asynchronous operations
 associated with the acceptor, and establishes the postcondition as if by
 __POSIX__ __close__. Otherwise, no effect. Handlers for cancelled asynchronous
 operations are passed an error code `ec` such that `ec ==
-errc::operation_canceled` holds true.]
+errc::operation_canceled` yields `true`.]
 
 [function_postconditions `is_open() == false`.]
 
   void cancel();
   void cancel(error_code& ec);
 
-[function_effects If `is_open()` is true, cancels any asynchronous operations
+[function_effects If `is_open()` is `true`, cancels any asynchronous operations
 associated with the acceptor. Handlers for cancelled asynchronous operations are
-passed an error code `ec` such that `ec == errc::operation_canceled` holds
-true.]
+passed an error code `ec` such that `ec == errc::operation_canceled` yields
+`true`.]
 
 [function_error_conditions\n
 [mdash] `errc::operation_not_supported` [mdash] Current conditions do not
@@ -418,14 +418,14 @@ extensions to be supported.]
 
 [function_requires `is_open()`.]
 
-[function_effects Sets the non-blocking mode of the acceptor. If `mode` is true,
+[function_effects Sets the non-blocking mode of the acceptor. If `mode` is `true`,
 subsequent synchronous operations may fail with error condition
 `errc::operation_would_block` if they are unable to perform the requested
-operation immediately. If `mode` is false, subsequent synchronous operations
+operation immediately. If `mode` is `false`, subsequent synchronous operations
 shall block until complete.]
 
 [function_error_conditions\n
-[mdash] `errc::bad_file_descriptor` [mdash] if `is_open()` is false.]
+[mdash] `errc::bad_file_descriptor` [mdash] if `is_open()` is `false`.]
 
 [function_note The non-blocking mode has no effect on the behavior of
 asynchronous operations.]
@@ -483,13 +483,13 @@ acceptor, as if by __POSIX__ __getsockname__.]
 
 [function_effects If `mode` is true, subsequent synchronous or asynchronous
 accept operations are permitted to fail with error condition
-`errc::connection_aborted`. If `mode` is false, subsequent accept operations
+`errc::connection_aborted`. If `mode` is `false`, subsequent accept operations
 shall not fail with `errc::connection_aborted`. [inline_note If `mode` is
-false, the implementation will restart the call to __POSIX__ __accept__ if it
+`false`, the implementation will restart the call to __POSIX__ __accept__ if it
 fails with `ECONNABORTED`.]]
 
 [function_error_conditions\n
-[mdash] `errc::bad_file_descriptor` [mdash] if `is_open()` is false.]
+[mdash] `errc::bad_file_descriptor` [mdash] if `is_open()` is `false`.]
 
 [commentary The `ECONNABORTED` error is suppressed by default since it is a
 transient error, is rarely useful, and handling it correctly adds complexity to
@@ -514,7 +514,7 @@ extracted from the queue of pending connections of the acceptor, as if by
 __POSIX__ __accept__.]
 
 [function_error_conditions\n
-[mdash] `socket_errc::already_open` [mdash] if `socket.is_open()` is false.]
+[mdash] `socket_errc::already_open` [mdash] if `socket.is_open()` is `false`.]
 
   template<class OtherProtocol, class CompletionToken>
     auto async_accept(basic_socket<OtherProtocol>& socket,
@@ -533,7 +533,7 @@ that the operations may logically be performed in parallel, the behavior is
 unspecified.]
 
 [function_error_conditions\n
-[mdash] `socket_errc::already_open` [mdash] if `socket.is_open()` is false.]
+[mdash] `socket_errc::already_open` [mdash] if `socket.is_open()` is `false`.]
 
   template<class OtherProtocol>
     void accept(basic_socket<OtherProtocol>& socket,

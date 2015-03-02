@@ -18,8 +18,8 @@ requirements, and `ec` denotes an object of type `error_code`.
       Writes one or more bytes of data to the stream `a`.\n
       \n
       If successful, returns the number of bytes written and sets `ec` such
-      that `!ec` is true. If an error occurred, returns `0` and sets `ec` such
-      that `!!ec` is true.\n
+      that `!ec` is `true`. If an error occurred, returns `0` and sets `ec` such
+      that `!!ec` is `true`.\n
       \n
       The operation shall not block if `buffer_size(cb) == 0`.
     ]

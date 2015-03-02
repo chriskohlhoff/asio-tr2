@@ -94,9 +94,9 @@ defined in the __POSIX__ header file __netinet_in_h__.]
   bool operator==(const udp& a, const udp& b);
 
 [function_returns A boolean indicating whether two objects of class `udp` are
-equal, such that the expression `udp::v4() == udp::v4()` is true, the
-expression `udp::v6() == udp::v6()` is true, and the expression `udp::v4() ==
-udp::v6()` is false.]
+equal, such that the expression `udp::v4() == udp::v4()` is `true`, the
+expression `udp::v6() == udp::v6()` is `true`, and the expression `udp::v4() ==
+udp::v6()` is `false`.]
 
   bool operator!=(const udp& a, const udp& b);
 

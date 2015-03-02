@@ -39,7 +39,7 @@ implementation performs `b.commit(n)`, where `n` is the return value from
 [function_block [mdash] an synchronous read_some operation fails.]
 
 [function_block On exit, if the input sequence of `b` contains the delimiter,
-`ec` is set such that `!ec` is true. Otherwise, if `b.size() == b.max_size()`,
+`ec` is set such that `!ec` is `true`. Otherwise, if `b.size() == b.max_size()`,
 `ec` is set such that `ec == stream_errc::not_found`. If `b.size() <
 b.max_size()`, `ec` contains the `error_code` from the most recent `read_some`
 call.]

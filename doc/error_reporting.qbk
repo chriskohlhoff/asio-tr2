@@ -36,7 +36,7 @@ unless otherwise specified:
 [mdash] If a call by the implementation to an operating system or other
 underlying API results in an error that prevents the function from meeting its
 specifications, the `error_code&` argument `ec` is set as appropriate for the
-specific error. Otherwise, the `ec` argument is set such that `!ec` is true.
+specific error. Otherwise, the `ec` argument is set such that `!ec` is `true`.
 
 Where a function is specified as two overloads, with and without an argument
 of type `error_code&`:
@@ -78,7 +78,7 @@ asynchronous operations report errors as follows:
 underlying API results in an error that prevents the asynchronous operation
 from meeting its specifications, the completion handler is invoked with an
 `error_code` value `ec` that is set as appropriate for the specific error.
-Otherwise, the `error_code` value `ec` is set such that `!ec` is true.
+Otherwise, the `error_code` value `ec` is set such that `!ec` is `true`.
 
 [mdash] Asynchronous operations shall not fail with an error condition that
 indicates interruption of an operating system or underlying API by a signal

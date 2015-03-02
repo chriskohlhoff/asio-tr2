@@ -30,7 +30,7 @@ type `X`.
     [`a == b`]
     [convertible to `bool`]
     [Returns `true` if `a` and `b` represent the same IP protocol version,
-     otherwise false.]
+     otherwise `false`.]
   ]
   [
     [`a != b`]

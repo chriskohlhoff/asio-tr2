@@ -7,7 +7,7 @@
 [function_returns `executor_wrapper<decay_t<T>, Executor>(forward<T>(t), ex)`.]
 
 [function_remarks This function shall not participate in overload resolution
-unless `is_executor<Executor>::value` is true.]
+unless `is_executor<Executor>::value` is `true`.]
 
   template<class ExecutionContext, class CompletionToken>
     executor_wrapper<decay_t<T>, typename ExecutionContext::executor_type>
@@ -16,6 +16,6 @@ unless `is_executor<Executor>::value` is true.]
 [function_returns `wrap(ctx.get_executor(), forward<T>(t))`.]
 
 [function_remarks This function shall not participate in overload resolution
-unless `is_convertible<ExecutionContext&, execution_context&>::value` is true.]
+unless `is_convertible<ExecutionContext&, execution_context&>::value` is `true`.]
 
 [endsect]

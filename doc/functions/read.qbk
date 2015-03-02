@@ -50,7 +50,7 @@ recent `read_some` call.]
 operation.]
 
 [function_remarks This function shall not participate in overload resolution
-unless `is_mutable_buffer_sequence<MutableBufferSequence>::value` is true.]
+unless `is_mutable_buffer_sequence<MutableBufferSequence>::value` is `true`.]
 
   template<class SyncReadStream, class DynamicBufferSequence>
     size_t read(SyncReadStream& stream, DynamicBufferSequence&& b);
@@ -102,6 +102,6 @@ recent `read_some` call.]
 operation.]
 
 [function_remarks This function shall not participate in overload resolution
-unless `is_dynamic_buffer_sequence<DynamicBufferSequence>::value` is true.]
+unless `is_dynamic_buffer_sequence<DynamicBufferSequence>::value` is `true`.]
 
 [endsect]

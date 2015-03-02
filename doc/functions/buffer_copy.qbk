@@ -49,8 +49,8 @@ copies a buffer in the sequence completely before proceeding to the next.]
 [function_remarks Where an overload accepts a template parameter
 `MutableBufferSequence`, the overload shall not participate in overload
 resolution unless `is_mutable_buffer_sequence<MutableBufferSequence>::value` is
-true. Where an overload accepts a template parameter `ConstBufferSequence`, the
+`true`. Where an overload accepts a template parameter `ConstBufferSequence`, the
 overload shall not participate in overload resolution unless
-`is_const_buffer_sequence<ConstBufferSequence>::value` is true.]
+`is_const_buffer_sequence<ConstBufferSequence>::value` is `true`.]
 
 [endsect]

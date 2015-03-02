@@ -205,11 +205,11 @@ unless `OtherProtocol` is implicitly convertible to `Protocol`.]
 
   ~basic_socket();
 
-[function_effects If `is_open()` is true, cancels any asynchronous operations
+[function_effects If `is_open()` is `true`, cancels any asynchronous operations
 associated with the socket, disables the linger socket option to prevent the
 destructor from blocking, and releases socket resources as if by __POSIX__
 __close__. Completion handlers for canceled operations are passed an error code
-`ec` such that `ec == errc::operation_canceled` holds true.]
+`ec` such that `ec == errc::operation_canceled` yields `true`.]
 
 [endsect]
 
@@ -218,10 +218,10 @@ __close__. Completion handlers for canceled operations are passed an error code
 
   basic_socket& operator=(basic_socket&& rhs);
 
-[function_effects If `is_open()` is true, cancels any asynchronous operations
+[function_effects If `is_open()` is `true`, cancels any asynchronous operations
 associated with the socket. Completion handlers for canceled operations are
-passed an error code `ec` such that `ec == errc::operation_canceled` holds
-true. Disables the linger socket option to prevent the assignment from
+passed an error code `ec` such that `ec == errc::operation_canceled` yields
+`true`. Disables the linger socket option to prevent the assignment from
 blocking, and releases socket resources as if by __POSIX__ __close__. Moves
 into `*this` the state originally represented by `rhs`.]
 
@@ -240,10 +240,10 @@ to the assignment.\n
 
 [function_requires `OtherProtocol` is implicitly convertible to `Protocol`.]
 
-[function_effects If `is_open()` is true, cancels any asynchronous operations
+[function_effects If `is_open()` is `true`, cancels any asynchronous operations
 associated with the socket. Completion handlers for canceled operations are
-passed an error code `ec` such that `ec == errc::operation_canceled` holds
-true. Disables the linger socket option to prevent the assignment from
+passed an error code `ec` such that `ec == errc::operation_canceled` yields
+`true`. Disables the linger socket option to prevent the assignment from
 blocking, and releases socket resources as if by __POSIX__ __close__. Moves
 into `*this` the state originally represented by `rhs`.]
 
@@ -318,24 +318,24 @@ previous call to `open` or `assign`.]
   void close();
   void close(error_code& ec);
 
-[function_effects If `is_open()` is true, cancels any asynchronous operations
+[function_effects If `is_open()` is `true`, cancels any asynchronous operations
 associated with the socket, and establishes the postcondition as if by
 __POSIX__ __close__. Completion handlers for canceled asynchronous operations
-are passed an error code `ec` such that `ec == errc::operation_canceled` holds
-true.]
+are passed an error code `ec` such that `ec == errc::operation_canceled` yields
+`true`.]
 
 [function_postconditions `is_open() == false`.]
 
   void cancel();
   void cancel(error_code& ec);
 
-[function_effects If `is_open()` is true, cancels any asynchronous operations
+[function_effects If `is_open()` is `true`, cancels any asynchronous operations
 associated with the socket. Completion handlers for canceled asynchronous
 operations are passed an error code `ec` such that `ec ==
-errc::operation_canceled` holds true.]
+errc::operation_canceled` yields `true`.]
 
 [function_error_conditions\n
-[mdash] `errc::bad_file_descriptor` [mdash] if `is_open()` is false.]
+[mdash] `errc::bad_file_descriptor` [mdash] if `is_open()` is `false`.]
 
   template<class SettableSocketOption>
     void set_option(const SettableSocketOption& option);
@@ -370,14 +370,14 @@ extensions to be supported.]
   void non_blocking(bool mode);
   void non_blocking(bool mode, error_code& ec);
 
-[function_effects Sets the non-blocking mode of the socket. If `mode` is true,
+[function_effects Sets the non-blocking mode of the socket. If `mode` is `true`,
 subsequent synchronous operations may fail with error condition
 `errc::operation_would_block` if they are unable to perform the requested
-operation immediately. If `mode` is false, subsequent synchronous operations
+operation immediately. If `mode` is `false`, subsequent synchronous operations
 block until complete.]
 
 [function_error_conditions\n
-[mdash] `errc::bad_file_descriptor` [mdash] if `is_open()` is false.]
+[mdash] `errc::bad_file_descriptor` [mdash] if `is_open()` is `false`.]
 
 [function_note The non-blocking mode has no effect on the behavior of
 asynchronous operations.]
@@ -395,7 +395,7 @@ status flag `O_NONBLOCK`. This mode has no effect on the behavior of the
 synchronous or asynchronous operations specified in this clause.]
 
 [function_error_conditions\n
-[mdash] `errc::bad_file_descriptor` [mdash] if `is_open()` is false.\n
+[mdash] `errc::bad_file_descriptor` [mdash] if `is_open()` is `false`.\n
 [mdash] `errc::invalid_argument` [mdash] if `mode == false` and `non_blocking()
 == true`. [inline_note As the combination does not make sense.]]
 
@@ -425,7 +425,7 @@ data mark.]
 blocking, or 0 if an error occurs.]
 
 [function_error_conditions\n
-[mdash] `errc::bad_file_descriptor` [mdash] if `is_open()` is false.]
+[mdash] `errc::bad_file_descriptor` [mdash] if `is_open()` is `false`.]
 
   void bind(const endpoint_type& endpoint);
   void bind(const endpoint_type& endpoint, error_code& ec);
@@ -462,7 +462,7 @@ if by __POSIX__ __getpeername__.]
   void connect(const endpoint_type& endpoint);
   void connect(const endpoint_type& endpoint, error_code& ec);
 
-[function_effects If `is_open()` is false, opens the socket by performing
+[function_effects If `is_open()` is `false`, opens the socket by performing
 `open(endpoint.protocol(), ec)`. If `ec`, returns with no further action.
 Connects the socket to the specified remote endpoint, as if by __POSIX__
 __connect__.]
@@ -472,7 +472,7 @@ __connect__.]
 
 [function_completion_signature `void(error_code ec)`.]
 
-[function_effects If `is_open()` is false, opens the socket by performing
+[function_effects If `is_open()` is `false`, opens the socket by performing
 `open(endpoint.protocol(), ec)`. If `ec`, returns with no further action.
 Initiates an asynchronous operation to connect the socket to the specified
 remote endpoint, as if by __POSIX__ __connect__.]
@@ -494,7 +494,7 @@ connect operation, the behavior is undefined.]
 to have error conditions pending, as if by __POSIX__ __poll__.]
 
 [function_error_conditions\n
-[mdash] `errc::bad_file_descriptor` [mdash] if `is_open()` is false.]
+[mdash] `errc::bad_file_descriptor` [mdash] if `is_open()` is `false`.]
 
   template<class CompletionToken>
     auto async_wait(wait_type w, CompletionToken&& token);
@@ -511,7 +511,7 @@ enters the corresponding ready state. The order of invocation of the handlers
 for these operations is unspecified.]
 
 [function_error_conditions\n
-[mdash] `errc::bad_file_descriptor` [mdash] if `is_open()` is false.]
+[mdash] `errc::bad_file_descriptor` [mdash] if `is_open()` is `false`.]
 
 [endsect]
 
