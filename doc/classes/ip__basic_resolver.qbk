@@ -108,7 +108,7 @@ originally represented by `rhs`.]
 [function_effects Causes any outstanding asynchronous resolve operations to
 complete as soon as possible. Completion handlers for cancelled operations
 shall be passed an error code `ec` such that `ec == errc::operation_canceled`
-is `true`.]
+yields `true`.]
 
   iterator resolve(const query& q);
   iterator resolve(const query& q, error_code& ec);
@@ -118,7 +118,7 @@ is `true`.]
 __getaddrinfo__.]
 
 [function_returns On success, an iterator object `i` such that the condition `i
-!= iterator()` holds. Otherwise `iterator()`.]
+!= iterator()` yields `true`. Otherwise `iterator()`.]
 
   template<class CompletionToken>
     auto async_resolve(const query& q, CompletionToken&& token);
@@ -129,7 +129,7 @@ __getaddrinfo__.]
 a sequence of `basic_resolver_entry<InternetProtocol>` objects, as if by
 __POSIX__ __getaddrinfo__. If the operation completes successfully, the handler
 is passed an iterator object `i` such that the condition `i != iterator()`
-holds. Otherwise, `i` is `iterator()`.]
+yields `true`. Otherwise, `i` is `iterator()`.]
 
   iterator resolve(const endpoint_type& e);
   iterator resolve(const endpoint_type& e, error_code& ec);
@@ -139,7 +139,7 @@ holds. Otherwise, `i` is `iterator()`.]
 __getnameinfo__.]
 
 [function_returns On success, an iterator object `i` such that the condition `i
-!= iterator()` holds. Otherwise `iterator()`.]
+!= iterator()` yields `true`. Otherwise `iterator()`.]
 
   template<class CompletionToken>
     auto async_resolve(const endpoint_type& e,
@@ -151,7 +151,7 @@ __getnameinfo__.]
 into a sequence of zero or one `basic_resolver_entry<InternetProtocol>`
 objects, as if by __POSIX__ __getnameinfo__. If the operation completes
 successfully, the handler is passed an iterator object `i` such that the
-condition `i != iterator()` holds. Otherwise, `i` is `iterator()`.]
+condition `i != iterator()` yields `true`. Otherwise, `i` is `iterator()`.]
 
 [endsect]
 

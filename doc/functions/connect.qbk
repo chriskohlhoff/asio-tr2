@@ -59,7 +59,7 @@ CopyConstructible requirements (C++ Std \[copyconstructible\]).]
 
 [function_effects If `s.is_open()` is `true`, performs `s.close(ec)`. Performs
 `ec.clear()`. Returns the first iterator `i` in the range [half_open_range
-`first`,`last`] for which `c(ec, *i)` holds and, if so, for which the
+`first`,`last`] for which `c(ec, *i)` yields `true` and, if so, for which the
 synchronous operation `s.connect(*i, ec)` succeeds. If no such iterator is
 found, `ec` contains the error code produced by the last unsuccessful connect
 operation and the function returns `last`.]

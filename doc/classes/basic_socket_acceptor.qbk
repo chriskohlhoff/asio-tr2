@@ -238,7 +238,7 @@ unless `OtherProtocol` is implicitly convertible to `Protocol`.]
 associated with the acceptor, and releases acceptor resources as if by
 __POSIX__ __close__. Otherwise, no effect. Handlers for cancelled operations
 shall be passed an error code `ec` such that `ec == errc::operation_canceled`
-is `true`.]
+yields `true`.]
 
 [endsect]
 
@@ -251,7 +251,7 @@ is `true`.]
 associated with the acceptor, and releases acceptor resources as if by __POSIX__
 __close__. Then moves into `*this` the state originally represented by `rhs`.
 Handlers for cancelled operations shall be passed an error code `ec` such that
-`ec == errc::operation_canceled` is `true`.]
+`ec == errc::operation_canceled` yields `true`.]
 
 [function_postconditions\n
 [mdash] `get_executor() == rhs.get_executor()`.\n
@@ -274,7 +274,7 @@ to the assignment.\n
 associated with the acceptor, and releases acceptor resources as if by __POSIX__
 __close__. Then moves into `*this` the state originally represented by `rhs`.
 Handlers for cancelled operations shall be passed an error code `ec` such that
-`ec == errc::operation_canceled` is `true`.]
+`ec == errc::operation_canceled` yields `true`.]
 
 [function_postconditions\n
 [mdash] `get_executor() == rhs.get_executor()`.\n
@@ -360,7 +360,7 @@ previous call to `open` or `assign`.]
 associated with the acceptor, and establishes the postcondition as if by
 __POSIX__ __close__. Otherwise, no effect. Handlers for cancelled asynchronous
 operations are passed an error code `ec` such that `ec ==
-errc::operation_canceled` is `true`.]
+errc::operation_canceled` yields `true`.]
 
 [function_postconditions `is_open() == false`.]
 
@@ -369,7 +369,7 @@ errc::operation_canceled` is `true`.]
 
 [function_effects If `is_open()` is `true`, cancels any asynchronous operations
 associated with the acceptor. Handlers for cancelled asynchronous operations are
-passed an error code `ec` such that `ec == errc::operation_canceled` is
+passed an error code `ec` such that `ec == errc::operation_canceled` yields
 `true`.]
 
 [function_error_conditions\n

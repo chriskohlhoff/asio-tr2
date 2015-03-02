@@ -172,7 +172,7 @@ the calling thread for the relative time produced by
 
 [function_effects Initiates an asynchronous wait operation such that the
 completion handler is submitted for execution only when the condition `ec ||
-!(clock_type::now() < expiry())` holds.]
+!(clock_type::now() < expiry())` yields `true`.]
 
 [endsect]
 

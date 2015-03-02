@@ -209,7 +209,7 @@ unless `OtherProtocol` is implicitly convertible to `Protocol`.]
 associated with the socket, disables the linger socket option to prevent the
 destructor from blocking, and releases socket resources as if by __POSIX__
 __close__. Completion handlers for canceled operations are passed an error code
-`ec` such that `ec == errc::operation_canceled` is `true`.]
+`ec` such that `ec == errc::operation_canceled` yields `true`.]
 
 [endsect]
 
@@ -220,7 +220,7 @@ __close__. Completion handlers for canceled operations are passed an error code
 
 [function_effects If `is_open()` is `true`, cancels any asynchronous operations
 associated with the socket. Completion handlers for canceled operations are
-passed an error code `ec` such that `ec == errc::operation_canceled` is
+passed an error code `ec` such that `ec == errc::operation_canceled` yields
 `true`. Disables the linger socket option to prevent the assignment from
 blocking, and releases socket resources as if by __POSIX__ __close__. Moves
 into `*this` the state originally represented by `rhs`.]
@@ -242,7 +242,7 @@ to the assignment.\n
 
 [function_effects If `is_open()` is `true`, cancels any asynchronous operations
 associated with the socket. Completion handlers for canceled operations are
-passed an error code `ec` such that `ec == errc::operation_canceled` is
+passed an error code `ec` such that `ec == errc::operation_canceled` yields
 `true`. Disables the linger socket option to prevent the assignment from
 blocking, and releases socket resources as if by __POSIX__ __close__. Moves
 into `*this` the state originally represented by `rhs`.]
@@ -321,7 +321,7 @@ previous call to `open` or `assign`.]
 [function_effects If `is_open()` is `true`, cancels any asynchronous operations
 associated with the socket, and establishes the postcondition as if by
 __POSIX__ __close__. Completion handlers for canceled asynchronous operations
-are passed an error code `ec` such that `ec == errc::operation_canceled` is
+are passed an error code `ec` such that `ec == errc::operation_canceled` yields
 `true`.]
 
 [function_postconditions `is_open() == false`.]
@@ -332,7 +332,7 @@ are passed an error code `ec` such that `ec == errc::operation_canceled` is
 [function_effects If `is_open()` is `true`, cancels any asynchronous operations
 associated with the socket. Completion handlers for canceled asynchronous
 operations are passed an error code `ec` such that `ec ==
-errc::operation_canceled` is `true`.]
+errc::operation_canceled` yields `true`.]
 
 [function_error_conditions\n
 [mdash] `errc::bad_file_descriptor` [mdash] if `is_open()` is `false`.]

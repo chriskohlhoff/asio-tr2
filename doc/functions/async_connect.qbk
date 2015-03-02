@@ -62,9 +62,9 @@ CopyConstructible requirements (C++ Std \[copyconstructible\]).]
 
 [function_effects If `s.is_open()` is `true`, performs `s.close(ec)`. Define
 `previous_ec` as an object of type `error_code` initialized such that
-`!previous_ec` is `true`. Initiates an asynchronous operation to determine the
+`!previous_ec` yields `true`. Initiates an asynchronous operation to determine the
 first iterator `i` in the range [half_open_range `first`,`last`] for which
-`c(previous_ec, *i)` holds and, if so, for which the asynchronous operation
+`c(previous_ec, *i)` yields `true` and, if so, for which the asynchronous operation
 `s.async_connect(*i, __unspecified__)` succeeds. If an asynchronous
 operation `s.async_connect(*i, __unspecified__)` fails, `previous_ec` is
 updated with the result of the operation. If no such iterator is found, `ec`
