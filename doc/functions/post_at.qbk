@@ -66,8 +66,7 @@ unless `is_executor<Executor>::value` is true.]
                  ExecutionContext& ctx, CompletionTokens&&... tokens);
 
 [function_returns
-`std::experimental::__versioned_ns__::post_at(ctx.get_executor(),
-forward<CompletionToken>(token))`.]
+`experimental::post_at(ctx.get_executor(), forward<CompletionToken>(token))`.]
 
 [function_remarks This function shall not participate in overload resolution
 unless `is_convertible<ExecutionContext&, execution_context&>::value` is true.]
