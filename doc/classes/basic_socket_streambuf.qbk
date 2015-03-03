@@ -112,7 +112,7 @@ performing:
   typename protocol_type::resolver resolver(ios);
   typename protocol_type::resolver::iterator i = resolver.resolve(q, ec_);
   if (!ec_)
-    std::experimental::__versioned_ns__::async_connect(*this, i, __unspecified__);
+    experimental::async_connect(*this, i, __unspecified__);
 ``
 
 where `ios` is an unspecified object of class `io_service`. `ec_` is set to
