@@ -56,7 +56,7 @@ unless `is_executor<Executor>::value` is true.]
   template<class ExecutionContext, class CompletionToken>
     auto post(ExecutionContext& ctx, CompletionToken&& token);
 
-[function_returns `experimental::post(ctx.get_executor(),
+[function_returns `std::experimental::post(ctx.get_executor(),
 forward<CompletionToken>(token))`.]
 
 [function_remarks This function shall not participate in overload resolution

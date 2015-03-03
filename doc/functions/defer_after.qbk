@@ -6,7 +6,7 @@
                      CompletionTokens&&... token);
 
 [function_returns
-`experimental::defer_at(chrono::steady_clock::now() + rel_time,
+`std::experimental::defer_at(chrono::steady_clock::now() + rel_time,
 forward<CompletionToken>(token))`.]
 
   template<class Rep, class Period, class Executor, class... CompletionTokens>
@@ -14,7 +14,7 @@ forward<CompletionToken>(token))`.]
                      const Executor& e, CompletionTokens&&... tokens);
 
 [function_returns
-`experimental::defer_at(chrono::steady_clock::now() + rel_time, e,
+`std::experimental::defer_at(chrono::steady_clock::now() + rel_time, e,
 forward<CompletionToken>(token))`.]
 
 [function_remarks This function shall not participate in overload resolution
@@ -25,7 +25,7 @@ unless `is_executor<Executor>::value` is true.]
                      ExecutionContext& c, CompletionTokens&&... tokens);
 
 [function_returns
-`experimental::defer_at(chrono::steady_clock::now() + rel_time,
+`std::experimental::defer_at(chrono::steady_clock::now() + rel_time,
 ctx.get_executor(), forward<CompletionToken>(token))`.]
 
 [function_remarks This function shall not participate in overload resolution
