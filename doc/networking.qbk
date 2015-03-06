@@ -175,39 +175,7 @@ QNX Neutrino.
 
 [section Changes in this revision]
 
-Revision 4 includes the following changes to the proposed text:
-
-* Boolean socket operations have been changed to use the `explicit operator
-  bool` ([xref socket.opt.bool]).
-
-* `ip::address_v4` comparison operators are now specified in terms of `==` and
-  `<` ([xref internet.address.v4]).
-
-* All `string_view` arguments are now taken by value.
-
-* Changed the address iterator classes to use the `reference` and `pointer`
-  member typedefs when specifying member function return types ([xref
-  internet.address.iter.v4], [xref internet.address.iter.v6]).
-
-* Added some explanatory text for `ip::basic_resolver_iterator` ([xref
-  internet.resolver.iter]).
-
-* Removed an unused `Allocator` template parameter from `buffer()` overload
-  ([xref buffer.synop]).
-
-* Corrected and simplified the specification of `ip::address` by using
-  exposition-only members ([xref internet.address]).
-
-* Added section names.
-
-* Added explanatory text to clarify purpose of `ip::basic_resolver_query`
-  ([xref internet.resolver.query]).
-
-* Explicitly documented that handlers may throw exceptions ([xref
-  async.reqmts.async.exceptions]).
-
-* Added a note about `CompletionToken` requirements ([xref
-  async.reqmts.async.token]).
+TODO
 
 [endsect]
 
@@ -826,8 +794,7 @@ This subclause defines components for performing timer operations.
 [include:classes classes/ip__bad_address_cast.qbk]
 [include:functions functions/ip__address_cast.qbk]
 [include:classes classes/hash_ip.qbk]
-[include:classes classes/ip__address_iterator_v4.qbk]
-[include:classes classes/ip__address_iterator_v6.qbk]
+[include:classes classes/ip__basic_address_iterator.qbk]
 [include:classes classes/ip__address_range_v4.qbk]
 [include:classes classes/ip__address_range_v6.qbk]
 [include:classes classes/ip__network_v4.qbk]

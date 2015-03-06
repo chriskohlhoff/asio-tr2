@@ -1,0 +1,88 @@
+[section:ip__basic_address_iterator Class template [^ip::basic_address_iterator] specializations]
+[xrefid internet.address.iter]
+
+The class template `basic_address_iterator` enables iteration over IP addresses
+in network byte order. This clause defines two specializations of the class
+template `basic_address_iterator`: `basic_address_iterator<address_v4>` and
+`basic_address_iterator<address_v6>`. The members and operational semantics of
+these specializations are defined below.
+
+  namespace std {
+    namespace experimental {
+      __begin_versioned_ns__
+        namespace ip {
+
+          template<> class basic_address_iterator<``['Address]``>
+          {
+          public:
+            // types:
+            typedef ``['Address]`` value_type;
+            typedef ptrdiff_t difference_type;
+            typedef const ``['Address]``* pointer;
+            typedef const ``['Address]``& reference;
+            typedef input_iterator_tag iterator_category;
+
+            // constructors:
+            basic_address_iterator(const ``['Address]``& a) noexcept;
+
+            // members:
+            reference operator*() const noexcept;
+            pointer operator->() const noexcept;
+            basic_address_iterator& operator++() noexcept;
+            basic_address_iterator& operator++(int) noexcept;
+            basic_address_iterator& operator--() noexcept;
+            basic_address_iterator& operator--(int) noexcept;
+
+            // other members as required by C++ Std [input.iterators]
+
+          private:
+            ``['Address]`` address_; // ``['exposition only]``
+          };
+
+        } // namespace ip
+      __end_versioned_ns__
+    } // namespace experimental
+  } // namespace std
+
+  basic_address_iterator(const ``['Address]``& a) noexcept;
+
+[function_effects Constructs an object of type `basic_address_iterator`,
+initializing `address_` with `a`.]
+
+  reference operator*() const noexcept;
+
+[function_returns `address_`.]
+
+  pointer operator->() const noexcept;
+
+[function_returns `std::addressof(address_)`.]
+
+  basic_address_iterator& operator++() noexcept;
+
+[function_effects Sets `address_` to the next unique address in network byte
+order.]
+
+[function_returns `*this`.]
+
+  basic_address_iterator& operator++(int) noexcept;
+
+[function_effects Sets `address_` to the next unique address in network byte
+order.]
+
+[function_returns The prior value of `*this`.]
+
+  basic_address_iterator& operator--() noexcept;
+
+[function_effects Sets `address_` to the prior unique address in network byte
+order.]
+
+[function_returns `*this`.]
+
+  basic_address_iterator& operator--(int) noexcept;
+
+[function_effects Sets `address_` to the prior unique address in network byte
+order.]
+
+[function_returns The prior value of `*this`.]
+
+[endsect]

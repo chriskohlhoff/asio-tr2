@@ -10,7 +10,7 @@
           {
           public:
             // types:
-            typedef address_iterator_v6 iterator;
+            typedef address_v6_iterator iterator;
 
             // constructors:
             address_range_v6() noexcept;

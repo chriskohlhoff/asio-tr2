@@ -93,8 +93,11 @@
           template<class T> constexpr T address_cast(const address_v4&) noexcept(``['see below]``);
           template<class T> constexpr T address_cast(const address_v6&) noexcept(``['see below]``);
 
-          class ``[link classes.ip__address_iterator_v4 address_iterator_v4]``;
-          class ``[link classes.ip__address_iterator_v6 address_iterator_v6]``;
+          template<class> basic_address_iterator; ``['// not defined]``
+          template<> class ``[link classes.ip__basic_address_iterator basic_address_iterator<address_v4>]``;
+          typedef basic_address_iterator<address_v4> address_v4_iterator;
+          template<> class ``[link classes.ip__basic_address_iterator basic_address_iterator<address_v6>]``;
+          typedef basic_address_iterator<address_v6> address_v6_iterator;
 
           class ``[link classes.ip__address_range_v4 address_range_v4]``;
           class ``[link classes.ip__address_range_v6 address_range_v6]``;
