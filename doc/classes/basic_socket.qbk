@@ -413,7 +413,8 @@ operating system-specific function on the result of `native_handle()`.]
   bool at_mark(error_code& ec) const;
 
 [function_effects Determines if the socket is at the out-of-band data mark, as
-if by __POSIX__ __sockatmark__. [inline_note ]
+if by __POSIX__ __sockatmark__. [inline_note The `at_mark()` function must be
+used in conjunction with the `socket_base::out_of_band_inline` socket option.]]
 
 [function_returns A `bool` indicating whether the socket is at the out-of-band
 data mark.]
