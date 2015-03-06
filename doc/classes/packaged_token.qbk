@@ -10,18 +10,18 @@ transformed into a completion handler.
     namespace experimental {
       __begin_versioned_ns__
 
-        template<class Func, class Alloc = allocator<void>>
+        template<class Func, class ProtoAllocator = allocator<void>>
         class packaged_token
         {
         public:
           // packaged_token types:
 
-          typedef Alloc allocator_type;
+          typedef ProtoAllocator allocator_type;
 
           // packaged_token constructors:
 
           explicit packaged_token(Func f);
-          packaged_token(Func f, const Alloc& a);
+          packaged_token(Func f, const allocator_type& a);
 
           // packaged_token operations:
 
@@ -29,13 +29,13 @@ transformed into a completion handler.
 
         private:
           Func f_; // ``['exposition only]``
-          Alloc allocator_; // ``['exposition only]``
+          ProtoAllocator allocator_; // ``['exposition only]``
         };
 
-        template<class Func, class Alloc, class R, class... Args>
-        struct handler_type<packaged_token<Func, Alloc>, R(Args...)>
+        template<class Func, class ProtoAllocator, class R, class... Args>
+        struct handler_type<packaged_token<Func, ProtoAllocator>, R(Args...)>
         {
-          typedef packaged_handler<result_of_t<Func(Args...)>(Args...), Alloc> type;
+          typedef packaged_handler<result_of_t<Func(Args...)>(Args...), ProtoAllocator> type;
         };
 
       __end_versioned_ns__
@@ -50,7 +50,7 @@ transformed into a completion handler.
 [function_effects Initializes `f_` with `std::move(f)` and default constructs
 `allocator_`.]
 
-  packaged_token(Func f, const Alloc& a);
+  packaged_token(Func f, const allocator_type& a);
 
 [function_effects Initializes `f_` with `std::move(f)` and `allocator_` with
 `a`.]

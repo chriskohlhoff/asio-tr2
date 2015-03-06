@@ -561,6 +561,10 @@ express type requirements, as listed in the table below.
 [table Template parameters and type requirements
   [[template parameter name][type requirements]]
   [
+    [`Allocator`]
+    [C++Std, \[allocator.requirements\]]
+  ]
+  [
     [`AsyncReadStream`]
     [[link requirements.async_read_stream buffer-oriented asynchronous read stream]]
   ]
@@ -611,6 +615,10 @@ express type requirements, as listed in the table below.
     [[link requirements.mutable_buffers mutable buffer sequence]]
   ]
   [
+    [`ProtoAllocator`]
+    [[link requirements.proto_allocator proto-allocator]]
+  ]
+  [
     [`Protocol`]
     [[link requirements.protocol protocol]]
   ]
@@ -654,6 +662,7 @@ express type requirements, as listed in the table below.
 [include:headers headers/networking/executor.qbk]
 [section:async_requirements Requirements]
 [xrefid async.reqmts]
+[include:requirements requirements/proto_allocator.qbk]
 [include:requirements requirements/asynchronous_operations.qbk]
 [include:requirements requirements/executor.qbk]
 [include:requirements requirements/service.qbk]

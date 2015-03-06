@@ -8,18 +8,18 @@ completion token types] for use with asynchronous operations.
     namespace experimental {
       __begin_versioned_ns__
 
-        template<class Allocator = allocator<void>>
+        template<class ProtoAllocator = allocator<void>>
         class use_future_t
         {
         public:
           // use_future_t types:
-          typedef Allocator allocator_type;
+          typedef ProtoAllocator allocator_type;
 
           // use_future_t members:
           constexpr use_future_t() noexcept;
-          explicit use_future_t(const Allocator& a) noexcept;
-          template<class OtherAllocator> use_future_t<OtherAllocator>
-            rebind(const OtherAllocator& a) const noexcept;
+          explicit use_future_t(const allocator_type& a) noexcept;
+          template<class OtherProtoAllocator> use_future_t<OtherProtoAllocator>
+            rebind(const OtherProtoAllocator& a) const noexcept;
           allocator_type get_allocator() const noexcept;
         };
 
@@ -35,7 +35,7 @@ completion token types] for use with asynchronous operations.
 [function_effects Constructs a `use_future_t` with a default-constructed
 allocator.]
 
-  explicit use_future_t(const Allocator& a) noexcept;
+  explicit use_future_t(const allocator_type& a) noexcept;
 
 [function_effects Constructs an object of type `use_future_t`.]
 
@@ -46,8 +46,8 @@ allocator.]
 [section [^use_future_t] members]
 [xrefid async.use.future.members]
 
-  template<class OtherAllocator> use_future_t<OtherAllocator>
-    rebind(const OtherAllocator& a) const noexcept;
+  template<class OtherProtoAllocator> use_future_t<OtherProtoAllocator>
+    rebind(const OtherProtoAllocator& a) const noexcept;
 
 [function_returns A `use_future_t` object where `get_allocator() == a`.]
 
@@ -60,8 +60,8 @@ allocator.]
 [section:use_future_t_traits [^use_future_t] traits]
 [xrefid async.use.future.traits]
 
-  template<class Allocator, class R, class... Args>
-  struct handler_type<use_future_t<Allocator>, R(Args...)>
+  template<class ProtoAllocator, class R, class... Args>
+  struct handler_type<use_future_t<ProtoAllocator>, R(Args...)>
   {
     typedef ``['see below]`` type;
   };
@@ -87,7 +87,7 @@ be in the range \[[^0]..[^N]) and let [^T[sub ['i]]] be the [^['i]]th type in
 ['i]]] in `Args`; and let [^a[sub ['i]]] be the [^['i]]th argument to
 `type::operator()`.
 
-[table handler_type<use_future_t<Allocator>, R(Args...)>::type semantics
+[table handler_type<use_future_t<ProtoAllocator>, R(Args...)>::type semantics
   [
     [[^N]]
     [[^U[sub ['0]]]]

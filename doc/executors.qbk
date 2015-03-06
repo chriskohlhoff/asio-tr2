@@ -1914,6 +1914,9 @@ the appropriate operation for their use case.
 be added to the TS.]
 
 [include:headers headers/concurrency/type_traits.qbk]
+[section:async_requirements Requirements]
+[include:requirements requirements/proto_allocator.qbk]
+[endsect]
 [include:classes classes/handler_type.qbk]
 [include:classes classes/async_result.qbk]
 [include:classes classes/async_completion.qbk]

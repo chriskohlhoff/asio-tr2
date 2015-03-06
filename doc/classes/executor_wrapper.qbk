@@ -63,8 +63,8 @@ requirements.executor Executor requirements].
         template<class T, class Executor>
           class async_result<executor_wrapper<T, Executor>>;
 
-        template<class T, class Executor, class Alloc>
-          struct associated_allocator<executor_wrapper<T, Executor>, Alloc>;
+        template<class T, class Executor, class ProtoAllocator>
+          struct associated_allocator<executor_wrapper<T, Executor>, ProtoAllocator>;
 
         template<class T, class Executor, class Executor1>
           struct associated_executor<executor_wrapper<T, Executor>, Executor1>;
@@ -200,13 +200,13 @@ the executor `ex_`.]
     namespace experimental {
       __begin_versioned_ns__
 
-        template<class T, class Executor, class Alloc>
-          struct associated_allocator<executor_wrapper<T, Executor>, Alloc>
+        template<class T, class Executor, class ProtoAllocator>
+          struct associated_allocator<executor_wrapper<T, Executor>, ProtoAllocator>
         {
-          typedef associated_allocator_t<T, Alloc> type;
+          typedef associated_allocator_t<T, ProtoAllocator> type;
 
           static type get(const executor_wrapper<T, Executor>& w,
-                          const Alloc& a = Alloc()) noexcept;
+                          const ProtoAllocator& a = ProtoAllocator()) noexcept;
         };
 
       __end_versioned_ns__
@@ -214,9 +214,9 @@ the executor `ex_`.]
   } // namespace std
 
   static type get(const executor_wrapper<T, Executor>& w,
-                  const Alloc& a = Alloc()) noexcept;
+                  const ProtoAllocator& a = ProtoAllocator()) noexcept;
 
-[function_returns `associated_allocator<T, Alloc>::get(w.unwrap(), a)`.]
+[function_returns `associated_allocator<T, ProtoAllocator>::get(w.unwrap(), a)`.]
 
 [endsect]
 

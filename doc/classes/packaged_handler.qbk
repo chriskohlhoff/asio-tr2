@@ -9,30 +9,30 @@ allocator.
     namespace experimental {
       __begin_versioned_ns__
 
-        template<class Signature, class Alloc>
+        template<class Signature, class ProtoAllocator>
         class packaged_handler
           : public packaged_task<Signature>
         {
         public:
           // packaged_handler types:
 
-          typedef Alloc allocator_type;
+          typedef ProtoAllocator allocator_type;
 
           // packaged_handler constructors:
 
           template<class Func>
-            explicit packaged_handler(packaged_token<Func, Alloc>&& token);
+            explicit packaged_handler(packaged_token<Func, ProtoAllocator>&& token);
 
           // packaged_handler operations:
 
           allocator_type get_allocator() const noexcept;
 
         private:
-          Alloc allocator_; // ``['exposition only]``
+          ProtoAllocator allocator_; // ``['exposition only]``
         };
 
-        template<class Signature, class Alloc>
-          class async_result<packaged_handler<Signature, Alloc>>;
+        template<class Signature, class ProtoAllocator>
+          class async_result<packaged_handler<Signature, ProtoAllocator>>;
 
       __end_versioned_ns__
     } // namespace experimental
@@ -42,10 +42,10 @@ allocator.
 [xrefid async.package.handler.members]
 
   template<class Func>
-    explicit packaged_handler(packaged_token<Func, Alloc>&& token);
+    explicit packaged_handler(packaged_token<Func, ProtoAllocator>&& token);
 
 [function_effects Constructs an object of class `packaged_handler<Signature,
-Alloc>`, initializing the base class with
+ProtoAllocator>`, initializing the base class with
 `packaged_task<Signature>(std::move(token.f_))` and initializing `allocator_`
 with `token.allocator_`.]
 
@@ -62,12 +62,12 @@ with `token.allocator_`.]
     namespace experimental {
       __begin_versioned_ns__
 
-        template<class Signature, class Alloc>
-        class async_result<packaged_handler<Signature, Alloc>>
+        template<class Signature, class ProtoAllocator>
+        class async_result<packaged_handler<Signature, ProtoAllocator>>
           : public async_result<packaged_task<Signature>>
         {
         public:
-          explicit async_result(packaged_handler<Signature, Alloc>& h);
+          explicit async_result(packaged_handler<Signature, ProtoAllocator>& h);
         };
 
       __end_versioned_ns__
@@ -77,7 +77,7 @@ with `token.allocator_`.]
 The implementation shall provide a specialization of `async_result` that meets
 the [link classes.async_result `async_result` specialization requirements].
 
-  explicit async_result(packaged_handler<Signature, Alloc>& h);
+  explicit async_result(packaged_handler<Signature, ProtoAllocator>& h);
 
 [function_effects Initializes the base class with `h`.]
 

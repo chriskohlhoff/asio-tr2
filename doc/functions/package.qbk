@@ -1,9 +1,10 @@
 [section:package Function [^package]]
 [xrefid async.package]
 
-  template<class Func, class Alloc = allocator<void>>
-    packaged_token<decay_t<Func>, Alloc> package(Func&& f, const Alloc& a = Alloc());
+  template<class Func, class ProtoAllocator = allocator<void>>
+    packaged_token<decay_t<Func>, ProtoAllocator> package(
+      Func&& f, const ProtoAllocator& a = ProtoAllocator());
 
-[function_returns `packaged_token<decay_t<Func>, Alloc>(forward<Func>(f), a)`.]
+[function_returns `packaged_token<decay_t<Func>, ProtoAllocator>(forward<Func>(f), a)`.]
 
 [endsect]

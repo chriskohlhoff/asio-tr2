@@ -27,12 +27,12 @@
           void on_work_started() noexcept;
           void on_work_finished() noexcept;
 
-          template<class Func, class Alloc>
-            void dispatch(Func&& f, const Alloc& a);
-          template<class Func, class Alloc>
-            void post(Func&& f, const Alloc& a);
-          template<class Func, class Alloc>
-            void defer(Func&& f, const Alloc& a);
+          template<class Func, class ProtoAllocator>
+            void dispatch(Func&& f, const ProtoAllocator& a);
+          template<class Func, class ProtoAllocator>
+            void post(Func&& f, const ProtoAllocator& a);
+          template<class Func, class ProtoAllocator>
+            void defer(Func&& f, const ProtoAllocator& a);
         };
 
         bool operator==(const loop_scheduler::executor_type& a,
@@ -110,8 +110,8 @@ associated with a `loop_scheduler`, and function objects submitted using the
 [function_effects Decreases the count of outstanding work associated with the
 `loop_scheduler`.]
 
-  template<class Func, class Alloc>
-    void dispatch(Func&& f, const Alloc& a);
+  template<class Func, class ProtoAllocator>
+    void dispatch(Func&& f, const ProtoAllocator& a);
 
 [function_effects If `running_in_this_thread()` is `true`, calls
 [^['DECAY_COPY]]`(forward<Func>(f))()`. Otherwise, requests execution of `f`.]
@@ -120,13 +120,13 @@ associated with a `loop_scheduler`, and function objects submitted using the
 performed in the current thread and before `dispatch` returns, the exception
 shall propagate to the caller of `dispatch`.]
 
-  template<class Func, class Alloc>
-    void post(Func&& f, const Alloc& a);
+  template<class Func, class ProtoAllocator>
+    void post(Func&& f, const ProtoAllocator& a);
 
 [function_effects Requests execution of `f`.]
 
-  template<class Func, class Alloc>
-    void defer(Func&& f, const Alloc& a);
+  template<class Func, class ProtoAllocator>
+    void defer(Func&& f, const ProtoAllocator& a);
 
 [function_effects Requests execution of `f`.]
 

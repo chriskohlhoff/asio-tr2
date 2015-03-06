@@ -18,8 +18,8 @@ The `executor` class provides a polymorphic wrapper for types that satisfy the
           executor(const executor& e) noexcept;
           executor(executor&& e) noexcept;
           template<class Executor> executor(Executor e);
-          template<class Executor, class Alloc>
-            executor(allocator_arg_t, const Alloc& a, Executor e);
+          template<class Executor, class ProtoAllocator>
+            executor(allocator_arg_t, const ProtoAllocator& a, Executor e);
 
           executor& operator=(const executor& e) noexcept;
           executor& operator=(executor&& e) noexcept;
@@ -31,8 +31,8 @@ The `executor` class provides a polymorphic wrapper for types that satisfy the
           // executor modifiers:
 
           void swap(executor& other) noexcept;
-          template<class Executor, class Alloc>
-            void assign(Executor e, const Alloc& a);
+          template<class Executor, class ProtoAllocator>
+            void assign(Executor e, const ProtoAllocator& a);
 
           // executor operations:
 
@@ -41,12 +41,12 @@ The `executor` class provides a polymorphic wrapper for types that satisfy the
           void on_work_started() noexcept;
           void on_work_finished() noexcept;
 
-          template<class Func, class Alloc>
-            void dispatch(Func&& f, const Alloc& a);
-          template<class Func, class Alloc>
-            void post(Func&& f, const Alloc& a);
-          template<class Func, class Alloc>
-            void defer(Func&& f, const Alloc& a);
+          template<class Func, class ProtoAllocator>
+            void dispatch(Func&& f, const ProtoAllocator& a);
+          template<class Func, class ProtoAllocator>
+            void post(Func&& f, const ProtoAllocator& a);
+          template<class Func, class ProtoAllocator>
+            void defer(Func&& f, const ProtoAllocator& a);
 
           // executor capacity:
 
@@ -77,8 +77,8 @@ The `executor` class provides a polymorphic wrapper for types that satisfy the
       __end_versioned_ns__
     } // namespace experimental
 
-    template<class Alloc>
-      struct uses_allocator<experimental::__versioned_ns__::executor, Alloc>
+    template<class Allocator>
+      struct uses_allocator<experimental::__versioned_ns__::executor, Allocator>
         : true_type {};
 
   } // namespace std
@@ -118,8 +118,8 @@ a valid state with an unspecified value.]
 [function_effects `*this` targets a copy of `e` initialized with
 `std::move(e)`.]
 
-  template<class Executor, class Alloc>
-    executor(allocator_arg_t, const Alloc& a, Executor e);
+  template<class Executor, class ProtoAllocator>
+    executor(allocator_arg_t, const ProtoAllocator& a, Executor e);
 
 [function_effects `*this` targets a copy of `e` initialized with
 `std::move(e)`.]
@@ -177,8 +177,8 @@ destroys, the target of `*this`.]
 
 [function_effects Interchanges the targets of `*this` and `other`.]
 
-  template<class Executor, class Alloc>
-    void assign(Executor e, const Alloc& a);
+  template<class Executor, class ProtoAllocator>
+    void assign(Executor e, const ProtoAllocator& a);
 
 [function_effects `executor(allocator_arg, a, std::move(e)).swap(*this)`.]
 
@@ -207,22 +207,22 @@ destroys, the target of `*this`.]
 [function_effects `e.on_work_finished()`, where `e` is the target object of
 `*this`.]
 
-  template<class Func, class Alloc>
-    void dispatch(Func&& f, const Alloc& a);
+  template<class Func, class ProtoAllocator>
+    void dispatch(Func&& f, const ProtoAllocator& a);
 
 [function_effects `e.dispatch(g, a)`, where `e` is the target object of
 `*this`, and `g` is a function object of unspecified type that, when called as
 `g()`, performs `DECAY_COPY(f)()`.]
 
-  template<class Func, class Alloc>
-    void post(Func&& f, const Alloc& a);
+  template<class Func, class ProtoAllocator>
+    void post(Func&& f, const ProtoAllocator& a);
 
 [function_effects `e.post(g, a)`, where `e` is the target object of `*this`,
 and `g` is a function object of unspecified type that, when called as `g()`,
 performs `DECAY_COPY(f)()`.]
 
-  template<class Func, class Alloc>
-    void defer(Func&& f, const Alloc& a);
+  template<class Func, class ProtoAllocator>
+    void defer(Func&& f, const ProtoAllocator& a);
 
 [function_effects `e.defer(g, a)`, where `e` is the target object of `*this`,
 and `g` is a function object of unspecified type that, when called as `g()`,

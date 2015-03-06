@@ -5,12 +5,12 @@
     namespace experimental {
       __begin_versioned_ns__
 
-        template<class T, class Alloc = allocator<void>>
+        template<class T, class ProtoAllocator = allocator<void>>
         struct associated_allocator
         {
           typedef ``['see below]`` type;
 
-          static type get(const T& t, const Alloc& a = Alloc()) noexcept;
+          static type get(const T& t, const ProtoAllocator& a = ProtoAllocator()) noexcept;
         };
 
       __end_versioned_ns__
@@ -19,21 +19,22 @@
 
 Specializations of `associated_allocator` shall satisfy the requirements in the
 table below. In this table, `X` is a specialization of `associated_allocator`
-for the template parameters `T` and `Alloc`; `t` is a value of (possibly const)
-`T`; and `a` is an object of type `Alloc`.
+for the template parameters `T` and `ProtoAllocator`; `t` is a value of
+(possibly const) `T`; and `a` is an object of type `ProtoAllocator`.
 
 [table associated_allocator specialization requirements
   [[Expression][Return type][Note]]
   [
     [`typename X::type`]
-    [A type meeting `Allocator` requirements (C++ Std, \[allocator.requirements\]).]
+    [A type meeting the [link requirements.proto_allocator proto-allocator]
+    requirements.]
     []
   ]
   [
     [`X::get(t)`]
     [`X::type`]
     [Shall not exit via an exception.\n
-     Equivalent to `X::get(t, Alloc())`.]
+     Equivalent to `X::get(t, ProtoAllocator())`.]
   ]
   [
     [`X::get(t, a)`]
@@ -48,9 +49,9 @@ for the template parameters `T` and `Alloc`; `t` is a value of (possibly const)
   typedef ``['see below]`` type;
 
 [function_type If `T` has a nested type `allocator_type`, `typename
-T::allocator_type`. Otherwise `Alloc`.]
+T::allocator_type`. Otherwise `ProtoAllocator`.]
 
-  type get(const T& t, const Alloc& a = Alloc()) noexcept;
+  type get(const T& t, const ProtoAllocator& a = ProtoAllocator()) noexcept;
 
 [function_returns If `T` has a nested type `allocator_type`,
 `t.get_allocator()`. Otherwise `a`.]

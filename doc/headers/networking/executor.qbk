@@ -17,19 +17,19 @@
         template<class CompletionToken, class Signature>
           struct ``[link classes.async_completion async_completion]``;
 
-        template<class T, class Alloc = allocator<void>>
+        template<class T, class ProtoAllocator = allocator<void>>
           struct ``[link classes.associated_allocator associated_allocator]``;
 
-        template<class T, class Alloc = allocator<void>>
-          using associated_allocator_t = typename associated_allocator<T, Alloc>::type;
+        template<class T, class ProtoAllocator = allocator<void>>
+          using associated_allocator_t = typename associated_allocator<T, ProtoAllocator>::type;
 
         ``// [link functions.get_associated_allocator get_associated_allocator]:``
 
         template<class T>
           associated_allocator_t<T> get_associated_allocator(const T& t);
-        template<class T, class Alloc>
-          associated_allocator_t<T, Alloc>
-            get_associated_allocator(const T& t, const Alloc& a);
+        template<class T, class ProtoAllocator>
+          associated_allocator_t<T, ProtoAllocator>
+            get_associated_allocator(const T& t, const ProtoAllocator& a);
 
         enum class fork_event {
           prepare,
@@ -79,8 +79,8 @@
         template<class T, class Executor>
           class async_result<executor_wrapper<T, Executor>>;
 
-        template<class T, class Executor, class Allocator>
-          struct associated_allocator<executor_wrapper<T, Executor>, Allocator>;
+        template<class T, class Executor, class ProtoAllocator>
+          struct associated_allocator<executor_wrapper<T, Executor>, ProtoAllocator>;
 
         template<class T, class Executor, class Executor1>
           struct associated_executor<executor_wrapper<T, Executor>, Executor1>;
@@ -172,37 +172,38 @@
         template<class Executor>
           struct is_executor<strand<Executor>> : true_type {};
 
-        template<class Allocator = allocator<void>>
+        template<class ProtoAllocator = allocator<void>>
           class ``[link classes.use_future_t use_future_t]``;
 
         constexpr use_future_t<> use_future = use_future_t<>();
 
-        template<class Allocator, class R, class... Args>
-          struct handler_type<use_future_t<Allocator>, R(Args...)>;
+        template<class ProtoAllocator, class R, class... Args>
+          struct handler_type<use_future_t<ProtoAllocator>, R(Args...)>;
 
         template<class R, class... Args>
           class ``[link classes.async_result_packaged_task async_result<packaged_task<R(Args...)>>]``;
 
-        template<class Signature, class Alloc>
+        template<class Signature, class ProtoAllocator>
           class ``[link classes.packaged_handler packaged_handler]``;
 
-        template<class Signature, class Alloc>
-          class async_result<packaged_handler<Signature, Alloc>>;
+        template<class Signature, class ProtoAllocator>
+          class async_result<packaged_handler<Signature, ProtoAllocator>>;
 
-        template<class Func, class Alloc = allocator<void>>
+        template<class Func, class ProtoAllocator = allocator<void>>
           class ``[link classes.packaged_token packaged_token]``;
 
-        template<class Func, class Alloc, class R, class... Args>
-          struct handler_type<packaged_token<Func, Alloc>, R(Args...)>;
+        template<class Func, class ProtoAllocator, class R, class... Args>
+          struct handler_type<packaged_token<Func, ProtoAllocator>, R(Args...)>;
 
-        template<class Func, class Alloc = allocator<void>>
-          packaged_token<decay_t<Func>, Alloc> ``[link functions.package package]``(Func&& f, const Alloc& a = Alloc());
+        template<class Func, class ProtoAllocator = allocator<void>>
+          packaged_token<decay_t<Func>, ProtoAllocator> ``[link functions.package package]``(
+            Func&& f, const ProtoAllocator& a = ProtoAllocator());
 
       __end_versioned_ns__
     } // namespace experimental
 
-    template<class Alloc>
-      struct uses_allocator<experimental::__versioned_ns__::executor, Alloc>
+    template<class Allocator>
+      struct uses_allocator<experimental::__versioned_ns__::executor, Allocator>
         : true_type {};
 
   } // namespace std

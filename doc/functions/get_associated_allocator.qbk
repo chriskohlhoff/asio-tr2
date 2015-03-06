@@ -6,10 +6,10 @@
 
 [function_returns `associated_allocator<T>::get(t)`.]
 
-  template<class T, class Alloc>
-    associated_allocator_t<T, Alloc>
-      get_associated_allocator(const T& t, const Alloc& a);
+  template<class T, class ProtoAllocator>
+    associated_allocator_t<T, ProtoAllocator>
+      get_associated_allocator(const T& t, const ProtoAllocator& a);
 
-[function_returns `associated_allocator<T, Alloc>::get(t, a)`.]
+[function_returns `associated_allocator<T, ProtoAllocator>::get(t, a)`.]
 
 [endsect]

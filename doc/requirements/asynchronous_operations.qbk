@@ -165,20 +165,21 @@ Asynchronous operations may allocate memory. [inline_note Such as a data
 structure to store copies of the `handler` object and the initiating function's
 arguments.]
 
-Let `Alloc1` be a type, satisfying `Allocator` requirements (C++ Std,
-[allocator.requirements]), that represents the asynchronous operation's default
-allocation strategy. [inline_note Typically `std::allocator<void>`.] Let
-`alloc1` be an object of type `Alloc1`.
+Let `Alloc1` be a type, satisfying the [link requirements.proto_allocator
+`ProtoAllocator`) requirements, that represents the asynchronous operation's
+default allocation strategy. [inline_note Typically `std::allocator<void>`.]
+Let `alloc1` be an object of type `Alloc1`.
 
-All handlers have an associated allocator object satisfying `Allocator`
-requirements. The type `Alloc2` of the handler's associated allocator shall be
-determined by `associated_allocator_t<Handler, Alloc1>`. The handler's
-associated allocator object `alloc2` shall be obtained by performing
-`associated_allocator<Handler, Executor1>::get(handler, alloc1)`.
+All handlers have an associated allocator object satisfying the [link
+requirements.proto_allocator `ProtoAllocator`] requirements. The type `Alloc2`
+of the handler's associated allocator shall be determined by
+`associated_allocator_t<Handler, Alloc1>`. The handler's associated allocator
+object `alloc2` shall be obtained by performing `associated_allocator<Handler,
+Executor1>::get(handler, alloc1)`.
 
 The asynchronous operations defined in this clause:
 
-[mdash] If required, allocates memory using only the completion handler's
+[mdash] If required, allocate memory using only the completion handler's
 associated allocator.
 
 [mdash] Prior to completion handler execution, deallocates any memory allocated.

@@ -22,12 +22,12 @@ permitted to execute on any thread.
           void on_work_started() noexcept {}
           void on_work_finished() noexcept {}
 
-          template<class Func, class Alloc>
-            void dispatch(Func&& f, const Alloc& a);
-          template<class Func, class Alloc>
-            void post(Func&& f, const Alloc& a);
-          template<class Func, class Alloc>
-            void defer(Func&& f, const Alloc& a);
+          template<class Func, class ProtoAllocator>
+            void dispatch(Func&& f, const ProtoAllocator& a);
+          template<class Func, class ProtoAllocator>
+            void post(Func&& f, const ProtoAllocator& a);
+          template<class Func, class ProtoAllocator>
+            void defer(Func&& f, const ProtoAllocator& a);
         };
 
         bool operator==(const system_executor&, const system_executor&) noexcept;
@@ -54,15 +54,15 @@ these function objects are discarded without calling them.
 [function_returns A reference to an object with static storage duration whose
 type is derived from `execution_context`.]
 
-  template<class Func, class Alloc>
-    void dispatch(Func&& f, const Alloc& a);
+  template<class Func, class ProtoAllocator>
+    void dispatch(Func&& f, const ProtoAllocator& a);
 
 [function_effects Calls [^['DECAY_COPY]]`(forward<Func>(f))()`.]
 
-  template<class Func, class Alloc>
-    void post(Func&& f, const Alloc& a);
-  template<class Func, class Alloc>
-    void defer(Func&& f, const Alloc& a);
+  template<class Func, class ProtoAllocator>
+    void post(Func&& f, const ProtoAllocator& a);
+  template<class Func, class ProtoAllocator>
+    void defer(Func&& f, const ProtoAllocator& a);
 
 [function_effects Creates an object `f1` initialized with
 [^['DECAY_COPY]]`(forward<Func>(f))`, and calls `f1` as if in a thread of
