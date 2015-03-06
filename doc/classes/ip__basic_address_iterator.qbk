@@ -46,8 +46,7 @@ these specializations are defined below.
 
   basic_address_iterator(const ``['Address]``& a) noexcept;
 
-[function_effects Constructs an object of type `basic_address_iterator`,
-initializing `address_` with `a`.]
+[function_effects Initializes `address_` with `a`.]
 
   reference operator*() const noexcept;
 
