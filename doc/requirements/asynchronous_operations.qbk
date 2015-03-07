@@ -166,7 +166,7 @@ structure to store copies of the `handler` object and the initiating function's
 arguments.]
 
 Let `Alloc1` be a type, satisfying the [link requirements.proto_allocator
-`ProtoAllocator`) requirements, that represents the asynchronous operation's
+`ProtoAllocator`] requirements, that represents the asynchronous operation's
 default allocation strategy. [inline_note Typically `std::allocator<void>`.]
 Let `alloc1` be an object of type `Alloc1`.
 
