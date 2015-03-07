@@ -20,7 +20,7 @@
             address_v4 netmask() const noexcept;
             address_v4 network() const noexcept;
             address_v4 broadcast() const noexcept;
-            address_range_v4 hosts() const noexcept;
+            address_v4_range hosts() const noexcept;
             network_v4 canonical() const noexcept;
             bool is_host() const noexcept;
             bool is_subnet_of(const network_v4& other) const noexcept;
@@ -104,11 +104,11 @@ corresponding bit value of `this->address()`. All other bits are zero.]
 starting from the most significant bit in network byte order, set to the
 corresponding bit value of `this->address()`. All other bits are non-zero.]
 
-  address_range_v4 hosts() const noexcept;
+  address_v4_range hosts() const noexcept;
 
-[function_returns If `is_host() == true`, an `address_range_v4` object
+[function_returns If `is_host() == true`, an `address_v4_range` object
 representing the single address `this->address().` Otherwise, an
-`address_range_v4` object representing the range of unique host IP addresses in
+`address_v4_range` object representing the range of unique host IP addresses in
 the network.]
 
 [function_note For IPv4, the network address and the broadcast address are not

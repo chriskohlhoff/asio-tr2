@@ -1,0 +1,78 @@
+[section:ip__basic_address_range Class template [^ip::basic_address_range] specializations]
+[xrefid internet.address.range]
+
+The class template `basic_address_range` represents a range of IP addresses in
+network byte order. This clause defines two specializations of the class
+template `basic_address_range`: `basic_address_range<address_v4>` and
+`basic_address_range<address_v6>`. The members and operational semantics of
+these specializations are defined below.
+
+  namespace std {
+    namespace experimental {
+      __begin_versioned_ns__
+        namespace ip {
+
+          template<> class basic_address_range<``['Address]``>
+          {
+          public:
+            // types:
+            typedef basic_address_iterator<``['Address]``> iterator;
+
+            // constructors:
+            basic_address_range() noexcept;
+            basic_address_range(const ``['Address]``& first,
+                                const ``['Address]``& last) noexcept;
+
+            // members:
+            iterator begin() const noexcept;
+            iterator end() const noexcept;
+            bool empty() const noexcept;
+            size_t size() const noexcept; ``['// not always defined]``
+            iterator find(const ``['Address]``& addr) const noexcept;
+          };
+
+        } // namespace ip
+      __end_versioned_ns__
+    } // namespace experimental
+  } // namespace std
+
+  basic_address_range() noexcept;
+
+[function_effects Constructs an object of type
+`basic_address_range<`['Address]`>` that represents an empty range.]
+
+  basic_address_range(const ``['Address]``& first,
+                      const ``['Address]``& last) noexcept;
+
+[function_effects Constructs an object of type
+`basic_address_range<`['Address]`>` that represents the half open range
+[half_open_range `first`,`last`].]
+
+  iterator begin() const noexcept;
+
+[function_returns An iterator that points to the beginning of the range.]
+
+  iterator end() const noexcept;
+
+[function_returns An iterator that points to the end of the range.]
+
+  bool empty() const noexcept;
+
+[function_returns `true` if `*this` represents an empty range, otherwise
+`false`.]
+
+  size_t size() const noexcept;
+
+[function_returns The number of unique addresses in the range.]
+
+[function_remarks This member function is not defined when ['[^Address]] is
+type `address_v6`.]
+
+  iterator find(const ``['Address]``& addr) const noexcept;
+
+[function_returns If `addr` is in the range, an iterator that points to `addr`;
+otherwise, `end()`.]
+
+[function_complexity Constant time.]
+
+[endsect]

@@ -99,8 +99,11 @@
           template<> class ``[link classes.ip__basic_address_iterator basic_address_iterator<address_v6>]``;
           typedef basic_address_iterator<address_v6> address_v6_iterator;
 
-          class ``[link classes.ip__address_range_v4 address_range_v4]``;
-          class ``[link classes.ip__address_range_v6 address_range_v6]``;
+          template<class> basic_address_range; ``['// not defined]``
+          template<> class ``[link classes.ip__basic_address_range basic_address_range<address_v4>]``;
+          typedef basic_address_range<address_v4> address_v4_range;
+          template<> class ``[link classes.ip__basic_address_range basic_address_range<address_v6>]``;
+          typedef basic_address_range<address_v6> address_v6_range;
 
           class ``[link classes.ip__network_v4 network_v4]``;
           class ``[link classes.ip__network_v6 network_v6]``;
