@@ -1,6 +1,10 @@
 [section:basic_socket_acceptor Class template [^basic_socket_acceptor]]
 [xrefid socket.acceptor]
 
+The class template `basic_socket_acceptor<Protocol>` is used to listen for, and
+queue, incoming socket connections. Socket objects that represent the incoming
+connections are dequeued by calling `accept` or `async_accept`.
+
   namespace std {
     namespace experimental {
       __begin_versioned_ns__
