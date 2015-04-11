@@ -137,29 +137,29 @@
         ``// [link functions.dispatch dispatch]:``
 
         template<class CompletionToken>
-          __initfn_result_type__ dispatch(CompletionToken&& token);
+          __ifr__ dispatch(CompletionToken&& token);
         template<class Executor, class CompletionToken>
-          __initfn_result_type__ dispatch(const Executor& ex, CompletionToken&& token);
+          __ifr__ dispatch(const Executor& ex, CompletionToken&& token);
         template<class ExecutionContext, class CompletionToken>
-          __initfn_result_type__ dispatch(ExecutionContext& ctx, CompletionToken&& token);
+          __ifr__ dispatch(ExecutionContext& ctx, CompletionToken&& token);
 
         ``// [link functions.post post]:``
 
         template<class CompletionToken>
-          __initfn_result_type__ post(CompletionToken&& token);
+          __ifr__ post(CompletionToken&& token);
         template<class Executor, class CompletionToken>
-          __initfn_result_type__ post(const Executor& ex, CompletionToken&& token);
+          __ifr__ post(const Executor& ex, CompletionToken&& token);
         template<class ExecutionContext, class CompletionToken>
-          __initfn_result_type__ post(ExecutionContext& ctx, CompletionToken&& token);
+          __ifr__ post(ExecutionContext& ctx, CompletionToken&& token);
 
         ``// [link functions.defer defer]:``
 
         template<class CompletionToken>
-          __initfn_result_type__ defer(CompletionToken&& token);
+          __ifr__ defer(CompletionToken&& token);
         template<class Executor, class CompletionToken>
-          __initfn_result_type__ defer(const Executor& ex, CompletionToken&& token);
+          __ifr__ defer(const Executor& ex, CompletionToken&& token);
         template<class ExecutionContext, class CompletionToken>
-          __initfn_result_type__ defer(ExecutionContext& ctx, CompletionToken&& token);
+          __ifr__ defer(ExecutionContext& ctx, CompletionToken&& token);
 
         template<class Executor>
           class ``[link classes.strand strand]``;

@@ -53,11 +53,11 @@ receive discrete messages of fixed maximum length.
                            socket_base::message_flags flags, error_code& ec);
 
           template<class MutableBufferSequence, class CompletionToken>
-            __initfn_result_type__ async_receive(const MutableBufferSequence& buffers,
+            __ifr__ async_receive(const MutableBufferSequence& buffers,
                                CompletionToken&& token);
 
           template<class MutableBufferSequence, class CompletionToken>
-            __initfn_result_type__ async_receive(const MutableBufferSequence& buffers,
+            __ifr__ async_receive(const MutableBufferSequence& buffers,
                                socket_base::message_flags flags,
                                CompletionToken&& token);
 
@@ -79,12 +79,12 @@ receive discrete messages of fixed maximum length.
                                 error_code& ec);
 
           template<class MutableBufferSequence, class CompletionToken>
-            __initfn_result_type__ async_receive_from(const MutableBufferSequence& buffers,
+            __ifr__ async_receive_from(const MutableBufferSequence& buffers,
                                     endpoint_type& sender,
                                     CompletionToken&& token);
 
           template<class MutableBufferSequence, class CompletionToken>
-            __initfn_result_type__ async_receive_from(const MutableBufferSequence& buffers,
+            __ifr__ async_receive_from(const MutableBufferSequence& buffers,
                                     endpoint_type& sender,
                                     socket_base::message_flags flags,
                                     CompletionToken&& token);
@@ -102,11 +102,11 @@ receive discrete messages of fixed maximum length.
                         socket_base::message_flags flags, error_code& ec);
 
           template<class ConstBufferSequence, class CompletionToken>
-            __initfn_result_type__ async_send(const ConstBufferSequence& buffers,
+            __ifr__ async_send(const ConstBufferSequence& buffers,
                             CompletionToken&& token);
 
           template<class ConstBufferSequence, class CompletionToken>
-            __initfn_result_type__ async_send(const ConstBufferSequence& buffers,
+            __ifr__ async_send(const ConstBufferSequence& buffers,
                             socket_base::message_flags flags,
                             CompletionToken&& token);
 
@@ -127,12 +127,12 @@ receive discrete messages of fixed maximum length.
                            socket_base::message_flags flags, error_code& ec);
 
           template<class ConstBufferSequence, class CompletionToken>
-            __initfn_result_type__ async_send_to(const ConstBufferSequence& buffers,
+            __ifr__ async_send_to(const ConstBufferSequence& buffers,
                                const endpoint_type& destination,
                                CompletionToken&& token);
 
           template<class ConstBufferSequence, class CompletionToken>
-            __initfn_result_type__ async_send_to(const ConstBufferSequence& buffers,
+            __ifr__ async_send_to(const ConstBufferSequence& buffers,
                                const endpoint_type& destination,
                                socket_base::message_flags flags,
                                CompletionToken&& token);
@@ -279,14 +279,14 @@ sockets because it does not permit the application to retrieve the source
 endpoint of received data.]
 
   template<class MutableBufferSequence, class CompletionToken>
-    __initfn_result_type__ async_receive(const MutableBufferSequence& buffers,
+    __ifr__ async_receive(const MutableBufferSequence& buffers,
                        CompletionToken&& token);
 
 [function_returns `async_receive(buffers, socket_base::message_flags(),
 forward<CompletionToken>(token))`.]
 
   template<class MutableBufferSequence, class CompletionToken>
-    __initfn_result_type__ async_receive(const MutableBufferSequence& buffers,
+    __ifr__ async_receive(const MutableBufferSequence& buffers,
                        socket_base::message_flags flags,
                        CompletionToken&& token);
 
@@ -367,7 +367,7 @@ sockets because it permits the application to retrieve the source endpoint of
 received data.]
 
   template<class MutableBufferSequence, class CompletionToken>
-    __initfn_result_type__ async_receive_from(const MutableBufferSequence& buffers,
+    __ifr__ async_receive_from(const MutableBufferSequence& buffers,
                             endpoint_type& sender,
                             CompletionToken&& token);
 
@@ -375,7 +375,7 @@ received data.]
 socket_base::message_flags(), forward<CompletionToken>(token))`.]
 
   template<class MutableBufferSequence, class CompletionToken>
-    __initfn_result_type__ async_receive_from(const MutableBufferSequence& buffers,
+    __ifr__ async_receive_from(const MutableBufferSequence& buffers,
                             endpoint_type& sender,
                             socket_base::message_flags flags,
                             CompletionToken&& token);
@@ -446,13 +446,13 @@ as if by __POSIX__:
 [function_returns On success, the number of bytes sent. Otherwise `0`.]
 
   template<class ConstBufferSequence, class CompletionToken>
-    __initfn_result_type__ async_send(const ConstBufferSequence& buffers, CompletionToken&& token);
+    __ifr__ async_send(const ConstBufferSequence& buffers, CompletionToken&& token);
 
 [function_returns `async_send(buffers, socket_base::message_flags(),
 forward<CompletionToken>(token))`.]
 
   template<class ConstBufferSequence, class CompletionToken>
-    __initfn_result_type__ async_send(const ConstBufferSequence& buffers,
+    __ifr__ async_send(const ConstBufferSequence& buffers,
                     socket_base::message_flags flags,
                     CompletionToken&& token);
 
@@ -516,7 +516,7 @@ as if by __POSIX__:
 [function_returns On success, the number of bytes sent. Otherwise `0`.]
 
   template<class ConstBufferSequence, class CompletionToken>
-    __initfn_result_type__ async_send_to(const ConstBufferSequence& buffers,
+    __ifr__ async_send_to(const ConstBufferSequence& buffers,
                        const endpoint_type& recipient,
                        CompletionToken&& token);
 
@@ -524,7 +524,7 @@ as if by __POSIX__:
 socket_base::message_flags(), forward<CompletionToken>(token))`.]
 
   template<class ConstBufferSequence, class CompletionToken>
-    __initfn_result_type__ async_send_to(const ConstBufferSequence& buffers,
+    __ifr__ async_send_to(const ConstBufferSequence& buffers,
                        const endpoint_type& recipient,
                        socket_base::message_flags flags,
                        CompletionToken&& token);

@@ -2,11 +2,11 @@
 [xrefid buffer.async.read.until]
 
   template<class AsyncReadStream, class DynamicBuffer, class CompletionToken>
-    __initfn_result_type__ async_read_until(AsyncReadStream& s,
+    __ifr__ async_read_until(AsyncReadStream& s,
                           DynamicBuffer&& b, char delim,
                           CompletionToken&& token);
   template<class AsyncReadStream, class DynamicBuffer, class CompletionToken>
-    __initfn_result_type__ async_read_until(AsyncReadStream& s,
+    __ifr__ async_read_until(AsyncReadStream& s,
                           DynamicBuffer&& b, string_view delim,
                           CompletionToken&& token);
 

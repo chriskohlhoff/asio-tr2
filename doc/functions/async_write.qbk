@@ -3,12 +3,12 @@
 
   template<class AsyncWriteStream, class ConstBufferSequence,
     class CompletionToken>
-      __initfn_result_type__ async_write(AsyncWriteStream& stream,
+      __ifr__ async_write(AsyncWriteStream& stream,
                        const ConstBufferSequence& buffers,
                        CompletionToken&& token);
   template<class AsyncWriteStream, class ConstBufferSequence,
     class CompletionCondition, class CompletionToken>
-      __initfn_result_type__ async_write(AsyncWriteStream& stream,
+      __ifr__ async_write(AsyncWriteStream& stream,
                        const ConstBufferSequence& buffers,
                        CompletionCondition completion_condition,
                        CompletionToken&& token);
@@ -51,11 +51,11 @@ is valid until the handler for the asynchronous operation is invoked.]
 unless `is_const_buffer_sequence<ConstBufferSequence>::value` is `true`.]
 
   template<class AsyncWriteStream, class DynamicBuffer, class CompletionToken>
-    __initfn_result_type__ async_write(AsyncWriteStream& stream,
+    __ifr__ async_write(AsyncWriteStream& stream,
                      DynamicBuffer&& b, CompletionToken&& token);
   template<class AsyncWriteStream, class DynamicBuffer,
     class CompletionCondition, class CompletionToken>
-      __initfn_result_type__ async_write(AsyncWriteStream& stream,
+      __ifr__ async_write(AsyncWriteStream& stream,
                        DynamicBuffer&& b,
                        CompletionCondition completion_condition,
                        CompletionToken&& token);

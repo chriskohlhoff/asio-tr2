@@ -3,12 +3,12 @@
 
   template<class AsyncReadStream, class MutableBufferSequence,
     class CompletionToken>
-      __initfn_result_type__ async_read(AsyncReadStream& stream,
+      __ifr__ async_read(AsyncReadStream& stream,
                       const MutableBufferSequence& buffers,
                       CompletionToken&& token);
   template<class AsyncReadStream, class MutableBufferSequence,
     class CompletionCondition, class CompletionToken>
-      __initfn_result_type__ async_read(AsyncReadStream& stream,
+      __ifr__ async_read(AsyncReadStream& stream,
                       const MutableBufferSequence& buffers,
                       CompletionCondition completion_condition,
                       CompletionToken&& token);
@@ -51,11 +51,11 @@ unless `is_mutable_buffer_sequence<MutableBufferSequence>::value` is `true`.]
 
   template<class AsyncReadStream, class DynamicBuffer,
     class CompletionToken>
-      __initfn_result_type__ async_read(AsyncReadStream& stream,
+      __ifr__ async_read(AsyncReadStream& stream,
                       DynamicBuffer&& b, CompletionToken&& token);
   template<class AsyncReadStream, class DynamicBuffer,
     class CompletionCondition, class CompletionToken>
-      __initfn_result_type__ async_read(AsyncReadStream& stream,
+      __ifr__ async_read(AsyncReadStream& stream,
                       DynamicBuffer&& b,
                       CompletionCondition completion_condition,
                       CompletionToken&& token);

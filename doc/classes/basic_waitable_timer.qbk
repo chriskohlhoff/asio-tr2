@@ -45,7 +45,7 @@
           void wait(error_code& ec);
 
           template<class CompletionToken>
-            __initfn_result_type__ async_wait(CompletionToken&& token);
+            __ifr__ async_wait(CompletionToken&& token);
         };
 
       __end_versioned_ns__
@@ -166,7 +166,7 @@ the calling thread for the relative time produced by
 [function_postconditions `ec || !(clock_type::now() < expiry())`.]
 
   template<class CompletionToken>
-    __initfn_result_type__ async_wait(CompletionToken&& token);
+    __ifr__ async_wait(CompletionToken&& token);
 
 [function_completion_signature `void(error_code ec)`.]
 

@@ -96,7 +96,7 @@
 
 [def __dotdotdot__ ...]
 [def __unspecified__ '''<emphasis>unspecified</emphasis>''']
-[def __initfn_result_type__ '''<emphasis>DEDUCED</emphasis>''']
+[def __ifr__ '''<emphasis>DEDUCED</emphasis>''']
 [def __versioned_ns__ concurrency_v1]
 [def __begin_versioned_ns__ inline namespace __versioned_ns__ {]
 [def __end_versioned_ns__ } // inline namespace __versioned_ns__]

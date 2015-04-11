@@ -105,7 +105,7 @@ connections are dequeued by calling `accept` or `async_accept`.
             void accept(basic_socket<OtherProtocol>& socket, error_code& ec);
 
           template<class OtherProtocol, class CompletionToken>
-            __initfn_result_type__ async_accept(basic_socket<OtherProtocol>& socket,
+            __ifr__ async_accept(basic_socket<OtherProtocol>& socket,
                               CompletionToken&& token);
 
           template<class OtherProtocol>
@@ -116,7 +116,7 @@ connections are dequeued by calling `accept` or `async_accept`.
                         endpoint_type& endpoint, error_code& ec);
 
           template<class OtherProtocol, class CompletionToken>
-            __initfn_result_type__ async_accept(basic_socket<OtherProtocol>& socket,
+            __ifr__ async_accept(basic_socket<OtherProtocol>& socket,
                               endpoint_type& endpoint,
                               CompletionToken&& token);
 
@@ -124,7 +124,7 @@ connections are dequeued by calling `accept` or `async_accept`.
           void wait(wait_type w, error_code& ec);
 
           template<class CompletionToken>
-            __initfn_result_type__ async_wait(wait_type w, CompletionToken&& token);
+            __ifr__ async_wait(wait_type w, CompletionToken&& token);
         };
 
       __end_versioned_ns__
@@ -518,7 +518,7 @@ __POSIX__ __accept__.]
 [mdash] `socket_errc::already_open` [mdash] if `socket.is_open()` is `false`.]
 
   template<class OtherProtocol, class CompletionToken>
-    __initfn_result_type__ async_accept(basic_socket<OtherProtocol>& socket,
+    __ifr__ async_accept(basic_socket<OtherProtocol>& socket,
                       CompletionToken&& token);
 
 [function_completion_signature `void(error_code ec)`.]
@@ -558,7 +558,7 @@ accepted connection.]
 `!socket.is_open()` is unmet.]
 
   template<class OtherProtocol, class CompletionToken>
-    __initfn_result_type__ async_accept(basic_socket<OtherProtocol>& socket,
+    __ifr__ async_accept(basic_socket<OtherProtocol>& socket,
                       endpoint_type& endpoint, CompletionToken&& token);
 
 [function_completion_signature `void(error_code ec)`.]
@@ -588,7 +588,7 @@ unspecified.]
 to have error conditions pending, as if by __POSIX__ __select__.]
 
   template<class CompletionToken>
-    __initfn_result_type__ async_wait(wait_type w, CompletionToken&& token);
+    __ifr__ async_wait(wait_type w, CompletionToken&& token);
 
 [function_completion_signature `void(error_code ec)`.]
 

@@ -2,7 +2,7 @@
 [xrefid async.dispatch.at]
 
   template<class Clock, class Duration, class... CompletionTokens>
-    __initfn_result_type__ dispatch_at(const chrono::time_point<Clock, Duration>& abs_time,
+    __ifr__ dispatch_at(const chrono::time_point<Clock, Duration>& abs_time,
                      CompletionTokens&&... tokens);
 
 [function_block Let the type `Handler` be the handler function object type
@@ -29,7 +29,7 @@ absolute timeout specified by `abs_time` performs
 [function_returns `result.get()`.]
 
   template<class Clock, class Duration, class Executor, class... CompletionTokens>
-    __initfn_result_type__ dispatch_at(const chrono::time_point<Clock, Duration>& abs_time,
+    __ifr__ dispatch_at(const chrono::time_point<Clock, Duration>& abs_time,
                      const Executor& ex, CompletionTokens&&... tokens);
 
 [function_block Let the type `Handler` be the handler function object type
@@ -62,7 +62,7 @@ alloc)` followed by `w.reset()`.]
 unless `is_executor<Executor>::value` is `true`.]
 
   template<class Clock, class Duration, class ExecutionContext, class... CompletionTokens>
-    __initfn_result_type__ dispatch_at(const chrono::time_point<Clock, Duration>& abs_time,
+    __ifr__ dispatch_at(const chrono::time_point<Clock, Duration>& abs_time,
                      ExecutionContext& ctx, CompletionTokens&&... tokens);
 
 [function_returns

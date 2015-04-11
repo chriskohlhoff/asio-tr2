@@ -82,25 +82,25 @@
         ``// [link functions.async_connect asynchronous connect operations]:``
 
         template<class Protocol, class InputIterator, class CompletionToken>
-          __initfn_result_type__ async_connect(basic_socket<Protocol>& s,
+          __ifr__ async_connect(basic_socket<Protocol>& s,
                              InputIterator first,
                              CompletionToken&& token);
 
         template<class Protocol, class InputIterator, class CompletionToken>
-          __initfn_result_type__ async_connect(basic_socket<Protocol>& s,
+          __ifr__ async_connect(basic_socket<Protocol>& s,
                              InputIterator first, InputIterator last,
                              CompletionToken&& token);
 
         template<class Protocol, class InputIterator,
           class ConnectCondition, class CompletionToken>
-            __initfn_result_type__ async_connect(basic_socket<Protocol>& s,
+            __ifr__ async_connect(basic_socket<Protocol>& s,
                                InputIterator first,
                                ConnectCondition c,
                                CompletionToken&& token);
 
         template<class Protocol, class InputIterator,
           class ConnectCondition, class CompletionToken>
-            __initfn_result_type__ async_connect(basic_socket<Protocol>& s,
+            __ifr__ async_connect(basic_socket<Protocol>& s,
                                InputIterator first, InputIterator last,
                                ConnectCondition c,
                                CompletionToken&& token);
