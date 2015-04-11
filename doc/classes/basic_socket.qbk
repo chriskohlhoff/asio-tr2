@@ -113,6 +113,9 @@
           basic_socket& operator=(basic_socket&& rhs);
           template<class OtherProtocol>
             basic_socket& operator=(basic_socket<OtherProtocol>&& rhs);
+
+        private:
+          protocol_type protocol_; // ``['exposition only]``
         };
 
       __end_versioned_ns__
@@ -135,7 +138,8 @@
 [function_postconditions\n
 [mdash] `get_executor() == ios.get_executor()`.\n
 [mdash] `is_open() == true`.\n
-[mdash] `non_blocking() == false`.]
+[mdash] `non_blocking() == false`.\n
+[mdash] `protocol_ == protocol`.]
 
   basic_socket(io_service& ios, const endpoint_type& endpoint);
 
@@ -148,7 +152,8 @@
 [function_postconditions\n
 [mdash] `get_executor() == ios.get_executor()`.\n
 [mdash] `is_open() == true`.\n
-[mdash] `non_blocking() == false`.]
+[mdash] `non_blocking() == false`.\n
+[mdash] `protocol_ == endpoint.protocol()`.]
 
   basic_socket(io_service& ios, const protocol_type& protocol,
                const native_handle_type& native_socket);
@@ -161,7 +166,8 @@ calling `assign(protocol, native_socket)`.]
 [function_postconditions\n
 [mdash] `get_executor() == ios.get_executor()`.\n
 [mdash] `is_open() == true`.\n
-[mdash] `non_blocking() == false`.]
+[mdash] `non_blocking() == false`.\n
+[mdash] `protocol_ == protocol`.]
 
   basic_socket(basic_socket&& rhs);
 
@@ -175,7 +181,8 @@ constructor invocation.\n
 [mdash] `non_blocking()` returns the same value as `rhs.non_blocking()` prior
 to the constructor invocation.\n
 [mdash] `rhs.is_open() == false`.\n
-[mdash] `native_handle()` returns the prior value of `rhs.native_handle()`.]
+[mdash] `native_handle()` returns the prior value of `rhs.native_handle()`.\n
+[mdash] `protocol_` is the prior value of `rhs.protocol_`.]
 
   template<class OtherProtocol>
     basic_socket(basic_socket<OtherProtocol>&& rhs);
@@ -192,7 +199,8 @@ constructor invocation.\n
 [mdash] `non_blocking()` returns the same value as `rhs.non_blocking()` prior
 to the constructor invocation.\n
 [mdash] `rhs.is_open() == false`.\n
-[mdash] `native_handle()` returns the prior value of `rhs.native_handle()`.]
+[mdash] `native_handle()` returns the prior value of `rhs.native_handle()`.\n
+[mdash] `protocol_` is the result of converting the prior value of `rhs.protocol_`.]
 
 [function_remarks This constructor shall not participate in overload resolution
 unless `OtherProtocol` is implicitly convertible to `Protocol`.]
@@ -204,11 +212,12 @@ unless `OtherProtocol` is implicitly convertible to `Protocol`.]
 
   ~basic_socket();
 
-[function_effects If `is_open()` is `true`, cancels any asynchronous operations
-associated with the socket, disables the linger socket option to prevent the
-destructor from blocking, and releases socket resources as if by __POSIX__
-__close__. Completion handlers for canceled operations are passed an error code
-`ec` such that `ec == errc::operation_canceled` yields `true`.]
+[function_effects If `is_open()` is `true`, cancels any outstanding
+asynchronous operations associated with the socket, disables the linger socket
+option to prevent the destructor from blocking, and releases socket resources
+as if by __POSIX__ `__close__(native_handle())`. Completion handlers for
+canceled operations are passed an error code `ec` such that `ec ==
+errc::operation_canceled` yields `true`.]
 
 [endsect]
 
@@ -217,12 +226,13 @@ __close__. Completion handlers for canceled operations are passed an error code
 
   basic_socket& operator=(basic_socket&& rhs);
 
-[function_effects If `is_open()` is `true`, cancels any asynchronous operations
-associated with the socket. Completion handlers for canceled operations are
-passed an error code `ec` such that `ec == errc::operation_canceled` yields
-`true`. Disables the linger socket option to prevent the assignment from
-blocking, and releases socket resources as if by __POSIX__ __close__. Moves
-into `*this` the state originally represented by `rhs`.]
+[function_effects If `is_open()` is `true`, cancels any outstanding
+asynchronous operations associated with the socket. Completion handlers for
+canceled operations are passed an error code `ec` such that `ec ==
+errc::operation_canceled` yields `true`. Disables the linger socket option to
+prevent the assignment from blocking, and releases socket resources as if by
+__POSIX__ `__close__(native_handle())`. Moves into `*this` the state originally
+represented by `rhs`.]
 
 [function_postconditions\n
 [mdash] `get_executor()` is equal to the prior value of `rhs.get_executor()`.\n
@@ -230,6 +240,7 @@ into `*this` the state originally represented by `rhs`.]
 assignment.\n
 [mdash] `non_blocking()` returns the same value as `rhs.non_blocking()` prior
 to the assignment.\n
+[mdash] `protocol_` is the prior value of `rhs.protocol_`.\n
 [mdash] `rhs.is_open() == false`.]
 
 [function_returns `*this`.]
@@ -239,12 +250,13 @@ to the assignment.\n
 
 [function_requires `OtherProtocol` is implicitly convertible to `Protocol`.]
 
-[function_effects If `is_open()` is `true`, cancels any asynchronous operations
-associated with the socket. Completion handlers for canceled operations are
-passed an error code `ec` such that `ec == errc::operation_canceled` yields
-`true`. Disables the linger socket option to prevent the assignment from
-blocking, and releases socket resources as if by __POSIX__ __close__. Moves
-into `*this` the state originally represented by `rhs`.]
+[function_effects If `is_open()` is `true`, cancels any outstanding
+asynchronous operations associated with the socket. Completion handlers for
+canceled operations are passed an error code `ec` such that `ec ==
+errc::operation_canceled` yields `true`. Disables the linger socket option to
+prevent the assignment from blocking, and releases socket resources as if by
+__POSIX__ `__close__(native_handle())`. Moves into `*this` the state originally
+represented by `rhs`.]
 
 [function_postconditions\n
 [mdash] `get_executor()` is equal to the prior value of `rhs.get_executor()`.\n
@@ -252,6 +264,7 @@ into `*this` the state originally represented by `rhs`.]
 assignment.\n
 [mdash] `non_blocking()` returns the same value as `rhs.non_blocking()` prior
 to the assignment.\n
+[mdash] `protocol_` is the result of converting the prior value of `rhs.protocol_`.\n
 [mdash] `rhs.is_open() == false`.]
 
 [function_returns `*this`.]
@@ -276,11 +289,12 @@ resolution unless `OtherProtocol` is implicitly convertible to `Protocol`.]
   void open(const protocol_type& protocol, error_code& ec);
 
 [function_effects Establishes the postcondition, as if by __POSIX__
-__socket__.]
+`__socket__(protocol.family(), protocol.type(), protocol.protocol())`.]
 
 [function_postconditions\n
 [mdash] `is_open() == true`.\n
-[mdash] `non_blocking() == false`.]
+[mdash] `non_blocking() == false`.\n
+[mdash] `protocol_ == protocol`.]
 
 [function_error_conditions\n
 [mdash] `socket_errc::already_open` [mdash] if `is_open() == true`.]
@@ -297,7 +311,8 @@ open socket.]
 
 [function_postconditions\n
 [mdash] `is_open() == true`.\n
-[mdash] `non_blocking() == false`.]
+[mdash] `non_blocking() == false`.\n
+[mdash] `protocol_ == protocol`.]
 
 [function_error_conditions\n
 [mdash] `socket_errc::already_open` [mdash] if `is_open() == true`.]
@@ -316,20 +331,20 @@ previous call to `open` or `assign`.]
   void close();
   void close(error_code& ec);
 
-[function_effects If `is_open()` is `true`, cancels any asynchronous operations
-associated with the socket, and establishes the postcondition as if by
-__POSIX__ __close__. Completion handlers for canceled asynchronous operations
-are passed an error code `ec` such that `ec == errc::operation_canceled` yields
-`true`.]
+[function_effects If `is_open()` is `true`, cancels any outstanding
+asynchronous operations associated with the socket, and establishes the
+postcondition as if by __POSIX__ `__close__(native_handle())`. Completion
+handlers for canceled asynchronous operations are passed an error code `ec`
+such that `ec == errc::operation_canceled` yields `true`.]
 
 [function_postconditions `is_open() == false`.]
 
   void cancel();
   void cancel(error_code& ec);
 
-[function_effects If `is_open()` is `true`, cancels any asynchronous operations
-associated with the socket. Completion handlers for canceled asynchronous
-operations are passed an error code `ec` such that `ec ==
+[function_effects If `is_open()` is `true`, cancels any outstanding
+asynchronous operations associated with the socket. Completion handlers for
+canceled asynchronous operations are passed an error code `ec` such that `ec ==
 errc::operation_canceled` yields `true`.]
 
 [function_error_conditions\n
@@ -341,15 +356,23 @@ errc::operation_canceled` yields `true`.]
     void set_option(const SettableSocketOption& option, error_code& ec);
 
 [function_effects Sets an option on the socket, as if by __POSIX__
-__setsockopt__.]
+`__setsockopt__(native_handle(), option.level(protocol_),
+option.name(protocol_), option.data(protocol_), option.size(protocol_))`.]
 
   template<class GettableSocketOption>
     void get_option(GettableSocketOption& option);
   template<class GettableSocketOption>
     void get_option(GettableSocketOption& option, error_code& ec);
 
-[function_effects Gets an option from the socket, as if by __POSIX__
-__getsockopt__.]
+[function_effects Gets an option from the socket, as if by __POSIX__:
+``
+  socklen_t option_len = option.size(protocol_);
+  int result = __getsockopt__(native_handle(), option.level(protocol_),
+                          option.name(protocol_), option.data(protocol_),
+                          &option_len);
+  if (result == 0)
+    option.resize(option_len);
+``]
 
   template<class IoControlCommand>
     void io_control(IoControlCommand& command);
@@ -357,7 +380,7 @@ __getsockopt__.]
     void io_control(IoControlCommand& command, error_code& ec);
 
 [function_effects Executes an I/O control command on the socket, as if by
-__POSIX__ __ioctl__.]
+__POSIX__ `__ioctl__(native_handle(), command.name(), command.data())`.]
 
 [commentary This Technical Specification does not include any classes that
 satisfy [link requirements.io_control_command `IoControlCommand`] requirements.
@@ -388,9 +411,21 @@ asynchronous operations.]
   void native_non_blocking(bool mode, error_code& ec);
 
 [function_effects Sets the non-blocking mode of the underlying native socket,
-as if by __POSIX__ __fcntl__ with command `F_SETFL` to add or clear the file
-status flag `O_NONBLOCK`. This mode has no effect on the behavior of the
-synchronous or asynchronous operations specified in this clause.]
+as if by __POSIX__:
+``
+  int flags = __fcntl__(native_handle(), F_GETFL, 0);
+  if (flags >= 0)
+  {
+    if (mode)
+      flags |= O_NONBLOCK;
+    else
+      flags &= ~O_NONBLOCK;
+    __fcntl__(native_handle(), F_SETFL, flags);
+  }
+``]
+
+[function_block The native non-blocking mode has no effect on the behavior of
+the synchronous or asynchronous operations specified in this clause.]
 
 [function_error_conditions\n
 [mdash] `errc::bad_file_descriptor` [mdash] if `is_open()` is `false`.\n
@@ -411,8 +446,9 @@ operating system-specific function on the result of `native_handle()`.]
   bool at_mark(error_code& ec) const;
 
 [function_effects Determines if the socket is at the out-of-band data mark, as
-if by __POSIX__ __sockatmark__. [inline_note The `at_mark()` function must be
-used in conjunction with the `socket_base::out_of_band_inline` socket option.]]
+if by __POSIX__ `__sockatmark__(native_handle())`. [inline_note The `at_mark()`
+function must be used in conjunction with the `socket_base::out_of_band_inline`
+socket option.]]
 
 [function_returns A `bool` indicating whether the socket is at the out-of-band
 data mark.]
@@ -429,34 +465,45 @@ blocking, or 0 if an error occurs.]
   void bind(const endpoint_type& endpoint);
   void bind(const endpoint_type& endpoint, error_code& ec);
 
-[function_effects Binds the socket to the specified local endpoint, as
-if by __POSIX__ __bind__.]
+[function_effects Binds the socket to the specified local endpoint, as if by
+__POSIX__ `__bind__(native_handle(), endpoint.data(), endpoint.size())`.]
 
   void shutdown(shutdown_type what);
   void shutdown(shutdown_type what, error_code& ec);
 
 [function_effects Shuts down all or part of a full-duplex connection for the
-socket, as if by __POSIX__ __shutdown__. If `what` is `shutdown_receive`, uses
-__POSIX__ `SHUT_RD`. If `what` is `shutdown_send`, uses __POSIX__ `SHUT_WR`. If
-`what` is `shutdown_both`, uses __POSIX__ `SHUT_RDWR`.]
+socket, as if by __POSIX__ `__shutdown__(native_handle(),
+static_cast<int>(what))`.]
 
   endpoint_type local_endpoint() const;
   endpoint_type local_endpoint(error_code& ec) const;
 
 [function_effects Determines the locally-bound endpoint associated with the
-socket, as if by __POSIX__ __getsockname__.]
+socket, as if by __POSIX__:
+``
+  endpoint_type endpoint;
+  socklen_t endpoint_len = endpoint.size();
+  int result == __getsockname__(native_handle(), endpoint.data(), &endpoint_len);
+  if (result == 0)
+    endpoint.resize(endpoint_len);
+``]
 
-[function_returns On success, the locally-bound endpoint. Otherwise
-`endpoint_type()`.]
+[function_returns On success, `endpoint`. Otherwise `endpoint_type()`.]
 
   endpoint_type remote_endpoint() const;
   endpoint_type remote_endpoint(error_code& ec) const;
 
 [function_effects Determines the remote endpoint associated with the socket, as
-if by __POSIX__ __getpeername__.]
+if by __POSIX__:
+``
+  endpoint_type endpoint;
+  socklen_t endpoint_len = endpoint.size();
+  int result == __getpeername__(native_handle(), endpoint.data(), &endpoint_len);
+  if (result == 0)
+    endpoint.resize(endpoint_len);
+``]
 
-[function_returns On success, the remote endpoint. Otherwise
-`endpoint_type()`.]
+[function_returns On success, `endpoint`. Otherwise `endpoint_type()`.]
 
   void connect(const endpoint_type& endpoint);
   void connect(const endpoint_type& endpoint, error_code& ec);
@@ -464,7 +511,7 @@ if by __POSIX__ __getpeername__.]
 [function_effects If `is_open()` is `false`, opens the socket by performing
 `open(endpoint.protocol(), ec)`. If `ec`, returns with no further action.
 Connects the socket to the specified remote endpoint, as if by __POSIX__
-__connect__.]
+`__connect__(native_handle(), endpoint.data(), endpoint.size())`.]
 
   template<class CompletionToken>
     __initfn_result_type__ async_connect(const endpoint_type& endpoint, CompletionToken&& token);
@@ -474,23 +521,33 @@ __connect__.]
 [function_effects If `is_open()` is `false`, opens the socket by performing
 `open(endpoint.protocol(), ec)`. If `ec`, returns with no further action.
 Initiates an asynchronous operation to connect the socket to the specified
-remote endpoint, as if by __POSIX__ __connect__.]
+remote endpoint, as if by __POSIX__ `__connect__(native_handle(),
+endpoint.data(), endpoint.size())`.]
 
-[function_block When multiple asynchronous connect operations are initiated
-such that the operations may logically be performed in parallel, the behavior
-is unspecified. When an asynchronous connect operation and an asynchronous read
-or write operation are initiated such that they may logically be performed in
-parallel, the behavior is undefined.]
+[function_block When an asynchronous connect operation on this socket is
+simultaneously outstanding with another asynchronous connect, read, or write
+operation on this socket, the behavior is undefined.]
 
-[function_block If a program performs a synchronous operation on the socket,
-other than `close` or `cancel`, while there is an incomplete asynchronous
+[function_block If a program performs a synchronous operation on this socket,
+other than `close` or `cancel`, while there is an outstanding asynchronous
 connect operation, the behavior is undefined.]
 
   void wait(wait_type w);
   void wait(wait_type w, error_code& ec);
 
 [function_effects Waits for the socket to be ready to read, ready to write, or
-to have error conditions pending, as if by __POSIX__ __poll__.]
+to have error conditions pending, as if by __POSIX__:
+``
+  pollfd fds[1];
+  fds[0].fd = native_handle();
+  switch (w)
+  {
+  case wait_read: fds[0].events = POLLIN; break;
+  case wait_write: fds[0].events = POLLOUT; break;
+  case wait_error: fds[0].events = POLLPRI | POLLERR | POLLHUP; break;
+  }
+  __poll__(fds, 1, -1);
+``]
 
 [function_error_conditions\n
 [mdash] `errc::bad_file_descriptor` [mdash] if `is_open()` is `false`.]
@@ -502,12 +559,23 @@ to have error conditions pending, as if by __POSIX__ __poll__.]
 
 [function_effects Initiates an asynchronous operation to wait for the socket to
 be ready to read, ready to write, or to have error conditions pending, as if by
-__POSIX__ __poll__.]
+__POSIX__:
+``
+  pollfd fds[1];
+  fds[0].fd = native_handle();
+  switch (w)
+  {
+  case wait_read: fds[0].events = POLLIN; break;
+  case wait_write: fds[0].events = POLLOUT; break;
+  case wait_error: fds[0].events = POLLPRI | POLLERR | POLLHUP; break;
+  }
+  __poll__(fds, 1, -1);
+``]
 
-[function_block When multiple asynchronous wait operations are initiated with
-the same `wait_type` value, all operations shall complete when the socket
-enters the corresponding ready state. The order of invocation of the handlers
-for these operations is unspecified.]
+[function_block When there are multiple simultaneously outstanding asynchronous
+wait operations on this socket with the same `wait_type` value, all of these
+operations complete when the socket enters the corresponding ready state. The
+order of invocation of the handlers for these operations is unspecified.]
 
 [function_error_conditions\n
 [mdash] `errc::bad_file_descriptor` [mdash] if `is_open()` is `false`.]

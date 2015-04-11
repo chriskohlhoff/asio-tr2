@@ -62,4 +62,60 @@
 The value `max_listen_connections` contains the implementation-defined limit on
 the length of the queue of pending incoming connections.
 
+[section Enumerated type `shutdown_type`]
+[xrefid socket.base.shutdown]
+
+This enumerated type specifies constants for use with the
+`basic_socket<Protocol>` class's `shutdown` member function.
+
+[table
+  [[Constant Name][__POSIX__ macro][Definition or notes]]
+  [[`shutdown_receive`][`SHUT_RD`][Disables further receive operations.]]
+  [[`shutdown_send`][`SHUT_WR`][Disables further send operations.]]
+  [[`shutdown_both`][`SHUT_RDWR`][Disables further send and receive operations.]]
+]
+
+[endsect]
+
+[section Enumerated type `wait_type`]
+[xrefid socket.base.wait]
+
+This enumerated type specifies constants for use with the
+`basic_socket<Protocol>` class's `wait` and `async_wait` member functions.
+
+[table
+  [[Constant Name][Definition or notes]]
+  [
+    [`wait_read`]
+    [Wait until the socket is ready-to-read.]
+  ]
+  [
+    [`wait_write`]
+    [Wait until the socket is ready-to-write.]
+  ]
+  [
+    [`wait_error`]
+    [Wait until the socket has a pending error condition.]
+  ]
+]
+
+[endsect]
+
+[section Bitmask type `message_flags`]
+[xrefid socket.base.message]
+
+This bitmask type specifies constants for use with the
+`basic_stream_socket<Protocol>` class's `send` and `receive` member functions,
+and the `basic_datagram_socket<Protocol>` class's `send`, `send_to`,
+`receive`, and `receive_from` member functions.
+
+[table
+  [[Constant Name][__POSIX__ macro][Definition or notes]]
+  [[`message_peek`][`MSG_PEEK`][Leave received data in queue.]]
+  [[`message_out_of_band`][`MSG_OOB`][Out-of-band data.]]
+  [[`message_do_not_route`][`MSG_DONTROUTE`][Send without using routing tables.]]
+]
+
+[endsect]
+
 [endsect]
