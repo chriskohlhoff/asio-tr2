@@ -43,12 +43,12 @@
           };
 
           // address_v6 comparisons:
-          bool operator==(const address_v6& a, const address_v6& b) noexcept;
-          bool operator!=(const address_v6& a, const address_v6& b) noexcept;
-          bool operator< (const address_v6& a, const address_v6& b) noexcept;
-          bool operator> (const address_v6& a, const address_v6& b) noexcept;
-          bool operator<=(const address_v6& a, const address_v6& b) noexcept;
-          bool operator>=(const address_v6& a, const address_v6& b) noexcept;
+          constexpr bool operator==(const address_v6& a, const address_v6& b) noexcept;
+          constexpr bool operator!=(const address_v6& a, const address_v6& b) noexcept;
+          constexpr bool operator< (const address_v6& a, const address_v6& b) noexcept;
+          constexpr bool operator> (const address_v6& a, const address_v6& b) noexcept;
+          constexpr bool operator<=(const address_v6& a, const address_v6& b) noexcept;
+          constexpr bool operator>=(const address_v6& a, const address_v6& b) noexcept;
 
           // address_v6 creation:
           constexpr address_v6 make_address_v6(const address_v6::bytes_type& bytes,
@@ -275,29 +275,29 @@ and `a.scope_id() == 0`.]
 [section:ip__address_v6__comparisons [^ip::address_v6] comparisons]
 [xrefid internet.address.v6.comparisons]
 
-  bool operator==(const address_v6& a, const address_v6& b) noexcept;
+  constexpr bool operator==(const address_v6& a, const address_v6& b) noexcept;
 
 [function_returns `a.to_bytes() == b.to_bytes() && a.scope_id() ==
 b.scope_id()`.]
 
-  bool operator!=(const address_v6& a, const address_v6& b) noexcept;
+  constexpr bool operator!=(const address_v6& a, const address_v6& b) noexcept;
 
 [function_returns `!(a == b)`.]
 
-  bool operator< (const address_v6& a, const address_v6& b) noexcept;
+  constexpr bool operator< (const address_v6& a, const address_v6& b) noexcept;
 
 [function_returns `a.to_bytes() < b.to_bytes() || (!(b.to_bytes() <
 a.to_bytes()) && a.scope_id() < b.scope_id())`.]
 
-  bool operator> (const address_v6& a, const address_v6& b) noexcept;
+  constexpr bool operator> (const address_v6& a, const address_v6& b) noexcept;
 
 [function_returns `b < a`.]
 
-  bool operator<=(const address_v6& a, const address_v6& b) noexcept;
+  constexpr bool operator<=(const address_v6& a, const address_v6& b) noexcept;
 
 [function_returns `!(b < a)`.]
 
-  bool operator>=(const address_v6& a, const address_v6& b) noexcept;
+  constexpr bool operator>=(const address_v6& a, const address_v6& b) noexcept;
 
 [function_returns `!(a < b)`.]
 
