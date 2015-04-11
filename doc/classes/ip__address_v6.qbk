@@ -191,52 +191,23 @@ represents an IPv4-mapped IPv6 address, as if computed by the following method:
 
   constexpr bool is_multicast_node_local() const noexcept;
 
-[function_returns A boolean indicating whether the `address_v6` object
-represents a multicast node-local address, as if computed by the following
-method:
-``
-  bytes_type b = to_bytes();
-  return is_multicast() && (b[1] & 0x0F) == 0x01;
-``]
+[function_returns `is_multicast() && (to_bytes()[1] & 0x0F) == 0x01`.]
 
   constexpr bool is_multicast_link_local() const noexcept;
 
-[function_returns A boolean indicating whether the `address_v6` object
-represents a multicast link-local address, as if computed by the following
-method:
-``
-  bytes_type b = to_bytes();
-  return is_multicast() && (b[1] & 0x0F) == 0x02;
-``]
+[function_returns `is_multicast() && (to_bytes()[1] & 0x0F) == 0x02`.]
 
   constexpr bool is_multicast_site_local() const noexcept;
 
-[function_returns A boolean indicating whether the `address_v6` object
-represents a multicast site-local address, as if computed by the following
-method:
-``
-  bytes_type b = to_bytes();
-  return is_multicast() && (b[1] & 0x0F) == 0x05;
-``]
+[function_returns `is_multicast() && (to_bytes()[1] & 0x0F) == 0x05`.]
 
   constexpr bool is_multicast_org_local() const noexcept;
 
-[function_returns A boolean indicating whether the `address_v6` object
-represents a multicast organization-local address, as if computed by the
-following method:
-``
-  bytes_type b = to_bytes();
-  return is_multicast() && (b[1] & 0x0F) == 0x08;
-``]
+[function_returns `is_multicast() && (to_bytes()[1] & 0x0F) == 0x08`.]
 
   constexpr bool is_multicast_global() const noexcept;
 
-[function_returns A boolean indicating whether the `address_v6` object
-represents a multicast global address, as if computed by the following method:
-``
-  bytes_type b = to_bytes();
-  return b[0] == 0xFF && (b[1] & 0x0F) == 0x0E;
-``]
+[function_returns `is_multicast() && (to_bytes()[1] & 0x0F) == 0x0E`.]
 
   constexpr bytes_type to_bytes() const noexcept;
 
