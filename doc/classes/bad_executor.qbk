@@ -19,4 +19,10 @@ An exception of type `bad_executor` is thrown by `executor` member functions
     } // namespace experimental
   } // namespace std
 
+  bad_executor() noexcept;
+
+[function_effects constructs a `bad_executor` object.]
+
+[function_postconditions `what()` returns an implementation-defined NTBS.]
+
 [endsect]

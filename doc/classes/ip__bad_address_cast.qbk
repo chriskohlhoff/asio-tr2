@@ -1,6 +1,8 @@
 [section:ip__bad_address_cast Class [^ip::bad_address_cast]]
 [xrefid internet.bad.address.cast]
 
+An exception of type `bad_address_cast` is thrown by a failed `address_cast`.
+
   namespace std {
     namespace experimental {
       __begin_versioned_ns__
@@ -9,7 +11,8 @@
           class bad_address_cast : bad_cast
           {
           public:
-            virtual const char* what() const noexcept override;
+            // constructor:
+            bad_address_cast() noexcept;
           };
 
         } // namespace ip
@@ -17,6 +20,10 @@
     } // namespace experimental
   } // namespace std
 
-Objects of type `bad_address_cast` are thrown by a failed `address_cast`.
+  bad_address_cast() noexcept;
+
+[function_effects constructs a `bad_address_cast` object.]
+
+[function_postconditions `what()` returns an implementation-defined NTBS.]
 
 [endsect]
