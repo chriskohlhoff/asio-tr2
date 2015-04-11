@@ -37,7 +37,7 @@
 
   basic_resolver_entry();
 
-[function_effects Calls
+[function_effects Equivalent to
 `basic_resolver_entry<InternetProtocol>(endpoint_type(), string_view(),
 string_view())`.]
 

@@ -164,7 +164,7 @@ unless `OtherProtocol` is implicitly convertible to `Protocol`.]
 
   basic_stream_socket& operator=(basic_stream_socket&& rhs);
 
-[function_effects Calls
+[function_effects Equivalent to
 `basic_socket<Protocol>::operator=(static_cast<basic_socket<Protocol>&&>(rhs))`.]
 
 [function_returns `*this`.]
@@ -174,7 +174,7 @@ unless `OtherProtocol` is implicitly convertible to `Protocol`.]
 
 [function_requires `OtherProtocol` is implicitly convertible to `Protocol`.]
 
-[function_effects Calls
+[function_effects Equivalent to
 `basic_socket<Protocol>::operator=(static_cast<basic_socket<OtherProtocol>&&>(rhs))`.]
 
 [function_returns `*this`.]

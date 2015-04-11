@@ -188,7 +188,7 @@ unless `OtherProtocol` is implicitly convertible to `Protocol`.]
 
   basic_datagram_socket& operator=(basic_datagram_socket&& rhs);
 
-[function_effects Calls
+[function_effects Equivalent to
 `basic_socket<Protocol>::operator=(std::move(rhs))`.]
 
 [function_returns `*this`.]
@@ -198,7 +198,7 @@ unless `OtherProtocol` is implicitly convertible to `Protocol`.]
 
 [function_requires `OtherProtocol` is implicitly convertible to `Protocol`.]
 
-[function_effects Calls
+[function_effects Equivalent to
 `basic_socket<Protocol>::operator=(std::move(rhs))`.]
 
 [function_returns `*this`.]

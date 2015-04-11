@@ -151,7 +151,7 @@ then `close` fails.]
 
   void expires_after(const duration& d);
 
-[function_effects Calls `expires_at(clock_type::now() + d)`.]
+[function_effects Equivalent to `expires_at(clock_type::now() + d)`.]
 
 [endsect]
 
