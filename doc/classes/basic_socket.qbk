@@ -153,16 +153,15 @@
   basic_socket(io_service& ios, const protocol_type& protocol,
                const native_handle_type& native_socket);
 
+[function_requires `native_socket` is a native handle to an open socket.]
+
 [function_effects Assigns the existing native socket into the object as if by
 calling `assign(protocol, native_socket)`.]
 
 [function_postconditions\n
 [mdash] `get_executor() == ios.get_executor()`.\n
+[mdash] `is_open() == true`.\n
 [mdash] `non_blocking() == false`.]
-
-[function_note Whether this function satisfies the postcondition `is_open() ==
-true` is dependent on the implementation-defined semantics of the
-`native_handle` type.]
 
   basic_socket(basic_socket&& rhs);
 
@@ -291,18 +290,17 @@ __socket__.]
   void assign(const protocol_type& protocol,
               const native_handle_type& native_socket, error_code& ec);
 
-[function_requires `!is_open()`.]
+[function_requires `!is_open()`, and `native_socket` is a native handle to an
+open socket.]
 
 [function_effects Assigns the native socket handle to the socket object.]
 
-[function_postconditions `non_blocking() == false`.]
+[function_postconditions\n
+[mdash] `is_open() == true`.\n
+[mdash] `non_blocking() == false`.]
 
 [function_error_conditions\n
 [mdash] `socket_errc::already_open` [mdash] if `is_open() == true`.]
-
-[function_note Whether this function satisfies the postcondition `is_open() ==
-true` is dependent on the implementation-defined semantics of the
-`native_handle` type.]
 
 [commentary The main source of errors for `assign` would be a call to register
 the socket with an OS-specific event demultiplexer, such as a `kqueue`, an

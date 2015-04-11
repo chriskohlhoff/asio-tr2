@@ -176,18 +176,17 @@ servers, although there are some security implications in doing so.]
   basic_socket_acceptor(io_service& ios, const protocol_type& protocol,
                         const native_handle_type& native_acceptor);
 
+[function_requires `native_acceptor` is a native handle to an open acceptor.]
+
 [function_effects Constructs an object of class
 `basic_socket_acceptor<Protocol>`, assigning the existing native acceptor into
 the object as if by calling `assign(protocol, native_acceptor)`.]
 
 [function_postconditions\n
 [mdash] `get_executor() == ios.get_executor()`.\n
+[mdash] `is_open() == true`.\n
 [mdash] `non_blocking() == false`.\n
 [mdash] `enable_connection_aborted() == false`.]
-
-[function_note Whether this function satisfies the postcondition `is_open() ==
-true` is dependent on the implementation-defined semantics of the
-`native_handle` type.]
 
   basic_socket_acceptor(basic_socket_acceptor&& rhs);
 
@@ -326,21 +325,19 @@ unmet.]
   void assign(const protocol_type& protocol,
               const native_handle_type& native_acceptor, error_code& ec);
 
-[function_requires `!is_open()`.]
+[function_requires `!is_open()`, and `native_acceptor` is a native handle to an
+open acceptor.]
 
 [function_effects Assigns the native acceptor handle to the acceptor object.]
 
 [function_postconditions\n
+[mdash] `is_open() == true`.\n
 [mdash] `non_blocking() == false`.\n
 [mdash] `enable_connection_aborted() == false`.]
 
 [function_error_conditions\n
 [mdash] `socket_errc::already_open` [mdash] if the requirement `!is_open()` is
 unmet.]
-
-[function_note Whether this function satisfies the postcondition `is_open() ==
-true` is dependent on the implementation-defined semantics of the
-`native_handle` type.]
 
 [commentary The main source of errors for `assign` would be a call to register
 the acceptor with an OS-specific event demultiplexer, such as a `kqueue`, an
