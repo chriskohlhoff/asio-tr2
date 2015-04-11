@@ -19,6 +19,7 @@
 
           typedef uint16_least_t port_type;
           typedef uint32_least_t address_v4_uint_type;
+          typedef uint32_least_t scope_id_type;
 
           struct v4_mapped_t {};
           constexpr v4_mapped_t v4_mapped;
@@ -69,7 +70,8 @@
           address_v4 make_address_v4(string_view, error_code&) noexcept;
 
           // ``[link classes.ip__address_v6__creation address_v6 creation]``:
-          constexpr address_v6 make_address_v6(const address_v6::bytes_type&, unsigned long = 0);
+          constexpr address_v6 make_address_v6(const address_v6::bytes_type&,
+                                               scope_id_type = 0);
           constexpr address_v6 make_address_v6(v4_mapped_t, const address_v4&) noexcept;
           address_v6 make_address_v6(const char*);
           address_v6 make_address_v6(const char*, error_code&) noexcept;

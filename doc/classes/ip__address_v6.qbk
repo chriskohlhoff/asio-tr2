@@ -15,14 +15,15 @@
             // constructors:
             constexpr address_v6() noexcept;
             constexpr address_v6(const address_v6& a) noexcept;
-            constexpr address_v6(const bytes_type& bytes, unsigned long scope = 0);
+            constexpr address_v6(const bytes_type& bytes,
+                                 scope_id_type scope = 0);
 
             // assignment:
             address_v6& operator=(const address_v6& a) noexcept;
 
             // members:
-            void scope_id(unsigned long id) noexcept;
-            constexpr unsigned long scope_id() const noexcept;
+            void scope_id(scope_id_type id) noexcept;
+            constexpr scope_id_type scope_id() const noexcept;
             constexpr bool is_unspecified() const noexcept;
             constexpr bool is_loopback() const noexcept;
             constexpr bool is_multicast() const noexcept;
@@ -52,7 +53,7 @@
 
           // address_v6 creation:
           constexpr address_v6 make_address_v6(const address_v6::bytes_type& bytes,
-                                               unsigned long scope_id = 0);
+                                               scope_id_type scope_id = 0);
           constexpr address_v6 make_address_v6(v4_mapped_t, const address_v4& a) noexcept;
           address_v6 make_address_v6(const char* str);
           address_v6 make_address_v6(const char* str, error_code& ec) noexcept;
@@ -109,7 +110,8 @@ byte-level representation of an IPv6 address in network byte order.
 
 [function_postconditions `*this == a`]
 
-  constexpr address_v6(const bytes_type& bytes, unsigned long scope = 0);
+  constexpr address_v6(const bytes_type& bytes,
+                       scope_id_type scope = 0);
 
 [function_throws `out_of_range` if any element of `bytes` is not in the range
 `[0, 0xFF]`. [inline_note For implementations where `numeric_limits<unsigned
@@ -133,11 +135,11 @@ char>::max() == 0xFF`, no out-of-range detection is needed.]]
 [section [^ip::address_v6] members]
 [xrefid internet.address.v6.members]
 
-  void scope_id(unsigned long id) noexcept;
+  void scope_id(scope_id_type id) noexcept;
 
 [function_postconditions `scope_id() == id`.]
 
-  constexpr unsigned long scope_id() const noexcept;
+  constexpr scope_id_type scope_id() const noexcept;
 
 [function_returns The scope identifier associated with the address.]
 
@@ -278,7 +280,7 @@ a.to_bytes()) && a.scope_id() < b.scope_id())`.]
 [xrefid internet.address.v6.creation]
 
   constexpr address_v6 make_address_v6(const address_v6::bytes_type& bytes,
-                                       unsigned long scope_id);
+                                       scope_id_type scope_id);
 
 [function_returns `address_v6(bytes, scope_id)`.]
 
