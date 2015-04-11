@@ -16,32 +16,22 @@ const) value of type `X`, and `u` denotes an identifier.
     []
   ]
   [
-    [`a.protocol();`]
+    [`a.protocol()`]
     [`protocol_type`]
     []
   ]
 ]
 
-In the table below, `X` denotes an endpoint class, `a` denotes a value of `X`,
-`s` is a value of a type that is convertible to `size_t` and denotes a size
-in bytes, and `u` denotes an identifier.
+In the table below, `X` denotes an endpoint class, `a` denotes a (possibly
+const) value of type `X`, `b` denotes a value of type `X`, and `s` denotes a
+(possibly const) value of a type that is convertible to `size_t` and denotes a
+size in bytes.
 
 [table Endpoint requirements for extensible implementations
   [[expression] [type] [assertion/note\npre/post-conditions]]
   [
-    [`a.data();`]
-    [`void*`]
-    [
-      Returns a pointer suitable for passing as the /address/ argument to
-      __POSIX__ functions such as __accept__, __getpeername__, __getsockname__
-      and __recvfrom__. The implementation shall perform a `static_cast` on the
-      pointer to convert it to `sockaddr*`.
-    ]
-  ]
-  [
-    [`const X& u = a;
-      u.data();`]
-    [`void*`]
+    [`a.data()`]
+    [`const void*`]
     [
       Returns a pointer suitable for passing as the /address/ argument to
       __POSIX__ functions such as __connect__, or as the /dest_addr/ argument
@@ -51,7 +41,17 @@ in bytes, and `u` denotes an identifier.
     ]
   ]
   [
-    [`a.size();`]
+    [`b.data()`]
+    [`void*`]
+    [
+      Returns a pointer suitable for passing as the /address/ argument to
+      __POSIX__ functions such as __accept__, __getpeername__, __getsockname__
+      and __recvfrom__. The implementation shall perform a `static_cast` on the
+      pointer to convert it to `sockaddr*`.
+    ]
+  ]
+  [
+    [`a.size()`]
     [`size_t`]
     [
       Returns a value suitable for passing as the /address_len/ argument
@@ -61,7 +61,7 @@ in bytes, and `u` denotes an identifier.
     ]
   ]
   [
-    [`a.resize(s);`]
+    [`b.resize(s)`]
     []
     [
       pre: `s >= 0`\n
@@ -74,7 +74,7 @@ in bytes, and `u` denotes an identifier.
     ]
   ]
   [
-    [`a.capacity();`]
+    [`a.capacity()`]
     [`size_t`]
     [
       Returns a value suitable for passing as the /address_len/ argument to

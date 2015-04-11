@@ -6,7 +6,7 @@ In the table below, `a` denotes a value of an I/O control command class.
 [table IoControlCommand requirements for extensible implementations
   [[expression] [type] [assertion/note\npre/post-conditions]]
   [
-    [`a.name();`]
+    [`a.name()`]
     [`int`]
     [
       Returns a value suitable for passing as the /request/ argument to
@@ -14,7 +14,7 @@ In the table below, `a` denotes a value of an I/O control command class.
     ]
   ]
   [
-    [`a.data();`]
+    [`a.data()`]
     [`void*`]
     [
     ]

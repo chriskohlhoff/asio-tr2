@@ -8,12 +8,12 @@ sequence] requirements, and `t` is a completion token.
 [table Buffer-oriented asynchronous write stream requirements
   [[operation] [type] [semantics, pre/post-conditions]]
   [
-    [`a.get_executor();`]
+    [`a.get_executor()`]
     [A type satisfying the [link requirements.executor Executor requirements].]
     [Returns the associated I/O executor.]
   ]
   [
-    [`a.async_write_some(cb,t);`]
+    [`a.async_write_some(cb,t)`]
     [
       The return type is determined according to the requirements for an
       [link requirements.asynchronous_operations asynchronous operation].
