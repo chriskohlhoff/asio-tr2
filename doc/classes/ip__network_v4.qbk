@@ -10,30 +10,30 @@
           {
           public:
             // constructors:
-            network_v4() noexcept;
-            network_v4(const address_v4& addr, unsigned short prefix_len);
-            network_v4(const address_v4& addr, const address_v4& mask);
+            constexpr network_v4() noexcept;
+            constexpr network_v4(const address_v4& addr, unsigned short prefix_len);
+            constexpr network_v4(const address_v4& addr, const address_v4& mask);
 
             // members:
-            address_v4 address() const noexcept;
-            unsigned short prefix_length() const noexcept;
-            address_v4 netmask() const noexcept;
-            address_v4 network() const noexcept;
-            address_v4 broadcast() const noexcept;
+            constexpr address_v4 address() const noexcept;
+            constexpr unsigned short prefix_length() const noexcept;
+            constexpr address_v4 netmask() const noexcept;
+            constexpr address_v4 network() const noexcept;
+            constexpr address_v4 broadcast() const noexcept;
             address_v4_range hosts() const noexcept;
-            network_v4 canonical() const noexcept;
-            bool is_host() const noexcept;
-            bool is_subnet_of(const network_v4& other) const noexcept;
+            constexpr network_v4 canonical() const noexcept;
+            constexpr bool is_host() const noexcept;
+            constexpr bool is_subnet_of(const network_v4& other) const noexcept;
             string to_string() const;
           };
 
           // network_v4 comparisons:
-          bool operator==(const network_v4& a, const network_v4& b) noexcept;
-          bool operator!=(const network_v4& a, const network_v4& b) noexcept;
+          constexpr bool operator==(const network_v4& a, const network_v4& b) noexcept;
+          constexpr bool operator!=(const network_v4& a, const network_v4& b) noexcept;
 
           // network_v4 creation:
-          network_v4 make_network_v4(const address_v4& addr, unsigned short prefix_len);
-          network_v4 make_network_v4(const address_v4& addr, const address_v4& mask);
+          constexpr network_v4 make_network_v4(const address_v4& addr, unsigned short prefix_len);
+          constexpr network_v4 make_network_v4(const address_v4& addr, const address_v4& mask);
           network_v4 make_network_v4(const char* str);
           network_v4 make_network_v4(const char* str, error_code& ec) noexcept;
           network_v4 make_network_v4(string_view str);
@@ -52,19 +52,19 @@
 [section [^ip::network_v4] constructors]
 [xrefid internet.network.v4.cons]
 
-  network_v4() noexcept;
+  constexpr network_v4() noexcept;
 
 [function_postconditions `this->address().is_unspecified() == true` and
 `prefix_length() == 0`.]
 
-  network_v4(const address_v4& addr, unsigned short prefix_len);
+  constexpr network_v4(const address_v4& addr, unsigned short prefix_len);
 
 [function_postconditions `this->address() == addr` and
 `prefix_length() == prefix_len`.]
 
 [function_throws `out_of_range` if `prefix_len > 32`.]
 
-  network_v4(const address_v4& addr, const address_v4& mask);
+  constexpr network_v4(const address_v4& addr, const address_v4& mask);
 
 [function_postconditions `this->address() == addr` and `prefix_length()` is equal to
 the number of contiguous non-zero bits.]
@@ -77,28 +77,28 @@ bits, or if the most significant bit is zero and any other bits are non-zero.]
 [section [^ip::network_v4] members]
 [xrefid internet.network.v4.members]
 
-  address_v4 address() const noexcept;
+  constexpr address_v4 address() const noexcept;
 
 [function_returns The address specified when the `network_v4` object was
 constructed.]
 
-  unsigned short prefix_length() const noexcept;
+  constexpr unsigned short prefix_length() const noexcept;
 
 [function_returns The prefix length of the network.]
 
-  address_v4 netmask() const noexcept;
+  constexpr address_v4 netmask() const noexcept;
 
 [function_returns An `address_v4` object with `prefix_length()` contiguous
 non-zero bits set, starting from the most significant bit in network byte
 order. All other bits are zero.]
 
-  address_v4 network() const noexcept;
+  constexpr address_v4 network() const noexcept;
 
 [function_returns An `address_v4` object with the first `prefix_length()` bits,
 starting from the most significant bit in network byte order, set to the
 corresponding bit value of `this->address()`. All other bits are zero.]
 
-  address_v4 broadcast() const noexcept;
+  constexpr address_v4 broadcast() const noexcept;
 
 [function_returns An `address_v4` object with the first `prefix_length()` bits,
 starting from the most significant bit in network byte order, set to the
@@ -117,15 +117,15 @@ included in the range of host IP addresses. For example, given a network
 `192.168.1.254` inclusive, and neither `192.168.1.0` nor the broadcast address
 `192.168.1.255` are in the range.]
 
-  network_v4 canonical() const noexcept;
+  constexpr network_v4 canonical() const noexcept;
 
 [function_returns `network_v4(network(), prefix_length())`.]
 
-  bool is_host() const noexcept;
+  constexpr bool is_host() const noexcept;
 
 [function_returns `prefix_length() == 32`.]
 
-  bool is_subnet_of(const network_v4& other) const noexcept;
+  constexpr bool is_subnet_of(const network_v4& other) const noexcept;
 
 [function_returns `true` if `other.prefix_length() < prefix_length()` and
 `network_v4(this->address(), other.prefix_length()).canonical() ==
@@ -141,12 +141,12 @@ to_string(prefix_length())`.]
 [section:ip__network_v4__comparisons [^ip::network_v4] comparisons]
 [xrefid internet.network.v4.comparisons]
 
-  bool operator==(const network_v4& a, const network_v4& b) noexcept;
+  constexpr bool operator==(const network_v4& a, const network_v4& b) noexcept;
 
 [function_returns `true` if `a.address() == b.address()` and `a.prefix_length()
 == b.prefix_length()`, otherwise `false`.]
 
-  bool operator!=(const network_v4& a, const network_v4& b) noexcept;
+  constexpr bool operator!=(const network_v4& a, const network_v4& b) noexcept;
 
 [function_returns `!(a == b)`.]
 
@@ -155,11 +155,11 @@ to_string(prefix_length())`.]
 [section:ip__network_v4__creation [^ip::network_v4] creation]
 [xrefid internet.network.v4.creation]
 
-  network_v4 make_network_v4(const address_v4& addr, unsigned short prefix_len);
+  constexpr network_v4 make_network_v4(const address_v4& addr, unsigned short prefix_len);
 
 [function_returns `network_v4(addr, prefix_len)`.]
 
-  network_v4 make_network_v4(const address_v4& addr, const address_v4& mask);
+  constexpr network_v4 make_network_v4(const address_v4& addr, const address_v4& mask);
 
 [function_returns `network_v4(addr, mask)`.]
 

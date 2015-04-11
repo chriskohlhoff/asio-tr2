@@ -10,26 +10,26 @@
           {
           public:
             // constructors:
-            network_v6() noexcept;
-            network_v6(const address_v6& addr, unsigned short prefix_len);
+            constexpr network_v6() noexcept;
+            constexpr network_v6(const address_v6& addr, unsigned short prefix_len);
 
             // members:
-            address_v6 address() const noexcept;
-            unsigned short prefix_length() const noexcept;
-            address_v6 network() const noexcept;
+            constexpr address_v6 address() const noexcept;
+            constexpr unsigned short prefix_length() const noexcept;
+            constexpr address_v6 network() const noexcept;
             address_v6_range hosts() const noexcept;
-            network_v6 canonical() const noexcept;
-            bool is_host() const noexcept;
-            bool is_subnet_of(const network_v6& other) const noexcept;
+            constexpr network_v6 canonical() const noexcept;
+            constexpr bool is_host() const noexcept;
+            constexpr bool is_subnet_of(const network_v6& other) const noexcept;
             string to_string() const;
           };
 
           // network_v6 comparisons:
-          bool operator==(const network_v6& a, const network_v6& b) noexcept;
-          bool operator!=(const network_v6& a, const network_v6& b) noexcept;
+          constexpr bool operator==(const network_v6& a, const network_v6& b) noexcept;
+          constexpr bool operator!=(const network_v6& a, const network_v6& b) noexcept;
 
           // network_v6 creation:
-          network_v6 make_network_v6(const address_v6& addr, unsigned short prefix_len);
+          constexpr network_v6 make_network_v6(const address_v6& addr, unsigned short prefix_len);
           network_v6 make_network_v6(const char* str);
           network_v6 make_network_v6(const char* str, error_code& ec) noexcept;
           network_v6 make_network_v6(const string_v6& str);
@@ -48,12 +48,12 @@
 [section [^ip::network_v6] constructors]
 [xrefid internet.network.v6.cons]
 
-  network_v6() noexcept;
+  constexpr network_v6() noexcept;
 
 [function_postconditions `address().is_unspecified() == true` and
 `prefix_length() == 0`.]
 
-  network_v6(const address_v6& addr, unsigned short prefix_len);
+  constexpr network_v6(const address_v6& addr, unsigned short prefix_len);
 
 [function_requires `prefix_len <= 128`.]
 
@@ -67,16 +67,16 @@
 [section [^ip::network_v6] members]
 [xrefid internet.network.v6.members]
 
-  address_v6 address() const noexcept;
+  constexpr address_v6 address() const noexcept;
 
 [function_returns The address specified when the `network_v6` object was
 constructed.]
 
-  unsigned short prefix_length() const noexcept;
+  constexpr unsigned short prefix_length() const noexcept;
 
 [function_returns The prefix length of the network.]
 
-  address_v6 network() const noexcept;
+  constexpr address_v6 network() const noexcept;
 
 [function_returns An `address_v6` object with the first `prefix_length()` bits,
 starting from the most significant bit in network byte order, set to the
@@ -88,15 +88,15 @@ corresponding bit value of `address()`. All other bits are zero.]
 representing the single address `address().` Otherwise, an `address_v6_range`
 object representing the range of unique host IP addresses in the network.]
 
-  network_v6 canonical() const noexcept;
+  constexpr network_v6 canonical() const noexcept;
 
 [function_returns `network_v6(network(), prefix_length())`.]
 
-  bool is_host() const noexcept;
+  constexpr bool is_host() const noexcept;
 
 [function_returns `true` if `prefix_length() == 128`, otherwise `false`.]
 
-  bool is_subnet_of(const network_v6& other) const noexcept;
+  constexpr bool is_subnet_of(const network_v6& other) const noexcept;
 
 [function_returns `true` if `other.prefix_length() < prefix_length()` and
 `network_v6(address(), other.prefix_length()).canonical() ==
@@ -116,12 +116,12 @@ other.canonical()`.]
 [section:ip__network_v6__comparisons [^ip::network_v6] comparisons]
 [xrefid internet.network.v6.comparisons]
 
-  bool operator==(const network_v6& a, const network_v6& b) noexcept;
+  constexpr bool operator==(const network_v6& a, const network_v6& b) noexcept;
 
 [function_returns `true` if `a.address() == b.address()` and `a.prefix_length()
 == b.prefix_length()`, otherwise `false`.]
 
-  bool operator!=(const network_v6& a, const network_v6& b) noexcept;
+  constexpr bool operator!=(const network_v6& a, const network_v6& b) noexcept;
 
 [function_returns `!(a == b)`.]
 
@@ -130,7 +130,7 @@ other.canonical()`.]
 [section:ip__network_v6__creation [^ip::network_v6] creation]
 [xrefid internet.network.v6.creation]
 
-  network_v6 make_network_v6(const address_v6& addr, unsigned short prefix_len);
+  constexpr network_v6 make_network_v6(const address_v6& addr, unsigned short prefix_len);
 
 [function_returns `network_v6(addr, prefix_len)`.]
 
