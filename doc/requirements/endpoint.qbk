@@ -34,7 +34,7 @@ size in bytes.
     [`const void*`]
     [
       Returns a pointer suitable for passing as the /address/ argument to
-      functions such as __POSIX_ __connect__, or as the /dest_addr/ argument
+      functions such as __POSIX__ __connect__, or as the /dest_addr/ argument
       to functions such as  __POSIX__ __sendto__. The implementation shall
       perform a `static_cast` on the pointer to convert it to `const
       sockaddr*`.
