@@ -1,7 +1,8 @@
 [section:io_control_command I/O control command requirements]
 [xrefid socket.reqmts.iocontrolcommand]
 
-In the table below, `a` denotes a value of an I/O control command class.
+In the table below, `a` denotes a (possibly const) value of an I/O control
+command class, and `b` denotes a value of an I/O control command class.
 
 [table IoControlCommand requirements for extensible implementations
   [[expression] [type] [assertion/note\npre/post-conditions]]
@@ -14,7 +15,7 @@ In the table below, `a` denotes a value of an I/O control command class.
     ]
   ]
   [
-    [`a.data()`]
+    [`b.data()`]
     [`void*`]
     [
     ]
