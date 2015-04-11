@@ -16,7 +16,7 @@
             constexpr address_v4() noexcept;
             constexpr address_v4(const address_v4& a) noexcept;
             constexpr address_v4(const bytes_type& bytes);
-            explicit constexpr address_v4(unsigned long val);
+            explicit constexpr address_v4(address_v4_uint_type val);
 
             // assignment:
             address_v4& operator=(const address_v4& a) noexcept;
@@ -29,7 +29,7 @@
             constexpr bool is_class_c() const noexcept;
             constexpr bool is_multicast() const noexcept;
             constexpr bytes_type to_bytes() const noexcept;
-            constexpr unsigned long to_ulong() const noexcept;
+            constexpr address_v4_uint_type to_uint() const noexcept;
             string to_string() const;
 
             // static members:
@@ -50,7 +50,7 @@
 
           // address_v4 creation:
           constexpr address_v4 make_address_v4(const address_v4::bytes_type& bytes);
-          constexpr address_v4 make_address_v4(unsigned long val);
+          constexpr address_v4 make_address_v4(address_v4_uint_type val);
           constexpr address_v4 make_address_v4(v4_mapped_t, const address_v6& a);
           address_v4 make_address_v4(const char* str);
           address_v4 make_address_v4(const char* str, error_code& ec) noexcept;
@@ -98,7 +98,7 @@ byte-level representation of an IPv4 address in network byte order.
 
 [function_effects Constructs an object of class `address_v4`.]
 
-[function_postconditions `to_bytes()` yields `{0, 0, 0, 0}` and `to_ulong() ==
+[function_postconditions `to_bytes()` yields `{0, 0, 0, 0}` and `to_uint() ==
 0`.]
 
   constexpr address_v4(const address_v4& a) noexcept;
@@ -113,16 +113,17 @@ byte-level representation of an IPv4 address in network byte order.
 `[0, 0xFF]`. [inline_note For implementations where `numeric_limits<unsigned
 char>::max() == 0xFF`, no out-of-range detection is needed.]]
 
-[function_postconditions `to_bytes() == bytes` and `to_ulong() == (bytes[0]
+[function_postconditions `to_bytes() == bytes` and `to_uint() == (bytes[0]
 << 24) | (bytes[1] << 16) | (bytes[2] << 8) | bytes[3]`.]
 
-  explicit constexpr address_v4(unsigned long val);
+  explicit constexpr address_v4(address_v4_uint_type val);
 
 [function_throws `out_of_range` if `val` is not in the range `[0, 0xFFFFFFFF]`.
-[inline_note For implementations where `numeric_limits<unsigned long>::max() ==
-0xFFFFFFFF`, no out-of-range detection is needed.]]
+[inline_note For implementations where
+`numeric_limits<address_v4_uint_type>::max() == 0xFFFFFFFF`, no out-of-range
+detection is needed.]]
 
-[function_postconditions `to_ulong() == val` and `to_bytes()` is `{ (val >> 24)
+[function_postconditions `to_uint() == val` and `to_bytes()` is `{ (val >> 24)
 & 0xFF, (val >> 16) & 0xFF, (val >> 8) & 0xFF, val & 0xFF }`.]
 
 [endsect]
@@ -143,34 +144,34 @@ char>::max() == 0xFF`, no out-of-range detection is needed.]]
 
   constexpr bool is_unspecified() const noexcept;
 
-[function_returns `to_ulong() == 0`.]
+[function_returns `to_uint() == 0`.]
 
   constexpr bool is_loopback() const noexcept;
 
-[function_returns `(to_ulong() & 0xFF000000) == 0x7F000000`.]
+[function_returns `(to_uint() & 0xFF000000) == 0x7F000000`.]
 
   constexpr bool is_class_a() const noexcept;
 
-[function_returns `(to_ulong() & 0x80000000) == 0`.]
+[function_returns `(to_uint() & 0x80000000) == 0`.]
 
   constexpr bool is_class_b() const noexcept;
 
-[function_returns `(to_ulong() & 0xC0000000) == 0x80000000`.]
+[function_returns `(to_uint() & 0xC0000000) == 0x80000000`.]
 
   constexpr bool is_class_c() const noexcept;
 
-[function_returns `(to_ulong() & 0xE0000000) == 0xC0000000`.]
+[function_returns `(to_uint() & 0xE0000000) == 0xC0000000`.]
 
   constexpr bool is_multicast() const noexcept;
 
-[function_returns `(to_ulong() & 0xF0000000) == 0xE0000000`.]
+[function_returns `(to_uint() & 0xF0000000) == 0xE0000000`.]
 
   constexpr bytes_type to_bytes() const noexcept;
 
 [function_returns A representation of the address in [link
 definitions.network_byte_order network byte order].]
 
-  constexpr unsigned long to_ulong() const noexcept;
+  constexpr address_v4_uint_type to_uint() const noexcept;
 
 [function_returns A representation of the address in [link
 definitions.host_byte_order host byte order].]
@@ -199,7 +200,7 @@ __inet_ntop__ when invoked with address family `AF_INET`.]
 
   static constexpr address_v4 broadcast(const address_v4& addr, const address_v4& mask) noexcept;
 
-[function_returns `address_v4(addr.to_ulong() | ~mask.to_ulong())`.]
+[function_returns `address_v4(addr.to_uint() | ~mask.to_uint())`.]
 
 [endsect]
 
@@ -208,7 +209,7 @@ __inet_ntop__ when invoked with address family `AF_INET`.]
 
   constexpr bool operator==(const address_v4& a, const address_v4& b) noexcept;
 
-[function_returns `a.to_ulong() == b.to_ulong()`.]
+[function_returns `a.to_uint() == b.to_uint()`.]
 
   constexpr bool operator!=(const address_v4& a, const address_v4& b) noexcept;
 
@@ -216,7 +217,7 @@ __inet_ntop__ when invoked with address family `AF_INET`.]
 
   constexpr bool operator< (const address_v4& a, const address_v4& b) noexcept;
 
-[function_returns `a.to_ulong() < b.to_ulong()`.]
+[function_returns `a.to_uint() < b.to_uint()`.]
 
   constexpr bool operator> (const address_v4& a, const address_v4& b) noexcept;
 
@@ -239,7 +240,7 @@ __inet_ntop__ when invoked with address family `AF_INET`.]
 
 [function_returns `address_v4(bytes)`.]
 
-  constexpr address_v4 make_address_v4(unsigned long val);
+  constexpr address_v4 make_address_v4(address_v4_uint_type val);
 
 [function_returns `address_v4(val)`.]
 

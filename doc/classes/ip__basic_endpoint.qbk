@@ -19,16 +19,16 @@ for an [link requirements.endpoint `Endpoint`].
             // constructors:
             constexpr basic_endpoint() noexcept;
             constexpr basic_endpoint(const protocol_type& proto,
-                                     unsigned short port_num) noexcept;
+                                     port_type port_num) noexcept;
             constexpr basic_endpoint(const ip::address& addr,
-                                     unsigned short port_num) noexcept;
+                                     port_type port_num) noexcept;
 
             // members:
             constexpr protocol_type protocol() const noexcept;
             constexpr ip::address address() const noexcept;
             void address(const ip::address& addr) noexcept;
-            constexpr unsigned short port() const noexcept;
-            void port(unsigned short port_num) noexcept;
+            constexpr port_type port() const noexcept;
+            void port(port_type port_num) noexcept;
           };
 
           // basic_endpoint comparisons:
@@ -116,7 +116,7 @@ the table below.]
 ]
 
   constexpr basic_endpoint(const protocol_type& proto,
-                           unsigned short port_num) noexcept;
+                           port_type port_num) noexcept;
 
 [function_effects Constructs an object of class
 `basic_endpoint<InternetProtocol>` with the specified protocol and port
@@ -125,7 +125,7 @@ number.]
 [function_postconditions The postconditions of this function are indicated in
 the table below.]
 
-[table basic_endpoint<InternetProtocol>::basic_endpoint(const InternetProtocol&, unsigned short) effects
+[table basic_endpoint<InternetProtocol>::basic_endpoint(const InternetProtocol&, port_type) effects
   [[expression][value]]
   [
     [`this->address()`]
@@ -140,7 +140,7 @@ the table below.]
 ]
 
   constexpr basic_endpoint(const ip::address& addr,
-                           unsigned short port_num) noexcept;
+                           port_type port_num) noexcept;
 
 [function_effects Constructs an object of class
 `basic_endpoint<InternetProtocol>` with the specified address and port number.]
@@ -148,7 +148,7 @@ the table below.]
 [function_postconditions The postconditions of this function are indicated in
 the table below.]
 
-[table basic_endpoint<InternetProtocol>::basic_endpoint(const ip::address&, unsigned short) effects
+[table basic_endpoint<InternetProtocol>::basic_endpoint(const ip::address&, port_type) effects
   [[expression][value]]
   [
     [`this->address()`]
@@ -180,11 +180,11 @@ the table below.]
 
 [function_postconditions `this->address() == addr`.]
 
-  constexpr unsigned short port() const noexcept;
+  constexpr port_type port() const noexcept;
 
 [function_returns The port number associated with the endpoint.]
 
-  void port(unsigned short port_num) noexcept;
+  void port(port_type port_num) noexcept;
 
 [function_effects Modifies the port number associated with the endpoint.]
 
