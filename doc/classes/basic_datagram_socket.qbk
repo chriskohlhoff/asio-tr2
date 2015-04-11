@@ -256,15 +256,27 @@ resolution unless `OtherProtocol` is implicitly convertible to `Protocol`.]
 [function_block A [link requirements.synchronous_read_operations synchronous
 read operation].]
 
-[function_effects Reads data from this socket, as if by __POSIX__ __recvmsg__,
-where `flags` specifies the type of message reception.]
+[function_effects Constructs an array `iov` of __POSIX__ type `struct iovec`
+and length `iovlen`, corresponding to `buffers`, and reads data from this
+socket as if by __POSIX__:
+``
+  msghdr message;
+  message.msg_name = nullptr;
+  message.msg_namelen = 0;
+  message.msg_iov = iov;
+  message.msg_iovlen = iovlen;
+  message.msg_control = nullptr;
+  message.msg_controllen = 0;
+  message.msg_flags = 0;
+  __recvmsg__(native_handle(), &message, static_cast<int>(flags));
+``]
+
+[function_returns On success, the number of bytes received. Otherwise `0`.]
 
 [function_note This operation may be used with connection-mode or
 connectionless-mode sockets, but it is normally used with connection-mode
 sockets because it does not permit the application to retrieve the source
 endpoint of received data.]
-
-[function_returns On success, the number of bytes received. Otherwise `0`.]
 
   template<class MutableBufferSequence, class CompletionToken>
     __initfn_result_type__ async_receive(const MutableBufferSequence& buffers,
@@ -280,17 +292,28 @@ forward<CompletionToken>(token))`.]
 
 [function_completion_signature `void(error_code ec, size_t n)`.]
 
-[function_effects Initiates an asynchronous operation to read data from a this
-socket, as if by __POSIX__ __recvmsg__, where `flags` specifies the type of
-message reception.]
+[function_effects Initiates an asynchronous operation to read data from this
+socket. Constructs an array `iov` of __POSIX__ type `struct iovec` and length
+`iovlen`, corresponding to `buffers`, then reads data as if by __POSIX__:
+``
+  msghdr message;
+  message.msg_name = nullptr;
+  message.msg_namelen = 0;
+  message.msg_iov = iov;
+  message.msg_iovlen = iovlen;
+  message.msg_control = nullptr;
+  message.msg_controllen = 0;
+  message.msg_flags = 0;
+  __recvmsg__(native_handle(), &message, static_cast<int>(flags));
+``]
+
+[function_block If the operation completes successfully, `n` is the number of
+bytes received. Otherwise `n` is `0`.]
 
 [function_note This operation may be used with connection-mode or
 connectionless-mode sockets, but it is normally used with connection-mode
 sockets because it does not permit the application to retrieve the source
 endpoint of received data.]
-
-[function_block If the operation completes successfully, `n` is the number of
-bytes received. Otherwise `n` is `0`.]
 
 [function_error_conditions\n
 [mdash] `errc::invalid_argument` [mdash] if `socket_base::message_peek` is set
@@ -319,16 +342,29 @@ socket_base::message_flags(), ec)`.]
 [function_block A [link requirements.synchronous_read_operations synchronous
 read operation].]
 
-[function_effects Reads data from this socket, as if by __POSIX__ __recvmsg__,
-where `sender` is updated to reflect the origin of the data, and `flags`
-specifies the type of message reception.]
+[function_effects Constructs an array `iov` of __POSIX__ type `struct iovec`
+and length `iovlen`, corresponding to `buffers`, and reads data from this
+socket as if by __POSIX__:
+``
+  msghdr message;
+  message.msg_name = sender.data();
+  message.msg_namelen = sender.capacity();
+  message.msg_iov = iov;
+  message.msg_iovlen = iovlen;
+  message.msg_control = nullptr;
+  message.msg_controllen = 0;
+  message.msg_flags = 0;
+  ssize_t result = __recvmsg__(native_handle(), &message, static_cast<int>(flags));
+  if (result >= 0)
+    sender.resize(message.msg_namelen);
+``]
+
+[function_returns On success, the number of bytes received. Otherwise `0`.]
 
 [function_note This operation may be used with connection-mode or
 connectionless-mode sockets, but it is normally used with connectionless-mode
 sockets because it permits the application to retrieve the source endpoint of
 received data.]
-
-[function_returns On success, the number of bytes received. Otherwise `0`.]
 
   template<class MutableBufferSequence, class CompletionToken>
     __initfn_result_type__ async_receive_from(const MutableBufferSequence& buffers,
@@ -347,16 +383,29 @@ socket_base::message_flags(), forward<CompletionToken>(token))`.]
 [function_completion_signature `void(error_code ec, size_t n)`.]
 
 [function_effects Initiates an asynchronous operation to read data from this
-socket, as if by __POSIX__ __recvmsg__, where `sender` is updated to reflect
-the source of the data, and `flags` specifies the type of message reception.]
+socket. Constructs an array `iov` of __POSIX__ type `struct iovec` and length
+`iovlen`, corresponding to `buffers`, then reads data as if by __POSIX__:
+``
+  msghdr message;
+  message.msg_name = sender.data();
+  message.msg_namelen = sender.capacity();
+  message.msg_iov = iov;
+  message.msg_iovlen = iovlen;
+  message.msg_control = nullptr;
+  message.msg_controllen = 0;
+  message.msg_flags = 0;
+  ssize_t result = __recvmsg__(native_handle(), &message, static_cast<int>(flags));
+  if (result >= 0)
+    sender.resize(message.msg_namelen);
+``]
+
+[function_block If the operation completes successfully, `n` is the number of
+bytes received. Otherwise `n` is `0`.]
 
 [function_note This operation may be used with connection-mode or
 connectionless-mode sockets, but it is normally used with connectionless-mode
 sockets because it permits the application to retrieve the source endpoint of
 received data.]
-
-[function_block If the operation completes successfully, `n` is the number of
-bytes received. Otherwise `n` is `0`.]
 
 [function_error_conditions\n
 [mdash] `errc::invalid_argument` [mdash] if `socket_base::message_peek` is set
@@ -379,8 +428,20 @@ in flags.]
 [function_block A [link requirements.synchronous_write_operations synchronous
 write operation].]
 
-[function_effects Writes data to this socket, as if by __POSIX__ __sendmsg__,
-where `flags` specifies the type of message transmission.]
+[function_effects Constructs an array `iov` of __POSIX__ type `struct iovec`
+and length `iovlen`, corresponding to `buffers`, and writes data to this socket
+as if by __POSIX__:
+``
+  msghdr message;
+  message.msg_name = nullptr;
+  message.msg_namelen = 0;
+  message.msg_iov = iov;
+  message.msg_iovlen = iovlen;
+  message.msg_control = nullptr;
+  message.msg_controllen = 0;
+  message.msg_flags = 0;
+  __sendmsg__(native_handle(), &message, static_cast<int>(flags));
+``]
 
 [function_returns On success, the number of bytes sent. Otherwise `0`.]
 
@@ -398,8 +459,19 @@ forward<CompletionToken>(token))`.]
 [function_completion_signature `void(error_code ec, size_t n)`.]
 
 [function_effects Initiates an asynchronous operation to write data to this
-socket, as if by __POSIX__ __sendmsg__, where `flags` specifies the
-type of message transmission.]
+socket. Constructs an array `iov` of __POSIX__ type `struct iovec` and length
+`iovlen`, corresponding to `buffers`, then writes data as if by __POSIX__:
+``
+  msghdr message;
+  message.msg_name = nullptr;
+  message.msg_namelen = 0;
+  message.msg_iov = iov;
+  message.msg_iovlen = iovlen;
+  message.msg_control = nullptr;
+  message.msg_controllen = 0;
+  message.msg_flags = 0;
+  __sendmsg__(native_handle(), &message, static_cast<int>(flags));
+``]
 
 [function_block If the operation completes successfully, `n` is the number of
 bytes sent. Otherwise `n` is `0`.]
@@ -426,9 +498,20 @@ ec)`.]
 [function_block A [link requirements.synchronous_write_operations synchronous
 write operation].]
 
-[function_effects Writes data to this socket, as if by __POSIX__ __sendmsg__,
-where `recipient` is the destination endpoint of the data, and `flags`
-specifies the type of message transmission.]
+[function_effects Constructs an array `iov` of __POSIX__ type `struct iovec`
+and length `iovlen`, corresponding to `buffers`, and writes data to this socket
+as if by __POSIX__:
+``
+  msghdr message;
+  message.msg_name = sender.data();
+  message.msg_namelen = sender.size();
+  message.msg_iov = iov;
+  message.msg_iovlen = iovlen;
+  message.msg_control = nullptr;
+  message.msg_controllen = 0;
+  message.msg_flags = 0;
+  __sendmsg__(native_handle(), &message, static_cast<int>(flags));
+``]
 
 [function_returns On success, the number of bytes sent. Otherwise `0`.]
 
@@ -449,8 +532,19 @@ socket_base::message_flags(), forward<CompletionToken>(token))`.]
 [function_completion_signature `void(error_code ec, size_t n)`.]
 
 [function_effects Initiates an asynchronous operation to write data to this
-socket, as if by __POSIX__ __sendmsg__, where `recipient` is the destination
-endpoint of the data, and `flags` specifies the type of message reception.]
+socket. Constructs an array `iov` of __POSIX__ type `struct iovec` and length
+`iovlen`, corresponding to `buffers`, then writes data as if by __POSIX__:
+``
+  msghdr message;
+  message.msg_name = sender.data();
+  message.msg_namelen = sender.size();
+  message.msg_iov = iov;
+  message.msg_iovlen = iovlen;
+  message.msg_control = nullptr;
+  message.msg_controllen = 0;
+  message.msg_flags = 0;
+  __sendmsg__(native_handle(), &message, static_cast<int>(flags));
+``]
 
 [function_block If the operation completes successfully, `n` is the number of
 bytes sent. Otherwise `n` is `0`.]
