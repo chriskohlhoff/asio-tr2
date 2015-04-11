@@ -73,14 +73,18 @@ Extensible implementations shall provide the following member functions:
           class basic_endpoint
           {
           public:
-            ``['unspecified]``* data();
-            const ``['unspecified]``* data() const;
+            void* data();
+            const void* data() const;
             size_t size() const;
             void resize(size_t s);
             size_t capacity() const;
-            ``['[*// remainder unchanged]]``
+            ``['// remainder unchanged]``
           private:
-  ``//        sockaddr\_storage data\_;  ['[*exposition only]]``
+            union
+            {
+              sockaddr_in v4_;
+              sockaddr_in6 v6_;
+            } data_; // ``['exposition only]``
           };
 
         } // namespace ip
@@ -260,11 +264,11 @@ address is based on [RFC2732].]
 [section [^ip::basic_endpoint] members (extensible implementations)]
 [xrefid internet.endpoint.extensible]
 
-  ``['unspecified]``* data();
+  void* data();
 
 [function_returns `std::addressof(data_)`.]
 
-  const ``['unspecified]``* data() const;
+  const void* data() const;
 
 [function_returns `std::addressof(data_)`.]
 

@@ -34,19 +34,19 @@ in bytes, and `u` denotes an identifier.
     [
       Returns a pointer suitable for passing as the /address/ argument to
       __POSIX__ functions such as __accept__, __getpeername__, __getsockname__
-      and __recvfrom__. The implementation shall perform a
-      `reinterpret_cast` on the pointer to convert it to `sockaddr*`.
+      and __recvfrom__. The implementation shall perform a `static_cast` on the
+      pointer to convert it to `sockaddr*`.
     ]
   ]
   [
     [`const X& u = a;
       u.data();`]
-    [a pointer]
+    [`void*`]
     [
       Returns a pointer suitable for passing as the /address/ argument to
       __POSIX__ functions such as __connect__, or as the /dest_addr/ argument
       to __POSIX__ functions such as  __sendto__. The implementation shall
-      perform a `reinterpret_cast` on the pointer to convert it to `const
+      perform a `static_cast` on the pointer to convert it to `const
       sockaddr*`.
     ]
   ]
