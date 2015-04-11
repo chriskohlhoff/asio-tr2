@@ -25,7 +25,6 @@ Multicast group management socket option classes shall be defined as follows:
   {
   public:
     // constructors:
-    ``['[*C]]``();
     explicit ``['[*C]]``(const address& multicast_group);
     explicit ``['[*C]]``(const address_v4& multicast_group,
                const address_v4& network_interface = address_v4::any());
@@ -42,10 +41,10 @@ Extensible implementations shall provide the following member functions:
     template<class Protocol> int name(const Protocol& p) const;
     template<class Protocol> const void* data(const Protocol& p) const;
     template<class Protocol> size_t size(const Protocol& p) const;
-    ``['[*// remainder unchanged]]``
+    ``['// remainder unchanged]``
   private:
-  ``//ip\_mreq v4\_value\_;    ['[*exposition only]]``
-  ``//ipv6\_mreq v6\_value\_;  ['[*exposition only]]``
+    ip_mreq v4_value_; // ``['exposition only]``
+    ipv6_mreq v6_value_; // ``['exposition only]``
   };
 
 The names and values used in the definition of the multicast group management
@@ -81,21 +80,11 @@ __POSIX__?]
 [section Multicast group management socket option constructors]
 [xrefid internet.multicast.group.cons]
 
-  ``['[*C]]``();
-
-[function_effects For extensible implementations, both `v4_value_` and
-`v6_value_` are zero-initialized.]
-
   explicit ``['[*C]]``(const address& multicast_group);
 
-[function_effects For extensible implementations, if `multicast_group.is_v6()`
-is `true` then `v6_value_.ipv6mr_multiaddr` is initialized to correspond to the
-IPv6 address returned by `multicast_group.to_v6()`,
-`v6_value_.ipv6mr_interface` is set to `0`, and `v4_value_` is
-zero-initialized; otherwise, `v4_value_.imr_multiaddr` is initialized to
-correspond to the IPv4 address returned by `multicast_group.to_v4()`,
-`v4_value_.imr_interface` is zero-initialized, and `v6_value_` is
-zero-initialized.]
+[function_effects If `multicast_group.is_v6()` is `true`, calls
+[^['[*C]]]`(address_cast<address_v6>(multicast_group))`; otherwise, calls
+[^['[*C]]]`(address_cast<address_v4>(multicast_group))`.]
 
   explicit ``['[*C]]``(const address_v4& multicast_group,
              const address_v4& network_interface = address_v4::any());
