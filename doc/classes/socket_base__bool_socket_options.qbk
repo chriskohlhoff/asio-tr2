@@ -49,7 +49,7 @@ The names and values used in the definition of the boolean socket option
 classes are described in the table below.
 
 [table Boolean socket options
-  [[['C]][['L]][['N]][description]]
+  [[['C]][['L]][['N]][notes]]
   [
     [`socket_base::broadcast`]
     [`SOL_SOCKET`]

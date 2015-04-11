@@ -45,7 +45,7 @@ The names and values used in the definition of the integral socket option
 classes are described in the table below.
 
 [table Integral socket options
-  [[['C]][['L]][['N]][description]]
+  [[['C]][['L]][['N]][notes]]
   [
     [`socket_base::receive_buffer_size`]
     [`SOL_SOCKET`]
