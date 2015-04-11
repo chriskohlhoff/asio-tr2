@@ -100,20 +100,7 @@ Extensible implementations provide the following member functions:
 [function_effects Constructs an object of class
 `basic_endpoint<InternetProtocol>`.]
 
-[function_postconditions The postconditions of this function are indicated in
-the table below.]
-
-[table basic_endpoint<InternetProtocol>::basic_endpoint() effects
-  [[expression][value]]
-  [
-    [`this->address()`]
-    [`ip::address(ip::address_v4())`]
-  ]
-  [
-    [`port()`]
-    [`0`]
-  ]
-]
+[function_postconditions `this->address() == ip::address()` and `port() == 0`.]
 
   constexpr basic_endpoint(const protocol_type& proto,
                            port_type port_num) noexcept;
@@ -122,22 +109,10 @@ the table below.]
 `basic_endpoint<InternetProtocol>` with the specified protocol and port
 number.]
 
-[function_postconditions The postconditions of this function are indicated in
-the table below.]
-
-[table basic_endpoint<InternetProtocol>::basic_endpoint(const InternetProtocol&, port_type) effects
-  [[expression][value]]
-  [
-    [`this->address()`]
-
-    [`ip::address(ip::address_v6())` if `proto == Protocol::v6()`, otherwise
-    `ip::address(ip::address_v4())`]
-  ]
-  [
-    [`port()`]
-    [`port_num`]
-  ]
-]
+[function_postconditions\n
+[mdash] If `proto == Protocol::v6()`, `this->address() == ip::address_v6()`;
+otherwise, `this->address() == ip::address_v4()`.\n
+[mdash] `port() == port_num`.]
 
   constexpr basic_endpoint(const ip::address& addr,
                            port_type port_num) noexcept;
@@ -145,20 +120,7 @@ the table below.]
 [function_effects Constructs an object of class
 `basic_endpoint<InternetProtocol>` with the specified address and port number.]
 
-[function_postconditions The postconditions of this function are indicated in
-the table below.]
-
-[table basic_endpoint<InternetProtocol>::basic_endpoint(const ip::address&, port_type) effects
-  [[expression][value]]
-  [
-    [`this->address()`]
-    [`addr`]
-  ]
-  [
-    [`port()`]
-    [`port_num`]
-  ]
-]
+[function_postconditions `this->address() == addr` and `port() == port_num`.]
 
 [endsect]
 

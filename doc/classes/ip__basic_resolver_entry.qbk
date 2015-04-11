@@ -45,24 +45,10 @@ string_view())`.]
                        string_view h,
                        string_view s);
 
-[function_postconditions The postconditions of this function are indicated in
-the table below.]
-
-[table basic_resolver_entry<InternetProtocol>::basic_resolver_entry() effects
-  [[expression][value]]
-  [
-    [`endpoint()`]
-    [`ep`]
-  ]
-  [
-    [`host_name()`]
-    [`h`]
-  ]
-  [
-    [`service_name()`]
-    [`s`]
-  ]
-]
+[function_postconditions\n
+[mdash] `endpoint() == ep`.\n
+[mdash] `host_name() == h`.\n
+[mdash] `service_name() == s`.]
 
 [endsect]
 
