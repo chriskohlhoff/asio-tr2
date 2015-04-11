@@ -187,15 +187,7 @@ representation of an IPv4 address and prefix length.]
     basic_ostream<CharT, Traits>& operator<<(
       basic_ostream<CharT, Traits>& os, const network_v4& net);
 
-[function_effects Outputs the textual representation of the network to the
-stream, as if it were implemented as follows:
-``
-  string s = net.to_string();
-  for (string::iterator i = s.begin(); i != s.end(); ++i)
-    os << os.widen(*i);
-``]
-
-[function_returns `os`.]
+[function_returns `os << net.to_string().c_str()`.]
 
 [endsect]
 

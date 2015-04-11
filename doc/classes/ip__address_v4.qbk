@@ -281,15 +281,7 @@ representation of an IPv4 address.]
     basic_ostream<CharT, Traits>& operator<<(
       basic_ostream<CharT, Traits>& os, const address_v4& addr);
 
-[function_effects Outputs the textual representation of the address to the
-stream, as if it were implemented as follows:
-``
-  string s = addr.to_string();
-  for (string::iterator i = s.begin(); i != s.end(); ++i)
-    os << os.widen(*i);
-``]
-
-[function_returns `os`.]
+[function_returns `os << addr.to_string().c_str()`.]
 
 [endsect]
 
