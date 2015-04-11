@@ -112,7 +112,7 @@ byte-level representation of an IPv6 address in network byte order.
   constexpr address_v6(const bytes_type& bytes, unsigned long scope = 0);
 
 [function_throws `out_of_range` if any element of `bytes` is not in the range
-`[0, 0xFF]`. [inline_note For implementations where `numeric_limit<unsigned
+`[0, 0xFF]`. [inline_note For implementations where `numeric_limits<unsigned
 char>::max() == 0xFF`, no out-of-range detection is needed.]]
 
 [function_postconditions `to_bytes() == bytes` and `scope_id() == scope`.]
