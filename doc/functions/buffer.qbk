@@ -153,7 +153,7 @@ to elements of the sequence (C++ Std, [string.require]).
 [function_returns A `mutable_buffers_1` value equivalent to:
 ``
   mutable_buffers_1(
-    vec.size() ? &vec[0] : nullptr,
+    !vec.empty() ? &vec[0] : nullptr,
     vec.size() * sizeof(T));
 ``]
 
@@ -163,7 +163,7 @@ to elements of the sequence (C++ Std, [string.require]).
 [function_returns A `mutable_buffers_1` value equivalent to:
 ``
   mutable_buffers_1(
-    vec.size() ? &vec[0] : nullptr,
+    !vec.empty() ? &vec[0] : nullptr,
     min(vec.size() * sizeof(T), n));
 ``]
 
@@ -173,7 +173,7 @@ to elements of the sequence (C++ Std, [string.require]).
 [function_returns A `const_buffers_1` value equivalent to:
 ``
   const_buffers_1(
-    vec.size() ? &vec[0] : nullptr,
+    !vec.empty() ? &vec[0] : nullptr,
     vec.size() * sizeof(T));
 ``]
 
@@ -183,7 +183,7 @@ to elements of the sequence (C++ Std, [string.require]).
 [function_returns A `const_buffers_1` value equivalent to:
 ``
   const_buffers_1(
-    vec.size() ? &vec[0] : nullptr,
+    !vec.empty() ? &vec[0] : nullptr,
     min(vec.size() * sizeof(T), n));
 ``]
 
@@ -193,7 +193,7 @@ to elements of the sequence (C++ Std, [string.require]).
 [function_returns A `mutable_buffers_1` value equivalent to:
 ``
   mutable_buffers_1(
-    str.size() ? &str[0] : nullptr,
+    !str.empty() ? &str[0] : nullptr,
     str.size() * sizeof(CharT));
 ``]
 
@@ -204,7 +204,7 @@ to elements of the sequence (C++ Std, [string.require]).
 [function_returns A `mutable_buffers_1` value equivalent to:
 ``
   mutable_buffers_1(
-    str.size() ? &str[0] : nullptr,
+    !str.empty() ? &str[0] : nullptr,
     min(str.size() * sizeof(CharT), n));
 ``]
 
