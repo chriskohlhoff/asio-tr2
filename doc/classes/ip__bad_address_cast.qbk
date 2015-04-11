@@ -9,7 +9,7 @@
           class bad_address_cast : bad_cast
           {
           public:
-            virtual const char* what() const noexcept;
+            virtual const char* what() const noexcept override;
           };
 
         } // namespace ip

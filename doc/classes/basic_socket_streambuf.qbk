@@ -40,11 +40,11 @@
 
         protected:
           // overridden virtual functions:
-          virtual int_type underflow();
-          virtual int_type pbackfail(int_type c = traits_type::eof());
-          virtual int_type overflow(int_type c = traits_type::eof());
-          virtual int sync();
-          virtual streambuf* setbuf(char_type* s, streamsize n);
+          virtual int_type underflow() override;
+          virtual int_type pbackfail(int_type c = traits_type::eof()) override;
+          virtual int_type overflow(int_type c = traits_type::eof()) override;
+          virtual int sync() override;
+          virtual streambuf* setbuf(char_type* s, streamsize n) override;
 
         private:
           error_code ec_; // ``['exposition only]``
@@ -158,7 +158,7 @@ then `close` fails.]
 [section [^basic_socket_streambuf] overridden virtual functions]
 [xrefid socket.streambuf.virtual]
 
-  virtual int_type underflow();
+  virtual int_type underflow() override;
 
 [function_effects Behaves according to the description of
 `basic_streambuf<char>::underflow()`, with the specialization that a sequence
@@ -170,7 +170,7 @@ the socket is closed and `ec_` is set to `errc::timed_out`.]
 [function_effects Returns `traits_type::eof()` to indicate failure. Otherwise
 returns `traits_type::to_int_type(*gptr())`.]
 
-  virtual int_type pbackfail(int_type c = traits_type::eof());
+  virtual int_type pbackfail(int_type c = traits_type::eof()) override;
 
 [function_effects Puts back the character designated by `c` to the input
 sequence, if possible, in one of three ways:\n
@@ -197,7 +197,7 @@ input sequence. If the function can succeed in more than one of these ways, it
 is unspecified which way is chosen. The function can alter the number of
 putback positions available as a result of any call.]
 
-  virtual int_type overflow(int_type c = traits_type::eof());
+  virtual int_type overflow(int_type c = traits_type::eof()) override;
 
 [function_effects Behaves according to the description of
 `basic_streambuf<char>::overflow(c)`, except that the behavior of "consuming
@@ -210,12 +210,12 @@ to `errc::timed_out`.]
 [function_returns `traits_type::not_eof(c)` to indicate success, and
 `traits_type::eof()` to indicate failure.]
 
-  virtual int sync();
+  virtual int sync() override;
 
 [function_effects If a put area exists, calls `overflow(traits_type::eof())` to
 flush characters.]
 
-  virtual streambuf* setbuf(char_type* s, streamsize n);
+  virtual streambuf* setbuf(char_type* s, streamsize n) override;
 
 [function_effects If `setbuf(nullptr, 0)` is called on a stream before any I/O has
 occurred on that stream, the stream becomes unbuffered. Otherwise the results
