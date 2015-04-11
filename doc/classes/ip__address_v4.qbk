@@ -178,7 +178,7 @@ definitions.host_byte_order host byte order].]
 
   string to_string() const;
 
-[function_returns A string representation of the address, as if by __POSIX__
+[function_returns A textual representation of the address, as if by __POSIX__
 __inet_ntop__ when invoked with address family `AF_INET`.]
 
 [endsect]
@@ -261,12 +261,16 @@ address, as if computed by the following method:
   address_v4 make_address_v4(string_view str);
   address_v4 make_address_v4(string_view str, error_code& ec) noexcept;
 
-[function_effects Converts a string representation of an address into a
+[function_effects Converts a textual representation of an address into a
 corresponding `address_v4` value, as if by __POSIX__ __inet_pton__ when invoked
 with address family `AF_INET`.]
 
 [function_returns If successful, an `address_v4` value corresponding to the
 string `str`. Otherwise `address_v4()`.]
+
+[function_error_conditions\n
+[mdash] `errc::invalid_argument` [mdash] if `str` is not a valid textual
+representation of an IPv4 address.]
 
 [endsect]
 
@@ -277,7 +281,7 @@ string `str`. Otherwise `address_v4()`.]
     basic_ostream<CharT, Traits>& operator<<(
       basic_ostream<CharT, Traits>& os, const address_v4& addr);
 
-[function_effects Outputs the string representation of the address to the
+[function_effects Outputs the textual representation of the address to the
 stream, as if it were implemented as follows:
 ``
   string s = addr.to_string();

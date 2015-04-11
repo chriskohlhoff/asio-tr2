@@ -145,6 +145,10 @@ other.canonical()`.]
 converting ['prefix-length] to an integer of type `unsigned short`. Otherwise
 returns `network_v6()` and sets `ec` to reflect the error.]
 
+[function_error_conditions\n
+[mdash] `errc::invalid_argument` [mdash] if `str` is not a valid textual
+representation of an IPv6 address and prefix length.]
+
 [endsect]
 
 [section:ip__network_v6__io [^ip::network_v6] I/O]
@@ -154,7 +158,7 @@ returns `network_v6()` and sets `ec` to reflect the error.]
     basic_ostream<CharT, Traits>& operator<<(
       basic_ostream<CharT, Traits>& os, const network_v6& net);
 
-[function_effects Outputs the string representation of the network to the
+[function_effects Outputs the textual representation of the network to the
 stream, as if it were implemented as follows:
 ``
   string s = net.to_string();

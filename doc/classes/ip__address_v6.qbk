@@ -245,14 +245,14 @@ definitions.network_byte_order network byte order].]
 
   string to_string() const;
 
-[function_effects Converts an address into a string representation. If
+[function_effects Converts an address into a textual representation. If
 `scope_id() == 0`, converts as if by __POSIX__ __inet_ntop__ when invoked with
 address family `AF_INET6`. If `scope_id() != 0`, the format is
-['`address`]`%`['`scope-id`], where ['`address`] is the string representation
+['`address`]`%`['`scope-id`], where ['`address`] is the textual representation
 of the equivalent address having `scope_id() == 0`, and ['`scope-id`] is an
-implementation-defined string representation of the scope identifier.]
+implementation-defined textual representation of the scope identifier.]
 
-[function_returns If successful, the string representation of the address.
+[function_returns If successful, the textual representation of the address.
 Otherwise `string()`.]
 
 [endsect]
@@ -328,12 +328,12 @@ method:
   address_v6 make_address_v6(string_view str);
   address_v6 make_address_v6(string_view str, error_code& ec) noexcept;
 
-[function_effects Converts a string representation of an address into a
+[function_effects Converts a textual representation of an address into a
 corresponding `address_v6` value. The format is either ['`address`] or
 ['`address`]`%`['`scope-id`], where ['`address`] is in the format specified by
 __POSIX__ __inet_pton__ when invoked with address family `AF_INET6`, and
 ['`scope-id`] is an optional string specifying the scope identifier. All
-implementations shall accept as ['`scope-id`] a string representation of an
+implementations shall accept as ['`scope-id`] a textual representation of an
 unsigned decimal integer. It is implementation-defined whether alternative
 scope identifier representations are permitted. If ['`scope-id`] is not
 supplied, an `address_v6` object shall be returned such that `scope_id() ==
@@ -341,6 +341,10 @@ supplied, an `address_v6` object shall be returned such that `scope_id() ==
 
 [function_returns If successful, an `address_v6` value corresponding to the
 string `str`. Otherwise returns `address_v6()`.]
+
+[function_error_conditions\n
+[mdash] `errc::invalid_argument` [mdash] if `str` is not a valid textual
+representation of an IPv6 address.]
 
 [endsect]
 
@@ -351,7 +355,7 @@ string `str`. Otherwise returns `address_v6()`.]
     basic_ostream<CharT, Traits>& operator<<(
       basic_ostream<CharT, Traits>& os, const address_v6& addr);
 
-[function_effects Outputs the string representation of the address to the
+[function_effects Outputs the textual representation of the address to the
 stream, as if it were implemented as follows:
 ``
   string s = addr.to_string();
