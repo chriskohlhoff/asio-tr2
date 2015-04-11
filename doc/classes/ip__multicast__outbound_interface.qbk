@@ -18,7 +18,6 @@ network interface to use for outgoing multicast datagrams.
             {
             public:
               // constructors:
-              outbound_interface();
               explicit outbound_interface(const address_v4& network_interface);
               explicit outbound_interface(unsigned int network_interface);
             };
@@ -46,8 +45,8 @@ Extensible implementations shall provide the following member functions:
               template<class Protocol> size_t size(const Protocol& p) const;
               ``['[*// remainder unchanged]]``
             private:
-  ``//          in\_addr v4\_value\_;       ['[*exposition only]]``
-  ``//          unsigned int v6\_value\_;  ['[*exposition only]]``
+                in_addr v4_value_; // ``['exposition only]``
+                unsigned int v6_value_; // ``['exposition only]``
             };
 
           } // namespace multicast
@@ -63,11 +62,6 @@ representation of a network interface.]
 
 [section [^ip::multicast::outbound_interface] constructors]
 [xrefid internet.multicast.outbound.cons]
-
-  outbound_interface();
-
-[function_effects For extensible implementations, both `v4_value_` and
-`v6_value_` are zero-initialized.]
 
   explicit outbound_interface(const address_v4& network_interface);
 
