@@ -18,15 +18,15 @@ requirements.internet_protocol `InternetProtocol`].
             typedef basic_datagram_socket<udp> socket;
 
             // static members:
-            static udp v4();
-            static udp v6();
+            static constexpr udp v4() noexcept;
+            static constexpr udp v6() noexcept;
 
             udp() = delete;
           };
 
           // udp comparisons:
-          bool operator==(const udp& a, const udp& b);
-          bool operator!=(const udp& a, const udp& b);
+          constexpr bool operator==(const udp& a, const udp& b) noexcept;
+          constexpr bool operator!=(const udp& a, const udp& b) noexcept;
 
         } // namespace ip
       __end_versioned_ns__
@@ -43,10 +43,10 @@ Extensible implementations provide the following member functions:
           class udp
           {
           public:
-            int family() const;
-            int type() const;
-            int protocol() const;
-            ``['[*// remainder unchanged]]``
+            constexpr int family() const noexcept;
+            constpexr int type() const noexcept;
+            constexpr int protocol() const noexcept;
+            ``['// remainder unchanged]``
           };
 
         } // namespace ip
@@ -91,14 +91,14 @@ defined in the __POSIX__ header file __netinet_in_h__.]
 [section [^ip::udp] comparisons]
 [xrefid internet.udp.comparisons]
 
-  bool operator==(const udp& a, const udp& b);
+  constexpr bool operator==(const udp& a, const udp& b) noexcept;
 
 [function_returns A boolean indicating whether two objects of class `udp` are
 equal, such that the expression `udp::v4() == udp::v4()` is `true`, the
 expression `udp::v6() == udp::v6()` is `true`, and the expression `udp::v4() ==
 udp::v6()` is `false`.]
 
-  bool operator!=(const udp& a, const udp& b);
+  constexpr bool operator!=(const udp& a, const udp& b) noexcept;
 
 [function_returns `!(a == b)`.]
 

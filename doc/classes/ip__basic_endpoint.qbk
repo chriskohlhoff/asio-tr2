@@ -17,39 +17,39 @@ for an [link requirements.endpoint `Endpoint`].
             typedef InternetProtocol protocol_type;
 
             // constructors:
-            basic_endpoint();
-            basic_endpoint(const protocol_type& proto,
-                           unsigned short port_num);
-            basic_endpoint(const ip::address& addr,
-                           unsigned short port_num);
+            constexpr basic_endpoint() noexcept;
+            constexpr basic_endpoint(const protocol_type& proto,
+                                     unsigned short port_num) noexcept;
+            constexpr basic_endpoint(const ip::address& addr,
+                                     unsigned short port_num) noexcept;
 
             // members:
-            protocol_type protocol() const;
-            ip::address address() const;
-            void address(const ip::address& addr);
-            unsigned short port() const;
-            void port(unsigned short port_num);
+            constexpr protocol_type protocol() const noexcept;
+            constexpr ip::address address() const noexcept;
+            void address(const ip::address& addr) noexcept;
+            constexpr unsigned short port() const noexcept;
+            void port(unsigned short port_num) noexcept;
           };
 
           // basic_endpoint comparisons:
           template<class InternetProtocol>
-            bool operator==(const basic_endpoint<InternetProtocol>& a,
-                            const basic_endpoint<InternetProtocol>& b);
+            constexpr bool operator==(const basic_endpoint<InternetProtocol>& a,
+                                      const basic_endpoint<InternetProtocol>& b) noexcept;
           template<class InternetProtocol>
-            bool operator!=(const basic_endpoint<InternetProtocol>& a,
-                            const basic_endpoint<InternetProtocol>& b);
+            constexpr bool operator!=(const basic_endpoint<InternetProtocol>& a,
+                                      const basic_endpoint<InternetProtocol>& b) noexcept;
           template<class InternetProtocol>
-            bool operator< (const basic_endpoint<InternetProtocol>& a,
-                            const basic_endpoint<InternetProtocol>& b);
+            constexpr bool operator< (const basic_endpoint<InternetProtocol>& a,
+                                      const basic_endpoint<InternetProtocol>& b) noexcept;
           template<class InternetProtocol>
-            bool operator> (const basic_endpoint<InternetProtocol>& a,
-                            const basic_endpoint<InternetProtocol>& b);
+            constexpr bool operator> (const basic_endpoint<InternetProtocol>& a,
+                                      const basic_endpoint<InternetProtocol>& b) noexcept;
           template<class InternetProtocol>
-            bool operator<=(const basic_endpoint<InternetProtocol>& a,
-                            const basic_endpoint<InternetProtocol>& b);
+            constexpr bool operator<=(const basic_endpoint<InternetProtocol>& a,
+                                      const basic_endpoint<InternetProtocol>& b) noexcept;
           template<class InternetProtocol>
-            bool operator>=(const basic_endpoint<InternetProtocol>& a,
-                            const basic_endpoint<InternetProtocol>& b);
+            constexpr bool operator>=(const basic_endpoint<InternetProtocol>& a,
+                                      const basic_endpoint<InternetProtocol>& b) noexcept;
 
           // basic_endpoint I/O:
           template<class CharT, class Traits, class InternetProtocol>
@@ -62,7 +62,7 @@ for an [link requirements.endpoint `Endpoint`].
     } // namespace experimental
   } // namespace std
 
-Extensible implementations shall provide the following member functions:
+Extensible implementations provide the following member functions:
 
   namespace std {
     namespace experimental {
@@ -73,11 +73,11 @@ Extensible implementations shall provide the following member functions:
           class basic_endpoint
           {
           public:
-            void* data();
-            const void* data() const;
-            size_t size() const;
+            void* data() noexcept;
+            const void* data() const noexcept;
+            constexpr size_t size() const noexcept;
             void resize(size_t s);
-            size_t capacity() const;
+            constexpr size_t capacity() const noexcept;
             ``['// remainder unchanged]``
           private:
             union
@@ -95,7 +95,7 @@ Extensible implementations shall provide the following member functions:
 [section [^ip::basic_endpoint] constructors]
 [xrefid internet.endpoint.cons]
 
-  basic_endpoint();
+  constexpr basic_endpoint() noexcept;
 
 [function_effects Constructs an object of class
 `basic_endpoint<InternetProtocol>`.]
@@ -115,8 +115,8 @@ the table below.]
   ]
 ]
 
-  basic_endpoint(const protocol_type& proto,
-                 unsigned short port_num);
+  constexpr basic_endpoint(const protocol_type& proto,
+                           unsigned short port_num) noexcept;
 
 [function_effects Constructs an object of class
 `basic_endpoint<InternetProtocol>` with the specified protocol and port
@@ -139,8 +139,8 @@ the table below.]
   ]
 ]
 
-  basic_endpoint(const ip::address& addr,
-                 unsigned short port_num);
+  constexpr basic_endpoint(const ip::address& addr,
+                           unsigned short port_num) noexcept;
 
 [function_effects Constructs an object of class
 `basic_endpoint<InternetProtocol>` with the specified address and port number.]
@@ -165,26 +165,26 @@ the table below.]
 [section [^ip::basic_endpoint] members]
 [xrefid internet.endpoint.members]
 
-  protocol_type protocol() const;
+  constexpr protocol_type protocol() const noexcept;
 
 [function_returns `Protocol::v6()` if the expression `this->address().is_v6()` is
 `true`, otherwise `Protocol::v4()`.]
 
-  ip::address address() const;
+  constexpr ip::address address() const noexcept;
 
 [function_returns The address associated with the endpoint.]
 
-  void address(const ip::address& addr);
+  void address(const ip::address& addr) noexcept;
 
 [function_effects Modifies the address associated with the endpoint.]
 
 [function_postconditions `this->address() == addr`.]
 
-  unsigned short port() const;
+  constexpr unsigned short port() const noexcept;
 
 [function_returns The port number associated with the endpoint.]
 
-  void port(unsigned short port_num);
+  void port(unsigned short port_num) noexcept;
 
 [function_effects Modifies the port number associated with the endpoint.]
 
@@ -196,39 +196,39 @@ the table below.]
 [xrefid internet.endpoint.comparisons]
 
   template<class InternetProtocol>
-    bool operator==(const basic_endpoint<InternetProtocol>& a,
-                    const basic_endpoint<InternetProtocol>& b);
+    constexpr bool operator==(const basic_endpoint<InternetProtocol>& a,
+                              const basic_endpoint<InternetProtocol>& b) noexcept;
 
 [function_returns `a.address() == b.address() && a.port() == b.port())`.]
 
   template<class InternetProtocol>
-    bool operator!=(const basic_endpoint<InternetProtocol>& a,
-                    const basic_endpoint<InternetProtocol>& b);
+    constexpr bool operator!=(const basic_endpoint<InternetProtocol>& a,
+                              const basic_endpoint<InternetProtocol>& b) noexcept;
 
 [function_returns `!(a == b)`.]
 
   template<class InternetProtocol>
-    bool operator< (const basic_endpoint<InternetProtocol>& a,
-                    const basic_endpoint<InternetProtocol>& b);
+    constexpr bool operator< (const basic_endpoint<InternetProtocol>& a,
+                              const basic_endpoint<InternetProtocol>& b) noexcept;
 
 [function_returns `a.address() < b.address() || (!(b.address() < a.address())
 && a.port() < b.port())`.]
 
   template<class InternetProtocol>
-    bool operator> (const basic_endpoint<InternetProtocol>& a,
-                    const basic_endpoint<InternetProtocol>& b);
+    constexpr bool operator> (const basic_endpoint<InternetProtocol>& a,
+                              const basic_endpoint<InternetProtocol>& b) noexcept;
 
 [function_returns `b < a`.]
 
   template<class InternetProtocol>
-    bool operator<=(const basic_endpoint<InternetProtocol>& a,
-                    const basic_endpoint<InternetProtocol>& b);
+    constexpr bool operator<=(const basic_endpoint<InternetProtocol>& a,
+                              const basic_endpoint<InternetProtocol>& b) noexcept;
 
 [function_returns `!(b < a)`.]
 
   template<class InternetProtocol>
-    bool operator>=(const basic_endpoint<InternetProtocol>& a,
-                    const basic_endpoint<InternetProtocol>& b);
+    constexpr bool operator>=(const basic_endpoint<InternetProtocol>& a,
+                              const basic_endpoint<InternetProtocol>& b) noexcept;
 
 [function_returns `!(a < b)`.]
 
@@ -264,15 +264,15 @@ address is based on [RFC2732].]
 [section [^ip::basic_endpoint] members (extensible implementations)]
 [xrefid internet.endpoint.extensible]
 
-  void* data();
+  void* data() noexcept;
 
 [function_returns `std::addressof(data_)`.]
 
-  const void* data() const;
+  const void* data() const noexcept;
 
 [function_returns `std::addressof(data_)`.]
 
-  size_t size() const;
+  constexpr size_t size() const noexcept;
 
 [function_returns `sizeof(sockaddr_in6)` if `protocol().family() == AF_INET6`,
 otherwise `sizeof(sockaddr_in)`.]
@@ -283,7 +283,7 @@ otherwise `sizeof(sockaddr_in)`.]
 `protocol().family() == AF_INET6 && s != sizeof(sockaddr_in6)` `||`
 `protocol().family() == AF_INET4 && s != sizeof(sockaddr_in)` is `true`.]
 
-  size_t capacity() const;
+  constexpr size_t capacity() const noexcept;
 
 [function_returns `sizeof(data_)`.]
 

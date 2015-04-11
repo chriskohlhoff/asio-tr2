@@ -21,15 +21,15 @@ requirements.internet_protocol `InternetProtocol`].
             class ``[link classes.ip__tcp__no_delay no\_delay]``;
 
             // static members:
-            static tcp v4();
-            static tcp v6();
+            static constexpr tcp v4() noexcept;
+            static constexpr tcp v6() noexcept;
 
             tcp() = delete;
           };
 
           // tcp comparisons:
-          bool operator==(const tcp& a, const tcp& b);
-          bool operator!=(const tcp& a, const tcp& b);
+          constexpr bool operator==(const tcp& a, const tcp& b) noexcept;
+          constexpr bool operator!=(const tcp& a, const tcp& b) noexcept;
 
         } // namespace ip
       __end_versioned_ns__
@@ -46,10 +46,10 @@ Extensible implementations provide the following member functions:
           class tcp
           {
           public:
-            int family() const;
-            int type() const;
-            int protocol() const;
-            ``['[*// remainder unchanged]]``
+            constexpr int family() const noexcept;
+            constexpr int type() const noexcept;
+            constexpr int protocol() const noexcept;
+            ``['// remainder unchanged]``
           };
 
         } // namespace ip
@@ -94,14 +94,14 @@ defined in the __POSIX__ header file __netinet_in_h__.]
 [section [^ip::tcp] comparisons]
 [xrefid internet.tcp.comparisons]
 
-  bool operator==(const tcp& a, const tcp& b);
+  constexpr bool operator==(const tcp& a, const tcp& b) noexcept;
 
 [function_returns A boolean indicating whether two objects of class `tcp` are
 equal, such that the expression `tcp::v4() == tcp::v4()` is `true`, the
 expression `tcp::v6() == tcp::v6()` is `true`, and the expression `tcp::v4() ==
 tcp::v6()` is `false`.]
 
-  bool operator!=(const tcp& a, const tcp& b);
+  constexpr bool operator!=(const tcp& a, const tcp& b) noexcept;
 
 [function_returns `!(a == b)`.]
 
