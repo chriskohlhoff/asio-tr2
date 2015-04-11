@@ -15,7 +15,7 @@ requirements.settable_socket_option `SettableSocketOption`].
   ip::udp::socket sock(io_svc, ep);
 
   // Join a multicast group.
-  ip::address addr = ip::address::from_string("239.255.0.1");
+  ip::address addr = ip::make_address("239.255.0.1");
   sock.set_option(ip::multicast::join_group(addr));
 ``]
 
