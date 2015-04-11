@@ -2,7 +2,7 @@
 [xrefid async.defer]
 
   template<class CompletionToken>
-    auto defer(CompletionToken&& token);
+    __initfn_result_type__ defer(CompletionToken&& token);
 
 [function_block Let the type `Handler` be the handler function object type
 determined by performing `handler_type_t<CompletionToken, void()>`.]
@@ -25,7 +25,7 @@ initializing the object as `result(handler)`.\n
 [function_returns `result.get()`.]
 
   template<class Executor, class CompletionToken>
-    auto defer(const Executor& ex, CompletionToken&& token);
+    __initfn_result_type__ defer(const Executor& ex, CompletionToken&& token);
 
 [function_block Let the type `Handler` be the handler function object type
 determined by performing `handler_type_t<CompletionToken, void()>`.]
@@ -54,7 +54,7 @@ performs `ex1.dispatch(std::move(handler), alloc)` followed by `w.reset()`.\n
 unless `is_executor<Executor>::value` is `true`.]
 
   template<class ExecutionContext, class CompletionToken>
-    auto defer(ExecutionContext& ctx, CompletionToken&& token);
+    __initfn_result_type__ defer(ExecutionContext& ctx, CompletionToken&& token);
 
 [function_returns `std::experimental::defer(ctx.get_executor(),
 forward<CompletionToken>(token))`.]

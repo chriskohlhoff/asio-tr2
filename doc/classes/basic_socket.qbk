@@ -85,14 +85,14 @@
           void connect(const endpoint_type& endpoint, error_code& ec);
 
           template<class CompletionToken>
-            auto async_connect(const endpoint_type& endpoint,
+            __initfn_result_type__ async_connect(const endpoint_type& endpoint,
                                CompletionToken&& token);
 
           void wait(wait_type w);
           void wait(wait_type w, error_code& ec);
 
           template<class CompletionToken>
-            auto async_wait(wait_type w, CompletionToken&& token);
+            __initfn_result_type__ async_wait(wait_type w, CompletionToken&& token);
 
         protected:
           // construct / copy / destroy:
@@ -469,7 +469,7 @@ Connects the socket to the specified remote endpoint, as if by __POSIX__
 __connect__.]
 
   template<class CompletionToken>
-    auto async_connect(const endpoint_type& endpoint, CompletionToken&& token);
+    __initfn_result_type__ async_connect(const endpoint_type& endpoint, CompletionToken&& token);
 
 [function_completion_signature `void(error_code ec)`.]
 
@@ -498,7 +498,7 @@ to have error conditions pending, as if by __POSIX__ __poll__.]
 [mdash] `errc::bad_file_descriptor` [mdash] if `is_open()` is `false`.]
 
   template<class CompletionToken>
-    auto async_wait(wait_type w, CompletionToken&& token);
+    __initfn_result_type__ async_wait(wait_type w, CompletionToken&& token);
 
 [function_completion_signature `void(error_code ec)`.]
 

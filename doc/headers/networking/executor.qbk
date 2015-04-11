@@ -137,29 +137,29 @@
         ``// [link functions.dispatch dispatch]:``
 
         template<class CompletionToken>
-          auto dispatch(CompletionToken&& token);
+          __initfn_result_type__ dispatch(CompletionToken&& token);
         template<class Executor, class CompletionToken>
-          auto dispatch(const Executor& ex, CompletionToken&& token);
+          __initfn_result_type__ dispatch(const Executor& ex, CompletionToken&& token);
         template<class ExecutionContext, class CompletionToken>
-          auto dispatch(ExecutionContext& ctx, CompletionToken&& token);
+          __initfn_result_type__ dispatch(ExecutionContext& ctx, CompletionToken&& token);
 
         ``// [link functions.post post]:``
 
         template<class CompletionToken>
-          auto post(CompletionToken&& token);
+          __initfn_result_type__ post(CompletionToken&& token);
         template<class Executor, class CompletionToken>
-          auto post(const Executor& ex, CompletionToken&& token);
+          __initfn_result_type__ post(const Executor& ex, CompletionToken&& token);
         template<class ExecutionContext, class CompletionToken>
-          auto post(ExecutionContext& ctx, CompletionToken&& token);
+          __initfn_result_type__ post(ExecutionContext& ctx, CompletionToken&& token);
 
         ``// [link functions.defer defer]:``
 
         template<class CompletionToken>
-          auto defer(CompletionToken&& token);
+          __initfn_result_type__ defer(CompletionToken&& token);
         template<class Executor, class CompletionToken>
-          auto defer(const Executor& ex, CompletionToken&& token);
+          __initfn_result_type__ defer(const Executor& ex, CompletionToken&& token);
         template<class ExecutionContext, class CompletionToken>
-          auto defer(ExecutionContext& ctx, CompletionToken&& token);
+          __initfn_result_type__ defer(ExecutionContext& ctx, CompletionToken&& token);
 
         template<class Executor>
           class ``[link classes.strand strand]``;

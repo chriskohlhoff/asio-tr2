@@ -3,12 +3,12 @@
 
   template<class AsyncReadStream, class DynamicBufferSequence,
     class CompletionToken>
-      auto async_read_until(AsyncReadStream& s,
+      __initfn_result_type__ async_read_until(AsyncReadStream& s,
                             DynamicBufferSequence&& b, char delim,
                             CompletionToken&& token);
   template<class AsyncReadStream, class DynamicBufferSequence,
     class CompletionToken>
-      auto async_read_until(AsyncReadStream& s,
+      __initfn_result_type__ async_read_until(AsyncReadStream& s,
                             DynamicBufferSequence&& b,
                             string_view delim,
                             CompletionToken&& token);

@@ -37,9 +37,10 @@ the result of an asynchronous operation is specified in terms of these names.
 [section Automatic deduction of initiating function return type]
 [xrefid async.reqmts.async.return.type]
 
-The return type of initiating functions is `typename
-async_result<Handler>::type`. For presentation convenience, this clause
-abbreviates this using `auto`.
+For the sake of exposition, this specification sometimes annotates functions
+with a return type `__initfn_result_type__`. For every function declaration
+that returns `__initfn_result_type__`, the meaning is equivalent to specifying
+the return type as `typename async_result<Handler>::type`.
 
 [endsect]
 

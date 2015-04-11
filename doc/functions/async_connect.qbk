@@ -2,7 +2,7 @@
 [xrefid socket.algo.async.connect]
 
   template<class Protocol, class InputIterator, class CompletionToken>
-    auto async_connect(basic_socket<Protocol>& s,
+    __initfn_result_type__ async_connect(basic_socket<Protocol>& s,
                        InputIterator first,
                        CompletionToken&& token);
 
@@ -13,7 +13,7 @@ end-of-sequence iterator.]
 forward<CompletionToken>(token))`.]
 
   template<class Protocol, class InputIterator, class CompletionToken>
-    auto async_connect(basic_socket<Protocol>& s,
+    __initfn_result_type__ async_connect(basic_socket<Protocol>& s,
                        InputIterator first, InputIterator last,
                        CompletionToken&& token);
 
@@ -34,7 +34,7 @@ operation and `i` contains `last`.]
 
   template<class Protocol, class InputIterator,
     class ConnectCondition, class CompletionToken>
-      auto async_connect(basic_socket<Protocol>& s,
+      __initfn_result_type__ async_connect(basic_socket<Protocol>& s,
                          InputIterator first,
                          ConnectCondition c,
                          CompletionToken&& token);
@@ -47,7 +47,7 @@ forward<CompletionToken>(token))`.]
 
   template<class Protocol, class InputIterator,
     class ConnectCondition, class CompletionToken>
-      auto async_connect(basic_socket<Protocol>& s,
+      __initfn_result_type__ async_connect(basic_socket<Protocol>& s,
                          InputIterator first, InputIterator last,
                          ConnectCondition c,
                          CompletionToken&& token);
