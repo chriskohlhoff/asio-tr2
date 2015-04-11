@@ -256,11 +256,13 @@ resolution unless `OtherProtocol` is implicitly convertible to `Protocol`.]
 [function_block A [link requirements.synchronous_read_operations synchronous
 read operation].]
 
-[function_effects Reads data from a connection-mode or connectionless-mode
-socket, as if by __POSIX__ __recvmsg__, where `flags` specifies the type of
-message reception. [inline_note It is normally used with connection-mode
+[function_effects Reads data from this socket, as if by __POSIX__ __recvmsg__,
+where `flags` specifies the type of message reception.]
+
+[function_note This operation may be used with connection-mode or
+connectionless-mode sockets, but it is normally used with connection-mode
 sockets because it does not permit the application to retrieve the source
-endpoint of received data.]]
+endpoint of received data.]
 
 [function_returns On success, the number of bytes received. Otherwise `0`.]
 
@@ -278,11 +280,14 @@ forward<CompletionToken>(token))`.]
 
 [function_completion_signature `void(error_code ec, size_t n)`.]
 
-[function_effects Initiates an asynchronous operation to read data from a
-connection-mode or connectionless-mode socket, as if by __POSIX__ __recvmsg__,
-where `flags` specifies the type of message reception. [inline_note It is
-normally used with connection-mode sockets because it does not permit the
-application to retrieve the source endpoint of received data.]]
+[function_effects Initiates an asynchronous operation to read data from a this
+socket, as if by __POSIX__ __recvmsg__, where `flags` specifies the type of
+message reception.]
+
+[function_note This operation may be used with connection-mode or
+connectionless-mode sockets, but it is normally used with connection-mode
+sockets because it does not permit the application to retrieve the source
+endpoint of received data.]
 
 [function_block If the operation completes successfully, `n` is the number of
 bytes received. Otherwise `n` is `0`.]
@@ -314,11 +319,14 @@ socket_base::message_flags(), ec)`.]
 [function_block A [link requirements.synchronous_read_operations synchronous
 read operation].]
 
-[function_effects Reads data from a connection-mode or connectionless-mode
-socket, as if by __POSIX__ __recvmsg__, where `sender` is updated to reflect
-the origin of the data, and `flags` specifies the type of message reception.
-[inline_note It is normally used with connectionless-mode sockets because it
-permits the application to retrieve the source endpoint of received data.]]
+[function_effects Reads data from this socket, as if by __POSIX__ __recvmsg__,
+where `sender` is updated to reflect the origin of the data, and `flags`
+specifies the type of message reception.]
+
+[function_note This operation may be used with connection-mode or
+connectionless-mode sockets, but it is normally used with connectionless-mode
+sockets because it permits the application to retrieve the source endpoint of
+received data.]
 
 [function_returns On success, the number of bytes received. Otherwise `0`.]
 
@@ -338,12 +346,14 @@ socket_base::message_flags(), forward<CompletionToken>(token))`.]
 
 [function_completion_signature `void(error_code ec, size_t n)`.]
 
-[function_effects Initiates an asynchronous operation to read data from a
-connection-mode or connectionless-mode socket, as if by __POSIX__ __recvmsg__,
-where `sender` is updated to reflect the source of the data, and `flags`
-specifies the type of message reception. [inline_note It is normally used with
-connectionless-mode sockets because it permits the application to retrieve the
-source endpoint of received data.]]
+[function_effects Initiates an asynchronous operation to read data from this
+socket, as if by __POSIX__ __recvmsg__, where `sender` is updated to reflect
+the source of the data, and `flags` specifies the type of message reception.]
+
+[function_note This operation may be used with connection-mode or
+connectionless-mode sockets, but it is normally used with connectionless-mode
+sockets because it permits the application to retrieve the source endpoint of
+received data.]
 
 [function_block If the operation completes successfully, `n` is the number of
 bytes received. Otherwise `n` is `0`.]
