@@ -1,7 +1,7 @@
 [section Native handles]
 [xrefid socket.reqmts.native]
 
-Several classes described in this Clause have a member type
+Several classes described in this Technical Specification have a member type
 `native_handle_type`, a member function `native_handle`, and member functions
 that accept arguments of type `native_handle_type`. The presence of these
 members and their semantics is implementation-defined. [std_note These members

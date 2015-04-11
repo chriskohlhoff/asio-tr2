@@ -407,10 +407,10 @@ __getsockopt__.]
 [function_effects Executes an I/O control command on the acceptor, as if by
 __POSIX__ __ioctl__.]
 
-[commentary This proposal does not include any classes that satisfy [link
-requirements.io_control_command `IoControlCommand`] requirements. However,
-implementation-specific extensions such as QoS may be implemented using
-`ioctl()`, and the `io_control()` operation is included to allow these
+[commentary This Technical Specification does not include any classes that
+satisfy [link requirements.io_control_command `IoControlCommand`] requirements.
+However, implementation-specific extensions such as QoS may be implemented
+using `ioctl()`, and the `io_control()` operation is included to allow these
 extensions to be supported.]
 
   void non_blocking(bool mode);

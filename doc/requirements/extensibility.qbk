@@ -1,10 +1,10 @@
 [section Extensibility]
 [xrefid socket.reqmts.extensibility]
 
-This clause defines an optional level of conformance, in the form of
-additional member functions on types that satisfy [link requirements.protocol
-`Protocol`], [link requirements.endpoint `Endpoint`], [link
-requirements.settable_socket_option `SettableSocketOption`], [link
+This Technical Specification defines an optional level of conformance, in the
+form of additional member functions on types that satisfy [link
+requirements.protocol `Protocol`], [link requirements.endpoint `Endpoint`],
+[link requirements.settable_socket_option `SettableSocketOption`], [link
 requirements.gettable_socket_option `GettableSocketOption`] or [link
 requirements.io_control_command `IoControlCommand`] requirements.
 
@@ -17,7 +17,8 @@ An implementation's level of conformance shall be documented.
 functions, where possible. It is intended that __POSIX__ and __Windows__
 implementations will provide them.]
 
-For the purposes of this clause, implementations that provide all of the
-additional member functions are known as /extensible implementations/.
+For the purposes of this Technical Specification, implementations that provide
+all of the additional member functions are known as /extensible
+implementations/.
 
 [endsect]

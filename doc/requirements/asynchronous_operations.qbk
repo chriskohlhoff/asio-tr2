@@ -1,14 +1,14 @@
 [section:asynchronous_operations Requirements on asynchronous operations]
 [xrefid async.reqmts.async]
 
-In this clause, an asynchronous operation is initiated by a function that is
-named with the prefix `async_`. These functions shall be known as ['initiating
-functions].
+In this Technical Specification, an asynchronous operation is initiated by a
+function that is named with the prefix `async_`. These functions shall be known
+as ['initiating functions].
 
 [section:completion_token Completion tokens and handlers]
 [xrefid async.reqmts.async.token]
 
-All initiating functions in this clause:
+All initiating functions in this Technical Specification:
 
 [mdash] are function templates with template parameter `CompletionToken`;
 
@@ -29,8 +29,9 @@ are placed on the type `CompletionToken`.]
 
 The type `Handler` must satisfy the `MoveConstructible` requirements (C++ Std,
 [moveconstructible]) and be callable with the specified completion signature.
-The ['Completion signature] elements in this clause have named parameters, and
-the result of an asynchronous operation is specified in terms of these names.
+The ['Completion signature] elements in this Technical Specification have named
+parameters, and the result of an asynchronous operation is specified in terms
+of these names.
 
 [endsect]
 
@@ -47,7 +48,8 @@ the return type as `typename async_result<Handler>::type`.
 [section Production of initiating function return value]
 [xrefid async.reqmts.async.return.value]
 
-An initiating function in this clause produces its return type as follows:
+An initiating function in this Technical Specification produces its return type
+as follows:
 
 [mdash] constructing an object `result` of type `async_result<Handler>`,
 initialized as `result(handler)`; and
@@ -120,13 +122,13 @@ Certain objects that participate in asynchronous operations have an
 [section I/O executor]
 [xrefid async.reqmts.async.io.exec]
 
-All asynchronous operations in this clause have an associated executor object
-satisfying the [link requirements.executor Executor requirements]. If the
-initiating function is a member function, the associated executor is that
-returned by the `get_executor` member function on the same object. If the
-initiating function is not a member function, the associated executor is that
-returned by the `get_executor` member function of the first argument to the
-initiating function.
+All asynchronous operations in this Technical Specification have an associated
+executor object satisfying the [link requirements.executor Executor
+requirements]. If the initiating function is a member function, the associated
+executor is that returned by the `get_executor` member function on the same
+object. If the initiating function is not a member function, the associated
+executor is that returned by the `get_executor` member function of the first
+argument to the initiating function.
 
 Let `Executor1` be the type of the associated executor, and `ex1` be the
 associated executor object obtained as described above.
@@ -178,7 +180,7 @@ of the handler's associated allocator shall be determined by
 object `alloc2` shall be obtained by performing `associated_allocator<Handler,
 Executor1>::get(handler, alloc1)`.
 
-The asynchronous operations defined in this clause:
+The asynchronous operations defined in this Technical Specification:
 
 [mdash] If required, allocate memory using only the completion handler's
 associated allocator.

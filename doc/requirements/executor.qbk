@@ -82,8 +82,8 @@ a value of type `A` meeting the `Allocator` requirements (C++ Std,
      Executor implementations should use the supplied allocator to allocate any
      memory required to store the function object. Prior to invoking the
      function object, the executor shall deallocate any memory allocated.
-     [inline_note Executors defined in this clause always use the supplied
-     allocator.]\n
+     [inline_note Executors defined in this Technical Specification always use
+     the supplied allocator.]\n
      \n
      Synchronization: The invocation of `dispatch` synchronizes with (C++ Std,
      \[intro.multithread\]) the invocation of `f1`.]
@@ -99,8 +99,8 @@ a value of type `A` meeting the `Allocator` requirements (C++ Std,
      Executor implementations should use the supplied allocator to allocate any
      memory required to store the function object. Prior to invoking the
      function object, the executor shall deallocate any memory allocated.
-     [inline_note Executors defined in this clause always use the supplied
-     allocator.]\n
+     [inline_note Executors defined in this Technical Specification always use
+     the supplied allocator.]\n
      \n
      Synchronization: The invocation of `post` synchronizes with (C++ Std,
      \[intro.multithread\]) the invocation of `f1`.]
@@ -116,8 +116,8 @@ a value of type `A` meeting the `Allocator` requirements (C++ Std,
      Executor implementations should use the supplied allocator to allocate any
      memory required to store the function object. Prior to invoking the
      function object, the executor shall deallocate any memory allocated.
-     [inline_note Executors defined in this clause always use the supplied
-     allocator.]\n
+     [inline_note Executors defined in this Technical Specification always use
+     the supplied allocator.]\n
      \n
      Synchronization: The invocation of `defer` synchronizes with (C++ Std,
      \[intro.multithread\]) the invocation of `f1`.]

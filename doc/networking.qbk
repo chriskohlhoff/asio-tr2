@@ -470,8 +470,8 @@ specification of these facilities.
 [commentary Grey-shaded italic text is commentary on the proposal. It is not to
 be added to the TS.]
 
-This clause describes components that C++ programs may use to perform network
-operations.
+This Technical Specification describes components that C++ programs may use to
+perform network operations.
 
 [commentary The Draft Filesystem Technical Specification [N4099] adds an
 introductory section on conformance to establish a relationship to __POSIX__
@@ -479,12 +479,12 @@ introductory section on conformance to establish a relationship to __POSIX__
 "as if" implemented by __POSIX__. It is expected that a section on conformance
 would be added here.]
 
-The following subclauses describe components for an asynchronous model, I/O
+The following clauses describe components for an asynchronous model, I/O
 services, timers, buffer management, sockets, endpoint resolution, socket
 iostreams, and internet protocols, as summarized in the table below:
 
 [table Networking library summary
-  [[Subclause][Header(s)]]
+  [[Clause][Header(s)]]
   [
     [[link network.convenience Convenience header]]
     [`<experimental/networking>`]
@@ -524,8 +524,8 @@ iostreams, and internet protocols, as summarized in the table below:
   ]
 ]
 
-Throughout this clause, the names of the template parameters are used to
-express type requirements, as listed in the table below.
+Throughout this Technical Specification, the names of the template parameters
+are used to express type requirements, as listed in the table below.
 
 [table Template parameters and type requirements
   [[template parameter name][type requirements]]
@@ -675,7 +675,7 @@ express type requirements, as listed in the table below.
 
 [section:timers Timers]
 [xrefid timer]
-This subclause defines components for performing timer operations.
+This clause defines components for performing timer operations.
 [std_example Performing a synchronous wait operation on a timer:
 ``
   io_service i;
