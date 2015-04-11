@@ -228,9 +228,21 @@ resolution unless `OtherProtocol` is implicitly convertible to `Protocol`.]
 [function_block A [link requirements.synchronous_read_operations synchronous
 read operation].]
 
-[function_effects Reads data from this socket, as if by __POSIX__ __recvmsg__,
-where `flags` specifies the type of message reception. The operation does not
-block if `buffer_size(buffers) == 0`.]
+[function_effects If `buffer_size(buffers) == 0`, returns immediately with no
+error. Otherwise, constructs an array `iov` of __POSIX__ type `struct iovec`
+and length `iovlen`, corresponding to `buffers`, and reads data from this
+socket as if by __POSIX__:
+``
+  msghdr message;
+  message.msg_name = nullptr;
+  message.msg_namelen = 0;
+  message.msg_iov = iov;
+  message.msg_iovlen = iovlen;
+  message.msg_control = nullptr;
+  message.msg_controllen = 0;
+  message.msg_flags = 0;
+  __recvmsg__(native_handle(), &message, static_cast<int>(flags));
+``]
 
 [function_returns On success, the number of bytes received. Otherwise `0`.]
 
@@ -253,9 +265,21 @@ forward<CompletionToken>(token))`.]
 [function_completion_signature `void(error_code ec, size_t n)`.]
 
 [function_effects Initiates an asynchronous operation to read data from this
-socket, as if by __POSIX__ __recvmsg__, where `flags` specifies the type of
-message reception. The operation completes immediately if `buffer_size(buffers)
-== 0`.]
+socket. If `buffer_size(buffers) == 0`, the asynchronous operation completes
+immediately with no error and `n == 0`. Otherwise, constructs an array `iov` of
+__POSIX__ type `struct iovec` and length `iovlen`, corresponding to `buffers`,
+then reads data as if by __POSIX__:
+``
+  msghdr message;
+  message.msg_name = nullptr;
+  message.msg_namelen = 0;
+  message.msg_iov = iov;
+  message.msg_iovlen = iovlen;
+  message.msg_control = nullptr;
+  message.msg_controllen = 0;
+  message.msg_flags = 0;
+  __recvmsg__(native_handle(), &message, static_cast<int>(flags));
+``]
 
 [function_block If the operation completes successfully, `n` is the number of
 bytes received. Otherwise `n` is `0`.]
@@ -283,8 +307,21 @@ peer performed an orderly shutdown.]
 [function_block A [link requirements.synchronous_write_operations synchronous
 write operation].]
 
-[function_effects Writes data to the socket, as if by __POSIX__ __sendmsg__,
-where `flags` specifies the type of message transmission.]
+[function_effects If `buffer_size(buffers) == 0`, returns immediately with no
+error. Otherwise, constructs an array `iov` of __POSIX__ type `struct iovec`
+and length `iovlen`, corresponding to `buffers`, and writes data to this socket
+as if by __POSIX__:
+``
+  msghdr message;
+  message.msg_name = nullptr;
+  message.msg_namelen = 0;
+  message.msg_iov = iov;
+  message.msg_iovlen = iovlen;
+  message.msg_control = nullptr;
+  message.msg_controllen = 0;
+  message.msg_flags = 0;
+  __sendmsg__(native_handle(), &message, static_cast<int>(flags));
+``]
 
 [function_returns On success, the number of bytes sent. Otherwise `0`.]
 
@@ -302,8 +339,21 @@ forward<CompletionToken>(token))`.]
 [function_completion_signature `void(error_code ec, size_t n)`.]
 
 [function_effects Initiates an asynchronous operation to write data to this
-socket, as if by __POSIX__ __sendmsg__, where `flags` specifies the type of
-message transmission.]
+socket. If `buffer_size(buffers) == 0`, the asynchronous operation completes
+immediately with no error and `n == 0`. Otherwise, constructs an array `iov` of
+__POSIX__ type `struct iovec` and length `iovlen`, corresponding to `buffers`,
+then writes data as if by __POSIX__:
+``
+  msghdr message;
+  message.msg_name = nullptr;
+  message.msg_namelen = 0;
+  message.msg_iov = iov;
+  message.msg_iovlen = iovlen;
+  message.msg_control = nullptr;
+  message.msg_controllen = 0;
+  message.msg_flags = 0;
+  __sendmsg__(native_handle(), &message, static_cast<int>(flags));
+``]
 
 [function_block If the operation completes successfully, `n` is the number of
 bytes sent. Otherwise `n` is `0`.]
