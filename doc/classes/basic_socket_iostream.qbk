@@ -93,7 +93,7 @@ traits_type>*>(std::addressof(sb_))`.]
 
   error_code error() const;
 
-[function_returns `rdbuf()->puberror()`.]
+[function_returns `rdbuf()->error()`.]
 
   time_point expiry() const;
 

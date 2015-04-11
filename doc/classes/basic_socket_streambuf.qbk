@@ -32,7 +32,7 @@
 
           basic_socket_streambuf<protocol_type>* close();
 
-          error_code puberror() const;
+          error_code error() const;
 
           time_point expiry() const;
           void expires_at(const time_point& t);
@@ -45,7 +45,6 @@
           virtual int_type overflow(int_type c = traits_type::eof());
           virtual int sync();
           virtual streambuf* setbuf(char_type* s, streamsize n);
-          virtual error_code error() const;
 
         private:
           error_code ec_; // ``['exposition only]``
@@ -138,9 +137,9 @@ then `close` fails.]
 
 [function_returns `this` on success, a null pointer otherwise.]
 
-  error_code puberror() const;
+  error_code error() const;
 
-[function_returns `error()`.]
+[function_returns `ec_`.]
 
   time_point expiry() const;
 
@@ -222,10 +221,6 @@ flush characters.]
 occurred on that stream, the stream becomes unbuffered. Otherwise the results
 are unspecified. "Unbuffered" means that `pbase()` and `pptr()` always return
 null and output to the socket should appear as soon as possible.]
-
-  virtual error_code error() const;
-
-[function_returns `ec_`.]
 
 [endsect]
 
