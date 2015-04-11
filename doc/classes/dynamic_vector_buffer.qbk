@@ -2,7 +2,7 @@
 [xrefid buffer.dynamic.vector]
 
 The `dynamic_vector_buffer` class template meets the requirements for [link
-requirements.dynamic_buffers `DynamicBufferSequence`].
+requirements.dynamic_buffers `DynamicBuffer`].
 
   namespace std {
     namespace experimental {

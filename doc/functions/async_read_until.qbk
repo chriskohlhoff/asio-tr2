@@ -1,17 +1,14 @@
 [section:async_read_until Asynchronous delimited read operations]
 [xrefid buffer.async.read.until]
 
-  template<class AsyncReadStream, class DynamicBufferSequence,
-    class CompletionToken>
-      __initfn_result_type__ async_read_until(AsyncReadStream& s,
-                            DynamicBufferSequence&& b, char delim,
-                            CompletionToken&& token);
-  template<class AsyncReadStream, class DynamicBufferSequence,
-    class CompletionToken>
-      __initfn_result_type__ async_read_until(AsyncReadStream& s,
-                            DynamicBufferSequence&& b,
-                            string_view delim,
-                            CompletionToken&& token);
+  template<class AsyncReadStream, class DynamicBuffer, class CompletionToken>
+    __initfn_result_type__ async_read_until(AsyncReadStream& s,
+                          DynamicBuffer&& b, char delim,
+                          CompletionToken&& token);
+  template<class AsyncReadStream, class DynamicBuffer, class CompletionToken>
+    __initfn_result_type__ async_read_until(AsyncReadStream& s,
+                          DynamicBuffer&& b, string_view delim,
+                          CompletionToken&& token);
 
 [function_block An [link requirements.asynchronous_operations asynchronous
 operation].]
@@ -22,17 +19,17 @@ operation].]
 [link requirements.async_read_stream buffer-oriented asynchronous read stream]
 object `stream` by performing zero or more asynchronous read_some operations on
 the stream, until the input sequence of the [link requirements.dynamic_buffers
-dynamic buffer sequence] object `b` contains the specified delimiter `delim`.]
+dynamic buffer] object `b` contains the specified delimiter `delim`.]
 
-[function_block Data is placed into the dynamic buffer sequence object `b`. A
-[link requirements.mutable_buffers mutable buffer sequence] is obtained prior
-to each `async_read_some` call using `b.prepare(N)`, where `N` is an
-unspecified value such that `N <= max_size() - size()`. [inline_note
-Implementations are encouraged to use `b.capacity()` when determining `N`, to
-minimize the number of asynchronous read_some operations performed on the
-stream.] After the completion of each asynchronous read_some operation, the
-implementation performs `b.commit(n)`, where `n` is the value passed to the
-asynchronous read_some operation's completion handler.]
+[function_block Data is placed into the dynamic buffer object `b`. A [link
+requirements.mutable_buffers mutable buffer sequence] is obtained prior to each
+`async_read_some` call using `b.prepare(N)`, where `N` is an unspecified value
+such that `N <= max_size() - size()`. [inline_note Implementations are
+encouraged to use `b.capacity()` when determining `N`, to minimize the number
+of asynchronous read_some operations performed on the stream.] After the
+completion of each asynchronous read_some operation, the implementation
+performs `b.commit(n)`, where `n` is the value passed to the asynchronous
+read_some operation's completion handler.]
 
 [function_block The asynchronous read_until operation continues until:]
 
@@ -44,8 +41,8 @@ asynchronous read_some operation's completion handler.]
 [function_block [mdash] an asynchronous read_some operation fails.]
 
 [function_block The program must ensure both the `AsyncReadStream` object
-`stream` and the memory associated with the dynamic buffer sequence `b` are
-valid until the handler for the asynchronous operation is invoked.]
+`stream` and the memory associated with the dynamic buffer `b` are valid until
+the handler for the asynchronous operation is invoked.]
 
 [function_block If `delim` is of type `string_view`, the implementation copies
 the underlying sequence of characters prior to initiating an asynchronous

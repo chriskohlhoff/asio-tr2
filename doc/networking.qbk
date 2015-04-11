@@ -561,8 +561,8 @@ are used to express type requirements, as listed in the table below.
     mutable buffer]]
   ]
   [
-    [`DynamicBufferSequence`]
-    [[link requirements.dynamic_buffers dynamic buffer sequence]]
+    [`DynamicBuffer`]
+    [[link requirements.dynamic_buffers dynamic buffer]]
   ]
   [
     [`Executor`]

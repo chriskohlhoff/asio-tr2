@@ -2,7 +2,7 @@
 [xrefid buffer.dynamic.string]
 
 The `dynamic_string_buffer` class template meets the requirements for [link
-requirements.dynamic_buffers `DynamicBufferSequence`].
+requirements.dynamic_buffers `DynamicBuffer`].
 
   namespace std {
     namespace experimental {

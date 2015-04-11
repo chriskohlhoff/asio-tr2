@@ -51,32 +51,27 @@ write operation.]
 [function_remarks This function shall not participate in overload resolution
 unless `is_const_buffer_sequence<ConstBufferSequence>::value` is `true`.]
 
-  template<class SyncWriteStream, class DynamicBufferSequence>
-    size_t write(SyncWriteStream& stream, DynamicBufferSequence&& b);
-  template<class SyncWriteStream, class DynamicBufferSequence>
-    size_t write(SyncWriteStream& stream, DynamicBufferSequence&& b,
+  template<class SyncWriteStream, class DynamicBuffer>
+    size_t write(SyncWriteStream& stream, DynamicBuffer&& b);
+  template<class SyncWriteStream, class DynamicBuffer>
+    size_t write(SyncWriteStream& stream, DynamicBuffer&& b, error_code& ec);
+  template<class SyncWriteStream, class DynamicBuffer, class CompletionCondition>
+    size_t write(SyncWriteStream& stream, DynamicBuffer&& b,
+                 CompletionCondition completion_condition);
+  template<class SyncWriteStream, class DynamicBuffer, class CompletionCondition>
+    size_t write(SyncWriteStream& stream, DynamicBuffer&& b,
+                 CompletionCondition completion_condition,
                  error_code& ec);
-  template<class SyncWriteStream, class DynamicBufferSequence,
-    class CompletionCondition>
-      size_t write(SyncWriteStream& stream,
-                   DynamicBufferSequence&& b,
-                   CompletionCondition completion_condition);
-  template<class SyncWriteStream, class DynamicBufferSequence,
-    class CompletionCondition>
-      size_t write(SyncWriteStream& stream,
-                   DynamicBufferSequence&& b,
-                   CompletionCondition completion_condition,
-                   error_code& ec);
 
 [function_effects Writes data to the [link requirements.sync_write_stream
 synchronous write stream] object `stream` by performing zero or more calls to
 the stream's `write_some` member function.]
 
 [function_block Data is written from the [link requirements.dynamic_buffers
-dynamic buffer sequence] object `b`. A [link requirements.const_buffers
-constant buffer sequence] is obtained using `b.data()`. After the data has been
-written to the stream, the implementation performs `b.consume(n)`, where `n` is
-the number of bytes successfully written.]
+dynamic buffer] object `b`. A [link requirements.const_buffers constant buffer
+sequence] is obtained using `b.data()`. After the data has been written to the
+stream, the implementation performs `b.consume(n)`, where `n` is the number of
+bytes successfully written.]
 
 [function_block The `completion_condition` parameter specifies a function
 object to be called after each call to the stream's `write_some` member
@@ -98,6 +93,6 @@ recent `write_some` call.]
 write operation.]
 
 [function_remarks This function shall not participate in overload resolution
-unless `is_dynamic_buffer_sequence<DynamicBufferSequence>::value` is `true`.]
+unless `is_dynamic_buffer<DynamicBuffer>::value` is `true`.]
 
 [endsect]
