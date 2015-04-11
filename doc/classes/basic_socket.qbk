@@ -482,7 +482,7 @@ static_cast<int>(what))`.]
 socket, as if by __POSIX__:
 ``
   endpoint_type endpoint;
-  socklen_t endpoint_len = endpoint.size();
+  socklen_t endpoint_len = endpoint.capacity();
   int result == __getsockname__(native_handle(), endpoint.data(), &endpoint_len);
   if (result == 0)
     endpoint.resize(endpoint_len);
@@ -497,7 +497,7 @@ socket, as if by __POSIX__:
 if by __POSIX__:
 ``
   endpoint_type endpoint;
-  socklen_t endpoint_len = endpoint.size();
+  socklen_t endpoint_len = endpoint.capacity();
   int result == __getpeername__(native_handle(), endpoint.data(), &endpoint_len);
   if (result == 0)
     endpoint.resize(endpoint_len);
