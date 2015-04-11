@@ -41,12 +41,12 @@
           };
 
           // address_v4 comparisons:
-          bool operator==(const address_v4& a, const address_v4& b) noexcept;
-          bool operator!=(const address_v4& a, const address_v4& b) noexcept;
-          bool operator< (const address_v4& a, const address_v4& b) noexcept;
-          bool operator> (const address_v4& a, const address_v4& b) noexcept;
-          bool operator<=(const address_v4& a, const address_v4& b) noexcept;
-          bool operator>=(const address_v4& a, const address_v4& b) noexcept;
+          constexpr bool operator==(const address_v4& a, const address_v4& b) noexcept;
+          constexpr bool operator!=(const address_v4& a, const address_v4& b) noexcept;
+          constexpr bool operator< (const address_v4& a, const address_v4& b) noexcept;
+          constexpr bool operator> (const address_v4& a, const address_v4& b) noexcept;
+          constexpr bool operator<=(const address_v4& a, const address_v4& b) noexcept;
+          constexpr bool operator>=(const address_v4& a, const address_v4& b) noexcept;
 
           // address_v4 creation:
           constexpr address_v4 make_address_v4(const address_v4::bytes_type& bytes);
@@ -206,27 +206,27 @@ __inet_ntop__ when invoked with address family `AF_INET`.]
 [section:ip__address_v4__comparisons [^ip::address_v4] comparisons]
 [xrefid internet.address.v4.comparisons]
 
-  bool operator==(const address_v4& a, const address_v4& b) noexcept;
+  constexpr bool operator==(const address_v4& a, const address_v4& b) noexcept;
 
 [function_returns `a.to_ulong() == b.to_ulong()`.]
 
-  bool operator!=(const address_v4& a, const address_v4& b) noexcept;
+  constexpr bool operator!=(const address_v4& a, const address_v4& b) noexcept;
 
 [function_returns `!(a == b)`.]
 
-  bool operator< (const address_v4& a, const address_v4& b) noexcept;
+  constexpr bool operator< (const address_v4& a, const address_v4& b) noexcept;
 
 [function_returns `a.to_ulong() < b.to_ulong()`.]
 
-  bool operator> (const address_v4& a, const address_v4& b) noexcept;
+  constexpr bool operator> (const address_v4& a, const address_v4& b) noexcept;
 
 [function_returns `b < a`.]
 
-  bool operator<=(const address_v4& a, const address_v4& b) noexcept;
+  constexpr bool operator<=(const address_v4& a, const address_v4& b) noexcept;
 
 [function_returns `!(b < a)`.]
 
-  bool operator>=(const address_v4& a, const address_v4& b) noexcept;
+  constexpr bool operator>=(const address_v4& a, const address_v4& b) noexcept;
 
 [function_returns `!(a < b)`.]
 
