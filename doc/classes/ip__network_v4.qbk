@@ -11,12 +11,12 @@
           public:
             // constructors:
             constexpr network_v4() noexcept;
-            constexpr network_v4(const address_v4& addr, unsigned short prefix_len);
+            constexpr network_v4(const address_v4& addr, unsigned prefix_len);
             constexpr network_v4(const address_v4& addr, const address_v4& mask);
 
             // members:
             constexpr address_v4 address() const noexcept;
-            constexpr unsigned short prefix_length() const noexcept;
+            constexpr unsigned prefix_length() const noexcept;
             constexpr address_v4 netmask() const noexcept;
             constexpr address_v4 network() const noexcept;
             constexpr address_v4 broadcast() const noexcept;
@@ -32,7 +32,7 @@
           constexpr bool operator!=(const network_v4& a, const network_v4& b) noexcept;
 
           // network_v4 creation:
-          constexpr network_v4 make_network_v4(const address_v4& addr, unsigned short prefix_len);
+          constexpr network_v4 make_network_v4(const address_v4& addr, unsigned prefix_len);
           constexpr network_v4 make_network_v4(const address_v4& addr, const address_v4& mask);
           network_v4 make_network_v4(const char* str);
           network_v4 make_network_v4(const char* str, error_code& ec) noexcept;
@@ -57,7 +57,7 @@
 [function_postconditions `this->address().is_unspecified() == true` and
 `prefix_length() == 0`.]
 
-  constexpr network_v4(const address_v4& addr, unsigned short prefix_len);
+  constexpr network_v4(const address_v4& addr, unsigned prefix_len);
 
 [function_postconditions `this->address() == addr` and
 `prefix_length() == prefix_len`.]
@@ -82,7 +82,7 @@ bits, or if the most significant bit is zero and any other bits are non-zero.]
 [function_returns The address specified when the `network_v4` object was
 constructed.]
 
-  constexpr unsigned short prefix_length() const noexcept;
+  constexpr unsigned prefix_length() const noexcept;
 
 [function_returns The prefix length of the network.]
 
@@ -155,7 +155,7 @@ to_string(prefix_length())`.]
 [section:ip__network_v4__creation [^ip::network_v4] creation]
 [xrefid internet.network.v4.creation]
 
-  constexpr network_v4 make_network_v4(const address_v4& addr, unsigned short prefix_len);
+  constexpr network_v4 make_network_v4(const address_v4& addr, unsigned prefix_len);
 
 [function_returns `network_v4(addr, prefix_len)`.]
 
@@ -171,8 +171,8 @@ to_string(prefix_length())`.]
 [function_returns If `str` contains a value of the form ['address] `'/'`
 ['prefix-length], a `network_v4` object constructed with the result of applying
 `make_address_v4()` to the ['address] portion of the string, and the result of
-converting ['prefix-length] to an integer of type `unsigned short`. Otherwise
-returns `network_v4()` and sets `ec` to reflect the error.]
+converting ['prefix-length] to an integer of type `unsigned`. Otherwise returns
+`network_v4()` and sets `ec` to reflect the error.]
 
 [function_error_conditions\n
 [mdash] `errc::invalid_argument` [mdash] if `str` is not a valid textual
