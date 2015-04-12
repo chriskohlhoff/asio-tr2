@@ -1,15 +1,16 @@
 [section:basic_socket_acceptor Class template [^basic_socket_acceptor]]
 [xrefid socket.acceptor]
 
-An object of class template `basic_socket_acceptor<Protocol>` is used to listen
-for, and queue, incoming socket connections. Socket objects that represent the
-incoming connections are dequeued by calling `accept` or `async_accept`.
+An object of class template `basic_socket_acceptor<AcceptableProtocol>` is used
+to listen for, and queue, incoming socket connections. Socket objects that
+represent the incoming connections are dequeued by calling `accept` or
+`async_accept`.
 
   namespace std {
     namespace experimental {
       __begin_versioned_ns__
 
-        template<class Protocol>
+        template<class AcceptableProtocol>
         class basic_socket_acceptor : public socket_base
         {
         public:
@@ -17,8 +18,9 @@ incoming connections are dequeued by calling `accept` or `async_accept`.
 
           typedef io_service::executor_type executor_type;
           typedef ``['implementation defined]`` native_handle_type; // See ``[link requirements.native_handles native handles]``
-          typedef Protocol protocol_type;
-          typedef typename Protocol::endpoint endpoint_type;
+          typedef AcceptableProtocol protocol_type;
+          typedef typename protocol_type::endpoint endpoint_type;
+          typedef typename protocol_type::socket socket_type;
 
           // construct / copy / destroy:
 
@@ -98,26 +100,28 @@ incoming connections are dequeued by calling `accept` or `async_accept`.
           void enable_connection_aborted(bool mode);
           bool enable_connection_aborted() const;
 
-          template<class OtherProtocol>
-            void accept(basic_socket<OtherProtocol>& socket);
-          template<class OtherProtocol>
-            void accept(basic_socket<OtherProtocol>& socket, error_code& ec);
+          socket_type accept();
+          socket_type accept(error_code& ec);
+          socket_type accept(io_service& ios);
+          socket_type accept(io_service& ios, error_code& ec);
 
-          template<class OtherProtocol, class CompletionToken>
-            __ifr__ async_accept(basic_socket<OtherProtocol>& socket,
-                              CompletionToken&& token);
+          template<class CompletionToken>
+            __ifr__ async_accept(CompletionToken&& token);
+          template<class CompletionToken>
+            __ifr__ async_accept(io_service& ios, CompletionToken&& token);
 
-          template<class OtherProtocol>
-            void accept(basic_socket<OtherProtocol>& socket,
-                        endpoint_type& endpoint);
-          template<class OtherProtocol>
-            void accept(basic_socket<OtherProtocol>& socket,
-                        endpoint_type& endpoint, error_code& ec);
+          socket_type accept(endpoint_type& endpoint);
+          socket_type accept(endpoint_type& endpoint, error_code& ec);
+          socket_type accept(io_service& ios, endpoint_type& endpoint);
+          socket_type accept(io_service& ios, endpoint_type& endpoint,
+                             error_code& ec);
 
-          template<class OtherProtocol, class CompletionToken>
-            __ifr__ async_accept(basic_socket<OtherProtocol>& socket,
-                              endpoint_type& endpoint,
-                              CompletionToken&& token);
+          template<class CompletionToken>
+            __ifr__ async_accept(endpoint_type& endpoint,
+                                 CompletionToken&& token);
+          template<class CompletionToken>
+            __ifr__ async_accept(io_service& ios, endpoint_type& endpoint,
+                                 CompletionToken&& token);
 
           void wait(wait_type w);
           void wait(wait_type w, error_code& ec);
@@ -132,6 +136,14 @@ incoming connections are dequeued by calling `accept` or `async_accept`.
       __end_versioned_ns__
     } // namespace experimental
   } // namespace std
+
+For a given acceptor, a program may initiate asynchronous accept or wait
+operations such that there are multiple simultaneously outstanding asynchronous
+operations.
+
+When there are multiple outstanding asynchronous accept operations
+the order in which the incoming connections are dequeued, and the order of
+invocation of the completion handlers for these operations, is unspecified.
 
 [section [^basic_socket_acceptor] constructors]
 [xrefid socket.acceptor.cons]
@@ -193,7 +205,7 @@ by calling `assign(protocol, native_acceptor)`.]
   basic_socket_acceptor(basic_socket_acceptor&& rhs);
 
 [function_effects Move constructs an object of class
-`basic_socket_acceptor<Protocol>` that refers to the state originally
+`basic_socket_acceptor<AcceptableProtocol>` that refers to the state originally
 represented by `rhs`.]
 
 [function_postconditions\n
@@ -213,7 +225,7 @@ to the constructor invocation.\n
 [function_requires `OtherProtocol` is implicitly convertible to `Protocol`.]
 
 [function_effects Move constructs an object of class
-`basic_socket_acceptor<Protocol>` that refers to the state originally
+`basic_socket_acceptor<AcceptableProtocol>` that refers to the state originally
 represented by `rhs`.]
 
 [function_postconditions\n
@@ -434,8 +446,6 @@ extensions to be supported.]
   void non_blocking(bool mode);
   void non_blocking(bool mode, error_code& ec);
 
-[function_requires `is_open()`.]
-
 [function_effects Sets the non-blocking mode of this acceptor. If `mode` is
 `true`, subsequent synchronous operations may fail with error condition
 `errc::operation_would_block` if they are unable to perform the requested
@@ -537,83 +547,88 @@ re-enable the error.]
 [function_returns Whether accept operations on this acceptor are permitted to
 fail with `errc::connection_aborted`.]
 
-  template<class OtherProtocol>
-    void accept(basic_socket<OtherProtocol>& socket);
-  template<class OtherProtocol>
-    void accept(basic_socket<OtherProtocol>& socket, error_code& ec);
+  socket_type accept();
+  socket_type accept(error_code& ec);
 
-[function_requires `Protocol` is convertible to `OtherProtocol`.]
+[function_returns `accept(get_executor().context(), ec)`.]
 
-[function_effects Associates `socket` with the first connection successfully
-extracted from the queue of pending connections of the acceptor, as if by
-__POSIX__ __accept__.]
+  socket_type accept(io_service& ios);
+  socket_type accept(io_service& ios, error_code& ec);
 
-[function_error_conditions\n
-[mdash] `socket_errc::already_open` [mdash] if `socket.is_open()` is `false`.]
+[function_effects Extracts a socket from the queue of pending connections of
+the acceptor, as if by __POSIX__:
+``
+  native_handle_type h = __accept__(native_handle(), nullptr, 0);
+``]
 
-  template<class OtherProtocol, class CompletionToken>
-    __ifr__ async_accept(basic_socket<OtherProtocol>& socket,
-                      CompletionToken&& token);
+[function_returns If `h` is an open native socket, `socket_type(ios, s)`;
+otherwise `socket_type(ios)`.]
 
-[function_completion_signature `void(error_code ec)`.]
+  template<class CompletionToken>
+    __ifr__ async_accept(CompletionToken&& token);
 
-[function_requires `Protocol` is convertible to `OtherProtocol`.]
+[function_returns `async_accept(get_executor().context(),
+forward<CompletionToken>(token))`.]
 
-[function_effects Initiates an asynchronous operation to associate `socket`
-with the first connection successfully extracted from the queue of pending
-connections of the acceptor, as if by __POSIX__ __accept__.]
+  template<class CompletionToken>
+    __ifr__ async_accept(io_service& ios, CompletionToken&& token);
 
-[function_block When multiple asynchronous accept operations are initiated such
-that the operations may logically be performed in parallel, the behavior is
-unspecified.]
+[function_completion_signature `void(error_code ec, socket_type s)`.]
 
-[function_error_conditions\n
-[mdash] `socket_errc::already_open` [mdash] if `socket.is_open()` is `false`.]
+[function_effects Initiates an asynchronous operation to extract a socket from
+the queue of pending connections of the acceptor, as if by __POSIX__:
+``
+  native_handle_type h = __accept__(native_handle(), nullptr, 0);
+``
+On success, `s` is `socket_type(ios, h). Otherwise, `s` is `socket_type(ios)`.]
 
-  template<class OtherProtocol>
-    void accept(basic_socket<OtherProtocol>& socket,
-                endpoint_type& endpoint);
-  template<class OtherProtocol>
-    void accept(basic_socket<OtherProtocol>& socket,
-                endpoint_type& endpoint, error_code& ec);
+  socket_type accept(endpoint_type& endpoint);
+  socket_type accept(endpoint_type& endpoint, error_code& ec);
 
-[function_requires\n
-[mdash] `!socket.is_open()`.\n
-[mdash] `Protocol` and `OtherProtocol` are the same type, or `Protocol` is
-convertible to `OtherProtocol`.]
+[function_returns `accept(get_executor().context(), endpoint, ec)`.]
 
-[function_effects Associates `socket` with the first connection successfully
-extracted from the queue of pending connections of the acceptor, as if by
-__POSIX__ __accept__. On success, sets `endpoint` to the remote endpoint of the
-accepted connection.]
+  socket_type accept(io_service& ios, endpoint_type& endpoint);
+  socket_type accept(io_service& ios, endpoint_type& endpoint,
+                     error_code& ec);
 
-[function_error_conditions\n
-[mdash] `socket_errc::already_open` [mdash] if the requirement
-`!socket.is_open()` is unmet.]
+[function_effects Extracts a socket from the queue of pending connections of
+the acceptor, as if by __POSIX__:
+``
+  socklen_t endpoint_len = endpoint.capacity();
+  native_handle_type h = __accept__(native_handle(),
+                                endpoint.data(),
+                                &endpoint_len);
+  if (h >= 0)
+    endpoint.resize(endpoint_len);
+``]
 
-  template<class OtherProtocol, class CompletionToken>
-    __ifr__ async_accept(basic_socket<OtherProtocol>& socket,
-                      endpoint_type& endpoint, CompletionToken&& token);
+[function_returns If `h` is an open native socket, `socket_type(ios, s)`;
+otherwise `socket_type(ios)`.]
 
-[function_completion_signature `void(error_code ec)`.]
+  template<class CompletionToken>
+    __ifr__ async_accept(endpoint_type& endpoint,
+                         CompletionToken&& token);
 
-[function_requires\n
-[mdash] `!socket.is_open()`.\n
-[mdash] `Protocol` and `OtherProtocol` are the same type, or `Protocol` is
-convertible to `OtherProtocol`.]
+[function_returns `async_accept(get_executor().context(), endpoint,
+forward<CompletionToken>(token))`.]
 
-[function_effects Initiates an asynchronous operation to associate `socket`
-with the first connection successfully extracted from the queue of pending
-connections of the acceptor, as if by __POSIX__ __accept__. On success, sets
-`endpoint` to the remote endpoint of the accepted connection.]
+  template<class CompletionToken>
+    __ifr__ async_accept(io_service& ios, endpoint_type& endpoint,
+                         CompletionToken&& token);
 
-[function_block When multiple asynchronous accept operations are initiated such
-that the operations may logically be performed in parallel, the behavior is
-unspecified.]
+[function_completion_signature `void(error_code ec, socket_type s)`.]
 
-[function_error_conditions\n
-[mdash] `socket_errc::already_open` [mdash] if the requirement
-`!socket.is_open()` is unmet.]
+[function_effects Initiates an asynchronous operation to extract a socket from
+the queue of pending connections of the acceptor, as if by __POSIX__:
+``
+  socklen_t endpoint_len = endpoint.capacity();
+  native_handle_type h = __accept__(native_handle(),
+                                endpoint.data(),
+                                &endpoint_len);
+  if (h >= 0)
+    endpoint.resize(endpoint_len);
+``
+On success, `s` is `socket_type(ios, h). Otherwise, `s` is `socket_type(ios)`.]
 
   void wait(wait_type w);
   void wait(wait_type w, error_code& ec);

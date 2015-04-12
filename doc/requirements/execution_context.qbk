@@ -2,7 +2,7 @@
 [xrefid async.reqmts.executioncontext]
 
 An execution context shall be publicly and unambiguously derived from
-`execution_context`.
+`execution_context`, and meet the additional requirements listed below.
 
 In the table below, `X` denotes an execution context class, and `x` denotes an
 object of type `X`.

@@ -2,7 +2,8 @@
 [xrefid socket.reqmts.connectcondition]
 
 A connect condition type shall satisfy the requirements of `Destructible` (C++
-Std, [destructible]) and `CopyConstructible` (C++ Std, [copyconstructible]).
+Std, [destructible]) and `CopyConstructible` (C++ Std, [copyconstructible])
+as well as the additional requirements listed below.
 
 In the table below, `x` denotes an object of a connect condition type, `ec`
 denotes a (possibly const) value of type `error_code`, and `ep` denotes a

@@ -1,9 +1,9 @@
 [section:internet_protocol Internet protocol requirements]
 [xrefid internet.reqmts.protocol]
 
-An internet protocol must meet the requirements for a [link
-requirements.protocol protocol] as well as the additional requirements listed
-below.
+An internet protocol must meet the requirements for [link
+requirements.acceptable_protocol], as well as the additional requirements
+listed below.
 
 In the table below, `X` denotes an internet protocol class, `a` denotes a
 (possibly const) value of type `X`, and `b` denotes a (possibly const) value of

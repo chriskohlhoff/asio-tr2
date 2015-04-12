@@ -1,0 +1,19 @@
+[section:acceptable_protocol Acceptable protocol requirements]
+[xrefid socket.reqmts.acceptableprotocol]
+
+An acceptable protocol must meet the requirements for [link
+requirements.protocol protocol] as well as the additional requirements listed
+below.
+
+In the table below, `X` denotes an acceptable protocol class.
+
+[table AcceptableProtocol requirements
+  [[expression] [return type] [assertion/note\npre/post-conditions]]
+  [
+    [`X::socket`]
+    [A type that is publicly and unambiguously derived from `basic_socket<X>`.]
+    []
+  ]
+]
+
+[endsect]
