@@ -97,28 +97,21 @@ Extensible implementations provide the following member functions:
 
   constexpr basic_endpoint() noexcept;
 
-[function_effects Constructs an object of class
-`basic_endpoint<InternetProtocol>`.]
-
 [function_postconditions `this->address() == ip::address()` and `port() == 0`.]
 
   constexpr basic_endpoint(const protocol_type& proto,
                            port_type port_num) noexcept;
 
-[function_effects Constructs an object of class
-`basic_endpoint<InternetProtocol>` with the specified protocol and port
-number.]
+[function_requires `proto == protocol_type::v4() || proto ==
+protocol_type::v6()`.]
 
 [function_postconditions\n
-[mdash] If `proto == Protocol::v6()`, `this->address() == ip::address_v6()`;
-otherwise, `this->address() == ip::address_v4()`.\n
+[mdash] If `proto == protocol_type::v6()`, `this->address() ==
+ip::address_v6()`; otherwise, `this->address() == ip::address_v4()`.\n
 [mdash] `port() == port_num`.]
 
   constexpr basic_endpoint(const ip::address& addr,
                            port_type port_num) noexcept;
-
-[function_effects Constructs an object of class
-`basic_endpoint<InternetProtocol>` with the specified address and port number.]
 
 [function_postconditions `this->address() == addr` and `port() == port_num`.]
 
@@ -129,16 +122,14 @@ otherwise, `this->address() == ip::address_v4()`.\n
 
   constexpr protocol_type protocol() const noexcept;
 
-[function_returns `Protocol::v6()` if the expression `this->address().is_v6()` is
-`true`, otherwise `Protocol::v4()`.]
+[function_returns `protocol_type::v6()` if the expression
+`this->address().is_v6()` is `true`, otherwise `protocol_type::v4()`.]
 
   constexpr ip::address address() const noexcept;
 
 [function_returns The address associated with the endpoint.]
 
   void address(const ip::address& addr) noexcept;
-
-[function_effects Modifies the address associated with the endpoint.]
 
 [function_postconditions `this->address() == addr`.]
 
@@ -147,8 +138,6 @@ otherwise, `this->address() == ip::address_v4()`.\n
 [function_returns The port number associated with the endpoint.]
 
   void port(port_type port_num) noexcept;
-
-[function_effects Modifies the port number associated with the endpoint.]
 
 [function_postconditions `port() == port_num`.]
 
@@ -208,7 +197,7 @@ otherwise, `this->address() == ip::address_v4()`.\n
 it were implemented as follows:
 ``
   basic_ostringstream<CharT, Traits> ss;
-  if (ep.protocol() == Protocol::v6())
+  if (ep.protocol() == protocol_type::v6())
     ss << "[" << ep.address() << "]";
   else
     ss << ep.address();
