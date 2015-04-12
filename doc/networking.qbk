@@ -560,16 +560,6 @@ are used to express type requirements, as listed in the table below.
     [[link requirements.const_buffers constant buffer sequence]]
   ]
   [
-    [`ConvertibleToConstBuffer`]
-    [[link requirements.convertible_to_const_buffer convertible to a
-    constant buffer]]
-  ]
-  [
-    [`ConvertibleToMutableBuffer`]
-    [[link requirements.convertible_to_mutable_buffer convertible to a
-    mutable buffer]]
-  ]
-  [
     [`DynamicBuffer`]
     [[link requirements.dynamic_buffers dynamic buffer]]
   ]
@@ -722,9 +712,7 @@ This clause defines components for performing timer operations.
 [include:headers headers/networking/buffer.qbk]
 [section:buffers_requirements Requirements]
 [xrefid buffer.reqmts]
-[include:requirements requirements/convertible_to_mutable_buffer.qbk]
 [include:requirements requirements/mutable_buffers.qbk]
-[include:requirements requirements/convertible_to_const_buffer.qbk]
 [include:requirements requirements/const_buffers.qbk]
 [include:requirements requirements/dynamic_buffers.qbk]
 [include:requirements requirements/synchronous_read_operations.qbk]
