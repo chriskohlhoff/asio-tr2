@@ -9,25 +9,33 @@ allocator.
     namespace experimental {
       __begin_versioned_ns__
 
-        template<class Signature, class ProtoAllocator>
-        class packaged_handler
-          : public packaged_task<Signature>
+        template<class, class> class packaged_handler; // undefined
+
+        template<class R, class... Args, class ProtoAllocator>
+        class packaged_handler<R(Args...), ProtoAllocator>
         {
         public:
           // packaged_handler types:
 
           typedef ProtoAllocator allocator_type;
 
-          // packaged_handler constructors:
+          // packaged_handler construct / copy / assign:
 
           template<class Func>
             explicit packaged_handler(packaged_token<Func, ProtoAllocator>&& token);
+          packaged_handler(const packaged_handler&) = delete;
+          packaged_handler(packaged_handler&& rhs) noexcept;
+          packaged_handler& operator=(const packaged_handler&) = delete;
+          packaged_handler& operator=(packaged_handler&& rhs) noexcept;
 
           // packaged_handler operations:
 
           allocator_type get_allocator() const noexcept;
+          future<R> get_future();
+          void operator()(Args... args);
 
         private:
+          packaged_task<R(Args...)> task_; // ``['exposition only]``
           ProtoAllocator allocator_; // ``['exposition only]``
         };
 
@@ -44,14 +52,32 @@ allocator.
   template<class Func>
     explicit packaged_handler(packaged_token<Func, ProtoAllocator>&& token);
 
-[function_effects Constructs an object of class `packaged_handler<Signature,
-ProtoAllocator>`, initializing the base class with
-`packaged_task<Signature>(std::move(token.f_))` and initializing `allocator_`
-with `token.allocator_`.]
+[function_effects Initializes `task_` with `std::move(token.f_)` and
+initializes `allocator_` with `token.allocator_`.]
+
+  packaged_handler(packaged_handler&& rhs) noexcept;
+
+[function_effects Initializes `task_` with `std::move(rhs.task_)` and
+initializes `allocator_` with `std::move(rhs.allocator_)`.]
+
+  packaged_handler& operator=(packaged_handler&& rhs) noexcept;
+
+[function_effects Performs `task_ = std::move(rhs.task_)` and
+`allocator_ = std::move(rhs.allocator_)`.]
+
+[function_returns `*this`.]
 
   allocator_type get_allocator() const noexcept;
 
 [function_returns `allocator_`.]
+
+  future<R> get_future();
+
+[function_returns `task_.get_future()`.]
+
+  void operator()(Args... args);
+
+[function_effects Calls `task_(forward<Args>(args)__dotdotdot__)`.]
 
 [endsect]
 
@@ -62,12 +88,20 @@ with `token.allocator_`.]
     namespace experimental {
       __begin_versioned_ns__
 
-        template<class Signature, class ProtoAllocator>
-        class async_result<packaged_handler<Signature, ProtoAllocator>>
-          : public async_result<packaged_task<Signature>>
+        template<class R, class... Args, class ProtoAllocator>
+        class async_result<packaged_handler<R(Args...), ProtoAllocator>>
         {
         public:
-          explicit async_result(packaged_handler<Signature, ProtoAllocator>& h);
+          typedef future<R> type;
+
+          explicit async_result(packaged_task<R(Args...)>& t);
+          async_result(const async_result&) = delete;
+          async_result& operator=(const async_result&) = delete;
+
+          type get();
+
+        private:
+          type future_; // ``['exposition only]``
         };
 
       __end_versioned_ns__
@@ -80,7 +114,11 @@ requirements].
 
   explicit async_result(packaged_handler<Signature, ProtoAllocator>& h);
 
-[function_effects Initializes the base class with `h`.]
+[function_effects Initializes `future_` with `t.get_future()`.]
+
+  type get();
+
+[function_returns `std::move(future_)`.]
 
 [endsect]
 

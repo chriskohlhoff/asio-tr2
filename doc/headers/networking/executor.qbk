@@ -183,8 +183,9 @@
         template<class R, class... Args>
           class ``[link classes.async_result_packaged_task async_result<packaged_task<R(Args...)>>]``;
 
-        template<class Signature, class ProtoAllocator>
-          class ``[link classes.packaged_handler packaged_handler]``;
+        template<class, class> class packaged_handler; // undefined
+        template<class R, class... Arg, class ProtoAllocator>
+          class ``[link classes.packaged_handler packaged_handler]``<R(Args...), ProtoAllocator>;
 
         template<class Signature, class ProtoAllocator>
           class async_result<packaged_handler<Signature, ProtoAllocator>>;
