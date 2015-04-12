@@ -178,7 +178,17 @@ QNX Neutrino.
 
 [section Changes in this revision]
 
-TODO
+This revision contains numerous changes resulting from the LWG wording review
+held in Cologne in February 2015. Please note, however, it does not yet contain
+all of the wording corrections and suggestions from that meeting, nor have the
+applied corrections and changes been reviewed. As the changes are too extensive
+to list here, readers may wish to view the GitHub page for this proposal at
+['[@https://github.com/chriskohlhoff/asio-tr2/]] for further information.
+
+The purpose of this revision is to provide LEWG with up-to-date wording in
+order to confirm and/or consider certain design choices, based on feedback from
+Cologne. To facilitate this process, this revision contains some of the
+suggested design changes from the wording review.
 
 [endsect]
 
@@ -842,8 +852,11 @@ Jamie Allsop for providing feedback during the drafting process, and Oliver
 Kowalke for contributing towards the design and implementation of the CIDR
 support.
 
-Thanks go to Jonathan Wakely and Roger Orr for the suggestions and corrections
-included in Revision 5 of this proposal.
+Thanks go to Marshall Clow, Jens Maurer, Arash Partow, Jamie Allsop, Dietmar
+Kühl, Detlef Vollmann, Jonathan Wakely, Mikael Kilpeläinen, Jens Weller,
+Michael Wong, Eric Fisselier, and Jeffrey Yasskin for participating in the
+Cologne wording review, and also to Roger Orr for some pre-Cologne review
+feedback.
 
 [endsect]
 
