@@ -2,7 +2,7 @@
 [xrefid socket.basic]
 
 Class template `basic_socket<Protocol>` is used as the base class for the
-`basic_datagram_socket<Protocol>` and `basic_stream_socket<Protocol> class
+`basic_datagram_socket<Protocol>` and `basic_stream_socket<Protocol>` class
 templates. It provides functionality that is common to both types of socket.
 
   namespace std {
