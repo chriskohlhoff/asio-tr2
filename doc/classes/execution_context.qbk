@@ -28,8 +28,8 @@ services, indexed by service type.
 
           // execution context protected operations:
 
-          void shutdown_context();
-          void destroy_context();
+          void shutdown();
+          void destroy();
         };
 
         // service access:
@@ -59,7 +59,7 @@ function template `make_service<Service>()`. If the service is already present,
 
 Once a service reference is obtained from an `execution_context` object by
 calling `use_service<>`, that reference remains usable until a call to
-`destroy_context()`.
+`destroy()`.
 
 [section [^execution_context] constructor]
 [xrefid async.exec.ctx.cons]
@@ -78,7 +78,7 @@ service types for its own use.]]
   ~execution_context();
 
 [function_effects Destroys an object of class `execution_context`. Performs
-`shutdown_context()` followed by `destroy_context()`.]
+`shutdown()` followed by `destroy()`.]
 
 [endsect]
 
@@ -98,14 +98,14 @@ set.]
 [section [^execution_context] protected operations]
 [xrefid async.exec.ctx.protected]
 
-  void shutdown_context();
+  void shutdown();
 
 [function_effects For each service object `svc` in the `execution_context` set,
-in reverse order of addition to the set, performs `svc->shutdown_service()`.
-For each service in the set, `shutdown_service` is called only once
-irrespective of the number of calls to `shutdown_context`.]
+in reverse order of addition to the set, performs `svc->shutdown()`. For each
+service in the set, `svc->shutdown()` is called only once irrespective of the
+number of calls to `shutdown` on the `execution_context`.]
 
-  void destroy_context();
+  void destroy();
 
 [function_effects Destroys each service object in the `execution_context` set,
 and removes it from the set, in reverse order of addition to the set.
@@ -129,7 +129,7 @@ type `Service`, initialized as `Service(ctx)`, and adds it to the set.]
 [function_returns A reference to the corresponding service of `ctx`.]
 
 [function_notes The reference returned remains valid until a call to
-`destroy_context`.]
+`destroy`.]
 
   template<class Service, class... Args> Service&
     make_service(execution_context& ctx, Args&&... args);
@@ -145,7 +145,7 @@ already exist in the `execution_context` set identified by `ctx`.]
 type `Key` is already present in the set.]
 
 [function_notes The reference returned remains valid until a call to
-`destroy_context`.]
+`destroy`.]
 
   template<class Service> bool has_service(const execution_context& ctx) noexcept;
 

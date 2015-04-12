@@ -22,12 +22,12 @@ referring to the `execution_context` object that will own the service.
     explicit my_service(execution_context& ctx);
     my_service(execution_context& ctx, int some_value);
   private:
-    virtual void shutdown_service();
+    virtual void shutdown() override;
     __dotdotdot__
   };
 ``]
 
-A service's `shutdown_service` member function shall destroy all copies of
-user-defined function objects that are held by the service.
+A service's `shutdown` member function shall destroy all copies of user-defined
+function objects that are held by the service.
 
 [endsect]

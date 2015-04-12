@@ -22,7 +22,7 @@
         private:
           // service operations:
 
-          virtual void shutdown_service() = 0;
+          virtual void shutdown() = 0;
           virtual void notify_fork(fork_event e) {}
 
           execution_context& context_; // ``['exposition only]``
