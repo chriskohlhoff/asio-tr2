@@ -24,7 +24,9 @@
             constexpr network_v4 canonical() const noexcept;
             constexpr bool is_host() const noexcept;
             constexpr bool is_subnet_of(const network_v4& other) const noexcept;
-            string to_string() const;
+            template<class Allocator = allocator<char>>
+              basic_string<char, char_traits<char>, Allocator>
+                to_string(const Allocator& a = Allocator()) const;
           };
 
           // network_v4 comparisons:
@@ -131,10 +133,12 @@ included in the range of host IP addresses. For example, given a network
 `network_v4(this->address(), other.prefix_length()).canonical() ==
 other.canonical()`, otherwise `false`.]
 
-  string to_string() const;
+  template<class Allocator = allocator<char>>
+    basic_string<char, char_traits<char>, Allocator>
+      to_string(const Allocator& a = Allocator()) const;
 
-[function_returns `this->address().to_string() + '/' +
-to_string(prefix_length())`.]
+[function_returns `this->address().to_string(a) + "/" +
+to_string(prefix_length()).c_str()`.]
 
 [endsect]
 

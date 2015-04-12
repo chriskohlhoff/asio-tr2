@@ -27,7 +27,9 @@ no valid address.
             constexpr bool is_unspecified() const noexcept;
             constexpr bool is_loopback() const noexcept;
             constexpr bool is_multicast() const noexcept;
-            string to_string() const;
+            template<class Allocator = allocator<char>>
+              basic_string<char, char_traits<char>, Allocator>
+                to_string(const Allocator& a = Allocator()) const;
 
           private:
             enum { none_ = 0, is_v4_, is_v6_ } type_; // ``['exposition only]``
@@ -125,10 +127,12 @@ returns `v6_.is_loopback()`. Otherwise returns `false`.]
 [function_returns If `is_v4()`, returns `v4_.is_multicast()`. If `is_v6()`,
 returns `v6_.is_multicast()`. Otherwise returns `false`.]
 
-  string to_string() const;
+  template<class Allocator = allocator<char>>
+    basic_string<char, char_traits<char>, Allocator>
+      to_string(const Allocator& a = Allocator()) const;
 
-[function_returns If `is_v4()`, returns `v4_.to_string()`. If `is_v6()`,
-returns `v6_.to_string()`. Otherwise throws `bad_address_cast`.]
+[function_returns If `is_v4()`, returns `v4_.to_string(a)`. If `is_v6()`,
+returns `v6_.to_string(a)`. Otherwise throws `bad_address_cast`.]
 
 [endsect]
 

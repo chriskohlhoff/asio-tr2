@@ -26,8 +26,12 @@ element in the results returned by a name resolution operation.
             // members:
             endpoint_type endpoint() const;
             operator endpoint_type() const;
-            string host_name() const;
-            string service_name() const;
+            template<class Allocator = allocator<char>>
+              basic_string<char, char_traits<char>, Allocator>
+                host_name(const Allocator& a = Allocator()) const;
+            template<class Allocator = allocator<char>>
+              basic_string<char, char_traits<char>, Allocator>
+                service_name(const Allocator& a = Allocator()) const;
           };
 
           // basic_resolver_entry comparisons:
@@ -73,11 +77,15 @@ element in the results returned by a name resolution operation.
 
 [function_returns `endpoint()`.]
 
-  string host_name() const;
+  template<class Allocator = allocator<char>>
+    basic_string<char, char_traits<char>, Allocator>
+      host_name(const Allocator& a = Allocator()) const;
 
 [function_returns The host name associated with the resolver entry.]
 
-  string service_name() const;
+  template<class Allocator = allocator<char>>
+    basic_string<char, char_traits<char>, Allocator>
+      service_name(const Allocator& a = Allocator()) const;
 
 [function_returns The service name associated with the resolver entry.]
 

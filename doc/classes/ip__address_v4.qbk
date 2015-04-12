@@ -30,7 +30,9 @@
             constexpr bool is_multicast() const noexcept;
             constexpr bytes_type to_bytes() const noexcept;
             constexpr address_v4_uint_type to_uint() const noexcept;
-            string to_string() const;
+            template<class Allocator = allocator<char>>
+              basic_string<char, char_traits<char>, Allocator>
+                to_string(const Allocator& a = Allocator()) const;
 
             // static members:
             static constexpr address_v4 any() noexcept;
@@ -176,10 +178,13 @@ definitions.network_byte_order network byte order].]
 [function_returns A representation of the address in [link
 definitions.host_byte_order host byte order].]
 
-  string to_string() const;
+  template<class Allocator = allocator<char>>
+    basic_string<char, char_traits<char>, Allocator>
+      to_string(const Allocator& a = Allocator()) const;
 
-[function_returns A textual representation of the address, as if by __POSIX__
-__inet_ntop__ when invoked with address family `AF_INET`.]
+[function_returns If successful, the textual representation of the address,
+determined as if by __POSIX__ __inet_ntop__ when invoked with address family
+`AF_INET`. Otherwise `basic_string<char, char_traits<char>, Allocator>(a)`.]
 
 [endsect]
 

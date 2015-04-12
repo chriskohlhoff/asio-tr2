@@ -202,6 +202,12 @@
 
           string ``[link functions.ip__host_name host_name]``();
           string ``[link functions.ip__host_name host_name]``(error_code&);
+          template<class Allocator>
+            basic_string<char, char_traits<char>, Allocator>
+              ``[link functions.ip__host_name host_name]``(const Allocator&) const;
+          template<class Allocator>
+            basic_string<char, char_traits<char>, Allocator>
+              ``[link functions.ip__host_name host_name]``(const Allocator&, error_code&) const;
 
           class ``[link classes.ip__tcp tcp]``;
 

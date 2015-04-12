@@ -36,7 +36,9 @@
             constexpr bool is_multicast_org_local() const noexcept;
             constexpr bool is_multicast_global() const noexcept;
             constexpr bytes_type to_bytes() const noexcept;
-            string to_string() const;
+            template<class Allocator = allocator<char>>
+              basic_string<char, char_traits<char>, Allocator>
+                to_string(const Allocator& a = Allocator()) const;
 
             // static members:
             static constexpr address_v6 any() noexcept;
@@ -216,7 +218,9 @@ represents an IPv4-mapped IPv6 address, as if computed by the following method:
 [function_returns A representation of the address in [link
 definitions.network_byte_order network byte order].]
 
-  string to_string() const;
+  template<class Allocator = allocator<char>>
+    basic_string<char, char_traits<char>, Allocator>
+      to_string(const Allocator& a = Allocator()) const;
 
 [function_effects Converts an address into a textual representation. If
 `scope_id() == 0`, converts as if by __POSIX__ __inet_ntop__ when invoked with
@@ -226,7 +230,7 @@ of the equivalent address having `scope_id() == 0`, and ['`scope-id`] is an
 implementation-defined textual representation of the scope identifier.]
 
 [function_returns If successful, the textual representation of the address.
-Otherwise `string()`.]
+Otherwise `basic_string<char, char_traits<char>, Allocator>(a)`.]
 
 [endsect]
 
