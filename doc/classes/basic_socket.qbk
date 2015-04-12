@@ -89,7 +89,7 @@ templates. It provides functionality that is common to both types of socket.
 
           template<class CompletionToken>
             __ifr__ async_connect(const endpoint_type& endpoint,
-                               CompletionToken&& token);
+                                  CompletionToken&& token);
 
           void wait(wait_type w);
           void wait(wait_type w, error_code& ec);
