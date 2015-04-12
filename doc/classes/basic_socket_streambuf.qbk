@@ -2,9 +2,9 @@
 [xrefid socket.streambuf]
 
 The class `basic_socket_streambuf<Protocol, Clock, WaitTraits>` associates both
-the input sequence and the output sequence with a socket. [inline_note The
-input and output sequences are independent as a stream socket provides full
-duplex I/O.]
+the input sequence and the output sequence with a socket. The input and output
+sequences do not support seeking. [inline_note The input and output sequences
+are independent as a stream socket provides full duplex I/O.]
 
 [std_note This class is intended for sending and receiving bytes, not
 characters. The conversion from characters to bytes, and vice versa, must occur
@@ -15,9 +15,7 @@ elsewhere.]
       __begin_versioned_ns__
 
         template<class Protocol, class Clock, class WaitTraits>
-        class basic_socket_streambuf :
-          public basic_streambuf<char>,
-          public basic_socket<Protocol>
+        class basic_socket_streambuf : public basic_streambuf<char>
         {
         public:
           // types:
@@ -32,6 +30,7 @@ elsewhere.]
           // construct / destroy:
 
           basic_socket_streambuf();
+          explicit basic_socket_streambuf(basic_stream_socket<protocol_type> s);
           virtual ~basic_socket_streambuf();
 
           // members:
@@ -41,6 +40,7 @@ elsewhere.]
 
           basic_socket_streambuf<protocol_type>* close();
 
+          basic_socket<protocol_type>& socket();
           error_code error() const;
 
           time_point expiry() const;
@@ -56,6 +56,7 @@ elsewhere.]
           virtual streambuf* setbuf(char_type* s, streamsize n) override;
 
         private:
+          basic_stream_socket<protocol_type> socket_; // ``['exposition only]``
           error_code ec_; // ``['exposition only]``
           time_point expiry_; // ``['exposition only]``
         };
@@ -64,30 +65,27 @@ elsewhere.]
     } // namespace experimental
   } // namespace std
 
-The class `basic_socket_streambuf<protocol_type>` associates both the input sequence
-and the output sequence with a socket. The input and output sequences are
-independent and do not support seeking. Multibyte/wide character conversion is
-not supported.
-
 [section [^basic_socket_streambuf] constructors]
 [xrefid socket.streambuf.cons]
 
   basic_socket_streambuf();
 
-[function_effects Constructs an object of class
-`basic_socket_streambuf<protocol_type>`, initializing the base classes with
-`basic_streambuf<char>()` and `basic_socket<protocol_type>(ios)`, where `ios` is an
-unspecified object of class `io_service` that has a longer lifetime than the
-`basic_socket<protocol_type>` base.]
+[function_effects Initializes `socket_` with `ios`, where `ios` is an
+unspecified object of class `io_service`.]
+
+[function_postconditions `expiry() == clock_type::max()`.]
+
+  explicit basic_socket_streambuf(basic_stream_socket<protocol_type> s);
+
+[function_effects Initializes `socket_` with `std::move(s)`.]
 
 [function_postconditions `expiry() == clock_type::max()`.]
 
   virtual ~basic_socket_streambuf();
 
-[function_effects Destroys an object of class
-`basic_socket_streambuf<protocol_type>`. If a put area exists, calls
-`overflow(traits_type::eof())` to flush characters. [inline_note The socket is
-closed by the `basic_socket<protocol_type>` destructor.]]
+[function_effects If a put area exists, calls `overflow(traits_type::eof())` to
+flush characters. [inline_note The socket is closed by the
+`basic_stream_socket<protocol_type>` destructor.]]
 
 [endsect]
 
@@ -96,37 +94,31 @@ closed by the `basic_socket<protocol_type>` destructor.]]
 
   basic_socket_streambuf<protocol_type>* connect(const endpoint_type& e);
 
-[function_effects Resets the `streambuf` get and put areas, closes the socket
-as if by calling `basic_socket<protocol_type>::close(ec_)`, then establishes a
-connection as if by performing:
-``
-  basic_socket<protocol_type>::async_connect(e, __unspecified__);
-``
-`ec_` is set to reflect the error code produced by the operation. If the
-operation does not complete before the absolute timeout specified by
-`expiry_`, the socket is closed and `ec_` is set to
-`errc::timed_out`.]
+[function_effects Resets the `streambuf` get and put areas, closes and re-opens
+the socket by performing `socket_.close(ec_)` and `socket_.open(e.protocol(),
+ec_)`, then attempts to establish a connection as if by __POSIX__
+`__connect__(socket_.native_handle(), static_cast<sockaddr*>(e.data()),
+e.size())`. `ec_` is set to reflect the error code produced by the operation.
+If the operation does not complete before the absolute timeout specified by
+`expiry_`, the socket is closed and `ec_` is set to `errc::timed_out`.]
 
 [function_returns if `!ec_`, `this`; otherwise, a null pointer.]
 
   template<class... Args>
     basic_socket_streambuf* connect(Args&&... args);
 
-[function_effects Resets the `streambuf` get and put areas. Constructs an
-object `q` of type `protocol_type::resolver::query` by initializing the object with
-`q(forward<Args>(args)__dotdotdot__)`, then establishes a connection as if by
-performing:
-``
-  typename protocol_type::resolver resolver(ios);
-  typename protocol_type::resolver::iterator i = resolver.resolve(q, ec_);
-  if (!ec_)
-    experimental::async_connect(*this, i, __unspecified__);
-``
-
-where `ios` is an unspecified object of class `io_service`. `ec_` is set to
-reflect the error code produced by the asynchronous operation. If the operation
-does not complete before the absolute timeout specified by `expiry_`, the
-socket is closed and `ec_` is set to `errc::timed_out`.]
+[function_effects Resets the `streambuf` get and put areas and closes the
+socket as if by calling `socket_.close(ec_)`. Obtains an endpoint sequence
+`endpoints` by performing
+`protocol_type::resolver(ios).resolve(forward<Args>(args)__dotdotdot__)`, where
+`ios` is an unspecified object of class `io_service`. For each endpoint `e` in
+the sequence, closes and re-opens the socket by performing `socket_.close(ec_)`
+and `socket_.open(e.protocol(), ec_)`, then attempts to establish a connection
+as if by __POSIX__ `__connect__(socket_.native_handle(),
+static_cast<sockaddr*>(e.data()), e.size())`. `ec_` is set to reflect the error
+code produced by the operation. If the operation does not complete before the
+absolute timeout specified by `expiry_`, the socket is closed and `ec_` is set
+to `errc::timed_out`.]
 
 [function_returns if `!ec_`, `this`; otherwise, a null pointer.]
 
@@ -145,6 +137,10 @@ then resets the get and put areas. If the call to `overflow` fails, or if `!ec_`
 then `close` fails.]
 
 [function_returns `this` on success, a null pointer otherwise.]
+
+  basic_socket<protocol_type>& socket();
+
+[function_returns `socket_`.]
 
   error_code error() const;
 

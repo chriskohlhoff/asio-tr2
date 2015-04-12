@@ -61,12 +61,16 @@ digraph G {
     basic_socket_acceptor -> socket_base;
     basic_stream_socket -> basic_socket;
     basic_datagram_socket -> basic_socket;
-    basic_socket_streambuf -> basic_socket;
   }
 
   {
     edge [ arrowtail = "diamond", dir = "both" ];
     basic_socket_iostream -> basic_socket_streambuf;
+  }
+
+  {
+    edge [ arrowtail = "diamond", style="dotted", dir = "both" ];
+    basic_socket_streambuf -> basic_stream_socket;
   }
 
   {
