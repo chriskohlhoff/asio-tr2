@@ -604,6 +604,10 @@ are used to express type requirements, as listed in the table below.
     [[link requirements.settable_socket_option settable socket option]]
   ]
   [
+    [`Signature`]
+    [[link requirements.signature signature]]
+  ]
+  [
     [`SyncReadStream`]
     [[link requirements.sync_read_stream buffer-oriented synchronous read stream]]
   ]
@@ -640,6 +644,7 @@ are used to express type requirements, as listed in the table below.
 [include:requirements requirements/executor.qbk]
 [include:requirements requirements/execution_context.qbk]
 [include:requirements requirements/service.qbk]
+[include:requirements requirements/signature.qbk]
 [endsect]
 [include:classes classes/handler_type.qbk]
 [include:classes classes/async_result.qbk]
