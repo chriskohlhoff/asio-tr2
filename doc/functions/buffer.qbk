@@ -208,27 +208,6 @@ to elements of the sequence (C++ Std, [string.require]).
     min(str.size() * sizeof(CharT), n));
 ``]
 
-  template<class CharT, class Traits, class Allocator>
-    const_buffers_1 buffer(const basic_string<CharT, Traits, Allocator>& str) noexcept;
-
-[function_returns A `const_buffers_1` value equivalent to:
-``
-  const_buffers_1(
-    str.data(),
-    str.size() * sizeof(CharT));
-``]
-
-  template<class CharT, class Traits, class Allocator>
-    const_buffers_1 buffer(const basic_string<CharT, Traits, Allocator>& str,
-                           size_t n) noexcept;
-
-[function_returns A `const_buffers_1` value equivalent to:
-``
-  const_buffers_1(
-    str.data(),
-    min(str.size() * sizeof(CharT), n));
-``]
-
   template<class CharT, class Traits>
     const_buffers_1 buffer(basic_string_view<CharT, Traits> str) noexcept;
 

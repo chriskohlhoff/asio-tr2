@@ -127,11 +127,6 @@
         template<class CharT, class Traits, class Allocator>
           mutable_buffers_1 buffer(basic_string<CharT, Traits, Allocator>& str,
                                    size_t n) noexcept;
-        template<class CharT, class Traits, class Allocator>
-          const_buffers_1 buffer(const basic_string<CharT, Traits, Allocator>& str) noexcept;
-        template<class CharT, class Traits, class Allocator>
-          const_buffers_1 buffer(const basic_string<CharT, Traits, Allocator>& str,
-                                 size_t n) noexcept;
 
         template<class CharT, class Traits>
           const_buffers_1 buffer(basic_string_view<CharT, Traits> str) noexcept;
