@@ -4,9 +4,10 @@
 The `outbound_interface` class represents a socket option that specifies the
 network interface to use for outgoing multicast datagrams.
 
-`outbound_interface` satisfies the requirements for `CopyConstructible`,
-`Assignable`, and [link requirements.settable_socket_option
-`SettableSocketOption`].
+`outbound_interface` satisfies the requirements for `Destructible` (C++ Std,
+[destructible]) `CopyConstructible` (C++ Std, [copyconstructible]),
+`Assignable` (C++ Std, [assignable]), and [link
+requirements.settable_socket_option `SettableSocketOption`].
 
   namespace std {
     namespace experimental {
@@ -18,8 +19,8 @@ network interface to use for outgoing multicast datagrams.
             {
             public:
               // constructors:
-              explicit outbound_interface(const address_v4& network_interface);
-              explicit outbound_interface(unsigned int network_interface);
+              explicit outbound_interface(const address_v4& network_interface) noexcept;
+              explicit outbound_interface(unsigned int network_interface) noexcept;
             };
 
           } // namespace multicast
@@ -39,11 +40,11 @@ Extensible implementations shall provide the following member functions:
             class outbound_interface
             {
             public:
-              template<class Protocol> int level(const Protocol& p) const;
-              template<class Protocol> int name(const Protocol& p) const;
-              template<class Protocol> const ``['unspecified]``* data(const Protocol& p) const;
-              template<class Protocol> size_t size(const Protocol& p) const;
-              ``['[*// remainder unchanged]]``
+              template<class Protocol> int level(const Protocol& p) const noexcept;
+              template<class Protocol> int name(const Protocol& p) const noexcept;
+              template<class Protocol> const void* data(const Protocol& p) const noexcept;
+              template<class Protocol> size_t size(const Protocol& p) const noexcept;
+              // ``['remainder unchanged]``
             private:
                 in_addr v4_value_; // ``['exposition only]``
                 unsigned int v6_value_; // ``['exposition only]``
@@ -63,13 +64,13 @@ representation of a network interface.]
 [section [^ip::multicast::outbound_interface] constructors]
 [xrefid internet.multicast.outbound.cons]
 
-  explicit outbound_interface(const address_v4& network_interface);
+  explicit outbound_interface(const address_v4& network_interface) noexcept;
 
 [function_effects For extensible implementations, `v4_value_` is initialized to
 correspond to the IPv4 address `network_interface`, and `v6_value_` is
 zero-initialized.]
 
-  explicit outbound_interface(unsigned int network_interface);
+  explicit outbound_interface(unsigned int network_interface) noexcept;
 
 [function_effects For extensible implementations, `v6_value_` is initialized to
 `network_interface`, and `v4_value_` is zero-initialized.]
@@ -79,7 +80,7 @@ zero-initialized.]
 [section [^ip::multicast::outbound_interface] members (extensible implementations)]
 [xrefid internet.multicast.outbound.extensible]
 
-  template<class Protocol> int level(const Protocol& p) const;
+  template<class Protocol> int level(const Protocol& p) const noexcept;
 
 [function_returns `IPPROTO_IPV6` if `p.family() == AF_INET6`, otherwise
 `IPPROTO_IP`.]
@@ -87,7 +88,7 @@ zero-initialized.]
 [function_note The constants `IPPROTO_IP` and `IPPROTO_IPV6` are defined in the
 __POSIX__ header file __netinet_in_h__.]
 
-  template<class Protocol> int name(const Protocol& p) const;
+  template<class Protocol> int name(const Protocol& p) const noexcept;
 
 [function_returns `IPV6_MULTICAST_IF` if `p.family() == AF_INET6`, otherwise
 `IP_MULTICAST_IF`.]
@@ -97,12 +98,12 @@ header file __netinet_in_h__.]
 
 [commentary Where is `IP_MULTICAST_IF` in __POSIX__?]
 
-  template<class Protocol> const ``['unspecified]``* data(const Protocol& p) const;
+  template<class Protocol> const void* data(const Protocol& p) const noexcept;
 
 [function_returns `std::addressof(v6_value_)` if `p.family() == AF_INET6`,
 otherwise `std::addressof(v4_value_)`.]
 
-  template<class Protocol> size_t size(const Protocol& p) const;
+  template<class Protocol> size_t size(const Protocol& p) const noexcept;
 
 [function_returns `sizeof(v6_value_)` if `p.family() == AF_INET6`, otherwise
 `sizeof(v4_value_)`.]

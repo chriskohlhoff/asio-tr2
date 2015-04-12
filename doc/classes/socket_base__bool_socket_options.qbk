@@ -6,43 +6,45 @@ The `socket_base::broadcast`, `socket_base::debug`,
 `socket_base::out_of_band_inline` and `socket_base::reuse_address` classes are
 boolean socket options.
 
-Boolean socket option classes satisfy the requirements for `CopyConstructible`,
-`Assignable`, [link requirements.gettable_socket_option
+Boolean socket option classes satisfy the requirements for `Destructible` (C++
+Std, [destructible]) `CopyConstructible` (C++ Std, [copyconstructible]),
+`Assignable` (C++ Std, [assignable]), [link requirements.gettable_socket_option
 `GettableSocketOption`], and [link requirements.settable_socket_option
-`SettableSocketOption`].
+`SettableSocketOption`]. The boolean socket option classes are contextually
+convertible to bool.
 
-Boolean socket option classes shall be defined as follows:
+Boolean socket option classes are defined as follows:
 
   class ``['[*C]]``
   {
   public:
     // constructors:
-    ``['[*C]]``();
-    explicit ``['[*C]]``(bool v);
+    ``['[*C]]``() noexcept;
+    explicit ``['[*C]]``(bool v) noexcept;
 
     // members:
-    ``['[*C]]``& operator=(bool v);
+    ``['[*C]]``& operator=(bool v) noexcept;
 
-    bool value() const;
+    bool value() const noexcept;
 
-    explicit operator bool() const;
-    bool operator!() const;
+    explicit operator bool() const noexcept;
+    bool operator!() const noexcept;
   };
 
-Extensible implementations shall provide the following member functions:
+Extensible implementations provide the following member functions:
 
   class ``['[*C]]``
   {
   public:
-    template<class Protocol> int level(const Protocol& p) const;
-    template<class Protocol> int name(const Protocol& p) const;
-    template<class Protocol> ``['unspecified]``* data(const Protocol& p);
-    template<class Protocol> const ``['unspecified]``* data(const Protocol& p) const;
-    template<class Protocol> size_t size(const Protocol& p) const;
+    template<class Protocol> int level(const Protocol& p) const noexcept;
+    template<class Protocol> int name(const Protocol& p) const noexcept;
+    template<class Protocol> void* data(const Protocol& p) noexcept;
+    template<class Protocol> const void* data(const Protocol& p) const noexcept;
+    template<class Protocol> size_t size(const Protocol& p) const noexcept;
     template<class Protocol> void resize(const Protocol& p, size_t s);
-    ``['[*// remainder unchanged]]``
+    // ``['remainder unchanged]``
   private:
-  ``//int value_;  ['[*exposition only]]``
+    int value_; // ``['exposition only]``
   };
 
 The names and values used in the definition of the boolean socket option
@@ -108,11 +110,11 @@ classes are described in the table below.
 [section Boolean socket option constructors]
 [xrefid socket.opt.bool.cons]
 
-  ``['[*C]]``();
+  ``['[*C]]``() noexcept;
 
 [function_postconditions `!value()`.]
 
-  explicit ``['[*C]]``(bool v);
+  explicit ``['[*C]]``(bool v) noexcept;
 
 [function_postconditions `value() == v`.]
 
@@ -121,22 +123,22 @@ classes are described in the table below.
 [section Boolean socket option members]
 [xrefid socket.opt.bool.members]
 
-  ``['[*C]]``& operator=(bool v);
+  ``['[*C]]``& operator=(bool v) noexcept;
 
 [function_returns `*this`.]
 
 [function_postconditions `value() == v`.]
 
-  bool value() const;
+  bool value() const noexcept;
 
 [function_returns The stored socket option value. For extensible
 implementations, returns `value_ != 0`.]
 
-  explicit operator bool() const;
+  explicit operator bool() const noexcept;
 
 [function_returns `value()`.]
 
-  bool operator!() const;
+  bool operator!() const noexcept;
 
 [function_returns `!value()`.]
 
@@ -145,23 +147,23 @@ implementations, returns `value_ != 0`.]
 [section Boolean socket option members (extensible implementations)]
 [xrefid socket.opt.bool.extensible]
 
-  template<class Protocol> int level(const Protocol& p) const;
+  template<class Protocol> int level(const Protocol& p) const noexcept;
 
 [function_returns ['[*`L`]].]
 
-  template<class Protocol> int name(const Protocol& p) const;
+  template<class Protocol> int name(const Protocol& p) const noexcept;
 
 [function_returns ['[*`N`]].]
 
-  template<class Protocol> ``['unspecified]``* data(const Protocol& p);
+  template<class Protocol> void* data(const Protocol& p) noexcept;
 
-[function_returns `&value_`.]
+[function_returns `std::addressof(value_)`.]
 
-  template<class Protocol> const ``['unspecified]``* data(const Protocol& p) const;
+  template<class Protocol> const void* data(const Protocol& p) const noexcept;
 
-[function_returns `&value_`.]
+[function_returns `std::addressof(value_)`.]
 
-  template<class Protocol> size_t size(const Protocol& p) const;
+  template<class Protocol> size_t size(const Protocol& p) const noexcept;
 
 [function_returns `sizeof(value_)`.]
 

@@ -20,7 +20,7 @@ are defined in the __POSIX__ header file __netinet_in_h__.]
 
 [commentary Where is `IP_TTL` in __POSIX__?]
 
-Constructors for the `hops` class shall throw `out_of_range` if the argument is
-not in the range `[0, 255]`.
+The constructor and assignment operator for the `hops` class that accept an
+`int` throw `out_of_range` if the argument is not in the range `[0, 255]`.
 
 [endsect]

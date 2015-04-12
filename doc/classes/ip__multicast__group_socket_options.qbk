@@ -5,7 +5,8 @@ The `ip::multicast::join_group` and `ip::multicast::leave_group` classes are
 socket options for multicast group management.
 
 Multicast group management socket option classes satisfy the requirements for
-`CopyConstructible`, `Assignable`, and [link
+`Destructible` (C++ Std, [destructible]) `CopyConstructible` (C++ Std,
+[copyconstructible]), `Assignable` (C++ Std, [assignable]), and [link
 requirements.settable_socket_option `SettableSocketOption`].
 
 [std_example Creating a UDP socket and joining a multicast group:
@@ -25,11 +26,11 @@ Multicast group management socket option classes shall be defined as follows:
   {
   public:
     // constructors:
-    explicit ``['[*C]]``(const address& multicast_group);
+    explicit ``['[*C]]``(const address& multicast_group) noexcept;
     explicit ``['[*C]]``(const address_v4& multicast_group,
-               const address_v4& network_interface = address_v4::any());
+               const address_v4& network_interface = address_v4::any()) noexcept;
     explicit ``['[*C]]``(const address_v6& multicast_group,
-               unsigned int network_interface = 0);
+               unsigned int network_interface = 0) noexcept;
   };
 
 Extensible implementations shall provide the following member functions:
@@ -37,11 +38,11 @@ Extensible implementations shall provide the following member functions:
   class ``['[*C]]``
   {
   public:
-    template<class Protocol> int level(const Protocol& p) const;
-    template<class Protocol> int name(const Protocol& p) const;
-    template<class Protocol> const void* data(const Protocol& p) const;
-    template<class Protocol> size_t size(const Protocol& p) const;
-    ``['// remainder unchanged]``
+    template<class Protocol> int level(const Protocol& p) const noexcept;
+    template<class Protocol> int name(const Protocol& p) const noexcept;
+    template<class Protocol> const void* data(const Protocol& p) const noexcept;
+    template<class Protocol> size_t size(const Protocol& p) const noexcept;
+    // ``['remainder unchanged]``
   private:
     ip_mreq v4_value_; // ``['exposition only]``
     ipv6_mreq v6_value_; // ``['exposition only]``
@@ -80,14 +81,14 @@ __POSIX__?]
 [section Multicast group management socket option constructors]
 [xrefid internet.multicast.group.cons]
 
-  explicit ``['[*C]]``(const address& multicast_group);
+  explicit ``['[*C]]``(const address& multicast_group) noexcept;
 
 [function_effects If `multicast_group.is_v6()` is `true`, calls
 [^['[*C]]]`(address_cast<address_v6>(multicast_group))`; otherwise, calls
 [^['[*C]]]`(address_cast<address_v4>(multicast_group))`.]
 
   explicit ``['[*C]]``(const address_v4& multicast_group,
-             const address_v4& network_interface = address_v4::any());
+             const address_v4& network_interface = address_v4::any()) noexcept;
 
 [function_effects For extensible implementations, `v4_value_.imr_multiaddr` is
 initialized to correspond to the address `multicast_group`,
@@ -95,7 +96,7 @@ initialized to correspond to the address `multicast_group`,
 `network_interface`, and `v6_value_` is zero-initialized.]
 
   explicit ``['[*C]]``(const address_v6& multicast_group,
-             unsigned int network_interface = 0);
+             unsigned int network_interface = 0) noexcept;
 
 [function_effects For extensible implementations, `v6_value_.ipv6mr_multiaddr`
 is initialized to correspond to the address `multicast_group`,
@@ -107,20 +108,20 @@ is initialized to correspond to the address `multicast_group`,
 [section Multicast group management socket option members (extensible implementations)]
 [xrefid internet.multicast.group.extensible]
 
-  template<class Protocol> int level(const Protocol& p) const;
+  template<class Protocol> int level(const Protocol& p) const noexcept;
 
 [function_returns ['[*`L`]].]
 
-  template<class Protocol> int name(const Protocol& p) const;
+  template<class Protocol> int name(const Protocol& p) const noexcept;
 
 [function_returns ['[*`N`]].]
 
-  template<class Protocol> const void* data(const Protocol& p) const;
+  template<class Protocol> const void* data(const Protocol& p) const noexcept;
 
 [function_returns `std::addressof(v6_value_)` if `p.family() == AF_INET6`, otherwise
 `std::addressof(v4_value_)`.]
 
-  template<class Protocol> size_t size(const Protocol& p) const;
+  template<class Protocol> size_t size(const Protocol& p) const noexcept;
 
 [function_returns `sizeof(v6_value_)` if `p.family() == AF_INET6`, otherwise
 `sizeof(v4_value_)`.]
