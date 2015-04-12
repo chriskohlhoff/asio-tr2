@@ -55,7 +55,7 @@ a value of type `A` meeting the `Allocator` requirements (C++ Std,
     [Same as `!(cx1 == cx2)`.]
   ]
   [
-    [`x.context()`]
+    [`x1.context()`]
     [`execution_context&`, or a type that is convertible to `execution_context&`.]
     [Shall not exit via an exception.]
   ]
