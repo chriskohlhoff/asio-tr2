@@ -1,5 +1,5 @@
 [section:connect_condition Connect condition requirements]
-[xrefid socket.reqmts.connect_condition]
+[xrefid socket.reqmts.connectcondition]
 
 A connect condition type shall satisfy the requirements of `Destructible` (C++
 Std, [destructible]) and `CopyConstructible` (C++ Std, [copyconstructible]).
