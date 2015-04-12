@@ -54,32 +54,20 @@ Extensible implementations provide the following member functions:
     } // namespace experimental
   } // namespace std
 
-In the table below, `u` denotes an identifier.
+The return values for these member functions are listed in the table below.
 
 [table Behavior of extensible implementations
-  [[expression] [value]]
+  [[value] [`family()`] [`type()`] [`protocol()`]]
   [
-    [`udp u(udp::v4()); u.family();`]
+    [`udp::v4()`]
     [`AF_INET`]
-  ]
-  [
-    [`udp u(udp::v4()); u.type();`]
     [`SOCK_DGRAM`]
-  ]
-  [
-    [`udp u(udp::v4()); u.protocol();`]
     [`IPPROTO_UDP`]
   ]
   [
-    [`udp u(udp::v6()); u.family();`]
+    [`udp::v6()`]
     [`AF_INET6`]
-  ]
-  [
-    [`udp u(udp::v6()); u.type();`]
     [`SOCK_DGRAM`]
-  ]
-  [
-    [`udp u(udp::v6()); u.protocol();`]
     [`IPPROTO_UDP`]
   ]
 ]
