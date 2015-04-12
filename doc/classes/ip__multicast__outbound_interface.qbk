@@ -61,6 +61,28 @@ unlike its __POSIX__ equivalents which are both gettable and settable. This is
 to avoid the need for additional classes that provide a protocol independent
 representation of a network interface.]
 
+Let [^['L]] and [^['N]] identify __POSIX__ macros to be passed as the /level/ and
+/option_name/ arguments, respectively, to __POSIX__ __setsockopt__ and
+__getsockopt__. In the table below, `p` denotes a (possibly const) value of a
+type meeting the [link requirements.protocol protocol] requirements, as passed
+to the socket option's `level` and `name` member functions.
+
+[table outbound_interface socket option
+  [[['L] if `p.family() == AF_INET4`][['N] if `p.family() == AF_INET4`]
+   [['L] if `p.family() == AF_INET6`][['N] if `p.family() == AF_INET6`]]
+  [
+    [`IPPROTO_IP`]
+    [`IP_MULTICAST_TTL`]
+    [`IPPROTO_IPV6`]
+    [`IPV6_MULTICAST_HOPS`]
+  ]
+]
+
+[function_note The constants `IPPROTO_IP`, `IPPROTO_IPV6`, and
+`IPV6_MULTICAST_IF` are defined in the __POSIX__ header file __netinet_in_h__.]
+
+[commentary Where is `IP_MULTICAST_IF` in __POSIX__?]
+
 [section [^ip::multicast::outbound_interface] constructors]
 [xrefid internet.multicast.outbound.cons]
 
@@ -82,21 +104,11 @@ zero-initialized.]
 
   template<class Protocol> int level(const Protocol& p) const noexcept;
 
-[function_returns `IPPROTO_IPV6` if `p.family() == AF_INET6`, otherwise
-`IPPROTO_IP`.]
-
-[function_note The constants `IPPROTO_IP` and `IPPROTO_IPV6` are defined in the
-__POSIX__ header file __netinet_in_h__.]
+[function_returns ['[*`L`]].]
 
   template<class Protocol> int name(const Protocol& p) const noexcept;
 
-[function_returns `IPV6_MULTICAST_IF` if `p.family() == AF_INET6`, otherwise
-`IP_MULTICAST_IF`.]
-
-[function_note The constant `IPV6_MULTICAST_IF` is defined in the __POSIX__
-header file __netinet_in_h__.]
-
-[commentary Where is `IP_MULTICAST_IF` in __POSIX__?]
+[function_returns ['[*`N`]].]
 
   template<class Protocol> const void* data(const Protocol& p) const noexcept;
 

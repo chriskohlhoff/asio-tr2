@@ -47,11 +47,12 @@ Extensible implementations provide the following member functions:
     int value_; // ``['exposition only]``
   };
 
-The names and values used in the definition of the boolean socket option
-classes are described in the table below.
+Let [^['L]] and [^['N]] identify the __POSIX__ macros to be passed as the
+/level/ and /option_name/ arguments, respectively, to __POSIX__ __setsockopt__
+and __getsockopt__.
 
 [table Boolean socket options
-  [[['C]][['L]][['N]][notes]]
+  [[['C]][['L]][['N]][Definition or notes]]
   [
     [`socket_base::broadcast`]
     [`SOL_SOCKET`]

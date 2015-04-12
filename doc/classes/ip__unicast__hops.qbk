@@ -3,15 +3,24 @@
 
 The `hops` class represents a socket option for specifying the default number
 of hops (also known as time-to-live or TTL) on outbound datagrams. It is an
-[link classes.socket_base__int_socket_options integral socket option] with the
-name and values in the table below:
+[link classes.socket_base__int_socket_options integral socket option].
+
+[^['L]] and [^['N]] identify __POSIX__ macros to be passed as the /level/ and
+/option_name/ arguments, respectively, to __POSIX__ __setsockopt__ and
+__getsockopt__. In the table below, `p` denotes a (possibly const) value of a
+type meeting the [link requirements.protocol protocol] requirements, as passed
+to the socket option's `level` and `name` member functions.
 
 [table hops integral socket option
-  [[['C]][['L]][['N]]]
+  [[['C]]
+   [['L] if `p.family() == AF_INET4`][['N] if `p.family() == AF_INET4`]
+   [['L] if `p.family() == AF_INET6`][['N] if `p.family() == AF_INET6`]]
   [
     [`ip::unicast::hops`]
-    [`IPPROTO_IPV6` if `p.family() == AF_INET6`, otherwise `IPPROTO_IP`.]
-    [`IPV6_UNICAST_HOPS` if `p.family() == AF_INET6`, otherwise `IP_TTL`.]
+    [`IPPROTO_IP`]
+    [`IP_TTL`]
+    [`IPPROTO_IPV6`]
+    [`IPV6_UNICAST_HOPS`]
   ]
 ]
 

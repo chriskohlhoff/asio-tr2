@@ -48,26 +48,29 @@ Extensible implementations shall provide the following member functions:
     ipv6_mreq v6_value_; // ``['exposition only]``
   };
 
-The names and values used in the definition of the multicast group management
-socket option classes are described in the table below.
+Let [^['L]] and [^['N]] identify __POSIX__ macros to be passed as the /level/ and
+/option_name/ arguments, respectively, to __POSIX__ __setsockopt__ and
+__getsockopt__. In the table below, `p` denotes a (possibly const) value of a
+type meeting the [link requirements.protocol protocol] requirements, as passed
+to the socket option's `level` and `name` member functions.
 
 [table Multicast group management socket options
-  [[['C]][['L]][['N]][notes]]
+  [[['C]]
+   [['L] if `p.family() == AF_INET4`][['N] if `p.family() == AF_INET4`]
+   [['L] if `p.family() == AF_INET6`][['N] if `p.family() == AF_INET6`]]
   [
     [`ip::multicast::join_group`]
-    [`IPPROTO_IPV6` if `p.family() == AF_INET6`, otherwise `IPPROTO_IP`.]
-    [`IPV6_JOIN_GROUP` if `p.family() == AF_INET6`, otherwise `IP_ADD_MEMBERSHIP`.]
-    [
-      Used to join a multicast group.
-    ]
+    [`IPPROTO_IP`]
+    [`IP_ADD_MEMBERSHIP`]
+    [`IPPROTO_IPV6`]
+    [`IPV6_JOIN_GROUP`]
   ]
   [
     [`ip::multicast::leave_group`]
-    [`IPPROTO_IPV6` if `p.family() == AF_INET6`, otherwise `IPPROTO_IP`.]
-    [`IPV6_LEAVE_GROUP` if `p.family() == AF_INET6`, otherwise `IP_DROP_MEMBERSHIP`.]
-    [
-      Used to leave a multicast group.
-    ]
+    [`IPPROTO_IP`]
+    [`IP_DROP_MEMBERSHIP`]
+    [`IPPROTO_IPV6`]
+    [`IPV6_LEAVE_GROUP`]
   ]
 ]
 
