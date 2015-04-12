@@ -5,7 +5,7 @@ The `outbound_interface` class represents a socket option that specifies the
 network interface to use for outgoing multicast datagrams.
 
 `outbound_interface` satisfies the requirements for `Destructible` (C++ Std,
-[destructible]) `CopyConstructible` (C++ Std, [copyconstructible]),
+[destructible]), `CopyConstructible` (C++ Std, [copyconstructible]),
 `Assignable` (C++ Std, [assignable]), and [link
 requirements.settable_socket_option `SettableSocketOption`].
 

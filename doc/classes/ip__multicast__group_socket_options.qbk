@@ -5,7 +5,7 @@ The `ip::multicast::join_group` and `ip::multicast::leave_group` classes are
 socket options for multicast group management.
 
 Multicast group management socket option classes satisfy the requirements for
-`Destructible` (C++ Std, [destructible]) `CopyConstructible` (C++ Std,
+`Destructible` (C++ Std, [destructible]), `CopyConstructible` (C++ Std,
 [copyconstructible]), `Assignable` (C++ Std, [assignable]), and [link
 requirements.settable_socket_option `SettableSocketOption`].
 
