@@ -1,0 +1,26 @@
+[section Method of description (Informative)]
+[xrefid description]
+
+This subclause describes the conventions used to specify this Technical
+Specification, in addition to those conventions specified in C++ Std,
+[description].
+
+[section Structure of each clause]
+[xrefid structure]
+
+[section Detailed specifications]
+[xrefid structure.specifications]
+
+In addition to the elements defined in C++Std [structure.specifications],
+descriptions of function semantics contain the following elements (as
+appropriate):
+
+[mdash] ['Completion signature:] - if the function initiates an asynchronous
+operation, the signature for a completion handler that may be used to receive
+the result of the operation
+
+[endsect]
+
+[endsect]
+
+[endsect]

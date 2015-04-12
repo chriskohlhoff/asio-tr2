@@ -1,0 +1,20 @@
+[section Future plans (Informative)]
+[xrefid plans]
+
+This section describes tentative plans for future versions of this technical
+specification and plans for moving content into future versions of the C++
+Standard.
+
+The C++ committee may release new versions of this technical specification,
+containing networking library extensions we hope to add to a near-future
+version of the C++ Standard. Future versions will define their contents in
+`std::experimental::network_v2`, `std::experimental::network_v3`, etc., with
+the most recent implemented version inlined into `std::experimental`.
+
+When an extension defined in this or a future version of this technical
+specification represents enough existing practice, it will be moved into the
+next version of the C++ Standard by removing the `experimental::network_vN`
+segment of its namespace and by removing the `experimental/` prefix from its
+header's path.
+
+[endsect]

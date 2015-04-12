@@ -1,0 +1,31 @@
+[section Normative references]
+[xrefid references]
+
+The following referenced documents are indispensable for the application of
+this document. For dated references, only the edition cited applies. For
+undated references, the latest edition of the referenced document (including
+any amendments) applies.
+
+* ISO/IEC 14882, Programming Language C++
+ 
+* ISO/IEC 9945, Information Technology — Portable Operating System Interface (POSIX)
+
+* C++ Extensions for Library Fundamentals
+
+[std_note The programming language and library described in ISO/IEC 14882 is
+herein called the C++ Standard. References to clauses within the C++ Standard
+are written as "C++Std \[xref\]".
+\n
+The operating system interface described in ISO/IEC 9945 is herein called __POSIX__.]
+
+This Technical Specification mentions commercially available operating systems
+for purposes of exposition. [footnote POSIX® is a registered trademark of The
+IEEE. Windows® is a registered trademark of Microsoft Corporation. This
+information is given for the convenience of users of this document and does not
+constitute an endorsement by ISO or IEC of these products.]
+
+Unless otherwise specified, the whole of the C++ Standard's Library
+introduction (C++Std [library]) is included into this Technical Specification
+by reference.
+
+[endsect]

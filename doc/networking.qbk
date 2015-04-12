@@ -472,18 +472,18 @@ specification of these facilities.
 [commentary Grey-shaded italic text is commentary on the proposal. It is not to
 be added to the TS.]
 
-This Technical Specification describes components that C++ programs may use to
-perform network operations.
+[include:scope scope.qbk]
+[include:conformance conformance.qbk]
+[include:references references.qbk]
+[include:namespaces namespaces.qbk]
+[include:definitions definitions.qbk]
+[include:plans plans.qbk]
+[include:feature_test feature_test.qbk]
+[include:description description.qbk]
+[include:error_reporting error_reporting.qbk]
 
-[commentary The Draft Filesystem Technical Specification [N4099] adds an
-introductory section on conformance to establish a relationship to __POSIX__
-[POSIX]. This proposal also requires a similar relationship to define behavior
-"as if" implemented by __POSIX__. It is expected that a section on conformance
-would be added here.]
-
-The following clauses describe components for an asynchronous model, I/O
-services, timers, buffer management, sockets, endpoint resolution, socket
-iostreams, and internet protocols, as summarized in the table below:
+[section Library summary]
+[xrefid summary]
 
 [table Networking library summary
   [[Clause][Header(s)]]
@@ -621,8 +621,7 @@ are used to express type requirements, as listed in the table below.
   ]
 ]
 
-[include:definitions definitions.qbk]
-[include:error_reporting error_reporting.qbk]
+[endsect]
 
 [section:convenience Convenience header]
 [xrefid convenience.hdr]
@@ -759,7 +758,6 @@ This clause defines components for performing timer operations.
 [section:sockets_requirements Requirements]
 [xrefid socket.reqmts]
 [include:requirements requirements/native_handles.qbk]
-[include:requirements requirements/extensibility.qbk]
 [include:requirements requirements/endpoint.qbk]
 [include:requirements requirements/protocol.qbk]
 [include:requirements requirements/acceptable_protocol.qbk]

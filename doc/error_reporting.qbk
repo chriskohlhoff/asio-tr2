@@ -70,9 +70,10 @@ exception as described in the C++ standard (C++14
 [section Asynchronous operations]
 [xrefid err.report.async]
 
-Asynchronous network library functions are identified by having the prefix
-`async_` and take a completion handler [xref async.reqmts.async.token]. These
-asynchronous operations report errors as follows:
+Asynchronous network library functions in this Technical Specification are
+identified by having the prefix `async_` and take a completion handler [xref
+async.reqmts.async.token]. These asynchronous operations report errors as
+follows:
 
 [mdash] If a call by the implementation to an operating system or other
 underlying API results in an error that prevents the asynchronous operation
@@ -98,7 +99,7 @@ operation is defined "as if" implemented by a __POSIX__ function, the
 
 [mdash] If the failure condition is one that is listed by __POSIX__ for that
 function, the `error_code` shall compare equal to the error's corresponding
-`enum class errc` (C++14 \[syserr\]) or [link classes.ip__resolver_errc `enum
+`enum class errc` (C++Std \[syserr\]) or [link classes.ip__resolver_errc `enum
 class resolver_errc`] constant.
 
 [mdash] Otherwise, the `error_code` shall be set to an implementation-defined
