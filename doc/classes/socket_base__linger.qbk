@@ -4,9 +4,10 @@
 The `linger` class represents a socket option for controlling the behavior
 when a socket is closed and unsent data is present.
 
-`linger` satisfies the requirements for `CopyConstructible`, `Assignable`,
-[link requirements.gettable_socket_option `GettableSocketOption`], and [link
-requirements.settable_socket_option `SettableSocketOption`].
+`linger` satisfies the requirements for `Destructible`, `CopyConstructible`,
+`Assignable`, [link requirements.gettable_socket_option
+`GettableSocketOption`], and [link requirements.settable_socket_option
+`SettableSocketOption`].
 
   namespace std {
     namespace experimental {
@@ -16,22 +17,22 @@ requirements.settable_socket_option `SettableSocketOption`].
         {
         public:
           // constructors:
-          linger();
-          linger(bool e, int t);
+          linger() noexcept;
+          linger(bool e, chrono::seconds t) noexcept;
 
           // members:
-          bool enabled() const;
-          void enabled(bool e);
+          bool enabled() const noexcept;
+          void enabled(bool e) noexcept;
 
-          int timeout() const;
-          void timeout(int t);
+          chrono::seconds timeout() const noexcept;
+          void timeout(chrono::seconds t) noexcept;
         };
 
       __end_versioned_ns__
     } // namespace experimental
   } // namespace std
 
-Extensible implementations shall provide the following member functions:
+Extensible implementations provide the following member functions:
 
   namespace std {
     namespace experimental {
@@ -40,15 +41,15 @@ Extensible implementations shall provide the following member functions:
         class socket_base::linger
         {
         public:
-          template<class Protocol> int level(const Protocol& p) const;
-          template<class Protocol> int name(const Protocol& p) const;
-          template<class Protocol> ``['unspecified]``* data(const Protocol& p);
-          template<class Protocol> const ``['unspecified]``* data(const Protocol& p) const;
-          template<class Protocol> size_t size(const Protocol& p) const;
+          template<class Protocol> int level(const Protocol& p) const noexcept;
+          template<class Protocol> int name(const Protocol& p) const noexcept;
+          template<class Protocol> void data(const Protocol& p) noexcept;
+          template<class Protocol> const void* data(const Protocol& p) const noexcept;
+          template<class Protocol> size_t size(const Protocol& p) const noexcept;
           template<class Protocol> void resize(const Protocol& p, size_t s);
-          ``['[*// remainder unchanged]]``
+          // ``['remainder unchanged]``
         private:
-  ``//      ::linger value_;  ['[*exposition only]]``
+          ::linger value_;  // ``['exposition only]``
         };
 
       __end_versioned_ns__
@@ -58,11 +59,11 @@ Extensible implementations shall provide the following member functions:
 [section [^socket_base::linger] constructors]
 [xrefid socket.opt.linger.cons]
 
-  linger();
+  linger() noexcept;
 
-[function_postconditions `!enabled() && timeout() == 0`.]
+[function_postconditions `!enabled() && timeout() == chrono::seconds(0)`.]
 
-  linger(bool e, int t);
+  linger(bool e, chrono::seconds t) noexcept;
 
 [function_postconditions `enabled() == e && timeout() == t`.]
 
@@ -71,21 +72,19 @@ Extensible implementations shall provide the following member functions:
 [section [^socket_base::linger] members]
 [xrefid socket.opt.linger.members]
 
-  bool enabled() const;
+  bool enabled() const noexcept;
 
-[function_returns The stored socket option value for whether linger on close is
-enabled. For extensible implementations, returns `value_.l_onoff != 0`.]
+[function_returns `value_.l_onoff != 0`.]
 
-  void enabled(bool e);
+  void enabled(bool e) noexcept;
 
 [function_postconditions `enabled() == e`.]
 
-  int timeout() const;
+  chrono::seconds timeout() const noexcept;
 
-[function_returns The stored socket option value for the linger timeout, in
-seconds. For extensible implementations, returns `value_.l_linger`.]
+[function_returns `chrono::seconds(value_.l_linger)`.]
 
-  void timeout(int t);
+  void timeout(chrono::seconds t) noexcept;
 
 [function_postconditions `timeout() == t`.]
 
@@ -94,29 +93,29 @@ seconds. For extensible implementations, returns `value_.l_linger`.]
 [section [^socket_base::linger] members (extensible implementations)]
 [xrefid socket.opt.linger.extensible]
 
-  template<class Protocol> int level(const Protocol& p) const;
+  template<class Protocol> int level(const Protocol& p) const noexcept;
 
 [function_returns `SOL_SOCKET`.]
 
 [function_note The constant `SOL_SOCKET` is defined in the __POSIX__ header
 file __sys_socket_h__.]
 
-  template<class Protocol> int name(const Protocol& p) const;
+  template<class Protocol> int name(const Protocol& p) const noexcept;
 
 [function_returns `SO_LINGER`.]
 
 [function_note The constant `SO_LINGER` is defined in the __POSIX__ header file
 __sys_socket_h__.]
 
-  template<class Protocol> ``['unspecified]``* data(const Protocol& p) const;
+  template<class Protocol> void* data(const Protocol& p) const noexcept;
 
-[function_returns `&value_`.]
+[function_returns `std::addressof(value_)`.]
 
-  template<class Protocol> const ``['unspecified]``* data(const Protocol& p) const;
+  template<class Protocol> const void* data(const Protocol& p) const noexcept;
 
-[function_returns `&value_`.]
+[function_returns `std::addressof(value_)`.]
 
-  template<class Protocol> size_t size(const Protocol& p) const;
+  template<class Protocol> size_t size(const Protocol& p) const noexcept;
 
 [function_returns `sizeof(value_)`.]
 
