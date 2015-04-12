@@ -1,4 +1,4 @@
-[section:async_result_packaged_task Class template specialization [^async_result] for [^packaged_task]]
+[section:async_result_packaged_task Partial class template specialization [^async_result] for [^packaged_task]]
 [xrefid async.packaged.task.specializations]
 
   namespace std {

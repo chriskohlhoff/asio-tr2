@@ -55,7 +55,7 @@ with `token.allocator_`.]
 
 [endsect]
 
-[section:async_result_packaged_handler Class template specialization [^async_result]]
+[section:async_result_packaged_handler Partial class template specialization [^async_result]]
 [xrefid async.package.handler.async.result]
 
   namespace std {
@@ -74,8 +74,9 @@ with `token.allocator_`.]
     } // namespace experimental
   } // namespace std
 
-The implementation shall provide a specialization of `async_result` that meets
-the [link classes.async_result `async_result` specialization requirements].
+The implementation provides a partial specialization of `async_result` that
+meets the [link classes.async_result `async_result` specialization
+requirements].
 
   explicit async_result(packaged_handler<Signature, ProtoAllocator>& h);
 
