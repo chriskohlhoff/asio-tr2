@@ -36,10 +36,7 @@ ambiguities when passing to functions that are overloaded on both
   } // namespace std
 
 The `mutable_buffers_1` class meets the requirements for [link
-requirements.mutable_buffers `MutableBufferSequence`], [link
-requirements.mutable_buffers `ConstBufferSequence`], [link
-requirements.convertible_to_mutable_buffer `ConvertibleToMutableBuffer`], and
-[link requirements.convertible_to_mutable_buffer `ConvertibleToConstBuffer`].
+requirements.mutable_buffers `MutableBufferSequence`].
 
 [section [^mutable_buffers_1] constructors]
 [xrefid buffer.mutable.1.cons]

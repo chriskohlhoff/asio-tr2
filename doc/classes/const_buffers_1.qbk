@@ -1,9 +1,8 @@
 [section:const_buffers_1 Class [^const_buffers_1]]
 [xrefid buffer.const.1]
 
-The `const_buffers_1` class meets the requirements for [link
-requirements.const_buffers `ConstBufferSequence`], and [link
-requirements.convertible_to_const_buffer `ConvertibleToConstBuffer`].
+An object of class `const_buffers_1` represents a sequence of exactly one
+`const_buffer` object.
 
   namespace std {
     namespace experimental {
@@ -30,8 +29,8 @@ requirements.convertible_to_const_buffer `ConvertibleToConstBuffer`].
     } // namespace experimental
   } // namespace std
 
-An object of class `const_buffers_1` represents a sequence of exactly one
-`const_buffer` object.
+The `const_buffers_1` class meets the requirements for [link
+requirements.const_buffers `ConstBufferSequence`].
 
 [section [^const_buffers_1] constructors]
 [xrefid buffer.const.1.cons]

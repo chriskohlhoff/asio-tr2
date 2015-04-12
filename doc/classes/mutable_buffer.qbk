@@ -1,10 +1,6 @@
 [section:mutable_buffer Class [^mutable_buffer]]
 [xrefid buffer.mutable]
 
-The `mutable_buffer` class meets the requirements for [link
-requirements.convertible_to_mutable_buffer `ConvertibleToMutableBuffer`] and
-[link requirements.convertible_to_const_buffer `ConvertibleToConstBuffer`].
-
   namespace std {
     namespace experimental {
       __begin_versioned_ns__
