@@ -1,13 +1,18 @@
 [section:ip__basic_resolver Class template [^ip::basic_resolver]]
 [xrefid internet.resolver]
 
+Objects of type `basic_resolver<InternetProtocol>` are used to perform name
+resolution. Name resolution is the translation of a host name and service name
+into a sequence of endpoints, or the translation of an endpoint into its
+corresponding host name and service name.
+
   namespace std {
     namespace experimental {
       __begin_versioned_ns__
         namespace ip {
 
           template<class InternetProtocol>
-          class basic_resolver
+          class basic_resolver : public resolver_base
           {
           public:
             // types:
@@ -15,8 +20,7 @@
             typedef io_service::executor_type executor_type;
             typedef InternetProtocol protocol_type;
             typedef typename InternetProtocol::endpoint endpoint_type;
-            typedef basic_resolver_query<InternetProtocol> query;
-            typedef basic_resolver_iterator<InternetProtocol> iterator;
+            typedef basic_resolver_results<InternetProtocol> results_type;
 
             // construct / copy / destroy:
 
@@ -35,18 +39,48 @@
 
             void cancel();
 
-            iterator resolve(const query& q);
-            iterator resolve(const query& q, error_code& ec);
+            results_type resolve(string_view host_name, string_view service_name);
+            results_type resolve(string_view host_name, string_view service_name,
+                                 error_code& ec);
+            results_type resolve(string_view host_name, string_view service_name,
+                                 flags f);
+            results_type resolve(string_view host_name, string_view service_name,
+                                 flags f, error_code& ec);
 
             template<class CompletionToken>
-              __ifr__ async_resolve(const query& q, CompletionToken&& token);
+              __ifr__ async_resolve(string_view host_name, string_view service_name,
+                                    CompletionToken&& token);
+            template<class CompletionToken>
+              __ifr__ async_resolve(string_view host_name, string_view service_name,
+                                    flags f, CompletionToken&& token);
 
-            iterator resolve(const endpoint_type& e);
-            iterator resolve(const endpoint_type& e, error_code& ec);
+            results_type resolve(const protocol_type& protocol,
+                                 string_view host_name, string_view service_name);
+            results_type resolve(const protocol_type& protocol,
+                                 string_view host_name, string_view service_name,
+                                 error_code& ec);
+            results_type resolve(const protocol_type& protocol,
+                                 string_view host_name, string_view service_name,
+                                 flags f);
+            results_type resolve(const protocol_type& protocol,
+                                 string_view host_name, string_view service_name,
+                                 flags f, error_code& ec);
+
+            template<class CompletionToken>
+              __ifr__ async_resolve(const protocol_type& protocol,
+                                    string_view host_name, string_view service_name,
+                                    CompletionToken&& token);
+            template<class CompletionToken>
+              __ifr__ async_resolve(const protocol_type& protocol,
+                                    string_view host_name, string_view service_name,
+                                    flags f, CompletionToken&& token);
+
+            results_type resolve(const endpoint_type& e);
+            results_type resolve(const endpoint_type& e, error_code& ec);
 
             template<class CompletionToken>
               __ifr__ async_resolve(const endpoint_type& e,
-                                 CompletionToken&& token);
+                                    CompletionToken&& token);
           };
 
         } // namespace ip
@@ -76,8 +110,8 @@ represented by `rhs`.]
 
   ~basic_resolver();
 
-[function_effects Destroys the resolver, cancelling any asynchronous operations
-associated with the resolver as if by calling `cancel()`.]
+[function_effects Destroys the resolver, canceling all asynchronous operations
+associated with this resolver as if by calling `cancel()`.]
 
 [endsect]
 
@@ -86,7 +120,7 @@ associated with the resolver as if by calling `cancel()`.]
 
   basic_resolver& operator=(basic_resolver&& rhs);
 
-[function_effects Cancels any outstanding asynchronous operations associated
+[function_effects Cancels all outstanding asynchronous operations associated
 with `*this` as if by calling `cancel()`, then moves into `*this` the state
 originally represented by `rhs`.]
 
@@ -105,53 +139,211 @@ originally represented by `rhs`.]
 
   void cancel();
 
-[function_effects Causes any outstanding asynchronous resolve operations to
-complete as soon as possible. Completion handlers for cancelled operations
-shall be passed an error code `ec` such that `ec == errc::operation_canceled`
-yields `true`.]
+[function_effects Cancels all outstanding asynchronous resolve operations
+associated with `*this`. Completion handlers for canceled operations are passed
+an error code `ec` such that `ec == errc::operation_canceled` yields `true`.]
 
-  iterator resolve(const query& q);
-  iterator resolve(const query& q, error_code& ec);
+  results_type resolve(string_view host_name, string_view service_name);
+  results_type resolve(string_view host_name, string_view service_name,
+                       error_code& ec);
 
-[function_effects Translates a query into a sequence of
-`basic_resolver_entry<InternetProtocol>` objects, as if by __POSIX__
-__getaddrinfo__.]
+[function_returns `resolve(host_name, service_name, resolver_base::flags(),
+ec)`.]
 
-[function_returns On success, an iterator object `i` such that the condition `i
-!= iterator()` yields `true`. Otherwise `iterator()`.]
+  results_type resolve(string_view host_name, string_view service_name,
+                       flags f);
+  results_type resolve(string_view host_name, string_view service_name,
+                       flags f, error_code& ec);
+
+[function_effects If `host_name.data() != nullptr`, let [^H] be an NTBS
+constructed from `host_name`; otherwise, let [^H] be `nullptr`. If
+`service_name.data() != nullptr`, let [^S] be an NTBS constructed from
+`service_name`; otherwise, let [^S] be `nullptr`. Resolves a host name and
+service name, as if by __POSIX__:
+``
+  addrinfo hints;
+  hints.ai_flags = static_cast<int>(f);
+  hints.ai_family = AF_UNSPEC;
+  hints.ai_socktype = endpoint_type().protocol().type();
+  hints.ai_protocol = endpoint_type().protocol().protocol();
+  hints.ai_addr = nullptr;
+  hints.ai_addrlen = 0;
+  hints.ai_canonname = nullptr;
+  hints.ai_next = nullptr;
+  addrinfo* result = nullptr;
+  __getaddrinfo__(H, S, &hints, &result);
+``]
+
+[function_returns On success, a non-empty results object containing the results
+of the resolve operation. Otherwise `results_type()`.]
 
   template<class CompletionToken>
-    __ifr__ async_resolve(const query& q, CompletionToken&& token);
+    __ifr__ async_resolve(string_view host_name, string_view service_name,
+                          CompletionToken&& token);
 
-[function_completion_signature `void(error_code ec, iterator i)`.]
+[function_returns `async_resolve(host_name, service_name,
+resolver_base::flags(), forward<CompletionToken>(token))`.]
 
-[function_effects Initiates an asynchronous operation to translate a query into
-a sequence of `basic_resolver_entry<InternetProtocol>` objects, as if by
-__POSIX__ __getaddrinfo__. If the operation completes successfully, the handler
-is passed an iterator object `i` such that the condition `i != iterator()`
-yields `true`. Otherwise, `i` is `iterator()`.]
+  template<class CompletionToken>
+    __ifr__ async_resolve(string_view host_name, string_view service_name,
+                          flags f, CompletionToken&& token);
+
+[function_completion_signature `void(error_code ec, results_type r)`.]
+
+[function_effects If `host_name.data() != nullptr`, let [^H] be an NTBS
+constructed from `host_name`; otherwise, let [^H] be `nullptr`. If
+`service_name.data() != nullptr`, let [^S] be an NTBS constructed from
+`service_name`; otherwise, let [^S] be `nullptr`. Initiates an asynchronous
+operation to resolve a host name and service name, as if by __POSIX__:
+``
+  addrinfo hints;
+  hints.ai_flags = static_cast<int>(f);
+  hints.ai_family = AF_UNSPEC;
+  hints.ai_socktype = endpoint_type().protocol().type();
+  hints.ai_protocol = endpoint_type().protocol().protocol();
+  hints.ai_addr = nullptr;
+  hints.ai_addrlen = 0;
+  hints.ai_canonname = nullptr;
+  hints.ai_next = nullptr;
+  addrinfo* result = nullptr;
+  __getaddrinfo__(H, S, &hints, &result);
+``
+On success, `r` is a non-empty results object containing the results of the
+resolve opeation. Otherwise, `r` is `results_type()`.]
+
+  results_type resolve(const protocol_type& protocol,
+                       string_view host_name, string_view service_name);
+  results_type resolve(const protocol_type& protocol,
+                       string_view host_name, string_view service_name,
+                       error_code& ec);
+
+[function_returns `resolve(protocol, host_name, service_name,
+resolver_base::flags(), ec)`.]
+
+  results_type resolve(const protocol_type& protocol,
+                       string_view host_name, string_view service_name,
+                       flags f);
+  results_type resolve(const protocol_type& protocol,
+                       string_view host_name, string_view service_name,
+                       flags f, error_code& ec);
+
+[function_effects If `host_name.data() != nullptr`, let [^H] be an NTBS
+constructed from `host_name`; otherwise, let [^H] be `nullptr`. If
+`service_name.data() != nullptr`, let [^S] be an NTBS constructed from
+`service_name`; otherwise, let [^S] be `nullptr`. Resolves a host name and
+service name, as if by __POSIX__:
+``
+  addrinfo hints;
+  hints.ai_flags = static_cast<int>(f);
+  hints.ai_family = protocol.family();
+  hints.ai_socktype = protocol.type();
+  hints.ai_protocol = protocol.protocol();
+  hints.ai_addr = nullptr;
+  hints.ai_addrlen = 0;
+  hints.ai_canonname = nullptr;
+  hints.ai_next = nullptr;
+  addrinfo* result = nullptr;
+  __getaddrinfo__(H, S, &hints, &result);
+``]
+
+[function_returns On success, a non-empty results object containing the results
+of the resolve operation. Otherwise `results_type()`.]
+
+  template<class CompletionToken>
+    __ifr__ async_resolve(const protocol_type& protocol,
+                          string_view host_name, string_view service_name,
+                          CompletionToken&& token);
+
+[function_returns `async_resolve(protocol, host_name, service_name,
+resolver_base::flags(), forward<CompletionToken>(token))`.]
+
+  template<class CompletionToken>
+    __ifr__ async_resolve(const protocol& protocol,
+                          string_view host_name, string_view service_name,
+                          flags f, CompletionToken&& token);
+
+[function_completion_signature `void(error_code ec, results_type r)`.]
+
+[function_effects If `host_name.data() != nullptr`, let [^H] be an NTBS
+constructed from `host_name`; otherwise, let [^H] be `nullptr`. If
+`service_name.data() != nullptr`, let [^S] be an NTBS constructed from
+`service_name`; otherwise, let [^S] be `nullptr`. Initiates an asynchronous
+operation to resolve a host name and service name, as if by __POSIX__:
+``
+  addrinfo hints;
+  hints.ai_flags = static_cast<int>(f);
+  hints.ai_family = protocol.family();
+  hints.ai_socktype = protocol.type();
+  hints.ai_protocol = protocol.protocol();
+  hints.ai_addr = nullptr;
+  hints.ai_addrlen = 0;
+  hints.ai_canonname = nullptr;
+  hints.ai_next = nullptr;
+  addrinfo* result = nullptr;
+  __getaddrinfo__(H, S, &hints, &result);
+``
+On success, `r` is a non-empty results object containing the results of the
+resolve opeation. Otherwise, `r` is `results_type()`.]
 
   iterator resolve(const endpoint_type& e);
   iterator resolve(const endpoint_type& e, error_code& ec);
 
-[function_effects Translates an endpoint into a sequence of zero or one
-`basic_resolver_entry<InternetProtocol>` objects, as if by __POSIX__
-__getnameinfo__.]
+[function_effects Let `S1` and `S2` be implementation-defined values that are
+sufficiently large to hold the host name and service name respectively.
+Resolves an endpoint as if by __POSIX__:
+``
+  char host_name[S1];
+  char service_name[S2];
+  int flags = 0;
+  if (endpoint_type().protocol().type() == SOCK_DGRAM)
+    flags |= NI_DGRAM;
+  int result = __getnameinfo__(e.data(), e.size(),
+                               host_name, S1,
+                               service_name, S2,
+                               flags);
+  if (result != 0)
+  {
+    flags |= NI_NUMERICSERV;
+    result = __getnameinfo__(e.data(), e.size(),
+                             host_name, S1,
+                             service_name, S2,
+                             flags);
+  }
+``]
 
-[function_returns On success, an iterator object `i` such that the condition `i
-!= iterator()` yields `true`. Otherwise `iterator()`.]
+[function_returns On success, a results object with `size() == 1` containing
+the results of the resolve operation. Otherwise `results_type()`.]
 
   template<class CompletionToken>
     __ifr__ async_resolve(const endpoint_type& e,
-                       CompletionToken&& token);
+                          CompletionToken&& token);
 
-[function_completion_signature `void(error_code ec, iterator i)`.]
+[function_completion_signature `void(error_code ec, results_type r)`.]
 
-[function_effects Initiates an asynchronous operation to translate an endpoint
-into a sequence of zero or one `basic_resolver_entry<InternetProtocol>`
-objects, as if by __POSIX__ __getnameinfo__. If the operation completes
-successfully, the handler is passed an iterator object `i` such that the
-condition `i != iterator()` yields `true`. Otherwise, `i` is `iterator()`.]
+[function_effects Let `S1` and `S2` be implementation-defined values that are
+sufficiently large to hold the host name and service name respectively.
+Initiates an asynchronous operation to resolve an endpoint as if by __POSIX__:
+``
+  char host_name[S1];
+  char service_name[S2];
+  int flags = 0;
+  if (endpoint_type().protocol().type() == SOCK_DGRAM)
+    flags |= NI_DGRAM;
+  int result = __getnameinfo__(e.data(), e.size(),
+                               host_name, S1,
+                               service_name, S2,
+                               flags);
+  if (result != 0)
+  {
+    flags |= NI_NUMERICSERV;
+    result = __getnameinfo__(e.data(), e.size(),
+                             host_name, S1,
+                             service_name, S2,
+                             flags);
+  }
+``
+On success, `r` is a results object with `size() == 1` containing the results
+of the resolve operation; otherwise, `r` is `results_type()`.]
 
 [endsect]
 

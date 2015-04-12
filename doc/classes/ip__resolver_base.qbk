@@ -1,12 +1,12 @@
-[section:ip__resolver_query_base Class [^ip::resolver_query_base]]
-[xrefid internet.resolver.query.base]
+[section:ip__resolver_base Class [^ip::resolver_base]]
+[xrefid internet.resolver.base]
 
   namespace std {
     namespace experimental {
       __begin_versioned_ns__
         namespace ip {
 
-          class resolver_query_base
+          class resolver_base
           {
           public:
             typedef ``['[*T1]]`` flags;
@@ -19,8 +19,8 @@
             static const flags address_configured;
 
           protected:
-            resolver_query_base();
-            ~resolver_query_base();
+            resolver_base();
+            ~resolver_base();
           };
 
         } // namespace ip
@@ -28,12 +28,11 @@
     } // namespace experimental
   } // namespace std
 
-`resolver_query_base` defines a bitmask type, `flags`, with the bitmask
-elements shown above. The meanings and __POSIX__ equivalents for each flag are
-defined in the table below.
+`resolver_base` defines a bitmask type, `flags`, with the bitmask elements
+shown above.
 
 [table resolver flags
-  [[flag] [__POSIX__ equivalent] [notes]]
+  [[Constant name][__POSIX__ macro][Definition or notes]]
   [
     [`passive`]
     [`AI_PASSIVE`]
@@ -59,8 +58,8 @@ defined in the table below.
   [
     [`v4_mapped`]
     [`AI_V4MAPPED`]
-    [If the query protocol is specified as an IPv6 protocol, return IPv4-mapped
-     IPv6 addresses on finding no IPv6 addresses.]
+    [If the protocol is specified as an IPv6 protocol, return IPv4-mapped IPv6
+     addresses on finding no IPv6 addresses.]
   ]
   [
     [`all_matching`]

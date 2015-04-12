@@ -1,6 +1,9 @@
 [section:ip__basic_resolver_entry Class template [^ip::basic_resolver_entry]]
 [xrefid internet.resolver.entry]
 
+An object of type `basic_resolver_entry<InternetProtocol>` represents a single
+element in the results returned by a name resolution operation.
+
   namespace std {
     namespace experimental {
       __begin_versioned_ns__
@@ -27,6 +30,14 @@
             string service_name() const;
           };
 
+          // basic_resolver_entry comparisons:
+          template<class InternetProtocol>
+            bool operator==(const basic_resolver_entry<InternetProtocol>& a,
+                            const basic_resolver_entry<InternetProtocol>& b);
+          template<class InternetProtocol>
+            bool operator!=(const basic_resolver_entry<InternetProtocol>& a,
+                            const basic_resolver_entry<InternetProtocol>& b);
+
         } // namespace ip
       __end_versioned_ns__
     } // namespace experimental
@@ -38,8 +49,7 @@
   basic_resolver_entry();
 
 [function_effects Equivalent to
-`basic_resolver_entry<InternetProtocol>(endpoint_type(), string_view(),
-string_view())`.]
+`basic_resolver_entry<InternetProtocol>(endpoint_type(), "", "")`.]
 
   basic_resolver_entry(const endpoint_type& ep,
                        string_view h,
@@ -70,6 +80,24 @@ string_view())`.]
   string service_name() const;
 
 [function_returns The service name associated with the resolver entry.]
+
+[endsect]
+
+[section [^op::basic_resolver_entry] comparisons]
+[xrefid internet.resolver.entry.comparisons]
+
+  template<class InternetProtocol>
+    bool operator==(const basic_resolver_entry<InternetProtocol>& a,
+                    const basic_resolver_entry<InternetProtocol>& b);
+
+[function_returns `a.endpoint() == b.endpoint() && a.host_name() ==
+b.host_name() && a.service_name() == b.service_name()`.]
+
+  template<class InternetProtocol>
+    bool operator!=(const basic_resolver_entry<InternetProtocol>& a,
+                    const basic_resolver_entry<InternetProtocol>& b);
+
+[function_returns `!(a == b)`.]
 
 [endsect]
 

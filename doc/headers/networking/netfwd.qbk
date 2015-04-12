@@ -53,11 +53,9 @@
           template<class InternetProtocol>
             class basic_endpoint;
           template<class InternetProtocol>
-            class basic_resolver_query;
-          template<class InternetProtocol>
             class basic_resolver_entry;
           template<class InternetProtocol>
-            class basic_resolver_iterator;
+            class basic_resolver_results;
           template<class InternetProtocol>
             class basic_resolver;
           class tcp;

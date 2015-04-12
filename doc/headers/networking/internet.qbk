@@ -175,16 +175,27 @@
               basic_ostream<CharT, Traits>&,
               const basic_endpoint<InternetProtocol>&);
 
-          class ``[link classes.ip__resolver_query_base resolver_query_base]``;
-
-          template<class InternetProtocol>
-            ``[link classes.ip__basic_resolver_query basic_resolver_query]``;
-
           template<class InternetProtocol>
             ``[link classes.ip__basic_resolver_entry basic_resolver_entry]``;
 
           template<class InternetProtocol>
-            ``[link classes.ip__basic_resolver_iterator basic_resolver_iterator]``;
+            bool operator==(const basic_resolver_entry<InternetProtocol>&,
+                            const basic_resolver_entry<InternetProtocol>&);
+          template<class InternetProtocol>
+            bool operator!=(const basic_resolver_entry<InternetProtocol>&,
+                            const basic_resolver_entry<InternetProtocol>&);
+
+          template<class InternetProtocol>
+            ``[link classes.ip__basic_resolver_results basic_resolver_results]``;
+
+          template<class InternetProtocol>
+            bool operator==(const basic_resolver_results<InternetProtocol>&,
+                            const basic_resolver_results<InternetProtocol>&);
+          template<class InternetProtocol>
+            bool operator!=(const basic_resolver_results<InternetProtocol>&,
+                            const basic_resolver_results<InternetProtocol>&);
+
+          class ``[link classes.ip__resolver_base resolver_base]``;
 
           template<class InternetProtocol>
             class ``[link classes.ip__basic_resolver basic_resolver]``;

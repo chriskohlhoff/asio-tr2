@@ -1,0 +1,171 @@
+[section:ip__basic_resolver_results Class template [^ip::basic_resolver_results]]
+[xrefid internet.resolver.results]
+
+An object of type `basic_resolver_results<InternetProtocol>` represents a
+sequence of `basic_resolver_entry<InternetProtocol>` elements
+resulting from a single name resolution operation.
+
+  namespace std {
+    namespace experimental {
+      __begin_versioned_ns__
+        namespace ip {
+
+          template<class InternetProtocol>
+          class basic_resolver_results
+          {
+          public:
+            // types:
+            typedef InternetProtocol protocol_type;
+            typedef typename protocol_type::endpoint endpoint_type;
+            typedef basic_resolver_entry<protocol_type> value_type;
+            typedef const value_type& const_reference;
+            typedef value_type& reference;
+            typedef ``['implementation-defined]`` const_iterator;
+            typedef const_iterator iterator;
+            typedef ptrdiff_t difference_type;
+            typedef size_t size_type;
+
+            // construct / copy / destroy:
+            basic_resolver_results();
+            basic_resolver_results(const basic_resolver_results& rhs);
+            basic_resolver_results(basic_resolver_results& rhs) noexcept;
+            basic_resolver_results& operator=(const basic_resolver_results& rhs);
+            basic_resolver_results& operator=(basic_resolver_results&& rhs);
+            ~basic_resolver_results();
+
+            // size:
+            size_type size() const noexcept;
+            size_type max_size() const noexcept;
+            bool empty() const noexcept;
+
+            // element access:
+            const_iterator begin() const;
+            const_iterator end() const;
+            const_iterator cbegin() const;
+            const_iterator cend() const;
+
+            // swap:
+            void swap(basic_resolver_results& that) noexcept;
+          };
+
+          // basic_resolver_results comparisons:
+          template<class InternetProtocol>
+            bool operator==(const basic_resolver_results<InternetProtocol>& a,
+                            const basic_resolver_results<InternetProtocol>& b);
+          template<class InternetProtocol>
+            bool operator!=(const basic_resolver_results<InternetProtocol>& a,
+                            const basic_resolver_results<InternetProtocol>& b);
+
+        } // namespace ip
+      __end_versioned_ns__
+    } // namespace experimental
+  } // namespace std
+
+The class template `basic_resolver_results` satisfies the requirements of a
+sequence container (C++Std [sequence.reqmts]), except that only the operations
+defined for const-qualified sequence containers are supported. The class
+template `basic_resolver_results` supports forward iterators.
+
+A default-constructed `basic_resolver_results` object is empty. A non-empty
+results object is obtained only by calling a `basic_resolver` object's `wait`
+or `async_wait` operations, or otherwise by copy construction, move
+construction, assignment, or swap from another non-empty results object.
+
+[section [^ip::basic_resolver_results] constructors]
+[xrefid internet.resolver.results.cons]
+
+  basic_resolver_results();
+
+[function_postconditions `size() == 0`.]
+
+  basic_resolver_results(const basic_resolver_results& rhs);
+
+[function_postconditions `*this == rhs`.]
+
+  basic_resolver_results(basic_resolver_results& rhs) noexcept;
+
+[function_postconditions `*this` is equal to the prior value of `rhs`.]
+
+[endsect]
+
+[section [^ip::basic_resolver_results] assignment]
+[xrefid internet.resolver.results.assign]
+
+  basic_resolver_results& operator=(const basic_resolver_results& rhs);
+
+[function_postconditions `*this == rhs`.]
+
+[function_returns `*this`.]
+
+  basic_resolver_results& operator=(basic_resolver_results& rhs) noexcept;
+
+[function_postconditions `*this` is equal to the prior value of `rhs`.]
+
+[function_returns `*this`.]
+
+[endsect]
+
+[section [^ip::basic_resolver_results] size]
+[xrefid internet.resolver.results.size]
+
+  size_type size() const noexcept;
+
+[function_returns The number of `basic_resolver_entry` elements in `*this`.]
+
+  size_type max_size() const noexcept;
+
+[function_returns The maximum number of `basic_resolver_entry` elements that
+can be stored in `*this`.]
+
+  bool empty() const noexcept;
+
+[function_returns `size() == 0`.]
+
+[endsect]
+
+[section [^ip::basic_resolver_results] element access]
+[xrefid internet.resolver.results.access]
+
+  const_iterator begin() const;
+  const_iterator cbegin() const;
+
+[function_returns A starting iterator that enumerates over all the
+`basic_resolver_entry` elements stored in `*this`.]
+
+  const_iterator end() const;
+  const_iterator cend() const;
+
+[function_returns A terminating iterator that enumerates over all the
+`basic_resolver_entry` elements stored in `*this`.]
+
+[endsect]
+
+[section [^ip::basic_resolver_results] swap]
+[xrefid internet.resolver.results.swap]
+
+  void swap(basic_resolver_results& that) noexcept;
+
+[function_postconditions `*this` is equal to the prior value of `that`, and
+`that` is equal to the prior value of `*this`.]
+
+[endsect]
+
+[section [^ip::basic_resolver_results] comparisons]
+[xrefid internet.resolver.results.comparisons]
+
+  template<class InternetProtocol>
+    bool operator==(const basic_resolver_results<InternetProtocol>& a,
+                    const basic_resolver_results<InternetProtocol>& b);
+
+[function_returns `a.size() == b.size() && equal(a.cbegin(), a.cend(),
+b.cbegin())`.]
+
+  template<class InternetProtocol>
+    bool operator!=(const basic_resolver_results<InternetProtocol>& a,
+                    const basic_resolver_results<InternetProtocol>& b);
+
+[function_returns `!(a == b)`.]
+
+[endsect]
+
+[endsect]
