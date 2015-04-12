@@ -127,6 +127,7 @@
 [def __netinet_in_h__ [@http://www.opengroup.org/onlinepubs/9699919799/basedefs/netinet_in.h.html `netinet/in.h`]]
 [def __netinet_tcp_h__ [@http://www.opengroup.org/onlinepubs/9699919799/basedefs/netinet_tcp.h.html `netinet/tcp.h`]]
 [def __dotdotdot__ ...]
+[def __empty_capture__ '''[]''']
 [def __unspecified__ '''<emphasis>unspecified</emphasis>''']
 [def __ifr__ '''<emphasis>DEDUCED</emphasis>''']
 [def __versioned_ns__ network_v1]

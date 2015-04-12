@@ -43,13 +43,22 @@
 
         ``// [link functions.connect synchronous connect operations]:``
 
-        template<class Protocol, class InputIterator>
-          InputIterator connect(basic_socket<Protocol>& s,
-                                InputIterator first);
-        template<class Protocol, class InputIterator>
-          InputIterator connect(basic_socket<Protocol>& s,
-                                InputIterator first,
-                                error_code& ec);
+        template<class Protocol, class EndpointSequence>
+          typename Protocol::endpoint connect(basic_socket<Protocol>& s,
+                                              const EndpointSequence& endpoints);
+        template<class Protocol, class EndpointSequence>
+          typename Protocol::endpoint connect(basic_socket<Protocol>& s,
+                                              const EndpointSequence& endpoints);
+                                              error_code& ec);
+        template<class Protocol, class EndpointSequence, class ConnectCondition>
+          typename Protocol::endpoint connect(basic_socket<Protocol>& s,
+                                              const EndpointSequence& endpoints,
+                                              ConnectCondition c);
+        template<class Protocol, class EndpointSequence, class ConnectCondition>
+          typename Protocol::endpoint connect(basic_socket<Protocol>& s,
+                                              const EndpointSequence& endpoints,
+                                              ConnectCondition c,
+                                              error_code& ec);
 
         template<class Protocol, class InputIterator>
           InputIterator connect(basic_socket<Protocol>& s,
@@ -58,17 +67,6 @@
           InputIterator connect(basic_socket<Protocol>& s,
                                 InputIterator first, InputIterator last,
                                 error_code& ec);
-
-        template<class Protocol, class InputIterator, class ConnectCondition>
-          InputIterator connect(basic_socket<Protocol>& s,
-                                InputIterator first,
-                                ConnectCondition c);
-        template<class Protocol, class InputIterator, class ConnectCondition>
-          InputIterator connect(basic_socket<Protocol>& s,
-                                InputIterator first,
-                                ConnectCondition c,
-                                error_code& ec);
-
         template<class Protocol, class InputIterator, class ConnectCondition>
           InputIterator connect(basic_socket<Protocol>& s,
                                 InputIterator first, InputIterator last,
@@ -81,29 +79,27 @@
 
         ``// [link functions.async_connect asynchronous connect operations]:``
 
-        template<class Protocol, class InputIterator, class CompletionToken>
+        template<class Protocol, class EndpointSequence, class CompletionToken>
           __ifr__ async_connect(basic_socket<Protocol>& s,
-                             InputIterator first,
-                             CompletionToken&& token);
+                                const EndpointSequence& endpoints,
+                                CompletionToken&& token);
+        template<class Protocol, class EndpointSequence,
+          class ConnectCondition, class CompletionToken>
+            __ifr__ async_connect(basic_socket<Protocol>& s,
+                                  const EndpointSequence& endpoints,
+                                  ConnectCondition c,
+                                  CompletionToken&& token);
 
         template<class Protocol, class InputIterator, class CompletionToken>
           __ifr__ async_connect(basic_socket<Protocol>& s,
-                             InputIterator first, InputIterator last,
-                             CompletionToken&& token);
-
+                                InputIterator first, InputIterator last,
+                                CompletionToken&& token);
         template<class Protocol, class InputIterator,
           class ConnectCondition, class CompletionToken>
             __ifr__ async_connect(basic_socket<Protocol>& s,
-                               InputIterator first,
-                               ConnectCondition c,
-                               CompletionToken&& token);
-
-        template<class Protocol, class InputIterator,
-          class ConnectCondition, class CompletionToken>
-            __ifr__ async_connect(basic_socket<Protocol>& s,
-                               InputIterator first, InputIterator last,
-                               ConnectCondition c,
-                               CompletionToken&& token);
+                                  InputIterator first, InputIterator last,
+                                  ConnectCondition c,
+                                  CompletionToken&& token);
 
       __end_versioned_ns__
     } // namespace experimental
