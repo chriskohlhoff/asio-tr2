@@ -549,7 +549,7 @@ are used to express type requirements, as listed in the table below.
   ]
   [
     [`ConnectCondition`]
-    [[link socket.reqmts.connect_condition connect condition]]
+    [[link requirements.connect_condition connect condition]]
   ]
   [
     [`ConstBufferSequence`]
@@ -568,6 +568,10 @@ are used to express type requirements, as listed in the table below.
   [
     [`DynamicBuffer`]
     [[link requirements.dynamic_buffers dynamic buffer]]
+  ]
+  [
+    [`ExecutionContext`]
+    [[link requirements.execution_context execution context]]
   ]
   [
     [`Executor`]
@@ -640,6 +644,7 @@ are used to express type requirements, as listed in the table below.
 [include:requirements requirements/proto_allocator.qbk]
 [include:requirements requirements/asynchronous_operations.qbk]
 [include:requirements requirements/executor.qbk]
+[include:requirements requirements/execution_context.qbk]
 [include:requirements requirements/service.qbk]
 [endsect]
 [include:classes classes/handler_type.qbk]

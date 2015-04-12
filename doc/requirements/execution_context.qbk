@@ -1,0 +1,24 @@
+[section:execution_context Execution context requirements]
+[xrefid async.reqmts.executioncontext]
+
+An execution context shall be publicly and unambiguously derived from
+`execution_context`.
+
+In the table below, `X` denotes an execution context class, and `x` denotes an
+object of type `X`.
+
+[table ExecutionContext requirements
+  [[expression] [return type] [assertion/note\npre/post-condition]]
+  [
+    [`X::executor_type`]
+    [type meeting [link requirements.executor executor] requirements]
+    []
+  ]
+  [
+    [`x.get_executor()`]
+    [`X::executor_type`]
+    [Returns an executor object that is associated with the execution context.]
+  ]
+]
+
+[endsect]

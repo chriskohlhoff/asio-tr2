@@ -50,6 +50,9 @@
     } // namespace experimental
   } // namespace std
 
+The class `io_service` satsifies the [link requirements.execution_context
+ExecutionContext type requirements].
+
 The `io_service` functions `run`, `run_for`, `run_until`, `run_one`,
 `run_one_for`, `run_one_until`, `poll`, or `poll_one` must be called for the
 `io_service` to perform [link definitions.asynchronous_operation asynchronous
@@ -57,11 +60,6 @@ operations] on behalf of a C++ program. Notification that an asynchronous
 operation has completed is delivered by execution of the associated handler
 function object, as determined by the requirements for [link
 requirements.asynchronous_operations asynchronous operations].
-
-An object of type `io_service` has an associated executor object, meeting the
-[link requirements.executor Executor type requirements], of type
-`io_service::executor_type` and obtainable via the `io_service` object's
-`get_executor` member function.
 
 For an object of type `io_service`, ['outstanding work] is defined as the sum
 of:
