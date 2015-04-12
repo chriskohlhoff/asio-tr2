@@ -6,6 +6,10 @@ supports reading and writing on sockets. It uses a
 `basic_socket_streambuf<Protocol, Clock, WaitTraits>` object to control the
 associated sequences.
 
+[std_note This class is intended for sending and receiving bytes, not
+characters. The conversion from characters to bytes, and vice versa, must occur
+elsewhere.]
+
   namespace std {
     namespace experimental {
       __begin_versioned_ns__
