@@ -1,17 +1,16 @@
 [section:basic_socket_acceptor Class template [^basic_socket_acceptor]]
 [xrefid socket.acceptor]
 
-The class template `basic_socket_acceptor<Protocol>` is used to listen for, and
-queue, incoming socket connections. Socket objects that represent the incoming
-connections are dequeued by calling `accept` or `async_accept`.
+An object of class template `basic_socket_acceptor<Protocol>` is used to listen
+for, and queue, incoming socket connections. Socket objects that represent the
+incoming connections are dequeued by calling `accept` or `async_accept`.
 
   namespace std {
     namespace experimental {
       __begin_versioned_ns__
 
         template<class Protocol>
-        class basic_socket_acceptor :
-          public socket_base
+        class basic_socket_acceptor : public socket_base
         {
         public:
           // types:
@@ -125,6 +124,9 @@ connections are dequeued by calling `accept` or `async_accept`.
 
           template<class CompletionToken>
             __ifr__ async_wait(wait_type w, CompletionToken&& token);
+
+        private:
+          protocol_type protocol_; // ``['exposition only]``
         };
 
       __end_versioned_ns__
@@ -136,30 +138,25 @@ connections are dequeued by calling `accept` or `async_accept`.
 
   explicit basic_socket_acceptor(io_service& ios);
 
-[function_effects Constructs an object of class
-`basic_socket_acceptor<Protocol>`.]
-
 [function_postconditions\n
 [mdash] `get_executor() == ios.get_executor()`.\n
 [mdash] `is_open() == false`.]
 
   basic_socket_acceptor(io_service& ios, const protocol_type& protocol);
 
-[function_effects Constructs an object of class
-`basic_socket_acceptor<Protocol>`, opening the acceptor as if by calling
-`open(protocol)`.]
+[function_effects Opens this acceptor as if by calling `open(protocol)`.]
 
 [function_postconditions\n
 [mdash] `get_executor() == ios.get_executor()`.\n
 [mdash] `is_open() == true`.\n
 [mdash] `non_blocking() == false`.\n
-[mdash] `enable_connection_aborted() == false`.]
+[mdash] `enable_connection_aborted() == false`.\n
+[mdash] `protocol_ == protocol`.]
 
   basic_socket_acceptor(io_service& ios, const endpoint_type& endpoint,
                         bool reuse_addr = true);
 
-[function_effects Constructs an object of class `basic_socket_acceptor<Protocol>`,
-opening and binding the acceptor as if by calling:
+[function_effects Opens and binds this acceptor as if by calling:
 ``
   open(endpoint.protocol());
   if (reuse_addr)
@@ -172,7 +169,8 @@ opening and binding the acceptor as if by calling:
 [mdash] `get_executor() == ios.get_executor()`.\n
 [mdash] `is_open() == true`.\n
 [mdash] `non_blocking() == false`.\n
-[mdash] `enable_connection_aborted() == false`.]
+[mdash] `enable_connection_aborted() == false`.\n
+[mdash] `protocol_ == endpoint.protocol()`.]
 
 [commentary [UNPV1] recommends setting `SO_REUSEADDR` by default in all TCP
 servers, although there are some security implications in doing so.]
@@ -182,15 +180,15 @@ servers, although there are some security implications in doing so.]
 
 [function_requires `native_acceptor` is a native handle to an open acceptor.]
 
-[function_effects Constructs an object of class
-`basic_socket_acceptor<Protocol>`, assigning the existing native acceptor into
-the object as if by calling `assign(protocol, native_acceptor)`.]
+[function_effects Assigns the existing native acceptor into this acceptor as if
+by calling `assign(protocol, native_acceptor)`.]
 
 [function_postconditions\n
 [mdash] `get_executor() == ios.get_executor()`.\n
 [mdash] `is_open() == true`.\n
 [mdash] `non_blocking() == false`.\n
-[mdash] `enable_connection_aborted() == false`.]
+[mdash] `enable_connection_aborted() == false`.\n
+[mdash] `protocol_ == protocol`.]
 
   basic_socket_acceptor(basic_socket_acceptor&& rhs);
 
@@ -206,6 +204,7 @@ constructor invocation.\n
 to the constructor invocation.\n
 [mdash] `enable_connection_aborted()` returns the same value as
 `rhs.enable_connection_aborted()` prior to the constructor invocation.\n
+[mdash] `protocol_` is equal to the prior value of `rhs.protocol_`.\n
 [mdash] `rhs.is_open() == false`.]
 
   template<class OtherProtocol>
@@ -225,6 +224,8 @@ constructor invocation.\n
 to the constructor invocation.\n
 [mdash] `enable_connection_aborted()` returns the same value as
 `rhs.enable_connection_aborted()` prior to the constructor invocation.\n
+[mdash] `native_handle()` returns the prior value of `rhs.native_handle()`.\n
+[mdash] `protocol_` is the result of converting the prior value of `rhs.protocol_`.\n
 [mdash] `rhs.is_open() == false`.]
 
 [function_remarks This constructor shall not participate in overload resolution
@@ -237,11 +238,11 @@ unless `OtherProtocol` is implicitly convertible to `Protocol`.]
 
   ~basic_socket_acceptor();
 
-[function_effects If `is_open()` is `true`, cancels any asynchronous operations
-associated with the acceptor, and releases acceptor resources as if by
-__POSIX__ __close__. Otherwise, no effect. Handlers for cancelled operations
-shall be passed an error code `ec` such that `ec == errc::operation_canceled`
-yields `true`.]
+[function_effects If `is_open()` is `true`, cancels all outstanding
+asynchronous operations associated with this acceptor, and releases acceptor
+resources as if by __POSIX__ `__close__(native_handle())`. Completion handlers
+for canceled operations are passed an error code `ec` such that `ec ==
+errc::operation_canceled` yields `true`.]
 
 [endsect]
 
@@ -250,11 +251,12 @@ yields `true`.]
 
   basic_socket_acceptor& operator=(basic_socket_acceptor&& rhs);
 
-[function_effects If `is_open()` is `true`, cancels any asynchronous operations
-associated with the acceptor, and releases acceptor resources as if by __POSIX__
-__close__. Then moves into `*this` the state originally represented by `rhs`.
-Handlers for cancelled operations shall be passed an error code `ec` such that
-`ec == errc::operation_canceled` yields `true`.]
+[function_effects If `is_open()` is `true`, cancels all outstanding
+asynchronous operations associated with this acceptor, and releases acceptor
+resources as if by __POSIX__ `__close__(native_handle())`. Then moves into
+`*this` the state originally represented by `rhs`. Completion handlers for
+canceled operations are passed an error code `ec` such that `ec ==
+errc::operation_canceled` yields `true`.]
 
 [function_postconditions\n
 [mdash] `get_executor() == rhs.get_executor()`.\n
@@ -264,6 +266,10 @@ assignment.\n
 to the assignment.\n
 [mdash] `enable_connection_aborted()` returns the same value as
 `rhs.enable_connection_aborted()` prior to the assignment.\n
+[mdash] `native_handle()` returns the same value as `rhs.native_handle()` prior
+to the assignment.\n
+[mdash] `protocol_` is the same value as `rhs.protocol_` prior to the
+assignment.\n
 [mdash] `rhs.is_open() == false`.]
 
 [function_returns `*this`.]
@@ -273,11 +279,12 @@ to the assignment.\n
 
 [function_requires `OtherProtocol` is implicitly convertible to `Protocol`.]
 
-[function_effects If `is_open()` is `true`, cancels any asynchronous operations
-associated with the acceptor, and releases acceptor resources as if by __POSIX__
-__close__. Then moves into `*this` the state originally represented by `rhs`.
-Handlers for cancelled operations shall be passed an error code `ec` such that
-`ec == errc::operation_canceled` yields `true`.]
+[function_effects If `is_open()` is `true`, cancels all outstanding
+asynchronous operations associated with this acceptor, and releases acceptor
+resources as if by __POSIX__ `__close__(native_handle())`. Then moves into
+`*this` the state originally represented by `rhs`. Completion handlers for
+canceled operations are passed an error code `ec` such that `ec ==
+errc::operation_canceled` yields `true`.]
 
 [function_postconditions\n
 [mdash] `get_executor() == rhs.get_executor()`.\n
@@ -287,6 +294,10 @@ assignment.\n
 to the assignment.\n
 [mdash] `enable_connection_aborted()` returns the same value as
 `rhs.enable_connection_aborted()` prior to the assignment.\n
+[mdash] `native_handle()` returns the same value as `rhs.native_handle()` prior
+to the assignment.\n
+[mdash] `protocol_` is the result of converting the value of `rhs.protocol_`
+prior to the assignment.\n
 [mdash] `rhs.is_open() == false`.]
 
 [function_returns `*this`.]
@@ -305,43 +316,40 @@ resolution unless `OtherProtocol` is implicitly convertible to `Protocol`.]
 
   native_handle_type native_handle();
 
-[function_returns The native representation of the acceptor implementation.]
+[function_returns The native representation of this acceptor.]
 
   void open(const protocol_type& protocol);
   void open(const protocol_type& protocol, error_code& ec);
 
-[function_requires `!is_open()`.]
-
 [function_effects Establishes the postcondition, as if by __POSIX__
-__socket__.]
+`__socket__(protocol.family(), protocol.type(), protocol.protocol())`.]
 
 [function_postconditions\n
 [mdash] `is_open() == true`.\n
 [mdash] `non_blocking() == false`.\n
-[mdash] `enable_connection_aborted() == false`.]
+[mdash] `enable_connection_aborted() == false`.\n
+[mdash] `protocol_ == protocol`.]
 
 [function_error_conditions\n
-[mdash] `socket_errc::already_open` [mdash] if the requirement `!is_open()` is
-unmet.]
+[mdash] `socket_errc::already_open` [mdash] if `is_open()` is `true`.]
 
   void assign(const protocol_type& protocol,
               const native_handle_type& native_acceptor);
   void assign(const protocol_type& protocol,
               const native_handle_type& native_acceptor, error_code& ec);
 
-[function_requires `!is_open()`, and `native_acceptor` is a native handle to an
-open acceptor.]
+[function_requires `native_acceptor` is a native handle to an open acceptor.]
 
-[function_effects Assigns the native acceptor handle to the acceptor object.]
+[function_effects Assigns the native acceptor handle to this acceptor object.]
 
 [function_postconditions\n
 [mdash] `is_open() == true`.\n
 [mdash] `non_blocking() == false`.\n
-[mdash] `enable_connection_aborted() == false`.]
+[mdash] `enable_connection_aborted() == false`.\n
+[mdash] `protocol_ == protocol`.]
 
 [function_error_conditions\n
-[mdash] `socket_errc::already_open` [mdash] if the requirement `!is_open()` is
-unmet.]
+[mdash] `socket_errc::already_open` [mdash] if `is_open()` is `true`.]
 
 [commentary The main source of errors for `assign` would be a call to register
 the acceptor with an OS-specific event demultiplexer, such as a `kqueue`, an
@@ -351,31 +359,32 @@ the same registration.]
 
   bool is_open() const;
 
-[function_returns A `bool` indicating whether the acceptor was opened by a
+[function_returns A `bool` indicating whether this acceptor was opened by a
 previous call to `open` or `assign`.]
 
   void close();
   void close(error_code& ec);
 
-[function_effects If `is_open()` is `true`, cancels any asynchronous operations
-associated with the acceptor, and establishes the postcondition as if by
-__POSIX__ __close__. Otherwise, no effect. Handlers for cancelled asynchronous
-operations are passed an error code `ec` such that `ec ==
-errc::operation_canceled` yields `true`.]
+[function_effects If `is_open()` is `true`, cancels all outstanding
+asynchronous operations associated with this acceptor, and establishes the
+postcondition as if by __POSIX__ `__close__(native_handle())`. Completion
+handlers for canceled asynchronous operations are passed an error code `ec`
+such that `ec == errc::operation_canceled` yields `true`.]
 
 [function_postconditions `is_open() == false`.]
 
   void cancel();
   void cancel(error_code& ec);
 
-[function_effects If `is_open()` is `true`, cancels any asynchronous operations
-associated with the acceptor. Handlers for cancelled asynchronous operations are
-passed an error code `ec` such that `ec == errc::operation_canceled` yields
+[function_effects Cancels all outstanding asynchronous operations associated
+with this acceptor. Completion handlers for canceled asynchronous operations
+are passed an error code `ec` such that `ec == errc::operation_canceled` yields
 `true`.]
 
 [function_error_conditions\n
+[mdash] `errc::bad_file_descriptor` [mdash] if `is_open()` is `false`.\n
 [mdash] `errc::operation_not_supported` [mdash] Current conditions do not
-permit cancellation. The conditions under which cancellation of asynchronous
+permit cancelation. The conditions under which cancelation of asynchronous
 operations is permitted are implementation-defined.]
 
 [commentary This flexibility is included to support implementations on
@@ -389,24 +398,32 @@ with an acceptor.]
   template<class SettableSocketOption>
     void set_option(const SettableSocketOption& option, error_code& ec);
 
-[function_effects Sets an option on the acceptor, as if by __POSIX__
-__setsockopt__.]
+[function_effects Sets an option on this acceptor, as if by __POSIX__
+`__setsockopt__(native_handle(), option.level(protocol_),
+option.name(protocol_), option.data(protocol_), option.size(protocol_))`.]
 
   template<class GettableSocketOption>
     void get_option(GettableSocketOption& option);
   template<class GettableSocketOption>
     void get_option(GettableSocketOption& option, error_code& ec);
 
-[function_effects Gets an option from the acceptor, as if by __POSIX__
-__getsockopt__.]
+[function_effects Gets an option from this acceptor, as if by __POSIX__:
+``
+  socklen_t option_len = option.size(protocol_);
+  int result = __getsockopt__(native_handle(), option.level(protocol_),
+                          option.name(protocol_), option.data(protocol_),
+                          &option_len);
+  if (result == 0)
+    option.resize(option_len);
+``]
 
   template<class IoControlCommand>
     void io_control(IoControlCommand& command);
   template<class IoControlCommand>
     void io_control(IoControlCommand& command, error_code& ec);
 
-[function_effects Executes an I/O control command on the acceptor, as if by
-__POSIX__ __ioctl__.]
+[function_effects Executes an I/O control command on this acceptor, as if by
+__POSIX__ `__ioctl__(native_handle(), command.name(), command.data())`.]
 
 [commentary This Technical Specification does not include any classes that
 satisfy [link requirements.io_control_command `IoControlCommand`] requirements.
@@ -419,8 +436,8 @@ extensions to be supported.]
 
 [function_requires `is_open()`.]
 
-[function_effects Sets the non-blocking mode of the acceptor. If `mode` is `true`,
-subsequent synchronous operations may fail with error condition
+[function_effects Sets the non-blocking mode of this acceptor. If `mode` is
+`true`, subsequent synchronous operations may fail with error condition
 `errc::operation_would_block` if they are unable to perform the requested
 operation immediately. If `mode` is `false`, subsequent synchronous operations
 shall block until complete.]
@@ -433,17 +450,30 @@ asynchronous operations.]
 
   bool non_blocking() const;
 
-[function_returns The non-blocking mode of the acceptor.]
+[function_returns The non-blocking mode of this acceptor.]
 
   void native_non_blocking(bool mode);
   void native_non_blocking(bool mode, error_code& ec);
 
 [function_effects Sets the non-blocking mode of the underlying native acceptor,
-as if by __POSIX__ __fcntl__ with command `F_SETFL` to add or clear the file
-status flag `O_NONBLOCK`. This mode shall have no effect on the behavior of
+as if by __POSIX__:
+``
+  int flags = __fcntl__(native_handle(), F_GETFL, 0);
+  if (flags >= 0)
+  {
+    if (mode)
+      flags |= O_NONBLOCK;
+    else
+      flags &= ~O_NONBLOCK;
+    __fcntl__(native_handle(), F_SETFL, flags);
+  }
+``]
+
+[function_block The native non-blocking mode has no effect on the behavior of
 the synchronous or asynchronous operations specified in this clause.]
 
 [function_error_conditions\n
+[mdash] `errc::bad_file_descriptor` [mdash] if `is_open()` is `false`.\n
 [mdash] `errc::invalid_argument` [mdash] if `mode == false` and `non_blocking()
 == true`. [inline_note As the combination does not make sense.]]
 
@@ -460,32 +490,36 @@ operating system-specific function on the result of `native_handle()`.]
   void bind(const endpoint_type& endpoint);
   void bind(const endpoint_type& endpoint, error_code& ec);
 
-[function_effects Binds the acceptor to the specified local endpoint, as
-if by __POSIX__ __bind__.]
+[function_effects Binds this acceptor to the specified local endpoint, as if by
+__POSIX__ `__bind__(native_handle(), endpoint.data(), endpoint.size())`.]
 
-  void listen(int backlog = max_connections);
+  void listen(int backlog = socket_base::max_connections);
   void listen(int backlog, error_code& ec);
 
-[function_effects Marks the acceptor as ready to accept connections, as if by
-__POSIX__ __listen__. If `backlog == socket_base::max_connections`, the
-implementation shall set the acceptor's listen queue to the maximum allowable
-length.]
+[function_effects Marks this acceptor as ready to accept connections, as if by
+__POSIX__ `__listen__(native_handle(), backlog)`.]
 
   endpoint_type local_endpoint() const;
   endpoint_type local_endpoint(error_code& ec) const;
 
-[function_effects Determines the locally-bound endpoint associated with the
-acceptor, as if by __POSIX__ __getsockname__.]
+[function_effects Determines the locally-bound endpoint associated with this
+acceptor, as if by __POSIX__:
+``
+  endpoint_type endpoint;
+  socklen_t endpoint_len = endpoint.capacity();
+  int result == __getsockname__(native_handle(), endpoint.data(), &endpoint_len);
+  if (result == 0)
+    endpoint.resize(endpoint_len);
+``]
 
-[function_returns On success, the locally-bound endpoint. Otherwise
-`endpoint_type()`.]
+[function_returns On success, `endpoint`. Otherwise `endpoint_type()`.]
 
   void enable_connection_aborted(bool mode);
 
 [function_effects If `mode` is true, subsequent synchronous or asynchronous
-accept operations are permitted to fail with error condition
+accept operations on this acceptor are permitted to fail with error condition
 `errc::connection_aborted`. If `mode` is `false`, subsequent accept operations
-shall not fail with `errc::connection_aborted`. [inline_note If `mode` is
+will not fail with `errc::connection_aborted`. [inline_note If `mode` is
 `false`, the implementation will restart the call to __POSIX__ __accept__ if it
 fails with `ECONNABORTED`.]]
 
@@ -500,8 +534,8 @@ re-enable the error.]
 
   bool enable_connection_aborted() const;
 
-[function_returns Whether accept operations are permitted to fail with
-`errc::connection_aborted`.]
+[function_returns Whether accept operations on this acceptor are permitted to
+fail with `errc::connection_aborted`.]
 
   template<class OtherProtocol>
     void accept(basic_socket<OtherProtocol>& socket);
@@ -584,8 +618,8 @@ unspecified.]
   void wait(wait_type w);
   void wait(wait_type w, error_code& ec);
 
-[function_effects Waits for the acceptor to be ready to read, ready to write, or
-to have error conditions pending, as if by __POSIX__ __select__.]
+[function_effects Waits for the acceptor to have a queued incoming connection,
+or to have error conditions pending, as if by __POSIX__ __poll__.]
 
   template<class CompletionToken>
     __ifr__ async_wait(wait_type w, CompletionToken&& token);
@@ -593,13 +627,16 @@ to have error conditions pending, as if by __POSIX__ __select__.]
 [function_completion_signature `void(error_code ec)`.]
 
 [function_effects Initiates an asynchronous operation to wait for the acceptor
-to be ready to read, ready to write, or to have error conditions pending, as if
-by __POSIX__ __select__.]
+to have a queued incoming connection, or to have error conditions pending, as
+if by __POSIX__ __poll__.]
 
 [function_block When multiple asynchronous wait operations are initiated with
 the same `wait_type` value, all operations shall complete when the acceptor
-enters the corresponding ready state. The order of invocation of the handlers
-for these operations is unspecified.]
+enters the corresponding ready state. The order of invocation of the
+completions handlers for these operations is unspecified.]
+
+[function_error_conditions\n
+[mdash] `errc::bad_file_descriptor` [mdash] if `is_open()` is `false`.]
 
 [endsect]
 
