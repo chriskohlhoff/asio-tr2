@@ -548,6 +548,10 @@ are used to express type requirements, as listed in the table below.
     [[link requirements.completion_token completion token]]
   ]
   [
+    [`ConnectCondition`]
+    [[link socket.reqmts.connect_condition connect condition]]
+  ]
+  [
     [`ConstBufferSequence`]
     [[link requirements.const_buffers constant buffer sequence]]
   ]
@@ -759,6 +763,7 @@ This clause defines components for performing timer operations.
 [include:requirements requirements/gettable_socket_option.qbk]
 [include:requirements requirements/settable_socket_option.qbk]
 [include:requirements requirements/io_control_command.qbk]
+[include:requirements requirements/connect_condition.qbk]
 [endsect]
 [include:classes classes/socket_errc.qbk]
 [include:classes classes/socket_base.qbk]
