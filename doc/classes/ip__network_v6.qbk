@@ -52,14 +52,12 @@
 
   constexpr network_v6() noexcept;
 
-[function_postconditions `address().is_unspecified() == true` and
+[function_postconditions `this->address().is_unspecified() == true` and
 `prefix_length() == 0`.]
 
   constexpr network_v6(const address_v6& addr, unsigned prefix_len);
 
-[function_requires `prefix_len <= 128`.]
-
-[function_postconditions `address() == addr` and
+[function_postconditions `this->address() == addr` and
 `prefix_length() == prefix_len`.]
 
 [function_throws `out_of_range` if `prefix_len > 128`.]
@@ -82,13 +80,14 @@ constructed.]
 
 [function_returns An `address_v6` object with the first `prefix_length()` bits,
 starting from the most significant bit in network byte order, set to the
-corresponding bit value of `address()`. All other bits are zero.]
+corresponding bit value of `this->address()`. All other bits are zero.]
 
   address_v6_range hosts() const noexcept;
 
 [function_returns If `is_host() == true`, an `address_v6_range` object
-representing the single address `address().` Otherwise, an `address_v6_range`
-object representing the range of unique host IP addresses in the network.]
+representing the single address `this->address().` Otherwise, an
+`address_v6_range` object representing the range of unique host IP addresses in
+the network.]
 
   constexpr network_v6 canonical() const noexcept;
 
@@ -96,13 +95,13 @@ object representing the range of unique host IP addresses in the network.]
 
   constexpr bool is_host() const noexcept;
 
-[function_returns `true` if `prefix_length() == 128`, otherwise `false`.]
+[function_returns `prefix_length() == 128`.]
 
   constexpr bool is_subnet_of(const network_v6& other) const noexcept;
 
 [function_returns `true` if `other.prefix_length() < prefix_length()` and
-`network_v6(address(), other.prefix_length()).canonical() ==
-other.canonical()`.]
+`network_v6(this->address(), other.prefix_length()).canonical() ==
+other.canonical()`, otherwise `false`.]
 
   template<class Allocator = allocator<char>>
     basic_string<char, char_traits<char>, Allocator>
