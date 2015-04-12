@@ -1077,7 +1077,7 @@ The priority scheduler's executors can then be used like any other:
   [[Header][Name][Description]]
   [
     [[^type_traits]]
-    [Class template [^handler_type]]
+    [Class template [^completion_handler_type]]
     [Transforms a completion token into a completion handler.]
   ]
   [
@@ -1918,7 +1918,7 @@ be added to the TS.]
 [section:async_requirements Requirements]
 [include:requirements requirements/proto_allocator.qbk]
 [endsect]
-[include:classes classes/handler_type.qbk]
+[include:classes classes/completion_handler_type.qbk]
 [include:classes classes/async_result.qbk]
 [include:classes classes/async_completion.qbk]
 [include:headers headers/concurrency/memory.qbk]

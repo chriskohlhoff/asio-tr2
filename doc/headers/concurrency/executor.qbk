@@ -47,7 +47,7 @@
           class ``[link classes.executor_wrapper executor_wrapper]``;
 
         template<class T, class Executor, class Signature>
-          struct handler_type<executor_wrapper<T, Executor>, Signature>;
+          struct completion_handler_type<executor_wrapper<T, Executor>, Signature>;
 
         template<class T, class Executor>
           class async_result<executor_wrapper<T, Executor>>;

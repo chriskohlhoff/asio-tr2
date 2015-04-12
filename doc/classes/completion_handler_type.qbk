@@ -1,0 +1,30 @@
+[section:completion_handler_type Class template [^completion_handler_type]]
+[xrefid async.handler.type]
+
+The `completion_handler_type` class template is a type transformation (C++Std,
+[meta]) that transforms a `CompletionToken` into a completion handler type that
+is based on a `Signature`.
+
+  namespace std {
+    namespace experimental {
+      __begin_versioned_ns__
+
+        template<class CompletionToken, class Signature, class = void>
+        struct completion_handler_type
+        {
+          typedef CompletionToken type;
+        };
+
+      __end_versioned_ns__
+    } // namespace experimental
+  } // namespace std
+
+The template parameter `CompletionToken` shall be an object type. The template
+parameter `Signature` shall be a call signature (C++Std, [func.def]).
+
+Specializations of `completion_handler_type` shall define a nested type `type`
+that satisfies the `MoveConstructible` requirements. An object of type `type`
+shall be a function object with call signature `Signature`, and `type` shall be
+constructible from a rvalue of type `CompletionToken`.
+
+[endsect]

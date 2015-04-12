@@ -33,7 +33,7 @@ transformed into a completion handler.
         };
 
         template<class Func, class ProtoAllocator, class R, class... Args>
-        struct handler_type<packaged_token<Func, ProtoAllocator>, R(Args...)>
+        struct completion_handler_type<packaged_token<Func, ProtoAllocator>, R(Args...)>
         {
           typedef packaged_handler<result_of_t<Func(Args...)>(Args...), ProtoAllocator> type;
         };

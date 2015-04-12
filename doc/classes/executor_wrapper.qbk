@@ -55,9 +55,9 @@ requirements.executor Executor requirements].
         };
 
         template<class T, class Executor, class Signature>
-        struct handler_type<executor_wrapper<T, Executor>, Signature>
+        struct completion_handler_type<executor_wrapper<T, Executor>, Signature>
         {
-          typedef executor_wrapper<handler_type_t<T, Signature>, Executor> type;
+          typedef executor_wrapper<completion_handler_type_t<T, Signature>, Executor> type;
         };
 
         template<class T, class Executor>

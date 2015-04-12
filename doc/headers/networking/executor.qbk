@@ -6,13 +6,13 @@
       __begin_versioned_ns__
 
         template<class CompletionToken, class Signature, class = void>
-          struct ``[link classes.handler_type handler_type]``;
+          struct ``[link classes.completion_handler_type completion_handler_type]``;
 
         template<class CompletionToken, class Signature>
-          using handler_type_t =
-            typename handler_type<CompletionToken, Signature>::type;
+          using completion_handler_type_t =
+            typename completion_handler_type<CompletionToken, Signature>::type;
 
-        template<class Handler> class ``[link classes.async_result async_result]``;
+        template<class CompletionHandler> class ``[link classes.async_result async_result]``;
 
         template<class CompletionToken, class Signature>
           struct ``[link classes.async_completion async_completion]``;
@@ -74,7 +74,7 @@
           class ``[link classes.executor_wrapper executor_wrapper]``;
 
         template<class T, class Executor, class Signature>
-          struct handler_type<executor_wrapper<T, Executor>, Signature>;
+          struct completion_handler_type<executor_wrapper<T, Executor>, Signature>;
 
         template<class T, class Executor>
           class async_result<executor_wrapper<T, Executor>>;
@@ -178,7 +178,7 @@
         constexpr use_future_t<> use_future = use_future_t<>();
 
         template<class ProtoAllocator, class R, class... Args>
-          struct handler_type<use_future_t<ProtoAllocator>, R(Args...)>;
+          struct completion_handler_type<use_future_t<ProtoAllocator>, R(Args...)>;
 
         template<class R, class... Args>
           class ``[link classes.async_result_packaged_task async_result<packaged_task<R(Args...)>>]``;
@@ -194,7 +194,7 @@
           class ``[link classes.packaged_token packaged_token]``;
 
         template<class Func, class ProtoAllocator, class R, class... Args>
-          struct handler_type<packaged_token<Func, ProtoAllocator>, R(Args...)>;
+          struct completion_handler_type<packaged_token<Func, ProtoAllocator>, R(Args...)>;
 
         template<class Func, class ProtoAllocator = allocator<void>>
           packaged_token<decay_t<Func>, ProtoAllocator> ``[link functions.package package]``(

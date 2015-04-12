@@ -21,17 +21,18 @@ of type `CompletionToken`;
 A ['completion handler] is a function object that will be invoked, at most
 once, with the result of an asynchronous operation.
 
-An initiating function determines the type `Handler` of its completion handler
-function object by performing `handler_type_t<CompletionToken, Signature>`. The
-handler object `handler` is initialized with
-`handler(forward<CompletionToken>(token))`. [inline_note No other requirements
-are placed on the type `CompletionToken`.]
+An initiating function determines the type `CompletionHandler` of its
+completion handler function object by performing
+`completion_handler_type_t<CompletionToken, Signature>`. The completion handler
+object `completion_handler` is initialized with
+`completion_handler(forward<CompletionToken>(token))`. [inline_note No other
+requirements are placed on the type `CompletionToken`.]
 
-The type `Handler` must satisfy the `MoveConstructible` requirements (C++ Std,
-[moveconstructible]) and be callable with the specified completion signature.
-The ['Completion signature] elements in this Technical Specification have named
-parameters, and the result of an asynchronous operation is specified in terms
-of these names.
+The type `CompletionHandler` must satisfy the `MoveConstructible` requirements
+(C++ Std, [moveconstructible]) and be callable with the specified completion
+signature. The ['Completion signature] elements in this Technical Specification
+have named parameters, and the result of an asynchronous operation is specified
+in terms of these names.
 
 [endsect]
 
@@ -41,7 +42,7 @@ of these names.
 For the sake of exposition, this specification sometimes annotates functions
 with a return type `__ifr__`. For every function declaration that returns
 `__ifr__`, the meaning is equivalent to specifying the return type as `typename
-async_result<Handler>::type`.
+async_result<CompletionHandler>::type`.
 
 [endsect]
 
@@ -51,8 +52,8 @@ async_result<Handler>::type`.
 An initiating function in this Technical Specification produces its return type
 as follows:
 
-[mdash] constructing an object `result` of type `async_result<Handler>`,
-initialized as `result(handler)`; and
+[mdash] constructing an object `result` of type
+`async_result<CompletionHandler>`, initialized as `result(handler)`; and
 
 [mdash] using `result.get()` as the operand of the return statement.
 
@@ -63,12 +64,13 @@ implemented as follows:
   template<class CompletionToken>
   auto async_xyz(T1 t1, T2 t2, CompletionToken&& token)
   {
-    handler_type_t<decay_t<CompletionToken>, void(R1 r1, R2 r2)>
-      handler(forward<CompletionToken>(token));
+    completion_handler_type_t<decay_t<CompletionToken>, void(R1 r1, R2 r2)>
+      completion_handler(forward<CompletionToken>(token));
 
-    async_result<decltype(handler)> result(handler);
+    async_result<decltype(completion_handler)> result(completion_handler);
 
-    // initiate the operation and cause handler to be invoked with the result
+    // initiate the operation and cause completion_handler to be invoked with
+    // the result
 
     return result.get();
   }
@@ -81,7 +83,8 @@ For convenience, initiating functions may be implemented using the
   {
     async_completion<CompletionToken, void(R1 r1, R2 r2)> init(token);
 
-    // initiate the operation and cause init.handler to be invoked with the result
+    // initiate the operation and cause init.completion_handler to be invoked
+    // with the result
 
     return init.result.get();
   }
@@ -138,11 +141,12 @@ associated executor object obtained as described above.
 [section Completion handler executor]
 [xrefid async.reqmts.async.handler.exec]
 
-A completion handler object of type `Handler` has an associated executor object
-`ex2` of type `Executor2` satisfying the [link requirements.executor Executor
-requirements]. The type `Executor2` is `associated_executor_t<Handler,
-Executor1>`. The object `ex2` is obtained by performing
-`associated_executor<Handler, Executor1>::get(handler, ex1)`.
+A completion handler object of type `CompletionHandler` has an associated
+executor object `ex2` of type `Executor2` satisfying the [link
+requirements.executor Executor requirements]. The type `Executor2` is
+`associated_executor_t<CompletionHandler, Executor1>`. The object `ex2` is
+obtained by performing `associated_executor<CompletionHandler,
+Executor1>::get(handler, ex1)`.
 
 [endsect]
 
@@ -176,8 +180,8 @@ Let `alloc1` be an object of type `Alloc1`.
 All handlers have an associated allocator object satisfying the [link
 requirements.proto_allocator `ProtoAllocator`] requirements. The type `Alloc2`
 of the handler's associated allocator shall be determined by
-`associated_allocator_t<Handler, Alloc1>`. The handler's associated allocator
-object `alloc2` shall be obtained by performing `associated_allocator<Handler,
+`associated_allocator_t<CompletionHandler, Alloc1>`. The handler's associated allocator
+object `alloc2` shall be obtained by performing `associated_allocator<CompletionHandler,
 Executor1>::get(handler, alloc1)`.
 
 The asynchronous operations defined in this Technical Specification:
@@ -194,7 +198,7 @@ Std, \[res.on.data.races\]).]
 
 [endsect]
 
-[section Execution of handler on completion of asynchronous operation]
+[section Execution of completion handler on completion of asynchronous operation]
 [xrefid async.reqmts.async.completion]
 
 When an asynchronous operation completes, the implementation constructs a
@@ -203,19 +207,19 @@ operation.
 
 If an asynchonous operation completes immediately (that is, within the thread
 of execution calling the initiating function, and before the initiating
-function returns), the handler shall be submitted for execution as if by
-performing `ex2.post(std::move(f), alloc2)`. Otherwise, the handler shall be
-submitted for execution as if by performing `ex2.dispatch(std::move(f),
-alloc2)`.
+function returns), the completion handler shall be submitted for execution as
+if by performing `ex2.post(std::move(f), alloc2)`. Otherwise, the completion
+handler shall be submitted for execution as if by performing
+`ex2.dispatch(std::move(f), alloc2)`.
 
 [endsect]
 
-[section Handlers and exceptions]
+[section Completion handlers and exceptions]
 [xrefid async.reqmts.async.exceptions]
 
-Handlers are permitted to throw exceptions. The effect of any exception
-propagated from the execution of a handler is determined by the executor which
-is executing the handler.
+Completion handlers are permitted to throw exceptions. The effect of any
+exception propagated from the execution of a completion handler is determined
+by the executor which is executing the handler.
 
 [endsect]
 

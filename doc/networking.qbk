@@ -645,7 +645,7 @@ are used to express type requirements, as listed in the table below.
 [include:requirements requirements/service.qbk]
 [include:requirements requirements/signature.qbk]
 [endsect]
-[include:classes classes/handler_type.qbk]
+[include:classes classes/completion_handler_type.qbk]
 [include:classes classes/async_result.qbk]
 [include:classes classes/async_completion.qbk]
 [include:classes classes/associated_allocator.qbk]

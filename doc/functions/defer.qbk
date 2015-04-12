@@ -4,48 +4,53 @@
   template<class CompletionToken>
     __ifr__ defer(CompletionToken&& token);
 
-[function_block Let the type `Handler` be the handler function object type
-determined by performing `handler_type_t<CompletionToken, void()>`.]
+[function_block Let the type `CompletionHandler` be the completion handler type
+determined by performing `completion_handler_type_t<CompletionToken, void()>`.]
 
-[function_requires The type `Handler` must satisfy the `MoveConstructible`
-requirements (C++ Std, \[moveconstructible\]) and be callable with zero
-arguments.]
+[function_requires The type `CompletionHandler` must satisfy the
+`MoveConstructible` requirements (C++ Std, \[moveconstructible\]) and be
+callable with zero arguments.]
 
 [function_effects\n
-[mdash] Constructs a function object `handler` of type `Handler`, initialized
-with `handler(forward<CompletionToken>(token))`.\n
-[mdash] Constructs an object `result` of type `async_result<Handler>`,
-initializing the object as `result(handler)`.\n
-[mdash] Obtains the handler's associated executor object `ex` by performing
-`get_associated_executor(handler)`.\n
-[mdash] Obtains the handler's associated allocator object `alloc` by performing
-`get_associated_allocator(handler)`.\n
-[mdash] Performs `ex.defer(std::move(handler), alloc)`.]
+[mdash] Constructs a function object `completion_handler` of type
+`CompletionHandler`, initialized as
+`completion_handler(forward<CompletionToken>(token))`.\n
+[mdash] Constructs an object `result` of type
+`async_result<CompletionHandler>`, initializing the object as
+`result(completion_handler)`.\n
+[mdash] Obtains the completion handler's associated executor object `ex` by
+performing `get_associated_executor(completion_handler)`.\n
+[mdash] Obtains the completion handler's associated allocator object `alloc` by
+performing `get_associated_allocator(completion_handler)`.\n
+[mdash] Performs `ex.defer(std::move(completion_handler), alloc)`.]
 
 [function_returns `result.get()`.]
 
   template<class Executor, class CompletionToken>
     __ifr__ defer(const Executor& ex, CompletionToken&& token);
 
-[function_block Let the type `Handler` be the handler function object type
-determined by performing `handler_type_t<CompletionToken, void()>`.]
+[function_block Let the type `CompletionHandler` be the completion handler type
+determined by performing `completion_handler_type_t<CompletionToken, void()>`.]
 
-[function_requires The type `Handler` must satisfy the `MoveConstructible`
-requirements (C++ Std, \[moveconstructible\]) and be callable with zero
-arguments.]
+[function_requires The type `CompletionHandler` must satisfy the
+`MoveConstructible` requirements (C++ Std, \[moveconstructible\]) and be
+callable with zero arguments.]
 
 [function_effects\n
-[mdash] Constructs a function object `handler` of type `Handler`,
-initialized with `handler(forward<CompletionToken>(token))`.\n
-[mdash] Constructs an object `result` of type `async_result<Handler>`,
-initializing the object as `result(handler)`.\n
-[mdash] Obtains the handler's associated executor object `ex1` by performing
-`get_associated_executor(handler)`.\n
+[mdash] Constructs a function object `completion_handler` of type
+`CompletionHandler`, initialized as
+`completion_handler(forward<CompletionToken>(token))`.\n
+[mdash] Constructs an object `result` of type
+`async_result<CompletionHandler>`, initializing the object as
+`result(completion_handler)`.\n
+[mdash] Obtains the completion handler's associated executor object `ex1` by
+performing `get_associated_executor(completion_handler)`.\n
 [mdash] Creates a work object `w` by performing `make_work(ex1)`.\n
-[mdash] Obtains the handler's associated allocator object `alloc` by performing
-`get_associated_allocator(handler)`.\n
+[mdash] Obtains the completion handler's associated allocator object `alloc` by
+performing `get_associated_allocator(completion_handler)`.\n
 [mdash] Constructs a function object `f` with a function call operator that
-performs `ex1.dispatch(std::move(handler), alloc)` followed by `w.reset()`.\n
+performs `ex1.dispatch(std::move(completion_handler), alloc)` followed by
+`w.reset()`.\n
 [mdash] Performs `ex.defer(std::move(f), alloc)`.]
 
 [function_returns `result.get()`.]

@@ -2,20 +2,21 @@
 [xrefid async.async.result]
 
 [/ TODO reword as introduction]
-The template parameter `Handler` is a handler type produced by `handler_type_t<T,
-S>` for some completion token type `T` and call signature `S`.
+The template parameter `CompletionHandler` is a completion handler type
+produced by `completion_handler_type_t<T, S>` for some completion token type
+`T` and call signature `S`.
 
   namespace std {
     namespace experimental {
       __begin_versioned_ns__
 
-        template<class Handler>
+        template<class CompletionHandler>
         class async_result
         {
         public:
           typedef void type;
 
-          explicit async_result(Handler&) {}
+          explicit async_result(CompletionHandler&) {}
           async_result(const async_result&) = delete;
           async_result& operator=(const async_result&) = delete;
 
@@ -27,10 +28,10 @@ S>` for some completion token type `T` and call signature `S`.
   } // namespace std
 
 Specializations of `async_result` shall satisfy the `Destructible` requirements
-(C++Std, [destructible]) in addition to the requirements in the table below.
-In this table, `R` is a specialization of `async_result` for the template
-parameter `Handler`; `r` is a modifiable lvalue of type `R`; and `h` is a
-modifiable lvalue of type `Handler`.
+(C++Std, [destructible]) in addition to the requirements in the table below. In
+this table, `R` is a specialization of `async_result` for the template
+parameter `CompletionHandler`; `r` is a modifiable lvalue of type `R`; and `h`
+is a modifiable lvalue of type `CompletionHandler`.
 
 [table async_result specialization requirements
   [[Expression][Return type][Note]]
