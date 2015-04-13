@@ -33,7 +33,7 @@ particular operating system.
 [section Conditionally-supported features]
 [xrefid conformance.conditional]
 
-This Technical Specification defines conditially supported features, in the
+This Technical Specification defines conditially-supported features, in the
 form of additional member functions on types that satisfy [link
 requirements.protocol `Protocol`], [link requirements.endpoint `Endpoint`],
 [link requirements.settable_socket_option `SettableSocketOption`], [link

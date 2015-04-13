@@ -1,15 +1,22 @@
-[section Feature test macros]
+[section Feature test macros (Informative)]
 [xrefid feature.test]
 
-This macro allows users to determine which version of this Technical
+These macros allows users to determine which version of this Technical
 Specification is supported by the headers defined by the specification. All
 headers in this Technical Specification shall supply the following macro
 definition:
 
-  #define __cpp_lib_experimental_network     yyyymm
+  #define __cpp_lib_experimental_network yyyymm
 
-[std_note The value of macro `__cpp_lib_experimental_network` is yyyymm where
-yyyy is the year and mm the month when the version of the Technical
-Specification was completed.]
+If an implementation supplies all of the conditionally-supported features
+specified in [xref conformance.conditional], all headers in this Technical
+Specification shall supply the following macro definition:
+
+  #define __cpp_lib_experimental_network_extensible yyyymm
+
+[std_note The value of the macros `__cpp_lib_experimental_network` and
+`__cpp_lib_experimental_network_extensible` is `yyyymm` where `yyyy` is the
+year and `mm` the month when the version of the Technical Specification was
+completed.]
 
 [endsect]
