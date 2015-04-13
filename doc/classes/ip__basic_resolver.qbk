@@ -285,8 +285,8 @@ operation to resolve a host name and service name, as if by __POSIX__:
 On success, `r` is a non-empty results object containing the results of the
 resolve opeation. Otherwise, `r` is `results_type()`.]
 
-  iterator resolve(const endpoint_type& e);
-  iterator resolve(const endpoint_type& e, error_code& ec);
+  results_type resolve(const endpoint_type& e);
+  results_type resolve(const endpoint_type& e, error_code& ec);
 
 [function_effects Let `S1` and `S2` be implementation-defined values that are
 sufficiently large to hold the host name and service name respectively.
