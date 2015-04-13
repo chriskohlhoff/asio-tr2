@@ -27,12 +27,17 @@ elsewhere.]
           typedef typename clock_type::duration duration;
           typedef WaitTraits traits_type;
 
-          // constructors:
+          // construct / copy / destroy:
 
           basic_socket_iostream();
           explicit basic_socket_streambuf(basic_stream_socket<protocol_type> s);
+          basic_socket_iostream(const basic_socket_iostream&) = delete;
+          basic_socket_iostream(basic_socket_iostream&& rhs);
           template<class... Args>
             explicit basic_socket_iostream(Args&&... args);
+
+          basic_socket_iostream& operator=(const basic_socket_iostream&) = delete;
+          basic_socket_iostream& operator=(basic_socket_iostream&& rhs);
 
           // members:
 
@@ -72,6 +77,13 @@ performs `setf(std::ios_base::unitbuf)`.]
 `sb_` as `basic_socket_streambuf<Protocol, Clock, WaitTraits>(std::move(s))`,
 and performs `setf(std::ios_base::unitbuf)`.]
 
+  basic_socket_iostream(basic_socket_iostream&& rhs);
+
+[function_effects Move constructs from the rvalue `rhs`. This is accomplished
+by move constructing the base class, and the contained
+`basic_socket_streambuf`. Next `basic_iostream<char>::set_rdbuf(&sb_)` is
+called to install the contained `basic_socket_streambuf`.]
+
   template<class... Args>
     explicit basic_socket_iostream(Args&&... args);
 
@@ -80,6 +92,13 @@ initializes  `sb_` as `basic_socket_streambuf<Protocol, Clock, WaitTraits>()`,
 and performs `setf(std::ios_base::unitbuf)`. Then calls
 `rdbuf()->connect(forward<Args>(args)__dotdotdot__)`. If that function returns
 a null pointer, calls `setstate(failbit)`.]
+
+  basic_socket_iostream& operator=(basic_socket_iostream&& rhs);
+
+[function_effects Move assigns the base and members of `*this` from the base
+and corresponding members of `rhs`.]
+
+[function_returns `*this`.]
 
 [endsect]
 

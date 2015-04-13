@@ -27,11 +27,17 @@ elsewhere.]
           typedef typename clock_type::duration duration;
           typedef WaitTraits traits_type;
 
-          // construct / destroy:
+          // construct / copy / destroy:
 
           basic_socket_streambuf();
           explicit basic_socket_streambuf(basic_stream_socket<protocol_type> s);
+          basic_socket_streambuf(const basic_socket_streambuf&) = delete;
+          basic_socket_streambuf(basic_socket_streambuf&& rhs);
+
           virtual ~basic_socket_streambuf();
+
+          basic_socket_streambuf& operator=(const basic_socket_streambuf&) = delete;
+          basic_socket_streambuf& operator=(basic_socket_streambuf&& rhs);
 
           // members:
 
@@ -81,11 +87,47 @@ unspecified object of class `io_service`.]
 
 [function_postconditions `expiry() == clock_type::max()`.]
 
+  basic_socket_streambuf(basic_socket_streambuf&& rhs);
+
+[function_effects Move constructs from the rvalue `rhs`. It is
+implementation-defined whether the sequence pointers in `*this` (`eback()`,
+`gptr()`, `egptr()`, `pbase()`, `pptr()`, `epptr()`) obtain the values which
+`rhs` had. Whether they do or not, `*this` and `rhs` reference separate buffers
+(if any at all) after the construction. Additionally `*this` references the
+socket which `rhs` did before the construction, and `rhs` references no open
+socket after the construction.]
+
+[function_postconditions Let `rhs_p` refer to the state of `rhs` just prior to
+this construction and let `rhs_a` refer to the state of `rhs` just after this
+construction.\n
+[mdash] `is_open() == rhs_p.is_open()`\n
+[mdash] `rhs_a.is_open() == false`\n
+[mdash] `expiry() == rhs_p.expiry()`\n
+[mdash] `rhs_a.expiry() == clock_type::max()`\n
+[mdash] `gptr() - eback() == rhs_p.gptr() - rhs_p.eback()`\n
+[mdash] `egptr() - eback() == rhs_p.egptr() - rhs_p.eback()`\n
+[mdash] `ptr() - pbase() == rhs_p.pptr() - rhs_p.pbase()`\n
+[mdash] `pptr() - pbase() == rhs_p.epptr() - rhs_p.pbase()`\n
+[mdash] `if (eback()) eback() != rhs_a.eback()`\n
+[mdash] `if (gptr()) gptr() != rhs_a.gptr()`\n
+[mdash] `if (egptr()) egptr() != rhs_a.egptr()`\n
+[mdash] `if (pbase()) pbase() != rhs_a.pbase()`\n
+[mdash] `if (pptr()) pptr() != rhs_a.pptr()`\n
+[mdash] `if (epptr()) epptr() != rhs_a.epptr()`]
+
   virtual ~basic_socket_streambuf();
 
 [function_effects If a put area exists, calls `overflow(traits_type::eof())` to
 flush characters. [inline_note The socket is closed by the
 `basic_stream_socket<protocol_type>` destructor.]]
+
+  basic_socket_streambuf& operator=(basic_socket_streambuf&& rhs);
+
+[function_effects Calls `this->close()` then move assigns from `rhs`. After the
+move assignment `*this` has the observable state it would have had if it had been
+move constructed from `rhs`.]
+
+[function_returns `*this`.]
 
 [endsect]
 
