@@ -221,7 +221,7 @@ move-construct from a socket:
 Second, there was concern about the use of resource-owning iterators associated
 with the `ip::basic_resolver` template, and the related single iterator
 overloads of the free functions `connect` and `async_connect`. The resolver has
-been changed so that its `resolve` operations now return a results type based
+been changed so that its `resolve` operations now return a results class based
 on the regular expression library's `match_results` template. This
 `ip::basic_resolver_results` type satisfies the requirements of a sequence
 container, except that only the operations defined for const-qualified sequence
