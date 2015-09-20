@@ -1,7 +1,7 @@
 [section Feature test macros (Informative)]
 [xrefid feature.test]
 
-These macros allows users to determine which version of this Technical
+These macros allow users to determine which version of this Technical
 Specification is supported by the headers defined by the specification. All
 headers in this Technical Specification shall supply the following macro
 definition:
