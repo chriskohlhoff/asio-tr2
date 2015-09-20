@@ -16,8 +16,8 @@ descriptions of function semantics contain the following elements (as
 appropriate):
 
 [mdash] ['Completion signature:] - if the function initiates an asynchronous
-operation, the signature for a completion handler that may be used to receive
-the result of the operation
+operation, specifies the signature of a completion handler used to receive
+the result of the operation.
 
 [endsect]
 
