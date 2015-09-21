@@ -1,0 +1,88 @@
+[section:executor_work_guard Class template [^executor_work_guard]]
+[xrefid async.exec.work.guard]
+
+  namespace std {
+  namespace experimental {
+  __begin_versioned_ns__
+
+    template<class Executor>
+    class executor_work_guard
+    {
+    public:
+      // types:
+
+      typedef Executor executor_type;
+
+      // construct / copy / destroy:
+
+      explicit executor_work_guard(const executor_type& ex) noexcept;
+      executor_work_guard(const executor_work_guard& other) noexcept;
+      executor_work_guard(executor_work_guard&& other) noexcept;
+
+      executor_work_guard& operator=(const executor_work_guard&) = delete;
+
+      ~executor_work_guard();
+
+      // executor work guard observers:
+
+      executor_type get_executor() const noexcept;
+      bool owns_work() const noexcept;
+
+      // executor work guard modifiers:
+
+      void reset() noexcept;
+
+    private:
+      Executor ex_; // ``['exposition only]``
+      bool owns_; // ``['exposition only]``
+    };
+
+  __end_versioned_ns__
+  } // namespace experimental
+  } // namespace std
+
+[section [^executor_work_guard] members]
+[xrefid async.exec.work.guard.members]
+
+  explicit executor_work_guard(const executor_type& ex) noexcept;
+
+[function_effects Constructs an object of class `executor_work_guard`,
+initializing `ex_` with `ex`, and then performing `ex_.on_work_started()`.]
+
+[function_postconditions `ex == ex_` and `owns_ == true`.]
+
+  executor_work_guard(const executor_work_guard& other) noexcept;
+
+[function_effects Constructs an object of class `executor_work_guard`,
+initializing `ex_` with `other.ex_`. If `other.owns_ == true`, performs
+`ex_.on_work_started()`.]
+
+[function_postconditions `ex_ == other.ex_` and `owns_ == other.owns_`.]
+
+  executor_work_guard(executor_work_guard&& other) noexcept;
+
+[function_effects Constructs an object of class `executor_work_guard`,
+initializing `ex_` with `std::move(other.ex_)` and `owns_` with `other.owns_`,
+and sets `other.owns_` to `false`.]
+
+  ~executor_work_guard();
+
+[function_effects If `owns_` is `true`, performs `ex_.on_work_finished()`.]
+
+  executor_type get_executor() const noexcept;
+
+[function_returns `ex_`.]
+
+  bool owns_work() const noexcept;
+
+[function_returns `owns_`.]
+
+  void reset() noexcept;
+
+[function_effects If `owns_` is `true`, performs `ex_.on_work_finished()`.]
+
+[function_postconditions `owns_ == false`.]
+
+[endsect]
+
+[endsect]

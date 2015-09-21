@@ -67,25 +67,25 @@
         wrap(ExecutionContext& ctx, T&& t);
 
     template<class T, class Executor>
-      class ``[link classes.executor_work executor_work]``;
+      class ``[link classes.executor_work_guard executor_work_guard]``;
 
-    ``// [link functions.make_work make_work]:``
+    ``// [link functions.make_work_guard make_work_guard]:``
 
     template<class Executor>
-      executor_work<Executor>
-        make_work(const Executor& ex);
+      executor_work_guard<Executor>
+        make_work_guard(const Executor& ex);
     template<class ExecutionContext>
-      executor_work<typename ExecutionContext::executor_type>
-        make_work(ExecutionContext& ctx);
+      executor_work_guard<typename ExecutionContext::executor_type>
+        make_work_guard(ExecutionContext& ctx);
     template<class T>
-      executor_work<associated_executor_t<T>>
-        make_work(const T& t);
+      executor_work_guard<associated_executor_t<T>>
+        make_work_guard(const T& t);
     template<class T, class Executor>
-      executor_work<associated_executor_t<T, Executor>>
-        make_work(const T& t, const Executor& ex);
+      executor_work_guard<associated_executor_t<T, Executor>>
+        make_work_guard(const T& t, const Executor& ex);
     template<class T, class ExecutionContext>
-      executor_work<associated_executor_t<T, typename ExecutionContext::executor_type>>
-        make_work(const T& t, ExecutionContext& ctx);
+      executor_work_guard<associated_executor_t<T, typename ExecutionContext::executor_type>>
+        make_work_guard(const T& t, ExecutionContext& ctx);
 
     class ``[link classes.system_executor system_executor]``;
 

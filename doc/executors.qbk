@@ -753,7 +753,7 @@ operation must:
 * Ask the completion handler for its associated executor, by calling
  `get_associated_executor`.
 
-* While pending, maintain an `executor_work` object for the associated
+* While pending, maintain an `executor_work_guard` object for the associated
   executor. This tells the executor to expect a function object to be submitted
   in the future. A thread pool, for example, will know that it still has work to
   do and needs to keep running.
@@ -768,10 +768,10 @@ Our `async_getline` operation can then be written as follows:
   void async_getline(std::istream& is, Handler handler)
   {
 
-The `make_work` function automatically obtains the associated executor and
-creates an `executor_work` object for it.
+The `make_work_guard` function automatically obtains the associated executor and
+creates an `executor_work_guard` object for it.
 
-  ``''''''``  auto work = make_work(handler);
+  ``''''''``  auto work = make_work_guard(handler);
 
 The asynchronous operation itself is posted outside of the associated executor.
 This is because we want the line reading to be performed asynchronously with
@@ -1130,12 +1130,12 @@ The priority scheduler's executors can then be used like any other:
   ]
   [
     [[^executor]]
-    [Class template [^executor_work]]
+    [Class template [^executor_work_guard]]
     [Tracks outstanding work against an executor.]
   ]
   [
     [[^executor]]
-    [Function [^make_work]]
+    [Function [^make_work_guard]]
     [Create work to track an outstanding operation.]
   ]
   [
@@ -1941,8 +1941,8 @@ be added to the TS.]
 [include:functions functions/get_associated_executor.qbk]
 [include:classes classes/executor_wrapper.qbk]
 [include:functions functions/wrap.qbk]
-[include:classes classes/executor_work.qbk]
-[include:functions functions/make_work.qbk]
+[include:classes classes/executor_work_guard.qbk]
+[include:functions functions/make_work_guard.qbk]
 [include:classes classes/system_executor.qbk]
 [include:classes classes/bad_executor.qbk]
 [include:classes classes/executor.qbk]

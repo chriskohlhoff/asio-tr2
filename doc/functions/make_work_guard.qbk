@@ -1,20 +1,20 @@
-[section:make_work Function [^make_work]]
-[xrefid async.make.work]
+[section:make_work_guard Function [^make_work_guard]]
+[xrefid async.make.work.guard]
 
   template<class Executor>
-    executor_work<Executor>
-      make_work(const Executor& ex);
+    executor_work_guard<Executor>
+      make_work_guard(const Executor& ex);
 
-[function_returns `executor_work<Executor>(ex)`.]
+[function_returns `executor_work_guard<Executor>(ex)`.]
 
 [function_remarks This function shall not participate in overload resolution
 unless `is_executor<Executor>::value` is `true`.]
 
   template<class ExecutionContext>
-    executor_work<typename ExecutionContext::executor_type>
-      make_work(ExecutionContext& ctx);
+    executor_work_guard<typename ExecutionContext::executor_type>
+      make_work_guard(ExecutionContext& ctx);
 
-[function_returns An object of type `executor_work<typename
+[function_returns An object of type `executor_work_guard<typename
 ExecutionContext::executor_type>` initialized with the result of
 `ctx.get_executor()`.]
 
@@ -22,10 +22,10 @@ ExecutionContext::executor_type>` initialized with the result of
 unless `is_convertible<ExecutionContext&, execution_context&>::value` is `true`.]
 
   template<class T>
-    executor_work<associated_executor_t<T>>
-      make_work(const T& t);
+    executor_work_guard<associated_executor_t<T>>
+      make_work_guard(const T& t);
 
-[function_returns An object of type `executor_work<associated_executor_t<T>>`
+[function_returns An object of type `executor_work_guard<associated_executor_t<T>>`
 initialized with the result of `associated_executor<T>::get(t)`.]
 
 [function_remarks This function shall not participate in overload resolution
@@ -33,10 +33,10 @@ unless `is_executor<T>::value` is `false` and `is_convertible<T&,
 execution_context&>::value` is `false`.]
 
   template<class T, class Executor>
-    executor_work<associated_executor_t<T, Executor>>
-      make_work(const T& t, const Executor& ex);
+    executor_work_guard<associated_executor_t<T, Executor>>
+      make_work_guard(const T& t, const Executor& ex);
 
-[function_returns An object of type `executor_work<associated_executor_t<T,
+[function_returns An object of type `executor_work_guard<associated_executor_t<T,
 Executor>>` initialized with the result of `associated_executor<T,
 Executor>::get(t, ex)`.]
 
@@ -44,10 +44,10 @@ Executor>::get(t, ex)`.]
 unless `is_executor<Executor>::value` is `true`.]
 
   template<class T, class ExecutionContext>
-    executor_work<associated_executor_t<T, typename ExecutionContext::executor_type>>
-      make_work(const T& t, ExecutionContext& ctx);
+    executor_work_guard<associated_executor_t<T, typename ExecutionContext::executor_type>>
+      make_work_guard(const T& t, ExecutionContext& ctx);
 
-[function_returns An object of type `executor_work<associated_executor_t<T,
+[function_returns An object of type `executor_work_guard<associated_executor_t<T,
 typename ExecutionContext::executor_type>>` initialized with the result of
 `associated_executor<T, typename ExecutionContext::executor_type>::get(t,
 ctx.get_executor())`.]

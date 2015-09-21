@@ -45,7 +45,7 @@ callable with zero arguments.]
 `result(completion_handler)`.\n
 [mdash] Obtains the completion handler's associated executor object `ex1` by
 performing `get_associated_executor(completion_handler)`.\n
-[mdash] Creates a work object `w` by performing `make_work(ex1)`.\n
+[mdash] Creates a work object `w` by performing `make_work_guard(ex1)`.\n
 [mdash] Obtains the completion handler's associated allocator object `alloc` by
 performing `get_associated_allocator(completion_handler)`.\n
 [mdash] Constructs a function object `f` with a function call operator that

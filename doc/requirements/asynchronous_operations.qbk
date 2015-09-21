@@ -154,13 +154,13 @@ Executor1>::get(handler, ex1)`.
 [xrefid async.reqmts.async.work]
 
 The implementation of an asynchronous operation shall maintain an object
-`work1` of type `executor_work<Executor1>`, initialized with `work1(ex1)` and
-with `work1.owns_work() == true`, until the effects of the asynchronous
+`work1` of type `executor_work_guard<Executor1>`, initialized with `work1(ex1)`
+and with `work1.owns_work() == true`, until the effects of the asynchronous
 operation have been realized.
 
 The implementation of an asynchronous operation shall maintain an object
-`work2` of type `executor_work<Executor2>`, initialized with `work2(ex2)` and
-with `work2.owns_work() == true`, until `handler` has been submitted for
+`work2` of type `executor_work_guard<Executor2>`, initialized with `work2(ex2)`
+and with `work2.owns_work() == true`, until `handler` has been submitted for
 execution.
 
 [endsect]
