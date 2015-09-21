@@ -50,7 +50,7 @@
   } // namespace experimental
   } // namespace std
 
-The class `io_service` satsifies the [link requirements.execution_context
+The class `io_service` satisfies the [link requirements.execution_context
 ExecutionContext type requirements].
 
 The `io_service` functions `run`, `run_for`, `run_until`, `run_one`,
