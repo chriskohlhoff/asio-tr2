@@ -2,43 +2,43 @@
 [xrefid async.exec.work]
 
   namespace std {
-    namespace experimental {
-      __begin_versioned_ns__
+  namespace experimental {
+  __begin_versioned_ns__
 
-        template<class Executor>
-        class executor_work
-        {
-        public:
-          // types:
+    template<class Executor>
+    class executor_work
+    {
+    public:
+      // types:
 
-          typedef Executor executor_type;
+      typedef Executor executor_type;
 
-          // construct / copy / destroy:
+      // construct / copy / destroy:
 
-          explicit executor_work(const executor_type& ex) noexcept;
-          executor_work(const executor_work& other) noexcept;
-          executor_work(executor_work&& other) noexcept;
+      explicit executor_work(const executor_type& ex) noexcept;
+      executor_work(const executor_work& other) noexcept;
+      executor_work(executor_work&& other) noexcept;
 
-          executor_work& operator=(const executor_work&) = delete;
+      executor_work& operator=(const executor_work&) = delete;
 
-          ~executor_work();
+      ~executor_work();
 
-          // executor work observers:
+      // executor work observers:
 
-          executor_type get_executor() const noexcept;
-          bool owns_work() const noexcept;
+      executor_type get_executor() const noexcept;
+      bool owns_work() const noexcept;
 
-          // executor work modifiers:
+      // executor work modifiers:
 
-          void reset() noexcept;
+      void reset() noexcept;
 
-        private:
-          Executor ex_; // ``['exposition only]``
-          bool owns_; // ``['exposition only]``
-        };
+    private:
+      Executor ex_; // ``['exposition only]``
+      bool owns_; // ``['exposition only]``
+    };
 
-      __end_versioned_ns__
-    } // namespace experimental
+  __end_versioned_ns__
+  } // namespace experimental
   } // namespace std
 
 [section [^executor_work] members]

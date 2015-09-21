@@ -2,52 +2,52 @@
 [xrefid io_service.io_service]
 
   namespace std {
-    namespace experimental {
-      __begin_versioned_ns__
+  namespace experimental {
+  __begin_versioned_ns__
 
-        class io_service : public execution_context
-        {
-        public:
-          // types:
+    class io_service : public execution_context
+    {
+    public:
+      // types:
 
-          class ``[link classes.io_service__executor_type executor_type]``;
+      class ``[link classes.io_service__executor_type executor_type]``;
 
-          // construct / copy / destroy:
+      // construct / copy / destroy:
 
-          io_service();
-          explicit io_service(int concurrency_hint);
-          io_service(const io_service&) = delete;
-          io_service& operator=(const io_service&) = delete;
+      io_service();
+      explicit io_service(int concurrency_hint);
+      io_service(const io_service&) = delete;
+      io_service& operator=(const io_service&) = delete;
 
-          // io_service operations:
+      // io_service operations:
 
-          executor_type get_executor() noexcept;
+      executor_type get_executor() noexcept;
 
-          size_t run();
-          template<class Rep, class Period>
-            size_t run_for(const chrono::duration<Rep, Period>& rel_time);
-          template<class Clock, class Duration>
-            size_t run_until(const chrono::time_point<Clock, Duration>& abs_time);
+      size_t run();
+      template<class Rep, class Period>
+        size_t run_for(const chrono::duration<Rep, Period>& rel_time);
+      template<class Clock, class Duration>
+        size_t run_until(const chrono::time_point<Clock, Duration>& abs_time);
 
-          size_t run_one();
-          template<class Rep, class Period>
-            size_t run_one_for(const chrono::duration<Rep, Period>& rel_time);
-          template<class Clock, class Duration>
-            size_t run_one_until(const chrono::time_point<Clock, Duration>& abs_time);
+      size_t run_one();
+      template<class Rep, class Period>
+        size_t run_one_for(const chrono::duration<Rep, Period>& rel_time);
+      template<class Clock, class Duration>
+        size_t run_one_until(const chrono::time_point<Clock, Duration>& abs_time);
 
-          size_t poll();
+      size_t poll();
 
-          size_t poll_one();
+      size_t poll_one();
 
-          void stop();
+      void stop();
 
-          bool stopped() const noexcept;
+      bool stopped() const noexcept;
 
-          void restart();
-        };
+      void restart();
+    };
 
-      __end_versioned_ns__
-    } // namespace experimental
+  __end_versioned_ns__
+  } // namespace experimental
   } // namespace std
 
 The class `io_service` satsifies the [link requirements.execution_context

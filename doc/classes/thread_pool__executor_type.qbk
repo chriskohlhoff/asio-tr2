@@ -2,48 +2,48 @@
 [xrefid thread.pool.exec]
 
   namespace std {
-    namespace experimental {
-      __begin_versioned_ns__
+  namespace experimental {
+  __begin_versioned_ns__
 
-        class thread_pool::executor_type
-        {
-        public:
-          // construct / copy / destroy:
+    class thread_pool::executor_type
+    {
+    public:
+      // construct / copy / destroy:
 
-          executor_type(const executor_type& other) noexcept;
-          executor_type(executor_type&& other) noexcept;
+      executor_type(const executor_type& other) noexcept;
+      executor_type(executor_type&& other) noexcept;
 
-          executor_type& operator=(const executor_type& other) noexcept;
-          executor_type& operator=(executor_type&& other) noexcept;
+      executor_type& operator=(const executor_type& other) noexcept;
+      executor_type& operator=(executor_type&& other) noexcept;
 
-          ~executor_type();
+      ~executor_type();
 
-          // executor operations:
+      // executor operations:
 
-          bool running_in_this_thread() const noexcept;
+      bool running_in_this_thread() const noexcept;
 
-          thread_pool& context() noexcept;
+      thread_pool& context() noexcept;
 
-          void on_work_started() noexcept;
-          void on_work_finished() noexcept;
+      void on_work_started() noexcept;
+      void on_work_finished() noexcept;
 
-          template<class Func, class ProtoAllocator>
-            void dispatch(Func&& f, const ProtoAllocator& a);
-          template<class Func, class ProtoAllocator>
-            void post(Func&& f, const ProtoAllocator& a);
-          template<class Func, class ProtoAllocator>
-            void defer(Func&& f, const ProtoAllocator& a);
-        };
+      template<class Func, class ProtoAllocator>
+        void dispatch(Func&& f, const ProtoAllocator& a);
+      template<class Func, class ProtoAllocator>
+        void post(Func&& f, const ProtoAllocator& a);
+      template<class Func, class ProtoAllocator>
+        void defer(Func&& f, const ProtoAllocator& a);
+    };
 
-        bool operator==(const thread_pool::executor_type& a,
-                        const thread_pool::executor_type& b) noexcept;
-        bool operator!=(const thread_pool::executor_type& a,
-                        const thread_pool::executor_type& b) noexcept;
+    bool operator==(const thread_pool::executor_type& a,
+                    const thread_pool::executor_type& b) noexcept;
+    bool operator!=(const thread_pool::executor_type& a,
+                    const thread_pool::executor_type& b) noexcept;
 
-        template<> struct is_executor<thread_pool::executor_type> : true_type {};
+    template<> struct is_executor<thread_pool::executor_type> : true_type {};
 
-      __end_versioned_ns__
-    } // namespace experimental
+  __end_versioned_ns__
+  } // namespace experimental
   } // namespace std
 
 `thread_pool::executor_type` is a type satisfying [link requirements.executor

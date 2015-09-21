@@ -8,13 +8,13 @@ Standard.
 The C++ committee may release new versions of this technical specification,
 containing networking library extensions we hope to add to a near-future
 version of the C++ Standard. Future versions will define their contents in
-`std::experimental::network_v2`, `std::experimental::network_v3`, etc., with
-the most recent implemented version inlined into `std::experimental`.
+`std::experimental::net::v2`, `std::experimental::net::v3`, etc., with
+the most recent implemented version inlined into `std::experimental::net`.
 
 When an extension defined in this or a future version of this technical
 specification represents enough existing practice, it will be moved into the
-next version of the C++ Standard by removing the `experimental::network_vN`
-segment of its namespace and by removing the `experimental/` prefix from its
-header's path.
+next version of the C++ Standard by replacing the `experimental::net::vN`
+segment of its namespace with `net`, and by removing the `experimental/` prefix
+from its header's path.
 
 [endsect]

@@ -2,23 +2,23 @@
 [xrefid buffer.mutable]
 
   namespace std {
-    namespace experimental {
-      __begin_versioned_ns__
+  namespace experimental {
+  __begin_versioned_ns__
 
-        class mutable_buffer
-        {
-        public:
-          // constructors:
-          mutable_buffer() noexcept;
-          mutable_buffer(void* p, size_t n) noexcept;
+    class mutable_buffer
+    {
+    public:
+      // constructors:
+      mutable_buffer() noexcept;
+      mutable_buffer(void* p, size_t n) noexcept;
 
-        private:
-          void* data_; // ``['exposition only]``
-          size_t size_; // ``['exposition only]``
-        };
+    private:
+      void* data_; // ``['exposition only]``
+      size_t size_; // ``['exposition only]``
+    };
 
-      __end_versioned_ns__
-    } // namespace experimental
+  __end_versioned_ns__
+  } // namespace experimental
   } // namespace std
 
 [section [^mutable_buffer] constructors]

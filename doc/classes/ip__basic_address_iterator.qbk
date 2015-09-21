@@ -8,40 +8,40 @@ template `basic_address_iterator`: `basic_address_iterator<address_v4>` and
 these specializations are defined below.
 
   namespace std {
-    namespace experimental {
-      __begin_versioned_ns__
-        namespace ip {
+  namespace experimental {
+  __begin_versioned_ns__
+  namespace ip {
 
-          template<> class basic_address_iterator<``['Address]``>
-          {
-          public:
-            // types:
-            typedef ``['Address]`` value_type;
-            typedef ptrdiff_t difference_type;
-            typedef const ``['Address]``* pointer;
-            typedef const ``['Address]``& reference;
-            typedef input_iterator_tag iterator_category;
+    template<> class basic_address_iterator<``['Address]``>
+    {
+    public:
+      // types:
+      typedef ``['Address]`` value_type;
+      typedef ptrdiff_t difference_type;
+      typedef const ``['Address]``* pointer;
+      typedef const ``['Address]``& reference;
+      typedef input_iterator_tag iterator_category;
 
-            // constructors:
-            basic_address_iterator(const ``['Address]``& a) noexcept;
+      // constructors:
+      basic_address_iterator(const ``['Address]``& a) noexcept;
 
-            // members:
-            reference operator*() const noexcept;
-            pointer operator->() const noexcept;
-            basic_address_iterator& operator++() noexcept;
-            basic_address_iterator& operator++(int) noexcept;
-            basic_address_iterator& operator--() noexcept;
-            basic_address_iterator& operator--(int) noexcept;
+      // members:
+      reference operator*() const noexcept;
+      pointer operator->() const noexcept;
+      basic_address_iterator& operator++() noexcept;
+      basic_address_iterator& operator++(int) noexcept;
+      basic_address_iterator& operator--() noexcept;
+      basic_address_iterator& operator--(int) noexcept;
 
-            // other members as required by C++ Std [input.iterators]
+      // other members as required by C++ Std [input.iterators]
 
-          private:
-            ``['Address]`` address_; // ``['exposition only]``
-          };
+    private:
+      ``['Address]`` address_; // ``['exposition only]``
+    };
 
-        } // namespace ip
-      __end_versioned_ns__
-    } // namespace experimental
+  } // namespace ip
+  __end_versioned_ns__
+  } // namespace experimental
   } // namespace std
 
   basic_address_iterator(const ``['Address]``& a) noexcept;

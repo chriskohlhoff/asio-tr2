@@ -2,90 +2,90 @@
 [xrefid internet.address.v4]
 
   namespace std {
-    namespace experimental {
-      __begin_versioned_ns__
-        namespace ip {
+  namespace experimental {
+  __begin_versioned_ns__
+  namespace ip {
 
-          class address_v4
-          {
-          public:
-            // types:
-            struct bytes_type;
+    class address_v4
+    {
+    public:
+      // types:
+      struct bytes_type;
 
-            // constructors:
-            constexpr address_v4() noexcept;
-            constexpr address_v4(const address_v4& a) noexcept;
-            constexpr address_v4(const bytes_type& bytes);
-            explicit constexpr address_v4(address_v4_uint_type val);
+      // constructors:
+      constexpr address_v4() noexcept;
+      constexpr address_v4(const address_v4& a) noexcept;
+      constexpr address_v4(const bytes_type& bytes);
+      explicit constexpr address_v4(address_v4_uint_type val);
 
-            // assignment:
-            address_v4& operator=(const address_v4& a) noexcept;
+      // assignment:
+      address_v4& operator=(const address_v4& a) noexcept;
 
-            // members:
-            constexpr bool is_unspecified() const noexcept;
-            constexpr bool is_loopback() const noexcept;
-            constexpr bool is_class_a() const noexcept;
-            constexpr bool is_class_b() const noexcept;
-            constexpr bool is_class_c() const noexcept;
-            constexpr bool is_multicast() const noexcept;
-            constexpr bytes_type to_bytes() const noexcept;
-            constexpr address_v4_uint_type to_uint() const noexcept;
-            template<class Allocator = allocator<char>>
-              basic_string<char, char_traits<char>, Allocator>
-                to_string(const Allocator& a = Allocator()) const;
+      // members:
+      constexpr bool is_unspecified() const noexcept;
+      constexpr bool is_loopback() const noexcept;
+      constexpr bool is_class_a() const noexcept;
+      constexpr bool is_class_b() const noexcept;
+      constexpr bool is_class_c() const noexcept;
+      constexpr bool is_multicast() const noexcept;
+      constexpr bytes_type to_bytes() const noexcept;
+      constexpr address_v4_uint_type to_uint() const noexcept;
+      template<class Allocator = allocator<char>>
+        basic_string<char, char_traits<char>, Allocator>
+          to_string(const Allocator& a = Allocator()) const;
 
-            // static members:
-            static constexpr address_v4 any() noexcept;
-            static constexpr address_v4 loopback() noexcept;
-            static constexpr address_v4 broadcast() noexcept;
-            static constexpr address_v4 broadcast(const address_v4& addr,
-              const address_v4& mask) noexcept;
-          };
+      // static members:
+      static constexpr address_v4 any() noexcept;
+      static constexpr address_v4 loopback() noexcept;
+      static constexpr address_v4 broadcast() noexcept;
+      static constexpr address_v4 broadcast(const address_v4& addr,
+        const address_v4& mask) noexcept;
+    };
 
-          // address_v4 comparisons:
-          constexpr bool operator==(const address_v4& a, const address_v4& b) noexcept;
-          constexpr bool operator!=(const address_v4& a, const address_v4& b) noexcept;
-          constexpr bool operator< (const address_v4& a, const address_v4& b) noexcept;
-          constexpr bool operator> (const address_v4& a, const address_v4& b) noexcept;
-          constexpr bool operator<=(const address_v4& a, const address_v4& b) noexcept;
-          constexpr bool operator>=(const address_v4& a, const address_v4& b) noexcept;
+    // address_v4 comparisons:
+    constexpr bool operator==(const address_v4& a, const address_v4& b) noexcept;
+    constexpr bool operator!=(const address_v4& a, const address_v4& b) noexcept;
+    constexpr bool operator< (const address_v4& a, const address_v4& b) noexcept;
+    constexpr bool operator> (const address_v4& a, const address_v4& b) noexcept;
+    constexpr bool operator<=(const address_v4& a, const address_v4& b) noexcept;
+    constexpr bool operator>=(const address_v4& a, const address_v4& b) noexcept;
 
-          // address_v4 creation:
-          constexpr address_v4 make_address_v4(const address_v4::bytes_type& bytes);
-          constexpr address_v4 make_address_v4(address_v4_uint_type val);
-          constexpr address_v4 make_address_v4(v4_mapped_t, const address_v6& a);
-          address_v4 make_address_v4(const char* str);
-          address_v4 make_address_v4(const char* str, error_code& ec) noexcept;
-          address_v4 make_address_v4(string_view str);
-          address_v4 make_address_v4(string_view str, error_code& ec) noexcept;
+    // address_v4 creation:
+    constexpr address_v4 make_address_v4(const address_v4::bytes_type& bytes);
+    constexpr address_v4 make_address_v4(address_v4_uint_type val);
+    constexpr address_v4 make_address_v4(v4_mapped_t, const address_v6& a);
+    address_v4 make_address_v4(const char* str);
+    address_v4 make_address_v4(const char* str, error_code& ec) noexcept;
+    address_v4 make_address_v4(string_view str);
+    address_v4 make_address_v4(string_view str, error_code& ec) noexcept;
 
-          // address_v4 I/O:
-          template<class CharT, class Traits>
-            basic_ostream<CharT, Traits>& operator<<(
-              basic_ostream<CharT, Traits>& os, const address_v4& addr);
+    // address_v4 I/O:
+    template<class CharT, class Traits>
+      basic_ostream<CharT, Traits>& operator<<(
+        basic_ostream<CharT, Traits>& os, const address_v4& addr);
 
-        } // namespace ip
-      __end_versioned_ns__
-    } // namespace experimental
+  } // namespace ip
+  __end_versioned_ns__
+  } // namespace experimental
   } // namespace std
 
 [section Struct [^ip::address_v4::bytes_type]]
 [xrefid internet.address.v4.bytes]
 
   namespace std {
-    namespace experimental {
-      __begin_versioned_ns__
-        namespace ip {
+  namespace experimental {
+  __begin_versioned_ns__
+  namespace ip {
 
-          struct address_v4::bytes_type : array<unsigned char, 4>
-          {
-            template<class... T> explicit constexpr bytes_type(T... t)
-              : array<unsigned char, 4>{{static_cast<unsigned char>(t)...}} {}
-          };
+    struct address_v4::bytes_type : array<unsigned char, 4>
+    {
+      template<class... T> explicit constexpr bytes_type(T... t)
+        : array<unsigned char, 4>{{static_cast<unsigned char>(t)...}} {}
+    };
 
-        } // namespace ip
-      __end_versioned_ns__
-    } // namespace experimental
+  } // namespace ip
+  __end_versioned_ns__
+  } // namespace experimental
   } // namespace std
 
 The [^ip::address_v4::bytes_type] type is a standard-layout struct that provides a

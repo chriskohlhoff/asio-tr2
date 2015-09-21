@@ -12,27 +12,27 @@ ambiguities when passing to functions that are overloaded on both
 `buffer()`].]
 
   namespace std {
-    namespace experimental {
-      __begin_versioned_ns__
+  namespace experimental {
+  __begin_versioned_ns__
 
-        class mutable_buffers_1 : public mutable_buffer
-        {
-        public:
-          // types:
-          typedef mutable_buffer value_type;
-          typedef ``['unspecified]`` const_iterator;
+    class mutable_buffers_1 : public mutable_buffer
+    {
+    public:
+      // types:
+      typedef mutable_buffer value_type;
+      typedef ``['unspecified]`` const_iterator;
 
-          // constructors:
-          mutable_buffers_1(void* p, size_t n) noexcept;
-          explicit mutable_buffers_1(const mutable_buffer& b) noexcept;
+      // constructors:
+      mutable_buffers_1(void* p, size_t n) noexcept;
+      explicit mutable_buffers_1(const mutable_buffer& b) noexcept;
 
-          // members:
-          const_iterator begin() const noexcept;
-          const_iterator end() const noexcept;
-        };
+      // members:
+      const_iterator begin() const noexcept;
+      const_iterator end() const noexcept;
+    };
 
-      __end_versioned_ns__
-    } // namespace experimental
+  __end_versioned_ns__
+  } // namespace experimental
   } // namespace std
 
 The `mutable_buffers_1` class meets the requirements for [link

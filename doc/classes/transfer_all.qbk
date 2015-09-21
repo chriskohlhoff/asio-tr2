@@ -2,17 +2,17 @@
 [xrefid buffer.transfer.all]
 
   namespace std {
-    namespace experimental {
-      __begin_versioned_ns__
+  namespace experimental {
+  __begin_versioned_ns__
 
-        class transfer_all
-        {
-        public:
-          size_t operator()(const error_code& ec, size_t) const;
-        };
+    class transfer_all
+    {
+    public:
+      size_t operator()(const error_code& ec, size_t) const;
+    };
 
-      __end_versioned_ns__
-    } // namespace experimental
+  __end_versioned_ns__
+  } // namespace experimental
   } // namespace std
 
 The class `transfer_all` is a function object type for use as a

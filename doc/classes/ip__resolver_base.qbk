@@ -2,30 +2,30 @@
 [xrefid internet.resolver.base]
 
   namespace std {
-    namespace experimental {
-      __begin_versioned_ns__
-        namespace ip {
+  namespace experimental {
+  __begin_versioned_ns__
+  namespace ip {
 
-          class resolver_base
-          {
-          public:
-            typedef ``['[*T1]]`` flags;
-            static const flags passive;
-            static const flags canonical_name;
-            static const flags numeric_host;
-            static const flags numeric_service;
-            static const flags v4_mapped;
-            static const flags all_matching;
-            static const flags address_configured;
+    class resolver_base
+    {
+    public:
+      typedef ``['[*T1]]`` flags;
+      static const flags passive;
+      static const flags canonical_name;
+      static const flags numeric_host;
+      static const flags numeric_service;
+      static const flags v4_mapped;
+      static const flags all_matching;
+      static const flags address_configured;
 
-          protected:
-            resolver_base();
-            ~resolver_base();
-          };
+    protected:
+      resolver_base();
+      ~resolver_base();
+    };
 
-        } // namespace ip
-      __end_versioned_ns__
-    } // namespace experimental
+  } // namespace ip
+  __end_versioned_ns__
+  } // namespace experimental
   } // namespace std
 
 `resolver_base` defines a bitmask type, `flags`, with the bitmask elements

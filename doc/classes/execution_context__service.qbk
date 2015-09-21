@@ -2,34 +2,34 @@
 [xrefid async.exec.ctx.svc]
 
   namespace std {
-    namespace experimental {
-      __begin_versioned_ns__
+  namespace experimental {
+  __begin_versioned_ns__
 
-        class execution_context::service
-        {
-        protected:
-          // construct / copy / destroy:
+    class execution_context::service
+    {
+    protected:
+      // construct / copy / destroy:
 
-          explicit service(execution_context& owner);
-          service(const service&) = delete;
-          service& operator=(const service&) = delete;
-          virtual ~service();
+      explicit service(execution_context& owner);
+      service(const service&) = delete;
+      service& operator=(const service&) = delete;
+      virtual ~service();
 
-          // service observers:
+      // service observers:
 
-          execution_context& context() noexcept;
+      execution_context& context() noexcept;
 
-        private:
-          // service operations:
+    private:
+      // service operations:
 
-          virtual void shutdown() = 0;
-          virtual void notify_fork(fork_event e) {}
+      virtual void shutdown() = 0;
+      virtual void notify_fork(fork_event e) {}
 
-          execution_context& context_; // ``['exposition only]``
-        };
+      execution_context& context_; // ``['exposition only]``
+    };
 
-      __end_versioned_ns__
-    } // namespace experimental
+  __end_versioned_ns__
+  } // namespace experimental
   } // namespace std
 
 [section [^execution_context::service] members]

@@ -6,44 +6,44 @@ tasks with asynchronous operations as a completion handler with an associated
 allocator.
 
   namespace std {
-    namespace experimental {
-      __begin_versioned_ns__
+  namespace experimental {
+  __begin_versioned_ns__
 
-        template<class, class> class packaged_handler; // undefined
+    template<class, class> class packaged_handler; // undefined
 
-        template<class R, class... Args, class ProtoAllocator>
-        class packaged_handler<R(Args...), ProtoAllocator>
-        {
-        public:
-          // packaged_handler types:
+    template<class R, class... Args, class ProtoAllocator>
+    class packaged_handler<R(Args...), ProtoAllocator>
+    {
+    public:
+      // packaged_handler types:
 
-          typedef ProtoAllocator allocator_type;
+      typedef ProtoAllocator allocator_type;
 
-          // packaged_handler construct / copy / assign:
+      // packaged_handler construct / copy / assign:
 
-          template<class Func>
-            explicit packaged_handler(packaged_token<Func, ProtoAllocator>&& token);
-          packaged_handler(const packaged_handler&) = delete;
-          packaged_handler(packaged_handler&& rhs) noexcept;
-          packaged_handler& operator=(const packaged_handler&) = delete;
-          packaged_handler& operator=(packaged_handler&& rhs) noexcept;
+      template<class Func>
+        explicit packaged_handler(packaged_token<Func, ProtoAllocator>&& token);
+      packaged_handler(const packaged_handler&) = delete;
+      packaged_handler(packaged_handler&& rhs) noexcept;
+      packaged_handler& operator=(const packaged_handler&) = delete;
+      packaged_handler& operator=(packaged_handler&& rhs) noexcept;
 
-          // packaged_handler operations:
+      // packaged_handler operations:
 
-          allocator_type get_allocator() const noexcept;
-          future<R> get_future();
-          void operator()(Args... args);
+      allocator_type get_allocator() const noexcept;
+      future<R> get_future();
+      void operator()(Args... args);
 
-        private:
-          packaged_task<R(Args...)> task_; // ``['exposition only]``
-          ProtoAllocator allocator_; // ``['exposition only]``
-        };
+    private:
+      packaged_task<R(Args...)> task_; // ``['exposition only]``
+      ProtoAllocator allocator_; // ``['exposition only]``
+    };
 
-        template<class Signature, class ProtoAllocator>
-          class async_result<packaged_handler<Signature, ProtoAllocator>>;
+    template<class Signature, class ProtoAllocator>
+      class async_result<packaged_handler<Signature, ProtoAllocator>>;
 
-      __end_versioned_ns__
-    } // namespace experimental
+  __end_versioned_ns__
+  } // namespace experimental
   } // namespace std
 
 [section [^packaged_handler] members]
@@ -85,27 +85,27 @@ initializes `allocator_` with `std::move(rhs.allocator_)`.]
 [xrefid async.package.handler.async.result]
 
   namespace std {
-    namespace experimental {
-      __begin_versioned_ns__
+  namespace experimental {
+  __begin_versioned_ns__
 
-        template<class R, class... Args, class ProtoAllocator>
-        class async_result<packaged_handler<R(Args...), ProtoAllocator>>
-        {
-        public:
-          typedef future<R> type;
+    template<class R, class... Args, class ProtoAllocator>
+    class async_result<packaged_handler<R(Args...), ProtoAllocator>>
+    {
+    public:
+      typedef future<R> type;
 
-          explicit async_result(packaged_task<R(Args...)>& t);
-          async_result(const async_result&) = delete;
-          async_result& operator=(const async_result&) = delete;
+      explicit async_result(packaged_task<R(Args...)>& t);
+      async_result(const async_result&) = delete;
+      async_result& operator=(const async_result&) = delete;
 
-          type get();
+      type get();
 
-        private:
-          type future_; // ``['exposition only]``
-        };
+    private:
+      type future_; // ``['exposition only]``
+    };
 
-      __end_versioned_ns__
-    } // namespace experimental
+  __end_versioned_ns__
+  } // namespace experimental
   } // namespace std
 
 The implementation provides a partial specialization of `async_result` that

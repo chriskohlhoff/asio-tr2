@@ -2,35 +2,35 @@
 [xrefid thread.pool]
 
   namespace std {
-    namespace experimental {
-      __begin_versioned_ns__
+  namespace experimental {
+  __begin_versioned_ns__
 
-        class thread_pool : public execution_context
-        {
-        public:
-          // types:
+    class thread_pool : public execution_context
+    {
+    public:
+      // types:
 
-          class ``[link classes.thread_pool__executor_type executor_type]``;
+      class ``[link classes.thread_pool__executor_type executor_type]``;
 
-          // construct / copy / destroy:
+      // construct / copy / destroy:
 
-          thread_pool();
-          explicit thread_pool(std::size_t num_threads);
-          thread_pool(const thread_pool&) = delete;
-          thread_pool& operator=(const thread_pool&) = delete;
-          ~thread_pool();
+      thread_pool();
+      explicit thread_pool(std::size_t num_threads);
+      thread_pool(const thread_pool&) = delete;
+      thread_pool& operator=(const thread_pool&) = delete;
+      ~thread_pool();
 
-          // thread_pool operations:
+      // thread_pool operations:
 
-          executor_type get_executor() noexcept;
+      executor_type get_executor() noexcept;
 
-          void stop();
+      void stop();
 
-          void join();
-        };
+      void join();
+    };
 
-      __end_versioned_ns__
-    } // namespace experimental
+  __end_versioned_ns__
+  } // namespace experimental
   } // namespace std
 
 Class `thread_pool` implements a fixed-size pool of threads.

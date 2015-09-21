@@ -2,48 +2,48 @@
 [xrefid loop_scheduler.exec]
 
   namespace std {
-    namespace experimental {
-      __begin_versioned_ns__
+  namespace experimental {
+  __begin_versioned_ns__
 
-        class loop_scheduler::executor_type
-        {
-        public:
-          // construct / copy / destroy:
+    class loop_scheduler::executor_type
+    {
+    public:
+      // construct / copy / destroy:
 
-          executor_type(const executor_type& other) noexcept;
-          executor_type(executor_type&& other) noexcept;
+      executor_type(const executor_type& other) noexcept;
+      executor_type(executor_type&& other) noexcept;
 
-          executor_type& operator=(const executor_type& other) noexcept;
-          executor_type& operator=(executor_type&& other) noexcept;
+      executor_type& operator=(const executor_type& other) noexcept;
+      executor_type& operator=(executor_type&& other) noexcept;
 
-          ~executor_type();
+      ~executor_type();
 
-          // executor operations:
+      // executor operations:
 
-          bool running_in_this_thread() const noexcept;
+      bool running_in_this_thread() const noexcept;
 
-          loop_scheduler& context() noexcept;
+      loop_scheduler& context() noexcept;
 
-          void on_work_started() noexcept;
-          void on_work_finished() noexcept;
+      void on_work_started() noexcept;
+      void on_work_finished() noexcept;
 
-          template<class Func, class ProtoAllocator>
-            void dispatch(Func&& f, const ProtoAllocator& a);
-          template<class Func, class ProtoAllocator>
-            void post(Func&& f, const ProtoAllocator& a);
-          template<class Func, class ProtoAllocator>
-            void defer(Func&& f, const ProtoAllocator& a);
-        };
+      template<class Func, class ProtoAllocator>
+        void dispatch(Func&& f, const ProtoAllocator& a);
+      template<class Func, class ProtoAllocator>
+        void post(Func&& f, const ProtoAllocator& a);
+      template<class Func, class ProtoAllocator>
+        void defer(Func&& f, const ProtoAllocator& a);
+    };
 
-        bool operator==(const loop_scheduler::executor_type& a,
-                        const loop_scheduler::executor_type& b) noexcept;
-        bool operator!=(const loop_scheduler::executor_type& a,
-                        const loop_scheduler::executor_type& b) noexcept;
+    bool operator==(const loop_scheduler::executor_type& a,
+                    const loop_scheduler::executor_type& b) noexcept;
+    bool operator!=(const loop_scheduler::executor_type& a,
+                    const loop_scheduler::executor_type& b) noexcept;
 
-        template<> struct is_executor<loop_scheduler::executor_type> : true_type {};
+    template<> struct is_executor<loop_scheduler::executor_type> : true_type {};
 
-      __end_versioned_ns__
-    } // namespace experimental
+  __end_versioned_ns__
+  } // namespace experimental
   } // namespace std
 
 `loop_scheduler::executor_type` is a type satisfying [link requirements.executor

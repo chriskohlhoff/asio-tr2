@@ -6,26 +6,26 @@ classes.completion_handler_type completion token types] for use with
 asynchronous operations.
 
   namespace std {
-    namespace experimental {
-      __begin_versioned_ns__
+  namespace experimental {
+  __begin_versioned_ns__
 
-        template<class ProtoAllocator = allocator<void>>
-        class use_future_t
-        {
-        public:
-          // use_future_t types:
-          typedef ProtoAllocator allocator_type;
+    template<class ProtoAllocator = allocator<void>>
+    class use_future_t
+    {
+    public:
+      // use_future_t types:
+      typedef ProtoAllocator allocator_type;
 
-          // use_future_t members:
-          constexpr use_future_t() noexcept;
-          explicit use_future_t(const allocator_type& a) noexcept;
-          template<class OtherProtoAllocator> use_future_t<OtherProtoAllocator>
-            rebind(const OtherProtoAllocator& a) const noexcept;
-          allocator_type get_allocator() const noexcept;
-        };
+      // use_future_t members:
+      constexpr use_future_t() noexcept;
+      explicit use_future_t(const allocator_type& a) noexcept;
+      template<class OtherProtoAllocator> use_future_t<OtherProtoAllocator>
+        rebind(const OtherProtoAllocator& a) const noexcept;
+      allocator_type get_allocator() const noexcept;
+    };
 
-      __end_versioned_ns__
-    } // namespace experimental
+  __end_versioned_ns__
+  } // namespace experimental
   } // namespace std
 
 [section [^use_future_t] constructors]

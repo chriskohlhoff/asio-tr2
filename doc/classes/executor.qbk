@@ -5,77 +5,77 @@ The `executor` class provides a polymorphic wrapper for types that satisfy the
 [link requirements.executor Executor requirements].
 
   namespace std {
-    namespace experimental {
-      __begin_versioned_ns__
+  namespace experimental {
+  __begin_versioned_ns__
 
-        class executor
-        {
-        public:
-          // construct / copy / destroy:
+    class executor
+    {
+    public:
+      // construct / copy / destroy:
 
-          executor() noexcept;
-          executor(nullptr_t) noexcept;
-          executor(const executor& e) noexcept;
-          executor(executor&& e) noexcept;
-          template<class Executor> executor(Executor e);
-          template<class Executor, class ProtoAllocator>
-            executor(allocator_arg_t, const ProtoAllocator& a, Executor e);
+      executor() noexcept;
+      executor(nullptr_t) noexcept;
+      executor(const executor& e) noexcept;
+      executor(executor&& e) noexcept;
+      template<class Executor> executor(Executor e);
+      template<class Executor, class ProtoAllocator>
+        executor(allocator_arg_t, const ProtoAllocator& a, Executor e);
 
-          executor& operator=(const executor& e) noexcept;
-          executor& operator=(executor&& e) noexcept;
-          executor& operator=(nullptr_t) noexcept;
-          template<class Executor> executor& operator=(Executor e);
+      executor& operator=(const executor& e) noexcept;
+      executor& operator=(executor&& e) noexcept;
+      executor& operator=(nullptr_t) noexcept;
+      template<class Executor> executor& operator=(Executor e);
 
-          ~executor();
+      ~executor();
 
-          // executor modifiers:
+      // executor modifiers:
 
-          void swap(executor& other) noexcept;
-          template<class Executor, class ProtoAllocator>
-            void assign(Executor e, const ProtoAllocator& a);
+      void swap(executor& other) noexcept;
+      template<class Executor, class ProtoAllocator>
+        void assign(Executor e, const ProtoAllocator& a);
 
-          // executor operations:
+      // executor operations:
 
-          execution_context& context() noexcept;
+      execution_context& context() noexcept;
 
-          void on_work_started() noexcept;
-          void on_work_finished() noexcept;
+      void on_work_started() noexcept;
+      void on_work_finished() noexcept;
 
-          template<class Func, class ProtoAllocator>
-            void dispatch(Func&& f, const ProtoAllocator& a);
-          template<class Func, class ProtoAllocator>
-            void post(Func&& f, const ProtoAllocator& a);
-          template<class Func, class ProtoAllocator>
-            void defer(Func&& f, const ProtoAllocator& a);
+      template<class Func, class ProtoAllocator>
+        void dispatch(Func&& f, const ProtoAllocator& a);
+      template<class Func, class ProtoAllocator>
+        void post(Func&& f, const ProtoAllocator& a);
+      template<class Func, class ProtoAllocator>
+        void defer(Func&& f, const ProtoAllocator& a);
 
-          // executor capacity:
+      // executor capacity:
 
-          explicit operator bool() const noexcept;
+      explicit operator bool() const noexcept;
 
-          // executor target access:
+      // executor target access:
 
-          const type_info& target_type() const noexcept;
-          template<class Executor> Executor* target() noexcept;
-          template<class Executor> const Executor* target() const noexcept;
-        };
+      const type_info& target_type() const noexcept;
+      template<class Executor> Executor* target() noexcept;
+      template<class Executor> const Executor* target() const noexcept;
+    };
 
-        template<> struct is_executor<executor> : true_type {};
+    template<> struct is_executor<executor> : true_type {};
 
-        // executor comparisons:
+    // executor comparisons:
 
-        bool operator==(const executor& a, const executor& b) noexcept;
-        bool operator==(const executor& e, nullptr_t) noexcept;
-        bool operator==(nullptr_t, const executor& e) noexcept;
-        bool operator!=(const executor& a, const executor& b) noexcept;
-        bool operator!=(const executor& e, nullptr_t) noexcept;
-        bool operator!=(nullptr_t, const executor& e) noexcept;
+    bool operator==(const executor& a, const executor& b) noexcept;
+    bool operator==(const executor& e, nullptr_t) noexcept;
+    bool operator==(nullptr_t, const executor& e) noexcept;
+    bool operator!=(const executor& a, const executor& b) noexcept;
+    bool operator!=(const executor& e, nullptr_t) noexcept;
+    bool operator!=(nullptr_t, const executor& e) noexcept;
 
-        // executor specialized algorithms:
+    // executor specialized algorithms:
 
-        void swap(executor& a, executor& b) noexcept;
+    void swap(executor& a, executor& b) noexcept;
 
-      __end_versioned_ns__
-    } // namespace experimental
+  __end_versioned_ns__
+  } // namespace experimental
 
     template<class Allocator>
       struct uses_allocator<experimental::__versioned_ns__::executor, Allocator>

@@ -5,36 +5,36 @@ Class `system_executor` represents a set of rules where function objects are
 permitted to execute on any thread.
 
   namespace std {
-    namespace experimental {
-      __begin_versioned_ns__
+  namespace experimental {
+  __begin_versioned_ns__
 
-        class system_executor
-        {
-        public:
-          // constructors:
+    class system_executor
+    {
+    public:
+      // constructors:
 
-          system_executor() {}
+      system_executor() {}
 
-          // executor operations:
+      // executor operations:
 
-          execution_context& context() noexcept;
+      execution_context& context() noexcept;
 
-          void on_work_started() noexcept {}
-          void on_work_finished() noexcept {}
+      void on_work_started() noexcept {}
+      void on_work_finished() noexcept {}
 
-          template<class Func, class ProtoAllocator>
-            void dispatch(Func&& f, const ProtoAllocator& a);
-          template<class Func, class ProtoAllocator>
-            void post(Func&& f, const ProtoAllocator& a);
-          template<class Func, class ProtoAllocator>
-            void defer(Func&& f, const ProtoAllocator& a);
-        };
+      template<class Func, class ProtoAllocator>
+        void dispatch(Func&& f, const ProtoAllocator& a);
+      template<class Func, class ProtoAllocator>
+        void post(Func&& f, const ProtoAllocator& a);
+      template<class Func, class ProtoAllocator>
+        void defer(Func&& f, const ProtoAllocator& a);
+    };
 
-        bool operator==(const system_executor&, const system_executor&) noexcept;
-        bool operator!=(const system_executor&, const system_executor&) noexcept;
+    bool operator==(const system_executor&, const system_executor&) noexcept;
+    bool operator!=(const system_executor&, const system_executor&) noexcept;
 
-      __end_versioned_ns__
-    } // namespace experimental
+  __end_versioned_ns__
+  } // namespace experimental
   } // namespace std
 
 Class `system_executor` satisfies the [link requirements.executor Executor

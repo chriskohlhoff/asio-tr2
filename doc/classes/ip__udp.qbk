@@ -5,53 +5,53 @@ The `udp` class meets the requirements for an [link
 requirements.internet_protocol `InternetProtocol`].
 
   namespace std {
-    namespace experimental {
-      __begin_versioned_ns__
-        namespace ip {
+  namespace experimental {
+  __begin_versioned_ns__
+  namespace ip {
 
-          class udp
-          {
-          public:
-            // types:
-            typedef basic_endpoint<udp> endpoint;
-            typedef basic_resolver<udp> resolver;
-            typedef basic_datagram_socket<udp> socket;
+    class udp
+    {
+    public:
+      // types:
+      typedef basic_endpoint<udp> endpoint;
+      typedef basic_resolver<udp> resolver;
+      typedef basic_datagram_socket<udp> socket;
 
-            // static members:
-            static constexpr udp v4() noexcept;
-            static constexpr udp v6() noexcept;
+      // static members:
+      static constexpr udp v4() noexcept;
+      static constexpr udp v6() noexcept;
 
-            udp() = delete;
-          };
+      udp() = delete;
+    };
 
-          // udp comparisons:
-          constexpr bool operator==(const udp& a, const udp& b) noexcept;
-          constexpr bool operator!=(const udp& a, const udp& b) noexcept;
+    // udp comparisons:
+    constexpr bool operator==(const udp& a, const udp& b) noexcept;
+    constexpr bool operator!=(const udp& a, const udp& b) noexcept;
 
-        } // namespace ip
-      __end_versioned_ns__
-    } // namespace experimental
+  } // namespace ip
+  __end_versioned_ns__
+  } // namespace experimental
   } // namespace std
 
 Extensible implementations provide the following member functions:
 
   namespace std {
-    namespace experimental {
-      __begin_versioned_ns__
-        namespace ip {
+  namespace experimental {
+  __begin_versioned_ns__
+  namespace ip {
 
-          class udp
-          {
-          public:
-            constexpr int family() const noexcept;
-            constpexr int type() const noexcept;
-            constexpr int protocol() const noexcept;
-            ``['// remainder unchanged]``
-          };
+    class udp
+    {
+    public:
+      constexpr int family() const noexcept;
+      constpexr int type() const noexcept;
+      constexpr int protocol() const noexcept;
+      ``['// remainder unchanged]``
+    };
 
-        } // namespace ip
-      __end_versioned_ns__
-    } // namespace experimental
+  } // namespace ip
+  __end_versioned_ns__
+  } // namespace experimental
   } // namespace std
 
 The return values for these member functions are listed in the table below.

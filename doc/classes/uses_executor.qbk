@@ -5,13 +5,13 @@
 [xrefid async.uses.executor.trait]
 
   namespace std {
-    namespace experimental {
-      __begin_versioned_ns__
+  namespace experimental {
+  __begin_versioned_ns__
 
-        template<class T, class Executor> struct uses_executor;
+    template<class T, class Executor> struct uses_executor;
 
-      __end_versioned_ns__
-    } // namespace experimental
+  __end_versioned_ns__
+  } // namespace experimental
   } // namespace std
 
 ['Remark:] Detects whether `T` has a nested `executor_type` that is convertible

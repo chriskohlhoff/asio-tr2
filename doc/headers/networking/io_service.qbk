@@ -2,13 +2,13 @@
 [xrefid io_service.synop]
 
   namespace std {
-    namespace experimental {
-      __begin_versioned_ns__
+  namespace experimental {
+  __begin_versioned_ns__
 
-        class ``[link classes.io_service io_service]``;
+    class ``[link classes.io_service io_service]``;
 
-      __end_versioned_ns__
-    } // namespace experimental
+  __end_versioned_ns__
+  } // namespace experimental
   } // namespace std
 
 [endsect]

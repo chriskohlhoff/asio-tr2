@@ -6,17 +6,17 @@ The `completion_handler_type` class template is a type transformation (C++Std,
 is based on a `Signature`.
 
   namespace std {
-    namespace experimental {
-      __begin_versioned_ns__
+  namespace experimental {
+  __begin_versioned_ns__
 
-        template<class CompletionToken, class Signature, class = void>
-        struct completion_handler_type
-        {
-          typedef CompletionToken type;
-        };
+    template<class CompletionToken, class Signature, class = void>
+    struct completion_handler_type
+    {
+      typedef CompletionToken type;
+    };
 
-      __end_versioned_ns__
-    } // namespace experimental
+  __end_versioned_ns__
+  } // namespace experimental
   } // namespace std
 
 The template parameter `CompletionToken` shall be an object type. The template

@@ -2,15 +2,15 @@
 [xrefid buffer.traits]
 
   namespace std {
-    namespace experimental {
-      __begin_versioned_ns__
+  namespace experimental {
+  __begin_versioned_ns__
 
-        template<class T> is_mutable_buffer_sequence;
-        template<class T> is_const_buffer_sequence;
-        template<class T> is_dynamic_buffer;
+    template<class T> is_mutable_buffer_sequence;
+    template<class T> is_const_buffer_sequence;
+    template<class T> is_dynamic_buffer;
 
-      __end_versioned_ns__
-    } // namespace experimental
+  __end_versioned_ns__
+  } // namespace experimental
   } // namespace std
 
 This sub-clause contains templates that may be used to query the properties of

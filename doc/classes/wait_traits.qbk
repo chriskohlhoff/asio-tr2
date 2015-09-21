@@ -1,21 +1,21 @@
 [section:wait_traits Class template [^wait_traits]]
 
   namespace std {
-    namespace experimental {
-      __begin_versioned_ns__
+  namespace experimental {
+  __begin_versioned_ns__
 
-        template<class Clock>
-        struct wait_traits
-        {
-          static typename Clock::duration to_wait_duration(
-            const typename Clock::duration& d);
+    template<class Clock>
+    struct wait_traits
+    {
+      static typename Clock::duration to_wait_duration(
+        const typename Clock::duration& d);
 
-          static typename Clock::duration to_wait_duration(
-            const typename Clock::time_point& t);
-        };
+      static typename Clock::duration to_wait_duration(
+        const typename Clock::time_point& t);
+    };
 
-      __end_versioned_ns__
-    } // namespace experimental
+  __end_versioned_ns__
+  } // namespace experimental
   } // namespace std
 
 Class template `wait_traits` satisfies the [link requirements.wait_traits

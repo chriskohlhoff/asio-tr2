@@ -97,9 +97,12 @@
 [def __dotdotdot__ ...]
 [def __unspecified__ '''<emphasis>unspecified</emphasis>''']
 [def __ifr__ '''<emphasis>DEDUCED</emphasis>''']
-[def __versioned_ns__ concurrency_v1]
-[def __begin_versioned_ns__ inline namespace __versioned_ns__ {]
-[def __end_versioned_ns__ } // inline namespace __versioned_ns__]
+[def __ns__ concurrency]
+[def __versioned_ns__ concurrency::v2]
+[def __begin_versioned_ns__ '''<phrase role="keyword">namespace</phrase> <phrase role="identifier">concurrency</phrase> <phrase role="special">{</phrase>
+<phrase role="keyword">inline namespace</phrase> <phrase role="identifier">v2</phrase> <phrase role="special">{</phrase>''']
+[def __end_versioned_ns__ '''<phrase role="special">}</phrase> <phrase role="comment">// inline namespace v2</phrase>
+<phrase role="special">}</phrase> <phrase role="comment">// namespace concurrency</phrase>''']
 [def __concurrency__]
 
 [/-----------------------------------------------------------------------------]
@@ -602,7 +605,7 @@ The leader thread waits for the next message to arrive.
 A new message has arrived. The leader thread promotes a follower to become the
 new leader.
 
-  ``''''''``  std::experimental::post(thread_pool_,
+  ``''''''``  std::experimental::concurrency::post(thread_pool_,
   ``''''''``      [this]{ receive_and_dispatch(); });
 
 The now former leader processes the message.

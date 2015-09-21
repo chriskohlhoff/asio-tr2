@@ -2,19 +2,19 @@
 [xrefid async.assoc.alloc]
 
   namespace std {
-    namespace experimental {
-      __begin_versioned_ns__
+  namespace experimental {
+  __begin_versioned_ns__
 
-        template<class T, class ProtoAllocator = allocator<void>>
-        struct associated_allocator
-        {
-          typedef ``['see below]`` type;
+    template<class T, class ProtoAllocator = allocator<void>>
+    struct associated_allocator
+    {
+      typedef ``['see below]`` type;
 
-          static type get(const T& t, const ProtoAllocator& a = ProtoAllocator()) noexcept;
-        };
+      static type get(const T& t, const ProtoAllocator& a = ProtoAllocator()) noexcept;
+    };
 
-      __end_versioned_ns__
-    } // namespace experimental
+  __end_versioned_ns__
+  } // namespace experimental
   } // namespace std
 
 Specializations of `associated_allocator` shall satisfy the requirements in the

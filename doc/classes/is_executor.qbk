@@ -2,13 +2,13 @@
 [xrefid async.is.exec]
 
   namespace std {
-    namespace experimental {
-      __begin_versioned_ns__
+  namespace experimental {
+  __begin_versioned_ns__
 
-        template<class T> struct is_executor : false_type {};
+    template<class T> struct is_executor : false_type {};
 
-      __end_versioned_ns__
-    } // namespace experimental
+  __end_versioned_ns__
+  } // namespace experimental
   } // namespace std
 
 `is_executor` can be used to detect executor types satisfying the [link

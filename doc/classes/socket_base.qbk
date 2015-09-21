@@ -2,48 +2,48 @@
 [xrefid socket.base]
 
   namespace std {
-    namespace experimental {
-      __begin_versioned_ns__
+  namespace experimental {
+  __begin_versioned_ns__
 
-        class socket_base
-        {
-        public:
-          class ``[link classes.socket_base__bool_socket_options broadcast]``;
-          class ``[link classes.socket_base__bool_socket_options debug]``;
-          class ``[link classes.socket_base__bool_socket_options do_not_route]``;
-          class ``[link classes.socket_base__bool_socket_options keep_alive]``;
-          class ``[link classes.socket_base__linger linger]``;
-          class ``[link classes.socket_base__bool_socket_options out_of_band_inline]``;
-          class ``[link classes.socket_base__int_socket_options receive_buffer_size]``;
-          class ``[link classes.socket_base__int_socket_options receive_low_watermark]``;
-          class ``[link classes.socket_base__bool_socket_options reuse_address]``;
-          class ``[link classes.socket_base__int_socket_options send_buffer_size]``;
-          class ``[link classes.socket_base__int_socket_options send_low_watermark]``;
+    class socket_base
+    {
+    public:
+      class ``[link classes.socket_base__bool_socket_options broadcast]``;
+      class ``[link classes.socket_base__bool_socket_options debug]``;
+      class ``[link classes.socket_base__bool_socket_options do_not_route]``;
+      class ``[link classes.socket_base__bool_socket_options keep_alive]``;
+      class ``[link classes.socket_base__linger linger]``;
+      class ``[link classes.socket_base__bool_socket_options out_of_band_inline]``;
+      class ``[link classes.socket_base__int_socket_options receive_buffer_size]``;
+      class ``[link classes.socket_base__int_socket_options receive_low_watermark]``;
+      class ``[link classes.socket_base__bool_socket_options reuse_address]``;
+      class ``[link classes.socket_base__int_socket_options send_buffer_size]``;
+      class ``[link classes.socket_base__int_socket_options send_low_watermark]``;
 
-          typedef ``['[*T1]]`` shutdown_type;
-          static constexpr shutdown_type shutdown_receive;
-          static constexpr shutdown_type shutdown_send;
-          static constexpr shutdown_type shutdown_both;
+      typedef ``['[*T1]]`` shutdown_type;
+      static constexpr shutdown_type shutdown_receive;
+      static constexpr shutdown_type shutdown_send;
+      static constexpr shutdown_type shutdown_both;
 
-          typedef ``['[*T2]]`` wait_type;
-          static constexpr wait_type wait_read;
-          static constexpr wait_type wait_write;
-          static constexpr wait_type wait_error;
+      typedef ``['[*T2]]`` wait_type;
+      static constexpr wait_type wait_read;
+      static constexpr wait_type wait_write;
+      static constexpr wait_type wait_error;
 
-          typedef ``['[*T3]]`` message_flags;
-          static constexpr message_flags message_peek;
-          static constexpr message_flags message_out_of_band;
-          static constexpr message_flags message_do_not_route;
+      typedef ``['[*T3]]`` message_flags;
+      static constexpr message_flags message_peek;
+      static constexpr message_flags message_out_of_band;
+      static constexpr message_flags message_do_not_route;
 
-          static const int max_listen_connections;
+      static const int max_listen_connections;
 
-        protected:
-          socket_base();
-          ~socket_base();
-        };
+    protected:
+      socket_base();
+      ~socket_base();
+    };
 
-      __end_versioned_ns__
-    } // namespace experimental
+  __end_versioned_ns__
+  } // namespace experimental
   } // namespace std
 
 `socket_base` defines several member types:

@@ -2,206 +2,206 @@
 [xrefid async.synop]
 
   namespace std {
-    namespace experimental {
-      __begin_versioned_ns__
+  namespace experimental {
+  __begin_versioned_ns__
 
-        template<class CompletionToken, class Signature, class = void>
-          struct ``[link classes.completion_handler_type completion_handler_type]``;
+    template<class CompletionToken, class Signature, class = void>
+      struct ``[link classes.completion_handler_type completion_handler_type]``;
 
-        template<class CompletionToken, class Signature>
-          using completion_handler_type_t =
-            typename completion_handler_type<CompletionToken, Signature>::type;
+    template<class CompletionToken, class Signature>
+      using completion_handler_type_t =
+        typename completion_handler_type<CompletionToken, Signature>::type;
 
-        template<class CompletionHandler> class ``[link classes.async_result async_result]``;
+    template<class CompletionHandler> class ``[link classes.async_result async_result]``;
 
-        template<class CompletionToken, class Signature>
-          struct ``[link classes.async_completion async_completion]``;
+    template<class CompletionToken, class Signature>
+      struct ``[link classes.async_completion async_completion]``;
 
-        template<class T, class ProtoAllocator = allocator<void>>
-          struct ``[link classes.associated_allocator associated_allocator]``;
+    template<class T, class ProtoAllocator = allocator<void>>
+      struct ``[link classes.associated_allocator associated_allocator]``;
 
-        template<class T, class ProtoAllocator = allocator<void>>
-          using associated_allocator_t = typename associated_allocator<T, ProtoAllocator>::type;
+    template<class T, class ProtoAllocator = allocator<void>>
+      using associated_allocator_t = typename associated_allocator<T, ProtoAllocator>::type;
 
-        ``// [link functions.get_associated_allocator get_associated_allocator]:``
+    ``// [link functions.get_associated_allocator get_associated_allocator]:``
 
-        template<class T>
-          associated_allocator_t<T> get_associated_allocator(const T& t);
-        template<class T, class ProtoAllocator>
-          associated_allocator_t<T, ProtoAllocator>
-            get_associated_allocator(const T& t, const ProtoAllocator& a);
+    template<class T>
+      associated_allocator_t<T> get_associated_allocator(const T& t);
+    template<class T, class ProtoAllocator>
+      associated_allocator_t<T, ProtoAllocator>
+        get_associated_allocator(const T& t, const ProtoAllocator& a);
 
-        enum class fork_event {
-          prepare,
-          parent,
-          child
-        };
+    enum class fork_event {
+      prepare,
+      parent,
+      child
+    };
 
-        class ``[link classes.execution_context execution_context]``;
+    class ``[link classes.execution_context execution_context]``;
 
-        class service_already_exists;
+    class service_already_exists;
 
-        template<class Service> Service& use_service(execution_context& ctx);
-        template<class Service, class... Args> Service&
-          make_service(execution_context& ctx, Args&&... args);
-        template<class Service> bool has_service(execution_context& ctx) noexcept;
+    template<class Service> Service& use_service(execution_context& ctx);
+    template<class Service, class... Args> Service&
+      make_service(execution_context& ctx, Args&&... args);
+    template<class Service> bool has_service(execution_context& ctx) noexcept;
 
-        template<class T> struct ``[link classes.is_executor is_executor]`` : false_type {};
+    template<class T> struct ``[link classes.is_executor is_executor]`` : false_type {};
 
-        struct ``[link classes.executor_arg_t executor_arg_t]`` { };
-        constexpr executor_arg_t executor_arg = executor_arg_t();
+    struct ``[link classes.executor_arg_t executor_arg_t]`` { };
+    constexpr executor_arg_t executor_arg = executor_arg_t();
 
-        template<class T, class Executor> struct ``[link classes.uses_executor uses_executor]``;
+    template<class T, class Executor> struct ``[link classes.uses_executor uses_executor]``;
 
-        template<class T, class Executor = system_executor>
-          struct ``[link classes.associated_executor associated_executor]``;
+    template<class T, class Executor = system_executor>
+      struct ``[link classes.associated_executor associated_executor]``;
 
-        template<class T, class Executor = system_executor>
-          using associated_executor_t = typename associated_executor<T, Executor>::type;
+    template<class T, class Executor = system_executor>
+      using associated_executor_t = typename associated_executor<T, Executor>::type;
 
-        ``// [link functions.get_associated_executor get_associated_executor]:``
+    ``// [link functions.get_associated_executor get_associated_executor]:``
 
-        template<class T>
-          associated_executor_t<T> get_associated_executor(const T& t);
-        template<class T, class Executor>
-          associated_executor_t<T, Executor>
-            get_associated_executor(const T& t, const Executor& ex);
-        template<class T, class ExecutionContext>
-          associated_executor_t<T, typename ExecutionContext::executor_type>
-            get_associated_executor(const T& t, ExecutionContext& ctx);
+    template<class T>
+      associated_executor_t<T> get_associated_executor(const T& t);
+    template<class T, class Executor>
+      associated_executor_t<T, Executor>
+        get_associated_executor(const T& t, const Executor& ex);
+    template<class T, class ExecutionContext>
+      associated_executor_t<T, typename ExecutionContext::executor_type>
+        get_associated_executor(const T& t, ExecutionContext& ctx);
 
-        template<class T, class Executor>
-          class ``[link classes.executor_wrapper executor_wrapper]``;
+    template<class T, class Executor>
+      class ``[link classes.executor_wrapper executor_wrapper]``;
 
-        template<class T, class Executor, class Signature>
-          struct completion_handler_type<executor_wrapper<T, Executor>, Signature>;
+    template<class T, class Executor, class Signature>
+      struct completion_handler_type<executor_wrapper<T, Executor>, Signature>;
 
-        template<class T, class Executor>
-          class async_result<executor_wrapper<T, Executor>>;
+    template<class T, class Executor>
+      class async_result<executor_wrapper<T, Executor>>;
 
-        template<class T, class Executor, class ProtoAllocator>
-          struct associated_allocator<executor_wrapper<T, Executor>, ProtoAllocator>;
+    template<class T, class Executor, class ProtoAllocator>
+      struct associated_allocator<executor_wrapper<T, Executor>, ProtoAllocator>;
 
-        template<class T, class Executor, class Executor1>
-          struct associated_executor<executor_wrapper<T, Executor>, Executor1>;
+    template<class T, class Executor, class Executor1>
+      struct associated_executor<executor_wrapper<T, Executor>, Executor1>;
 
-        ``// [link functions.wrap wrap]:``
+    ``// [link functions.wrap wrap]:``
 
-        template<class Executor, class T>
-          executor_wrapper<decay_t<T>, Executor> wrap(const Executor& ex, T&& t);
-        template<class ExecutionContext, class T>
-          executor_wrapper<decay_t<T>, typename ExecutionContext::executor_type>
-            wrap(ExecutionContext& ctx, T&& t);
+    template<class Executor, class T>
+      executor_wrapper<decay_t<T>, Executor> wrap(const Executor& ex, T&& t);
+    template<class ExecutionContext, class T>
+      executor_wrapper<decay_t<T>, typename ExecutionContext::executor_type>
+        wrap(ExecutionContext& ctx, T&& t);
 
-        template<class Executor>
-          class ``[link classes.executor_work executor_work]``;
+    template<class Executor>
+      class ``[link classes.executor_work executor_work]``;
 
-        ``// [link functions.make_work make_work]:``
+    ``// [link functions.make_work make_work]:``
 
-        template<class Executor>
-          executor_work<Executor>
-            make_work(const Executor& ex);
-        template<class ExecutionContext>
-          executor_work<typename ExecutionContext::executor_type>
-            make_work(ExecutionContext& ctx);
-        template<class T>
-          executor_work<associated_executor_t<T>>
-            make_work(const T& t);
-        template<class T, class Executor>
-          executor_work<associated_executor_t<T, Executor>>
-            make_work(const T& t, const Executor& ex);
-        template<class T, class ExecutionContext>
-          executor_work<associated_executor_t<T, typename ExecutionContext::executor_type>>
-            make_work(const T& t, ExecutionContext& ctx);
+    template<class Executor>
+      executor_work<Executor>
+        make_work(const Executor& ex);
+    template<class ExecutionContext>
+      executor_work<typename ExecutionContext::executor_type>
+        make_work(ExecutionContext& ctx);
+    template<class T>
+      executor_work<associated_executor_t<T>>
+        make_work(const T& t);
+    template<class T, class Executor>
+      executor_work<associated_executor_t<T, Executor>>
+        make_work(const T& t, const Executor& ex);
+    template<class T, class ExecutionContext>
+      executor_work<associated_executor_t<T, typename ExecutionContext::executor_type>>
+        make_work(const T& t, ExecutionContext& ctx);
 
-        class ``[link classes.system_executor system_executor]``;
+    class ``[link classes.system_executor system_executor]``;
 
-        bool operator==(const system_executor&, const system_executor&);
-        bool operator!=(const system_executor&, const system_executor&);
+    bool operator==(const system_executor&, const system_executor&);
+    bool operator!=(const system_executor&, const system_executor&);
 
-        template<> struct is_executor<system_executor> : true_type {};
+    template<> struct is_executor<system_executor> : true_type {};
 
-        class ``[link classes.bad_executor bad_executor]``;
+    class ``[link classes.bad_executor bad_executor]``;
 
-        class ``[link classes.executor executor]``;
+    class ``[link classes.executor executor]``;
 
-        template <> struct is_executor<executor> : true_type {};
+    template <> struct is_executor<executor> : true_type {};
 
-        bool operator==(const executor& a, const executor& b) noexcept;
-        bool operator==(const executor& e, nullptr_t) noexcept;
-        bool operator==(nullptr_t, const executor& e) noexcept;
-        bool operator!=(const executor& a, const executor& b) noexcept;
-        bool operator!=(const executor& e, nullptr_t) noexcept;
-        bool operator!=(nullptr_t, const executor& e) noexcept;
+    bool operator==(const executor& a, const executor& b) noexcept;
+    bool operator==(const executor& e, nullptr_t) noexcept;
+    bool operator==(nullptr_t, const executor& e) noexcept;
+    bool operator!=(const executor& a, const executor& b) noexcept;
+    bool operator!=(const executor& e, nullptr_t) noexcept;
+    bool operator!=(nullptr_t, const executor& e) noexcept;
 
-        ``// [link functions.dispatch dispatch]:``
+    ``// [link functions.dispatch dispatch]:``
 
-        template<class CompletionToken>
-          __ifr__ dispatch(CompletionToken&& token);
-        template<class Executor, class CompletionToken>
-          __ifr__ dispatch(const Executor& ex, CompletionToken&& token);
-        template<class ExecutionContext, class CompletionToken>
-          __ifr__ dispatch(ExecutionContext& ctx, CompletionToken&& token);
+    template<class CompletionToken>
+      __ifr__ dispatch(CompletionToken&& token);
+    template<class Executor, class CompletionToken>
+      __ifr__ dispatch(const Executor& ex, CompletionToken&& token);
+    template<class ExecutionContext, class CompletionToken>
+      __ifr__ dispatch(ExecutionContext& ctx, CompletionToken&& token);
 
-        ``// [link functions.post post]:``
+    ``// [link functions.post post]:``
 
-        template<class CompletionToken>
-          __ifr__ post(CompletionToken&& token);
-        template<class Executor, class CompletionToken>
-          __ifr__ post(const Executor& ex, CompletionToken&& token);
-        template<class ExecutionContext, class CompletionToken>
-          __ifr__ post(ExecutionContext& ctx, CompletionToken&& token);
+    template<class CompletionToken>
+      __ifr__ post(CompletionToken&& token);
+    template<class Executor, class CompletionToken>
+      __ifr__ post(const Executor& ex, CompletionToken&& token);
+    template<class ExecutionContext, class CompletionToken>
+      __ifr__ post(ExecutionContext& ctx, CompletionToken&& token);
 
-        ``// [link functions.defer defer]:``
+    ``// [link functions.defer defer]:``
 
-        template<class CompletionToken>
-          __ifr__ defer(CompletionToken&& token);
-        template<class Executor, class CompletionToken>
-          __ifr__ defer(const Executor& ex, CompletionToken&& token);
-        template<class ExecutionContext, class CompletionToken>
-          __ifr__ defer(ExecutionContext& ctx, CompletionToken&& token);
+    template<class CompletionToken>
+      __ifr__ defer(CompletionToken&& token);
+    template<class Executor, class CompletionToken>
+      __ifr__ defer(const Executor& ex, CompletionToken&& token);
+    template<class ExecutionContext, class CompletionToken>
+      __ifr__ defer(ExecutionContext& ctx, CompletionToken&& token);
 
-        template<class Executor>
-          class ``[link classes.strand strand]``;
+    template<class Executor>
+      class ``[link classes.strand strand]``;
 
-        template<class Executor>
-          bool operator==(const strand<Executor>& a, const strand<Executor>& b);
-        template<class Executor>
-          bool operator!=(const strand<Executor>& a, const strand<Executor>& b);
+    template<class Executor>
+      bool operator==(const strand<Executor>& a, const strand<Executor>& b);
+    template<class Executor>
+      bool operator!=(const strand<Executor>& a, const strand<Executor>& b);
 
-        template<class Executor>
-          struct is_executor<strand<Executor>> : true_type {};
+    template<class Executor>
+      struct is_executor<strand<Executor>> : true_type {};
 
-        template<class ProtoAllocator = allocator<void>>
-          class ``[link classes.use_future_t use_future_t]``;
+    template<class ProtoAllocator = allocator<void>>
+      class ``[link classes.use_future_t use_future_t]``;
 
-        constexpr use_future_t<> use_future = use_future_t<>();
+    constexpr use_future_t<> use_future = use_future_t<>();
 
-        template<class ProtoAllocator, class R, class... Args>
-          struct completion_handler_type<use_future_t<ProtoAllocator>, R(Args...)>;
+    template<class ProtoAllocator, class R, class... Args>
+      struct completion_handler_type<use_future_t<ProtoAllocator>, R(Args...)>;
 
-        template<class R, class... Args>
-          class ``[link classes.async_result_packaged_task async_result<packaged_task<R(Args...)>>]``;
+    template<class R, class... Args>
+      class ``[link classes.async_result_packaged_task async_result<packaged_task<R(Args...)>>]``;
 
-        template<class, class> class packaged_handler; // undefined
-        template<class R, class... Arg, class ProtoAllocator>
-          class ``[link classes.packaged_handler packaged_handler]``<R(Args...), ProtoAllocator>;
+    template<class, class> class packaged_handler; // undefined
+    template<class R, class... Arg, class ProtoAllocator>
+      class ``[link classes.packaged_handler packaged_handler]``<R(Args...), ProtoAllocator>;
 
-        template<class Signature, class ProtoAllocator>
-          class async_result<packaged_handler<Signature, ProtoAllocator>>;
+    template<class Signature, class ProtoAllocator>
+      class async_result<packaged_handler<Signature, ProtoAllocator>>;
 
-        template<class Func, class ProtoAllocator = allocator<void>>
-          class ``[link classes.packaged_token packaged_token]``;
+    template<class Func, class ProtoAllocator = allocator<void>>
+      class ``[link classes.packaged_token packaged_token]``;
 
-        template<class Func, class ProtoAllocator, class R, class... Args>
-          struct completion_handler_type<packaged_token<Func, ProtoAllocator>, R(Args...)>;
+    template<class Func, class ProtoAllocator, class R, class... Args>
+      struct completion_handler_type<packaged_token<Func, ProtoAllocator>, R(Args...)>;
 
-        template<class Func, class ProtoAllocator = allocator<void>>
-          packaged_token<decay_t<Func>, ProtoAllocator> ``[link functions.package package]``(
-            Func&& f, const ProtoAllocator& a = ProtoAllocator());
+    template<class Func, class ProtoAllocator = allocator<void>>
+      packaged_token<decay_t<Func>, ProtoAllocator> ``[link functions.package package]``(
+        Func&& f, const ProtoAllocator& a = ProtoAllocator());
 
-      __end_versioned_ns__
-    } // namespace experimental
+  __end_versioned_ns__
+  } // namespace experimental
 
     template<class Allocator>
       struct uses_allocator<experimental::__versioned_ns__::executor, Allocator>

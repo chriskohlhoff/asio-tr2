@@ -2,259 +2,259 @@
 [xrefid internet.synop]
 
   namespace std {
-    namespace experimental {
-      __begin_versioned_ns__
-        namespace ip {
+  namespace experimental {
+  __begin_versioned_ns__
+  namespace ip {
 
-          enum class resolver_errc {
-            host_not_found = ``['implementation defined]``, // ``['EAI_NONAME]``
-            host_not_found_try_again = ``['implementation defined]``, // ``['EAI_AGAIN]``
-            service_not_found = ``['implementation defined]`` // ``['EAI_SERVICE]``
-          };
+    enum class resolver_errc {
+      host_not_found = ``['implementation defined]``, // ``['EAI_NONAME]``
+      host_not_found_try_again = ``['implementation defined]``, // ``['EAI_AGAIN]``
+      service_not_found = ``['implementation defined]`` // ``['EAI_SERVICE]``
+    };
 
-          const error_category& resolver_category() noexcept;
+    const error_category& resolver_category() noexcept;
 
-          error_code make_error_code(resolver_errc e) noexcept;
-          error_condition make_error_condition(resolver_errc e) noexcept;
+    error_code make_error_code(resolver_errc e) noexcept;
+    error_condition make_error_condition(resolver_errc e) noexcept;
 
-          typedef uint16_least_t port_type;
-          typedef uint32_least_t address_v4_uint_type;
-          typedef uint32_least_t scope_id_type;
+    typedef uint16_least_t port_type;
+    typedef uint32_least_t address_v4_uint_type;
+    typedef uint32_least_t scope_id_type;
 
-          struct v4_mapped_t {};
-          constexpr v4_mapped_t v4_mapped;
+    struct v4_mapped_t {};
+    constexpr v4_mapped_t v4_mapped;
 
-          class ``[link classes.ip__address address]``;
-          class ``[link classes.ip__address_v4 address_v4]``;
-          class ``[link classes.ip__address_v6 address_v6]``;
+    class ``[link classes.ip__address address]``;
+    class ``[link classes.ip__address_v4 address_v4]``;
+    class ``[link classes.ip__address_v6 address_v6]``;
 
-          class ``[link classes.ip__bad_address_cast bad_address_cast]``;
+    class ``[link classes.ip__bad_address_cast bad_address_cast]``;
 
-          // ``[link classes.ip__address__comparisons address comparisons]``:
-          bool operator==(const address&, const address&) noexcept;
-          bool operator!=(const address&, const address&) noexcept;
-          bool operator< (const address&, const address&) noexcept;
-          bool operator> (const address&, const address&) noexcept;
-          bool operator<=(const address&, const address&) noexcept;
-          bool operator>=(const address&, const address&) noexcept;
+    // ``[link classes.ip__address__comparisons address comparisons]``:
+    bool operator==(const address&, const address&) noexcept;
+    bool operator!=(const address&, const address&) noexcept;
+    bool operator< (const address&, const address&) noexcept;
+    bool operator> (const address&, const address&) noexcept;
+    bool operator<=(const address&, const address&) noexcept;
+    bool operator>=(const address&, const address&) noexcept;
 
-          // ``[link classes.ip__address_v4__comparisons address_v4 comparisons]``:
-          bool operator==(const address_v4&, const address_v4&) noexcept;
-          bool operator!=(const address_v4&, const address_v4&) noexcept;
-          bool operator< (const address_v4&, const address_v4&) noexcept;
-          bool operator> (const address_v4&, const address_v4&) noexcept;
-          bool operator<=(const address_v4&, const address_v4&) noexcept;
-          bool operator>=(const address_v4&, const address_v4&) noexcept;
+    // ``[link classes.ip__address_v4__comparisons address_v4 comparisons]``:
+    bool operator==(const address_v4&, const address_v4&) noexcept;
+    bool operator!=(const address_v4&, const address_v4&) noexcept;
+    bool operator< (const address_v4&, const address_v4&) noexcept;
+    bool operator> (const address_v4&, const address_v4&) noexcept;
+    bool operator<=(const address_v4&, const address_v4&) noexcept;
+    bool operator>=(const address_v4&, const address_v4&) noexcept;
 
-          // ``[link classes.ip__address_v6__comparisons address_v6 comparisons]``:
-          bool operator==(const address_v6&, const address_v6&) noexcept;
-          bool operator!=(const address_v6&, const address_v6&) noexcept;
-          bool operator< (const address_v6&, const address_v6&) noexcept;
-          bool operator> (const address_v6&, const address_v6&) noexcept;
-          bool operator<=(const address_v6&, const address_v6&) noexcept;
-          bool operator>=(const address_v6&, const address_v6&) noexcept;
+    // ``[link classes.ip__address_v6__comparisons address_v6 comparisons]``:
+    bool operator==(const address_v6&, const address_v6&) noexcept;
+    bool operator!=(const address_v6&, const address_v6&) noexcept;
+    bool operator< (const address_v6&, const address_v6&) noexcept;
+    bool operator> (const address_v6&, const address_v6&) noexcept;
+    bool operator<=(const address_v6&, const address_v6&) noexcept;
+    bool operator>=(const address_v6&, const address_v6&) noexcept;
 
-          // ``[link classes.ip__address__creation address creation]``:
-          address make_address(const char*);
-          address make_address(const char*, error_code&) noexcept;
-          address make_address(string_view);
-          address make_address(string_view, error_code&) noexcept;
+    // ``[link classes.ip__address__creation address creation]``:
+    address make_address(const char*);
+    address make_address(const char*, error_code&) noexcept;
+    address make_address(string_view);
+    address make_address(string_view, error_code&) noexcept;
 
-          // ``[link classes.ip__address_v4__creation address_v4 creation]``:
-          constexpr address_v4 make_address_v4(const address_v4::bytes_type&);
-          constexpr address_v4 make_address_v4(address_v4_uint_type);
-          constexpr address_v4 make_address_v4(v4_mapped_t, const address_v6&);
-          address_v4 make_address_v4(const char*);
-          address_v4 make_address_v4(const char*, error_code&) noexcept;
-          address_v4 make_address_v4(string_view);
-          address_v4 make_address_v4(string_view, error_code&) noexcept;
+    // ``[link classes.ip__address_v4__creation address_v4 creation]``:
+    constexpr address_v4 make_address_v4(const address_v4::bytes_type&);
+    constexpr address_v4 make_address_v4(address_v4_uint_type);
+    constexpr address_v4 make_address_v4(v4_mapped_t, const address_v6&);
+    address_v4 make_address_v4(const char*);
+    address_v4 make_address_v4(const char*, error_code&) noexcept;
+    address_v4 make_address_v4(string_view);
+    address_v4 make_address_v4(string_view, error_code&) noexcept;
 
-          // ``[link classes.ip__address_v6__creation address_v6 creation]``:
-          constexpr address_v6 make_address_v6(const address_v6::bytes_type&,
-                                               scope_id_type = 0);
-          constexpr address_v6 make_address_v6(v4_mapped_t, const address_v4&) noexcept;
-          address_v6 make_address_v6(const char*);
-          address_v6 make_address_v6(const char*, error_code&) noexcept;
-          address_v6 make_address_v6(string_view);
-          address_v6 make_address_v6(string_view, error_code&) noexcept;
+    // ``[link classes.ip__address_v6__creation address_v6 creation]``:
+    constexpr address_v6 make_address_v6(const address_v6::bytes_type&,
+                                         scope_id_type = 0);
+    constexpr address_v6 make_address_v6(v4_mapped_t, const address_v4&) noexcept;
+    address_v6 make_address_v6(const char*);
+    address_v6 make_address_v6(const char*, error_code&) noexcept;
+    address_v6 make_address_v6(string_view);
+    address_v6 make_address_v6(string_view, error_code&) noexcept;
 
-          // ``[link classes.ip__address__io address I/O]``:
-          template<class CharT, class Traits>
-            basic_ostream<CharT, Traits>& operator<<(
-              basic_ostream<CharT, Traits>&, const address&);
+    // ``[link classes.ip__address__io address I/O]``:
+    template<class CharT, class Traits>
+      basic_ostream<CharT, Traits>& operator<<(
+        basic_ostream<CharT, Traits>&, const address&);
 
-          // ``[link classes.ip__address_v4__io address_v4 I/O]``:
-          template<class CharT, class Traits>
-            basic_ostream<CharT, Traits>& operator<<(
-              basic_ostream<CharT, Traits>&, const address_v4&);
+    // ``[link classes.ip__address_v4__io address_v4 I/O]``:
+    template<class CharT, class Traits>
+      basic_ostream<CharT, Traits>& operator<<(
+        basic_ostream<CharT, Traits>&, const address_v4&);
 
-          // ``[link classes.ip__address_v6__io address_v6 I/O]``:
-          template<class CharT, class Traits>
-            basic_ostream<CharT, Traits>& operator<<(
-              basic_ostream<CharT, Traits>&, const address_v6&);
+    // ``[link classes.ip__address_v6__io address_v6 I/O]``:
+    template<class CharT, class Traits>
+      basic_ostream<CharT, Traits>& operator<<(
+        basic_ostream<CharT, Traits>&, const address_v6&);
 
-          // ``[link functions.ip__address_cast address conversions]``:
-          template<class T> constexpr T address_cast(const address&) noexcept(``['see below]``);
-          template<class T> constexpr T address_cast(const address_v4&) noexcept(``['see below]``);
-          template<class T> constexpr T address_cast(const address_v6&) noexcept(``['see below]``);
+    // ``[link functions.ip__address_cast address conversions]``:
+    template<class T> constexpr T address_cast(const address&) noexcept(``['see below]``);
+    template<class T> constexpr T address_cast(const address_v4&) noexcept(``['see below]``);
+    template<class T> constexpr T address_cast(const address_v6&) noexcept(``['see below]``);
 
-          template<class> basic_address_iterator; ``['// not defined]``
-          template<> class ``[link classes.ip__basic_address_iterator basic_address_iterator<address_v4>]``;
-          typedef basic_address_iterator<address_v4> address_v4_iterator;
-          template<> class ``[link classes.ip__basic_address_iterator basic_address_iterator<address_v6>]``;
-          typedef basic_address_iterator<address_v6> address_v6_iterator;
+    template<class> basic_address_iterator; ``['// not defined]``
+    template<> class ``[link classes.ip__basic_address_iterator basic_address_iterator<address_v4>]``;
+    typedef basic_address_iterator<address_v4> address_v4_iterator;
+    template<> class ``[link classes.ip__basic_address_iterator basic_address_iterator<address_v6>]``;
+    typedef basic_address_iterator<address_v6> address_v6_iterator;
 
-          template<class> basic_address_range; ``['// not defined]``
-          template<> class ``[link classes.ip__basic_address_range basic_address_range<address_v4>]``;
-          typedef basic_address_range<address_v4> address_v4_range;
-          template<> class ``[link classes.ip__basic_address_range basic_address_range<address_v6>]``;
-          typedef basic_address_range<address_v6> address_v6_range;
+    template<class> basic_address_range; ``['// not defined]``
+    template<> class ``[link classes.ip__basic_address_range basic_address_range<address_v4>]``;
+    typedef basic_address_range<address_v4> address_v4_range;
+    template<> class ``[link classes.ip__basic_address_range basic_address_range<address_v6>]``;
+    typedef basic_address_range<address_v6> address_v6_range;
 
-          class ``[link classes.ip__network_v4 network_v4]``;
-          class ``[link classes.ip__network_v6 network_v6]``;
+    class ``[link classes.ip__network_v4 network_v4]``;
+    class ``[link classes.ip__network_v6 network_v6]``;
 
-          // ``[link classes.ip__network_v4__comparisons network_v4 comparisons]``:
-          bool operator==(const network_v4&, const network_v4&) noexcept;
-          bool operator!=(const network_v4&, const network_v4&) noexcept;
+    // ``[link classes.ip__network_v4__comparisons network_v4 comparisons]``:
+    bool operator==(const network_v4&, const network_v4&) noexcept;
+    bool operator!=(const network_v4&, const network_v4&) noexcept;
 
-          // ``[link classes.ip__network_v6__comparisons network_v6 comparisons]``:
-          bool operator==(const network_v6&, const network_v6&) noexcept;
-          bool operator!=(const network_v6&, const network_v6&) noexcept;
+    // ``[link classes.ip__network_v6__comparisons network_v6 comparisons]``:
+    bool operator==(const network_v6&, const network_v6&) noexcept;
+    bool operator!=(const network_v6&, const network_v6&) noexcept;
 
-          // ``[link classes.ip__network_v4__creation network_v4 creation]``:
-          network_v4 make_network_v4(const address_v4&, unsigned);
-          network_v4 make_network_v4(const address_v4&, const address_v4&);
-          network_v4 make_network_v4(const char*);
-          network_v4 make_network_v4(const char*, error_code&) noexcept;
-          network_v4 make_network_v4(string_view);
-          network_v4 make_network_v4(string_view, error_code&) noexcept;
+    // ``[link classes.ip__network_v4__creation network_v4 creation]``:
+    network_v4 make_network_v4(const address_v4&, unsigned);
+    network_v4 make_network_v4(const address_v4&, const address_v4&);
+    network_v4 make_network_v4(const char*);
+    network_v4 make_network_v4(const char*, error_code&) noexcept;
+    network_v4 make_network_v4(string_view);
+    network_v4 make_network_v4(string_view, error_code&) noexcept;
 
-          // ``[link classes.ip__network_v6__creation network_v6 creation]``:
-          network_v6 make_network_v6(const address_v6&, unsigned);
-          network_v6 make_network_v6(const char*);
-          network_v6 make_network_v6(const char*, error_code&) noexcept;
-          network_v6 make_network_v6(string_view);
-          network_v6 make_network_v6(string_view, error_code&) noexcept;
+    // ``[link classes.ip__network_v6__creation network_v6 creation]``:
+    network_v6 make_network_v6(const address_v6&, unsigned);
+    network_v6 make_network_v6(const char*);
+    network_v6 make_network_v6(const char*, error_code&) noexcept;
+    network_v6 make_network_v6(string_view);
+    network_v6 make_network_v6(string_view, error_code&) noexcept;
 
-          // ``[link classes.ip__network_v4__io network_v4 I/O]``:
-          template<class CharT, class Traits>
-            basic_ostream<CharT, Traits>& operator<<(
-              basic_ostream<CharT, Traits>&, const network_v4&);
+    // ``[link classes.ip__network_v4__io network_v4 I/O]``:
+    template<class CharT, class Traits>
+      basic_ostream<CharT, Traits>& operator<<(
+        basic_ostream<CharT, Traits>&, const network_v4&);
 
-          // ``[link classes.ip__network_v6__io network_v6 I/O]``:
-          template<class CharT, class Traits>
-            basic_ostream<CharT, Traits>& operator<<(
-              basic_ostream<CharT, Traits>&, const network_v6&);
+    // ``[link classes.ip__network_v6__io network_v6 I/O]``:
+    template<class CharT, class Traits>
+      basic_ostream<CharT, Traits>& operator<<(
+        basic_ostream<CharT, Traits>&, const network_v6&);
 
-          template<class InternetProtocol>
-            class ``[link classes.ip__basic_endpoint basic_endpoint]``;
+    template<class InternetProtocol>
+      class ``[link classes.ip__basic_endpoint basic_endpoint]``;
 
-          // basic_endpoint comparisons:
-          template<class InternetProtocol>
-            bool operator==(const basic_endpoint<InternetProtocol>&,
-                            const basic_endpoint<InternetProtocol>&);
-          template<class InternetProtocol>
-            bool operator!=(const basic_endpoint<InternetProtocol>&,
-                            const basic_endpoint<InternetProtocol>&);
-          template<class InternetProtocol>
-            bool operator< (const basic_endpoint<InternetProtocol>&,
-                            const basic_endpoint<InternetProtocol>&);
-          template<class InternetProtocol>
-            bool operator> (const basic_endpoint<InternetProtocol>&,
-                            const basic_endpoint<InternetProtocol>&);
-          template<class InternetProtocol>
-            bool operator<=(const basic_endpoint<InternetProtocol>&,
-                            const basic_endpoint<InternetProtocol>&);
-          template<class InternetProtocol>
-            bool operator>=(const basic_endpoint<InternetProtocol>&,
-                            const basic_endpoint<InternetProtocol>&);
+    // basic_endpoint comparisons:
+    template<class InternetProtocol>
+      bool operator==(const basic_endpoint<InternetProtocol>&,
+                      const basic_endpoint<InternetProtocol>&);
+    template<class InternetProtocol>
+      bool operator!=(const basic_endpoint<InternetProtocol>&,
+                      const basic_endpoint<InternetProtocol>&);
+    template<class InternetProtocol>
+      bool operator< (const basic_endpoint<InternetProtocol>&,
+                      const basic_endpoint<InternetProtocol>&);
+    template<class InternetProtocol>
+      bool operator> (const basic_endpoint<InternetProtocol>&,
+                      const basic_endpoint<InternetProtocol>&);
+    template<class InternetProtocol>
+      bool operator<=(const basic_endpoint<InternetProtocol>&,
+                      const basic_endpoint<InternetProtocol>&);
+    template<class InternetProtocol>
+      bool operator>=(const basic_endpoint<InternetProtocol>&,
+                      const basic_endpoint<InternetProtocol>&);
 
-          // basic_endpoint I/O:
-          template<class CharT, class Traits, class InternetProtocol>
-            basic_ostream<CharT, Traits>& operator<<(
-              basic_ostream<CharT, Traits>&,
-              const basic_endpoint<InternetProtocol>&);
+    // basic_endpoint I/O:
+    template<class CharT, class Traits, class InternetProtocol>
+      basic_ostream<CharT, Traits>& operator<<(
+        basic_ostream<CharT, Traits>&,
+        const basic_endpoint<InternetProtocol>&);
 
-          template<class InternetProtocol>
-            ``[link classes.ip__basic_resolver_entry basic_resolver_entry]``;
+    template<class InternetProtocol>
+      ``[link classes.ip__basic_resolver_entry basic_resolver_entry]``;
 
-          template<class InternetProtocol>
-            bool operator==(const basic_resolver_entry<InternetProtocol>&,
-                            const basic_resolver_entry<InternetProtocol>&);
-          template<class InternetProtocol>
-            bool operator!=(const basic_resolver_entry<InternetProtocol>&,
-                            const basic_resolver_entry<InternetProtocol>&);
+    template<class InternetProtocol>
+      bool operator==(const basic_resolver_entry<InternetProtocol>&,
+                      const basic_resolver_entry<InternetProtocol>&);
+    template<class InternetProtocol>
+      bool operator!=(const basic_resolver_entry<InternetProtocol>&,
+                      const basic_resolver_entry<InternetProtocol>&);
 
-          template<class InternetProtocol>
-            ``[link classes.ip__basic_resolver_results basic_resolver_results]``;
+    template<class InternetProtocol>
+      ``[link classes.ip__basic_resolver_results basic_resolver_results]``;
 
-          template<class InternetProtocol>
-            bool operator==(const basic_resolver_results<InternetProtocol>&,
-                            const basic_resolver_results<InternetProtocol>&);
-          template<class InternetProtocol>
-            bool operator!=(const basic_resolver_results<InternetProtocol>&,
-                            const basic_resolver_results<InternetProtocol>&);
+    template<class InternetProtocol>
+      bool operator==(const basic_resolver_results<InternetProtocol>&,
+                      const basic_resolver_results<InternetProtocol>&);
+    template<class InternetProtocol>
+      bool operator!=(const basic_resolver_results<InternetProtocol>&,
+                      const basic_resolver_results<InternetProtocol>&);
 
-          class ``[link classes.ip__resolver_base resolver_base]``;
+    class ``[link classes.ip__resolver_base resolver_base]``;
 
-          template<class InternetProtocol>
-            class ``[link classes.ip__basic_resolver basic_resolver]``;
+    template<class InternetProtocol>
+      class ``[link classes.ip__basic_resolver basic_resolver]``;
 
-          string ``[link functions.ip__host_name host_name]``();
-          string ``[link functions.ip__host_name host_name]``(error_code&);
-          template<class Allocator>
-            basic_string<char, char_traits<char>, Allocator>
-              ``[link functions.ip__host_name host_name]``(const Allocator&) const;
-          template<class Allocator>
-            basic_string<char, char_traits<char>, Allocator>
-              ``[link functions.ip__host_name host_name]``(const Allocator&, error_code&) const;
+    string ``[link functions.ip__host_name host_name]``();
+    string ``[link functions.ip__host_name host_name]``(error_code&);
+    template<class Allocator>
+      basic_string<char, char_traits<char>, Allocator>
+        ``[link functions.ip__host_name host_name]``(const Allocator&) const;
+    template<class Allocator>
+      basic_string<char, char_traits<char>, Allocator>
+        ``[link functions.ip__host_name host_name]``(const Allocator&, error_code&) const;
 
-          class ``[link classes.ip__tcp tcp]``;
+    class ``[link classes.ip__tcp tcp]``;
 
-          // tcp comparisons:
-          bool operator==(const tcp& a, const tcp& b);
-          bool operator!=(const tcp& a, const tcp& b);
+    // tcp comparisons:
+    bool operator==(const tcp& a, const tcp& b);
+    bool operator!=(const tcp& a, const tcp& b);
 
-          class ``[link classes.ip__udp udp]``;
+    class ``[link classes.ip__udp udp]``;
 
-          // udp comparisons:
-          bool operator==(const udp& a, const udp& b);
-          bool operator!=(const udp& a, const udp& b);
+    // udp comparisons:
+    bool operator==(const udp& a, const udp& b);
+    bool operator!=(const udp& a, const udp& b);
 
-          class ``[link classes.ip__v6_only v6_only]``;
+    class ``[link classes.ip__v6_only v6_only]``;
 
-          namespace unicast {
+    namespace unicast {
 
-            class ``[link classes.ip__unicast__hops hops]``;
+      class ``[link classes.ip__unicast__hops hops]``;
 
-          } // namespace unicast
+    } // namespace unicast
 
-          namespace multicast {
+    namespace multicast {
 
-            class ``[link classes.ip__multicast__group_socket_options join_group]``;
+      class ``[link classes.ip__multicast__group_socket_options join_group]``;
 
-            class ``[link classes.ip__multicast__group_socket_options leave_group]``;
+      class ``[link classes.ip__multicast__group_socket_options leave_group]``;
 
-            class ``[link classes.ip__multicast__outbound_interface outbound_interface]``;
+      class ``[link classes.ip__multicast__outbound_interface outbound_interface]``;
 
-            class ``[link classes.ip__multicast__hops hops]``;
+      class ``[link classes.ip__multicast__hops hops]``;
 
-            class ``[link classes.ip__multicast__enable_loopback enable_loopback]``;
+      class ``[link classes.ip__multicast__enable_loopback enable_loopback]``;
 
-          } // namespace multicast
-        } // namespace ip
-      __end_versioned_ns__
-    } // namespace experimental
+    } // namespace multicast
+  } // namespace ip
+  __end_versioned_ns__
+  } // namespace experimental
 
     template<> struct is_error_condition_enum<
-      experimental::ip::resolver_errc>
+      experimental::__versioned_ns__::ip::resolver_errc>
         : public true_type {};
 
     // ``[link classes.hash hash support]``
     template<class T> struct hash;
-    template<> struct hash<experimental::ip::address>;
-    template<> struct hash<experimental::ip::address_v4>;
-    template<> struct hash<experimental::ip::address_v6>;
+    template<> struct hash<experimental::__versioned_ns__::ip::address>;
+    template<> struct hash<experimental::__versioned_ns__::ip::address_v4>;
+    template<> struct hash<experimental::__versioned_ns__::ip::address_v6>;
 
   } // namespace std
 

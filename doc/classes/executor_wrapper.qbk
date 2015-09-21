@@ -6,71 +6,71 @@ type `T`, and an executor object of type `Executor` satisfying [link
 requirements.executor Executor requirements].
 
   namespace std {
-    namespace experimental {
-      __begin_versioned_ns__
+  namespace experimental {
+  __begin_versioned_ns__
 
-        template<class T, class Executor>
-        class executor_wrapper
-        {
-        public:
-          // types:
+    template<class T, class Executor>
+    class executor_wrapper
+    {
+    public:
+      // types:
 
-          typedef T wrapped_type;
-          typedef Executor executor_type;
+      typedef T wrapped_type;
+      typedef Executor executor_type;
 
-          // construct / copy / destroy:
+      // construct / copy / destroy:
 
-          executor_wrapper(T t, const Executor& ex);
-          executor_wrapper(const executor_wrapper& other) = default;
-          executor_wrapper(executor_wrapper&& other) = default;
-          template<class U, class OtherExecutor>
-            executor_wrapper(const executor_wrapper<U, OtherExecutor>& other);
-          template<class U, class OtherExecutor>
-            executor_wrapper(executor_wrapper<U, OtherExecutor>&& other);
-          template<class U, class OtherExecutor>
-            executor_wrapper(executor_arg_t, const Executor& ex,
-              const executor_wrapper<U, OtherExecutor>& other);
-          template<class U, class OtherExecutor>
-            executor_wrapper(executor_arg_t, const Executor& ex,
-              executor_wrapper<U, OtherExecutor>&& other);
+      executor_wrapper(T t, const Executor& ex);
+      executor_wrapper(const executor_wrapper& other) = default;
+      executor_wrapper(executor_wrapper&& other) = default;
+      template<class U, class OtherExecutor>
+        executor_wrapper(const executor_wrapper<U, OtherExecutor>& other);
+      template<class U, class OtherExecutor>
+        executor_wrapper(executor_wrapper<U, OtherExecutor>&& other);
+      template<class U, class OtherExecutor>
+        executor_wrapper(executor_arg_t, const Executor& ex,
+          const executor_wrapper<U, OtherExecutor>& other);
+      template<class U, class OtherExecutor>
+        executor_wrapper(executor_arg_t, const Executor& ex,
+          executor_wrapper<U, OtherExecutor>&& other);
 
-          ~executor_wrapper();
+      ~executor_wrapper();
 
-          // executor wrapper access:
+      // executor wrapper access:
 
-          T& unwrap() noexcept;
-          const T& unwrap() const noexcept;
-          executor_type get_executor() const noexcept;
+      T& unwrap() noexcept;
+      const T& unwrap() const noexcept;
+      executor_type get_executor() const noexcept;
 
-          // executor wrapper invocation:
+      // executor wrapper invocation:
 
-          template<class... Args>
-            result_of_t<T&(Args&&...)> operator()(Args&&... args);
-          template<class... Args>
-            result_of_t<const T&(Args&&...)> operator()(Args&&... args) const;
+      template<class... Args>
+        result_of_t<T&(Args&&...)> operator()(Args&&... args);
+      template<class... Args>
+        result_of_t<const T&(Args&&...)> operator()(Args&&... args) const;
 
-        private:
-          Executor ex_; // ``['exposition only]``
-          T wrapped_; // ``['exposition only]``
-        };
+    private:
+      Executor ex_; // ``['exposition only]``
+      T wrapped_; // ``['exposition only]``
+    };
 
-        template<class T, class Executor, class Signature>
-        struct completion_handler_type<executor_wrapper<T, Executor>, Signature>
-        {
-          typedef executor_wrapper<completion_handler_type_t<T, Signature>, Executor> type;
-        };
+    template<class T, class Executor, class Signature>
+    struct completion_handler_type<executor_wrapper<T, Executor>, Signature>
+    {
+      typedef executor_wrapper<completion_handler_type_t<T, Signature>, Executor> type;
+    };
 
-        template<class T, class Executor>
-          class async_result<executor_wrapper<T, Executor>>;
+    template<class T, class Executor>
+      class async_result<executor_wrapper<T, Executor>>;
 
-        template<class T, class Executor, class ProtoAllocator>
-          struct associated_allocator<executor_wrapper<T, Executor>, ProtoAllocator>;
+    template<class T, class Executor, class ProtoAllocator>
+      struct associated_allocator<executor_wrapper<T, Executor>, ProtoAllocator>;
 
-        template<class T, class Executor, class Executor1>
-          struct associated_executor<executor_wrapper<T, Executor>, Executor1>;
+    template<class T, class Executor, class Executor1>
+      struct associated_executor<executor_wrapper<T, Executor>, Executor1>;
 
-      __end_versioned_ns__
-    } // namespace experimental
+  __end_versioned_ns__
+  } // namespace experimental
   } // namespace std
 
 [section [^executor_wrapper] constructors]
@@ -160,27 +160,27 @@ the executor `ex_`.]
 [xrefid async.exec.wrapper.async.result]
 
   namespace std {
-    namespace experimental {
-      __begin_versioned_ns__
+  namespace experimental {
+  __begin_versioned_ns__
 
-        template<class T, class Executor>
-        class async_result<executor_wrapper<T, Executor>>
-        {
-        public:
-          typedef typename async_result<T>::type type;
+    template<class T, class Executor>
+    class async_result<executor_wrapper<T, Executor>>
+    {
+    public:
+      typedef typename async_result<T>::type type;
 
-          explicit async_result(executor_wrapper<T, Executor>& wrapper);
-          async_result(const async_result&) = delete;
-          async_result& operator=(const async_result&) = delete;
+      explicit async_result(executor_wrapper<T, Executor>& wrapper);
+      async_result(const async_result&) = delete;
+      async_result& operator=(const async_result&) = delete;
 
-          type get();
+      type get();
 
-        private:
-          async_result<T> wrapped_; // ``['exposition only]``
-        };
+    private:
+      async_result<T> wrapped_; // ``['exposition only]``
+    };
 
-      __end_versioned_ns__
-    } // namespace experimental
+  __end_versioned_ns__
+  } // namespace experimental
   } // namespace std
 
   explicit async_result(executor_wrapper<T, Executor>& wrapper);
@@ -197,20 +197,20 @@ the executor `ex_`.]
 [xrefid async.exec.wrapper.assoc.alloc]
 
   namespace std {
-    namespace experimental {
-      __begin_versioned_ns__
+  namespace experimental {
+  __begin_versioned_ns__
 
-        template<class T, class Executor, class ProtoAllocator>
-          struct associated_allocator<executor_wrapper<T, Executor>, ProtoAllocator>
-        {
-          typedef associated_allocator_t<T, ProtoAllocator> type;
+    template<class T, class Executor, class ProtoAllocator>
+      struct associated_allocator<executor_wrapper<T, Executor>, ProtoAllocator>
+    {
+      typedef associated_allocator_t<T, ProtoAllocator> type;
 
-          static type get(const executor_wrapper<T, Executor>& w,
-                          const ProtoAllocator& a = ProtoAllocator()) noexcept;
-        };
+      static type get(const executor_wrapper<T, Executor>& w,
+                      const ProtoAllocator& a = ProtoAllocator()) noexcept;
+    };
 
-      __end_versioned_ns__
-    } // namespace experimental
+  __end_versioned_ns__
+  } // namespace experimental
   } // namespace std
 
   static type get(const executor_wrapper<T, Executor>& w,
@@ -224,20 +224,20 @@ the executor `ex_`.]
 [xrefid async.exec.wrapper.assoc.exec]
 
   namespace std {
-    namespace experimental {
-      __begin_versioned_ns__
+  namespace experimental {
+  __begin_versioned_ns__
 
-        template<class T, class Executor, class Executor1>
-          struct associated_executor<executor_wrapper<T, Executor>, Executor1>
-        {
-          typedef Executor type;
+    template<class T, class Executor, class Executor1>
+      struct associated_executor<executor_wrapper<T, Executor>, Executor1>
+    {
+      typedef Executor type;
 
-          static type get(const executor_wrapper<T, Executor>& w,
-                          const Executor1& e = Executor1()) noexcept;
-        };
+      static type get(const executor_wrapper<T, Executor>& w,
+                      const Executor1& e = Executor1()) noexcept;
+    };
 
-      __end_versioned_ns__
-    } // namespace experimental
+  __end_versioned_ns__
+  } // namespace experimental
   } // namespace std
 
   static type get(const executor_wrapper<T, Executor>& w,

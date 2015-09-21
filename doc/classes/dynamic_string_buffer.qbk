@@ -5,40 +5,40 @@ The `dynamic_string_buffer` class template meets the requirements for [link
 requirements.dynamic_buffers `DynamicBuffer`].
 
   namespace std {
-    namespace experimental {
-      __begin_versioned_ns__
+  namespace experimental {
+  __begin_versioned_ns__
 
-        template<class CharT, class Traits, class Allocator>
-        class dynamic_string_buffer
-        {
-        public:
-          // types:
-          typedef const_buffers_1 const_buffers_type;
-          typedef mutable_buffers_1 mutable_buffers_type;
+    template<class CharT, class Traits, class Allocator>
+    class dynamic_string_buffer
+    {
+    public:
+      // types:
+      typedef const_buffers_1 const_buffers_type;
+      typedef mutable_buffers_1 mutable_buffers_type;
 
-          // constructors:
-          explicit dynamic_string_buffer(basic_string<CharT, Traits, Allocator>& str) noexcept;
-          dynamic_string_buffer(basic_string<CharT, Traits, Allocator>& str,
-                                size_t maximum_size) noexcept;
-          dynamic_string_buffer(dynamic_string_buffer&&) = default;
+      // constructors:
+      explicit dynamic_string_buffer(basic_string<CharT, Traits, Allocator>& str) noexcept;
+      dynamic_string_buffer(basic_string<CharT, Traits, Allocator>& str,
+                            size_t maximum_size) noexcept;
+      dynamic_string_buffer(dynamic_string_buffer&&) = default;
 
-          // members:
-          size_t size() const noexcept;
-          size_t max_size() const noexcept;
-          size_t capacity() const noexcept;
-          const_buffers_type data() const noexcept;
-          mutable_buffers_type prepare(size_t n);
-          void commit(size_t n) noexcept;
-          void consume(size_t n);
+      // members:
+      size_t size() const noexcept;
+      size_t max_size() const noexcept;
+      size_t capacity() const noexcept;
+      const_buffers_type data() const noexcept;
+      mutable_buffers_type prepare(size_t n);
+      void commit(size_t n) noexcept;
+      void consume(size_t n);
 
-        private:
-          basic_string<CharT, Traits, Allocator>& str_; // ``['exposition only]``
-          size_t size_; // ``['exposition only]``
-          const size_t max_size_; // ``['exposition only]``
-        };
+    private:
+      basic_string<CharT, Traits, Allocator>& str_; // ``['exposition only]``
+      size_t size_; // ``['exposition only]``
+      const size_t max_size_; // ``['exposition only]``
+    };
 
-      __end_versioned_ns__
-    } // namespace experimental
+  __end_versioned_ns__
+  } // namespace experimental
   } // namespace std
 
 The `dynamic_string_buffer` class template requires that `sizeof(CharT) == 1`.

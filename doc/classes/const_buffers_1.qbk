@@ -5,28 +5,28 @@ An object of class `const_buffers_1` represents a sequence of exactly one
 `const_buffer` object.
 
   namespace std {
-    namespace experimental {
-      __begin_versioned_ns__
+  namespace experimental {
+  __begin_versioned_ns__
 
-        class const_buffers_1 :
-          public const_buffer
-        {
-        public:
-          // types:
-          typedef const_buffer value_type;
-          typedef ``['unspecified]`` const_iterator;
+    class const_buffers_1 :
+      public const_buffer
+    {
+    public:
+      // types:
+      typedef const_buffer value_type;
+      typedef ``['unspecified]`` const_iterator;
 
-          // constructors:
-          const_buffers_1(const void* p, size_t n) noexcept;
-          explicit const_buffers_1(const const_buffer& b) noexcept;
+      // constructors:
+      const_buffers_1(const void* p, size_t n) noexcept;
+      explicit const_buffers_1(const const_buffer& b) noexcept;
 
-          // members:
-          const_iterator begin() const noexcept;
-          const_iterator end() const noexcept;
-        };
+      // members:
+      const_iterator begin() const noexcept;
+      const_iterator end() const noexcept;
+    };
 
-      __end_versioned_ns__
-    } // namespace experimental
+  __end_versioned_ns__
+  } // namespace experimental
   } // namespace std
 
 The `const_buffers_1` class meets the requirements for [link

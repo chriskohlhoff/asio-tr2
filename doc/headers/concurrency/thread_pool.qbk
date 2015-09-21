@@ -1,13 +1,13 @@
 [section Header [^<experimental/thread_pool>] synopsis]
 
   namespace std {
-    namespace experimental {
-      __begin_versioned_ns__
+  namespace experimental {
+  __begin_versioned_ns__
 
-        class ``[link classes.thread_pool thread_pool]``;
+    class ``[link classes.thread_pool thread_pool]``;
 
-      __end_versioned_ns__
-    } // namespace experimental
+  __end_versioned_ns__
+  } // namespace experimental
   } // namespace std
 
 [endsect]

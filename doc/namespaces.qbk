@@ -3,23 +3,24 @@
 
 The components described in this Technical Specification are experimental and
 not part of the C++ standard library. All components described in this
-Technical Specification are declared in namespace
-`std::experimental::__versioned_ns__` or a sub-namespace thereof unless
-otherwise specified. The header described in this technical specification shall
-import the contents of `std::experimental::__versioned_ns__` into
-`std::experimental` as if by:
+Technical Specification are declared in namespace `std::experimental::net::v1`
+or a sub-namespace thereof unless otherwise specified. The headers described in
+this technical specification shall import the contents of
+`std::experimental::net::v1` into `std::experimental::net` as if by:
 
   namespace std {
     namespace experimental {
-      inline namespace __versioned_ns__ {}
+      namespace net {
+        inline namespace v1 {}
+      }
     }
   }
 
 Unless otherwise specified, references to other entities described in this
 Technical Specification are assumed to be qualified with
-`std::experimental::__versioned_ns__::`, references to entities described in
-the C++ standard are assumed to be qualified with `std::`, and references to
-entities described in C++ Extensions for Library Fundamentals are assumed to be
+`std::experimental::net::v1::`, references to entities described in the C++
+standard are assumed to be qualified with `std::`, and references to entities
+described in C++ Extensions for Library Fundamentals are assumed to be
 qualified with `std::experimental::fundamentals_v1::`.
 
 [endsect]

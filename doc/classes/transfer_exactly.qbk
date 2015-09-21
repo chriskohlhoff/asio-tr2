@@ -2,20 +2,20 @@
 [xrefid buffer.transfer.exactly]
 
   namespace std {
-    namespace experimental {
-      __begin_versioned_ns__
+  namespace experimental {
+  __begin_versioned_ns__
 
-        class transfer_exactly
-        {
-        public:
-          explicit transfer_exactly(size_t e);
-          size_t operator()(const error_code& ec, size_t s) const;
-        private:
-          size_t exact_; // ``['exposition only]``
-        };
+    class transfer_exactly
+    {
+    public:
+      explicit transfer_exactly(size_t e);
+      size_t operator()(const error_code& ec, size_t s) const;
+    private:
+      size_t exact_; // ``['exposition only]``
+    };
 
-      __end_versioned_ns__
-    } // namespace experimental
+  __end_versioned_ns__
+  } // namespace experimental
   } // namespace std
 
 The class `transfer_exactly` is a function object type for use as a

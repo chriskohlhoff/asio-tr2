@@ -5,56 +5,56 @@ The `tcp` class meets the requirements for an [link
 requirements.internet_protocol `InternetProtocol`].
 
   namespace std {
-    namespace experimental {
-      __begin_versioned_ns__
-        namespace ip {
+  namespace experimental {
+  __begin_versioned_ns__
+  namespace ip {
 
-          class tcp
-          {
-          public:
-            // types:
-            typedef basic_endpoint<tcp> endpoint;
-            typedef basic_resolver<tcp> resolver;
-            typedef basic_stream_socket<tcp> socket;
-            typedef basic_socket_acceptor<tcp> acceptor;
-            typedef basic_socket_iostream<tcp> iostream;
-            class ``[link classes.ip__tcp__no_delay no\_delay]``;
+    class tcp
+    {
+    public:
+      // types:
+      typedef basic_endpoint<tcp> endpoint;
+      typedef basic_resolver<tcp> resolver;
+      typedef basic_stream_socket<tcp> socket;
+      typedef basic_socket_acceptor<tcp> acceptor;
+      typedef basic_socket_iostream<tcp> iostream;
+      class ``[link classes.ip__tcp__no_delay no\_delay]``;
 
-            // static members:
-            static constexpr tcp v4() noexcept;
-            static constexpr tcp v6() noexcept;
+      // static members:
+      static constexpr tcp v4() noexcept;
+      static constexpr tcp v6() noexcept;
 
-            tcp() = delete;
-          };
+      tcp() = delete;
+    };
 
-          // tcp comparisons:
-          constexpr bool operator==(const tcp& a, const tcp& b) noexcept;
-          constexpr bool operator!=(const tcp& a, const tcp& b) noexcept;
+    // tcp comparisons:
+    constexpr bool operator==(const tcp& a, const tcp& b) noexcept;
+    constexpr bool operator!=(const tcp& a, const tcp& b) noexcept;
 
-        } // namespace ip
-      __end_versioned_ns__
-    } // namespace experimental
+  } // namespace ip
+  __end_versioned_ns__
+  } // namespace experimental
   } // namespace std
 
 Extensible implementations provide the following member functions:
 
   namespace std {
-    namespace experimental {
-      __begin_versioned_ns__
-        namespace ip {
+  namespace experimental {
+  __begin_versioned_ns__
+  namespace ip {
 
-          class tcp
-          {
-          public:
-            constexpr int family() const noexcept;
-            constexpr int type() const noexcept;
-            constexpr int protocol() const noexcept;
-            ``['// remainder unchanged]``
-          };
+    class tcp
+    {
+    public:
+      constexpr int family() const noexcept;
+      constexpr int type() const noexcept;
+      constexpr int protocol() const noexcept;
+      ``['// remainder unchanged]``
+    };
 
-        } // namespace ip
-      __end_versioned_ns__
-    } // namespace experimental
+  } // namespace ip
+  __end_versioned_ns__
+  } // namespace experimental
   } // namespace std
 
 The return values for these member functions are listed in the table below.

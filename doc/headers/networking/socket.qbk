@@ -2,107 +2,107 @@
 [xrefid socket.synop]
 
   namespace std {
-    namespace experimental {
-      __begin_versioned_ns__
+  namespace experimental {
+  __begin_versioned_ns__
 
-        enum class socket_errc {
-          already_open = ``['implementation defined]``,
-          not_found = ``['implementation defined]``
-        };
+    enum class socket_errc {
+      already_open = ``['implementation defined]``,
+      not_found = ``['implementation defined]``
+    };
 
-        const error_category& socket_category() noexcept;
+    const error_category& socket_category() noexcept;
 
-        error_code make_error_code(socket_errc e) noexcept;
-        error_condition make_error_condition(socket_errc e) noexcept;
+    error_code make_error_code(socket_errc e) noexcept;
+    error_condition make_error_condition(socket_errc e) noexcept;
 
-        // Sockets:
+    // Sockets:
 
-        class ``[link classes.socket_base socket_base]``;
+    class ``[link classes.socket_base socket_base]``;
 
-        template<class Protocol>
-          class ``[link classes.basic_socket basic_socket]``;
+    template<class Protocol>
+      class ``[link classes.basic_socket basic_socket]``;
 
-        template<class Protocol>
-          class ``[link classes.basic_datagram_socket basic_datagram_socket]``;
+    template<class Protocol>
+      class ``[link classes.basic_datagram_socket basic_datagram_socket]``;
 
-        template<class Protocol>
-          class ``[link classes.basic_stream_socket basic_stream_socket]``;
+    template<class Protocol>
+      class ``[link classes.basic_stream_socket basic_stream_socket]``;
 
-        template<class Protocol>
-          class ``[link classes.basic_socket_acceptor basic_socket_acceptor]``;
+    template<class Protocol>
+      class ``[link classes.basic_socket_acceptor basic_socket_acceptor]``;
 
-        // Socket streams:
+    // Socket streams:
 
-        template<class Protocol, class Clock = chrono::steady_clock,
-          class WaitTraits = wait_traits<Clock>>
-            class ``[link classes.basic_socket_streambuf basic_socket_streambuf]``;
+    template<class Protocol, class Clock = chrono::steady_clock,
+      class WaitTraits = wait_traits<Clock>>
+        class ``[link classes.basic_socket_streambuf basic_socket_streambuf]``;
 
-        template<class Protocol, class Clock = chrono::steady_clock,
-          class WaitTraits = wait_traits<Clock>>
-            class ``[link classes.basic_socket_iostream basic_socket_iostream]``;
+    template<class Protocol, class Clock = chrono::steady_clock,
+      class WaitTraits = wait_traits<Clock>>
+        class ``[link classes.basic_socket_iostream basic_socket_iostream]``;
 
-        ``// [link functions.connect synchronous connect operations]:``
+    ``// [link functions.connect synchronous connect operations]:``
 
-        template<class Protocol, class EndpointSequence>
-          typename Protocol::endpoint connect(basic_socket<Protocol>& s,
-                                              const EndpointSequence& endpoints);
-        template<class Protocol, class EndpointSequence>
-          typename Protocol::endpoint connect(basic_socket<Protocol>& s,
-                                              const EndpointSequence& endpoints);
-                                              error_code& ec);
-        template<class Protocol, class EndpointSequence, class ConnectCondition>
-          typename Protocol::endpoint connect(basic_socket<Protocol>& s,
-                                              const EndpointSequence& endpoints,
-                                              ConnectCondition c);
-        template<class Protocol, class EndpointSequence, class ConnectCondition>
-          typename Protocol::endpoint connect(basic_socket<Protocol>& s,
-                                              const EndpointSequence& endpoints,
-                                              ConnectCondition c,
-                                              error_code& ec);
+    template<class Protocol, class EndpointSequence>
+      typename Protocol::endpoint connect(basic_socket<Protocol>& s,
+                                          const EndpointSequence& endpoints);
+    template<class Protocol, class EndpointSequence>
+      typename Protocol::endpoint connect(basic_socket<Protocol>& s,
+                                          const EndpointSequence& endpoints);
+                                          error_code& ec);
+    template<class Protocol, class EndpointSequence, class ConnectCondition>
+      typename Protocol::endpoint connect(basic_socket<Protocol>& s,
+                                          const EndpointSequence& endpoints,
+                                          ConnectCondition c);
+    template<class Protocol, class EndpointSequence, class ConnectCondition>
+      typename Protocol::endpoint connect(basic_socket<Protocol>& s,
+                                          const EndpointSequence& endpoints,
+                                          ConnectCondition c,
+                                          error_code& ec);
 
-        template<class Protocol, class InputIterator>
-          InputIterator connect(basic_socket<Protocol>& s,
-                                InputIterator first, InputIterator last);
-        template<class Protocol, class InputIterator>
-          InputIterator connect(basic_socket<Protocol>& s,
-                                InputIterator first, InputIterator last,
-                                error_code& ec);
-        template<class Protocol, class InputIterator, class ConnectCondition>
-          InputIterator connect(basic_socket<Protocol>& s,
-                                InputIterator first, InputIterator last,
-                                ConnectCondition c);
-        template<class Protocol, class InputIterator, class ConnectCondition>
-          InputIterator connect(basic_socket<Protocol>& s,
-                                InputIterator first, InputIterator last,
-                                ConnectCondition c,
-                                error_code& ec);
+    template<class Protocol, class InputIterator>
+      InputIterator connect(basic_socket<Protocol>& s,
+                            InputIterator first, InputIterator last);
+    template<class Protocol, class InputIterator>
+      InputIterator connect(basic_socket<Protocol>& s,
+                            InputIterator first, InputIterator last,
+                            error_code& ec);
+    template<class Protocol, class InputIterator, class ConnectCondition>
+      InputIterator connect(basic_socket<Protocol>& s,
+                            InputIterator first, InputIterator last,
+                            ConnectCondition c);
+    template<class Protocol, class InputIterator, class ConnectCondition>
+      InputIterator connect(basic_socket<Protocol>& s,
+                            InputIterator first, InputIterator last,
+                            ConnectCondition c,
+                            error_code& ec);
 
-        ``// [link functions.async_connect asynchronous connect operations]:``
+    ``// [link functions.async_connect asynchronous connect operations]:``
 
-        template<class Protocol, class EndpointSequence, class CompletionToken>
-          __ifr__ async_connect(basic_socket<Protocol>& s,
-                                const EndpointSequence& endpoints,
-                                CompletionToken&& token);
-        template<class Protocol, class EndpointSequence,
-          class ConnectCondition, class CompletionToken>
-            __ifr__ async_connect(basic_socket<Protocol>& s,
-                                  const EndpointSequence& endpoints,
-                                  ConnectCondition c,
-                                  CompletionToken&& token);
+    template<class Protocol, class EndpointSequence, class CompletionToken>
+      __ifr__ async_connect(basic_socket<Protocol>& s,
+                            const EndpointSequence& endpoints,
+                            CompletionToken&& token);
+    template<class Protocol, class EndpointSequence,
+      class ConnectCondition, class CompletionToken>
+        __ifr__ async_connect(basic_socket<Protocol>& s,
+                              const EndpointSequence& endpoints,
+                              ConnectCondition c,
+                              CompletionToken&& token);
 
-        template<class Protocol, class InputIterator, class CompletionToken>
-          __ifr__ async_connect(basic_socket<Protocol>& s,
-                                InputIterator first, InputIterator last,
-                                CompletionToken&& token);
-        template<class Protocol, class InputIterator,
-          class ConnectCondition, class CompletionToken>
-            __ifr__ async_connect(basic_socket<Protocol>& s,
-                                  InputIterator first, InputIterator last,
-                                  ConnectCondition c,
-                                  CompletionToken&& token);
+    template<class Protocol, class InputIterator, class CompletionToken>
+      __ifr__ async_connect(basic_socket<Protocol>& s,
+                            InputIterator first, InputIterator last,
+                            CompletionToken&& token);
+    template<class Protocol, class InputIterator,
+      class ConnectCondition, class CompletionToken>
+        __ifr__ async_connect(basic_socket<Protocol>& s,
+                              InputIterator first, InputIterator last,
+                              ConnectCondition c,
+                              CompletionToken&& token);
 
-      __end_versioned_ns__
-    } // namespace experimental
+  __end_versioned_ns__
+  } // namespace experimental
 
     template<> struct is_error_code_enum<
       experimental::__versioned_ns__::socket_errc>

@@ -5,91 +5,91 @@ Instances of the `basic_endpoint` class template meet the requirements
 for an [link requirements.endpoint `Endpoint`].
 
   namespace std {
-    namespace experimental {
-      __begin_versioned_ns__
-        namespace ip {
+  namespace experimental {
+  __begin_versioned_ns__
+  namespace ip {
 
-          template<class InternetProtocol>
-          class basic_endpoint
-          {
-          public:
-            // types:
-            typedef InternetProtocol protocol_type;
+    template<class InternetProtocol>
+    class basic_endpoint
+    {
+    public:
+      // types:
+      typedef InternetProtocol protocol_type;
 
-            // constructors:
-            constexpr basic_endpoint() noexcept;
-            constexpr basic_endpoint(const protocol_type& proto,
-                                     port_type port_num) noexcept;
-            constexpr basic_endpoint(const ip::address& addr,
-                                     port_type port_num) noexcept;
+      // constructors:
+      constexpr basic_endpoint() noexcept;
+      constexpr basic_endpoint(const protocol_type& proto,
+                               port_type port_num) noexcept;
+      constexpr basic_endpoint(const ip::address& addr,
+                               port_type port_num) noexcept;
 
-            // members:
-            constexpr protocol_type protocol() const noexcept;
-            constexpr ip::address address() const noexcept;
-            void address(const ip::address& addr) noexcept;
-            constexpr port_type port() const noexcept;
-            void port(port_type port_num) noexcept;
-          };
+      // members:
+      constexpr protocol_type protocol() const noexcept;
+      constexpr ip::address address() const noexcept;
+      void address(const ip::address& addr) noexcept;
+      constexpr port_type port() const noexcept;
+      void port(port_type port_num) noexcept;
+    };
 
-          // basic_endpoint comparisons:
-          template<class InternetProtocol>
-            constexpr bool operator==(const basic_endpoint<InternetProtocol>& a,
-                                      const basic_endpoint<InternetProtocol>& b) noexcept;
-          template<class InternetProtocol>
-            constexpr bool operator!=(const basic_endpoint<InternetProtocol>& a,
-                                      const basic_endpoint<InternetProtocol>& b) noexcept;
-          template<class InternetProtocol>
-            constexpr bool operator< (const basic_endpoint<InternetProtocol>& a,
-                                      const basic_endpoint<InternetProtocol>& b) noexcept;
-          template<class InternetProtocol>
-            constexpr bool operator> (const basic_endpoint<InternetProtocol>& a,
-                                      const basic_endpoint<InternetProtocol>& b) noexcept;
-          template<class InternetProtocol>
-            constexpr bool operator<=(const basic_endpoint<InternetProtocol>& a,
-                                      const basic_endpoint<InternetProtocol>& b) noexcept;
-          template<class InternetProtocol>
-            constexpr bool operator>=(const basic_endpoint<InternetProtocol>& a,
-                                      const basic_endpoint<InternetProtocol>& b) noexcept;
+    // basic_endpoint comparisons:
+    template<class InternetProtocol>
+      constexpr bool operator==(const basic_endpoint<InternetProtocol>& a,
+                                const basic_endpoint<InternetProtocol>& b) noexcept;
+    template<class InternetProtocol>
+      constexpr bool operator!=(const basic_endpoint<InternetProtocol>& a,
+                                const basic_endpoint<InternetProtocol>& b) noexcept;
+    template<class InternetProtocol>
+      constexpr bool operator< (const basic_endpoint<InternetProtocol>& a,
+                                const basic_endpoint<InternetProtocol>& b) noexcept;
+    template<class InternetProtocol>
+      constexpr bool operator> (const basic_endpoint<InternetProtocol>& a,
+                                const basic_endpoint<InternetProtocol>& b) noexcept;
+    template<class InternetProtocol>
+      constexpr bool operator<=(const basic_endpoint<InternetProtocol>& a,
+                                const basic_endpoint<InternetProtocol>& b) noexcept;
+    template<class InternetProtocol>
+      constexpr bool operator>=(const basic_endpoint<InternetProtocol>& a,
+                                const basic_endpoint<InternetProtocol>& b) noexcept;
 
-          // basic_endpoint I/O:
-          template<class CharT, class Traits, class InternetProtocol>
-            basic_ostream<CharT, Traits>& operator<<(
-              basic_ostream<CharT, Traits>& os,
-              const basic_endpoint<InternetProtocol>& ep);
+    // basic_endpoint I/O:
+    template<class CharT, class Traits, class InternetProtocol>
+      basic_ostream<CharT, Traits>& operator<<(
+        basic_ostream<CharT, Traits>& os,
+        const basic_endpoint<InternetProtocol>& ep);
 
-        } // namespace ip
-      __end_versioned_ns__
-    } // namespace experimental
+  } // namespace ip
+  __end_versioned_ns__
+  } // namespace experimental
   } // namespace std
 
 Extensible implementations provide the following member functions:
 
   namespace std {
-    namespace experimental {
-      __begin_versioned_ns__
-        namespace ip {
+  namespace experimental {
+  __begin_versioned_ns__
+  namespace ip {
 
-          template<class InternetProtocol>
-          class basic_endpoint
-          {
-          public:
-            void* data() noexcept;
-            const void* data() const noexcept;
-            constexpr size_t size() const noexcept;
-            void resize(size_t s);
-            constexpr size_t capacity() const noexcept;
-            ``['// remainder unchanged]``
-          private:
-            union
-            {
-              sockaddr_in v4_;
-              sockaddr_in6 v6_;
-            } data_; // ``['exposition only]``
-          };
+    template<class InternetProtocol>
+    class basic_endpoint
+    {
+    public:
+      void* data() noexcept;
+      const void* data() const noexcept;
+      constexpr size_t size() const noexcept;
+      void resize(size_t s);
+      constexpr size_t capacity() const noexcept;
+      ``['// remainder unchanged]``
+    private:
+      union
+      {
+        sockaddr_in v4_;
+        sockaddr_in6 v6_;
+      } data_; // ``['exposition only]``
+    };
 
-        } // namespace ip
-      __end_versioned_ns__
-    } // namespace experimental
+  } // namespace ip
+  __end_versioned_ns__
+  } // namespace experimental
   } // namespace std
 
 [section [^ip::basic_endpoint] constructors]

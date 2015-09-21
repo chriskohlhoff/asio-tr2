@@ -2,20 +2,20 @@
 [xrefid buffer.transfer.at.least]
 
   namespace std {
-    namespace experimental {
-      __begin_versioned_ns__
+  namespace experimental {
+  __begin_versioned_ns__
 
-        class transfer_at_least
-        {
-        public:
-          explicit transfer_at_least(size_t m);
-          size_t operator()(const error_code& ec, size_t s) const;
-        private:
-          size_t minimum_; // ``['exposition only]``
-        };
+    class transfer_at_least
+    {
+    public:
+      explicit transfer_at_least(size_t m);
+      size_t operator()(const error_code& ec, size_t s) const;
+    private:
+      size_t minimum_; // ``['exposition only]``
+    };
 
-      __end_versioned_ns__
-    } // namespace experimental
+  __end_versioned_ns__
+  } // namespace experimental
   } // namespace std
 
 The class `transfer_at_least` is a function object type for use as a

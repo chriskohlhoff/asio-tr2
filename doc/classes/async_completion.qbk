@@ -8,25 +8,25 @@ call signature (C++ Std, [func.def]) for the completion handler type invoked on
 completion of the asynchronous operation.
 
   namespace std {
-    namespace experimental {
-      __begin_versioned_ns__
+  namespace experimental {
+  __begin_versioned_ns__
 
-        template<class CompletionToken, class Signature>
-        struct async_completion
-        {
-          typedef completion_handler_type_t<decay_t<CompletionToken>, Signature>
-            completion_handler_type;
+    template<class CompletionToken, class Signature>
+    struct async_completion
+    {
+      typedef completion_handler_type_t<decay_t<CompletionToken>, Signature>
+        completion_handler_type;
 
-          explicit async_completion(CompletionToken& t);
-          async_completion(const async_completion&) = delete;
-          async_completion& operator=(const async_completion&) = delete;
+      explicit async_completion(CompletionToken& t);
+      async_completion(const async_completion&) = delete;
+      async_completion& operator=(const async_completion&) = delete;
 
-          ``['see below]`` completion_handler;
-          async_result<completion_handler_type> result;
-        };
+      ``['see below]`` completion_handler;
+      async_result<completion_handler_type> result;
+    };
 
-      __end_versioned_ns__
-    } // namespace experimental
+  __end_versioned_ns__
+  } // namespace experimental
   } // namespace std
 
 The template parameter `Signature` shall be a call signature (C++Std,

@@ -7,24 +7,24 @@ produced by `completion_handler_type_t<T, S>` for some completion token type
 `T` and call signature `S`.
 
   namespace std {
-    namespace experimental {
-      __begin_versioned_ns__
+  namespace experimental {
+  __begin_versioned_ns__
 
-        template<class CompletionHandler>
-        class async_result
-        {
-        public:
-          typedef void type;
+    template<class CompletionHandler>
+    class async_result
+    {
+    public:
+      typedef void type;
 
-          explicit async_result(CompletionHandler&) {}
-          async_result(const async_result&) = delete;
-          async_result& operator=(const async_result&) = delete;
+      explicit async_result(CompletionHandler&) {}
+      async_result(const async_result&) = delete;
+      async_result& operator=(const async_result&) = delete;
 
-          type get() {}
-        };
+      type get() {}
+    };
 
-      __end_versioned_ns__
-    } // namespace experimental
+  __end_versioned_ns__
+  } // namespace experimental
   } // namespace std
 
 Specializations of `async_result` shall satisfy the `Destructible` requirements

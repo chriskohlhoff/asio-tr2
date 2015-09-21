@@ -2,53 +2,53 @@
 [xrefid loop_scheduler]
 
   namespace std {
-    namespace experimental {
-      __begin_versioned_ns__
+  namespace experimental {
+  __begin_versioned_ns__
 
-        class loop_scheduler : public execution_context
-        {
-        public:
-          // types:
+    class loop_scheduler : public execution_context
+    {
+    public:
+      // types:
 
-          class ``[link classes.loop_scheduler__executor_type executor_type]``;
+      class ``[link classes.loop_scheduler__executor_type executor_type]``;
 
-          // construct / copy / destroy:
+      // construct / copy / destroy:
 
-          loop_scheduler();
-          explicit loop_scheduler(std::size_t concurrency_hint);
-          loop_scheduler(const loop_scheduler&) = delete;
-          loop_scheduler& operator=(const loop_scheduler&) = delete;
-          ~loop_scheduler();
+      loop_scheduler();
+      explicit loop_scheduler(std::size_t concurrency_hint);
+      loop_scheduler(const loop_scheduler&) = delete;
+      loop_scheduler& operator=(const loop_scheduler&) = delete;
+      ~loop_scheduler();
 
-          // loop_scheduler operations:
+      // loop_scheduler operations:
 
-          executor_type get_executor() noexcept;
+      executor_type get_executor() noexcept;
 
-          size_t run();
-          template<class Rep, class Period>
-            size_t run_for(const chrono::duration<Rep, Period>& rel_time);
-          template<class Clock, class Duration>
-            size_t run_until(const chrono::time_point<Clock, Duration>& abs_time);
+      size_t run();
+      template<class Rep, class Period>
+        size_t run_for(const chrono::duration<Rep, Period>& rel_time);
+      template<class Clock, class Duration>
+        size_t run_until(const chrono::time_point<Clock, Duration>& abs_time);
 
-          size_t run_one();
-          template<class Rep, class Period>
-            size_t run_one_for(const chrono::duration<Rep, Period>& rel_time);
-          template<class Clock, class Duration>
-            size_t run_one_until(const chrono::time_point<Clock, Duration>& abs_time);
+      size_t run_one();
+      template<class Rep, class Period>
+        size_t run_one_for(const chrono::duration<Rep, Period>& rel_time);
+      template<class Clock, class Duration>
+        size_t run_one_until(const chrono::time_point<Clock, Duration>& abs_time);
 
-          size_t poll();
+      size_t poll();
 
-          size_t poll_one();
+      size_t poll_one();
 
-          void stop();
+      void stop();
 
-          bool stopped() const;
+      bool stopped() const;
 
-          void restart();
-        };
+      void restart();
+    };
 
-      __end_versioned_ns__
-    } // namespace experimental
+  __end_versioned_ns__
+  } // namespace experimental
   } // namespace std
 
 An object of type `loop_scheduler` has an associated executor object, meeting the

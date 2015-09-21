@@ -5,43 +5,43 @@ Class `execution_context` implements an extensible, type-safe, polymorphic set o
 services, indexed by service type.
 
   namespace std {
-    namespace experimental {
-      __begin_versioned_ns__
+  namespace experimental {
+  __begin_versioned_ns__
 
-        class execution_context
-        {
-        public:
-          class ``[link classes.execution_context__service service]``;
+    class execution_context
+    {
+    public:
+      class ``[link classes.execution_context__service service]``;
 
-          // construct / copy / destroy:
+      // construct / copy / destroy:
 
-          execution_context();
-          execution_context(const execution_context&) = delete;
-          execution_context& operator=(const execution_context&) = delete;
-          virtual ~execution_context();
+      execution_context();
+      execution_context(const execution_context&) = delete;
+      execution_context& operator=(const execution_context&) = delete;
+      virtual ~execution_context();
 
-          // execution context operations:
+      // execution context operations:
 
-          void notify_fork(fork_event e);
+      void notify_fork(fork_event e);
 
-        protected:
+    protected:
 
-          // execution context protected operations:
+      // execution context protected operations:
 
-          void shutdown();
-          void destroy();
-        };
+      void shutdown();
+      void destroy();
+    };
 
-        // service access:
-        template<class Service> typename Service::key_type&
-          use_service(execution_context& ctx);
-        template<class Service, class... Args> Service&
-          make_service(execution_context& ctx, Args&&... args);
-        template<class Service> bool has_service(const execution_context& ctx) noexcept;
-        class service_already_exists : public logic_error { };
+    // service access:
+    template<class Service> typename Service::key_type&
+      use_service(execution_context& ctx);
+    template<class Service, class... Args> Service&
+      make_service(execution_context& ctx, Args&&... args);
+    template<class Service> bool has_service(const execution_context& ctx) noexcept;
+    class service_already_exists : public logic_error { };
 
-      __end_versioned_ns__
-    } // namespace experimental
+  __end_versioned_ns__
+  } // namespace experimental
   } // namespace std
 
 Access to the services of an `execution_context` is via three function

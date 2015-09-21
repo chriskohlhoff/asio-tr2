@@ -61,7 +61,7 @@ unless `is_executor<Executor>::value` is `true`.]
   template<class ExecutionContext, class CompletionToken>
     __ifr__ dispatch(ExecutionContext& ctx, CompletionToken&& token);
 
-[function_returns `std::experimental::dispatch(ctx.get_executor(),
+[function_returns `std::experimental::__ns__::dispatch(ctx.get_executor(),
 forward<CompletionToken>(token))`.]
 
 [function_remarks This function shall not participate in overload resolution

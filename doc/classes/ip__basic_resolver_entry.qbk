@@ -5,46 +5,46 @@ An object of type `basic_resolver_entry<InternetProtocol>` represents a single
 element in the results returned by a name resolution operation.
 
   namespace std {
-    namespace experimental {
-      __begin_versioned_ns__
-        namespace ip {
+  namespace experimental {
+  __begin_versioned_ns__
+  namespace ip {
 
-          template<class InternetProtocol>
-          class basic_resolver_entry
-          {
-          public:
-            // types:
-            typedef InternetProtocol protocol_type;
-            typedef typename InternetProtocol::endpoint endpoint_type;
+    template<class InternetProtocol>
+    class basic_resolver_entry
+    {
+    public:
+      // types:
+      typedef InternetProtocol protocol_type;
+      typedef typename InternetProtocol::endpoint endpoint_type;
 
-            // constructors:
-            basic_resolver_entry();
-            basic_resolver_entry(const endpoint_type& ep,
-                                 string_view h,
-                                 string_view s);
+      // constructors:
+      basic_resolver_entry();
+      basic_resolver_entry(const endpoint_type& ep,
+                           string_view h,
+                           string_view s);
 
-            // members:
-            endpoint_type endpoint() const;
-            operator endpoint_type() const;
-            template<class Allocator = allocator<char>>
-              basic_string<char, char_traits<char>, Allocator>
-                host_name(const Allocator& a = Allocator()) const;
-            template<class Allocator = allocator<char>>
-              basic_string<char, char_traits<char>, Allocator>
-                service_name(const Allocator& a = Allocator()) const;
-          };
+      // members:
+      endpoint_type endpoint() const;
+      operator endpoint_type() const;
+      template<class Allocator = allocator<char>>
+        basic_string<char, char_traits<char>, Allocator>
+          host_name(const Allocator& a = Allocator()) const;
+      template<class Allocator = allocator<char>>
+        basic_string<char, char_traits<char>, Allocator>
+          service_name(const Allocator& a = Allocator()) const;
+    };
 
-          // basic_resolver_entry comparisons:
-          template<class InternetProtocol>
-            bool operator==(const basic_resolver_entry<InternetProtocol>& a,
-                            const basic_resolver_entry<InternetProtocol>& b);
-          template<class InternetProtocol>
-            bool operator!=(const basic_resolver_entry<InternetProtocol>& a,
-                            const basic_resolver_entry<InternetProtocol>& b);
+    // basic_resolver_entry comparisons:
+    template<class InternetProtocol>
+      bool operator==(const basic_resolver_entry<InternetProtocol>& a,
+                      const basic_resolver_entry<InternetProtocol>& b);
+    template<class InternetProtocol>
+      bool operator!=(const basic_resolver_entry<InternetProtocol>& a,
+                      const basic_resolver_entry<InternetProtocol>& b);
 
-        } // namespace ip
-      __end_versioned_ns__
-    } // namespace experimental
+  } // namespace ip
+  __end_versioned_ns__
+  } // namespace experimental
   } // namespace std
 
 [section [^ip::basic_resolver_entry] constructors]

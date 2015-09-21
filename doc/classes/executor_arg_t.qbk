@@ -2,14 +2,14 @@
 [xrefid async.executor.arg]
 
   namespace std {
-    namespace experimental {
-      __begin_versioned_ns__
+  namespace experimental {
+  __begin_versioned_ns__
 
-        struct executor_arg_t { };
-        constexpr executor_arg_t executor_arg = executor_arg_t();
+    struct executor_arg_t { };
+    constexpr executor_arg_t executor_arg = executor_arg_t();
 
-      __end_versioned_ns__
-    } // namespace experimental
+  __end_versioned_ns__
+  } // namespace experimental
   } // namespace std
 
 The `executor_arg_t` struct is an empty structure type used as a unique type to

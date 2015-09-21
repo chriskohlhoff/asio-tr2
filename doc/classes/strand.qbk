@@ -5,60 +5,60 @@ The class template `strand` is a wrapper around an object of type `Executor`
 satisfying the [link requirements.executor Executor requirements].
 
   namespace std {
-    namespace experimental {
-      __begin_versioned_ns__
+  namespace experimental {
+  __begin_versioned_ns__
 
-        template<class Executor>
-        class strand
-        {
-        public:
-          // types:
+    template<class Executor>
+    class strand
+    {
+    public:
+      // types:
 
-          typedef Executor inner_executor_type;
+      typedef Executor inner_executor_type;
 
-          // construct / copy / destroy:
+      // construct / copy / destroy:
 
-          strand();
-          explicit strand(Executor ex);
-          strand(const strand& other) noexcept;
-          strand(strand&& other) noexcept;
-          template<class OtherExecutor> strand(const strand<OtherExecutor>& other) noexcept;
-          template<class OtherExecutor> strand(strand<OtherExecutor>&& other) noexcept;
+      strand();
+      explicit strand(Executor ex);
+      strand(const strand& other) noexcept;
+      strand(strand&& other) noexcept;
+      template<class OtherExecutor> strand(const strand<OtherExecutor>& other) noexcept;
+      template<class OtherExecutor> strand(strand<OtherExecutor>&& other) noexcept;
 
-          strand& operator=(const strand& other) noexcept;
-          strand& operator=(strand&& other) noexcept;
-          template<class OtherExecutor> strand& operator=(const strand<OtherExecutor>& other) noexcept;
-          template<class OtherExecutor> strand& operator=(strand<OtherExecutor>&& other) noexcept;
+      strand& operator=(const strand& other) noexcept;
+      strand& operator=(strand&& other) noexcept;
+      template<class OtherExecutor> strand& operator=(const strand<OtherExecutor>& other) noexcept;
+      template<class OtherExecutor> strand& operator=(strand<OtherExecutor>&& other) noexcept;
 
-          ~strand();
+      ~strand();
 
-          // strand operations:
+      // strand operations:
 
-          inner_executor_type get_inner_executor() const noexcept;
+      inner_executor_type get_inner_executor() const noexcept;
 
-          bool running_in_this_thread() const noexcept;
+      bool running_in_this_thread() const noexcept;
 
-          execution_context& context() noexcept;
+      execution_context& context() noexcept;
 
-          void on_work_started() noexcept;
-          void on_work_finished() noexcept;
+      void on_work_started() noexcept;
+      void on_work_finished() noexcept;
 
-          template<class Func, class ProtoAllocator>
-            void dispatch(Func&& f, const ProtoAllocator& a);
-          template<class Func, class ProtoAllocator>
-            void post(Func&& f, const ProtoAllocator& a);
-          template<class Func, class ProtoAllocator>
-            void defer(Func&& f, const ProtoAllocator& a);
+      template<class Func, class ProtoAllocator>
+        void dispatch(Func&& f, const ProtoAllocator& a);
+      template<class Func, class ProtoAllocator>
+        void post(Func&& f, const ProtoAllocator& a);
+      template<class Func, class ProtoAllocator>
+        void defer(Func&& f, const ProtoAllocator& a);
 
-        private:
-          Executor inner_ex_; // ``['exposition only]``
-        };
+    private:
+      Executor inner_ex_; // ``['exposition only]``
+    };
 
-        bool operator==(const strand<Executor>& a, const strand<Executor>& b);
-        bool operator!=(const strand<Executor>& a, const strand<Executor>& b);
+    bool operator==(const strand<Executor>& a, const strand<Executor>& b);
+    bool operator!=(const strand<Executor>& a, const strand<Executor>& b);
 
-      __end_versioned_ns__
-    } // namespace experimental
+  __end_versioned_ns__
+  } // namespace experimental
   } // namespace std
 
 `strand<Executor>` satisfies the Executor requirements.

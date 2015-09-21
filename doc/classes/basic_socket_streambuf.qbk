@@ -11,64 +11,64 @@ characters. The conversion from characters to bytes, and vice versa, must occur
 elsewhere.]
 
   namespace std {
-    namespace experimental {
-      __begin_versioned_ns__
+  namespace experimental {
+  __begin_versioned_ns__
 
-        template<class Protocol, class Clock, class WaitTraits>
-        class basic_socket_streambuf : public basic_streambuf<char>
-        {
-        public:
-          // types:
+    template<class Protocol, class Clock, class WaitTraits>
+    class basic_socket_streambuf : public basic_streambuf<char>
+    {
+    public:
+      // types:
 
-          typedef Protocol protocol_type;
-          typedef typename protocol_type::endpoint endpoint_type;
-          typedef Clock clock_type;
-          typedef typename clock_type::time_point time_point;
-          typedef typename clock_type::duration duration;
-          typedef WaitTraits traits_type;
+      typedef Protocol protocol_type;
+      typedef typename protocol_type::endpoint endpoint_type;
+      typedef Clock clock_type;
+      typedef typename clock_type::time_point time_point;
+      typedef typename clock_type::duration duration;
+      typedef WaitTraits traits_type;
 
-          // construct / copy / destroy:
+      // construct / copy / destroy:
 
-          basic_socket_streambuf();
-          explicit basic_socket_streambuf(basic_stream_socket<protocol_type> s);
-          basic_socket_streambuf(const basic_socket_streambuf&) = delete;
-          basic_socket_streambuf(basic_socket_streambuf&& rhs);
+      basic_socket_streambuf();
+      explicit basic_socket_streambuf(basic_stream_socket<protocol_type> s);
+      basic_socket_streambuf(const basic_socket_streambuf&) = delete;
+      basic_socket_streambuf(basic_socket_streambuf&& rhs);
 
-          virtual ~basic_socket_streambuf();
+      virtual ~basic_socket_streambuf();
 
-          basic_socket_streambuf& operator=(const basic_socket_streambuf&) = delete;
-          basic_socket_streambuf& operator=(basic_socket_streambuf&& rhs);
+      basic_socket_streambuf& operator=(const basic_socket_streambuf&) = delete;
+      basic_socket_streambuf& operator=(basic_socket_streambuf&& rhs);
 
-          // members:
+      // members:
 
-          basic_socket_streambuf* connect(const endpoint_type& e);
-          template<class... Args> basic_socket_streambuf* connect(Args&&... );
+      basic_socket_streambuf* connect(const endpoint_type& e);
+      template<class... Args> basic_socket_streambuf* connect(Args&&... );
 
-          basic_socket_streambuf<protocol_type>* close();
+      basic_socket_streambuf<protocol_type>* close();
 
-          basic_socket<protocol_type>& socket();
-          error_code error() const;
+      basic_socket<protocol_type>& socket();
+      error_code error() const;
 
-          time_point expiry() const;
-          void expires_at(const time_point& t);
-          void expires_after(const duration& d);
+      time_point expiry() const;
+      void expires_at(const time_point& t);
+      void expires_after(const duration& d);
 
-        protected:
-          // overridden virtual functions:
-          virtual int_type underflow() override;
-          virtual int_type pbackfail(int_type c = traits_type::eof()) override;
-          virtual int_type overflow(int_type c = traits_type::eof()) override;
-          virtual int sync() override;
-          virtual streambuf* setbuf(char_type* s, streamsize n) override;
+    protected:
+      // overridden virtual functions:
+      virtual int_type underflow() override;
+      virtual int_type pbackfail(int_type c = traits_type::eof()) override;
+      virtual int_type overflow(int_type c = traits_type::eof()) override;
+      virtual int sync() override;
+      virtual streambuf* setbuf(char_type* s, streamsize n) override;
 
-        private:
-          basic_stream_socket<protocol_type> socket_; // ``['exposition only]``
-          error_code ec_; // ``['exposition only]``
-          time_point expiry_; // ``['exposition only]``
-        };
+    private:
+      basic_stream_socket<protocol_type> socket_; // ``['exposition only]``
+      error_code ec_; // ``['exposition only]``
+      time_point expiry_; // ``['exposition only]``
+    };
 
-      __end_versioned_ns__
-    } // namespace experimental
+  __end_versioned_ns__
+  } // namespace experimental
   } // namespace std
 
 [section [^basic_socket_streambuf] constructors]

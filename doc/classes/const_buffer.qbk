@@ -2,24 +2,24 @@
 [xrefid buffer.const]
 
   namespace std {
-    namespace experimental {
-      __begin_versioned_ns__
+  namespace experimental {
+  __begin_versioned_ns__
 
-        class const_buffer
-        {
-        public:
-          // constructors:
-          const_buffer() noexcept;
-          const_buffer(const void* p, size_t n) noexcept;
-          const_buffer(const mutable_buffer& b) noexcept;
+    class const_buffer
+    {
+    public:
+      // constructors:
+      const_buffer() noexcept;
+      const_buffer(const void* p, size_t n) noexcept;
+      const_buffer(const mutable_buffer& b) noexcept;
 
-        private:
-          const void* data_; // ``['exposition only]``
-          size_t size_; // ``['exposition only]``
-        };
+    private:
+      const void* data_; // ``['exposition only]``
+      size_t size_; // ``['exposition only]``
+    };
 
-      __end_versioned_ns__
-    } // namespace experimental
+  __end_versioned_ns__
+  } // namespace experimental
   } // namespace std
 
 [section [^const_buffer] constructors]

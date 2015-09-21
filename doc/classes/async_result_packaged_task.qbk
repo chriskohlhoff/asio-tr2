@@ -2,27 +2,27 @@
 [xrefid async.packaged.task.specializations]
 
   namespace std {
-    namespace experimental {
-      __begin_versioned_ns__
+  namespace experimental {
+  __begin_versioned_ns__
 
-        template<class R, class... Args>
-        class async_result<packaged_task<R(Args...)>>
-        {
-        public:
-          typedef future<R> type;
+    template<class R, class... Args>
+    class async_result<packaged_task<R(Args...)>>
+    {
+    public:
+      typedef future<R> type;
 
-          explicit async_result(packaged_task<R(Args...)>& t);
-          async_result(const async_result&) = delete;
-          async_result& operator=(const async_result&) = delete;
+      explicit async_result(packaged_task<R(Args...)>& t);
+      async_result(const async_result&) = delete;
+      async_result& operator=(const async_result&) = delete;
 
-          type get();
+      type get();
 
-        private:
-          type future_; // ``['exposition only]``
-        };
+    private:
+      type future_; // ``['exposition only]``
+    };
 
-      __end_versioned_ns__
-    } // namespace experimental
+  __end_versioned_ns__
+  } // namespace experimental
   } // namespace std
 
   explicit async_result(packaged_task<R(Args...)>& t);

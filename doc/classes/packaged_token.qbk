@@ -7,39 +7,39 @@ the packaged task's `Signature` is deferred until the completion token is
 transformed into a completion handler.
 
   namespace std {
-    namespace experimental {
-      __begin_versioned_ns__
+  namespace experimental {
+  __begin_versioned_ns__
 
-        template<class Func, class ProtoAllocator = allocator<void>>
-        class packaged_token
-        {
-        public:
-          // packaged_token types:
+    template<class Func, class ProtoAllocator = allocator<void>>
+    class packaged_token
+    {
+    public:
+      // packaged_token types:
 
-          typedef ProtoAllocator allocator_type;
+      typedef ProtoAllocator allocator_type;
 
-          // packaged_token constructors:
+      // packaged_token constructors:
 
-          explicit packaged_token(Func f);
-          packaged_token(Func f, const allocator_type& a);
+      explicit packaged_token(Func f);
+      packaged_token(Func f, const allocator_type& a);
 
-          // packaged_token operations:
+      // packaged_token operations:
 
-          allocator_type get_allocator() const noexcept;
+      allocator_type get_allocator() const noexcept;
 
-        private:
-          Func f_; // ``['exposition only]``
-          ProtoAllocator allocator_; // ``['exposition only]``
-        };
+    private:
+      Func f_; // ``['exposition only]``
+      ProtoAllocator allocator_; // ``['exposition only]``
+    };
 
-        template<class Func, class ProtoAllocator, class R, class... Args>
-        struct completion_handler_type<packaged_token<Func, ProtoAllocator>, R(Args...)>
-        {
-          typedef packaged_handler<result_of_t<Func(Args...)>(Args...), ProtoAllocator> type;
-        };
+    template<class Func, class ProtoAllocator, class R, class... Args>
+    struct completion_handler_type<packaged_token<Func, ProtoAllocator>, R(Args...)>
+    {
+      typedef packaged_handler<result_of_t<Func(Args...)>(Args...), ProtoAllocator> type;
+    };
 
-      __end_versioned_ns__
-    } // namespace experimental
+  __end_versioned_ns__
+  } // namespace experimental
   } // namespace std
 
 [section [^packaged_token] members]

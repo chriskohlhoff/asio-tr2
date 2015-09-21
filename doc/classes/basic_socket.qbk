@@ -6,123 +6,123 @@ Class template `basic_socket<Protocol>` is used as the base class for the
 templates. It provides functionality that is common to both types of socket.
 
   namespace std {
-    namespace experimental {
-      __begin_versioned_ns__
+  namespace experimental {
+  __begin_versioned_ns__
 
-        template<class Protocol>
-        class basic_socket : public socket_base
-        {
-        public:
-          // types:
+    template<class Protocol>
+    class basic_socket : public socket_base
+    {
+    public:
+      // types:
 
-          typedef io_service::executor_type executor_type;
-          typedef ``['implementation defined]`` native_handle_type; // See ``[link requirements.native_handles native handles]``
-          typedef Protocol protocol_type;
-          typedef typename protocol_type::endpoint endpoint_type;
+      typedef io_service::executor_type executor_type;
+      typedef ``['implementation defined]`` native_handle_type; // See ``[link requirements.native_handles native handles]``
+      typedef Protocol protocol_type;
+      typedef typename protocol_type::endpoint endpoint_type;
 
-          // basic_socket operations:
+      // basic_socket operations:
 
-          executor_type get_executor() noexcept;
+      executor_type get_executor() noexcept;
 
-          native_handle_type native_handle(); // See ``[link requirements.native_handles native handles]``
+      native_handle_type native_handle(); // See ``[link requirements.native_handles native handles]``
 
-          void open(const protocol_type& protocol = protocol_type());
-          void open(const protocol_type& protocol, error_code& ec);
+      void open(const protocol_type& protocol = protocol_type());
+      void open(const protocol_type& protocol, error_code& ec);
 
-          void assign(const protocol_type& protocol,
-                      const native_handle_type& native_socket); // See ``[link requirements.native_handles native handles]``
-          void assign(const protocol_type& protocol,
-                      const native_handle_type& native_socket,
-                      error_code& ec); // See ``[link requirements.native_handles native handles]``
+      void assign(const protocol_type& protocol,
+                  const native_handle_type& native_socket); // See ``[link requirements.native_handles native handles]``
+      void assign(const protocol_type& protocol,
+                  const native_handle_type& native_socket,
+                  error_code& ec); // See ``[link requirements.native_handles native handles]``
 
-          bool is_open() const noexcept;
+      bool is_open() const noexcept;
 
-          void close();
-          void close(error_code& ec);
+      void close();
+      void close(error_code& ec);
 
-          void cancel();
-          void cancel(error_code& ec);
+      void cancel();
+      void cancel(error_code& ec);
 
-          template<class SettableSocketOption>
-            void set_option(const SettableSocketOption& option);
-          template<class SettableSocketOption>
-            void set_option(const SettableSocketOption& option, error_code& ec);
+      template<class SettableSocketOption>
+        void set_option(const SettableSocketOption& option);
+      template<class SettableSocketOption>
+        void set_option(const SettableSocketOption& option, error_code& ec);
 
-          template<class GettableSocketOption>
-            void get_option(GettableSocketOption& option) const;
-          template<class GettableSocketOption>
-            void get_option(GettableSocketOption& option, error_code& ec) const;
+      template<class GettableSocketOption>
+        void get_option(GettableSocketOption& option) const;
+      template<class GettableSocketOption>
+        void get_option(GettableSocketOption& option, error_code& ec) const;
 
-          template<class IoControlCommand>
-            void io_control(IoControlCommand& command);
-          template<class IoControlCommand>
-            void io_control(IoControlCommand& command, error_code& ec);
+      template<class IoControlCommand>
+        void io_control(IoControlCommand& command);
+      template<class IoControlCommand>
+        void io_control(IoControlCommand& command, error_code& ec);
 
-          void non_blocking(bool mode);
-          void non_blocking(bool mode, error_code& ec);
-          bool non_blocking() const;
+      void non_blocking(bool mode);
+      void non_blocking(bool mode, error_code& ec);
+      bool non_blocking() const;
 
-          void native_non_blocking(bool mode);
-          void native_non_blocking(bool mode, error_code& ec);
-          bool native_non_blocking() const;
+      void native_non_blocking(bool mode);
+      void native_non_blocking(bool mode, error_code& ec);
+      bool native_non_blocking() const;
 
-          bool at_mark() const;
-          bool at_mark(error_code& ec) const;
+      bool at_mark() const;
+      bool at_mark(error_code& ec) const;
 
-          size_t available() const;
-          size_t available(error_code& ec) const;
+      size_t available() const;
+      size_t available(error_code& ec) const;
 
-          void bind(const endpoint_type& endpoint);
-          void bind(const endpoint_type& endpoint, error_code& ec);
+      void bind(const endpoint_type& endpoint);
+      void bind(const endpoint_type& endpoint, error_code& ec);
 
-          void shutdown(shutdown_type what);
-          void shutdown(shutdown_type what, error_code& ec);
+      void shutdown(shutdown_type what);
+      void shutdown(shutdown_type what, error_code& ec);
 
-          endpoint_type local_endpoint() const;
-          endpoint_type local_endpoint(error_code& ec) const;
+      endpoint_type local_endpoint() const;
+      endpoint_type local_endpoint(error_code& ec) const;
 
-          endpoint_type remote_endpoint() const;
-          endpoint_type remote_endpoint(error_code& ec) const;
+      endpoint_type remote_endpoint() const;
+      endpoint_type remote_endpoint(error_code& ec) const;
 
-          void connect(const endpoint_type& endpoint);
-          void connect(const endpoint_type& endpoint, error_code& ec);
+      void connect(const endpoint_type& endpoint);
+      void connect(const endpoint_type& endpoint, error_code& ec);
 
-          template<class CompletionToken>
-            __ifr__ async_connect(const endpoint_type& endpoint,
-                                  CompletionToken&& token);
+      template<class CompletionToken>
+        __ifr__ async_connect(const endpoint_type& endpoint,
+                              CompletionToken&& token);
 
-          void wait(wait_type w);
-          void wait(wait_type w, error_code& ec);
+      void wait(wait_type w);
+      void wait(wait_type w, error_code& ec);
 
-          template<class CompletionToken>
-            __ifr__ async_wait(wait_type w, CompletionToken&& token);
+      template<class CompletionToken>
+        __ifr__ async_wait(wait_type w, CompletionToken&& token);
 
-        protected:
-          // construct / copy / destroy:
+    protected:
+      // construct / copy / destroy:
 
-          explicit basic_socket(io_service& ios);
-          basic_socket(io_service& ios, const protocol_type& protocol);
-          basic_socket(io_service& ios, const endpoint_type& endpoint);
-          basic_socket(io_service& ios, const protocol_type& protocol,
-                       const native_handle_type& native_socket); // See ``[link requirements.native_handles native handles]``
-          basic_socket(const basic_socket&) = delete;
-          basic_socket(basic_socket&& rhs);
-          template<class OtherProtocol>
-            basic_socket(basic_socket<OtherProtocol>&& rhs);
+      explicit basic_socket(io_service& ios);
+      basic_socket(io_service& ios, const protocol_type& protocol);
+      basic_socket(io_service& ios, const endpoint_type& endpoint);
+      basic_socket(io_service& ios, const protocol_type& protocol,
+                   const native_handle_type& native_socket); // See ``[link requirements.native_handles native handles]``
+      basic_socket(const basic_socket&) = delete;
+      basic_socket(basic_socket&& rhs);
+      template<class OtherProtocol>
+        basic_socket(basic_socket<OtherProtocol>&& rhs);
 
-          ~basic_socket();
+      ~basic_socket();
 
-          basic_socket& operator=(const basic_socket&) = delete;
-          basic_socket& operator=(basic_socket&& rhs);
-          template<class OtherProtocol>
-            basic_socket& operator=(basic_socket<OtherProtocol>&& rhs);
+      basic_socket& operator=(const basic_socket&) = delete;
+      basic_socket& operator=(basic_socket&& rhs);
+      template<class OtherProtocol>
+        basic_socket& operator=(basic_socket<OtherProtocol>&& rhs);
 
-        private:
-          protocol_type protocol_; // ``['exposition only]``
-        };
+    private:
+      protocol_type protocol_; // ``['exposition only]``
+    };
 
-      __end_versioned_ns__
-    } // namespace experimental
+  __end_versioned_ns__
+  } // namespace experimental
   } // namespace std
 
 [section [^basic_socket] constructors]

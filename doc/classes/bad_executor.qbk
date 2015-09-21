@@ -5,18 +5,18 @@ An exception of type `bad_executor` is thrown by `executor` member functions
 `dispatch`, `post`, and `defer` when the executor object has no target.
 
   namespace std {
-    namespace experimental {
-      __begin_versioned_ns__
+  namespace experimental {
+  __begin_versioned_ns__
 
-        class bad_executor : public exception
-        {
-        public:
-          // constructor:
-          bad_executor() noexcept;
-        };
+    class bad_executor : public exception
+    {
+    public:
+      // constructor:
+      bad_executor() noexcept;
+    };
 
-      __end_versioned_ns__
-    } // namespace experimental
+  __end_versioned_ns__
+  } // namespace experimental
   } // namespace std
 
   bad_executor() noexcept;
