@@ -29,9 +29,7 @@ to elements of the sequence (C++ Std, [string.require]).
 
 [function_returns A `mutable_buffers_1` value equivalent to:
 ``
-  mutable_buffers_1(
-    buffer_cast<void*>(b),
-    min(buffer_size(b), n));
+  mutable_buffers_1(b.data(), min(b.size(), n));
 ``]
 
   const_buffers_1 buffer(const const_buffer& b) noexcept;
@@ -42,9 +40,7 @@ to elements of the sequence (C++ Std, [string.require]).
 
 [function_returns A `const_buffers_1` value equivalent to:
 ``
-  const_buffers_1(
-    buffer_cast<const void*>(b),
-    min(buffer_size(b), n));
+  const_buffers_1(b.data(), min(b.size(), n));
 ``]
 
   template<class T, size_t N>

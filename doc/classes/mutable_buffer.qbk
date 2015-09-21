@@ -12,6 +12,10 @@
       mutable_buffer() noexcept;
       mutable_buffer(void* p, size_t n) noexcept;
 
+      // members:
+      void* data() const noexcept;
+      size_t size() const noexcept;
+
     private:
       void* data_; // ``['exposition only]``
       size_t size_; // ``['exposition only]``
@@ -31,6 +35,19 @@
   mutable_buffer(void* p, size_t n) noexcept;
 
 [function_postconditions `data_ == p` and `size_ == n`.]
+
+[endsect]
+
+[section [^mutable_buffer] members]
+[xrefid buffer.mutable.members]
+
+  void* data() const noexcept;
+
+[function_returns `data_`.]
+
+  size_t size() const noexcept;
+
+[function_returns `size_`.]
 
 [endsect]
 

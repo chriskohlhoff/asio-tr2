@@ -7,8 +7,8 @@
 [function_returns A `mutable_buffer` equivalent to
 ``
   mutable_buffer(
-    buffer_cast<char*>(b) + min(n, buffer_size(b)),
-    buffer_size(b) - min(n, buffer_size(b)));
+    static_cast<char*>(b.data()) + min(n, b.size()),
+    b.size() - min(n, b.size()));
 ``]
 
   const_buffer operator+(const const_buffer& b, size_t n) noexcept;
@@ -17,8 +17,8 @@
 [function_returns A `const_buffer` equivalent to
 ``
   const_buffer(
-    buffer_cast<const char*>(b) + min(n, buffer_size(b)),
-    buffer_size(b) - min(n, buffer_size(b)));
+    stati_cast<const char*>(b.data()) + min(n, b.size()),
+    b.size() - min(n, b.size()));
 ``]
 
   mutable_buffers_1 operator+(const mutable_buffers_1& b, size_t n) noexcept;
@@ -27,8 +27,8 @@
 [function_returns A `mutable_buffers_1` equivalent to
 ``
   mutable_buffers_1(
-    buffer_cast<char*>(b) + min(n, buffer_size(b)),
-    buffer_size(b) - min(n, buffer_size(b)));
+    static_cast<char*>(b.data()) + min(n, b.size()),
+    b.size() - min(n, b.size()));
 ``]
 
   const_buffers_1 operator+(const const_buffers_1& b, size_t n) noexcept;
@@ -37,8 +37,8 @@
 [function_returns A `const_buffers_1` equivalent to
 ``
   const_buffers_1(
-    buffer_cast<const char*>(b) + min(n, buffer_size(b)),
-    buffer_size(b) - min(n, buffer_size(b)));
+    static_cast<const char*>(b.data()) + min(n, b.size()),
+    b.size() - min(n, b.size()));
 ``]
 
 [endsect]

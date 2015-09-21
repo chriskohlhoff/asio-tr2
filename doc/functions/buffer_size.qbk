@@ -16,7 +16,7 @@ as follows:\n
   for (const auto& v: buffers)
   {
     const_buffer b(v);
-    total_size += b.size_;
+    total_size += b.size();
   }
   return total_size;
 ``]

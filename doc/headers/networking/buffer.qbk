@@ -29,11 +29,6 @@
     template<class T> is_const_buffer_sequence;
     template<class T> is_dynamic_buffer;
 
-    ``// [link functions.buffer_cast buffer conversions]:``
-
-    template<class T> T buffer_cast(const mutable_buffer& b) noexcept;
-    template<class T> T buffer_cast(const const_buffer& b) noexcept;
-
     ``// [link functions.buffer_size buffer size]:``
 
     size_t buffer_size(const mutable_buffer& b) noexcept;

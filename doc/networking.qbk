@@ -797,7 +797,6 @@ This clause defines components for performing timer operations.
 [include:classes classes/mutable_buffers_1.qbk]
 [include:classes classes/const_buffers_1.qbk]
 [include:classes classes/buffer_type_traits.qbk]
-[include:functions functions/buffer_cast.qbk]
 [include:functions functions/buffer_size.qbk]
 [include:functions functions/buffer_copy.qbk]
 [include:functions functions/buffer_arithmetic.qbk]

@@ -37,11 +37,6 @@ to provide an opaque representation of contiguous memory, where:
   mechanisms for automatically determining the size of a buffer from an array,
   `std::array` or `std::vector` of POD elements, or from a `std::string`.
 
-* Type safety violations must be explicitly requested using the `buffer_cast`
-  function. In general an application should never need to do this, but it is
-  required by the library implementation to pass the raw memory to the
-  underlying operating system functions.
-
 Finally, multiple buffers can be passed to scatter-gather operations (such as
 the free functions `read` or `write`) by putting the buffer objects
 into a container. The `MutableBufferSequence` and `ConstBufferSequence`

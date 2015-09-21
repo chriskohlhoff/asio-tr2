@@ -34,9 +34,8 @@ In the table below, `X` denotes a constant buffer sequence class, `x` denotes a
           {
             const_buffer b1(v1);
             const_buffer b2(v2);
-            return buffer_cast<const void*>(b1)
-              == buffer_cast<const void*>(b2)
-                && buffer_size(b1) == buffer_size(b2);
+            return b1.data() == b2.data()
+                && b1.size() == b2.size();
           })
      ``]
   ]

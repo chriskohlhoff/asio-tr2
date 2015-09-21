@@ -28,9 +28,8 @@ In the table below, `X` denotes a constant buffer sequence class, `x` denotes a
           {
             mutable_buffer b1(v1);
             mutable_buffer b2(v2);
-            return buffer_cast<void*>(b1)
-              == buffer_cast<void*>(b2)
-                && buffer_size(b1) == buffer_size(b2);
+            return b1.data() == b2.data()
+                && b1.size() == b2.size();
           })
      ``]
   ]

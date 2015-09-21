@@ -13,6 +13,10 @@
       const_buffer(const void* p, size_t n) noexcept;
       const_buffer(const mutable_buffer& b) noexcept;
 
+      // members:
+      const void* data() const noexcept;
+      size_t size() const noexcept;
+
     private:
       const void* data_; // ``['exposition only]``
       size_t size_; // ``['exposition only]``
@@ -27,7 +31,7 @@
 
   const_buffer() noexcept;
 
-[function_postconditions `data_ == nullptr` and `size_t == 0`.]
+[function_postconditions `data_ == nullptr` and `size_ == 0`.]
 
   const_buffer(const void* p, size_t n) noexcept;
 
@@ -36,6 +40,19 @@
   const_buffer(const mutable_buffer& b);
 
 [function_postconditions `data_ == b.data_` and `size_ == b.size_`.]
+
+[endsect]
+
+[section [^const_buffer] members]
+[xrefid buffer.const.members]
+
+  const void* data() const noexcept;
+
+[function_returns `data_`.]
+
+  size_t size() const noexcept;
+
+[function_returns `size_`.]
 
 [endsect]
 
