@@ -1,11 +1,11 @@
-[section Header [^<experimental/io_service>] synopsis]
-[xrefid io_service.synop]
+[section Header [^<experimental/io_context>] synopsis]
+[xrefid io_context.synop]
 
   namespace std {
   namespace experimental {
   __begin_versioned_ns__
 
-    class ``[link classes.io_service io_service]``;
+    class ``[link classes.io_context io_context]``;
 
   __end_versioned_ns__
   } // namespace experimental

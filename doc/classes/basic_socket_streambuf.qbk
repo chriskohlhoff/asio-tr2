@@ -76,8 +76,8 @@ elsewhere.]
 
   basic_socket_streambuf();
 
-[function_effects Initializes `socket_` with `ios`, where `ios` is an
-unspecified object of class `io_service`.]
+[function_effects Initializes `socket_` with `ctx`, where `ctx` is an
+unspecified object of class `io_context`.]
 
 [function_postconditions `expiry() == clock_type::max()`.]
 
@@ -152,8 +152,8 @@ If the operation does not complete before the absolute timeout specified by
 [function_effects Resets the `streambuf` get and put areas and closes the
 socket as if by calling `socket_.close(ec_)`. Obtains an endpoint sequence
 `endpoints` by performing
-`protocol_type::resolver(ios).resolve(forward<Args>(args)__dotdotdot__)`, where
-`ios` is an unspecified object of class `io_service`. For each endpoint `e` in
+`protocol_type::resolver(ctx).resolve(forward<Args>(args)__dotdotdot__)`, where
+`ctx` is an unspecified object of class `io_context`. For each endpoint `e` in
 the sequence, closes and re-opens the socket by performing `socket_.close(ec_)`
 and `socket_.open(e.protocol(), ec_)`, then attempts to establish a connection
 as if by __POSIX__ `__connect__(socket_.native_handle(),

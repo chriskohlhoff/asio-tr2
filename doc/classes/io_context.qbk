@@ -1,25 +1,25 @@
-[section:io_service Class [^io_service]]
-[xrefid io_service.io_service]
+[section:io_context Class [^io_context]]
+[xrefid io_context.io_context]
 
   namespace std {
   namespace experimental {
   __begin_versioned_ns__
 
-    class io_service : public execution_context
+    class io_context : public execution_context
     {
     public:
       // types:
 
-      class ``[link classes.io_service__executor_type executor_type]``;
+      class ``[link classes.io_context__executor_type executor_type]``;
 
       // construct / copy / destroy:
 
-      io_service();
-      explicit io_service(int concurrency_hint);
-      io_service(const io_service&) = delete;
-      io_service& operator=(const io_service&) = delete;
+      io_context();
+      explicit io_context(int concurrency_hint);
+      io_context(const io_context&) = delete;
+      io_context& operator=(const io_context&) = delete;
 
-      // io_service operations:
+      // io_context operations:
 
       executor_type get_executor() noexcept;
 
@@ -50,48 +50,48 @@
   } // namespace experimental
   } // namespace std
 
-The class `io_service` satisfies the [link requirements.execution_context
+The class `io_context` satisfies the [link requirements.execution_context
 ExecutionContext type requirements].
 
-The `io_service` functions `run`, `run_for`, `run_until`, `run_one`,
+The `io_context` functions `run`, `run_for`, `run_until`, `run_one`,
 `run_one_for`, `run_one_until`, `poll`, or `poll_one` must be called for the
-`io_service` to perform [link definitions.asynchronous_operation asynchronous
+`io_context` to perform [link definitions.asynchronous_operation asynchronous
 operations] on behalf of a C++ program. Notification that an asynchronous
 operation has completed is delivered by execution of the associated handler
 function object, as determined by the requirements for [link
 requirements.asynchronous_operations asynchronous operations].
 
-For an object of type `io_service`, ['outstanding work] is defined as the sum
+For an object of type `io_context`, ['outstanding work] is defined as the sum
 of:
 
 [mdash] the total number of calls to the `on_work_started` function, less the
 total number of calls to the `on_work_finished` function, to any executor of
-the `io_service`.
+the `io_context`.
 
-[mdash] the number of function objects that have been added to the `io_service`
-via any executor of the `io_service`, but not yet executed; and
+[mdash] the number of function objects that have been added to the `io_context`
+via any executor of the `io_context`, but not yet executed; and
 
 [mdash] the number of function objects that are currently being executed by the
-`io_service`.
+`io_context`.
 
-If at any time the outstanding work falls to `0`, the `io_service` is stopped
+If at any time the outstanding work falls to `0`, the `io_context` is stopped
 as if by `stop()`.
 
-The `io_service` member functions `get_executor`, `run`, `run_for`,
+The `io_context` member functions `get_executor`, `run`, `run_for`,
 `run_until`, `run_one`, `run_one_for`, `run_one_until`, `poll`, `poll_one`,
-`stop`, and `stopped`, and the `io_service::executor_type` copy constructors,
+`stop`, and `stopped`, and the `io_context::executor_type` copy constructors,
 member functions and comparison operators, shall not introduce data races as a
 result of concurrent calls to those functions from different threads of
 execution. [inline_note The `restart` member function is excluded from these
 thread safety requirements.]
 
-[section [^io_service] members]
-[xrefid io_service.io_service.members]
+[section [^io_context] members]
+[xrefid io_context.io_context.members]
 
-  io_service();
-  explicit io_service(int concurrency_hint);
+  io_context();
+  explicit io_context(int concurrency_hint);
 
-[function_effects Creates an object of class `io_service`.]
+[function_effects Creates an object of class `io_context`.]
 
 [function_remarks The `concurrency_hint` parameter is a suggestion to the
 implementation on the number of threads that should process asynchronous
@@ -100,7 +100,7 @@ operations and execute function objects.]
   executor_type get_executor() noexcept;
 
 [function_returns An executor that may be used for submitting function objects
-to the `io_service`.]
+to the `io_context`.]
 
   size_t run();
 
@@ -145,18 +145,18 @@ one of `run`, `run_for`, `run_until`, `run_one`, `run_one_for`,
 one of `run`, `run_for`, `run_until`, `run_one`, `run_one_for`,
 `run_one_until`, `poll`, or `poll_one`.]
 
-[function_effects If the `io_service` object has no outstanding work, performs
-`stop()`. Otherwise, blocks while the io_service has outstanding work, or until
-the `io_service` is stopped, or until one function object has been executed.]
+[function_effects If the `io_context` object has no outstanding work, performs
+`stop()`. Otherwise, blocks while the io_context has outstanding work, or until
+the `io_context` is stopped, or until one function object has been executed.]
 
 [function_block If an executed function object throws an exception, the
-exception propagates to the caller of `run_one()`. The `io_service` state is as
+exception propagates to the caller of `run_one()`. The `io_context` state is as
 if the function object had returned normally.]
 
 [function_returns `1` if a function object was executed, otherwise `0`.]
 
 [function_notes This function may invoke additional function objects through
-nested calls to the `io_service` executor's `dispatch` member function. These
+nested calls to the `io_context` executor's `dispatch` member function. These
 do not count towards the return value.]
 
   template<class Rep, class Period>
@@ -170,20 +170,20 @@ do not count towards the return value.]
   template<class Clock, class Duration>
     size_t run_one_until(const chrono::time_point<Clock, Duration>& abs_time);
 
-[function_effects If the `io_service` object has no outstanding work, performs
-`stop()`. Otherwise, blocks while the io_service has outstanding work, or until
+[function_effects If the `io_context` object has no outstanding work, performs
+`stop()`. Otherwise, blocks while the io_context has outstanding work, or until
 the expiration of the absolute timeout (C++ Std, \[thread.req.timing\])
-specified by `abs_time`, or until the `io_service` is stopped, or until one
+specified by `abs_time`, or until the `io_context` is stopped, or until one
 function object has been executed.]
 
 [function_block If an executed function object throws an exception, the
-exception propagates to the caller of `run_one()`. The `io_service` state is as
+exception propagates to the caller of `run_one()`. The `io_context` state is as
 if the function object had returned normally.]
 
 [function_returns `1` if a function object was executed, otherwise `0`.]
 
 [function_notes This function may invoke additional function objects through
-nested calls to the `io_service` executor's `dispatch` member function. These
+nested calls to the `io_context` executor's `dispatch` member function. These
 do not count towards the return value.]
 
   size_t poll();
@@ -200,23 +200,23 @@ do not count towards the return value.]
 
   size_t poll_one();
 
-[function_effects If the `io_service` object has no outstanding work, performs
+[function_effects If the `io_context` object has no outstanding work, performs
 `stop()`. Otherwise, if there is a function object ready for immediate
 execution, executes it.]
 
 [function_block If an executed function object throws an exception, the
-exception propagates to the caller of `poll_one()`. The `io_service` state is
+exception propagates to the caller of `poll_one()`. The `io_context` state is
 as if the function object had returned normally.]
 
 [function_returns `1` if a function object was invoked, otherwise `0`.]
 
 [function_notes This function may invoke additional function objects through
-nested calls to the `io_service` executor's `dispatch` member function. These
+nested calls to the `io_context` executor's `dispatch` member function. These
 do not count towards the return value.]
 
   void stop();
 
-[function_effects Stops the `io_service`. Concurrent calls to `run`, `run_for`,
+[function_effects Stops the `io_context`. Concurrent calls to `run`, `run_for`,
 `run_until`, `run_one`, `run_one_for`, `run_one_until`, `poll` or `poll_one`
 will end as soon as possible. If a call to `run`, `run_for`, `run_until`,
 `run_one`, `run_one_for`, `run_one_until`, `poll` or `poll_one` is currently
@@ -230,12 +230,12 @@ calls to `run`, `run_for`, `run_until`, `run_one`, `run_one_for`,
 [function_note When `stopped() == true`, subsequent calls to `run`, `run_for`,
 `run_until`, `run_one`, `run_one_for`, `run_one_until`, `poll` or `poll_one`
 will exit immediately with a return value of `0`, without executing any
-function objects. An `io_service` remains in the stopped state until a call to
+function objects. An `io_context` remains in the stopped state until a call to
 `restart()`.]
 
   bool stopped() const noexcept;
 
-[function_returns `true` if the `io_service` is stopped.]
+[function_returns `true` if the `io_context` is stopped.]
 
   void restart();
 

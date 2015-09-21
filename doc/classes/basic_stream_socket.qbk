@@ -21,10 +21,10 @@ stream.
 
       // construct / copy / destroy:
 
-      explicit basic_stream_socket(io_service& ios);
-      basic_stream_socket(io_service& ios, const protocol_type& protocol);
-      basic_stream_socket(io_service& ios, const endpoint_type& endpoint);
-      basic_stream_socket(io_service& ios, const protocol_type& protocol,
+      explicit basic_stream_socket(io_context& ctx);
+      basic_stream_socket(io_context& ctx, const protocol_type& protocol);
+      basic_stream_socket(io_context& ctx, const endpoint_type& endpoint);
+      basic_stream_socket(io_context& ctx, const protocol_type& protocol,
                           const native_handle_type& native_socket);
       basic_stream_socket(const basic_stream_socket&) = delete;
       basic_stream_socket(basic_stream_socket&& rhs);
@@ -141,25 +141,25 @@ asynchronous write operation, the behavior is undefined.
 [section [^basic_stream_socket] constructors]
 [xrefid socket.stream.cons]
 
-  explicit basic_stream_socket(io_service& ios);
+  explicit basic_stream_socket(io_context& ctx);
 
 [function_effects Initializes the base class with
-`basic_socket<Protocol>(ios)`.]
+`basic_socket<Protocol>(ctx)`.]
 
-  basic_stream_socket(io_service& ios, const protocol_type& protocol);
+  basic_stream_socket(io_context& ctx, const protocol_type& protocol);
 
-[function_effects Initializes the base class with `basic_socket<Protocol>(ios,
+[function_effects Initializes the base class with `basic_socket<Protocol>(ctx,
 protocol)`.]
 
-  basic_stream_socket(io_service& ios, const endpoint_type& endpoint);
+  basic_stream_socket(io_context& ctx, const endpoint_type& endpoint);
 
-[function_effects Initializes the base class with `basic_socket<Protocol>(ios,
+[function_effects Initializes the base class with `basic_socket<Protocol>(ctx,
 endpoint)`.]
 
-  basic_stream_socket(io_service& ios, const protocol_type& protocol,
+  basic_stream_socket(io_context& ctx, const protocol_type& protocol,
                         const native_handle_type& native_socket);
 
-[function_effects Initializes the base class with `basic_socket<Protocol>(ios,
+[function_effects Initializes the base class with `basic_socket<Protocol>(ctx,
 protocol, native_socket)`.]
 
   basic_stream_socket(basic_stream_socket&& rhs);

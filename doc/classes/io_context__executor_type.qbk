@@ -1,11 +1,11 @@
-[section:io_service__executor_type Class [^io_service::executor_type]]
-[xrefid io_service.exec]
+[section:io_context__executor_type Class [^io_context::executor_type]]
+[xrefid io_context.exec]
 
   namespace std {
   namespace experimental {
   __begin_versioned_ns__
 
-    class io_service::executor_type
+    class io_context::executor_type
     {
     public:
       // construct / copy / destroy:
@@ -20,7 +20,7 @@
 
       bool running_in_this_thread() const noexcept;
 
-      io_service& context() noexcept;
+      io_context& context() noexcept;
 
       void on_work_started() noexcept;
       void on_work_finished() noexcept;
@@ -33,26 +33,26 @@
         void defer(Func&& f, const ProtoAllocator& a);
     };
 
-    bool operator==(const io_service::executor_type& a,
-                    const io_service::executor_type& b) noexcept;
-    bool operator!=(const io_service::executor_type& a,
-                    const io_service::executor_type& b) noexcept;
+    bool operator==(const io_context::executor_type& a,
+                    const io_context::executor_type& b) noexcept;
+    bool operator!=(const io_context::executor_type& a,
+                    const io_context::executor_type& b) noexcept;
 
-    template<> struct is_executor<io_service::executor_type> : true_type {};
+    template<> struct is_executor<io_context::executor_type> : true_type {};
 
   __end_versioned_ns__
   } // namespace experimental
   } // namespace std
 
-`io_service::executor_type` is a type satisfying [link requirements.executor
-Executor requirements]. Objects of type `io_service::executor_type` are
-associated with an `io_service`, and function objects submitted using the
+`io_context::executor_type` is a type satisfying [link requirements.executor
+Executor requirements]. Objects of type `io_context::executor_type` are
+associated with an `io_context`, and function objects submitted using the
 `dispatch`, `post`, or `defer` member functions will be executed by the
-`io_service` from within the `run`, `run_for`, `run_until`, `run_one`,
+`io_context` from within the `run`, `run_for`, `run_until`, `run_one`,
 `run_one_for`, `run_one_until`, `poll` or `poll_one` functions.
 
-[section [^io_service::executor_type] constructors]
-[xrefid io_service.exec.cons]
+[section [^io_context::executor_type] constructors]
+[xrefid io_context.exec.cons]
 
   executor_type(const executor_type& other) noexcept;
 
@@ -64,8 +64,8 @@ associated with an `io_service`, and function objects submitted using the
 
 [endsect]
 
-[section [^io_service::executor_type] assignment]
-[xrefid io_service.exec.assign]
+[section [^io_context::executor_type] assignment]
+[xrefid io_context.exec.assign]
 
   executor_type& operator=(const executor_type& other) noexcept;
 
@@ -81,30 +81,30 @@ associated with an `io_service`, and function objects submitted using the
 
 [endsect]
 
-[section [^io_service::executor_type] operations]
-[xrefid io_service.exec.ops]
+[section [^io_context::executor_type] operations]
+[xrefid io_context.exec.ops]
 
   bool running_in_this_thread() const noexcept;
 
 [function_returns `true` if the current thread of execution is running the
 `run`, `run_for`, `run_until`, `run_one`, `run_one_for`, `run_one_until`,
-`poll` or `poll_one` function of the associated `io_service` object.
+`poll` or `poll_one` function of the associated `io_context` object.
 [inline_note That is, the current thread of execution's call chain includes a
 run function.]]
 
-  io_service& context() noexcept;
+  io_context& context() noexcept;
 
-[function_returns A reference to the associated `io_service` object.]
+[function_returns A reference to the associated `io_context` object.]
 
   void on_work_started() noexcept;
 
 [function_effects Increment the count of outstanding work associated with the
-`io_service`.]
+`io_context`.]
 
   void on_work_finished() noexcept;
 
 [function_effects Decrement the count of outstanding work associated with the
-`io_service`.]
+`io_context`.]
 
   template<class Func, class ProtoAllocator>
     void dispatch(Func&& f, const ProtoAllocator& a);
@@ -117,25 +117,25 @@ calls `post(forward<Func>(f), a)`.]
   template<class Func, class ProtoAllocator>
     void post(Func&& f, const ProtoAllocator& a);
 
-[function_effects Adds `f` to the `io_service`.]
+[function_effects Adds `f` to the `io_context`.]
 
   template<class Func, class ProtoAllocator>
     void defer(Func&& f, const ProtoAllocator& a);
 
-[function_effects Adds `f` to the `io_service`.]
+[function_effects Adds `f` to the `io_context`.]
 
 [endsect]
 
-[section [^io_service::executor_type] comparisons]
-[xrefid io_service.exec.comparisons]
+[section [^io_context::executor_type] comparisons]
+[xrefid io_context.exec.comparisons]
 
-  bool operator==(const io_service::executor_type& a,
-                  const io_service::executor_type& b) noexcept;
+  bool operator==(const io_context::executor_type& a,
+                  const io_context::executor_type& b) noexcept;
 
 [function_returns `addressof(a.context()) == addressof(b.context())`.]
 
-  bool operator!=(const io_service::executor_type& a,
-                  const io_service::executor_type& b) noexcept;
+  bool operator!=(const io_context::executor_type& a,
+                  const io_context::executor_type& b) noexcept;
 
 [function_returns `!(a == b)`.]
 

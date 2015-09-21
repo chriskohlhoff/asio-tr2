@@ -565,7 +565,7 @@ be added to the TS.]
   ]
   [
     [[link network.basic_io_services Basic I/O services]]
-    [`<experimental/io_service>`]
+    [`<experimental/io_context>`]
   ]
   [
     [[link network.timers Timers]]
@@ -740,10 +740,10 @@ are used to express type requirements, as listed in the table below.
 [endsect]
 
 [section:basic_io_services Basic I/O services]
-[xrefid io_service]
-[include:headers headers/networking/io_service.qbk]
-[include:classes classes/io_service.qbk]
-[include:classes classes/io_service__executor_type.qbk]
+[xrefid io_context]
+[include:headers headers/networking/io_context.qbk]
+[include:classes classes/io_context.qbk]
+[include:classes classes/io_context__executor_type.qbk]
 [endsect]
 
 [section:timers Timers]
@@ -751,8 +751,8 @@ are used to express type requirements, as listed in the table below.
 This clause defines components for performing timer operations.
 [std_example Performing a synchronous wait operation on a timer:
 ``
-  io_service i;
-  steady_timer t(i);
+  io_context c;
+  steady_timer t(c);
   t.expires_after(seconds(5));
   t.wait();
 ``]
@@ -760,8 +760,8 @@ This clause defines components for performing timer operations.
 ``
   void handler(error_code ec) { __dotdotdot__ }
   __dotdotdot__
-  io_service i;
-  steady_timer t(i);
+  io_context c;
+  steady_timer t(c);
   t.expires_after(seconds(5));
   t.async_wait(handler);
   i.run();

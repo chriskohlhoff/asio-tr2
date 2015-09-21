@@ -15,7 +15,7 @@
     template<class Executor>
       class strand;
 
-    class io_service;
+    class io_context;
 
     template<class Clock> struct wait_traits;
     template<class Clock, class WaitTraits = wait_traits<Clock>>

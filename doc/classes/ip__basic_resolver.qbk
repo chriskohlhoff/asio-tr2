@@ -17,14 +17,14 @@ corresponding host name and service name.
     public:
       // types:
 
-      typedef io_service::executor_type executor_type;
+      typedef io_context::executor_type executor_type;
       typedef InternetProtocol protocol_type;
       typedef typename InternetProtocol::endpoint endpoint_type;
       typedef basic_resolver_results<InternetProtocol> results_type;
 
       // construct / copy / destroy:
 
-      explicit basic_resolver(io_service& ios);
+      explicit basic_resolver(io_context& ctx);
       basic_resolver(const basic_resolver&) = delete;
       basic_resolver(basic_resolver&& rhs) noexcept;
 
@@ -91,9 +91,9 @@ corresponding host name and service name.
 [section [^ip::basic_resolver] constructors]
 [xrefid internet.resolver.cons]
 
-  explicit basic_resolver(io_service& ios);
+  explicit basic_resolver(io_context& ctx);
 
-[function_postconditions `get_executor() == ios.get_executor()`.]
+[function_postconditions `get_executor() == ctx.get_executor()`.]
 
   basic_resolver(basic_resolver&& rhs) noexcept;
 
@@ -124,7 +124,7 @@ associated with this resolver as if by calling `cancel()`.]
 with `*this` as if by calling `cancel()`, then moves into `*this` the state
 originally represented by `rhs`.]
 
-[function_postconditions `get_executor() == ios.get_executor()`.]
+[function_postconditions `get_executor() == ctx.get_executor()`.]
 
 [function_returns `*this`.]
 

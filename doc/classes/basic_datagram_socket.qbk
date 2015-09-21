@@ -20,10 +20,10 @@ receive discrete messages of fixed maximum length.
 
       // construct / copy / destroy:
 
-      explicit basic_datagram_socket(io_service& ios);
-      basic_datagram_socket(io_service& ios, const protocol_type& protocol);
-      basic_datagram_socket(io_service& ios, const endpoint_type& endpoint);
-      basic_datagram_socket(io_service& ios, const protocol_type& protocol,
+      explicit basic_datagram_socket(io_context& ctx);
+      basic_datagram_socket(io_context& ctx, const protocol_type& protocol);
+      basic_datagram_socket(io_context& ctx, const endpoint_type& endpoint);
+      basic_datagram_socket(io_context& ctx, const protocol_type& protocol,
                             const native_handle_type& native_socket);
       basic_datagram_socket(const basic_datagram_socket&) = delete;
       basic_datagram_socket(basic_datagram_socket&& rhs);
@@ -169,26 +169,26 @@ outstanding asynchronous write operation, the behavior is undefined.
 [section [^basic_datagram_socket] constructors]
 [xrefid socket.dgram.cons]
 
-  explicit basic_datagram_socket(io_service& ios);
+  explicit basic_datagram_socket(io_context& ctx);
 
 [function_effects Initializes the base class with
-`basic_socket<Protocol>(ios)`.]
+`basic_socket<Protocol>(ctx)`.]
 
-  basic_datagram_socket(io_service& ios, const protocol_type& protocol);
+  basic_datagram_socket(io_context& ctx, const protocol_type& protocol);
 
-[function_effects Initializes the base class with `basic_socket<Protocol>(ios,
+[function_effects Initializes the base class with `basic_socket<Protocol>(ctx,
 protocol)`.]
 
-  basic_datagram_socket(io_service& ios, const endpoint_type& endpoint);
+  basic_datagram_socket(io_context& ctx, const endpoint_type& endpoint);
 
 [function_effects Initializes the base class with
-`basic_socket<Protocol>(ios, endpoint)`.]
+`basic_socket<Protocol>(ctx, endpoint)`.]
 
-  basic_datagram_socket(io_service& ios, const protocol_type& protocol,
+  basic_datagram_socket(io_context& ctx, const protocol_type& protocol,
                         const native_handle_type& native_socket);
 
 [function_effects Initializes the base class with
-`basic_socket<Protocol>(ios, protocol, native_socket)`.]
+`basic_socket<Protocol>(ctx, protocol, native_socket)`.]
 
   basic_datagram_socket(basic_datagram_socket&& rhs);
 

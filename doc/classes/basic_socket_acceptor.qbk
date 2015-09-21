@@ -16,7 +16,7 @@ represent the incoming connections are dequeued by calling `accept` or
     public:
       // types:
 
-      typedef io_service::executor_type executor_type;
+      typedef io_context::executor_type executor_type;
       typedef ``['implementation defined]`` native_handle_type; // See ``[link requirements.native_handles native handles]``
       typedef AcceptableProtocol protocol_type;
       typedef typename protocol_type::endpoint endpoint_type;
@@ -24,11 +24,11 @@ represent the incoming connections are dequeued by calling `accept` or
 
       // construct / copy / destroy:
 
-      explicit basic_socket_acceptor(io_service& ios);
-      basic_socket_acceptor(io_service& ios, const protocol_type& protocol);
-      basic_socket_acceptor(io_service& ios, const endpoint_type& endpoint,
+      explicit basic_socket_acceptor(io_context& ctx);
+      basic_socket_acceptor(io_context& ctx, const protocol_type& protocol);
+      basic_socket_acceptor(io_context& ctx, const endpoint_type& endpoint,
                             bool reuse_addr = true);
-      basic_socket_acceptor(io_service& ios, const protocol_type& protocol,
+      basic_socket_acceptor(io_context& ctx, const protocol_type& protocol,
                             const native_handle_type& native_acceptor);
       basic_socket_acceptor(const basic_socket_acceptor&) = delete;
       basic_socket_acceptor(basic_socket_acceptor&& rhs);
@@ -102,25 +102,25 @@ represent the incoming connections are dequeued by calling `accept` or
 
       socket_type accept();
       socket_type accept(error_code& ec);
-      socket_type accept(io_service& ios);
-      socket_type accept(io_service& ios, error_code& ec);
+      socket_type accept(io_context& ctx);
+      socket_type accept(io_context& ctx, error_code& ec);
 
       template<class CompletionToken>
         __ifr__ async_accept(CompletionToken&& token);
       template<class CompletionToken>
-        __ifr__ async_accept(io_service& ios, CompletionToken&& token);
+        __ifr__ async_accept(io_context& ctx, CompletionToken&& token);
 
       socket_type accept(endpoint_type& endpoint);
       socket_type accept(endpoint_type& endpoint, error_code& ec);
-      socket_type accept(io_service& ios, endpoint_type& endpoint);
-      socket_type accept(io_service& ios, endpoint_type& endpoint,
+      socket_type accept(io_context& ctx, endpoint_type& endpoint);
+      socket_type accept(io_context& ctx, endpoint_type& endpoint,
                          error_code& ec);
 
       template<class CompletionToken>
         __ifr__ async_accept(endpoint_type& endpoint,
                              CompletionToken&& token);
       template<class CompletionToken>
-        __ifr__ async_accept(io_service& ios, endpoint_type& endpoint,
+        __ifr__ async_accept(io_context& ctx, endpoint_type& endpoint,
                              CompletionToken&& token);
 
       void wait(wait_type w);
@@ -148,24 +148,24 @@ invocation of the completion handlers for these operations, is unspecified.
 [section [^basic_socket_acceptor] constructors]
 [xrefid socket.acceptor.cons]
 
-  explicit basic_socket_acceptor(io_service& ios);
+  explicit basic_socket_acceptor(io_context& ctx);
 
 [function_postconditions\n
-[mdash] `get_executor() == ios.get_executor()`.\n
+[mdash] `get_executor() == ctx.get_executor()`.\n
 [mdash] `is_open() == false`.]
 
-  basic_socket_acceptor(io_service& ios, const protocol_type& protocol);
+  basic_socket_acceptor(io_context& ctx, const protocol_type& protocol);
 
 [function_effects Opens this acceptor as if by calling `open(protocol)`.]
 
 [function_postconditions\n
-[mdash] `get_executor() == ios.get_executor()`.\n
+[mdash] `get_executor() == ctx.get_executor()`.\n
 [mdash] `is_open() == true`.\n
 [mdash] `non_blocking() == false`.\n
 [mdash] `enable_connection_aborted() == false`.\n
 [mdash] `protocol_ == protocol`.]
 
-  basic_socket_acceptor(io_service& ios, const endpoint_type& endpoint,
+  basic_socket_acceptor(io_context& ctx, const endpoint_type& endpoint,
                         bool reuse_addr = true);
 
 [function_effects Opens and binds this acceptor as if by calling:
@@ -178,7 +178,7 @@ invocation of the completion handlers for these operations, is unspecified.
 ``]
 
 [function_postconditions\n
-[mdash] `get_executor() == ios.get_executor()`.\n
+[mdash] `get_executor() == ctx.get_executor()`.\n
 [mdash] `is_open() == true`.\n
 [mdash] `non_blocking() == false`.\n
 [mdash] `enable_connection_aborted() == false`.\n
@@ -187,7 +187,7 @@ invocation of the completion handlers for these operations, is unspecified.
 [commentary [UNPV1] recommends setting `SO_REUSEADDR` by default in all TCP
 servers, although there are some security implications in doing so.]
 
-  basic_socket_acceptor(io_service& ios, const protocol_type& protocol,
+  basic_socket_acceptor(io_context& ctx, const protocol_type& protocol,
                         const native_handle_type& native_acceptor);
 
 [function_requires `native_acceptor` is a native handle to an open acceptor.]
@@ -196,7 +196,7 @@ servers, although there are some security implications in doing so.]
 by calling `assign(protocol, native_acceptor)`.]
 
 [function_postconditions\n
-[mdash] `get_executor() == ios.get_executor()`.\n
+[mdash] `get_executor() == ctx.get_executor()`.\n
 [mdash] `is_open() == true`.\n
 [mdash] `non_blocking() == false`.\n
 [mdash] `enable_connection_aborted() == false`.\n
@@ -552,8 +552,8 @@ fail with `errc::connection_aborted`.]
 
 [function_returns `accept(get_executor().context(), ec)`.]
 
-  socket_type accept(io_service& ios);
-  socket_type accept(io_service& ios, error_code& ec);
+  socket_type accept(io_context& ctx);
+  socket_type accept(io_context& ctx, error_code& ec);
 
 [function_effects Extracts a socket from the queue of pending connections of
 the acceptor, as if by __POSIX__:
@@ -561,8 +561,8 @@ the acceptor, as if by __POSIX__:
   native_handle_type h = __accept__(native_handle(), nullptr, 0);
 ``]
 
-[function_returns If `h` is an open native socket, `socket_type(ios, s)`;
-otherwise `socket_type(ios)`.]
+[function_returns If `h` is an open native socket, `socket_type(ctx, s)`;
+otherwise `socket_type(ctx)`.]
 
   template<class CompletionToken>
     __ifr__ async_accept(CompletionToken&& token);
@@ -571,7 +571,7 @@ otherwise `socket_type(ios)`.]
 forward<CompletionToken>(token))`.]
 
   template<class CompletionToken>
-    __ifr__ async_accept(io_service& ios, CompletionToken&& token);
+    __ifr__ async_accept(io_context& ctx, CompletionToken&& token);
 
 [function_completion_signature `void(error_code ec, socket_type s)`.]
 
@@ -580,15 +580,15 @@ the queue of pending connections of the acceptor, as if by __POSIX__:
 ``
   native_handle_type h = __accept__(native_handle(), nullptr, 0);
 ``
-On success, `s` is `socket_type(ios, h). Otherwise, `s` is `socket_type(ios)`.]
+On success, `s` is `socket_type(ctx, h). Otherwise, `s` is `socket_type(ctx)`.]
 
   socket_type accept(endpoint_type& endpoint);
   socket_type accept(endpoint_type& endpoint, error_code& ec);
 
 [function_returns `accept(get_executor().context(), endpoint, ec)`.]
 
-  socket_type accept(io_service& ios, endpoint_type& endpoint);
-  socket_type accept(io_service& ios, endpoint_type& endpoint,
+  socket_type accept(io_context& ctx, endpoint_type& endpoint);
+  socket_type accept(io_context& ctx, endpoint_type& endpoint,
                      error_code& ec);
 
 [function_effects Extracts a socket from the queue of pending connections of
@@ -602,8 +602,8 @@ the acceptor, as if by __POSIX__:
     endpoint.resize(endpoint_len);
 ``]
 
-[function_returns If `h` is an open native socket, `socket_type(ios, s)`;
-otherwise `socket_type(ios)`.]
+[function_returns If `h` is an open native socket, `socket_type(ctx, s)`;
+otherwise `socket_type(ctx)`.]
 
   template<class CompletionToken>
     __ifr__ async_accept(endpoint_type& endpoint,
@@ -613,7 +613,7 @@ otherwise `socket_type(ios)`.]
 forward<CompletionToken>(token))`.]
 
   template<class CompletionToken>
-    __ifr__ async_accept(io_service& ios, endpoint_type& endpoint,
+    __ifr__ async_accept(io_context& ctx, endpoint_type& endpoint,
                          CompletionToken&& token);
 
 [function_completion_signature `void(error_code ec, socket_type s)`.]
@@ -628,7 +628,7 @@ the queue of pending connections of the acceptor, as if by __POSIX__:
   if (h >= 0)
     endpoint.resize(endpoint_len);
 ``
-On success, `s` is `socket_type(ios, h). Otherwise, `s` is `socket_type(ios)`.]
+On success, `s` is `socket_type(ctx, h). Otherwise, `s` is `socket_type(ctx)`.]
 
   void wait(wait_type w);
   void wait(wait_type w, error_code& ec);

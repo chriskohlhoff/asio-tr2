@@ -11,7 +11,7 @@
     public:
       // types:
 
-      typedef io_service::executor_type executor_type;
+      typedef io_context::executor_type executor_type;
       typedef Clock clock_type;
       typedef typename clock_type::duration duration;
       typedef typename clock_type::time_point time_point;
@@ -19,9 +19,9 @@
 
       // construct / copy / destroy:
 
-      explicit basic_waitable_timer(io_service& ios);
-      basic_waitable_timer(io_service& ios, const time_point& t);
-      basic_waitable_timer(io_service& ios, const duration& d);
+      explicit basic_waitable_timer(io_context& ctx);
+      basic_waitable_timer(io_context& ctx, const time_point& t);
+      basic_waitable_timer(io_context& ctx, const duration& d);
       basic_waitable_timer(const basic_waitable_timer&) = delete;
       basic_waitable_timer(basic_waitable_timer&& rhs) noexcept;
 
@@ -55,21 +55,21 @@
 [section [^basic_waitable_timer] constructors]
 [xrefid timer.waitable.cons]
 
-  explicit basic_waitable_timer(io_service& ios);
+  explicit basic_waitable_timer(io_context& ctx);
 
-[function_effects Equivalent to `basic_waitable_timer(ios, time_point())`.]
+[function_effects Equivalent to `basic_waitable_timer(ctx, time_point())`.]
 
-  basic_waitable_timer(io_service& ios, const time_point& t);
+  basic_waitable_timer(io_context& ctx, const time_point& t);
 
 [function_postconditions\n
-[mdash] `get_executor() == ios.get_executor()`.\n
+[mdash] `get_executor() == ctx.get_executor()`.\n
 [mdash] `expiry() == t`.]
 
-  basic_waitable_timer(io_service& ios, const duration& d);
+  basic_waitable_timer(io_context& ctx, const duration& d);
 
 [function_effects Sets the expiry time as if by calling `expires_after(d)`.]
 
-[function_postconditions `get_executor() == ios.get_executor()`.]
+[function_postconditions `get_executor() == ctx.get_executor()`.]
 
   basic_waitable_timer(basic_waitable_timer&& rhs) noexcept;
 
