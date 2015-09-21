@@ -7,7 +7,7 @@
 
     class execution_context;
     template<class T, class Executor>
-      class executor_wrapper;
+      class executor_binder;
     template<class Executor>
       class executor_work_guard;
     class system_executor;

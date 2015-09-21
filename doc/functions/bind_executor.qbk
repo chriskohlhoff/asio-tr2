@@ -1,0 +1,22 @@
+[section:bind_executor Function [^bind_executor]]
+[xrefid async.bind.executor]
+
+  template<class Executor, class T>
+    executor_binder<decay_t<T>, Executor>
+      bind_executor(const Executor& ex, T&& t);
+
+[function_returns `executor_binder<decay_t<T>, Executor>(forward<T>(t), ex)`.]
+
+[function_remarks This function shall not participate in overload resolution
+unless `is_executor<Executor>::value` is `true`.]
+
+  template<class ExecutionContext, class CompletionToken>
+    executor_binder<decay_t<T>, typename ExecutionContext::executor_type>
+      bind_executor(ExecutionContext& ctx, T&& t);
+
+[function_returns `bind_executor(ctx.get_executor(), forward<T>(t))`.]
+
+[function_remarks This function shall not participate in overload resolution
+unless `is_convertible<ExecutionContext&, execution_context&>::value` is `true`.]
+
+[endsect]

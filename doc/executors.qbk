@@ -685,7 +685,7 @@ associated with the object.
     void do_read()
     {
       socket_.async_read_some(in_buffer_,
-        wrap(strand_, [this](error_code ec, size_t n)
+        bind_executor(strand_, [this](error_code ec, size_t n)
           {
             // ... process input data ...
             if (!ec) do_read();
@@ -696,27 +696,27 @@ associated with the object.
     {
       // ... generate output data ...
       async_write(socket_, out_buffer_,
-        wrap(strand_, [this](error_code ec, size_t n)
+        bind_executor(strand_, [this](error_code ec, size_t n)
           {
             if (!ec) do_write();
           }));
     }
   };
 
-The `wrap` function is used to associated an executor with an object. In this
-example, we used `wrap` to associated the strand with each of the lambdas. The
-`wrap` function works with any executor or execution context. For example, here
-we associate a thread pool with a lamdba:
+The `bind_executor` function is used to associate an executor with an object.
+In this example, we used `bind_executor` to associate the strand with each of
+the lambdas. The `bind_executor` function works with any executor or execution
+context. For example, here we associate a thread pool with a lamdba:
 
   async_getline(std::cin,
-      wrap(pool, [](std::string line)
+      bind_executor(pool, [](std::string line)
         {
           std::cout << "Line: " << line << "\n";
         }));
 
-Rather than using the `wrap` function, the associated executor may be manually
-specified by providing a nested `executor_type` typedef and `get_executor()`
-member function.
+Rather than using the `bind_executor` function, the associated executor may be
+manually specified by providing a nested `executor_type` typedef and
+`get_executor()` member function.
 
   class line_printer
   {
@@ -808,7 +808,7 @@ reuse the associated executor of the final handler.
 
     // Use the associated executor for each operation in the composition.
     async_getline(is,
-        wrap(ex, [&is, lines=std::move(init), handler=std::move(handler)]
+        bind_executor(ex, [&is, lines=std::move(init), handler=std::move(handler)]
           (std::string line) mutable
           {
             if (line.empty())
@@ -880,7 +880,7 @@ So, when we construct and run a pipeline like this:
   // ...
 
   thread_pool pool;
-  auto f = pipeline(reader, filter, wrap(pool, upper), writer);
+  auto f = pipeline(reader, filter, bind_executor(pool, upper), writer);
   f.wait();
 
 we are specifying that the the `upper` stage should run on the thread pool,
@@ -1120,12 +1120,12 @@ The priority scheduler's executors can then be used like any other:
   ]
   [
     [[^executor]]
-    [Class template [^executor_wrapper]]
+    [Class template [^executor_binder]]
     [Associates an executor with an object.]
   ]
   [
     [[^executor]]
-    [Function [^wrap]]
+    [Function [^bind_executor]]
     [Associate an executor with an object.]
   ]
   [
@@ -1939,8 +1939,8 @@ be added to the TS.]
 [include:classes classes/uses_executor.qbk]
 [include:classes classes/associated_executor.qbk]
 [include:functions functions/get_associated_executor.qbk]
-[include:classes classes/executor_wrapper.qbk]
-[include:functions functions/wrap.qbk]
+[include:classes classes/executor_binder.qbk]
+[include:functions functions/bind_executor.qbk]
 [include:classes classes/executor_work_guard.qbk]
 [include:functions functions/make_work_guard.qbk]
 [include:classes classes/system_executor.qbk]

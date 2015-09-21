@@ -1,0 +1,250 @@
+[section:executor_binder Class template [^executor_binder]]
+[xrefid async.exec.binder]
+
+`executor_binder<T, Executor>` binds an executor of type `Executor` satisfying
+[link requirements.executor Executor requirements] to an object or function of
+type `T`.
+
+  namespace std {
+  namespace experimental {
+  __begin_versioned_ns__
+
+    template<class T, class Executor>
+    class executor_binder
+    {
+    public:
+      // types:
+
+      typedef T target_type;
+      typedef Executor executor_type;
+
+      // construct / copy / destroy:
+
+      executor_binder(T t, const Executor& ex);
+      executor_binder(const executor_binder& other) = default;
+      executor_binder(executor_binder&& other) = default;
+      template<class U, class OtherExecutor>
+        executor_binder(const executor_binder<U, OtherExecutor>& other);
+      template<class U, class OtherExecutor>
+        executor_binder(executor_binder<U, OtherExecutor>&& other);
+      template<class U, class OtherExecutor>
+        executor_binder(executor_arg_t, const Executor& ex,
+          const executor_binder<U, OtherExecutor>& other);
+      template<class U, class OtherExecutor>
+        executor_binder(executor_arg_t, const Executor& ex,
+          executor_binder<U, OtherExecutor>&& other);
+
+      ~executor_binder();
+
+      // executor binder access:
+
+      T& get() noexcept;
+      const T& get() const noexcept;
+      executor_type get_executor() const noexcept;
+
+      // executor binder invocation:
+
+      template<class... Args>
+        result_of_t<T&(Args&&...)> operator()(Args&&... args);
+      template<class... Args>
+        result_of_t<const T&(Args&&...)> operator()(Args&&... args) const;
+
+    private:
+      Executor ex_; // ``['exposition only]``
+      T target_; // ``['exposition only]``
+    };
+
+    template<class T, class Executor, class Signature>
+    struct completion_handler_type<executor_binder<T, Executor>, Signature>
+    {
+      typedef executor_binder<completion_handler_type_t<T, Signature>, Executor> type;
+    };
+
+    template<class T, class Executor>
+      class async_result<executor_binder<T, Executor>>;
+
+    template<class T, class Executor, class ProtoAllocator>
+      struct associated_allocator<executor_binder<T, Executor>, ProtoAllocator>;
+
+    template<class T, class Executor, class Executor1>
+      struct associated_executor<executor_binder<T, Executor>, Executor1>;
+
+  __end_versioned_ns__
+  } // namespace experimental
+  } // namespace std
+
+[section [^executor_binder] constructors]
+[xrefid async.exec.binder.cons]
+
+  executor_binder(T t, const Executor& ex);
+
+[function_effects Constructs an object of type `executor_binder<T, Executor>`.
+Initializes `ex_` with the value `ex`. Initializes `target_` by performing
+uses-executor construction, using the constructor argument `std::move(t)` and
+the executor `ex_`.]
+
+  template<class U, class OtherExecutor>
+    executor_binder(const executor_binder<U, OtherExecutor>& other);
+
+[function_requires If `U` is not convertible to `T`, or if `OtherExecutor` is
+not convertible to `Executor`, the program is ill-formed.]
+
+[function_effects Constructs an object of type `executor_binder<T, Executor>`.
+Initializes `ex_` with `other.get_executor()`. Initializes `target_` by
+performing uses-executor construction, using the constructor argument
+`other.get()` and the executor `ex_`.]
+
+  template<class U, class OtherExecutor>
+    executor_binder(executor_binder<U, OtherExecutor>&& other);
+
+[function_requires If `U` is not convertible to `T`, or if `OtherExecutor` is
+not convertible to `Executor`, the program is ill-formed.]
+
+[function_effects Constructs an object of type `executor_binder<T, Executor>`.
+Initializes `ex_` with `other.get_executor()`. Initializes `target_` by
+performing uses-executor construction, using the constructor argument
+`std::move(other.get())` and the executor `ex_`.]
+
+  template<class U, class OtherExecutor>
+    executor_binder(executor_arg_t, const Executor& ex,
+      const executor_binder<U, OtherExecutor>& other);
+
+[function_requires If `U` is not convertible to `T` the program is ill-formed.]
+
+[function_effects Constructs an object of type `executor_binder<T, Executor>`.
+Initializes `ex_` with `ex`. Initializes `target_` by performing uses-executor
+construction, using the constructor argument `other.get()` and the executor
+`ex_`.]
+
+  template<class U, class OtherExecutor>
+    executor_binder(executor_arg_t, const Executor& ex,
+      executor_binder<U, OtherExecutor>&& other);
+
+[function_requires `U` is `T` or convertible to `T`.]
+
+[function_effects Constructs an object of type `executor_binder<T, Executor>`.
+Initializes `ex_` with `ex`. Initializes `target_` by performing uses-executor
+construction, using the constructor argument `std::move(other.get())` and
+the executor `ex_`.]
+
+[endsect]
+
+[section [^executor_binder] access]
+[xrefid async.exec.binder.access]
+
+  T& get() noexcept;
+  const T& get() const noexcept;
+
+[function_returns `target_`.]
+
+  executor_type get_executor() const noexcept;
+
+[function_returns `executor_`.]
+
+[endsect]
+
+[section [^executor_binder] invocation]
+[xrefid async.exec.binder.invocation]
+
+  template<class... Args>
+    result_of_t<T&(Args&&...)> operator()(Args&&... args);
+  template<class... Args>
+    result_of_t<const T&(Args&&...)> operator()(Args&&... args) const;
+
+[function_returns [^['INVOKE]]`(get(), forward<Args>(args)__dotdotdot__)`
+(C++ Std, \[func.require\]).]
+
+[endsect]
+
+[section Class template partial specialization [^async_result]]
+[xrefid async.exec.binder.async.result]
+
+  namespace std {
+  namespace experimental {
+  __begin_versioned_ns__
+
+    template<class T, class Executor>
+    class async_result<executor_binder<T, Executor>>
+    {
+    public:
+      typedef typename async_result<T>::type type;
+
+      explicit async_result(executor_binder<T, Executor>& binder);
+      async_result(const async_result&) = delete;
+      async_result& operator=(const async_result&) = delete;
+
+      type get();
+
+    private:
+      async_result<T> target_; // ``['exposition only]``
+    };
+
+  __end_versioned_ns__
+  } // namespace experimental
+  } // namespace std
+
+  explicit async_result(executor_binder<T, Executor>& binder);
+
+[function_effects Initializes `target_` as `target_(binder.get())`.]
+
+  type get();
+
+[function_returns `target_.get()`.]
+
+[endsect]
+
+[section Class template partial specialization [^associated_allocator]]
+[xrefid async.exec.binder.assoc.alloc]
+
+  namespace std {
+  namespace experimental {
+  __begin_versioned_ns__
+
+    template<class T, class Executor, class ProtoAllocator>
+      struct associated_allocator<executor_binder<T, Executor>, ProtoAllocator>
+    {
+      typedef associated_allocator_t<T, ProtoAllocator> type;
+
+      static type get(const executor_binder<T, Executor>& b,
+                      const ProtoAllocator& a = ProtoAllocator()) noexcept;
+    };
+
+  __end_versioned_ns__
+  } // namespace experimental
+  } // namespace std
+
+  static type get(const executor_binder<T, Executor>& b,
+                  const ProtoAllocator& a = ProtoAllocator()) noexcept;
+
+[function_returns `associated_allocator<T, ProtoAllocator>::get(b.get(), a)`.]
+
+[endsect]
+
+[section Class template partial specialization [^associated_executor]]
+[xrefid async.exec.binder.assoc.exec]
+
+  namespace std {
+  namespace experimental {
+  __begin_versioned_ns__
+
+    template<class T, class Executor, class Executor1>
+      struct associated_executor<executor_binder<T, Executor>, Executor1>
+    {
+      typedef Executor type;
+
+      static type get(const executor_binder<T, Executor>& b,
+                      const Executor1& e = Executor1()) noexcept;
+    };
+
+  __end_versioned_ns__
+  } // namespace experimental
+  } // namespace std
+
+  static type get(const executor_binder<T, Executor>& b,
+                  const Executor1& e = Executor1()) noexcept;
+
+[function_returns `b.get_executor()`.]
+
+[endsect]
+
+[endsect]
