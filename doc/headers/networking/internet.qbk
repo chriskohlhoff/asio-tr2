@@ -18,7 +18,6 @@
     error_condition make_error_condition(resolver_errc e) noexcept;
 
     typedef uint16_least_t port_type;
-    typedef uint32_least_t address_v4_uint_type;
     typedef uint32_least_t scope_id_type;
 
     struct v4_mapped_t {};
@@ -62,7 +61,7 @@
 
     // ``[link classes.ip__address_v4__creation address_v4 creation]``:
     constexpr address_v4 make_address_v4(const address_v4::bytes_type&);
-    constexpr address_v4 make_address_v4(address_v4_uint_type);
+    constexpr address_v4 make_address_v4(address_v4::uint_type);
     constexpr address_v4 make_address_v4(v4_mapped_t, const address_v6&);
     address_v4 make_address_v4(const char*);
     address_v4 make_address_v4(const char*, error_code&) noexcept;
