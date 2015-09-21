@@ -38,20 +38,20 @@
     bool operator>=(const address&, const address&) noexcept;
 
     // ``[link classes.ip__address_v4__comparisons address_v4 comparisons]``:
-    bool operator==(const address_v4&, const address_v4&) noexcept;
-    bool operator!=(const address_v4&, const address_v4&) noexcept;
-    bool operator< (const address_v4&, const address_v4&) noexcept;
-    bool operator> (const address_v4&, const address_v4&) noexcept;
-    bool operator<=(const address_v4&, const address_v4&) noexcept;
-    bool operator>=(const address_v4&, const address_v4&) noexcept;
+    constexpr bool operator==(const address_v4&, const address_v4&) noexcept;
+    constexpr bool operator!=(const address_v4&, const address_v4&) noexcept;
+    constexpr bool operator< (const address_v4&, const address_v4&) noexcept;
+    constexpr bool operator> (const address_v4&, const address_v4&) noexcept;
+    constexpr bool operator<=(const address_v4&, const address_v4&) noexcept;
+    constexpr bool operator>=(const address_v4&, const address_v4&) noexcept;
 
     // ``[link classes.ip__address_v6__comparisons address_v6 comparisons]``:
-    bool operator==(const address_v6&, const address_v6&) noexcept;
-    bool operator!=(const address_v6&, const address_v6&) noexcept;
-    bool operator< (const address_v6&, const address_v6&) noexcept;
-    bool operator> (const address_v6&, const address_v6&) noexcept;
-    bool operator<=(const address_v6&, const address_v6&) noexcept;
-    bool operator>=(const address_v6&, const address_v6&) noexcept;
+    constexpr bool operator==(const address_v6&, const address_v6&) noexcept;
+    constexpr bool operator!=(const address_v6&, const address_v6&) noexcept;
+    constexpr bool operator< (const address_v6&, const address_v6&) noexcept;
+    constexpr bool operator> (const address_v6&, const address_v6&) noexcept;
+    constexpr bool operator<=(const address_v6&, const address_v6&) noexcept;
+    constexpr bool operator>=(const address_v6&, const address_v6&) noexcept;
 
     // ``[link classes.ip__address__creation address creation]``:
     address make_address(const char*);
