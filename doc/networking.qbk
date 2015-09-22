@@ -612,6 +612,10 @@ are used to express type requirements, as listed in the table below.
     [[link requirements.async_write_stream buffer-oriented asynchronous write stream]]
   ]
   [
+    [`Clock`]
+    [C++Std, \[time.clock.req\]]
+  ]
+  [
     [`CompletionToken`]
     [[link requirements.completion_token completion token]]
   ]
