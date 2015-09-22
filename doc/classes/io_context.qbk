@@ -11,6 +11,7 @@
       // types:
 
       class ``[link classes.io_context__executor_type executor_type]``;
+      typedef ``['implementation defined]`` count_type;
 
       // construct / copy / destroy:
 
@@ -23,21 +24,21 @@
 
       executor_type get_executor() noexcept;
 
-      size_t run();
+      count_type run();
       template<class Rep, class Period>
-        size_t run_for(const chrono::duration<Rep, Period>& rel_time);
+        count_type run_for(const chrono::duration<Rep, Period>& rel_time);
       template<class Clock, class Duration>
-        size_t run_until(const chrono::time_point<Clock, Duration>& abs_time);
+        count_type run_until(const chrono::time_point<Clock, Duration>& abs_time);
 
-      size_t run_one();
+      count_type run_one();
       template<class Rep, class Period>
-        size_t run_one_for(const chrono::duration<Rep, Period>& rel_time);
+        count_type run_one_for(const chrono::duration<Rep, Period>& rel_time);
       template<class Clock, class Duration>
-        size_t run_one_until(const chrono::time_point<Clock, Duration>& abs_time);
+        count_type run_one_until(const chrono::time_point<Clock, Duration>& abs_time);
 
-      size_t poll();
+      count_type poll();
 
-      size_t poll_one();
+      count_type poll_one();
 
       void stop();
 
@@ -52,6 +53,9 @@
 
 The class `io_context` satisfies the [link requirements.execution_context
 ExecutionContext type requirements].
+
+`count_type` is an implementation-defined unsigned integral type of at least 32
+bits.
 
 The `io_context` functions `run`, `run_for`, `run_until`, `run_one`,
 `run_one_for`, `run_one_until`, `poll`, or `poll_one` must be called for the
@@ -102,7 +106,7 @@ operations and execute function objects.]
 [function_returns An executor that may be used for submitting function objects
 to the `io_context`.]
 
-  size_t run();
+  count_type run();
 
 [function_requires Must not be called from a thread that is currently calling
 one of `run`, `run_for`, `run_until`, `run_one`, `run_one_for`,
@@ -110,16 +114,16 @@ one of `run`, `run_for`, `run_until`, `run_one`, `run_one_for`,
 
 [function_effects Equivalent to:
 ``
-  size_t n = 0;
+  count_type n = 0;
   while (run_one())
-    if (n != numeric_limits<size_t>::max())
+    if (n != numeric_limits<count_type>::max())
       ++n;
 ``]
 
 [function_returns `n`.]
 
   template<class Rep, class Period>
-    size_t run_for(const chrono::duration<Rep, Period>& rel_time);
+    count_type run_for(const chrono::duration<Rep, Period>& rel_time);
 
 [function_effects Equivalent to:
 ``
@@ -127,19 +131,19 @@ one of `run`, `run_for`, `run_until`, `run_one`, `run_one_for`,
 ``]
 
   template<class Clock, class Duration>
-    size_t run_until(const chrono::time_point<Clock, Duration>& abs_time);
+    count_type run_until(const chrono::time_point<Clock, Duration>& abs_time);
 
 [function_effects Equivalent to:
 ``
-  size_t n = 0;
+  count_type n = 0;
   while (run_one_until(abs_time))
-    if (n != numeric_limits<size_t>::max())
+    if (n != numeric_limits<count_type>::max())
       ++n;
 ``]
 
 [function_returns `n`.]
 
-  size_t run_one();
+  count_type run_one();
 
 [function_requires Must not be called from a thread that is currently calling
 one of `run`, `run_for`, `run_until`, `run_one`, `run_one_for`,
@@ -160,7 +164,7 @@ nested calls to the `io_context` executor's `dispatch` member function. These
 do not count towards the return value.]
 
   template<class Rep, class Period>
-    size_t run_one_for(const chrono::duration<Rep, Period>& rel_time);
+    count_type run_one_for(const chrono::duration<Rep, Period>& rel_time);
 
 [function_effects Equivalent to:
 ``
@@ -168,7 +172,7 @@ do not count towards the return value.]
 ``]
 
   template<class Clock, class Duration>
-    size_t run_one_until(const chrono::time_point<Clock, Duration>& abs_time);
+    count_type run_one_until(const chrono::time_point<Clock, Duration>& abs_time);
 
 [function_effects If the `io_context` object has no outstanding work, performs
 `stop()`. Otherwise, blocks while the io_context has outstanding work, or until
@@ -186,19 +190,19 @@ if the function object had returned normally.]
 nested calls to the `io_context` executor's `dispatch` member function. These
 do not count towards the return value.]
 
-  size_t poll();
+  count_type poll();
 
 [function_effects Equivalent to:
 ``
-  size_t n = 0;
+  count_type n = 0;
   while (poll_one())
-    if (n != numeric_limits<size_t>::max())
+    if (n != numeric_limits<count_type>::max())
       ++n;
 ``]
 
 [function_returns `n`.]
 
-  size_t poll_one();
+  count_type poll_one();
 
 [function_effects If the `io_context` object has no outstanding work, performs
 `stop()`. Otherwise, if there is a function object ready for immediate
