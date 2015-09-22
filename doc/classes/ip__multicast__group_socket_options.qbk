@@ -87,8 +87,8 @@ __POSIX__?]
   explicit ``['[*C]]``(const address& multicast_group) noexcept;
 
 [function_effects If `multicast_group.is_v6()` is `true`, calls
-[^['[*C]]]`(address_cast<address_v6>(multicast_group))`; otherwise, calls
-[^['[*C]]]`(address_cast<address_v4>(multicast_group))`.]
+[^['[*C]]]`(multicast_group.to_v6())`; otherwise, calls
+[^['[*C]]]`(multicast_group.to_v4())`.]
 
   explicit ``['[*C]]``(const address_v4& multicast_group,
              const address_v4& network_interface = address_v4::any()) noexcept;
