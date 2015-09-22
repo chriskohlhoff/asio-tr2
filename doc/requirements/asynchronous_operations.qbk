@@ -165,8 +165,8 @@ operation have been realized.
 
 The implementation of an asynchronous operation shall maintain an object
 `work2` of type `executor_work_guard<Executor2>`, initialized with `work2(ex2)`
-and with `work2.owns_work() == true`, until `handler` has been submitted for
-execution.
+and with `work2.owns_work() == true`, until `completion_handler` has been
+submitted for execution.
 
 [endsect]
 
@@ -174,8 +174,8 @@ execution.
 [xrefid async.reqmts.async.alloc]
 
 Asynchronous operations may allocate memory. [inline_note Such as a data
-structure to store copies of the `handler` object and the initiating function's
-arguments.]
+structure to store copies of the `completion_handler` object and the initiating
+function's arguments.]
 
 Let `Alloc1` be a type, satisfying the [link requirements.proto_allocator
 `ProtoAllocator`] requirements, that represents the asynchronous operation's
@@ -207,8 +207,8 @@ Std, \[res.on.data.races\]).]
 [xrefid async.reqmts.async.completion]
 
 When an asynchronous operation completes, the implementation constructs a
-zero-argument function object `f` to invoke `handler` with the results of the
-operation.
+zero-argument function object `f` to invoke `completion_handler` with the
+results of the operation.
 
 If an asynchonous operation completes immediately (that is, within the thread
 of execution calling the initiating function, and before the initiating
