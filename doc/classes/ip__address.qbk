@@ -42,12 +42,12 @@ no valid address.
     };
 
     // address comparisons:
-    bool operator==(const address& a, const address& b) noexcept;
-    bool operator!=(const address& a, const address& b) noexcept;
-    bool operator< (const address& a, const address& b) noexcept;
-    bool operator> (const address& a, const address& b) noexcept;
-    bool operator<=(const address& a, const address& b) noexcept;
-    bool operator>=(const address& a, const address& b) noexcept;
+    constexpr bool operator==(const address& a, const address& b) noexcept;
+    constexpr bool operator!=(const address& a, const address& b) noexcept;
+    constexpr bool operator< (const address& a, const address& b) noexcept;
+    constexpr bool operator> (const address& a, const address& b) noexcept;
+    constexpr bool operator<=(const address& a, const address& b) noexcept;
+    constexpr bool operator>=(const address& a, const address& b) noexcept;
 
     // address creation:
     address make_address(const char* str);
@@ -168,18 +168,18 @@ returns `v6_.to_string(a)`.]
 [section:ip__address__comparisons [^ip::address] comparisons]
 [xrefid internet.address.comparisons]
 
-  bool operator==(const address& a, const address& b) noexcept;
+  constexpr bool operator==(const address& a, const address& b) noexcept;
 
 [function_returns [br]
  [mdash] if `a.is_v4() != b.is_v4()`, `false`;[br]
  [mdash] if `a.is_v4()`, the result of `a.v4_ == b.v4_`;[br]
  [mdash] otherwise, the result of `a.v6_ == b.v6_`.]
 
-  bool operator!=(const address& a, const address& b) noexcept;
+  constexpr bool operator!=(const address& a, const address& b) noexcept;
 
 [function_returns `!(a == b)`.]
 
-  bool operator< (const address& a, const address& b) noexcept;
+  constexpr bool operator< (const address& a, const address& b) noexcept;
 
 [function_returns [br]
  [mdash] if `a.is_v4() && !b.is_v4()`, `true`;[br]
@@ -187,15 +187,15 @@ returns `v6_.to_string(a)`.]
  [mdash] if `a.is_v4()`, the result of `a.v4_ < b.v4_`;[br]
  [mdash] otherwise, the result of `a.v6_ < b.v6_`.]
 
-  bool operator> (const address& a, const address& b) noexcept;
+  constexpr bool operator> (const address& a, const address& b) noexcept;
 
 [function_returns `b < a`.]
 
-  bool operator<=(const address& a, const address& b) noexcept;
+  constexpr bool operator<=(const address& a, const address& b) noexcept;
   
 [function_returns `!(b < a)`.]
 
-  bool operator>=(const address& a, const address& b) noexcept;
+  constexpr bool operator>=(const address& a, const address& b) noexcept;
 
 [function_returns `!(a < b)`.]
 
