@@ -57,6 +57,8 @@
     constexpr address_v4 make_address_v4(v4_mapped_t, const address_v6& a);
     address_v4 make_address_v4(const char* str);
     address_v4 make_address_v4(const char* str, error_code& ec) noexcept;
+    address_v4 make_address_v4(const string& str);
+    address_v4 make_address_v4(const string& str, error_code& ec) noexcept;
     address_v4 make_address_v4(string_view str);
     address_v4 make_address_v4(string_view str, error_code& ec) noexcept;
 
@@ -264,6 +266,8 @@ address, as if computed by the following method:
 
   address_v4 make_address_v4(const char* str);
   address_v4 make_address_v4(const char* str, error_code& ec) noexcept;
+  address_v4 make_address_v4(const string& str);
+  address_v4 make_address_v4(const string& str, error_code& ec) noexcept;
   address_v4 make_address_v4(string_view str);
   address_v4 make_address_v4(string_view str, error_code& ec) noexcept;
 

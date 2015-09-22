@@ -47,6 +47,8 @@ no valid address.
     // address creation:
     address make_address(const char* str);
     address make_address(const char* str, error_code& ec) noexcept;
+    address make_address(const string& str);
+    address make_address(const string& str, error_code& ec) noexcept;
     address make_address(string_view str);
     address make_address(string_view str, error_code& ec) noexcept;
 
@@ -176,6 +178,8 @@ returns `v6_.to_string(a)`.]
 
   address make_address(const char* str);
   address make_address(const char* str, error_code& ec) noexcept;
+  address make_address(const string& str);
+  address make_address(const string& str, error_code& ec) noexcept;
   address make_address(string_view str);
   address make_address(string_view str, error_code& ec) noexcept;
 

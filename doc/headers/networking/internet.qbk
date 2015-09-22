@@ -56,6 +56,8 @@
     // ``[link classes.ip__address__creation address creation]``:
     address make_address(const char*);
     address make_address(const char*, error_code&) noexcept;
+    address make_address(const string&);
+    address make_address(const string&, error_code&) noexcept;
     address make_address(string_view);
     address make_address(string_view, error_code&) noexcept;
 
@@ -65,6 +67,8 @@
     constexpr address_v4 make_address_v4(v4_mapped_t, const address_v6&);
     address_v4 make_address_v4(const char*);
     address_v4 make_address_v4(const char*, error_code&) noexcept;
+    address_v4 make_address_v4(const string&);
+    address_v4 make_address_v4(const string&, error_code&) noexcept;
     address_v4 make_address_v4(string_view);
     address_v4 make_address_v4(string_view, error_code&) noexcept;
 
@@ -74,6 +78,8 @@
     constexpr address_v6 make_address_v6(v4_mapped_t, const address_v4&) noexcept;
     address_v6 make_address_v6(const char*);
     address_v6 make_address_v6(const char*, error_code&) noexcept;
+    address_v6 make_address_v6(const string&);
+    address_v6 make_address_v6(const string&, error_code&) noexcept;
     address_v6 make_address_v6(string_view);
     address_v6 make_address_v6(string_view, error_code&) noexcept;
 
@@ -125,6 +131,8 @@
     network_v4 make_network_v4(const address_v4&, const address_v4&);
     network_v4 make_network_v4(const char*);
     network_v4 make_network_v4(const char*, error_code&) noexcept;
+    network_v4 make_network_v4(const string&);
+    network_v4 make_network_v4(const string&, error_code&) noexcept;
     network_v4 make_network_v4(string_view);
     network_v4 make_network_v4(string_view, error_code&) noexcept;
 
@@ -132,6 +140,8 @@
     network_v6 make_network_v6(const address_v6&, unsigned);
     network_v6 make_network_v6(const char*);
     network_v6 make_network_v6(const char*, error_code&) noexcept;
+    network_v6 make_network_v6(const string&);
+    network_v6 make_network_v6(const string&, error_code&) noexcept;
     network_v6 make_network_v6(string_view);
     network_v6 make_network_v6(string_view, error_code&) noexcept;
 
