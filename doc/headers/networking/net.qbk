@@ -1,4 +1,4 @@
-[section Header [^<experimental/networking>] synopsis]
+[section Header [^<experimental/net>] synopsis]
 [xrefid convenience.hdr.synop]
 
   #include <experimental/executor>

@@ -553,7 +553,7 @@ be added to the TS.]
   [[Clause][Header(s)]]
   [
     [[link network.convenience Convenience header]]
-    [`<experimental/networking>`]
+    [`<experimental/net>`]
   ]
   [
     [[link network.forward Forward declarations]]
@@ -693,7 +693,7 @@ are used to express type requirements, as listed in the table below.
 
 [section:convenience Convenience header]
 [xrefid convenience.hdr]
-[include:headers headers/networking/networking.qbk]
+[include:headers headers/networking/net.qbk]
 [endsect]
 
 [section:forward Forward declarations]
