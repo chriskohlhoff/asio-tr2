@@ -44,185 +44,52 @@ to elements of the sequence (C++ Std, [string.require]).
 ``]
 
   template<class T, size_t N>
-    mutable_buffers_1 buffer(T (&arr)[N]) noexcept;
-
-[function_returns A `mutable_buffers_1` value equivalent to:
-``
-  mutable_buffers_1(
-    static_cast<void*>(arr),
-    N * sizeof(T));
-``]
-
+    mutable_buffers_1 buffer(T (&data)[N]) noexcept;
   template<class T, size_t N>
-    mutable_buffers_1 buffer(T (&arr)[N], size_t n) noexcept;
-
-[function_returns A `mutable_buffers_1` value equivalent to:
-``
-  mutable_buffers_1(
-    static_cast<void*>(arr),
-    min(N * sizeof(T), n));
-``]
-
+    const_buffers_1 buffer(const T (&data)[N]) noexcept;
   template<class T, size_t N>
-    const_buffers_1 buffer(const T (&arr)[N]) noexcept;
-
-[function_returns A `const_buffers_1` value equivalent to:
-``
-  const_buffers_1(
-    static_cast<const void*>(arr),
-    N * sizeof(T));
-``]
-
+    mutable_buffers_1 buffer(array<T, N>& data) noexcept;
   template<class T, size_t N>
-    const_buffers_1 buffer(const T (&arr)[N], size_t n) noexcept;
-
-[function_returns A `const_buffers_1` value equivalent to:
-``
-  const_buffers_1(
-    static_cast<const void*>(arr),
-    min(N * sizeof(T), n));
-``]
-
+    const_buffers_1 buffer(array<const T, N>& data) noexcept;
   template<class T, size_t N>
-    mutable_buffers_1 buffer(array<T, N>& arr) noexcept;
-
-[function_returns A `mutable_buffers_1` value equivalent to:
-``
-  mutable_buffers_1(
-    arr.data(),
-    arr.size() * sizeof(T));
-``]
-
-  template<class T, size_t N>
-    mutable_buffers_1 buffer(array<T, N>& arr, size_t n) noexcept;
-
-[function_returns A `mutable_buffers_1` value equivalent to:
-``
-  mutable_buffers_1(
-    arr.data(),
-    min(arr.size() * sizeof(T), n));
-``]
-
-  template<class T, size_t N>
-    const_buffers_1 buffer(array<const T, N>& arr) noexcept;
-
-[function_returns A `const_buffers_1` value equivalent to:
-``
-  const_buffers_1(
-    arr.data(),
-    arr.size() * sizeof(T));
-``]
-
-  template<class T, size_t N>
-    const_buffers_1 buffer(array<const T, N>& arr, size_t n) noexcept;
-
-[function_returns A `const_buffers_1` value equivalent to:
-``
-  const_buffers_1(
-    arr.data(),
-    min(arr.size() * sizeof(T), n));
-``]
-
-  template<class T, size_t N>
-    const_buffers_1 buffer(const array<T, N>& arr) noexcept;
-
-[function_returns A `const_buffers_1` value equivalent to:
-``
-  const_buffers_1(
-    arr.data(),
-    arr.size() * sizeof(T));
-``]
-
-  template<class T, size_t N>
-    const_buffers_1 buffer(const array<T, N>& arr, size_t n) noexcept;
-
-[function_returns A `const_buffers_1` value equivalent to:
-``
-  const_buffers_1(
-    arr.data(),
-    min(arr.size() * sizeof(T), n));
-``]
-
+    const_buffers_1 buffer(const array<T, N>& data) noexcept;
   template<class T, class Allocator>
-    mutable_buffers_1 buffer(vector<T, Allocator>& vec) noexcept;
-
-[function_returns A `mutable_buffers_1` value equivalent to:
-``
-  mutable_buffers_1(
-    !vec.empty() ? &vec[0] : nullptr,
-    vec.size() * sizeof(T));
-``]
-
+    mutable_buffers_1 buffer(vector<T, Allocator>& data) noexcept;
   template<class T, class Allocator>
-    mutable_buffers_1 buffer(vector<T, Allocator>& vec, size_t n) noexcept;
-
-[function_returns A `mutable_buffers_1` value equivalent to:
-``
-  mutable_buffers_1(
-    !vec.empty() ? &vec[0] : nullptr,
-    min(vec.size() * sizeof(T), n));
-``]
-
-  template<class T, class Allocator>
-    const_buffers_1 buffer(const vector<T, Allocator>& vec) noexcept;
-
-[function_returns A `const_buffers_1` value equivalent to:
-``
-  const_buffers_1(
-    !vec.empty() ? &vec[0] : nullptr,
-    vec.size() * sizeof(T));
-``]
-
-  template<class T, class Allocator>
-    const_buffers_1 buffer(const vector<T, Allocator>& vec, size_t n) noexcept;
-
-[function_returns A `const_buffers_1` value equivalent to:
-``
-  const_buffers_1(
-    !vec.empty() ? &vec[0] : nullptr,
-    min(vec.size() * sizeof(T), n));
-``]
-
+    const_buffers_1 buffer(const vector<T, Allocator>& data) noexcept;
   template<class CharT, class Traits, class Allocator>
-    mutable_buffers_1 buffer(basic_string<CharT, Traits, Allocator>& str) noexcept;
+    mutable_buffers_1 buffer(basic_string<CharT, Traits, Allocator>& data) noexcept;
+  template<class CharT, class Traits>
+    const_buffers_1 buffer(basic_string_view<CharT, Traits> data) noexcept;
 
-[function_returns A `mutable_buffers_1` value equivalent to:
+[function_returns
 ``
-  mutable_buffers_1(
-    !str.empty() ? &str[0] : nullptr,
-    str.size() * sizeof(CharT));
+  buffer(
+    begin(data) != end(data) ? std::addressof(*begin(data)) : nullptr,
+    (end(data) - begin(data)) * sizeof(*begin(data)));
 ``]
 
+  template<class T, size_t N>
+    mutable_buffers_1 buffer(T (&data)[N], size_t n) noexcept;
+  template<class T, size_t N>
+    const_buffers_1 buffer(const T (&data)[N], size_t n) noexcept;
+  template<class T, size_t N>
+    mutable_buffers_1 buffer(array<T, N>& data, size_t n) noexcept;
+  template<class T, size_t N>
+    const_buffers_1 buffer(array<const T, N>& data, size_t n) noexcept;
+  template<class T, size_t N>
+    const_buffers_1 buffer(const array<T, N>& data, size_t n) noexcept;
+  template<class T, class Allocator>
+    mutable_buffers_1 buffer(vector<T, Allocator>& data, size_t n) noexcept;
+  template<class T, class Allocator>
+    const_buffers_1 buffer(const vector<T, Allocator>& data, size_t n) noexcept;
   template<class CharT, class Traits, class Allocator>
-    mutable_buffers_1 buffer(basic_string<CharT, Traits, Allocator>& str,
+    mutable_buffers_1 buffer(basic_string<CharT, Traits, Allocator>& data,
                              size_t n) noexcept;
-
-[function_returns A `mutable_buffers_1` value equivalent to:
-``
-  mutable_buffers_1(
-    !str.empty() ? &str[0] : nullptr,
-    min(str.size() * sizeof(CharT), n));
-``]
-
   template<class CharT, class Traits>
-    const_buffers_1 buffer(basic_string_view<CharT, Traits> str) noexcept;
-
-[function_returns A `const_buffers_1` value equivalent to:
-``
-  const_buffers_1(
-    str.data(),
-    str.size() * sizeof(CharT));
-``]
-
-  template<class CharT, class Traits>
-    const_buffers_1 buffer(basic_string_view<CharT, Traits> str,
+    const_buffers_1 buffer(basic_string_view<CharT, Traits> data,
                            size_t n) noexcept;
 
-[function_returns A `const_buffers_1` value equivalent to:
-``
-  const_buffers_1(
-    str.data(),
-    min(str.size() * sizeof(CharT), n));
-``]
+[function_returns `buffer(buffer(data), n)`.]
 
 [endsect]
