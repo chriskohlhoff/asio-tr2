@@ -182,12 +182,12 @@ Let `Alloc1` be a type, satisfying the [link requirements.proto_allocator
 default allocation strategy. [inline_note Typically `std::allocator<void>`.]
 Let `alloc1` be an object of type `Alloc1`.
 
-All handlers have an associated allocator object satisfying the [link
+A completion handler object of type `CompletionHandler` has an associated
+allocator object `alloc2` of type `Alloc2` satisfying the [link
 requirements.proto_allocator `ProtoAllocator`] requirements. The type `Alloc2`
-of the handler's associated allocator shall be determined by
-`associated_allocator_t<CompletionHandler, Alloc1>`. The handler's associated allocator
-object `alloc2` shall be obtained by performing `associated_allocator<CompletionHandler,
-Executor1>::get(handler, alloc1)`.
+is `associated_allocator_t<CompletionHandler, Alloc1>`. The object `alloc2` is
+obtained by performing `associated_allocator<CompletionHandler,
+Alloc1>::get(handler, alloc1)`.
 
 The asynchronous operations defined in this Technical Specification:
 
