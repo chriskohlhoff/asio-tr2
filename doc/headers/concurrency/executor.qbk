@@ -81,12 +81,9 @@
     template<class T>
       executor_work_guard<associated_executor_t<T>>
         make_work_guard(const T& t);
-    template<class T, class Executor>
-      executor_work_guard<associated_executor_t<T, Executor>>
-        make_work_guard(const T& t, const Executor& ex);
-    template<class T, class ExecutionContext>
-      executor_work_guard<associated_executor_t<T, typename ExecutionContext::executor_type>>
-        make_work_guard(const T& t, ExecutionContext& ctx);
+    template<class T, class U>
+      auto make_work_guard(const T& t, U&& u)
+        -> decltype(make_work_guard(get_associated_executor(t, forward<U>(u))));
 
     class ``[link classes.system_executor system_executor]``;
 
