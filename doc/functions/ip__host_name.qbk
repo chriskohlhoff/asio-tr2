@@ -13,4 +13,7 @@
 [function_returns The standard host name for the current machine, determined as
 if by __POSIX__ __gethostname__.]
 
+[function_remarks In the last two overloads, ill-formed unless
+`allocator_traits<Allocator>::value_type` is `char`.]
+
 [endsect]

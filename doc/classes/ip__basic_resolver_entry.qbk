@@ -83,11 +83,17 @@ element in the results returned by a name resolution operation.
 
 [function_returns The host name associated with the resolver entry.]
 
+[function_remarks Ill-formed unless `allocator_traits<Allocator>::value_type`
+is `char`.]
+
   template<class Allocator = allocator<char>>
     basic_string<char, char_traits<char>, Allocator>
       service_name(const Allocator& a = Allocator()) const;
 
 [function_returns The service name associated with the resolver entry.]
+
+[function_remarks Ill-formed unless `allocator_traits<Allocator>::value_type`
+is `char`.]
 
 [endsect]
 
