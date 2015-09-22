@@ -48,8 +48,7 @@
 Executor requirements]. Objects of type `io_context::executor_type` are
 associated with an `io_context`, and function objects submitted using the
 `dispatch`, `post`, or `defer` member functions will be executed by the
-`io_context` from within the `run`, `run_for`, `run_until`, `run_one`,
-`run_one_for`, `run_one_until`, `poll` or `poll_one` functions.
+`io_context` from within a run function.]
 
 [section [^io_context::executor_type] constructors]
 [xrefid io_context.exec.cons]
@@ -86,11 +85,9 @@ associated with an `io_context`, and function objects submitted using the
 
   bool running_in_this_thread() const noexcept;
 
-[function_returns `true` if the current thread of execution is running the
-`run`, `run_for`, `run_until`, `run_one`, `run_one_for`, `run_one_until`,
-`poll` or `poll_one` function of the associated `io_context` object.
-[inline_note That is, the current thread of execution's call chain includes a
-run function.]]
+[function_returns `true` if the current thread of execution is calling a run
+function of the associated `io_context` object. [inline_note That is, the
+current thread of execution's call chain includes a run function.]]
 
   io_context& context() noexcept;
 
