@@ -20,6 +20,8 @@ satisfying the [link requirements.executor Executor requirements].
 
       strand();
       explicit strand(Executor ex);
+      template<class ProtoAllocator>
+        strand(allocator_arg_t, const ProtoAllocator& alloc, Executor ex);
       strand(const strand& other) noexcept;
       strand(strand&& other) noexcept;
       template<class OtherExecutor> strand(const strand<OtherExecutor>& other) noexcept;
@@ -108,6 +110,15 @@ unless `Executor` satisfies the `DefaultConstructible` requirements (C++ Std,
 [function_effects Constructs an object of class `strand<Executor>` that
 represents a unique ordered, non-concurrent state. Initializes `inner_ex_` as
 `inner_ex_(ex)`.]
+
+  template<class ProtoAllocator>
+    strand(allocator_arg_t, const ProtoAllocator& a, Executor ex);
+
+[function_effects Constructs an object of class `strand<Executor>` that
+represents a unique ordered, non-concurrent state. Initializes `inner_ex_` as
+`inner_ex_(ex)`. A copy of the allocator argument `a` is used to allocate
+memory, if necessary, for the internal data structures of the constructed
+strand object.]
 
   strand(const strand& other) noexcept;
 
