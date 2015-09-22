@@ -29,9 +29,9 @@ these specializations are defined below.
       reference operator*() const noexcept;
       pointer operator->() const noexcept;
       basic_address_iterator& operator++() noexcept;
-      basic_address_iterator& operator++(int) noexcept;
+      basic_address_iterator operator++(int) noexcept;
       basic_address_iterator& operator--() noexcept;
-      basic_address_iterator& operator--(int) noexcept;
+      basic_address_iterator operator--(int) noexcept;
 
       // other members as required by C++ Std [input.iterators]
 
@@ -63,7 +63,7 @@ order.]
 
 [function_returns `*this`.]
 
-  basic_address_iterator& operator++(int) noexcept;
+  basic_address_iterator operator++(int) noexcept;
 
 [function_effects Sets `address_` to the next unique address in network byte
 order.]
@@ -77,7 +77,7 @@ order.]
 
 [function_returns `*this`.]
 
-  basic_address_iterator& operator--(int) noexcept;
+  basic_address_iterator operator--(int) noexcept;
 
 [function_effects Sets `address_` to the prior unique address in network byte
 order.]
