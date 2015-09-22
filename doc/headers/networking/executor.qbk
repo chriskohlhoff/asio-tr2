@@ -26,10 +26,10 @@
     ``// [link functions.get_associated_allocator get_associated_allocator]:``
 
     template<class T>
-      associated_allocator_t<T> get_associated_allocator(const T& t);
+      associated_allocator_t<T> get_associated_allocator(const T& t) noexcept;
     template<class T, class ProtoAllocator>
       associated_allocator_t<T, ProtoAllocator>
-        get_associated_allocator(const T& t, const ProtoAllocator& a);
+        get_associated_allocator(const T& t, const ProtoAllocator& a) noexcept;
 
     enum class fork_event {
       prepare,
@@ -62,13 +62,13 @@
     ``// [link functions.get_associated_executor get_associated_executor]:``
 
     template<class T>
-      associated_executor_t<T> get_associated_executor(const T& t);
+      associated_executor_t<T> get_associated_executor(const T& t) noexcept;
     template<class T, class Executor>
       associated_executor_t<T, Executor>
-        get_associated_executor(const T& t, const Executor& ex);
+        get_associated_executor(const T& t, const Executor& ex) noexcept;
     template<class T, class ExecutionContext>
       associated_executor_t<T, typename ExecutionContext::executor_type>
-        get_associated_executor(const T& t, ExecutionContext& ctx);
+        get_associated_executor(const T& t, ExecutionContext& ctx) noexcept;
 
     template<class T, class Executor>
       class ``[link classes.executor_binder executor_binder]``;

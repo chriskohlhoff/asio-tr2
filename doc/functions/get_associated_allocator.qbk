@@ -2,13 +2,13 @@
 [xrefid async.assoc.alloc.get]
 
   template<class T>
-    associated_allocator_t<T> get_associated_allocator(const T& t);
+    associated_allocator_t<T> get_associated_allocator(const T& t) noexcept;
 
 [function_returns `associated_allocator<T>::get(t)`.]
 
   template<class T, class ProtoAllocator>
     associated_allocator_t<T, ProtoAllocator>
-      get_associated_allocator(const T& t, const ProtoAllocator& a);
+      get_associated_allocator(const T& t, const ProtoAllocator& a) noexcept;
 
 [function_returns `associated_allocator<T, ProtoAllocator>::get(t, a)`.]
 

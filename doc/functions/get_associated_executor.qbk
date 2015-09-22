@@ -2,13 +2,13 @@
 [xrefid async.assoc.exec.get]
 
   template<class T>
-    associated_executor_t<T> get_associated_executor(const T& t);
+    associated_executor_t<T> get_associated_executor(const T& t) noexcept;
 
 [function_returns `associated_executor<T>::get(t)`.]
 
   template<class T, class Executor>
     associated_executor_t<T, Executor>
-      get_associated_executor(const T& t, const Executor& ex);
+      get_associated_executor(const T& t, const Executor& ex) noexcept;
 
 [function_returns `associated_executor<T, Executor>::get(t, ex)`.]
 
@@ -17,7 +17,7 @@ unless `is_executor<Executor>::value` is `true`.]
 
   template<class T, class ExecutionContext>
     associated_executor_t<T, typename ExecutionContext::executor_type>
-      get_associated_executor(const T& t, ExecutionContext& ctx);
+      get_associated_executor(const T& t, ExecutionContext& ctx) noexcept;
 
 [function_returns `get_associated_executor(t, ctx.get_executor())`.]
 

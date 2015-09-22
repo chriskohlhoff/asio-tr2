@@ -13,10 +13,10 @@
     ``// [link functions.get_associated_allocator get_associated_allocator]:``
 
     template<class T>
-      associated_allocator_t<T> get_associated_allocator(const T& t);
+      associated_allocator_t<T> get_associated_allocator(const T& t) noexcept;
     template<class T, class Alloc>
       associated_allocator_t<T, Alloc>
-        get_associated_allocator(const T& t, const Alloc& a);
+        get_associated_allocator(const T& t, const Alloc& a) noexcept;
 
   __end_versioned_ns__
   } // namespace experimental
