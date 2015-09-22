@@ -46,7 +46,7 @@
       make_service(execution_context& ctx, Args&&... args);
     template<class Service> bool has_service(execution_context& ctx) noexcept;
 
-    template<class T> struct ``[link classes.is_executor is_executor]`` : false_type {};
+    template<class T> struct ``[link classes.is_executor is_executor]``;
 
     struct ``[link classes.executor_arg_t executor_arg_t]`` { };
     constexpr executor_arg_t executor_arg = executor_arg_t();
