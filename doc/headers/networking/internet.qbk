@@ -127,7 +127,7 @@
     bool operator!=(const network_v6&, const network_v6&) noexcept;
 
     // ``[link classes.ip__network_v4__creation network_v4 creation]``:
-    network_v4 make_network_v4(const address_v4&, unsigned);
+    network_v4 make_network_v4(const address_v4&, int);
     network_v4 make_network_v4(const address_v4&, const address_v4&);
     network_v4 make_network_v4(const char*);
     network_v4 make_network_v4(const char*, error_code&) noexcept;
@@ -137,7 +137,7 @@
     network_v4 make_network_v4(string_view, error_code&) noexcept;
 
     // ``[link classes.ip__network_v6__creation network_v6 creation]``:
-    network_v6 make_network_v6(const address_v6&, unsigned);
+    network_v6 make_network_v6(const address_v6&, int);
     network_v6 make_network_v6(const char*);
     network_v6 make_network_v6(const char*, error_code&) noexcept;
     network_v6 make_network_v6(const string&);
