@@ -5,6 +5,11 @@ In this Technical Specification, an asynchronous operation is initiated by a
 function that is named with the prefix `async_`. These functions shall be known
 as ['initiating functions].
 
+This section uses the names `Alloc1`, `Alloc2`, `alloc1`, `alloc2`,
+`CompletionHandler`, `completion_handler`, `Executor1`, `Executor2`, `ex1`,
+`ex2`, `f`, `token`, `work1`, and `work2` as placeholders for specifying the
+requirements below.
+
 [section:completion_token Completion tokens and handlers]
 [xrefid async.reqmts.async.token]
 
