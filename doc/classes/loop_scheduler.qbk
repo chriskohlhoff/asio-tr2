@@ -75,7 +75,7 @@ as if by `stop()`.
 The `loop_scheduler` member functions `get_executor`, `run`, `run_for`,
 `run_until`, `run_one`, `run_one_for`, `run_one_until`, `poll`, `poll_one`,
 `stop`, and `stopped`, and the `loop_scheduler::executor_type` copy constructors,
-member functions and comparison operators, shall not introduce data races as a
+member functions and comparison operators, do not introduce data races as a
 result of concurrent calls to those functions from different threads.
 [inline_note The `restart` member function is excluded from these thread safety
 requirements.]
@@ -154,8 +154,8 @@ one of `run`, `run_for`, `run_until`, `run_one`, `run_one_for`,
 the `loop_scheduler` is stopped, or until one function object has been executed.]
 
 [function_block If an executed function object throws an exception, the
-exception shall be allowed to propagate to the caller of `run_one()`. The
-`loop_scheduler` state shall be as if the function object had returned normally.]
+exception propagates to the caller of `run_one()`. The `loop_scheduler` state
+is as if the function object had returned normally.]
 
 [function_returns `1` if a function object was executed, otherwise `0`.]
 
@@ -183,8 +183,8 @@ work, or until the expiration of the absolute timeout (C++ Std,
 is stopped, or until one function object has been executed.]
 
 [function_block If an executed function object throws an exception, the
-exception shall be allowed to propagate to the caller of `run_one()`. The
-`loop_scheduler` state shall be as if the function object had returned normally.]
+exception propagates to the caller of `run_one_until()`. The `loop_scheduler`
+state is as if the function object had returned normally.]
 
 [function_returns `1` if a function object was executed, otherwise `0`.]
 
@@ -211,8 +211,8 @@ performs `stop()`. Otherwise, if there is a function object ready for immediate
 execution, executes it.]
 
 [function_block If an executed function object throws an exception, the
-exception shall be allowed to propagate to the caller of `poll_one()`. The
-`loop_scheduler` state shall be as if the function object had returned normally.]
+exception propagates to the caller of `poll_one()`. The `loop_scheduler` state
+is as if the function object had returned normally.]
 
 [function_returns `1` if a handler was executed, otherwise `0`.]
 

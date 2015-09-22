@@ -20,7 +20,7 @@ requirements.settable_socket_option `SettableSocketOption`].
   sock.set_option(ip::multicast::join_group(addr));
 ``]
 
-Multicast group management socket option classes shall be defined as follows:
+Multicast group management socket option classes are defined as follows:
 
   class ``['[*C]]``
   {
@@ -33,7 +33,7 @@ Multicast group management socket option classes shall be defined as follows:
                unsigned int network_interface = 0) noexcept;
   };
 
-Extensible implementations shall provide the following member functions:
+Extensible implementations provide the following member functions:
 
   class ``['[*C]]``
   {

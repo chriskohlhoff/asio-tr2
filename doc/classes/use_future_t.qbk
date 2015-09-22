@@ -73,7 +73,7 @@ An object `t1` of type `F` is an asynchronous provider with an associated
 shared state (C++Std, [futures.state]). The type `F` provides `F::operator()`
 such that the expression `t1(declval<Args>()...)` is well formed.
 
-The implementation shall specialize `associated_executor` for `F`. For function
+The implementation specializes `associated_executor` for `F`. For function
 objects executed using the associated executor's `dispatch()`, `post()` or
 `defer()` functions, any exception thrown is caught by the executor and stored
 in the associated shared state.

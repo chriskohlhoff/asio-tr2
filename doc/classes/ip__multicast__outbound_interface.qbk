@@ -29,7 +29,7 @@ requirements.settable_socket_option `SettableSocketOption`].
   } // namespace experimental
   } // namespace std
 
-Extensible implementations shall provide the following member functions:
+Extensible implementations provide the following member functions:
 
   namespace std {
   namespace experimental {

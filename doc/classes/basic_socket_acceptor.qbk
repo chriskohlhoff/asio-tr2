@@ -450,7 +450,7 @@ extensions to be supported.]
 `true`, subsequent synchronous operations may fail with error condition
 `errc::operation_would_block` if they are unable to perform the requested
 operation immediately. If `mode` is `false`, subsequent synchronous operations
-shall block until complete.]
+block until complete.]
 
 [function_error_conditions\n
 [mdash] `errc::bad_file_descriptor` [mdash] if `is_open()` is `false`.]
@@ -646,8 +646,8 @@ to have a queued incoming connection, or to have error conditions pending, as
 if by __POSIX__ __poll__.]
 
 [function_block When multiple asynchronous wait operations are initiated with
-the same `wait_type` value, all operations shall complete when the acceptor
-enters the corresponding ready state. The order of invocation of the
+the same `wait_type` value, all outstanding operations complete when the
+acceptor enters the corresponding ready state. The order of invocation of the
 completions handlers for these operations is unspecified.]
 
 [function_error_conditions\n

@@ -54,8 +54,8 @@ to `async_read_until` returns.]]
 sequence of `b` contains the delimiter, `ec` is set such that `!ec` is `true`.
 Otherwise, if `b.size() == b.max_size()`, `ec` is set such that `ec ==
 stream_errc::not_found`. If `b.size() < b.max_size()`, `ec` contains the
-`error_code` from the most recent asynchronous read_some operation. `n` shall
-contain the number of bytes in the input sequence of `b` up to and including
+`error_code` from the most recent asynchronous read_some operation. `n`
+contains the number of bytes in the input sequence of `b` up to and including
 the delimiter, if present, otherwise `0`.]
 
 [endsect]

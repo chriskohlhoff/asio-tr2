@@ -84,7 +84,7 @@ as if by `stop()`.
 
 The `io_context` member functions `get_executor`, `stop`, and `stopped`, the
 run functions, and the `io_context::executor_type` copy constructors, member
-functions and comparison operators, shall not introduce data races as a result
+functions and comparison operators, do not introduce data races as a result
 of concurrent calls to those functions from different threads of execution.
 [inline_note The `restart` member function is excluded from these thread safety
 requirements.]

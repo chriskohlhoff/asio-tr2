@@ -116,7 +116,7 @@ pool; otherwise `false`.]
 
 [function_block If `f` exits via an exception, and the execution of `f` is
 performed in the current thread and before `dispatch` returns, the exception
-shall propagate to the caller of `dispatch`.]
+propagates to the caller of `dispatch`.]
 
   template<class Func, class ProtoAllocator>
     void post(Func&& f, const ProtoAllocator& a);

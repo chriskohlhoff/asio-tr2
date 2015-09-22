@@ -55,8 +55,8 @@ via the `thread_pool` executor, but not yet executed; and
 
 The `thread_pool` member functions `get_executor`, `stop`, and `join`, and the
 `thread_pool::executor_type` copy constructors, member functions and comparison
-operators, shall not introduce data races as a result of concurrent calls to
-those functions from different threads.
+operators, do not introduce data races as a result of concurrent calls to those
+functions from different threads.
 
 [section [^thread_pool] constructors/destructor]
 [xrefid thread.pool.cons]

@@ -14,9 +14,9 @@
   } // namespace std
 
 This sub-clause contains templates that may be used to query the properties of
-a type at compile time. Each of these templates shall be a UnaryTypeTrait (C++
-Std, [meta.rqmts]) with a BaseCharacteristic of `true_type` if the
-corresponding condition is true, otherwise `false_type`.
+a type at compile time. Each of these templates is a UnaryTypeTrait (C++ Std,
+[meta.rqmts]) with a BaseCharacteristic of `true_type` if the corresponding
+condition is true, otherwise `false_type`.
 
 [table Buffer type traits
   [[Template][Condition][Preconditions]]

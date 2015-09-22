@@ -16,14 +16,14 @@
 
 ['Remark:] Detects whether `T` has a nested `executor_type` that is convertible
 from `Executor`. Meets the `BinaryTypeTrait` requirements (C++ Std,
-[meta.rqmts]). The implementation shall provide a definition that is derived
-from `true_type` if a type `T::executor_type` exists and
-`is_convertible<Executor, T::executor_type>::value != false`, otherwise it
-shall be derived from `false_type`. A program may specialize this template to
-derive from `true_type` for a user-defined type `T` that does not have a nested
-`executor_type` but nonetheless can be constructed with an executor if the
-first argument of a constructor has type `executor_arg_t` and the second
-argument has type `Executor`.
+[meta.rqmts]). The implementation provides a definition that is derived from
+`true_type` if a type `T::executor_type` exists and `is_convertible<Executor,
+T::executor_type>::value != false`, otherwise it is derived from `false_type`.
+A program may specialize this template to derive from `true_type` for a
+user-defined type `T` that does not have a nested `executor_type` but
+nonetheless can be constructed with an executor if the first argument of a
+constructor has type `executor_arg_t` and the second argument has type
+`Executor`.
 
 [endsect]
 

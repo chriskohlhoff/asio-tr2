@@ -2,9 +2,9 @@
 [xrefid internet.v6only]
 
 The `v6_only` class represents a socket option for determining whether a socket
-created for an IPv6 protocol is restricted to IPv6 communications only. It
-shall be defined as a [link classes.socket_base__bool_socket_options boolean
-socket option] with the name and values in the table below:
+created for an IPv6 protocol is restricted to IPv6 communications only. It is
+defined as a [link classes.socket_base__bool_socket_options boolean socket
+option] with the name and values in the table below:
 
 [table v6_only boolean socket option
   [[['C]][['L]][['N]]]

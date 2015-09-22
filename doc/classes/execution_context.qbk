@@ -115,9 +115,9 @@ and removes it from the set, in reverse order of addition to the set.
 [section [^execution_context] globals]
 [xrefid async.exec.ctx.globals]
 
-The functions `use_service`, `make_service`, and `has_service` shall not
-introduce data races as a result of concurrent calls to those functions from
-different threads.
+The functions `use_service`, `make_service`, and `has_service` do not introduce
+data races as a result of concurrent calls to those functions from different
+threads.
 
   template<class Service> typename Service::key_type&
     use_service(execution_context& ctx);

@@ -67,7 +67,7 @@ type is derived from `execution_context`.]
 [function_effects Creates an object `f1` initialized with
 [^['DECAY_COPY]]`(forward<Func>(f))`, and calls `f1` as if in a thread of
 execution represented by a `thread` object. Any exception propagated from the
-execution of [^['DECAY_COPY]]`(forward<Func>(f))()` shall result in a call to
+execution of [^['DECAY_COPY]]`(forward<Func>(f))()` results in a call to
 `std::terminate`.]
 
 [endsect]
