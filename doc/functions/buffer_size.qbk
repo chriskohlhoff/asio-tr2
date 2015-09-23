@@ -1,11 +1,6 @@
 [section:buffer_size Function [^buffer_size]]
 [xrefid buffer.size]
 
-  size_t buffer_size(const mutable_buffer& b) noexcept;
-  size_t buffer_size(const const_buffer& b) noexcept;
-
-[function_returns `b.size_`.]
-
   template<class ConstBufferSequence>
     size_t buffer_size(const ConstBufferSequence& buffers) noexcept;
 
@@ -13,16 +8,14 @@
 as follows:\n
 ``
   size_t total_size = 0;
-  for (const auto& v: buffers)
+  auto i = std::experimental::__ns__::buffer_sequence_begin(buffers);
+  auto end = std::experimental::__ns__::buffer_sequence_end(buffers);
+  for (; i != end; ++i)
   {
     const_buffer b(v);
     total_size += b.size();
   }
   return total_size;
 ``]
-
-[function_remarks This function overload shall not participate in overload
-resolution unless `is_const_buffer_sequence<ConstBufferSequence>::value` is
-`true`.]
 
 [endsect]

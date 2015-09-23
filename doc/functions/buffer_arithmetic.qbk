@@ -17,26 +17,6 @@
 [function_returns A `const_buffer` equivalent to
 ``
   const_buffer(
-    stati_cast<const char*>(b.data()) + min(n, b.size()),
-    b.size() - min(n, b.size()));
-``]
-
-  mutable_buffers_1 operator+(const mutable_buffers_1& b, size_t n) noexcept;
-  mutable_buffers_1 operator+(size_t n, const mutable_buffers_1& b) noexcept;
-
-[function_returns A `mutable_buffers_1` equivalent to
-``
-  mutable_buffers_1(
-    static_cast<char*>(b.data()) + min(n, b.size()),
-    b.size() - min(n, b.size()));
-``]
-
-  const_buffers_1 operator+(const const_buffers_1& b, size_t n) noexcept;
-  const_buffers_1 operator+(size_t n, const const_buffers_1& b) noexcept;
-
-[function_returns A `const_buffers_1` equivalent to
-``
-  const_buffers_1(
     static_cast<const char*>(b.data()) + min(n, b.size()),
     b.size() - min(n, b.size()));
 ``]

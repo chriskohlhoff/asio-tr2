@@ -25,6 +25,9 @@
   } // namespace experimental
   } // namespace std
 
+The `mutable_buffer` class satisfies the [link requirements.mutable_buffers
+`MutableBufferSequence`] type requirements.
+
 [section [^mutable_buffer] constructors]
 [xrefid buffer.mutable.cons]
 

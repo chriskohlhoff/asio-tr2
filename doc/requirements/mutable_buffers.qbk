@@ -8,11 +8,14 @@ requirements in the table below.
 In the table below, `X` denotes a constant buffer sequence class, `x` denotes a
 (possibly const) value of type `X`, and `u` denotes an identifier.
 
-[table ConstBufferSequence requirements
+[table MutableBufferSequence requirements
   [[expression] [return type] [assertion/note\npre/post-condition]]
   [
-    [`X::value_type`]
-    [convertible to `mutable_buffer`]
+    [`std::experimental::__ns__::buffer_sequence_begin(x)`\n
+     `std::experimental::__ns__::buffer_sequence_end(x)`]
+    [An iterator type meeting the requirements for bidirectional iterators (C++
+     Std, \[bidirection.iterators\]) whose value type is convertible to
+     `mutable_buffer`.]
     []
   ]
   [
@@ -22,7 +25,11 @@ In the table below, `X` denotes a constant buffer sequence class, `x` denotes a
     []
     [post:\n
      ``
-       equal(u.begin(), u.end(), x.begin(), x.end(),
+       equal(
+         std::experimental::__ns__::buffer_sequence_begin(x),
+         std::experimental::__ns__::buffer_sequence_end(x),
+         std::experimental::__ns__::buffer_sequence_begin(u),
+         std::experimental::__ns__::buffer_sequence_end(u),
          [](const typename X::value_type& v1,
             const typename X::value_type& v2)
           {

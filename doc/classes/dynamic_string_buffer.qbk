@@ -13,8 +13,8 @@ requirements.dynamic_buffers `DynamicBuffer`].
     {
     public:
       // types:
-      typedef const_buffers_1 const_buffers_type;
-      typedef mutable_buffers_1 mutable_buffers_type;
+      typedef const_buffer const_buffers_type;
+      typedef mutable_buffer mutable_buffers_type;
 
       // constructors:
       explicit dynamic_string_buffer(basic_string<CharT, Traits, Allocator>& str) noexcept;

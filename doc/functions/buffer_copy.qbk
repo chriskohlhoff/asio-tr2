@@ -1,25 +1,6 @@
 [section:buffer_copy Function [^buffer_copy]]
 [xrefid buffer.copy]
 
-  size_t buffer_copy(const mutable_buffer& dest,
-                     const const_buffer& source) noexcept;
-  size_t buffer_copy(const mutable_buffer& dest,
-                     const const_buffer& source,
-                     size_t max_size) noexcept;
-  template<class ConstBufferSequence>
-    size_t buffer_copy(const mutable_buffer& dest,
-                       const ConstBufferSequence& source) noexcept;
-  template<class ConstBufferSequence>
-    size_t buffer_copy(const mutable_buffer& dest,
-                       const ConstBufferSequence& source,
-                       size_t max_size) noexcept;
-  template<class MutableBufferSequence>
-    size_t buffer_copy(const MutableBufferSequence& dest,
-                       const const_buffer& source) noexcept;
-  template<class MutableBufferSequence>
-    size_t buffer_copy(const MutableBufferSequence& dest,
-                       const const_buffer& source,
-                       size_t max_size) noexcept;
   template<class MutableBufferSequence, class ConstBufferSequence>
     size_t buffer_copy(const MutableBufferSequence& dest,
                        const ConstBufferSequence& source) noexcept;
@@ -28,29 +9,22 @@
                        const ConstBufferSequence& source,
                        size_t max_size) noexcept;
 
-[function_effects Copies bytes from the buffer or buffer sequence `source` to
-the buffer or buffer sequence `dest`, as if by calls to `memcpy`.]
+[function_effects Copies bytes from the buffer sequence `source` to the buffer
+sequence `dest`, as if by calls to `memcpy`.]
 
 [function_block The number of bytes copied is the lesser of:\n
 [mdash] `buffer_size(dest)`;\n
 [mdash] `buffer_size(source)`; and\n
 [mdash] `max_size`, if specified.]
 
-[function_block The mutable buffer or mutable buffer sequence `dest` specifies
-memory where the data should be placed. The operation always fills a
-buffer in the sequence completely before proceeding to the next.]
+[function_block The mutable buffer sequence `dest` specifies memory where the
+data should be placed. The operation always fills a buffer in the sequence
+completely before proceeding to the next.]
 
-[function_block The constant buffer or constant buffer sequence `source`
-specifies memory where the data to be written is located. The operation always
-copies a buffer in the sequence completely before proceeding to the next.]
+[function_block The constant buffer sequence `source` specifies memory where
+the data to be written is located. The operation always copies a buffer in the
+sequence completely before proceeding to the next.]
 
 [function_returns The number of bytes copied from `source` to `dest`.]
-
-[function_remarks Where an overload accepts a template parameter
-`MutableBufferSequence`, the overload shall not participate in overload
-resolution unless `is_mutable_buffer_sequence<MutableBufferSequence>::value` is
-`true`. Where an overload accepts a template parameter `ConstBufferSequence`, the
-overload shall not participate in overload resolution unless
-`is_const_buffer_sequence<ConstBufferSequence>::value` is `true`.]
 
 [endsect]

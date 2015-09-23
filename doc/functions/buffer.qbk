@@ -13,54 +13,48 @@ For the function overloads below that accept an argument of type
 rules defined for invalidation of references, pointers and iterators referring
 to elements of the sequence (C++ Std, [string.require]).
 
-  mutable_buffers_1 buffer(void* p, size_t n) noexcept;
+  mutable_buffer buffer(void* p, size_t n) noexcept;
 
-[function_returns `mutable_buffers_1(p, n)`.]
+[function_returns `mutable_buffer(p, n)`.]
 
-  const_buffers_1 buffer(const void* p, size_t n) noexcept;
+  const_buffer buffer(const void* p, size_t n) noexcept;
 
-[function_returns `const_buffers_1(p, n)`.]
+[function_returns `const_buffer(p, n)`.]
 
-  mutable_buffers_1 buffer(const mutable_buffer& b) noexcept;
+  mutable_buffer buffer(const mutable_buffer& b) noexcept;
 
-[function_returns `mutable_buffers_1(b)`.]
+[function_returns `b`.]
 
-  mutable_buffers_1 buffer(const mutable_buffer& b, size_t n) noexcept;
+  mutable_buffer buffer(const mutable_buffer& b, size_t n) noexcept;
 
-[function_returns A `mutable_buffers_1` value equivalent to:
-``
-  mutable_buffers_1(b.data(), min(b.size(), n));
-``]
+[function_returns `mutable_buffer(b.data(), min(b.size(), n))`.]
 
-  const_buffers_1 buffer(const const_buffer& b) noexcept;
+  const_buffer buffer(const const_buffer& b) noexcept;
 
-[function_returns `const_buffers_1(b)`.]
+[function_returns `b`.]
 
-  const_buffers_1 buffer(const const_buffer& b, size_t n) noexcept;
+  const_buffer buffer(const const_buffer& b, size_t n) noexcept;
 
-[function_returns A `const_buffers_1` value equivalent to:
-``
-  const_buffers_1(b.data(), min(b.size(), n));
-``]
+[function_returns `const_buffer(b.data(), min(b.size(), n))`.]
 
   template<class T, size_t N>
-    mutable_buffers_1 buffer(T (&data)[N]) noexcept;
+    mutable_buffer buffer(T (&data)[N]) noexcept;
   template<class T, size_t N>
-    const_buffers_1 buffer(const T (&data)[N]) noexcept;
+    const_buffer buffer(const T (&data)[N]) noexcept;
   template<class T, size_t N>
-    mutable_buffers_1 buffer(array<T, N>& data) noexcept;
+    mutable_buffer buffer(array<T, N>& data) noexcept;
   template<class T, size_t N>
-    const_buffers_1 buffer(array<const T, N>& data) noexcept;
+    const_buffer buffer(array<const T, N>& data) noexcept;
   template<class T, size_t N>
-    const_buffers_1 buffer(const array<T, N>& data) noexcept;
+    const_buffer buffer(const array<T, N>& data) noexcept;
   template<class T, class Allocator>
-    mutable_buffers_1 buffer(vector<T, Allocator>& data) noexcept;
+    mutable_buffer buffer(vector<T, Allocator>& data) noexcept;
   template<class T, class Allocator>
-    const_buffers_1 buffer(const vector<T, Allocator>& data) noexcept;
+    const_buffer buffer(const vector<T, Allocator>& data) noexcept;
   template<class CharT, class Traits, class Allocator>
-    mutable_buffers_1 buffer(basic_string<CharT, Traits, Allocator>& data) noexcept;
+    mutable_buffer buffer(basic_string<CharT, Traits, Allocator>& data) noexcept;
   template<class CharT, class Traits>
-    const_buffers_1 buffer(basic_string_view<CharT, Traits> data) noexcept;
+    const_buffer buffer(basic_string_view<CharT, Traits> data) noexcept;
 
 [function_returns
 ``
@@ -70,25 +64,25 @@ to elements of the sequence (C++ Std, [string.require]).
 ``]
 
   template<class T, size_t N>
-    mutable_buffers_1 buffer(T (&data)[N], size_t n) noexcept;
+    mutable_buffer buffer(T (&data)[N], size_t n) noexcept;
   template<class T, size_t N>
-    const_buffers_1 buffer(const T (&data)[N], size_t n) noexcept;
+    const_buffer buffer(const T (&data)[N], size_t n) noexcept;
   template<class T, size_t N>
-    mutable_buffers_1 buffer(array<T, N>& data, size_t n) noexcept;
+    mutable_buffer buffer(array<T, N>& data, size_t n) noexcept;
   template<class T, size_t N>
-    const_buffers_1 buffer(array<const T, N>& data, size_t n) noexcept;
+    const_buffer buffer(array<const T, N>& data, size_t n) noexcept;
   template<class T, size_t N>
-    const_buffers_1 buffer(const array<T, N>& data, size_t n) noexcept;
+    const_buffer buffer(const array<T, N>& data, size_t n) noexcept;
   template<class T, class Allocator>
-    mutable_buffers_1 buffer(vector<T, Allocator>& data, size_t n) noexcept;
+    mutable_buffer buffer(vector<T, Allocator>& data, size_t n) noexcept;
   template<class T, class Allocator>
-    const_buffers_1 buffer(const vector<T, Allocator>& data, size_t n) noexcept;
+    const_buffer buffer(const vector<T, Allocator>& data, size_t n) noexcept;
   template<class CharT, class Traits, class Allocator>
-    mutable_buffers_1 buffer(basic_string<CharT, Traits, Allocator>& data,
-                             size_t n) noexcept;
+    mutable_buffer buffer(basic_string<CharT, Traits, Allocator>& data,
+                          size_t n) noexcept;
   template<class CharT, class Traits>
-    const_buffers_1 buffer(basic_string_view<CharT, Traits> data,
-                           size_t n) noexcept;
+    const_buffer buffer(basic_string_view<CharT, Traits> data,
+                        size_t n) noexcept;
 
 [function_returns `buffer(buffer(data), n)`.]
 
