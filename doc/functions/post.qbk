@@ -1,59 +1,44 @@
 [section:post Function [^post]]
 [xrefid async.post]
 
+[std_note The function `post` satisfies the requirements for an [link
+requirements.asynchronous_operations asynchronous operation].]
+
   template<class CompletionToken>
     __ifr__ post(CompletionToken&& token);
 
-[function_block Let the type `CompletionHandler` be the completion handler type
-determined by performing `completion_handler_type_t<CompletionToken, void()>`.]
-
-[function_requires The type `CompletionHandler` must satisfy the
-`MoveConstructible` requirements (C++ Std, \[moveconstructible\]) and be
-callable with zero arguments.]
-
 [function_effects\n
-[mdash] Constructs a function object `completion_handler` of type
-`CompletionHandler`, initialized as
-`completion_handler(forward<CompletionToken>(token))`.\n
-[mdash] Constructs an object `result` of type
-`async_result<CompletionHandler>`, initializing the object as
-`result(completion_handler)`.\n
-[mdash] Obtains the completion handler's associated executor object `ex` by
-performing `get_associated_executor(completion_handler)`.\n
-[mdash] Obtains the completion handler's associated allocator object `alloc` by
-performing `get_associated_allocator(completion_handler)`.\n
-[mdash] Performs `ex.post(std::move(completion_handler), alloc)`.]
+[mdash] Constructs an object `completion` of type
+`async_completion<CompletionToken, void()>`, initialized with
+`forward<CompletionToken>(token)`.\n
+[mdash] Performs `ex.post(std::move(completion.completion_handler), alloc)`,
+where `ex` is the result of
+`get_associated_executor(completion.completion_handler)`, and `alloc` is the
+result of `get_associated_allocator(completion.completion_handler)`.]
 
-[function_returns `result.get()`.]
+[function_returns `completion.result.get()`.]
 
   template<class Executor, class CompletionToken>
     __ifr__ post(const Executor& ex, CompletionToken&& token);
 
-[function_block Let the type `CompletionHandler` be the completion handler type
-determined by performing `completion_handler_type_t<CompletionToken, void()>`.]
-
-[function_requires The type `CompletionHandler` must satisfy the
-`MoveConstructible` requirements (C++ Std, \[moveconstructible\]) and be
-callable with zero arguments.]
-
 [function_effects\n
-[mdash] Constructs a function object `completion_handler` of type
-`CompletionHandler`, initialized as
-`completion_handler(forward<CompletionToken>(token))`.\n
-[mdash] Constructs an object `result` of type
-`async_result<CompletionHandler>`, initializing the object as
-`result(completion_handler)`.\n
-[mdash] Obtains the completion handler's associated executor object `ex1` by
-performing `get_associated_executor(completion_handler)`.\n
-[mdash] Creates a work object `w` by performing `make_work_guard(ex1)`.\n
-[mdash] Obtains the completion handler's associated allocator object `alloc` by
-performing `get_associated_allocator(completion_handler)`.\n
-[mdash] Constructs a function object `f` with a function call operator that
-performs `ex1.dispatch(std::move(completion_handler), alloc)` followed by
-`w.reset()`.\n
-[mdash] Performs `ex.post(std::move(f), alloc)`.]
+[mdash] Constructs an object `completion` of type
+`async_completion<CompletionToken, void()>`, initialized with
+`forward<CompletionToken>(token)`.\n
+[mdash] Constructs a function object `f` containing as members:\n
+  [bullet] a copy of the completion handler `h`, initialized with
+  `std::move(completion.completion_handler)`,\n
+  [bullet] an `executor_work_guard` object `w` for the completion handler's
+  associated executor, initialized with `make_work_guard(h)`,\n
+[indent]and where the effect of `f()` is:\n
+  [bullet] `w.get_executor().dispatch(std::move(h), alloc)`, where `alloc` is
+  the result of `get_associated_allocator(h)`, followed by\n
+  [bullet] `w.reset()`.\n
+[mdash] Performs `ex.post(std::move(f), alloc)`, where `alloc` is the result
+of `get_associated_allocator(completion.completion_handler)` prior to the
+construction of `f`.]
 
-[function_returns `result.get()`.]
+[function_returns `completion.result.get()`.]
 
 [function_remarks This function shall not participate in overload resolution
 unless `is_executor<Executor>::value` is `true`.]
@@ -65,6 +50,7 @@ unless `is_executor<Executor>::value` is `true`.]
 forward<CompletionToken>(token))`.]
 
 [function_remarks This function shall not participate in overload resolution
-unless `is_convertible<ExecutionContext&, execution_context&>::value` is `true`.]
+unless `is_convertible<ExecutionContext&, execution_context&>::value` is
+`true`.]
 
 [endsect]

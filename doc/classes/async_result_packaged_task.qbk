@@ -5,31 +5,32 @@
   namespace experimental {
   __begin_versioned_ns__
 
-    template<class R, class... Args>
-    class async_result<packaged_task<R(Args...)>>
+    template<class Result, class... Args, class Signature>
+    class async_result<packaged_task<Result(Args...)>, Signature>
     {
     public:
-      typedef future<R> type;
+      typedef packaged_task<Result(Args...)> completion_handler_type;
+      typedef future<Result> return_type;
 
-      explicit async_result(packaged_task<R(Args...)>& t);
+      explicit async_result(completion_handler_type& h);
       async_result(const async_result&) = delete;
       async_result& operator=(const async_result&) = delete;
 
-      type get();
+      return_type get();
 
     private:
-      type future_; // ``['exposition only]``
+      return_type future_; // ``['exposition only]``
     };
 
   __end_versioned_ns__
   } // namespace experimental
   } // namespace std
 
-  explicit async_result(packaged_task<R(Args...)>& t);
+  explicit async_result(completion_handler_type& h);
 
-[function_effects Initializes `future_` with `t.get_future()`.]
+[function_effects Initializes `future_` with `h.get_future()`.]
 
-  type get();
+  return_type get();
 
 [function_returns `std::move(future_)`.]
 

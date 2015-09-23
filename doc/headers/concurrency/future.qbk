@@ -12,25 +12,10 @@
     constexpr use_future_t<> use_future = use_future_t<>();
 
     template<class Allocator, class R, class... Args>
-      struct completion_handler_type<use_future_t<Allocator>, R(Args...)>;
+      class async_result<use_future_t<Allocator>, R(Args...)>;
 
-    template<class R, class... Args>
-      class ``[link classes.async_result_packaged_task async_result<packaged_task<R(Args...)>>]``;
-
-    template<class Signature, class Alloc>
-      class ``[link classes.packaged_handler packaged_handler]``;
-
-    template<class Signature, class Alloc>
-      class async_result<packaged_handler<Signature, Alloc>>;
-
-    template<class Func, class Alloc = allocator<void>>
-      class ``[link classes.packaged_token packaged_token]``;
-
-    template<class Func, class Alloc, class R, class... Args>
-      struct completion_handler_type<packaged_token<Func, Alloc>, R(Args...)>;
-
-    template<class Func, class Alloc = allocator<void>>
-      packaged_token<decay_t<Func>, Alloc> ``[link functions.package package]``(Func&& f, const Alloc& a = Alloc());
+    template<class R, class... Args, class Signature>
+      class ``[link classes.async_result_packaged_task async_result<packaged_task<R(Args...)>, Signature>]``;
 
   __end_versioned_ns__
   } // namespace experimental

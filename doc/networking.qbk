@@ -87,6 +87,8 @@
 [template xref[text]'''<link linkend="'''[text]'''">'''\[[text]\]'''</link>''']
 
 [template mdash[] '''&mdash; ''']
+[template indent[] '''&nbsp;&nbsp;&nbsp;&nbsp;''']
+[template bullet[] [indent]'''&bull; ''']
 
 [template half_open_range[text] '''&#91;'''[text])]
 
@@ -126,6 +128,7 @@
 [def __sys_socket_h__ [@http://www.opengroup.org/onlinepubs/9699919799/basedefs/sys_socket.h.html `sys/socket.h`]]
 [def __netinet_in_h__ [@http://www.opengroup.org/onlinepubs/9699919799/basedefs/netinet_in.h.html `netinet/in.h`]]
 [def __netinet_tcp_h__ [@http://www.opengroup.org/onlinepubs/9699919799/basedefs/netinet_tcp.h.html `netinet/tcp.h`]]
+[def __dotdot__ ..]
 [def __dotdotdot__ ...]
 [def __empty_capture__ '''[]''']
 [def __unspecified__ '''<emphasis>unspecified</emphasis>''']
@@ -713,7 +716,6 @@ are used to express type requirements, as listed in the table below.
 [include:requirements requirements/service.qbk]
 [include:requirements requirements/signature.qbk]
 [endsect]
-[include:classes classes/completion_handler_type.qbk]
 [include:classes classes/async_result.qbk]
 [include:classes classes/async_completion.qbk]
 [include:classes classes/associated_allocator.qbk]
@@ -738,9 +740,6 @@ are used to express type requirements, as listed in the table below.
 [include:classes classes/strand.qbk]
 [include:classes classes/use_future_t.qbk]
 [include:classes classes/async_result_packaged_task.qbk]
-[include:classes classes/packaged_handler.qbk]
-[include:classes classes/packaged_token.qbk]
-[include:functions functions/package.qbk]
 [endsect]
 
 [section:basic_io_services Basic I/O services]

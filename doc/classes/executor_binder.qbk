@@ -55,13 +55,7 @@ type `T`.
     };
 
     template<class T, class Executor, class Signature>
-    struct completion_handler_type<executor_binder<T, Executor>, Signature>
-    {
-      typedef executor_binder<completion_handler_type_t<T, Signature>, Executor> type;
-    };
-
-    template<class T, class Executor>
-      class async_result<executor_binder<T, Executor>>;
+      class async_result<executor_binder<T, Executor>, Signature>;
 
     template<class T, class Executor, class ProtoAllocator>
       struct associated_allocator<executor_binder<T, Executor>, ProtoAllocator>;
@@ -163,31 +157,34 @@ the executor `ex_`.]
   namespace experimental {
   __begin_versioned_ns__
 
-    template<class T, class Executor>
-    class async_result<executor_binder<T, Executor>>
+    template<class T, class Executor, class Signature>
+    class async_result<executor_binder<T, Executor>, Signature>
     {
     public:
-      typedef typename async_result<T>::type type;
+      typedef executor_binder<
+        typename async_result<T, Signature>::completion_handler_type,
+          Executor> completion_handler_type;
+      typedef typename async_result<T, Signature>::return_type return_type;
 
-      explicit async_result(executor_binder<T, Executor>& binder);
+      explicit async_result(completion_handler_type& h);
       async_result(const async_result&) = delete;
       async_result& operator=(const async_result&) = delete;
 
-      type get();
+      return_type get();
 
     private:
-      async_result<T> target_; // ``['exposition only]``
+      async_result<T, Signature> target_; // ``['exposition only]``
     };
 
   __end_versioned_ns__
   } // namespace experimental
   } // namespace std
 
-  explicit async_result(executor_binder<T, Executor>& binder);
+  explicit async_result(completion_handler_type& h);
 
-[function_effects Initializes `target_` as `target_(binder.get())`.]
+[function_effects Initializes `target_` as `target_(h.get())`.]
 
-  type get();
+  return_type get();
 
 [function_returns `target_.get()`.]
 

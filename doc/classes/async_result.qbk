@@ -1,42 +1,63 @@
 [section:async_result Class template [^async_result]]
 [xrefid async.async.result]
 
-[/ TODO reword as introduction]
-The template parameter `CompletionHandler` is a completion handler type
-produced by `completion_handler_type_t<T, S>` for some completion token type
-`T` and call signature `S`.
+The `async_result` class template is a customization point for asynchronous
+operations. Template parameter `CompletionToken` specifies the model used to
+obtain the result of the asynchronous operation. Template parameter `Signature`
+is the call signature (C++ Std, [func.def]) for the completion handler type
+invoked on completion of the asynchronous operation. The `async_result`
+template:
+
+[mdash] transforms a `CompletionToken` into a completion handler type that is
+based on a `Signature`; and
+
+[mdash] determines the return type and return value of an asynchronous
+operation's initiating function.
 
   namespace std {
   namespace experimental {
   __begin_versioned_ns__
 
-    template<class CompletionHandler>
+    template<class CompletionToken, class Signature, class = void>
     class async_result
     {
     public:
-      typedef void type;
+      typedef CompletionToken completion_handler_type;
+      typedef void return_type;
 
-      explicit async_result(CompletionHandler&) {}
+      explicit async_result(completion_handler_type&) {}
       async_result(const async_result&) = delete;
       async_result& operator=(const async_result&) = delete;
 
-      type get() {}
+      return_type get() {}
     };
 
   __end_versioned_ns__
   } // namespace experimental
   } // namespace std
 
+The template parameter `CompletionToken` shall be an object type. The template
+parameter `Signature` shall be a call signature (C++Std, [func.def]).
+
 Specializations of `async_result` shall satisfy the `Destructible` requirements
 (C++Std, [destructible]) in addition to the requirements in the table below. In
-this table, `R` is a specialization of `async_result` for the template
-parameter `CompletionHandler`; `r` is a modifiable lvalue of type `R`; and `h`
-is a modifiable lvalue of type `CompletionHandler`.
+this table, `R` is a specialization of `async_result`; `r` is a modifiable
+lvalue of type `R`; and `h` is a modifiable lvalue of type
+`R::completion_handler_type`.
 
 [table async_result specialization requirements
   [[Expression][Return type][Note]]
   [
-    [`R::type`]
+    [`R::completion_handler_type`]
+    []
+    [A type satisfying `MoveConstructible` requirements (C++ Std,
+     \[moveconstructible\]), An object of type `completion_handler_type` shall
+     be a function object with call signature `Signature`, and
+     `completion_handler_type` shall be constructible with an rvalue of type
+     `CompletionToken`.]
+  ]
+  [
+    [`R::return_type`]
     []
     [`void`; or a type satisfying `MoveConstructible` requirements (C++ Std,
      \[moveconstructible\])]
@@ -48,7 +69,7 @@ is a modifiable lvalue of type `CompletionHandler`.
   ]
   [
     [`r.get()`]
-    [`R::type`]
+    [`R::return_type`]
     [The `get()` member function shall be used only as the operand of a return
      statement.]
   ]

@@ -5,13 +5,7 @@
   __begin_versioned_ns__
 
     template<class CompletionToken, class Signature, class = void>
-      struct ``[link classes.completion_handler_type completion_handler_type]``;
-
-    template<class CompletionToken, class Signature>
-      using completion_handler_type_t =
-        typename completion_handler_type<CompletionToken, Signature>::type;
-
-    template<class CompletionHandler> class ``[link classes.async_result async_result]``;
+      class ``[link classes.async_result async_result]``;
 
     template<class CompletionToken, class Signature>
       struct ``[link classes.async_completion async_completion]``;

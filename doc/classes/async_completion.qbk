@@ -1,7 +1,6 @@
 [section:async_completion Class template [^async_completion]]
 [xrefid async.async.completion]
 
-[/ TODO]
 Template parameter `CompletionToken` specifies the model used to obtain the
 result of the asynchronous operation. Template parameter `Signature` is the
 call signature (C++ Std, [func.def]) for the completion handler type invoked on
@@ -14,15 +13,16 @@ completion of the asynchronous operation.
     template<class CompletionToken, class Signature>
     struct async_completion
     {
-      typedef completion_handler_type_t<decay_t<CompletionToken>, Signature>
-        completion_handler_type;
+      typedef async_result<decay_t<CompletionToken>,
+        Signature>::completion_handler_type
+          completion_handler_type;
 
       explicit async_completion(CompletionToken& t);
       async_completion(const async_completion&) = delete;
       async_completion& operator=(const async_completion&) = delete;
 
       ``['see below]`` completion_handler;
-      async_result<completion_handler_type> result;
+      async_result<decay_t<CompletionToken>, Signature> result;
     };
 
   __end_versioned_ns__

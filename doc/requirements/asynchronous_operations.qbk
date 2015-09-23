@@ -27,11 +27,11 @@ A ['completion handler] is a function object that will be invoked, at most
 once, with the result of an asynchronous operation.
 
 An initiating function determines the type `CompletionHandler` of its
-completion handler function object by performing
-`completion_handler_type_t<CompletionToken, Signature>`. The completion handler
-object `completion_handler` is initialized with
-`completion_handler(forward<CompletionToken>(token))`. [inline_note No other
-requirements are placed on the type `CompletionToken`.]
+completion handler function object by performing `typename
+async_result<decay_t<CompletionToken>, Signature>::completion_handler_type`.
+The completion handler object `completion_handler` is initialized with
+`forward<CompletionToken>(token)`. [inline_note No other requirements are
+placed on the type `CompletionToken`.]
 
 The type `CompletionHandler` must satisfy the `MoveConstructible` requirements
 (C++ Std, [moveconstructible]) and be callable with the specified completion
@@ -47,7 +47,7 @@ in terms of these names.
 For the sake of exposition, this specification sometimes annotates functions
 with a return type `__ifr__`. For every function declaration that returns
 `__ifr__`, the meaning is equivalent to specifying the return type as `typename
-async_result<CompletionHandler>::type`.
+async_result<decay_t<CompletionToken>, Signature>::return_type`.
 
 [endsect]
 
@@ -58,7 +58,8 @@ An initiating function in this Technical Specification produces its return type
 as follows:
 
 [mdash] constructing an object `result` of type
-`async_result<CompletionHandler>`, initialized as `result(handler)`; and
+`async_result<decay_t<CompletionToken>, Signature>`, initialized as
+`result(completion_handler)`; and
 
 [mdash] using `result.get()` as the operand of the return statement.
 
@@ -69,10 +70,10 @@ implemented as follows:
   template<class CompletionToken>
   auto async_xyz(T1 t1, T2 t2, CompletionToken&& token)
   {
-    completion_handler_type_t<decay_t<CompletionToken>, void(R1 r1, R2 r2)>
+    typename async_result<decay_t<CompletionToken>, void(R1, R2)>::completion_handler_type
       completion_handler(forward<CompletionToken>(token));
 
-    async_result<decltype(completion_handler)> result(completion_handler);
+    async_result<decay_t<CompletionToken>, void(R1, R2)> result(completion_handler);
 
     // initiate the operation and cause completion_handler to be invoked with
     // the result
@@ -86,7 +87,7 @@ For convenience, initiating functions may be implemented using the
   template<class CompletionToken>
   auto async_xyz(T1 t1, T2 t2, CompletionToken&& token)
   {
-    async_completion<CompletionToken, void(R1 r1, R2 r2)> init(token);
+    async_completion<CompletionToken, void(R1, R2)> init(token);
 
     // initiate the operation and cause init.completion_handler to be invoked
     // with the result

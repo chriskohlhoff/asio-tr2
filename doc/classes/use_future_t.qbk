@@ -1,9 +1,10 @@
 [section:use_future_t Class template [^use_future_t]]
 [xrefid async.use.future]
 
-The class template `use_future_t` defines a set of [link
-classes.completion_handler_type completion token types] for use with
-asynchronous operations.
+The class template `use_future_t` defines a set of types that, when passed as a
+[link requirements.completion_token completion token] to an asynchronous
+operation's initiating function, cause the result of the asynchronous operation
+to be delivered via a future (C++Std, [futures.unique_future]).
 
   namespace std {
   namespace experimental {
@@ -22,6 +23,7 @@ asynchronous operations.
       template<class OtherProtoAllocator> use_future_t<OtherProtoAllocator>
         rebind(const OtherProtoAllocator& a) const noexcept;
       allocator_type get_allocator() const noexcept;
+      template <class F> ``['unspecified]`` operator()(F&& f) const;
     };
 
   __end_versioned_ns__
@@ -56,18 +58,63 @@ allocator.]
 
 [function_returns The associated allocator object.]
 
+  template <class F> ``['unspecified]`` operator()(F&& f) const;
+
+[function_block Let [^G] be a forwarding call wrapper type (C++Std,
+\[func.def\]). Let [^FD] be the type `decay_t<F>` and let [^fd] be an lvalue of
+type [^FD] constructed with `forward<F>(f)`. Let [^N] be
+[^sizeof][^__dotdotdot__(ArgsT)] for the [^ArgsT&&__dotdotdot__] parameter of
+the forwarding call wrapper `G`. Let [^['i]] be in the range [half_open_range
+`0`,`N`] and let [^T[sub ['i]]] be the [^['i]]th deduced type in `ArgsT`. Let
+[^a[sub ['i]]] be the [^['i]]th argument associated with [^T[sub ['i]]].]
+
+[function_returns A forwarding call wrapper `g` of type `G`. The object `g` is
+an asynchronous provider with an associated shared state (C++Std,
+\[futures.state\]). The effect of [^g([^a[sub ['0]]], __dotdotdot__, [^a[sub
+['N-1]]])] is to atomically store the result of [^INVOKE(fd, forward<[^T[sub
+['0]]]>([^a[sub ['0]]]), __dotdotdot__, forward<[^T[sub ['N-1]]]>([^a[sub
+['N-1]]]))] in the shared state and make the shared state ready. If `fd` exits
+via an exception then that exception is atomically stored in the shared state
+and the shared state is made ready.]
+
+[function_remarks The return type satisfies the `MoveConstructible` (C++Std,
+\[moveconstructible\]) requirements.]
+
+[function_block The implementation provides a partial specialization [^template
+<class Result, class][^__dotdotdot__ Args> async_result<G,
+Result(Args][^__dotdotdot__)>] such that:\n
+[mdash] the nested typedef `completion_handler_type` is the type `G`;\n
+[mdash] the nested typedef `return_type` is
+[^future<result_of_t<FD(decay_t<Args>][^__dotdotdot__)>>]; and\n
+[mdash] when an object `r1` of type [^async_result<G,
+Result(Args][^__dotdotdot__)>] is constructed from `g`, the expression `r1.get()`
+returns a future with the same shared state as `g`.]
+
+[function_block The implementation specializes `associated_executor` for `G`.
+For function objects executed using the associated executor's `dispatch()`,
+`post()` or `defer()` functions, any exception thrown is caught by the executor
+and stored in the associated shared state.]
+
 [endsect]
 
-[section:use_future_t_traits [^use_future_t] traits]
-[xrefid async.use.future.traits]
+[section:use_future_t_result Partial class template specialization [^async_result] for [^use_future_t]]
+[xrefid async.use.future.result]
 
-  template<class ProtoAllocator, class R, class... Args>
-  struct completion_handler_type<use_future_t<ProtoAllocator>, R(Args...)>
+  template<class ProtoAllocator, class Result, class... Args>
+  class async_result<use_future_t<ProtoAllocator>, Result(Args...)>
   {
-    typedef ``['see below]`` type;
+    typedef ``['see below]`` completion_handler_type;
+    typedef ``['see below]`` return_type;
+
+    explicit async_result(completion_handler_type& h);
+    async_result(const async_result&) = delete;
+    async_result& operator=(const async_result&) = delete;
+
+    return_type get();
   };
 
-Let `F` be the nested function object type `type`.
+Let `R` be the type `async_result<use_future_t<ProtoAllocator>, Result(Args...)>`.
+Let `F` be the nested function object type `R::completion_handler_type`.
 
 An object `t1` of type `F` is an asynchronous provider with an associated
 shared state (C++Std, [futures.state]). The type `F` provides `F::operator()`
@@ -78,22 +125,21 @@ objects executed using the associated executor's `dispatch()`, `post()` or
 `defer()` functions, any exception thrown is caught by the executor and stored
 in the associated shared state.
 
-`async_result<F>` is valid and when an object `r1` of type `async_result<F>` is
-constructed from `t1`, the expression `r1.get()` returns a future with the same
-shared state as `t1`.
+When an object `r1` of type `R` is constructed from `t1`, the expression
+`r1.get()` returns a future with the same shared state as `t1`.
 
-The semantics of `async_result::type` and `F::operator()` are defined in the
-table below. In this table, [^N] is the value of `sizeof...(Args)`; let [^['i]]
-be in the range \[[^0]..[^N]) and let [^T[sub ['i]]] be the [^['i]]th type in
-`Args`; let [^U[sub ['i]]] be [^decay_t<T[sub ['i]]>] for each type [^T[sub
-['i]]] in `Args`; and let [^a[sub ['i]]] be the [^['i]]th argument to
+The semantics of `R::return_type` and `F::operator()` are defined in the table
+below. In this table, [^N] is the value of `sizeof...(Args)`; let [^['i]] be in
+the range [half_open_range `0`,`N`] and let [^T[sub ['i]]] be the [^['i]]th
+type in `Args`; let [^U[sub ['i]]] be [^decay_t<T[sub ['i]]>] for each type
+[^T[sub ['i]]] in `Args`; and let [^a[sub ['i]]] be the [^['i]]th argument to
 `F::operator()`.
 
-[table completion_handler_type<use_future_t<ProtoAllocator>, R(Args...)>::type semantics
+[table async_result<use_future_t<ProtoAllocator>, Result(Args...)> semantics
   [
     [[^N]]
     [[^U[sub ['0]]]]
-    [`async_result<type>::type`]
+    [`R::return_type`]
     [`F::operator()` effects]
   ]
   [

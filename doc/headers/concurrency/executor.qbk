@@ -47,10 +47,7 @@
       class ``[link classes.executor_binder executor_binder]``;
 
     template<class T, class Executor, class Signature>
-      struct completion_handler_type<executor_binder<T, Executor>, Signature>;
-
-    template<class T, class Executor>
-      class async_result<executor_binder<T, Executor>>;
+      class async_result<executor_binder<T, Executor>, Signature>;
 
     template<class T, class Executor, class Allocator>
       struct associated_allocator<executor_binder<T, Executor>, Allocator>;

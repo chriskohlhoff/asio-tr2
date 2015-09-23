@@ -83,6 +83,8 @@
 ]
 
 [template mdash[] '''&mdash; ''']
+[template indent[] '''&nbsp;&nbsp;&nbsp;&nbsp;''']
+[template bullet[] [indent]'''&bull; ''']
 [template arrow[] '''&rarr; ''']
 
 [template half_open_range[text] '''&#91;'''[text])]
@@ -94,6 +96,7 @@
 
 [/-----------------------------------------------------------------------------]
 
+[def __dotdot__ ..]
 [def __dotdotdot__ ...]
 [def __unspecified__ '''<emphasis>unspecified</emphasis>''']
 [def __ifr__ '''<emphasis>DEDUCED</emphasis>''']
@@ -190,7 +193,7 @@ Run a function asynchronously, on your own thread pool:
 Run a function asynchronously and wait for the result:
 
   std::future<int> f =
-    post(package([]{
+    post(use_future([]{
       // ...
       return 42;
     }));
@@ -203,7 +206,7 @@ result:
   thread_pool pool;
 
   std::future<int> f =
-    post(pool, package([]{
+    post(pool, use_future([]{
       // ...
       return 42;
     }));
@@ -215,7 +218,7 @@ Run a function in the future and wait for the result:
   std::future<int> f =
     post_after(
       std::chrono::seconds(1),
-      package([]{
+      use_future([]{
         // ...
         return 42;
       }));
@@ -415,7 +418,7 @@ may be trivially emulated as follows:
   auto async(F&& f, Args&&... args)
   {
     return post(
-      package(
+      use_future(
         std::bind(std::forward<F>(f),
           std::forward<Args>(args)...)));
   }
@@ -427,16 +430,17 @@ Starting from the inside out, the expression:
 
 creates a function object that will invoke `f` with the specified arguments. Next:
 
-  package(...)
+  use_future(...)
 
-returns an object that will be lazily converted into a `std::packaged_task<>`.
-We could also have used `std::packaged_task<>` directly, as in:
+returns an object that will be lazily converted into a function object similar
+to`std::packaged_task<>`. We could also have used `std::packaged_task<>`
+directly, as in:
 
   std::packaged_task<
     std::result_of_t<
       std::decay_t<F>(std::decay_t<Args>...)>>(...)
 
-In this example, the `package()` function saves on typing by determining the
+In this example, the `use_future()` function saves on typing by determining the
 return type of `F` for us. Finally:
 
   post(...)
@@ -476,7 +480,7 @@ to the thread pool.
     void deposit(int amount)
     {
       post(pool_,
-        package([=]
+        use_future([=]
           {
             balance_ += amount;
           })).get();
@@ -492,9 +496,9 @@ the body of the function:
     balance_ += amount;
   }
 
-which we then wrap in a lazily created `std::packaged_task<>`:
+which we then wrap in a lazily created `std::packaged_task<>` equivalent:
 
-  package(...)
+  use_future(...)
 
 Finally, we submit the packaged task to the pool and wait for it to complete.
 When we submit a `std::packaged_task<>`, `post()` automatically deduces its
@@ -536,7 +540,7 @@ implementation to the strand.
     void deposit(int amount)
     {
       dispatch(strand_,
-        package([=]
+        use_future([=]
           {
             balance_ += amount;
           })).get();
@@ -1078,11 +1082,6 @@ The priority scheduler's executors can then be used like any other:
 
 [table
   [[Header][Name][Description]]
-  [
-    [[^type_traits]]
-    [Class template [^completion_handler_type]]
-    [Transforms a completion token into a completion handler.]
-  ]
   [
     [[^type_traits]]
     [Class template [^async_result]]
@@ -1920,18 +1919,16 @@ be added to the TS.]
 [include:headers headers/concurrency/type_traits.qbk]
 [section:async_requirements Requirements]
 [include:requirements requirements/proto_allocator.qbk]
+[include:requirements requirements/asynchronous_operations.qbk]
+[include:requirements requirements/executor.qbk]
+[include:requirements requirements/service.qbk]
 [endsect]
-[include:classes classes/completion_handler_type.qbk]
 [include:classes classes/async_result.qbk]
 [include:classes classes/async_completion.qbk]
 [include:headers headers/concurrency/memory.qbk]
 [include:classes classes/associated_allocator.qbk]
 [include:functions functions/get_associated_allocator.qbk]
 [include:headers headers/concurrency/executor.qbk]
-[section:async_requirements Requirements]
-[include:requirements requirements/executor.qbk]
-[include:requirements requirements/service.qbk]
-[endsect]
 [include:classes classes/execution_context.qbk]
 [include:classes classes/execution_context__service.qbk]
 [include:classes classes/is_executor.qbk]
@@ -1961,9 +1958,6 @@ be added to the TS.]
 [include:headers headers/concurrency/future.qbk]
 [include:classes classes/use_future_t.qbk]
 [include:classes classes/async_result_packaged_task.qbk]
-[include:classes classes/packaged_handler.qbk]
-[include:classes classes/packaged_token.qbk]
-[include:functions functions/package.qbk]
 [include:headers headers/concurrency/thread_pool.qbk]
 [include:classes classes/thread_pool.qbk]
 [include:classes classes/thread_pool__executor_type.qbk]
