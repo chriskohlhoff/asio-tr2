@@ -248,11 +248,11 @@ function that was submitted to the strand.]]
     void dispatch(Func&& f, const ProtoAllocator& a);
 
 [function_effects If `running_in_this_thread() == true`, calls
-[^['DECAY_COPY]]`(forward<Func>(f))()`. [inline_note If `f` exits via an
-exception, the exception propagates to the caller of `dispatch()`.] Otherwise,
-requests invocation of `f`, as if by forwarding the function object `f` and
-allocator `a` to the executor `inner_ex_`, such that the guarantees of
-ordering and non-concurrency are met.]
+[^['DECAY_COPY]]`(forward<Func>(f))()` (C++Std, \[thread.decaycopy\]).
+[inline_note If `f` exits via an exception, the exception propagates to the
+caller of `dispatch()`.] Otherwise, requests invocation of `f`, as if by
+forwarding the function object `f` and allocator `a` to the executor
+`inner_ex_`, such that the guarantees of ordering and non-concurrency are met.]
 
   template<class Func, class ProtoAllocator>
     void post(Func&& f, const ProtoAllocator& a);

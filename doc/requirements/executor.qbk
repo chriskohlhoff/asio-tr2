@@ -75,9 +75,9 @@ a value of type `A` meeting the `Allocator` requirements (C++ Std,
     [`x1.dispatch(std::move(f),a)`]
     []
     [Effects: Creates an object `f1` initialized with
-     [^['DECAY_COPY]]`(forward<Func>(f))` in the current thread of execution .
-     Calls `f1()` at most once. The executor may block forward progress of the
-     caller until `f1()` finishes execution.\n
+     [^['DECAY_COPY]]`(forward<Func>(f))` (C++Std, \[thread.decaycopy\]) in the
+     current thread of execution . Calls `f1()` at most once. The executor may
+     block forward progress of the caller until `f1()` finishes execution.\n
      \n
      Executor implementations should use the supplied allocator to allocate any
      memory required to store the function object. Prior to invoking the

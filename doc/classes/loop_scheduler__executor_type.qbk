@@ -114,7 +114,8 @@ associated with a `loop_scheduler`, and function objects submitted using the
     void dispatch(Func&& f, const ProtoAllocator& a);
 
 [function_effects If `running_in_this_thread()` is `true`, calls
-[^['DECAY_COPY]]`(forward<Func>(f))()`. Otherwise, requests execution of `f`.]
+[^['DECAY_COPY]]`(forward<Func>(f))()` (C++Std, \[thread.decaycopy\]).
+Otherwise, requests execution of `f`.]
 
 [function_block If `f` exits via an exception, and the execution of `f` is
 performed in the current thread and before `dispatch` returns, the exception

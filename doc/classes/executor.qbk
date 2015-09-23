@@ -212,7 +212,7 @@ destroys, the target of `*this`.]
 
 [function_effects `e.dispatch(g, a)`, where `e` is the target object of
 `*this`, and `g` is a function object of unspecified type that, when called as
-`g()`, performs `DECAY_COPY(f)()`.]
+`g()`, performs `DECAY_COPY(f)()` (C++Std, \[thread.decaycopy\]).]
 
   template<class Func, class ProtoAllocator>
     void post(Func&& f, const ProtoAllocator& a);
