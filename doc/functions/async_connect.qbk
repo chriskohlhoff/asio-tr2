@@ -22,9 +22,6 @@ operation].]
 [function_completion_signature `void(error_code ec, typename Protocol::endpoint
 ep)`.]
 
-[function_requires `ConnectCondition` is a function object type meeting
-CopyConstructible requirements (C++ Std, \[copyconstructible\]).]
-
 [function_effects If `s.is_open()` is `true`, performs `s.close(ec)`. Define
 `previous_ec` as an object of type `error_code` initialized such that
 `!previous_ec` yields `true`. Initiates an asynchronous operation to determine
@@ -59,9 +56,6 @@ return true; }, forward<CompletionToken>(token))`.]
 operation].]
 
 [function_completion_signature `void(error_code ec, InputIterator i)`.]
-
-[function_requires `ConnectCondition` is a function object type meeting
-CopyConstructible requirements (C++ Std, \[copyconstructible\]).]
 
 [function_effects If `s.is_open()` is `true`, performs `s.close(ec)`. Define
 `previous_ec` as an object of type `error_code` initialized such that
