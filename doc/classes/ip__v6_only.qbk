@@ -18,4 +18,11 @@ option] with the name and values in the table below:
 [std_note The constants `IPPROTO_IPV6` and `IPV6_V6ONLY` are defined in the
 __POSIX__ header file __netinet_in_h__.]
 
+Implementations are not required to support setting the `v6_only` option to
+`false`, and the initial value of the `v6_only` option for a socket is
+implementation-defined. [inline_note As not all operating systems support dual
+stack IP networking. Some operating systems that do provide dual stack support
+offer a configuration option to disable it or to set the initial value of the
+`v6_only` socket option.]
+
 [endsect]
