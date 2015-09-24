@@ -160,11 +160,19 @@ Certain objects that participate in asynchronous operations have an
 [section I/O executor]
 [xrefid async.reqmts.async.io.exec]
 
+An asynchronous operation has an associated executor satisfying the [link
+requirements.executor `Executor`] requirements. If not otherwise specified by
+the asynchronous operation, this associated executor is an object of type
+`system_executor`.
+
 All asynchronous operations in this Technical Specification have an associated
-executor object satisfying the [link requirements.executor Executor
-requirements]. If the initiating function is a member function, the associated
+executor object that is determined as follows:
+
+[mdash] If the initiating function is a member function, the associated
 executor is that returned by the `get_executor` member function on the same
-object. If the initiating function is not a member function, the associated
+object.
+
+[mdash] If the initiating function is not a member function, the associated
 executor is that returned by the `get_executor` member function of the first
 argument to the initiating function.
 
