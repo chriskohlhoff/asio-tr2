@@ -23,7 +23,7 @@
       basic_waitable_timer(io_context& ctx, const time_point& t);
       basic_waitable_timer(io_context& ctx, const duration& d);
       basic_waitable_timer(const basic_waitable_timer&) = delete;
-      basic_waitable_timer(basic_waitable_timer&& rhs) noexcept;
+      basic_waitable_timer(basic_waitable_timer&& rhs);
 
       ~basic_waitable_timer();
 
@@ -75,7 +75,7 @@ Instances of class template `basic_waitable_timer` meet the requirements of
 
 [function_postconditions `get_executor() == ctx.get_executor()`.]
 
-  basic_waitable_timer(basic_waitable_timer&& rhs) noexcept;
+  basic_waitable_timer(basic_waitable_timer&& rhs);
 
 [function_effects Move constructs an object of class
 `basic_waitable_timer<Clock, WaitTraits>` that refers to the state originally
