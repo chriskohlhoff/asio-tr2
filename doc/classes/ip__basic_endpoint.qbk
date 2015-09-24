@@ -1,8 +1,10 @@
 [section:ip__basic_endpoint Class template [^ip::basic_endpoint]]
 [xrefid internet.endpoint]
 
-Instances of the `basic_endpoint` class template meet the requirements
-for an [link requirements.endpoint `Endpoint`].
+An object of type `basic_endpoint<InternetProtocol>` represents a
+protocol-specific endpoint, where an endpoint consists of an IP address and
+port number. Endpoints may be used to identify sources and destinations for
+socket connections and datagrams.
 
   namespace std {
   namespace experimental {
@@ -61,6 +63,9 @@ for an [link requirements.endpoint `Endpoint`].
   __end_versioned_ns__
   } // namespace experimental
   } // namespace std
+
+Instances of the `basic_endpoint` class template meet the requirements
+for an [link requirements.endpoint `Endpoint`].
 
 Extensible implementations provide the following member functions:
 

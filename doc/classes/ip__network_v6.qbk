@@ -1,6 +1,9 @@
 [section:ip__network_v6 Class template [^ip::network_v6]]
 [xrefid internet.network.v6]
 
+The class `network_v6` provides the ability to use and manipulate IPv6 network
+addresses.
+
   namespace std {
   namespace experimental {
   __begin_versioned_ns__

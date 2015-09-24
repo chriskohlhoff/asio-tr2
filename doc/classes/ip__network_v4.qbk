@@ -1,6 +1,9 @@
 [section:ip__network_v4 Class template [^ip::network_v4]]
 [xrefid internet.network.v4]
 
+The class `network_v4` provides the ability to use and manipulate IPv4 network
+addresses.
+
   namespace std {
   namespace experimental {
   __begin_versioned_ns__

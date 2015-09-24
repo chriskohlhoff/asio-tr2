@@ -1,6 +1,8 @@
 [section:ip__address_v4 Class [^ip::address_v4]]
 [xrefid internet.address.v4]
 
+The class `address_v4` is a representation of an IPv4 address.
+
   namespace std {
   namespace experimental {
   __begin_versioned_ns__

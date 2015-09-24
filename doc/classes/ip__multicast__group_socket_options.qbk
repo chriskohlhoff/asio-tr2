@@ -4,11 +4,6 @@
 The `ip::multicast::join_group` and `ip::multicast::leave_group` classes are
 socket options for multicast group management.
 
-Multicast group management socket option classes satisfy the requirements for
-`Destructible` (C++ Std, [destructible]), `CopyConstructible` (C++ Std,
-[copyconstructible]), `CopyAssignable` (C++ Std, [copyassignable]), and [link
-requirements.settable_socket_option `SettableSocketOption`].
-
 [std_example Creating a UDP socket and joining a multicast group:
 ``
   // Open an IPv4 UDP socket bound to a specific port.
@@ -32,6 +27,11 @@ Multicast group management socket option classes are defined as follows:
     explicit ``['[*C]]``(const address_v6& multicast_group,
                unsigned int network_interface = 0) noexcept;
   };
+
+Multicast group management socket option classes satisfy the requirements for
+`Destructible` (C++ Std, [destructible]), `CopyConstructible` (C++ Std,
+[copyconstructible]), `CopyAssignable` (C++ Std, [copyassignable]), and [link
+requirements.settable_socket_option `SettableSocketOption`].
 
 Extensible implementations provide the following member functions:
 

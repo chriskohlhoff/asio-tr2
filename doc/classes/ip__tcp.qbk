@@ -1,8 +1,7 @@
 [section:ip__tcp Class [^ip::tcp]]
 [xrefid internet.tcp]
 
-The `tcp` class meets the requirements for an [link
-requirements.internet_protocol `InternetProtocol`].
+The class `tcp` encapsulates the types and flags necessary for TCP sockets.
 
   namespace std {
   namespace experimental {
@@ -35,6 +34,9 @@ requirements.internet_protocol `InternetProtocol`].
   __end_versioned_ns__
   } // namespace experimental
   } // namespace std
+
+The `tcp` class meets the requirements for an [link
+requirements.internet_protocol `InternetProtocol`].
 
 Extensible implementations provide the following member functions:
 

@@ -1,8 +1,7 @@
 [section:ip__udp Class [^ip::udp]]
 [xrefid internet.udp]
 
-The `udp` class meets the requirements for an [link
-requirements.internet_protocol `InternetProtocol`].
+The class `udp` encapsulates the types and flags necessary for UDP sockets.
 
   namespace std {
   namespace experimental {
@@ -32,6 +31,9 @@ requirements.internet_protocol `InternetProtocol`].
   __end_versioned_ns__
   } // namespace experimental
   } // namespace std
+
+The `udp` class meets the requirements for an [link
+requirements.internet_protocol `InternetProtocol`].
 
 Extensible implementations provide the following member functions:
 

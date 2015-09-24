@@ -1,6 +1,8 @@
 [section:ip__address_v6 Class [^ip::address_v6]]
 [xrefid internet.address.v6]
 
+The class `address_v6` is a representation of an IPv6 address.
+
   namespace std {
   namespace experimental {
   __begin_versioned_ns__
