@@ -132,4 +132,15 @@ with the function.
 
 [endsect]
 
+[section Suppression of signals]
+[xrefid err.report.signal]
+
+Some __POSIX__ functions referred to in this Technical Specification may report
+errors by raising a `SIGPIPE` signal. Where a synchronous or asynchronous
+operation is specified in terms of these __POSIX__ functions, the generation of
+`SIGPIPE` is suppressed and an error condition corresponding to __POSIX__
+`EPIPE` is produced instead.
+
+[endsect]
+
 [endsect]
