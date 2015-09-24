@@ -1,30 +1,53 @@
 [section:asynchronous_operations Requirements on asynchronous operations]
 [xrefid async.reqmts.async]
 
-In this Technical Specification, an asynchronous operation is initiated by a
-function that is named with the prefix `async_`. These functions shall be known
-as ['initiating functions].
-
 This section uses the names `Alloc1`, `Alloc2`, `alloc1`, `alloc2`,
 `CompletionHandler`, `completion_handler`, `Executor1`, `Executor2`, `ex1`,
-`ex2`, `f`, `token`, `work1`, and `work2` as placeholders for specifying the
-requirements below.
+`ex2`, `f`, `Signature`, `token`, `work1`, and `work2` as placeholders for
+specifying the requirements below.
+
+[section General asynchronous operation concepts]
+[xrefid async.reqmts.async.concepts]
+
+An ['initiating function] is a function which may be called to start an
+asynchronous operation. A ['completion handler] is a function object that will
+be invoked, at most once, with the result of the asynchronous operation.
+
+The lifecycle of an asynchronous operation is comprised of the following events
+and phases:
+
+[mdash] Event 1: The asynchronous operation is started by a call to the
+['initiating function].
+
+[mdash] Phase 1: The asynchronous operation is now ['outstanding].
+
+[mdash] Event 2: The externally observable side effects of the asynchronous
+operation, if any, are fully established. The ['completion handler] is
+submitted to an executor.
+
+[mdash] Phase 2: The asynchronous operation is now ['completed].
+
+[mdash] Event 3: The completion handler is called with the result of the
+asynchronous operation.
+
+In this Technical Specification, all functions with the prefix `async_` are
+initiating functions.
+
+[endsect]
 
 [section:completion_token Completion tokens and handlers]
 [xrefid async.reqmts.async.token]
 
-All initiating functions in this Technical Specification:
+Initiating functions:
 
 [mdash] are function templates with template parameter `CompletionToken`;
 
 [mdash] accept, as the final parameter, a ['completion token] object `token`
 of type `CompletionToken`;
 
-[mdash] specify a ['Completion signature] element that defines a call signature
-`Signature` (C++ Std, [func.def]).
-
-A ['completion handler] is a function object that will be invoked, at most
-once, with the result of an asynchronous operation.
+[mdash] specify a ['completion signature], which is a call signature (C++ Std,
+[func.def]) `Signature` that determines the arguments to the completion
+handler.
 
 An initiating function determines the type `CompletionHandler` of its
 completion handler function object by performing `typename
@@ -33,29 +56,35 @@ The completion handler object `completion_handler` is initialized with
 `forward<CompletionToken>(token)`. [inline_note No other requirements are
 placed on the type `CompletionToken`.]
 
-The type `CompletionHandler` must satisfy the `MoveConstructible` requirements
-(C++ Std, [moveconstructible]) and be callable with the specified completion
-signature. The ['Completion signature] elements in this Technical Specification
-have named parameters, and the result of an asynchronous operation is specified
-in terms of these names.
+The type `CompletionHandler` must satisfy the requirements of `Destructible`
+(C++ Std, [destructible]) and `MoveConstructible` (C++ Std,
+[moveconstructible]), and be callable with the specified call signature.
+
+In this Technical Specification, all initiating functions specify a
+['Completion signature] element that defines the call signature `Signature`.
+The ['Completion signature] elements in this Technical Specification have named
+parameters, and the results of an asynchronous operation are specified in terms
+of these names.
 
 [endsect]
 
 [section Automatic deduction of initiating function return type]
 [xrefid async.reqmts.async.return.type]
 
-For the sake of exposition, this specification sometimes annotates functions
-with a return type `__ifr__`. For every function declaration that returns
-`__ifr__`, the meaning is equivalent to specifying the return type as `typename
+The return type of an initiating function is `typename
 async_result<decay_t<CompletionToken>, Signature>::return_type`.
+
+For the sake of exposition, this Technical Specification sometimes annotates
+functions with a return type `__ifr__`. For every function declaration that
+returns `__ifr__`, the meaning is equivalent to specifying the return type as
+`typename async_result<decay_t<CompletionToken>, Signature>::return_type`.
 
 [endsect]
 
 [section Production of initiating function return value]
 [xrefid async.reqmts.async.return.value]
 
-An initiating function in this Technical Specification produces its return type
-as follows:
+An initiating function produces its return type as follows:
 
 [mdash] constructing an object `result` of type
 `async_result<decay_t<CompletionToken>, Signature>`, initialized as
@@ -139,8 +168,9 @@ object. If the initiating function is not a member function, the associated
 executor is that returned by the `get_executor` member function of the first
 argument to the initiating function.
 
-Let `Executor1` be the type of the associated executor, and `ex1` be the
-associated executor object obtained as described above.
+Let `Executor1` be the type of the associated executor. Let `ex1` be a value of
+type `Executor1`, representing the associated executor object obtained as
+described above.
 
 [endsect]
 
@@ -148,11 +178,11 @@ associated executor object obtained as described above.
 [xrefid async.reqmts.async.handler.exec]
 
 A completion handler object of type `CompletionHandler` has an associated
-executor object `ex2` of type `Executor2` satisfying the [link
-requirements.executor Executor requirements]. The type `Executor2` is
-`associated_executor_t<CompletionHandler, Executor1>`. The object `ex2` is
-obtained by performing `associated_executor<CompletionHandler,
-Executor1>::get(handler, ex1)`.
+executor of type `Executor2` satisfying the [link requirements.executor
+Executor requirements]. The type `Executor2` is
+`associated_executor_t<CompletionHandler, Executor1>`. Let `ex2` be a value of
+type `Executor2` obtained by performing
+`get_associated_executor(completion_handler, ex1)`.
 
 [endsect]
 
@@ -161,13 +191,13 @@ Executor1>::get(handler, ex1)`.
 
 The implementation of an asynchronous operation shall maintain an object
 `work1` of type `executor_work_guard<Executor1>`, initialized with `work1(ex1)`
-and with `work1.owns_work() == true`, until the effects of the asynchronous
-operation have been realized.
+and with `work1.owns_work() == true`, until the asynchronous operation has
+completed.
 
 The implementation of an asynchronous operation shall maintain an object
 `work2` of type `executor_work_guard<Executor2>`, initialized with `work2(ex2)`
-and with `work2.owns_work() == true`, until `completion_handler` has been
-submitted for execution.
+and with `work2.owns_work() == true`, until the asynchronous operation has
+completed and `completion_handler` has been submitted for execution.
 
 [endsect]
 
@@ -181,21 +211,22 @@ function's arguments.]
 Let `Alloc1` be a type, satisfying the [link requirements.proto_allocator
 `ProtoAllocator`] requirements, that represents the asynchronous operation's
 default allocation strategy. [inline_note Typically `std::allocator<void>`.]
-Let `alloc1` be an object of type `Alloc1`.
+Let `alloc1` be a value of type `Alloc1`.
 
 A completion handler object of type `CompletionHandler` has an associated
 allocator object `alloc2` of type `Alloc2` satisfying the [link
 requirements.proto_allocator `ProtoAllocator`] requirements. The type `Alloc2`
-is `associated_allocator_t<CompletionHandler, Alloc1>`. The object `alloc2` is
-obtained by performing `associated_allocator<CompletionHandler,
-Alloc1>::get(handler, alloc1)`.
+is `associated_allocator_t<CompletionHandler, Alloc1>`. Let `alloc2` be a value
+of type `Alloc2` obtained by performing
+`get_associated_allocator(completion_handler, alloc1)`.
 
 The asynchronous operations defined in this Technical Specification:
 
 [mdash] If required, allocate memory using only the completion handler's
 associated allocator.
 
-[mdash] Prior to completion handler execution, deallocates any memory allocated.
+[mdash] Prior to completion handler execution, deallocate any memory allocated
+using the completion handler's associated allocator.
 
 [std_note The implementation may perform operating system or underlying API
 calls that perform memory allocations not using the associated allocator.
@@ -225,7 +256,7 @@ handler shall be submitted for execution as if by performing
 
 Completion handlers are permitted to throw exceptions. The effect of any
 exception propagated from the execution of a completion handler is determined
-by the executor which is executing the handler.
+by the executor which is executing the completion handler.
 
 [endsect]
 
