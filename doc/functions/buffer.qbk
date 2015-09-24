@@ -1,7 +1,8 @@
 [section:buffer Buffer creation functions]
 [xrefid buffer.creation]
 
-In the functions below, `T` must be a trivially copyable type.
+In the functions below, `T` must be a trivially copyable or standard-layout
+type (C++ Std, [basic.types]).
 
 For the function overloads below that accept an argument of type `vector<>`,
 the buffer objects returned are invalidated by any vector operation that also
