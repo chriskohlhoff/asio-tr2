@@ -46,7 +46,7 @@ lvalue of type `R`; and `h` is a modifiable lvalue of type
 `R::completion_handler_type`.
 
 [table async_result specialization requirements
-  [[Expression][Return type][Note]]
+  [[Expression][Return type][Requirement]]
   [
     [`R::completion_handler_type`]
     []
@@ -70,8 +70,8 @@ lvalue of type `R`; and `h` is a modifiable lvalue of type
   [
     [`r.get()`]
     [`R::return_type`]
-    [The `get()` member function shall be used only as the operand of a return
-     statement.]
+    [[inline_note An asynchronous operation's initiating function uses the
+     `get()` member function as the sole operand of a return statement.]]
   ]
 ]
 
