@@ -31,14 +31,17 @@ type `A` meeting the `Allocator` requirements (C++ Std,
     []
     [Shall not exit via an exception.\n
      \n
-     post: `u == cx1`]
+     post: `u == cx1` and
+     `std::addressof(u.context()) == std::addressof(cx1.context()).`]
   ]
   [
     [`X u(mx1);`]
     []
     [Shall not exit via an exception.\n
      \n
-     post: `u` equals the prior value of `mx1`.]
+     post: `u` equals the prior value of `mx1` and
+     `std::addressof(u.context())` equals the prior value of
+     `std::addressof(mx1.context())`.]
   ]
   [
     [`cx1 == cx2`]
@@ -58,8 +61,12 @@ type `A` meeting the `Allocator` requirements (C++ Std,
   ]
   [
     [`x1.context()`]
-    [`execution_context&`, or a type that is convertible to `execution_context&`.]
-    [Shall not exit via an exception.]
+    [`execution_context&`, or `E&` where `E` is a type that satifisfies the
+     [link requirements.execution_context `ExecutionContext`] requirements.]
+    [Shall not exit via an exception.\n
+     \n
+     The comparison operators and member functions defined in these
+     requirements shall not alter the reference returned by this function.]
   ]
   [
     [`x1.on_work_started()`]
