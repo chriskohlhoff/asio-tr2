@@ -28,8 +28,8 @@ services, indexed by service type.
 
       // execution context protected operations:
 
-      void shutdown();
-      void destroy();
+      void shutdown() noexcept;
+      void destroy() noexcept;
     };
 
     // service access:
@@ -98,14 +98,14 @@ set.]
 [section [^execution_context] protected operations]
 [xrefid async.exec.ctx.protected]
 
-  void shutdown();
+  void shutdown() noexcept;
 
 [function_effects For each service object `svc` in the `execution_context` set,
 in reverse order of addition to the set, performs `svc->shutdown()`. For each
 service in the set, `svc->shutdown()` is called only once irrespective of the
 number of calls to `shutdown` on the `execution_context`.]
 
-  void destroy();
+  void destroy() noexcept;
 
 [function_effects Destroys each service object in the `execution_context` set,
 and removes it from the set, in reverse order of addition to the set.
