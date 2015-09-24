@@ -16,26 +16,26 @@ return true; }, forward<CompletionToken>(token))`.]
                             ConnectCondition c,
                             CompletionToken&& token);
 
-[function_block An [link requirements.asynchronous_operations asynchronous
-operation].]
-
 [function_completion_signature `void(error_code ec, typename Protocol::endpoint
 ep)`.]
 
-[function_effects If `s.is_open()` is `true`, performs `s.close(ec)`. Define
-`previous_ec` as an object of type `error_code` initialized such that
-`!previous_ec` yields `true`. Initiates an asynchronous operation to determine
-the first element `ep` in the sequence `endpoints` for which `c(previous_ec,
-ep)` yields `true` and, if so, for which the asynchronous operation
-`s.async_connect(ep, __unspecified__)` succeeds. If an asynchronous operation
-`s.async_connect(ep, __unspecified__)` fails, `previous_ec` is updated with the
-result of the operation. If no such element is found, `ec` contains
-`previous_ec` and `ep` is `typename Protocol::endpoint()`. [inline_note The
-underlying `async_connect` operations are performed sequentially.]]
+[function_effects Performs `ec.clear()`, then finds the first element `ep` in
+the sequence `endpoints` for which:\n
+[mdash] `c(ec, ep)` yields `true`;\n
+[mdash] `s.close(ec)` succeeds;\n
+[mdash] `s.open(ep.protocol(), ec)` succeeds; and\n
+[mdash] the asynchronous operation `s.async_connect(ep, __unspecified__)` succeeds.\n
+`ec` is updated with the result of the `s.async_connect(ep, __unspecified__)`
+operation, if any. If no such element is found, or if the operation fails with
+one of the error conditions listed below, `ep` is set to `typename
+Protocol::endpoint()`. [inline_note The underlying `close`, `open`, and
+`async_connect` operations are performed sequentially.]]
 
 [function_error_conditions\n
 [mdash] `socket_errc::not_found` [mdash] if `endpoints.empty()` or if the
-function object `c` returned `false` for all elements in the sequence.]
+function object `c` returned `false` for all elements in the sequence.\n
+[mdash] `errc::operation_canceled` [mdash] if `s.is_open() == false`
+immediately following an `async_connect` operation on the underlying socket.]
 
   template<class Protocol, class InputIterator, class CompletionToken>
     __ifr__ async_connect(basic_socket<Protocol>& s,
@@ -52,24 +52,24 @@ return true; }, forward<CompletionToken>(token))`.]
                             ConnectCondition c,
                             CompletionToken&& token);
 
-[function_block An [link requirements.asynchronous_operations asynchronous
-operation].]
-
 [function_completion_signature `void(error_code ec, InputIterator i)`.]
 
-[function_effects If `s.is_open()` is `true`, performs `s.close(ec)`. Define
-`previous_ec` as an object of type `error_code` initialized such that
-`!previous_ec` yields `true`. Initiates an asynchronous operation to determine
-the first iterator `i` in the range [half_open_range `first`,`last`] for which
-`c(previous_ec, *i)` yields `true` and, if so, for which the asynchronous
-operation `s.async_connect(*i, __unspecified__)` succeeds. If an asynchronous
-operation `s.async_connect(*i, __unspecified__)` fails, `previous_ec` is
-updated with the result of the operation. If no such iterator is found, `ec`
-contains `previous_ec` and `i` contains `last`. [inline_note The underlying
-`async_connect` operations are performed sequentially.]]
+[function_effects Performs `ec.clear()`, then finds the first iterator `i` in
+the range [half_open_range `first`,`last`] for which:\n
+[mdash] `c(ec, *i)` yields `true`;\n
+[mdash] `s.close(ec)` succeeds;\n
+[mdash] `s.open(typename Protocol::endpoint(*i).protocol(), ec)` succeeds; and\n
+[mdash] the asynchronous operation `s.async_connect(*i, __unspecified__)` succeeds.\n
+`ec` is updated with the result of the `s.async_connect(*i, __unspecified__)`
+operation, if any. If no such iterator is found, or if the operation fails with
+one of the error conditions listed below, `i` is set to `last`. [inline_note
+The underlying `close`, `open`, and `async_connect` operations are performed
+sequentially.]]
 
 [function_error_conditions\n
 [mdash] `socket_errc::not_found` [mdash] if `first == last` or if the function
-object `c` returned `false` for all iterators in the range.]
+object `c` returned `false` for all iterators in the range.\n
+[mdash] `errc::operation_canceled` [mdash] if `s.is_open() == false`
+immediately following an `async_connect` operation on the underlying socket.]
 
 [endsect]

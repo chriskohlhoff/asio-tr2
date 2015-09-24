@@ -21,12 +21,15 @@ true; }, ec)`.]
                                         const EndpointSequence& endpoints,
                                         ConnectCondition c, error_code& ec);
 
-[function_effects If `s.is_open()` is `true`, performs `s.close(ec)`. Performs
-`ec.clear()`. Returns the first element `ep` in the sequence `endpoints` for
-which `c(ec, ep)` yields `true` and, if so, for which the synchronous operation
-`s.connect(ep, ec)` succeeds. If no such element is found, `ec` contains the
-error code produced by the last unsuccessful connect operation and the function
-returns `typename Protocol::endpoint()`.]
+[function_effects Performs `ec.clear()`, then finds the first element `ep` in
+the sequence `endpoints` for which:\n
+[mdash] `c(ec, ep)` yields `true`;\n
+[mdash] `s.close(ec)` succeeds;\n
+[mdash] `s.open(ep.protocol(), ec)` succeeds; and\n
+[mdash] `s.connect(ep, ec)` succeeds.]
+
+[function_returns `typename Protocol::endpoint()` if no such element is found,
+otherwise `ep`.]
 
 [function_error_conditions\n
 [mdash] `socket_errc::not_found` [mdash] if `endpoints.empty()` or if the
@@ -52,12 +55,14 @@ return true; }, ec)`.]
                           InputIterator first, InputIterator last,
                           ConnectCondition c, error_code& ec);
 
-[function_effects If `s.is_open()` is `true`, performs `s.close(ec)`. Performs
-`ec.clear()`. Returns the first iterator `i` in the range [half_open_range
-`first`,`last`] for which `c(ec, *i)` yields `true` and, if so, for which the
-synchronous operation `s.connect(*i, ec)` succeeds. If no such iterator is
-found, `ec` contains the error code produced by the last unsuccessful connect
-operation and the function returns `last`.]
+[function_effects Performs `ec.clear()`, then finds the first iterator `i` in
+the range [half_open_range `first`,`last`] for which:\n
+[mdash] `c(ec, *i)` yields `true`;\n
+[mdash] `s.close(ec)` succeeds;\n
+[mdash] `s.open(typename Protocol::endpoint(*i).protocol(), ec)` succeeds; and\n
+[mdash] `s.connect(*i, ec)` succeeds.]
+
+[function_returns `last` if no such iterator is found, otherwise `i`.]
 
 [function_error_conditions\n
 [mdash] `socket_errc::not_found` [mdash] if `first == last` or if the function
