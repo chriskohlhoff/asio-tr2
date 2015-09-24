@@ -44,6 +44,9 @@ these specializations are defined below.
   } // namespace experimental
   } // namespace std
 
+Specializations of `basic_address_iterator` satisfy the requirements for input
+iterators (C++ Std, [input.iterators]).
+
   basic_address_iterator(const ``['Address]``& a) noexcept;
 
 [function_effects Initializes `address_` with `a`.]

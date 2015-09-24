@@ -8,10 +8,10 @@ boolean socket options.
 
 Boolean socket option classes satisfy the requirements for `Destructible` (C++
 Std, [destructible]), `CopyConstructible` (C++ Std, [copyconstructible]),
-`Assignable` (C++ Std, [assignable]), [link requirements.gettable_socket_option
-`GettableSocketOption`], and [link requirements.settable_socket_option
-`SettableSocketOption`]. The boolean socket option classes are contextually
-convertible to bool.
+`CopyAssignable` (C++ Std, [copyassignable]), [link
+requirements.gettable_socket_option `GettableSocketOption`], and [link
+requirements.settable_socket_option `SettableSocketOption`]. The boolean socket
+option classes are contextually convertible to bool.
 
 Boolean socket option classes are defined as follows:
 

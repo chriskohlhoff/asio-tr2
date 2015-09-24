@@ -49,6 +49,10 @@
   } // namespace experimental
   } // namespace std
 
+`network_v6` satisfies the requirements for `Destructible` (C++ Std,
+[destructible]), `CopyConstructible` (C++ Std, [copyconstructible]), and
+`CopyAssignable` (C++ Std, [copyassignable]).
+
 [section [^ip::network_v6] constructors]
 [xrefid internet.network.v6.cons]
 

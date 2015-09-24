@@ -67,6 +67,10 @@
   } // namespace experimental
   } // namespace std
 
+`address_v4` satisfies the requirements for `Destructible` (C++ Std,
+[destructible]), `CopyConstructible` (C++ Std, [copyconstructible]),
+and `CopyAssignable` (C++ Std, [copyassignable]).
+
 [section Struct [^ip::address_v4::bytes_type]]
 [xrefid internet.address.v4.bytes]
 
@@ -101,12 +105,6 @@ byte-level representation of an IPv4 address in network byte order.
 [function_postconditions `to_bytes()` yields `{0, 0, 0, 0}` and `to_uint() ==
 0`.]
 
-  constexpr address_v4(const address_v4& a) noexcept;
-
-[function_effects Constructs an object of class `address_v4`.]
-
-[function_postconditions `*this == a`]
-
   constexpr address_v4(const bytes_type& bytes);
 
 [function_throws `out_of_range` if any element of `bytes` is not in the range
@@ -125,17 +123,6 @@ detection is needed.]]
 
 [function_postconditions `to_uint() == val` and `to_bytes()` is `{ (val >> 24)
 & 0xFF, (val >> 16) & 0xFF, (val >> 8) & 0xFF, val & 0xFF }`.]
-
-[endsect]
-
-[section [^ip::address_v4] assignment]
-[xrefid internet.address.v4.assign]
-
-  address_v4& operator=(const address_v4& a) noexcept;
-
-[function_postconditions `*this == a`]
-
-[function_returns `*this`]
 
 [endsect]
 

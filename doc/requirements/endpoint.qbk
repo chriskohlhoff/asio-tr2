@@ -2,8 +2,9 @@
 [xrefid socket.reqmts.endpoint]
 
 An endpoint must meet the requirements of `DefaultConstructible` types (C++
-Std, [defaultconstructible]), `CopyConstructible` types (C++ Std, 20.1.3),
-and the requirements of `Assignable` types (C++ Std, 23.1).
+Std, [defaultconstructible]), `CopyConstructible` types (C++ Std,
+[copyconstructible]), and the requirements of `CopyAssignable` types (C++ Std,
+[copyassignable]).
 
 In the table below, `X` denotes an endpoint class, `a` denotes a (possibly
 const) value of type `X`, and `u` denotes an identifier.

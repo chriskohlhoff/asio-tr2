@@ -74,6 +74,10 @@
   } // namespace experimental
   } // namespace std
 
+`address_v6` satisfies the requirements for `Destructible` (C++ Std,
+[destructible]), `CopyConstructible` (C++ Std, [copyconstructible]),
+and `CopyAssignable` (C++ Std, [copyassignable]).
+
 [std_note The implementations of the functions `is_unspecified`, `is_loopback`,
 `is_multicast`, `is_link_local`, `is_site_local`, `is_v4_mapped`,
 `is_multicast_node_local`, `is_multicast_link_local`, `is_multicast_site_local`,
@@ -110,10 +114,6 @@ byte-level representation of an IPv6 address in network byte order.
 
 [function_postconditions `is_unspecified() == true` and `scope_id() == 0`.]
 
-  constexpr address_v6(const address_v6& a) noexcept;
-
-[function_postconditions `*this == a`]
-
   constexpr address_v6(const bytes_type& bytes,
                        scope_id_type scope = 0);
 
@@ -122,17 +122,6 @@ byte-level representation of an IPv6 address in network byte order.
 char>::max() == 0xFF`, no out-of-range detection is needed.]]
 
 [function_postconditions `to_bytes() == bytes` and `scope_id() == scope`.]
-
-[endsect]
-
-[section [^ip::address_v6] assignment]
-[xrefid internet.address.v6.assign]
-
-  address_v6& operator=(const address_v6& a) noexcept;
-
-[function_postconditions `*this == a`]
-
-[function_returns `*this`]
 
 [endsect]
 

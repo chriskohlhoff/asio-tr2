@@ -67,6 +67,10 @@ no valid address.
   } // namespace experimental
   } // namespace std
 
+`address` satisfies the requirements for `Destructible` (C++ Std,
+[destructible]), `CopyConstructible` (C++ Std, [copyconstructible]), and
+`CopyAssignable` (C++ Std, [copyassignable]).
+
 [section [^ip::address] constructors]
 [xrefid internet.address.cons]
 
@@ -74,10 +78,6 @@ no valid address.
 
 [function_postconditions `is_v4() == true`, `is_v6() == false`, and
 `is_unspecified() == true`.]
-
-  constexpr address(const address& a) noexcept;
-
-[function_postconditions `*this == a`]
 
   constexpr address(const address_v4& a) noexcept;
 
@@ -95,12 +95,6 @@ no valid address.
 
 [section [^ip::address] assignment]
 [xrefid internet.address.assign]
-
-  address& operator=(const address& a) noexcept;
-
-[function_postconditions `*this == a`]
-
-[function_returns `*this`]
 
   constexpr address(const address_v4& a) noexcept;
 
