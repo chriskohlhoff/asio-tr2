@@ -19,8 +19,7 @@
                   CompletionCondition completion_condition,
                   error_code& ec);
 
-[function_block A [link requirements.synchronous_read_operations synchronous
-read operation].]
+[function_block A [link requirements.read_write_operations read operation].]
 
 [function_effects Clears `ec`, then reads data from the [link
 requirements.sync_read_stream buffer-oriented synchronous read stream] object

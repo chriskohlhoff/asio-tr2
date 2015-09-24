@@ -13,8 +13,7 @@
                       CompletionCondition completion_condition,
                       CompletionToken&& token);
 
-[function_block An [link requirements.asynchronous_read_operations asynchronous
-read operation].]
+[function_block A [link requirements.read_write_operations read operation].]
 
 [function_completion_signature `void(error_code ec, size_t n)`.]
 
@@ -59,9 +58,6 @@ unless `is_mutable_buffer_sequence<MutableBufferSequence>::value` is `true`.]
                       DynamicBuffer&& b,
                       CompletionCondition completion_condition,
                       CompletionToken&& token);
-
-[function_block An [link requirements.asynchronous_operations asynchronous
-operation].]
 
 [function_completion_signature `void(error_code ec, size_t n)`.]
 

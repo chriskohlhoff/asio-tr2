@@ -15,8 +15,8 @@ requirements, and `ec` denotes an object of type `error_code`.
      `a.read_some(mb,ec)`]
     [`size_t`]
     [
-      Meets the requirements for a [link
-      requirements.synchronous_read_operations synchronous read operation].\n
+      Meets the requirements for a [link requirements.read_write_operations read
+      operation].\n
       \n
       Reads one or more bytes of data from the stream `a`.\n
       \n

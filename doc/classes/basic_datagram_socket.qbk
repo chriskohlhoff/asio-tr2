@@ -257,8 +257,7 @@ resolution unless `OtherProtocol` is implicitly convertible to `Protocol`.]
     size_t receive(const MutableBufferSequence& buffers,
                    socket_base::message_flags flags, error_code& ec);
 
-[function_block A [link requirements.synchronous_read_operations synchronous
-read operation].]
+[function_block A [link requirements.read_write_operations read operation].]
 
 [function_effects Constructs an array `iov` of __POSIX__ type `struct iovec`
 and length `iovlen`, corresponding to `buffers`, and reads data from this
@@ -343,8 +342,7 @@ socket_base::message_flags(), ec)`.]
                         socket_base::message_flags flags,
                         error_code& ec);
 
-[function_block A [link requirements.synchronous_read_operations synchronous
-read operation].]
+[function_block A [link requirements.read_write_operations read operation].]
 
 [function_effects Constructs an array `iov` of __POSIX__ type `struct iovec`
 and length `iovlen`, corresponding to `buffers`, and reads data from this
@@ -383,6 +381,8 @@ socket_base::message_flags(), forward<CompletionToken>(token))`.]
                             endpoint_type& sender,
                             socket_base::message_flags flags,
                             CompletionToken&& token);
+
+[function_block A [link requirements.read_write_operations read operation].]
 
 [function_completion_signature `void(error_code ec, size_t n)`.]
 
@@ -429,8 +429,7 @@ in flags.]
     size_t send(const ConstBufferSequence& buffers,
                 socket_base::message_flags flags, error_code& ec);
 
-[function_block A [link requirements.synchronous_write_operations synchronous
-write operation].]
+[function_block A [link requirements.read_write_operations write operation].]
 
 [function_effects Constructs an array `iov` of __POSIX__ type `struct iovec`
 and length `iovlen`, corresponding to `buffers`, and writes data to this socket
@@ -459,6 +458,8 @@ forward<CompletionToken>(token))`.]
     __ifr__ async_send(const ConstBufferSequence& buffers,
                     socket_base::message_flags flags,
                     CompletionToken&& token);
+
+[function_block A [link requirements.read_write_operations write operation].]
 
 [function_completion_signature `void(error_code ec, size_t n)`.]
 
@@ -499,8 +500,7 @@ ec)`.]
                    const endpoint_type& recipient,
                    socket_base::message_flags flags, error_code& ec);
 
-[function_block A [link requirements.synchronous_write_operations synchronous
-write operation].]
+[function_block A [link requirements.read_write_operations write operation].]
 
 [function_effects Constructs an array `iov` of __POSIX__ type `struct iovec`
 and length `iovlen`, corresponding to `buffers`, and writes data to this socket
@@ -532,6 +532,8 @@ socket_base::message_flags(), forward<CompletionToken>(token))`.]
                        const endpoint_type& recipient,
                        socket_base::message_flags flags,
                        CompletionToken&& token);
+
+[function_block A [link requirements.read_write_operations write operation].]
 
 [function_completion_signature `void(error_code ec, size_t n)`.]
 

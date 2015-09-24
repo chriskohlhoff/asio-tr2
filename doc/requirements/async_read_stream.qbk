@@ -22,9 +22,9 @@ requirements, and `t` is a completion token.
       [link requirements.asynchronous_operations asynchronous operation].
     ]
     [
-      Meets the requirements for an [link
-      requirements.asynchronous_read_operations asynchronous read operation]
-      with completion signature `void(error_code ec, size_t n)`.\n
+      Meets the requirements for a [link requirements.read_write_operations read
+      operation] and an [link requirements.asynchronous_operations asynchronous
+      operation] with completion signature `void(error_code ec, size_t n)`.\n
       \n
       Initiates an asynchronous operation to read one or more bytes of data
       from the stream `a`.\n

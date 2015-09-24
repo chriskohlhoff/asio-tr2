@@ -19,8 +19,7 @@
                    CompletionCondition completion_condition,
                    error_code& ec);
 
-[function_block A [link requirements.synchronous_write_operations synchronous
-write operation].]
+[function_block A [link requirements.read_write_operations write operation].]
 
 [function_effects Writes data to the [link requirements.sync_write_stream
 buffer-oriented synchronous write stream] object `stream` by performing zero or

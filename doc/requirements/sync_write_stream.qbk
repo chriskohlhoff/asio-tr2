@@ -15,8 +15,8 @@ requirements, and `ec` denotes an object of type `error_code`.
      `a.write_some(cb,ec)`]
     [`size_t`]
     [
-      Meets the requirements for a [link
-      requirements.synchronous_write_operations synchronous write operation].\n
+      Meets the requirements for a [link requirements.read_write_operations write
+      operation].\n
       \n
       Writes one or more bytes of data to the stream `a`.\n
       \n

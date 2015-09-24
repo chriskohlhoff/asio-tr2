@@ -10,9 +10,6 @@
                           DynamicBuffer&& b, string_view delim,
                           CompletionToken&& token);
 
-[function_block An [link requirements.asynchronous_operations asynchronous
-operation].]
-
 [function_completion_signature `void(error_code ec, size_t n)`.]
 
 [function_effects Initiates an asynchronous operation to read data from the

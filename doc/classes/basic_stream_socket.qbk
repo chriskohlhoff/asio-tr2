@@ -227,8 +227,7 @@ resolution unless `OtherProtocol` is implicitly convertible to `Protocol`.]
     size_t receive(const MutableBufferSequence& buffers,
                    socket_base::message_flags flags, error_code& ec);
 
-[function_block A [link requirements.synchronous_read_operations synchronous
-read operation].]
+[function_block A [link requirements.read_write_operations read operation].]
 
 [function_effects If `buffer_size(buffers) == 0`, returns immediately with no
 error. Otherwise, constructs an array `iov` of __POSIX__ type `struct iovec`
@@ -263,6 +262,8 @@ forward<CompletionToken>(token))`.]
     __ifr__ async_receive(const MutableBufferSequence& buffers,
                        socket_base::message_flags flags,
                        CompletionToken&& token);
+
+[function_block A [link requirements.read_write_operations read operation].]
 
 [function_completion_signature `void(error_code ec, size_t n)`.]
 
@@ -306,8 +307,7 @@ peer performed an orderly shutdown.]
     size_t send(const ConstBufferSequence& buffers,
                 socket_base::message_flags flags, error_code& ec);
 
-[function_block A [link requirements.synchronous_write_operations synchronous
-write operation].]
+[function_block A [link requirements.read_write_operations write operation].]
 
 [function_effects If `buffer_size(buffers) == 0`, returns immediately with no
 error. Otherwise, constructs an array `iov` of __POSIX__ type `struct iovec`
@@ -337,6 +337,8 @@ forward<CompletionToken>(token))`.]
     __ifr__ async_send(const ConstBufferSequence& buffers,
                     socket_base::message_flags flags,
                     CompletionToken&& token);
+
+[function_block A [link requirements.read_write_operations write operation].]
 
 [function_completion_signature `void(error_code ec, size_t n)`.]
 
