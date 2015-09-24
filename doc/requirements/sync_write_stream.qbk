@@ -18,13 +18,13 @@ requirements, and `ec` denotes an object of type `error_code`.
       Meets the requirements for a [link requirements.read_write_operations write
       operation].\n
       \n
-      Writes one or more bytes of data to the stream `a`.\n
+      If `buffer_size(cb) > 0`, writes one or more bytes of data to the stream
+      `a` from the buffer sequence `cb`. If successful, sets `ec` such that
+      `!ec` is `true`, and returns the number of bytes written. If an error
+      occurred, sets `ec` such that `!!ec` is `true`, and returns 0.\n
       \n
-      If successful, returns the number of bytes written and sets `ec` such
-      that `!ec` is `true`. If an error occurred, returns `0` and sets `ec` such
-      that `!!ec` is `true`.\n
-      \n
-      The operation shall not block if `buffer_size(cb) == 0`.
+      If `buffer_size(cb) == 0`, the operation shall not block. Sets `ec` such
+      that `!ec` is `true`, and returns 0.
     ]
   ]
 ]

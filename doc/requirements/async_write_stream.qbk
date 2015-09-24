@@ -4,9 +4,9 @@
 A type `X` meets the `AsyncWriteStream` requirements if it satisfies the
 requirements listed below.
 
-In the table below, `a` denotes a value of type `X`, `cb` denotes a (possibly const)
-value satisfying the [link requirements.const_buffers `ConstBufferSequence`]
-requirements, and `t` is a completion token.
+In the table below, `a` denotes a value of type `X`, `cb` denotes a (possibly
+const) value satisfying the [link requirements.const_buffers
+`ConstBufferSequence`] requirements, and `t` is a completion token.
 
 [table AsyncWriteStream requirements
   [[operation] [type] [semantics, pre/post-conditions]]
@@ -26,14 +26,14 @@ requirements, and `t` is a completion token.
       operation] and an [link requirements.asynchronous_operations asynchronous
       operation] with completion signature `void(error_code ec, size_t n)`.\n
       \n
-      Initiates an asynchronous operation to write one or more bytes of data to
-      the stream `a`.\n
+      If `buffer_size(cb) > 0`, initiates an asynchronous operation to write
+      one or more bytes of data to the stream `a` from the buffer sequence
+      `cb`. If successful, `ec` is set such that `!ec` is `true`, and `n` is
+      the number of bytes written. If an error occurred, `ec` is set such that
+      `!!ec` is `true`, and `n` is 0.\n
       \n
-      If successful, `n` is the number of bytes written and `ec` is set such
-      that `!ec` is `true`. If an error occurred, `n` is `0` and `ec` is set such
-      that `!!ec` is `true`.\n
-      \n
-      The operation shall complete immediately if `buffer_size(cb) == 0`.
+      If `buffer_size(cb) == 0`, the operation completes immediately. `ec` is
+      set such that `!ec` is `true`, and `n` is 0.
     ]
   ]
 ]
