@@ -65,6 +65,16 @@ For both overloads, failure to allocate storage is reported by throwing an
 exception as described in the C++ standard (C++14
 \[res.on.exception.handling\]).
 
+In this Technical Specification, when a type requirement is specified using two
+function call expressions [*['f]], with and without an argument `ec` of type
+`error_code`:
+
+  ``[*['f]]``(a1, a2, ..., aN)
+  ``[*['f]]``(a1, a2, ..., aN, ec)
+
+then the effects of the first call expression of [*['f]] shall be as described
+for the first overload above.
+
 [endsect]
 
 [section Asynchronous operations]
@@ -87,6 +97,10 @@ indicates interruption of an operating system or underlying API by a signal
 shall not fail with any error condition associated with non-blocking operations
 [inline_note Such as __POSIX__ error numbers `EWOULDBLOCK`, `EAGAIN`, or
 `EINPROGRESS`; __Windows__ error numbers `WSAEWOULDBLOCK` or `WSAEINPROGRESS`].
+
+In this Technical Specification, when a type requirement is specified as a call
+to a function or member function having the prefix `async_`, then the function
+shall satisfy the error reporting requirements described above.
 
 [endsect]
 
