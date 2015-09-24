@@ -125,6 +125,10 @@ templates. It provides functionality that is common to both types of socket.
   } // namespace experimental
   } // namespace std
 
+Instances of class template `basic_socket` meet the requirements of
+`Destructible` (C++ Std, [destructible]), `MoveConstructible` (C++ Std,
+[moveconstructible]), and `MoveAssignable` (C++ Std, [moveassignable]).
+
 [section [^basic_socket] constructors]
 [xrefid socket.basic.cons]
 

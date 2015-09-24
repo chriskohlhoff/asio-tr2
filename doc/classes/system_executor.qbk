@@ -37,7 +37,7 @@ permitted to execute on any thread.
   } // namespace experimental
   } // namespace std
 
-Class `system_executor` satisfies the [link requirements.executor Executor
+Class `system_executor` satisfies the [link requirements.executor `Executor`
 requirements].
 
 To satisfy the executor requirements for the `post` and `defer` member

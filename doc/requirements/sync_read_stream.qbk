@@ -1,11 +1,14 @@
 [section:sync_read_stream Buffer-oriented synchronous read stream requirements]
 [xrefid buffer.reqmts.syncreadstream]
 
-In the table below, `a` denotes a synchronous read stream object, `mb` denotes
-an object satisfying [link requirements.mutable_buffers mutable buffer
-sequence] requirements, and `ec` denotes an object of type `error_code`.
+A type `X` meets the `SyncReadStream` requirements if it satisfies the
+requirements listed below.
 
-[table Buffer-oriented synchronous read stream requirements
+In the table below, `a` denotes a value of type `X`, `mb` denotes a (possibly const)
+value satisfying the [link requirements.mutable_buffers `MutableBufferSequence`]
+requirements, and `ec` denotes an object of type `error_code`.
+
+[table SyncReadStream requirements
   [[operation] [type] [semantics, pre/post-conditions]]
   [
     [`a.read_some(mb)`\n

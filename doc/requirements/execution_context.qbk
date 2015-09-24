@@ -1,11 +1,11 @@
 [section:execution_context Execution context requirements]
 [xrefid async.reqmts.executioncontext]
 
-An execution context shall be publicly and unambiguously derived from
-`execution_context`, and meet the additional requirements listed below.
+A type `X` meets the `ExecutionContext` requirements if it is publicly and
+unambiguously derived from `execution_context`, and satisfies the additional
+requirements listed below.
 
-In the table below, `X` denotes an execution context class, and `x` denotes an
-object of type `X`.
+In the table below, `x` denotes a value of type `X`.
 
 [table ExecutionContext requirements
   [[expression] [return type] [assertion/note\npre/post-condition]]

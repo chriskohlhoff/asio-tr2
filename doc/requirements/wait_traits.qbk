@@ -1,10 +1,13 @@
 [section:wait_traits Wait traits requirements]
 [xrefid timer.reqmts.waittraits]
 
-In the table below, `X` denotes a wait traits class for a type `Clock` meeting
-the `Clock` requirements (C++ Std, [time.clock.req]); `t` denotes a (possibly
-const) value of type `Clock::time_point`; and `d` denotes a (possibly const)
-value of type `Clock::duration`.
+For a type `Clock` meeting the `Clock` requirements (C++ Std,
+[time.clock.req]), a type `X` meets the `WaitTraits` requirements if it
+satisfies the requirements listed below.
+
+In the table below, `t` denotes a (possibly const) value of type
+`Clock::time_point`; and `d` denotes a (possibly const) value of type
+`Clock::duration`.
 
 [table WaitTraits requirements
   [[expression] [return type] [assertion/note\npre/post-condition]]

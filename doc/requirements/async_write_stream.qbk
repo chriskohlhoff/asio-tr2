@@ -1,11 +1,14 @@
 [section:async_write_stream Buffer-oriented asynchronous write stream requirements]
 [xrefid buffer.reqmts.asyncwritestream]
 
-In the table below, `a` denotes an asynchronous write stream object, `cb`
-denotes an object satisfying [link requirements.const_buffers constant buffer
-sequence] requirements, and `t` is a completion token.
+A type `X` meets the `AsyncWriteStream` requirements if it satisfies the
+requirements listed below.
 
-[table Buffer-oriented asynchronous write stream requirements
+In the table below, `a` denotes a value of type `X`, `cb` denotes a (possibly const)
+value satisfying the [link requirements.const_buffers `ConstBufferSequence`]
+requirements, and `t` is a completion token.
+
+[table AsyncWriteStream requirements
   [[operation] [type] [semantics, pre/post-conditions]]
   [
     [`a.get_executor()`]

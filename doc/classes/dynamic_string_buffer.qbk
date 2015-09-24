@@ -1,8 +1,9 @@
 [section:dynamic_string_buffer Class template [^dynamic_string_buffer]]
 [xrefid buffer.dynamic.string]
 
-The `dynamic_string_buffer` class template meets the requirements for [link
-requirements.dynamic_buffers `DynamicBuffer`].
+Class template `dynamic_string_buffer` is an adaptor used to automatically grow
+or shrink a `basic_string` object, to reflect the data successfully transferred
+in an I/O operation.
 
   namespace std {
   namespace experimental {
@@ -40,6 +41,9 @@ requirements.dynamic_buffers `DynamicBuffer`].
   __end_versioned_ns__
   } // namespace experimental
   } // namespace std
+
+The `dynamic_string_buffer` class template meets the requirements of [link
+requirements.dynamic_buffers `DynamicBuffer`].
 
 The `dynamic_string_buffer` class template requires that `sizeof(CharT) == 1`.
 

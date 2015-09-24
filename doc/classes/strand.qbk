@@ -63,7 +63,8 @@ satisfying the [link requirements.executor Executor requirements].
   } // namespace experimental
   } // namespace std
 
-`strand<Executor>` satisfies the Executor requirements.
+`strand<Executor>` satisfies the [link requirements.executor `Executor`]
+requirements.
 
 A strand provides guarantees of ordering and non-concurrency. Given:
 

@@ -1,14 +1,14 @@
 [section:connect_condition Connect condition requirements]
 [xrefid socket.reqmts.connectcondition]
 
-A connect condition type shall satisfy the requirements of `Destructible` (C++
-Std, [destructible]) and `CopyConstructible` (C++ Std, [copyconstructible])
-as well as the additional requirements listed below.
+A type `X` meets the `ConnectCondition` requirements if it satisfies the
+requirements of `Destructible` (C++ Std, [destructible]) and
+`CopyConstructible` (C++ Std, [copyconstructible]), as well as the additional
+requirements listed below.
 
-In the table below, `x` denotes an object of a connect condition type, `ec`
-denotes a (possibly const) value of type `error_code`, and `ep` denotes a
-(possibly const) value of some type satisfying the [link requirements.endpoint
-endpoint] requirements.
+In the table below, `x` denotes a value of type `X`, `ec` denotes a (possibly
+const) value of type `error_code`, and `ep` denotes a (possibly const) value of
+some type satisfying the [link requirements.endpoint endpoint] requirements.
 
 [table ConnectCondition requirements
   [[expression] [return type] [assertion/note\npre/post-condition]]

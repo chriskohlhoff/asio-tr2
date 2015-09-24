@@ -1,12 +1,17 @@
 [section:mutable_buffers Mutable buffer sequence requirements]
 [xrefid buffer.reqmts.mutablebuffersequence]
 
-A ['mutable buffer sequence] satisfies the requirements for a [link
-requirements.const_buffers constant buffer sequence] as well as the
-requirements in the table below.
+A ['mutable buffer sequence] represents a set of memory regions that may be
+used to receive the output of an operation, such as the `receive` operation of
+a socket.
 
-In the table below, `X` denotes a constant buffer sequence class, `x` denotes a
-(possibly const) value of type `X`, and `u` denotes an identifier.
+A type `X` meets the `MutableBufferSequence` requirements if it satisfies the
+requirements of `Destructible` (C++ Std, [destructible]) and
+`CopyConstructible` (C++ Std, [copyconstructible]), as well as the additional
+requirements listed below.
+
+In the table below, `x` denotes a (possibly const) value of type `X`, and `u`
+denotes an identifier.
 
 [table MutableBufferSequence requirements
   [[expression] [return type] [assertion/note\npre/post-condition]]

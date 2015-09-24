@@ -26,8 +26,9 @@
   } // namespace experimental
   } // namespace std
 
-The `const_buffer` class satisfies the [link requirements.const_buffers
-`ConstBufferSequence`] type requirements.
+The `const_buffer` class satisfies requirements of [link
+requirements.const_buffers `ConstBufferSequence`], `DefaultConstructible` (C++
+Std, [defaultconstructible]), and `CopyAssignable` (C++ Std, [copyassignable]).
 
 [section [^const_buffer] constructors]
 [xrefid buffer.const.cons]

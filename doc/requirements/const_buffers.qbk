@@ -1,12 +1,16 @@
 [section:const_buffers Constant buffer sequence requirements]
 [xrefid buffer.reqmts.constbuffersequence]
 
-A ['constant buffer sequence] satisfies the requirements for `Destructible`
-(C++ Std, [destructible]) and `CopyConstructible` (C++ Std,
-[copyconstructible]), as well as the requirements in the table below.
+A ['constant buffer sequence] represents a set of memory regions that may be
+used as input to an operation, such as the `send` operation of a socket.
 
-In the table below, `X` denotes a constant buffer sequence class, `x` denotes a
-(possibly const) value of type `X`, and `u` denotes an identifier.
+A type `X` meets the `ConstBufferSequence` requirements if it satisfies the
+requirements of `Destructible` (C++ Std, [destructible]) and
+`CopyConstructible` (C++ Std, [copyconstructible]), as well as the additional
+requirements listed below.
+
+In the table below, `x` denotes a (possibly const) value of type `X`, and `u`
+denotes an identifier.
 
 [table ConstBufferSequence requirements
   [[expression] [return type] [assertion/note\npre/post-condition]]

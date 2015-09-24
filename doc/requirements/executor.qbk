@@ -2,11 +2,13 @@
 [xrefid async.reqmts.executor]
 
 The library describes a standard set of requirements for ['executors]. A type
-meeting the Executor requirements embodies a set of rules for determining how
+meeting the `Executor` requirements embodies a set of rules for determining how
 submitted function objects are to be executed.
 
-An executor type `X` shall satisfy the requirements of `CopyConstructible` (C++
-Std, [copyconstructible]) and `Destructible` (C++ Std, [destructible]) types.
+A type `X` meets the `Executor` requirements if it satisfies the requirements of
+`CopyConstructible` (C++ Std, [copyconstructible]) and `Destructible` (C++ Std,
+[destructible]), as well as the additional requirements listed below.
+
 No constructor, comparison operator, copy operation, move operation, swap
 operation, or member functions `context`, `on_work_started`, and
 `on_work_finished` on these types shall exit via an exception.
@@ -15,12 +17,12 @@ The executor copy constructor, comparison operators, and other member functions
 defined in these requirements shall not introduce data races as a result of
 concurrent calls to those functions from different threads.
 
-In the table below, `X` denotes an executor class, `x1` and `x2` denote values
-of type `X`, `cx1` and `cx2` denote (possibly const) values of type `X`, `mx1`
-denotes an xvalue of type `X`, `f` denotes a `MoveConstructible` (C++ Std,
-[moveconstructible]) function object callable with zero arguments, `a` denotes
-a value of type `A` meeting the `Allocator` requirements (C++ Std,
-[allocator.requirements]), and `u` denotes an identifier.
+In the table below, `x1` and `x2` denote values of type `X`, `cx1` and `cx2`
+denote (possibly const) values of type `X`, `mx1` denotes an xvalue of type
+`X`, `f` denotes a `MoveConstructible` (C++ Std, [moveconstructible]) function
+object callable with zero arguments, `a` denotes a value of type `A` meeting
+the `Allocator` requirements (C++ Std, [allocator.requirements]), and `u`
+denotes an identifier.
 
 [table Executor requirements
   [[expression] [type] [assertion/note\npre/post-conditions]]

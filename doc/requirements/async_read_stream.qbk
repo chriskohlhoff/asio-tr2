@@ -1,11 +1,14 @@
 [section:async_read_stream Buffer-oriented asynchronous read stream requirements]
 [xrefid buffer.reqmts.asyncreadstream]
 
-In the table below, `a` denotes an asynchronous read stream object, `mb`
-denotes an object satisfying [link requirements.mutable_buffers mutable buffer
-sequence] requirements, and `t` is a completion token.
+A type `X` meets the `AsyncReadStream` requirements if it satisfies the
+requirements listed below.
 
-[table Buffer-oriented asynchronous read stream requirements
+In the table below, `a` denotes a value of type `X`, `mb` denotes a (possibly const)
+value satisfying the [link requirements.mutable_buffers `MutableBufferSequence`]
+requirements, and `t` is a completion token.
+
+[table AsyncReadStream requirements
   [[operation] [type] [semantics, pre/post-conditions]]
   [
     [`a.get_executor()`]

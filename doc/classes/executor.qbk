@@ -83,13 +83,15 @@ The `executor` class provides a polymorphic wrapper for types that satisfy the
 
   } // namespace std
 
-The ['target] is the executor object that is held by the wrapper. The
-`executor` type itself meets the requirements for an [link
-requirements.executor Executor].
+Class `executor` meets the requirements of [link requirements.executor
+`Executor`], `DefaultConstructible` (C++ Std, [defaultconstructible]), and
+`CopyAssignable` (C++ Std, [copyassignable]).
 
 [std_note To meet the `noexcept` requirements for executor copy constructors
 and move constructors, implementations may share a target between two or more
 `executor` objects.]
+
+The ['target] is the executor object that is held by the wrapper.
 
 [section [^executor] constructors]
 [xrefid async.executor.cons]

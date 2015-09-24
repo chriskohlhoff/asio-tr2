@@ -1,17 +1,17 @@
 [section:acceptable_protocol Acceptable protocol requirements]
 [xrefid socket.reqmts.acceptableprotocol]
 
-An acceptable protocol must meet the requirements for [link
-requirements.protocol protocol] as well as the additional requirements listed
-below.
-
-In the table below, `X` denotes an acceptable protocol class.
+A type `X` meets the `AcceptableProtocol` requirements if it satisfies the
+requirements of [link requirements.protocol `Protocol`] as well as the
+additional requirements listed below.
 
 [table AcceptableProtocol requirements
   [[expression] [return type] [assertion/note\npre/post-conditions]]
   [
     [`X::socket`]
-    [A type that is publicly and unambiguously derived from `basic_socket<X>`.]
+    [A type that satisfies the requirements of `Destructible` (C++ Std,
+     \[destructible\]) and `MoveConstructible` (C++ Std, \[moveconstructible\]),
+     and that is publicly and unambiguously derived from `basic_socket<X>`.]
     []
   ]
 ]

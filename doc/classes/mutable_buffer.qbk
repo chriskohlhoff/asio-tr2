@@ -25,8 +25,10 @@
   } // namespace experimental
   } // namespace std
 
-The `mutable_buffer` class satisfies the [link requirements.mutable_buffers
-`MutableBufferSequence`] type requirements.
+The `mutable_buffer` class satisfies requirements of [link
+requirements.mutable_buffers `MutableBufferSequence`], `DefaultConstructible`
+(C++ Std, [defaultconstructible]), and `CopyAssignable` (C++ Std,
+[copyassignable]).
 
 [section [^mutable_buffer] constructors]
 [xrefid buffer.mutable.cons]
