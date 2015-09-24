@@ -128,12 +128,14 @@ in the associated shared state.
 When an object `r1` of type `R` is constructed from `t1`, the expression
 `r1.get()` returns a future with the same shared state as `t1`.
 
-The semantics of `R::return_type` and `F::operator()` are defined in the table
-below. In this table, [^N] is the value of `sizeof...(Args)`; let [^['i]] be in
-the range [half_open_range `0`,`N`] and let [^T[sub ['i]]] be the [^['i]]th
-type in `Args`; let [^U[sub ['i]]] be [^decay_t<T[sub ['i]]>] for each type
-[^T[sub ['i]]] in `Args`; and let [^a[sub ['i]]] be the [^['i]]th argument to
-`F::operator()`.
+The type of `R::return_type` and the effects of `F::operator()` are defined in
+the table below. After establishing these effects, `F::operator()` makes the
+shared state ready. In this table, [^N] is the value of `sizeof...(Args)`; let
+[^['i]] be in the range [half_open_range `0`,`N`] and let [^T[sub ['i]]] be the
+[^['i]]th type in `Args`; let [^U[sub ['i]]] be [^decay_t<T[sub ['i]]>] for
+each type [^T[sub ['i]]] in `Args`; let [^A[sub ['i]]] be the deduced type of
+the [^['i]]th argument to `F::operator()`; and let [^a[sub ['i]]] be the
+[^['i]]th argument to `F::operator()`.
 
 [table async_result<use_future_t<ProtoAllocator>, Result(Args...)> semantics
   [
@@ -146,7 +148,7 @@ type in `Args`; let [^U[sub ['i]]] be [^decay_t<T[sub ['i]]>] for each type
     [0]
     []
     [[^future<void>]]
-    [Makes the shared state ready.]
+    [None.]
   ]
   [
     [1]
@@ -154,21 +156,21 @@ type in `Args`; let [^U[sub ['i]]] be [^decay_t<T[sub ['i]]>] for each type
     [[^future<void>]]
     [If [^a[sub ['0]]] evaluates to `true`, atomically stores the exception
      pointer produced by [^make_exception_ptr(system_error(a[sub ['0]]))] in the
-     shared state. The shared state is made ready.]
+     shared state.]
   ]
   [
     [1]
     [`exception_ptr`]
     [[^future<void>]]
     [If [^a[sub ['0]]] is non-null, atomically stores the exception pointer
-     [^a[sub ['0]]] in the shared state. The shared state is made ready.]
+     [^a[sub ['0]]] in the shared state.]
   ]
   [
     [1]
     [all other types]
     [[^future<U[sub ['0]]>]]
-    [Atomically stores [^a[sub ['0]]] in the shared state and makes that state
-     ready.]
+    [Atomically stores [^forward<A[sub ['0]]>(a[sub ['0]])] in the shared
+     state.]
   ]
   [
     [2]
@@ -176,23 +178,23 @@ type in `Args`; let [^U[sub ['i]]] be [^decay_t<T[sub ['i]]>] for each type
     [[^future<U[sub ['1]]>]]
     [If [^a[sub ['0]]] evaluates to `true`, atomically stores the exception
      pointer produced by [^make_exception_ptr(system_error(a[sub ['0]]))] in the
-     shared state; otherwise, atomically stores [^a[sub ['1]]] in the shared
-     state. The shared state is made ready.]
+     shared state; otherwise, atomically stores [^forward<A[sub ['1]]>(a[sub
+     ['1]])] in the shared state.]
   ]
   [
     [2]
     [`exception_ptr`]
     [[^future<U[sub ['1]]>]]
     [If [^a[sub ['0]]] is non-null, atomically stores the exception pointer in
-     the shared state; otherwise, atomically stores [^a[sub ['1]]] in the shared
-     state. The shared state is made ready.]
+     the shared state; otherwise, atomically stores [^forward<A[sub ['1]]>(a[sub
+     ['1]])] in the shared state.]
   ]
   [
     [2]
     [all other types]
     [[^future<tuple<U[sub ['0]],U[sub ['1]]>>]]
-    [Atomically stores the result of [^make_tuple(a[sub ['0]],a[sub ['1]])] in
-     the shared state and makes that state ready.]
+    [Atomically stores [^forward_as_tuple<A[sub ['0]],A[sub ['1]]>(a[sub
+     ['0]],a[sub ['1]])] in the shared state.]
   ]
   [
     [>2]
@@ -200,25 +202,25 @@ type in `Args`; let [^U[sub ['i]]] be [^decay_t<T[sub ['i]]>] for each type
     [[^future<tuple<U[sub ['1]],...,U[sub ['N-1]]>>]]
     [If [^a[sub ['0]]] evaluates to `true`, atomically stores the exception
      pointer produced by [^make_exception_ptr(system_error(a[sub ['0]]))] in the
-     shared state; otherwise, atomically stores the result of [^make_tuple(a[sub
-     ['1]],...,a[sub ['N-1]])] in the shared state. The shared state is made
-     ready.]
+     shared state; otherwise, atomically stores [^forward_as_tuple<A[sub
+     ['1]],...,A[sub ['N-1]])>(a[sub ['1]],...,a[sub ['N-1]])] in the shared
+     state.]
   ]
   [
     [>2]
     [`exception_ptr`]
     [[^future<tuple<U[sub ['1]],...,U[sub ['N-1]]>>]]
     [If [^a[sub ['0]]] is non-null, atomically stores the exception pointer in
-     the shared state; otherwise, atomically stores the result of
-     [^make_tuple(a[sub ['1]],...,a[sub ['N-1]])] in the shared state. The
-     shared state is made ready.]
+     the shared state; otherwise, atomically stores [^forward_as_tuple<A[sub
+     ['1]],...,A[sub ['N-1]]>(a[sub ['1]],...,a[sub ['N-1]])] in the shared
+     state.]
   ]
   [
     [>2]
     [all other types]
     [[^future<tuple<U[sub ['0]],...,U[sub ['N-1]]>>]]
-    [Atomically stores the result of [^make_tuple(a[sub ['0]],...,a[sub
-     ['N-1]])] in the shared state and makes that state ready.]
+    [Atomically stores [^forward_as_tuple<A[sub ['0]],...,A[sub ['N-1]]>(a[sub
+     ['0]],...,a[sub ['N-1]])] in the shared state.]
   ]
 ]
 
