@@ -28,4 +28,10 @@ waiting for the operation to complete. Multiple asynchronous operations may be
 executed concurrently.
 [endsect]
 
+[section:orderly_shutdown orderly shutdown]
+[xrefid defs.orderly.shutdown]
+The procedure for shutting down a stream after all work in progress has been
+completed, without loss of data.
+[endsect]
+
 [endsect]

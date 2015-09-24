@@ -22,8 +22,8 @@ requirements, and `ec` denotes an object of type `error_code`.
       `a` into the buffer sequence `mb`. If successful, sets `ec` such that
       `!ec` is `true`, and returns the number of bytes read. If an error
       occurred, sets `ec` such that `!!ec` is `true`, and returns 0. If all
-      data has been read from the stream and the stream has been shut down in
-      an orderly manner, sets `ec` to `stream_errc::eof` and returns 0.\n
+      data has been read from the stream, and the stream performed an orderly
+      shutdown, sets `ec` to `stream_errc::eof` and returns 0.\n
       \n
       If `buffer_size(mb) == 0`, the operation shall not block. Sets `ec` such
       that `!ec` is `true`, and returns 0.
