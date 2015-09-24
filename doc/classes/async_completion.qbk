@@ -29,7 +29,7 @@ completion of the asynchronous operation.
   } // namespace experimental
   } // namespace std
 
-The template parameter `Signature` shall be a call signature (C++Std,
+The template parameter `Signature` shall be a call signature (C++ Std,
 [func.def]).
 
 [section [^async_completion] members]

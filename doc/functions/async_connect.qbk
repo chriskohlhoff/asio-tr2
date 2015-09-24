@@ -23,7 +23,7 @@ operation].]
 ep)`.]
 
 [function_requires `ConnectCondition` is a function object type meeting
-CopyConstructible requirements (C++ Std \[copyconstructible\]).]
+CopyConstructible requirements (C++ Std, \[copyconstructible\]).]
 
 [function_effects If `s.is_open()` is `true`, performs `s.close(ec)`. Define
 `previous_ec` as an object of type `error_code` initialized such that
@@ -61,7 +61,7 @@ operation].]
 [function_completion_signature `void(error_code ec, InputIterator i)`.]
 
 [function_requires `ConnectCondition` is a function object type meeting
-CopyConstructible requirements (C++ Std \[copyconstructible\]).]
+CopyConstructible requirements (C++ Std, \[copyconstructible\]).]
 
 [function_effects If `s.is_open()` is `true`, performs `s.close(ec)`. Define
 `previous_ec` as an object of type `error_code` initialized such that

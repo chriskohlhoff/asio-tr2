@@ -20,7 +20,7 @@
 
 Class template `wait_traits` satisfies the [link requirements.wait_traits
 `WaitTraits`] type requirements. Template argument `Clock` is a type meeting
-the `Clock` requirements (C++ Std [time.clock.req]).
+the `Clock` requirements (C++ Std, [time.clock.req]).
 
 [section Class template [^wait_traits] members]
 

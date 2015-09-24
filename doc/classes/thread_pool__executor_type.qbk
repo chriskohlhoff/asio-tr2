@@ -112,7 +112,7 @@ pool; otherwise `false`.]
     void dispatch(Func&& f, const ProtoAllocator& a);
 
 [function_effects If `running_in_this_thread()` is `true`, calls
-[^['DECAY_COPY]]`(forward<Func>(f))()` (C++Std, \[thread.decaycopy\]).
+[^['DECAY_COPY]]`(forward<Func>(f))()` (C++ Std, \[thread.decaycopy\]).
 Otherwise, requests execution of `f`.]
 
 [function_block If `f` exits via an exception, and the execution of `f` is

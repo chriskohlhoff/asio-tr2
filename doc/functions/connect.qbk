@@ -53,7 +53,7 @@ return true; }, ec)`.]
                           ConnectCondition c, error_code& ec);
 
 [function_requires `ConnectCondition` is a function object type meeting
-CopyConstructible requirements (C++ Std \[copyconstructible\]).]
+CopyConstructible requirements (C++ Std, \[copyconstructible\]).]
 
 [function_effects If `s.is_open()` is `true`, performs `s.close(ec)`. Performs
 `ec.clear()`. Returns the first iterator `i` in the range [half_open_range

@@ -4,7 +4,7 @@
 A class is a ['service] if it is publicly and unambiguously derived from
 `execution_context::service`, or if it is publicly and unambiguously derived
 from another service. For a service `S`, `S::key_type` is valid and denotes a
-type (C++Std, [temp.deduct]), and `is_base_of_v<typename S::key_type, S>` is
+type (C++ Std, [temp.deduct]), and `is_base_of_v<typename S::key_type, S>` is
 `true`.
 
 A service defines an explicit constructor that can be invoked with a single

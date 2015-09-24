@@ -37,10 +37,10 @@ operation's initiating function.
   } // namespace std
 
 The template parameter `CompletionToken` shall be an object type. The template
-parameter `Signature` shall be a call signature (C++Std, [func.def]).
+parameter `Signature` shall be a call signature (C++ Std, [func.def]).
 
 Specializations of `async_result` shall satisfy the `Destructible` requirements
-(C++Std, [destructible]) in addition to the requirements in the table below. In
+(C++ Std, [destructible]) in addition to the requirements in the table below. In
 this table, `R` is a specialization of `async_result`; `r` is a modifiable
 lvalue of type `R`; and `h` is a modifiable lvalue of type
 `R::completion_handler_type`.

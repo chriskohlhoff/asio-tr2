@@ -6,6 +6,6 @@
   template<> struct hash<experimental::__versioned_ns__::ip::address_v6>;
 
 [function_requires the template specializations shall meet the requirements of
-class template `hash` (C++ Std \[unord.hash\]).]
+class template `hash` (C++ Std, \[unord.hash\]).]
 
 [endsect]

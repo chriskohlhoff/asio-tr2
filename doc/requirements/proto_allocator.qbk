@@ -2,11 +2,11 @@
 [xrefid async.reqmts.proto.allocator]
 
 A type `A` meets the proto-allocator requirements if `A` is `CopyConstructible`
-(C++Std, [copyconstructible]), `Destructible` (C++Std, [destructible]), and
-`allocator_traits<A>::rebind_alloc<U>` meets the allocator requirements
-(C++Std, [allocator.requirements]), where `U` is an object type. [inline_note
-For example, `std::allocator<void>` meets the proto-allocator requirements but
-not the allocator requirements.] No constructor, comparison operator, copy
+(C++ Std, [copyconstructible]), `Destructible` (C++ Std, [destructible]), and
+`allocator_traits<A>::rebind_alloc<U>` meets the allocator requirements (C++
+Std, [allocator.requirements]), where `U` is an object type. [inline_note For
+example, `std::allocator<void>` meets the proto-allocator requirements but not
+the allocator requirements.] No constructor, comparison operator, copy
 operation, move operation, or swap operation on these types shall exit via an
 exception.
 

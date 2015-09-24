@@ -4,7 +4,7 @@
 The class template `use_future_t` defines a set of types that, when passed as a
 [link requirements.completion_token completion token] to an asynchronous
 operation's initiating function, cause the result of the asynchronous operation
-to be delivered via a future (C++Std, [futures.unique_future]).
+to be delivered via a future (C++ Std, [futures.unique_future]).
 
   namespace std {
   namespace experimental {
@@ -60,7 +60,7 @@ allocator.]
 
   template <class F> ``['unspecified]`` operator()(F&& f) const;
 
-[function_block Let [^G] be a forwarding call wrapper type (C++Std,
+[function_block Let [^G] be a forwarding call wrapper type (C++ Std,
 \[func.def\]). Let [^FD] be the type `decay_t<F>` and let [^fd] be an lvalue of
 type [^FD] constructed with `forward<F>(f)`. Let [^N] be
 [^sizeof][^__dotdotdot__(ArgsT)] for the [^ArgsT&&__dotdotdot__] parameter of
@@ -69,15 +69,15 @@ the forwarding call wrapper `G`. Let [^['i]] be in the range [half_open_range
 [^a[sub ['i]]] be the [^['i]]th argument associated with [^T[sub ['i]]].]
 
 [function_returns A forwarding call wrapper `g` of type `G`. The object `g` is
-an asynchronous provider with an associated shared state (C++Std,
+an asynchronous provider with an associated shared state (C++ Std,
 \[futures.state\]). The effect of [^g([^a[sub ['0]]], __dotdotdot__, [^a[sub
 ['N-1]]])] is to atomically store the result of [^INVOKE(fd, forward<[^T[sub
 ['0]]]>([^a[sub ['0]]]), __dotdotdot__, forward<[^T[sub ['N-1]]]>([^a[sub
-['N-1]]]))] (C++Std, \[func.require\]) in the shared state and make the shared
+['N-1]]]))] (C++ Std, \[func.require\]) in the shared state and make the shared
 state ready. If `fd` exits via an exception then that exception is atomically
 stored in the shared state and the shared state is made ready.]
 
-[function_remarks The return type satisfies the `MoveConstructible` (C++Std,
+[function_remarks The return type satisfies the `MoveConstructible` (C++ Std,
 \[moveconstructible\]) requirements.]
 
 [function_block The implementation provides a partial specialization [^template
@@ -117,7 +117,7 @@ Let `R` be the type `async_result<use_future_t<ProtoAllocator>, Result(Args...)>
 Let `F` be the nested function object type `R::completion_handler_type`.
 
 An object `t1` of type `F` is an asynchronous provider with an associated
-shared state (C++Std, [futures.state]). The type `F` provides `F::operator()`
+shared state (C++ Std, [futures.state]). The type `F` provides `F::operator()`
 such that the expression `t1(declval<Args>()...)` is well formed.
 
 The implementation specializes `associated_executor` for `F`. For function
