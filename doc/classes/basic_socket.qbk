@@ -129,6 +129,11 @@ Instances of class template `basic_socket` meet the requirements of
 `Destructible` (C++ Std, [destructible]), `MoveConstructible` (C++ Std,
 [moveconstructible]), and `MoveAssignable` (C++ Std, [moveassignable]).
 
+When an operation has its effects specified as if by passing the result of
+`native_handle()` to a __POSIX__ function, then the operation fails with error
+condition `errc::bad_file_descriptor` if `is_open() == false` at the point in
+the effects when the __POSIX__ function is called.
+
 [section [^basic_socket] constructors]
 [xrefid socket.basic.cons]
 

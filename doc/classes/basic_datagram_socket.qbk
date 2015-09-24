@@ -170,6 +170,11 @@ If a program performs a synchronous operation on this socket, other than
 `close`, `cancel`, `shutdown`, `receive`, or `receive_from`, while there is an
 outstanding asynchronous write operation, the behavior is undefined.
 
+When an operation has its effects specified as if by passing the result of
+`native_handle()` to a __POSIX__ function, then the operation fails with error
+condition `errc::bad_file_descriptor` if `is_open() == false` at the point in
+the effects when the __POSIX__ function is called.
+
 [section [^basic_datagram_socket] constructors]
 [xrefid socket.dgram.cons]
 
