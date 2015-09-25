@@ -15,8 +15,8 @@
 [function_effects Initiates an asynchronous operation to read data from the
 [link requirements.async_read_stream buffer-oriented asynchronous read stream]
 object `stream` by performing zero or more asynchronous read_some operations on
-the stream, until the input sequence of the [link requirements.dynamic_buffers
-dynamic buffer] object `b` contains the specified delimiter `delim`.]
+the stream, until the readable bytes of the [link requirements.dynamic_buffers
+dynamic buffer] object `b` contain the specified delimiter `delim`.]
 
 [function_block Data is placed into the dynamic buffer object `b`. A [link
 requirements.mutable_buffers mutable buffer sequence] is obtained prior to each
@@ -30,7 +30,7 @@ read_some operation's completion handler.]
 
 [function_block The asynchronous read_until operation continues until:]
 
-[function_block [mdash] the input sequence of `b` contains the delimiter
+[function_block [mdash] the readable bytes of `b` contain the delimiter
 `delim`; or]
 
 [function_block [mdash] `b.size() == b.max_size()`; or]
@@ -47,12 +47,12 @@ read_some operation on the stream. [inline_note This means that the caller is
 not required to guarantee the validity of the delimiter string after the call
 to `async_read_until` returns.]]
 
-[function_block On completion of the asynchronous operation, if the input
-sequence of `b` contains the delimiter, `ec` is set such that `!ec` is `true`.
+[function_block On completion of the asynchronous operation, if the readable
+bytes of `b` contain the delimiter, `ec` is set such that `!ec` is `true`.
 Otherwise, if `b.size() == b.max_size()`, `ec` is set such that `ec ==
-stream_errc::not_found`. If `b.size() < b.max_size()`, `ec` contains the
-`error_code` from the most recent asynchronous read_some operation. `n`
-contains the number of bytes in the input sequence of `b` up to and including
-the delimiter, if present, otherwise `0`.]
+stream_errc::not_found`. If `b.size() < b.max_size()`, `ec` is the `error_code`
+from the most recent asynchronous read_some operation. `n` is the number of
+readable bytes in `b` up to and including the delimiter, if present, otherwise
+`0`.]
 
 [endsect]
