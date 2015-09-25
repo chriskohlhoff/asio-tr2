@@ -1,10 +1,11 @@
 [section:asynchronous_operations Requirements on asynchronous operations]
 [xrefid async.reqmts.async]
 
-This section uses the names `Alloc1`, `Alloc2`, `alloc1`, `alloc2`,
+This section uses the names `Alloc1`, `Alloc2`, `alloc1`, `alloc2`, `Args`,
 `CompletionHandler`, `completion_handler`, `Executor1`, `Executor2`, `ex1`,
-`ex2`, `f`, `Signature`, `token`, `work1`, and `work2` as placeholders for
-specifying the requirements below.
+`ex2`, `f`, [^['i]], [^['N]], `Signature`, `token`, [^T[sub ['i]]], [^t[sub
+['i]]], `work1`, and `work2` as placeholders for specifying the requirements
+below.
 
 [section General asynchronous operation concepts]
 [xrefid async.reqmts.async.concepts]
@@ -246,9 +247,15 @@ Std, \[res.on.data.races\]).]
 [section Execution of completion handler on completion of asynchronous operation]
 [xrefid async.reqmts.async.completion]
 
-When an asynchronous operation completes, the implementation constructs a
-zero-argument function object `f` to invoke `completion_handler` with the
-results of the operation.
+Let `Args...` be the argument types of the completion signature `Signature` and
+let [^['N]] be `sizeof...(Args)`. Let [^['i]] be in the range [half_open_range
+`0`,[^['N]]]. Let [^T[sub ['i]]] be the [^['i]]th type in `Args...` and let
+[^t[sub ['i]]] be the [^['i]]th completion handler argument associated with
+[^T[sub ['i]]].
+
+Let `f` be a function object, callable as `f()`, that invokes
+`completion_handler` as if by [^completion_handler(forward<T[sub ['0]]>(t[sub
+['0]]), ..., forward<T[sub ['N-1]]>(t[sub ['N-1]]))].
 
 If an asynchonous operation completes immediately (that is, within the thread
 of execution calling the initiating function, and before the initiating
