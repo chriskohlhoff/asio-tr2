@@ -150,6 +150,18 @@ invocation of the completion handler.
 
 [endsect]
 
+[section Non-blocking requirements on initiating functions]
+[xrefid async.reqmts.async.non.blocking]
+
+An initiating function shall not block (C++Std [defns.block]) the calling
+thread pending completion of the outstanding operation.
+
+[std_note Initiating functions may still block the calling thread for other
+reasons. For example, an initiating function may lock a mutex in order to
+synchronize access to shared data.]
+
+[endsect]
+
 [section Associated executor]
 [xrefid async.reqmts.async.assoc.exec]
 
