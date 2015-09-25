@@ -140,22 +140,23 @@ move constructed from `rhs`.]
 
   basic_socket_streambuf<protocol_type>* connect(const endpoint_type& e);
 
-[function_effects Resets the `streambuf` get and put areas, closes and re-opens
-the socket by performing `socket_.close(ec_)` and `socket_.open(e.protocol(),
-ec_)`, then attempts to establish a connection as if by __POSIX__
-`__connect__(socket_.native_handle(), static_cast<sockaddr*>(e.data()),
-e.size())`. `ec_` is set to reflect the error code produced by the operation.
-If the operation does not complete before the absolute timeout specified by
-`expiry_`, the socket is closed and `ec_` is set to `errc::timed_out`.]
+[function_effects Initializes the `basic_socket_streambuf` as required, closes
+and re-opens the socket by performing `socket_.close(ec_)` and
+`socket_.open(e.protocol(), ec_)`, then attempts to establish a connection as
+if by __POSIX__ `__connect__(socket_.native_handle(),
+static_cast<sockaddr*>(e.data()), e.size())`. `ec_` is set to reflect the error
+code produced by the operation. If the operation does not complete before the
+absolute timeout specified by `expiry_`, the socket is closed and `ec_` is set
+to `errc::timed_out`.]
 
 [function_returns if `!ec_`, `this`; otherwise, a null pointer.]
 
   template<class... Args>
     basic_socket_streambuf* connect(Args&&... args);
 
-[function_effects Resets the `streambuf` get and put areas and closes the
-socket as if by calling `socket_.close(ec_)`. Obtains an endpoint sequence
-`endpoints` by performing
+[function_effects Initializes the `basic_socket_streambuf` as required and
+closes the socket as if by calling `socket_.close(ec_)`. Obtains an endpoint
+sequence `endpoints` by performing
 `protocol_type::resolver(ctx).resolve(forward<Args>(args)__dotdotdot__)`, where
 `ctx` is an unspecified object of class `io_context`. For each endpoint `e` in
 the sequence, closes and re-opens the socket by performing `socket_.close(ec_)`
@@ -175,14 +176,16 @@ requirements.internet_protocol internet protocol].]
   basic_socket_streambuf* close();
 
 [function_effects If a put area exists, calls `overflow(traits_type::eof())` to
-flush characters. Calls:
-``
-  basic_socket<protocol_type>::close(ec_);
-``
-then resets the get and put areas. If the call to `overflow` fails, or if `!ec_`,
-then `close` fails.]
+flush characters. Regardless of whether the preceding call fails or throws an
+exception, the function closes the socket as if by
+`basic_socket<protocol_type>::close(ec_)`. If any of the calls made by the
+function fail, `close` fails by returning a null pointer. If one of these calls
+throws an exception, the exception is caught and rethrown after closing the
+socket.]
 
 [function_returns `this` on success, a null pointer otherwise.]
+
+[function_postcondition `is_open() == false`.]
 
   basic_socket<protocol_type>& socket();
 
