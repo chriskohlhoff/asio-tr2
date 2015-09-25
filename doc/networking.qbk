@@ -1,4 +1,4 @@
-[library Networking Library Proposal (Revision 5)
+[library Networking Library (Revision 6)
     [quickbook 1.1]
     [id network]
 ]
@@ -184,68 +184,23 @@ QNX Neutrino.
 
 [section Changes in this revision]
 
-This revision contains numerous changes resulting from the LWG wording review
-held in Cologne in February 2015. Please note, however, it does not yet contain
-all of the wording corrections and suggestions from that meeting, nor have the
-applied corrections and changes been reviewed. As the changes are too extensive
-to list here, readers may wish to view the GitHub page for this proposal at
+This revision includes changes to address the remaining issues from the LWG
+wording review held in Cologne in February 2015, as well applying design
+changes following LEWG review in Lenexa. As the changes are too extensive to
+list here, readers may wish to view the GitHub page for this proposal at
 ['[@https://github.com/chriskohlhoff/asio-tr2/]] for further information.
 
-The purpose of this revision is to provide LEWG with up-to-date wording in
-order to confirm and/or consider certain design choices, based on feedback from
-Cologne. To facilitate this process, this revision contains some of the
-suggested design changes from the wording review. There are two significant
-design changes worth noting here.
+Since the previous revision, the design changes of note include:
 
-First, the `basic_socket_acceptor` class's `accept` and `async_accept` member
-functions have been changed to produce the incoming socket object by moving the
-result, rather than by taking a socket object by non-const reference. For example,
-a synchronous accept operation may now look like this:
-
-  tcp::socket socket(my_acceptor.accept());
-  // read and write on newly accepted socket ...
-
-and an asynchronous accept operation like this:
-
-  my_acceptor.async_accept(
-      [](error_code ec, tcp::socket socket)
-      {
-        if (!ec)
-        {
-          // read and write on newly accepted socket
-        }
-      });
-
-As a consequence of this change, the `basic_socket_streambuf` class no longer
-inherits from `basic_socket` [mdash] it did so previously to allow users to
-pass it to `accept()` or `async_accept()`. Instead, `basic_socket_streambuf`
-and `basic_socket_iostream` are move-enabled and support the ability to
-move-construct from a socket:
-
-  tcp::iostream s(my_acceptor.accept());
-
-Second, there was concern about the use of resource-owning iterators associated
-with the `ip::basic_resolver` template, and the related single iterator
-overloads of the free functions `connect` and `async_connect`. The resolver has
-been changed so that its `resolve` operations now return a results class based
-on the regular expression library's `match_results` template. This
-`ip::basic_resolver_results` type satisfies the requirements of a sequence
-container, except that only the operations defined for const-qualified sequence
-containers are supported:
-
-  for (auto& result : my_resolver.resolve("www.boost.org", "http"))
-  {
-    std::cout << result->endpoint() << ", ";
-    std::cout << result->host_name() << ", ";
-    std::cout << result->service_name() << std::endl;
-  }
-
-In addition, the single iterator overloads of the free functions `connect` and
-`async_connect` have been removed and replaced with overloads that accept an
-`EndpointSequence`. This ensures that the following simple usage idiom is still
-supported:
-
-  connect(my_socket, my_resolver.resolve("www.boost.org", "http"));
+* Renaming `io_service` to `io_context`.
+* Renaming `wrap()` to `bind_executor()`.
+* Changing `package()` to be the function call operator of `use_future`.
+* Removal of the `const_buffers_1` and `mutable_buffers_1` classes. The buffer
+  sequence requirements have been updated, and `const_buffer` and
+  `mutable_buffer` now satisfy these requirements directly.
+* Add new `data()` and `size()` member functions to `const_buffer` and
+  `mutable_buffer`, replacing `buffer_cast<>()` and `buffer_size()`
+  respectively.
 
 [endsect]
 
