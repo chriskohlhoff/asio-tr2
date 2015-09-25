@@ -38,7 +38,8 @@ read_some operation's completion handler.]
 [function_block [mdash] an asynchronous read_some operation fails.]
 
 [function_block The program shall ensure the `AsyncReadStream` object `stream`
-is valid until the handler for the asynchronous operation is invoked.]
+is valid until the completion handler for the asynchronous operation is
+invoked.]
 
 [function_block If `delim` is of type `string_view`, the implementation copies
 the underlying sequence of characters prior to initiating an asynchronous

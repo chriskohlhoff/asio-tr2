@@ -122,15 +122,16 @@ operations.
 
 When there are multiple outstanding asynchronous read operations with zero
 `flags`, the `buffers` are filled in the order in which the operations were
-issued. The order of invocation of the handlers for these operations is
-unspecified. When there are multiple asynchronous read operations, where at
+issued. The order of invocation of the completion handlers for these operations
+is unspecified. When there are multiple asynchronous read operations, where at
 least one has non-zero `flags`, the behavior is unspecified.
 
 When there are multiple outstanding asynchronous write operations with zero
 `flags`, the `buffers` are transmitted in the order in which the operations
-were issued. The order of invocation of the handlers for these operations is
-unspecified. When there are multiple outstanding asynchronous write operations,
-where at least one has non-zero `flags`, the behavior is unspecified.
+were issued. The order of invocation of the completion handlers for these
+operations is unspecified. When there are multiple outstanding asynchronous
+write operations, where at least one has non-zero `flags`, the behavior is
+unspecified.
 
 If a program performs a synchronous operation on this socket, other than
 `close`, `cancel`, `shutdown`, or `send`, while there is an outstanding
