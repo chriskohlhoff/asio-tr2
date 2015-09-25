@@ -19,7 +19,7 @@ denotes an identifier.
     [`std::experimental::__ns__::buffer_sequence_begin(x)`\n
      `std::experimental::__ns__::buffer_sequence_end(x)`]
     [An iterator type meeting the requirements for bidirectional iterators (C++
-     Std, \[bidirection.iterators\]) whose value type is convertible to
+     Std, \[bidirectional.iterators\]) whose value type is convertible to
      `mutable_buffer`.]
     []
   ]
