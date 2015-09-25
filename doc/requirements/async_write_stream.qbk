@@ -1,5 +1,5 @@
 [section:async_write_stream Buffer-oriented asynchronous write stream requirements]
-[xrefid buffer.reqmts.asyncwritestream]
+[xrefid buffer.stream.reqmts.asyncwritestream]
 
 A type `X` meets the `AsyncWriteStream` requirements if it satisfies the
 requirements listed below.

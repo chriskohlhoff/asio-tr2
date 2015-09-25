@@ -1,5 +1,5 @@
 [section:sync_write_stream Buffer-oriented synchronous write stream requirements]
-[xrefid buffer.reqmts.syncwritestream]
+[xrefid buffer.stream.reqmts.syncwritestream]
 
 A type `X` meets the `SyncWriteStream` requirements if it satisfies the
 requirements listed below.

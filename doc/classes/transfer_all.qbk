@@ -1,5 +1,9 @@
 [section:transfer_all Class [^transfer_all]]
-[xrefid buffer.transfer.all]
+[xrefid buffer.stream.transfer.all]
+
+The class `transfer_all` is a completion condition that is used to specify that
+a read or write operation should continue until all of the data has been
+transferred, or until an error occurs.
 
   namespace std {
   namespace experimental {
@@ -15,10 +19,8 @@
   } // namespace experimental
   } // namespace std
 
-The class `transfer_all` is a function object type for use as a
-`CompletionCondition` argument to [link functions.read synchronous read], [link
-functions.async_read asynchronous read], [link functions.write synchronous
-write], or [link functions.async_write asynchronous write] operations.
+The class `transfer_all` satisfies the [link requirements.completion_condition
+`CompletionCondition`] requirements.
 
   size_t operator()(const error_code& ec, size_t) const;
 

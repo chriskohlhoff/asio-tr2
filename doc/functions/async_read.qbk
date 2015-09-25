@@ -22,11 +22,11 @@ buffer-oriented asynchronous read stream] object `stream` by invoking the
 stream's `async_read_some` member function (henceforth referred to as
 asynchronous read_some operations) zero or more times.]
 
-[function_block The `completion_condition` parameter specifies a function
-object to be called prior to each asynchronous read_some operation. The
-function object is passed the `error_code` value from the most recent
+[function_block The `completion_condition` parameter specifies a completion
+condition to be called prior to each asynchronous read_some operation. The
+completion condition is passed the `error_code` value from the most recent
 asynchronous read_some operation, and the total number of bytes transferred in
-the asynchronous read operation so far. The function object return value
+the asynchronous read operation so far. The completion condition return value
 specifies the maximum number of bytes to be read on the subsequent asynchronous
 read_some operation. Overloads where a completion condition is not specified
 behave as if called with an object of class `transfer_all`.]
@@ -78,11 +78,11 @@ completion of each asynchronous read_some operation, the implementation
 performs `b.commit(n)`, where `n` is the value passed to the asynchronous
 read_some operation's completion handler.]
 
-[function_block The `completion_condition` parameter specifies a function
-object to be called prior to each asynchronous read_some operation. The
-function object is passed the `error_code` value from the most recent
+[function_block The `completion_condition` parameter specifies a completion
+condition to be called prior to each asynchronous read_some operation. The
+completion condition is passed the `error_code` value from the most recent
 asynchronous read_some operation, and the total number of bytes transferred in
-the asynchronous read operation so far. The function object return value
+the asynchronous read operation so far. The completion condition return value
 specifies the maximum number of bytes to be read on the subsequent asynchronous
 read_some operation. Overloads where a completion condition is not specified
 behave as if called with an object of class `transfer_all`.]

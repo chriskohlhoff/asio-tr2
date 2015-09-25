@@ -1,5 +1,9 @@
 [section:transfer_exactly Class [^transfer_exactly]]
-[xrefid buffer.transfer.exactly]
+[xrefid buffer.stream.transfer.exactly]
+
+The class `transfer_exactly` is a completion condition that is used to specify
+that a read or write operation should continue until an exact number of bytes
+has been transferred, or until an error occurs.
 
   namespace std {
   namespace experimental {
@@ -18,10 +22,8 @@
   } // namespace experimental
   } // namespace std
 
-The class `transfer_exactly` is a function object type for use as a
-`CompletionCondition` argument to [link functions.read synchronous read], [link
-functions.async_read asynchronous read], [link functions.write synchronous
-write], or [link functions.async_write asynchronous write] operations.
+The class `transfer_exactly` satisfies the [link
+requirements.completion_condition `CompletionCondition`] requirements.
 
   explicit transfer_exactly(size_t e);
 

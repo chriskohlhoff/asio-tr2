@@ -25,14 +25,14 @@
 buffer-oriented synchronous write stream] object `stream` by performing zero or
 more calls to the stream's `write_some` member function.]
 
-[function_block The `completion_condition` parameter specifies a function
-object to be called prior to each call to the stream's `write_some` member
-function. The function object is passed the `error_code` value from the most
-recent `write_some` call, and the total number of bytes transferred in the
-synchronous write operation so far. The function object return value specifies
-the maximum number of bytes to be write on the subsequent `write_some` call.
-Overloads where a completion condition is not specified behave as if called
-with an object of class `transfer_all`.]
+[function_block The `completion_condition` parameter specifies a completion
+condition to be called prior to each call to the stream's `write_some` member
+function. The completion condition is passed the `error_code` value from the
+most recent `write_some` call, and the total number of bytes transferred in the
+synchronous write operation so far. The completion condition return value
+specifies the maximum number of bytes to be written on the subsequent
+`write_some` call. Overloads where a completion condition is not specified
+behave as if called with an object of class `transfer_all`.]
 
 [function_block The synchronous write operation continues until:]
 
@@ -72,12 +72,14 @@ sequence] is obtained using `b.data()`. After the data has been written to the
 stream, the implementation performs `b.consume(n)`, where `n` is the number of
 bytes successfully written.]
 
-[function_block The `completion_condition` parameter specifies a function
-object to be called after each call to the stream's `write_some` member
-function. The function object is passed the `error_code` value from the most
-recent `write_some` call, and the total number of bytes transferred in the
-synchronous write operation so far. Overloads where a completion condition is
-not specified behave as if called with an object of class `transfer_all`.]
+[function_block The `completion_condition` parameter specifies a completion
+condition to be called after each call to the stream's `write_some` member
+function. The completion condition is passed the `error_code` value from the
+most recent `write_some` call, and the total number of bytes transferred in the
+synchronous write operation so far. The completion condition return value
+specifies the maximum number of bytes to be written on the subsequent
+`write_some` call. Overloads where a completion condition is not specified
+behave as if called with an object of class `transfer_all`.]
 
 [function_block The synchronous write operation continues until:]
 

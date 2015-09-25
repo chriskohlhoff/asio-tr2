@@ -1,5 +1,5 @@
 [section:async_read_stream Buffer-oriented asynchronous read stream requirements]
-[xrefid buffer.reqmts.asyncreadstream]
+[xrefid buffer.stream.reqmts.asyncreadstream]
 
 A type `X` meets the `AsyncReadStream` requirements if it satisfies the
 requirements listed below.

@@ -1,5 +1,5 @@
 [section:sync_read_stream Buffer-oriented synchronous read stream requirements]
-[xrefid buffer.reqmts.syncreadstream]
+[xrefid buffer.stream.reqmts.syncreadstream]
 
 A type `X` meets the `SyncReadStream` requirements if it satisfies the
 requirements listed below.

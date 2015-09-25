@@ -575,7 +575,10 @@ be added to the TS.]
     [`<experimental/timer>`]
   ]
   [
-    [[link network.buffers Buffers]]
+    [
+      [link network.buffers Buffers]\n
+      [link network.buffer_streams Buffer-oriented streams]\n
+    ]
     [`<experimental/buffer>`]
   ]
   [
@@ -617,6 +620,10 @@ are used to express type requirements, as listed in the table below.
   [
     [`Clock`]
     [C++Std, \[time.clock.req\]]
+  ]
+  [
+    [`CompletionCondition`]
+    [[link requirements.completion_condition completion condition]]
   ]
   [
     [`CompletionToken`]
@@ -787,10 +794,6 @@ This clause defines components for performing timer operations.
 [include:requirements requirements/const_buffers.qbk]
 [include:requirements requirements/dynamic_buffers.qbk]
 [include:requirements requirements/read_write_operations.qbk]
-[include:requirements requirements/sync_read_stream.qbk]
-[include:requirements requirements/async_read_stream.qbk]
-[include:requirements requirements/sync_write_stream.qbk]
-[include:requirements requirements/async_write_stream.qbk]
 [endsect]
 [include:classes classes/mutable_buffer.qbk]
 [include:classes classes/const_buffer.qbk]
@@ -803,6 +806,18 @@ This clause defines components for performing timer operations.
 [include:classes classes/dynamic_vector_buffer.qbk]
 [include:classes classes/dynamic_string_buffer.qbk]
 [include:functions functions/dynamic_buffer.qbk]
+[endsect]
+
+[section:buffer_streams Buffer-oriented streams]
+[xrefid buffer.stream]
+[section:buffer_streams_requirements Requirements]
+[xrefid buffer.stream.reqmts]
+[include:requirements requirements/sync_read_stream.qbk]
+[include:requirements requirements/async_read_stream.qbk]
+[include:requirements requirements/sync_write_stream.qbk]
+[include:requirements requirements/async_write_stream.qbk]
+[include:requirements requirements/completion_condition.qbk]
+[endsect]
 [include:classes classes/transfer_all.qbk]
 [include:classes classes/transfer_at_least.qbk]
 [include:classes classes/transfer_exactly.qbk]
