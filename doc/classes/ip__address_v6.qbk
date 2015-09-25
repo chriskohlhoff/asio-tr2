@@ -76,9 +76,9 @@ The class `address_v6` is a representation of an IPv6 address.
   } // namespace experimental
   } // namespace std
 
-`address_v6` satisfies the requirements for `Destructible` (C++ Std,
-[destructible]), `CopyConstructible` (C++ Std, [copyconstructible]),
-and `CopyAssignable` (C++ Std, [copyassignable]).
+`address_v6` satisfies the requirements for `Destructible` (C++Std
+[destructible]), `CopyConstructible` (C++Std [copyconstructible]),
+and `CopyAssignable` (C++Std [copyassignable]).
 
 [std_note The implementations of the functions `is_unspecified`, `is_loopback`,
 `is_multicast`, `is_link_local`, `is_site_local`, `is_v4_mapped`,

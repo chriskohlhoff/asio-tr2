@@ -9,8 +9,8 @@ additional requirements listed below.
   [[expression] [return type] [assertion/note\npre/post-conditions]]
   [
     [`X::socket`]
-    [A type that satisfies the requirements of `Destructible` (C++ Std,
-     \[destructible\]) and `MoveConstructible` (C++ Std, \[moveconstructible\]),
+    [A type that satisfies the requirements of `Destructible` (C++Std
+     \[destructible\]) and `MoveConstructible` (C++Std \[moveconstructible\]),
      and that is publicly and unambiguously derived from `basic_socket<X>`.]
     []
   ]

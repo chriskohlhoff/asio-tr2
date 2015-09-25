@@ -2,8 +2,8 @@
 [xrefid socket.reqmts.protocol]
 
 A type `X` meets the `Protocol` requirements if it satisfies the requirements
-of `Destructible` (C++ Std, [destructible]), `CopyConstructible` (C++ Std,
-[copyconstructible]), and `CopyAssignable` (C++ Std, [copyassignable]), as well
+of `Destructible` (C++Std [destructible]), `CopyConstructible` (C++Std
+[copyconstructible]), and `CopyAssignable` (C++Std [copyassignable]), as well
 as the additional requirements listed below.
 
 [table Protocol requirements

@@ -178,7 +178,7 @@ count towards the return value.]
 
 [function_effects If the `loop_scheduler` object has no oustanding work,
 performs `stop()`. Otherwise, blocks while the `loop_scheduler` has outstanding
-work, or until the expiration of the absolute timeout (C++ Std,
+work, or until the expiration of the absolute timeout (C++Std
 \[thread.req.timing\]) specified by `abs_time`, or until the `loop_scheduler`
 is stopped, or until one function object has been executed.]
 

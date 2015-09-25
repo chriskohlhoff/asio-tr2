@@ -1,7 +1,7 @@
 [section:wait_traits Wait traits requirements]
 [xrefid timer.reqmts.waittraits]
 
-For a type `Clock` meeting the `Clock` requirements (C++ Std,
+For a type `Clock` meeting the `Clock` requirements (C++Std
 [time.clock.req]), a type `X` meets the `WaitTraits` requirements if it
 satisfies the requirements listed below.
 

@@ -146,7 +146,7 @@ the executor `ex_`.]
     result_of_t<const T&(Args&&...)> operator()(Args&&... args) const;
 
 [function_returns [^['INVOKE]]`(get(), forward<Args>(args)__dotdotdot__)`
-(C++ Std, \[func.require\]).]
+(C++Std \[func.require\]).]
 
 [endsect]
 

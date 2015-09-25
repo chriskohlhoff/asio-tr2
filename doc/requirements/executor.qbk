@@ -6,7 +6,7 @@ meeting the `Executor` requirements embodies a set of rules for determining how
 submitted function objects are to be executed.
 
 A type `X` meets the `Executor` requirements if it satisfies the requirements of
-`CopyConstructible` (C++ Std, [copyconstructible]) and `Destructible` (C++ Std,
+`CopyConstructible` (C++Std [copyconstructible]) and `Destructible` (C++Std
 [destructible]), as well as the additional requirements listed below.
 
 No constructor, comparison operator, copy operation, move operation, swap
@@ -19,9 +19,9 @@ concurrent calls to those functions from different threads.
 
 In the table below, `x1` and `x2` denote values of type `X`, `cx1` and `cx2`
 denote (possibly const) values of type `X`, `mx1` denotes an xvalue of type
-`X`, `f` denotes a `MoveConstructible` (C++ Std, [moveconstructible]) function
+`X`, `f` denotes a `MoveConstructible` (C++Std [moveconstructible]) function
 object callable with zero arguments, `a` denotes a (possibly const) value of
-type `A` meeting the `Allocator` requirements (C++ Std,
+type `A` meeting the `Allocator` requirements (C++Std
 [allocator.requirements]), and `u` denotes an identifier.
 
 [table Executor requirements
@@ -84,7 +84,7 @@ type `A` meeting the `Allocator` requirements (C++ Std,
     [`x1.dispatch(std::move(f),a)`]
     []
     [Effects: Creates an object `f1` initialized with
-     [^['DECAY_COPY]]`(forward<Func>(f))` (C++ Std, \[thread.decaycopy\]) in the
+     [^['DECAY_COPY]]`(forward<Func>(f))` (C++Std \[thread.decaycopy\]) in the
      current thread of execution . Calls `f1()` at most once. The executor may
      block forward progress of the caller until `f1()` finishes execution.\n
      \n
@@ -94,7 +94,7 @@ type `A` meeting the `Allocator` requirements (C++ Std,
      [inline_note Executors defined in this Technical Specification always use
      the supplied allocator unless otherwise specified.]\n
      \n
-     Synchronization: The invocation of `dispatch` synchronizes with (C++ Std,
+     Synchronization: The invocation of `dispatch` synchronizes with (C++Std
      \[intro.multithread\]) the invocation of `f1`.]
   ]
   [
@@ -113,7 +113,7 @@ type `A` meeting the `Allocator` requirements (C++ Std,
      the supplied allocator unless otherwise specified.]\n
      \n
      Synchronization: The invocation of `post` or `defer` synchronizes with
-     (C++ Std, \[intro.multithread\]) the invocation of `f1`.\n
+     (C++Std \[intro.multithread\]) the invocation of `f1`.\n
      \n
      [inline_note Although the requirements placed on `defer` are identical to
      `post`, the use of `post` conveys a preference that the caller ['does not]

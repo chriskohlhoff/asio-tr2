@@ -63,8 +63,8 @@ elsewhere.]
   } // namespace std
 
 Instances of class template `basic_socket_iostream` meet the requirements of
-`Destructible` (C++ Std, [destructible]), `MoveConstructible` (C++ Std,
-[moveconstructible]), and `MoveAssignable` (C++ Std, [moveassignable]).
+`Destructible` (C++Std [destructible]), `MoveConstructible` (C++Std
+[moveconstructible]), and `MoveAssignable` (C++Std [moveassignable]).
 
 [section [^basic_socket_iostream] constructors]
 [xrefid socket.iostream.cons]

@@ -15,7 +15,7 @@
   } // namespace std
 
 ['Remark:] Detects whether `T` has a nested `executor_type` that is convertible
-from `Executor`. Meets the `BinaryTypeTrait` requirements (C++ Std,
+from `Executor`. Meets the `BinaryTypeTrait` requirements (C++Std
 [meta.rqmts]). The implementation provides a definition that is derived from
 `true_type` if a type `T::executor_type` exists and `is_convertible<Executor,
 T::executor_type>::value != false`, otherwise it is derived from `false_type`.

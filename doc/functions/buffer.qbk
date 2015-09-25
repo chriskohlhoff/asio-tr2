@@ -2,17 +2,17 @@
 [xrefid buffer.creation]
 
 In the functions below, `T` must be a trivially copyable or standard-layout
-type (C++ Std, [basic.types]).
+type (C++Std [basic.types]).
 
 For the function overloads below that accept an argument of type `vector<>`,
 the buffer objects returned are invalidated by any vector operation that also
 invalidates all references, pointers and iterators referring to the elements in
-the sequence (C++ Std, [vector]).
+the sequence (C++Std [vector]).
 
 For the function overloads below that accept an argument of type
 `basic_string<>`, the buffer objects returned are invalidated according to the
 rules defined for invalidation of references, pointers and iterators referring
-to elements of the sequence (C++ Std, [string.require]).
+to elements of the sequence (C++Std [string.require]).
 
   mutable_buffer buffer(void* p, size_t n) noexcept;
 

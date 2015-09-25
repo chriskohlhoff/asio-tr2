@@ -6,8 +6,8 @@ used to receive the output of an operation, such as the `receive` operation of
 a socket.
 
 A type `X` meets the `MutableBufferSequence` requirements if it satisfies the
-requirements of `Destructible` (C++ Std, [destructible]) and
-`CopyConstructible` (C++ Std, [copyconstructible]), as well as the additional
+requirements of `Destructible` (C++Std [destructible]) and
+`CopyConstructible` (C++Std [copyconstructible]), as well as the additional
 requirements listed below.
 
 In the table below, `x` denotes a (possibly const) value of type `X`, and `u`
@@ -18,8 +18,8 @@ denotes an identifier.
   [
     [`std::experimental::__ns__::buffer_sequence_begin(x)`\n
      `std::experimental::__ns__::buffer_sequence_end(x)`]
-    [An iterator type meeting the requirements for bidirectional iterators (C++
-     Std, \[bidirectional.iterators\]) whose value type is convertible to
+    [An iterator type meeting the requirements for bidirectional iterators
+     (C++Std \[bidirectional.iterators\]) whose value type is convertible to
      `mutable_buffer`.]
     []
   ]

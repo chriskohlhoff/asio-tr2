@@ -69,9 +69,9 @@ The class `address_v4` is a representation of an IPv4 address.
   } // namespace experimental
   } // namespace std
 
-`address_v4` satisfies the requirements for `Destructible` (C++ Std,
-[destructible]), `CopyConstructible` (C++ Std, [copyconstructible]),
-and `CopyAssignable` (C++ Std, [copyassignable]).
+`address_v4` satisfies the requirements for `Destructible` (C++Std
+[destructible]), `CopyConstructible` (C++Std [copyconstructible]),
+and `CopyAssignable` (C++Std [copyassignable]).
 
 [section Struct [^ip::address_v4::bytes_type]]
 [xrefid internet.address.v4.bytes]

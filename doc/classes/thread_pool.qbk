@@ -100,7 +100,7 @@ exit once the outstanding work is `0`. Blocks until all threads in the pool
 have completed.]
 
 [function_synchronization The completion of each thread in the pool
-synchronizes with (C++ Std, \[intro.multithread\]) the corresponding successful
+synchronizes with (C++Std \[intro.multithread\]) the corresponding successful
 `join()` return.]
 
 [function_postconditions The threads in the pool represented by `*this` have

@@ -53,8 +53,8 @@
   } // namespace std
 
 Instances of class template `basic_waitable_timer` meet the requirements of
-`Destructible` (C++ Std, [destructible]), `MoveConstructible` (C++ Std,
-[moveconstructible]), and `MoveAssignable` (C++ Std, [moveassignable]).
+`Destructible` (C++Std [destructible]), `MoveConstructible` (C++Std
+[moveconstructible]), and `MoveAssignable` (C++Std [moveassignable]).
 
 [section [^basic_waitable_timer] constructors]
 [xrefid timer.waitable.cons]

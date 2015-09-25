@@ -4,7 +4,7 @@
 The `async_result` class template is a customization point for asynchronous
 operations. Template parameter `CompletionToken` specifies the model used to
 obtain the result of the asynchronous operation. Template parameter `Signature`
-is the call signature (C++ Std, [func.def]) for the completion handler type
+is the call signature (C++Std [func.def]) for the completion handler type
 invoked on completion of the asynchronous operation. The `async_result`
 template:
 
@@ -37,10 +37,10 @@ operation's initiating function.
   } // namespace std
 
 The template parameter `CompletionToken` shall be an object type. The template
-parameter `Signature` shall be a call signature (C++ Std, [func.def]).
+parameter `Signature` shall be a call signature (C++Std [func.def]).
 
 Specializations of `async_result` shall satisfy the `Destructible` requirements
-(C++ Std, [destructible]) in addition to the requirements in the table below. In
+(C++Std [destructible]) in addition to the requirements in the table below. In
 this table, `R` is a specialization of `async_result`; `r` is a modifiable
 lvalue of type `R`; and `h` is a modifiable lvalue of type
 `R::completion_handler_type`.
@@ -50,7 +50,7 @@ lvalue of type `R`; and `h` is a modifiable lvalue of type
   [
     [`R::completion_handler_type`]
     []
-    [A type satisfying `MoveConstructible` requirements (C++ Std,
+    [A type satisfying `MoveConstructible` requirements (C++Std
      \[moveconstructible\]), An object of type `completion_handler_type` shall
      be a function object with call signature `Signature`, and
      `completion_handler_type` shall be constructible with an rvalue of type
@@ -59,7 +59,7 @@ lvalue of type `R`; and `h` is a modifiable lvalue of type
   [
     [`R::return_type`]
     []
-    [`void`; or a type satisfying `MoveConstructible` requirements (C++ Std,
+    [`void`; or a type satisfying `MoveConstructible` requirements (C++Std
      \[moveconstructible\])]
   ]
   [

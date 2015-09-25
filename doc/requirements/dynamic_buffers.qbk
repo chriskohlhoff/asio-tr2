@@ -12,8 +12,8 @@ buffer sequence for `receive`.] Data written to the writable bytes of a dynamic
 buffer object is appended to the readable bytes of the same object.
 
 A type `X` meets the `DynamicBuffer` requirements if it satisfies the
-requirements of `Destructible` (C++ Std, [destructible]) and
-`MoveConstructible` (C++ Std, [moveconstructible]), as well as the additional
+requirements of `Destructible` (C++Std [destructible]) and
+`MoveConstructible` (C++Std [moveconstructible]), as well as the additional
 requirements listed below.
 
 In the table below, `x` denotes a value of type `X`, `x1` denotes a (possibly

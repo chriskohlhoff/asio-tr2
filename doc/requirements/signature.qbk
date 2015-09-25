@@ -1,7 +1,7 @@
 [section:signature Signature requirements]
 [xrefid async.reqmts.signature]
 
-A type satisfies the signature requirements if it is a call signature (C++ Std,
+A type satisfies the signature requirements if it is a call signature (C++Std
 [func.def]).
 
 [endsect]

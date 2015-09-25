@@ -84,8 +84,8 @@ The `executor` class provides a polymorphic wrapper for types that satisfy the
   } // namespace std
 
 Class `executor` meets the requirements of [link requirements.executor
-`Executor`], `DefaultConstructible` (C++ Std, [defaultconstructible]), and
-`CopyAssignable` (C++ Std, [copyassignable]).
+`Executor`], `DefaultConstructible` (C++Std [defaultconstructible]), and
+`CopyAssignable` (C++Std [copyassignable]).
 
 [std_note To meet the `noexcept` requirements for executor copy constructors
 and move constructors, implementations may share a target between two or more
@@ -214,7 +214,7 @@ destroys, the target of `*this`.]
 
 [function_block Let `e` be the target object of `*this`. Let `a1` be the
 allocator that was specified when the target was set. Let `fd` be the result of
-`DECAY_COPY(f)` (C++ Std, \[thread.decaycopy\]).]
+`DECAY_COPY(f)` (C++Std \[thread.decaycopy\]).]
 
 [function_effects `e.dispatch(g, a1)`, where `g` is a function object of
 unspecified type that, when called as `g()`, performs `fd()`. The allocator `a`

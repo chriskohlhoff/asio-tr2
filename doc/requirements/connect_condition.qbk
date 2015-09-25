@@ -2,8 +2,8 @@
 [xrefid socket.reqmts.connectcondition]
 
 A type `X` meets the `ConnectCondition` requirements if it satisfies the
-requirements of `Destructible` (C++ Std, [destructible]) and
-`CopyConstructible` (C++ Std, [copyconstructible]), as well as the additional
+requirements of `Destructible` (C++Std [destructible]) and
+`CopyConstructible` (C++Std [copyconstructible]), as well as the additional
 requirements listed below.
 
 In the table below, `x` denotes a value of type `X`, `ec` denotes a (possibly

@@ -16,7 +16,7 @@ satisfying the [link requirements.executor Executor type requirements].
 
 `T` shall be a complete type.
 
-Class template `is_executor` is a UnaryTypeTrait (C++ Std, [meta.rqmts]) with a
+Class template `is_executor` is a UnaryTypeTrait (C++Std [meta.rqmts]) with a
 BaseCharacteristic of `true_type` if the type `T` meets the syntactic
 requirements for [link requirements.executor executor], otherwise `false_type`.
 

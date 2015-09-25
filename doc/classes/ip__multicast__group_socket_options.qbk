@@ -29,8 +29,8 @@ Multicast group management socket option classes are defined as follows:
   };
 
 Multicast group management socket option classes satisfy the requirements for
-`Destructible` (C++ Std, [destructible]), `CopyConstructible` (C++ Std,
-[copyconstructible]), `CopyAssignable` (C++ Std, [copyassignable]), and [link
+`Destructible` (C++Std [destructible]), `CopyConstructible` (C++Std
+[copyconstructible]), `CopyAssignable` (C++Std [copyassignable]), and [link
 requirements.settable_socket_option `SettableSocketOption`].
 
 Extensible implementations provide the following member functions:

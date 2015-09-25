@@ -109,8 +109,8 @@ stream.
   } // namespace std
 
 Instances of class template `basic_stream_socket` meet the requirements of
-`Destructible` (C++ Std, [destructible]), `MoveConstructible` (C++ Std,
-[moveconstructible]), `MoveAssignable` (C++ Std, [moveassignable]), [link
+`Destructible` (C++Std [destructible]), `MoveConstructible` (C++Std
+[moveconstructible]), `MoveAssignable` (C++Std [moveassignable]), [link
 requirements.sync_read_stream `SyncReadStream`], [link
 requirements.sync_write_stream `SyncWriteStream`], [link
 requirements.async_read_stream `AsyncReadStream`], and [link

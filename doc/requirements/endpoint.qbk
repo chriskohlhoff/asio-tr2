@@ -2,9 +2,9 @@
 [xrefid socket.reqmts.endpoint]
 
 A type `X` meets the `Endpoint` requirements if it satisfies the requirements
-of `Destructible` (C++ Std, [destructible]), `DefaultConstructible` (C++ Std,
-[defaultconstructible]), `CopyConstructible` (C++ Std, [copyconstructible]),
-and `CopyAssignable` (C++ Std, [copyassignable]), as well as the additional
+of `Destructible` (C++Std [destructible]), `DefaultConstructible` (C++Std
+[defaultconstructible]), `CopyConstructible` (C++Std [copyconstructible]),
+and `CopyAssignable` (C++Std [copyassignable]), as well as the additional
 requirements listed below.
 
 In the table below, `a` denotes a (possibly const) value of type `X`, and `u`

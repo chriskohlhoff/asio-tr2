@@ -24,9 +24,9 @@ network interface to use for outgoing multicast datagrams.
   } // namespace experimental
   } // namespace std
 
-`outbound_interface` satisfies the requirements for `Destructible` (C++ Std,
-[destructible]), `CopyConstructible` (C++ Std, [copyconstructible]),
-`CopyAssignable` (C++ Std, [copyassignable]), and [link
+`outbound_interface` satisfies the requirements for `Destructible` (C++Std
+[destructible]), `CopyConstructible` (C++Std [copyconstructible]),
+`CopyAssignable` (C++Std [copyassignable]), and [link
 requirements.settable_socket_option `SettableSocketOption`].
 
 Extensible implementations provide the following member functions:

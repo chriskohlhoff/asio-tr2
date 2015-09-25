@@ -57,7 +57,7 @@ type is derived from `execution_context`.]
   template<class Func, class ProtoAllocator>
     void dispatch(Func&& f, const ProtoAllocator& a);
 
-[function_effects Equivalent to [^['DECAY_COPY]]`(forward<Func>(f))()` (C++ Std,
+[function_effects Equivalent to [^['DECAY_COPY]]`(forward<Func>(f))()` (C++Std
 \[thread.decaycopy\]).]
 
   template<class Func, class ProtoAllocator>

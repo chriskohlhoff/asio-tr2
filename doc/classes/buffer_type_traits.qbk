@@ -14,7 +14,7 @@
   } // namespace std
 
 This sub-clause contains templates that may be used to query the properties of
-a type at compile time. Each of these templates is a UnaryTypeTrait (C++ Std,
+a type at compile time. Each of these templates is a UnaryTypeTrait (C++Std
 [meta.rqmts]) with a BaseCharacteristic of `true_type` if the corresponding
 condition is true, otherwise `false_type`.
 

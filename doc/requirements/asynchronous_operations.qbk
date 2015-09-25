@@ -46,7 +46,7 @@ Initiating functions:
 [mdash] accept, as the final parameter, a ['completion token] object `token`
 of type `CompletionToken`;
 
-[mdash] specify a ['completion signature], which is a call signature (C++ Std,
+[mdash] specify a ['completion signature], which is a call signature (C++Std
 [func.def]) `Signature` that determines the arguments to the completion
 handler.
 
@@ -58,7 +58,7 @@ The completion handler object `completion_handler` is initialized with
 placed on the type `CompletionToken`.]
 
 The type `CompletionHandler` must satisfy the requirements of `Destructible`
-(C++ Std, [destructible]) and `MoveConstructible` (C++ Std,
+(C++Std [destructible]) and `MoveConstructible` (C++Std
 [moveconstructible]), and be callable with the specified call signature.
 
 In this Technical Specification, all initiating functions specify a
@@ -239,8 +239,8 @@ using the completion handler's associated allocator.
 
 [std_note The implementation may perform operating system or underlying API
 calls that perform memory allocations not using the associated allocator.
-Invocations of the allocator functions may not introduce data races (See C++
-Std, \[res.on.data.races\]).]
+Invocations of the allocator functions may not introduce data races (See C++Std
+\[res.on.data.races\]).]
 
 [endsect]
 

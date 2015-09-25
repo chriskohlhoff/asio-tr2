@@ -9,7 +9,7 @@
 determined by performing `handler_type_t<CompletionToken, void()>`.]
 
 [function_requires The type `Handler` must satisfy the `MoveConstructible`
-requirements (C++ Std, \[moveconstructible\]) and be callable with zero
+requirements (C++Std \[moveconstructible\]) and be callable with zero
 arguments.]
 
 [function_effects\n
@@ -36,7 +36,7 @@ absolute timeout specified by `abs_time` performs
 determined by performing `handler_type_t<CompletionToken, void()>`.]
 
 [function_requires The type `Handler` must satisfy the `MoveConstructible`
-requirements (C++ Std, \[moveconstructible\]) and be callable with zero
+requirements (C++Std \[moveconstructible\]) and be callable with zero
 arguments.]
 
 [function_effects\n

@@ -67,9 +67,9 @@ no valid address.
   } // namespace experimental
   } // namespace std
 
-`address` satisfies the requirements for `Destructible` (C++ Std,
-[destructible]), `CopyConstructible` (C++ Std, [copyconstructible]), and
-`CopyAssignable` (C++ Std, [copyassignable]).
+`address` satisfies the requirements for `Destructible` (C++Std
+[destructible]), `CopyConstructible` (C++Std [copyconstructible]), and
+`CopyAssignable` (C++Std [copyassignable]).
 
 [section [^ip::address] constructors]
 [xrefid internet.address.cons]

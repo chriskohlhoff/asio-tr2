@@ -6,7 +6,7 @@
 
 Most synchronous network library functions provide two overloads, one that
 throws an exception to report system errors, and another that sets an
-`error_code` (C++ Std, [syserr]).
+`error_code` (C++Std [syserr]).
 
 [commentary Check whether it is "most" overloads, "some" or "all".]
 
@@ -62,8 +62,8 @@ as if:
 except that the type thrown may differ as specified above.
 
 For both overloads, failure to allocate storage is reported by throwing an
-exception as described in the C++ standard (C++14
-\[res.on.exception.handling\]).
+exception as described in the C++ standard (C++Std
+[res.on.exception.handling]).
 
 In this Technical Specification, when a type requirement is specified using two
 function call expressions [*['f]], with and without an argument `ec` of type

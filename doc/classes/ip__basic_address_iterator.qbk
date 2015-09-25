@@ -33,7 +33,7 @@ these specializations are defined below.
       basic_address_iterator& operator--() noexcept;
       basic_address_iterator operator--(int) noexcept;
 
-      // other members as required by C++ Std [input.iterators]
+      // other members as required by C++Std [input.iterators]
 
     private:
       ``['Address]`` address_; // ``['exposition only]``
@@ -45,7 +45,7 @@ these specializations are defined below.
   } // namespace std
 
 Specializations of `basic_address_iterator` satisfy the requirements for input
-iterators (C++ Std, [input.iterators]).
+iterators (C++Std [input.iterators]).
 
   basic_address_iterator(const ``['Address]``& a) noexcept;
 

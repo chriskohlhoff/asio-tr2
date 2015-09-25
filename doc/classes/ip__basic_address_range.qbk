@@ -37,8 +37,8 @@ these specializations are defined below.
   } // namespace std
 
 Specializations of `basic_address_range` satisfy the requirements for
-`Destructible` (C++ Std, [destructible]), `CopyConstructible` (C++ Std,
-[copyconstructible]), and `CopyAssignable` (C++ Std, [copyassignable]).
+`Destructible` (C++Std [destructible]), `CopyConstructible` (C++Std
+[copyconstructible]), and `CopyAssignable` (C++Std [copyassignable]).
 
   basic_address_range() noexcept;
 

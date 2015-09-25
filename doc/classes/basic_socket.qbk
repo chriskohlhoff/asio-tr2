@@ -126,8 +126,8 @@ templates. It provides functionality that is common to both types of socket.
   } // namespace std
 
 Instances of class template `basic_socket` meet the requirements of
-`Destructible` (C++ Std, [destructible]), `MoveConstructible` (C++ Std,
-[moveconstructible]), and `MoveAssignable` (C++ Std, [moveassignable]).
+`Destructible` (C++Std [destructible]), `MoveConstructible` (C++Std
+[moveconstructible]), and `MoveAssignable` (C++Std [moveassignable]).
 
 When an operation has its effects specified as if by passing the result of
 `native_handle()` to a __POSIX__ function, then the operation fails with error

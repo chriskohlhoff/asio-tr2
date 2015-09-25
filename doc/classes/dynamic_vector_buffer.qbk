@@ -46,7 +46,7 @@ The `dynamic_vector_buffer` class template meets the requirements of [link
 requirements.dynamic_buffers `DynamicBuffer`].
 
 The `dynamic_vector_buffer` class template requires that `T` is a trivially
-copyable or standard-layout type (C++ Std, [basic.types]) and that `sizeof(T)
+copyable or standard-layout type (C++Std [basic.types]) and that `sizeof(T)
 == 1`.
 
 [section [^dynamic_vector_buffer] constructors]
