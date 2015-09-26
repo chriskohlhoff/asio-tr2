@@ -67,7 +67,7 @@ calling `use_service<>`, that reference remains usable until a call to
   execution_context();
 
 [function_effects Creates an object of class `execution_context` which contains
-no services. [inline_note An implementation might preload service of internal
+no services. [inline_note An implementation might preload services of internal
 service types for its own use.]]
 
 [endsect]
