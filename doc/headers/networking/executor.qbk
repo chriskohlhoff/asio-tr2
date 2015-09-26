@@ -104,6 +104,7 @@
         -> decltype(make_work_guard(get_associated_executor(t, forward<U>(u))));
 
     class ``[link classes.system_executor system_executor]``;
+    class ``[link classes.system_context system_context]``;
 
     bool operator==(const system_executor&, const system_executor&);
     bool operator!=(const system_executor&, const system_executor&);

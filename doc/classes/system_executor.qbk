@@ -17,7 +17,7 @@ permitted to execute on any thread.
 
       // executor operations:
 
-      execution_context& context() noexcept;
+      system_context& context() noexcept;
 
       void on_work_started() noexcept {}
       void on_work_finished() noexcept {}
@@ -37,22 +37,22 @@ permitted to execute on any thread.
   } // namespace experimental
   } // namespace std
 
-Class `system_executor` satisfies the [link requirements.executor `Executor`
-requirements].
+Class `system_executor` satisfies the `Destructible` (C++Std [destructible]),
+`DefaultConstructible` (C++Std [defaultconstructible]), and [link
+requirements.executor `Executor`] type requirements.
 
-To satisfy the executor requirements for the `post` and `defer` member
+To satisfy the `Executor` requirements for the `post` and `defer` member
 functions, the system executor may create `thread` objects to run the submitted
-function objects. If the program is terminated by any means, and there remain
-unexecuted functions objects that have been submitted using `post` or `defer`,
-these function objects are discarded without calling them.
+function objects. These `thread` objects are collectively referred to as
+['system threads].
 
 [section [^system_executor] operations]
 [xrefid async.system.exec.ops]
 
-  execution_context& context() noexcept;
+  system_context& context() noexcept;
 
-[function_returns A reference to an object with static storage duration whose
-type is derived from `execution_context`.]
+[function_returns A reference to an object with static storage duration. All
+calls to this function return references to the same object.]
 
   template<class Func, class ProtoAllocator>
     void dispatch(Func&& f, const ProtoAllocator& a);
@@ -65,11 +65,11 @@ type is derived from `execution_context`.]
   template<class Func, class ProtoAllocator>
     void defer(Func&& f, const ProtoAllocator& a);
 
-[function_effects Creates an object `f1` initialized with
-[^['DECAY_COPY]]`(forward<Func>(f))`, and calls `f1` as if in a thread of
-execution represented by a `thread` object. Any exception propagated from the
-execution of [^['DECAY_COPY]]`(forward<Func>(f))()` results in a call to
-`std::terminate`.]
+[function_effects If `context().stopped() == false`, creates an object `f1`
+initialized with [^['DECAY_COPY]]`(forward<Func>(f))`, and calls `f1` as if in
+a thread of execution represented by a `thread` object. Any exception
+propagated from the execution of [^['DECAY_COPY]]`(forward<Func>(f))()` results
+in a call to `std::terminate`.]
 
 [endsect]
 

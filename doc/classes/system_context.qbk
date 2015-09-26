@@ -1,0 +1,77 @@
+[section:system_context Class [^system_context]]
+[xrefid async.system.context]
+
+Class `system_context` implements the execution context associated with
+`system_executor` objects.
+
+  namespace std {
+  namespace experimental {
+  __begin_versioned_ns__
+
+    class system_context : public execution_context
+    {
+    public:
+      // types:
+
+      typedef ``[link classes.system_executor system_executor]`` executor_type;
+
+      // construct / copy / destroy:
+
+      system_context() = delete;
+      system_context(const system_context&) = delete;
+      system_context& operator=(const system_context&) = delete;
+      ~system_context();
+
+      // system_context operations:
+
+      executor_type get_executor() noexcept;
+
+      void stop();
+      bool stopped() const noexcept;
+      void join();
+    };
+
+  __end_versioned_ns__
+  } // namespace experimental
+  } // namespace std
+
+The class `system_context` satisfies the [link requirements.execution_context
+`ExecutionContext`] type requirements.
+
+The `system_context` member functions `get_executor`, `stop`, and `stopped`,
+and the `system_executor` copy constructors, member functions and comparison
+operators, do not introduce data races as a result of concurrent calls to those
+functions from different threads of execution.
+
+  ~system_context();
+
+[function_effects Performs `stop()` followed by `join()`.]
+
+  executor_type get_executor() noexcept;
+
+[function_returns `system_executor()`.]
+
+  void stop();
+
+[function_effects Signals all system threads to exit as soon as possible. If a
+system thread is currently executing a function object, the thread will exit
+only after completion of that function object. Returns without waiting for the
+system threads to complete.]
+
+[function_postconditions `stopped() == true`.]
+
+  bool stopped() const noexcept;
+
+[function_returns `true` if the `system_context` has been stopped by a prior
+call to `stop`.]
+
+  void join();
+
+[function_effects Blocks the calling thread (C++Std \[defns.block\]) until all
+system threads have completed.]
+
+[function_synchronization The completion of each system thread
+synchronizes with (C++Std \[intro.multithread\]) the corresponding successful
+`join()` return.]
+
+[endsect]

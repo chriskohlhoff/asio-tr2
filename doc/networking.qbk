@@ -53,6 +53,10 @@
 [:['Complexity:] [text]]
 ]
 
+[template function_synchronization[text]
+[:['Synchronization:] [text]]
+]
+
 [template function_remarks[text]
 [:['Remarks:] [text]]
 ]
@@ -694,6 +698,7 @@ are used to express type requirements, as listed in the table below.
 [include:classes classes/executor_work_guard.qbk]
 [include:functions functions/make_work_guard.qbk]
 [include:classes classes/system_executor.qbk]
+[include:classes classes/system_context.qbk]
 [include:classes classes/bad_executor.qbk]
 [include:classes classes/executor.qbk]
 [include:functions functions/dispatch.qbk]

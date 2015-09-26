@@ -15,6 +15,12 @@ In the table below, `x` denotes a value of type `X`.
     []
   ]
   [
+    [`~x()`]
+    []
+    [Destroys all unexecuted function objects that were submitted via an
+     executor object that is associated with the execution context.]
+  ]
+  [
     [`x.get_executor()`]
     [`X::executor_type`]
     [Returns an executor object that is associated with the execution context.]
