@@ -789,6 +789,7 @@ This clause defines components for performing timer operations.
 [include:headers headers/networking/socket.qbk]
 [section:sockets_requirements Requirements]
 [xrefid socket.reqmts]
+[include:requirements requirements/synchronous_socket_operations.qbk]
 [include:requirements requirements/native_handles.qbk]
 [include:requirements requirements/endpoint.qbk]
 [include:requirements requirements/protocol.qbk]

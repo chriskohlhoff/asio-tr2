@@ -455,14 +455,15 @@ extensions to be supported.]
   void non_blocking(bool mode);
   void non_blocking(bool mode, error_code& ec);
 
-[function_effects Sets the non-blocking mode of this acceptor. If `mode` is
-`true`, subsequent synchronous operations may fail with error condition
-`errc::operation_would_block` if they are unable to perform the requested
-operation immediately. If `mode` is `false`, subsequent synchronous operations
-block until complete.]
+[function_effects Sets the non-blocking mode of this acceptor. The non-blocking
+mode determines whether subsequent [link
+requirements.synchronous_socket_operations synchronous socket operations] on
+`*this` block the calling thread.]
 
 [function_error_conditions\n
 [mdash] `errc::bad_file_descriptor` [mdash] if `is_open()` is `false`.]
+
+[function_postconditions `non_blocking() == mode`.]
 
 [function_note The non-blocking mode has no effect on the behavior of
 asynchronous operations.]
