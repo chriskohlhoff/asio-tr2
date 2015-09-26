@@ -167,16 +167,24 @@ calling `cancel()`. Sets the expiry time associated with the timer. ]
 the calling thread (C++Std [defns.block]) for the relative time produced by
 `WaitTraits::to_wait_duration(expiry())`.]
 
-[function_postconditions `ec || !(clock_type::now() < expiry())`.]
+[function_postconditions `ec || expiry() <= clock_type::now()`.]
 
   template<class CompletionToken>
     __ifr__ async_wait(CompletionToken&& token);
 
 [function_completion_signature `void(error_code ec)`.]
 
-[function_effects Initiates an asynchronous wait operation such that the
-completion handler is submitted for execution only when the condition `ec ||
-!(clock_type::now() < expiry())` yields `true`.]
+[function_effects Initiates an asynchronous wait operation to repeatedly wait
+for the relative time produced by `WaitTraits::to_wait_duration(e)`, where `e`
+is a value of type `time_point` such that `e <= expiry()`. The completion
+handler is submitted for execution only when the condition `ec || expiry() <=
+clock_type::now()` yields `true`.]
+
+[function_note To implement `async_wait`, an `io_context` object `ctx` may
+maintain a priority queue for each specialization of
+`basic_waitable_timer<Clock, WaitTraits>` for which a timer object was
+initialized with `ctx`. Only the time point `e` of the earliest outstanding
+expiry need be passed to `WaitTraits::to_wait_duration(e)`.]
 
 [endsect]
 
