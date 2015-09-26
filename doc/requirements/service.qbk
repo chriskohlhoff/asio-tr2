@@ -3,15 +3,19 @@
 
 A class is a ['service] if it is publicly and unambiguously derived from
 `execution_context::service`, or if it is publicly and unambiguously derived
-from another service. For a service `S`, `S::key_type` is valid and denotes a
-type (C++Std [temp.deduct]), and `is_base_of_v<typename S::key_type, S>` is
-`true`.
+from another service. For a service `S`, `S::key_type` shall be valid and
+denote a type (C++Std [temp.deduct]), `is_base_of_v<typename S::key_type, S>`
+shall be `true`, and `S` shall satisfy the `Destructible` requirements (C++Std
+[destructible]).
 
-A service defines an explicit constructor that can be invoked with a single
-lvalue argument referring to the `execution_context` object that will own the
-service. Any additional constructors shall take a first lvalue argument
-referring to the `execution_context` object that will own the service.
+The first parameter of all service constructors shall be an lvalue reference to
+`execution_context`. This parameter denotes the `execution_context` object that
+represents a set of services, of which the service object will be a member.
 [inline_note These constructors may be called by the `make_service` function.]
+
+A service shall provide an explicit constructor with a single parameter of
+lvalue reference to `execution_context`. [inline_note This constructor may be
+called by the `use_service` function.]
 
 [std_example \n..
 ``
