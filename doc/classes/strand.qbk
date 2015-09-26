@@ -123,8 +123,7 @@ strand object.]
 
   strand(const strand& other) noexcept;
 
-[function_effects Constructs an object of class `strand<Executor>`. Initializes
-`inner_ex_` as `inner_ex_(other.inner_ex_)`.]
+[function_effects Initializes `inner_ex_` as `inner_ex_(other.inner_ex_)`.]
 
 [function_postconditions\n
 [mdash] `*this == other`\n
@@ -132,8 +131,8 @@ strand object.]
 
   strand(strand&& other) noexcept;
 
-[function_effects Constructs an object of class `strand<Executor>`. Initializes
-`inner_ex_` with `inner_ex_(std::move(other.inner_ex_))`.]
+[function_effects Initializes `inner_ex_` with
+`inner_ex_(std::move(other.inner_ex_))`.]
 
 [function_postconditions\n
 [mdash] `*this` is equal to the prior value of `other`\n
@@ -143,8 +142,7 @@ strand object.]
 
 [function_requires `OtherExecutor` is convertible to `Executor`.]
 
-[function_effects Constructs an object of class `strand<Executor>`. Initializes
-`inner_ex_` with `inner_ex_(other.inner_ex_)`.]
+[function_effects Initializes `inner_ex_` with `inner_ex_(other.inner_ex_)`.]
 
 [function_postconditions `*this == other`.]
 
@@ -152,8 +150,8 @@ strand object.]
 
 [function_requires `OtherExecutor` is convertible to `Executor`.]
 
-[function_effects Constructs an object of class `strand<Executor>`. Initializes
-`inner_ex_` with `inner_ex_(std::move(other.inner_ex_))`.]
+[function_effects Initializes `inner_ex_` with
+`inner_ex_(std::move(other.inner_ex_))`.]
 
 [function_postconditions `*this` is equal to the prior value of `other`.]
 

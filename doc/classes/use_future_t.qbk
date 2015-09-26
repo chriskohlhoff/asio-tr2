@@ -40,8 +40,6 @@ allocator.]
 
   explicit use_future_t(const allocator_type& a) noexcept;
 
-[function_effects Constructs an object of type `use_future_t`.]
-
 [function_postconditions `get_allocator() == a`.]
 
 [endsect]

@@ -72,10 +72,9 @@ type `T`.
 
   executor_binder(T t, const Executor& ex);
 
-[function_effects Constructs an object of type `executor_binder<T, Executor>`.
-Initializes `ex_` with the value `ex`. Initializes `target_` by performing
-uses-executor construction, using the constructor argument `std::move(t)` and
-the executor `ex_`.]
+[function_effects Initializes `ex_` with `ex`. Initializes `target_` by
+performing uses-executor construction, using the constructor argument
+`std::move(t)` and the executor `ex_`.]
 
   template<class U, class OtherExecutor>
     executor_binder(const executor_binder<U, OtherExecutor>& other);
@@ -83,10 +82,9 @@ the executor `ex_`.]
 [function_requires If `U` is not convertible to `T`, or if `OtherExecutor` is
 not convertible to `Executor`, the program is ill-formed.]
 
-[function_effects Constructs an object of type `executor_binder<T, Executor>`.
-Initializes `ex_` with `other.get_executor()`. Initializes `target_` by
-performing uses-executor construction, using the constructor argument
-`other.get()` and the executor `ex_`.]
+[function_effects Initializes `ex_` with `other.get_executor()`. Initializes
+`target_` by performing uses-executor construction, using the constructor
+argument `other.get()` and the executor `ex_`.]
 
   template<class U, class OtherExecutor>
     executor_binder(executor_binder<U, OtherExecutor>&& other);
@@ -94,10 +92,9 @@ performing uses-executor construction, using the constructor argument
 [function_requires If `U` is not convertible to `T`, or if `OtherExecutor` is
 not convertible to `Executor`, the program is ill-formed.]
 
-[function_effects Constructs an object of type `executor_binder<T, Executor>`.
-Initializes `ex_` with `other.get_executor()`. Initializes `target_` by
-performing uses-executor construction, using the constructor argument
-`std::move(other.get())` and the executor `ex_`.]
+[function_effects Initializes `ex_` with `other.get_executor()`. Initializes
+`target_` by performing uses-executor construction, using the constructor
+argument `std::move(other.get())` and the executor `ex_`.]
 
   template<class U, class OtherExecutor>
     executor_binder(executor_arg_t, const Executor& ex,
@@ -105,10 +102,9 @@ performing uses-executor construction, using the constructor argument
 
 [function_requires If `U` is not convertible to `T` the program is ill-formed.]
 
-[function_effects Constructs an object of type `executor_binder<T, Executor>`.
-Initializes `ex_` with `ex`. Initializes `target_` by performing uses-executor
-construction, using the constructor argument `other.get()` and the executor
-`ex_`.]
+[function_effects Initializes `ex_` with `ex`. Initializes `target_` by
+performing uses-executor construction, using the constructor argument
+`other.get()` and the executor `ex_`.]
 
   template<class U, class OtherExecutor>
     executor_binder(executor_arg_t, const Executor& ex,
@@ -116,10 +112,9 @@ construction, using the constructor argument `other.get()` and the executor
 
 [function_requires `U` is `T` or convertible to `T`.]
 
-[function_effects Constructs an object of type `executor_binder<T, Executor>`.
-Initializes `ex_` with `ex`. Initializes `target_` by performing uses-executor
-construction, using the constructor argument `std::move(other.get())` and
-the executor `ex_`.]
+[function_effects Initializes `ex_` with `ex`. Initializes `target_` by
+performing uses-executor construction, using the constructor argument
+`std::move(other.get())` and the executor `ex_`.]
 
 [endsect]
 

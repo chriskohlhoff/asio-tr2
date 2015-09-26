@@ -46,24 +46,22 @@
 
   explicit executor_work_guard(const executor_type& ex) noexcept;
 
-[function_effects Constructs an object of class `executor_work_guard`,
-initializing `ex_` with `ex`, and then performing `ex_.on_work_started()`.]
+[function_effects Initializes `ex_` with `ex`, and then performs
+`ex_.on_work_started()`.]
 
 [function_postconditions `ex == ex_` and `owns_ == true`.]
 
   executor_work_guard(const executor_work_guard& other) noexcept;
 
-[function_effects Constructs an object of class `executor_work_guard`,
-initializing `ex_` with `other.ex_`. If `other.owns_ == true`, performs
-`ex_.on_work_started()`.]
+[function_effects Initializes `ex_` with `other.ex_`. If `other.owns_ == true`,
+performs `ex_.on_work_started()`.]
 
 [function_postconditions `ex_ == other.ex_` and `owns_ == other.owns_`.]
 
   executor_work_guard(executor_work_guard&& other) noexcept;
 
-[function_effects Constructs an object of class `executor_work_guard`,
-initializing `ex_` with `std::move(other.ex_)` and `owns_` with `other.owns_`,
-and sets `other.owns_` to `false`.]
+[function_effects Initializes `ex_` with `std::move(other.ex_)` and `owns_`
+with `other.owns_`, and sets `other.owns_` to `false`.]
 
   ~executor_work_guard();
 

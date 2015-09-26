@@ -102,8 +102,6 @@ byte-level representation of an IPv4 address in network byte order.
 
   constexpr address_v4() noexcept;
 
-[function_effects Constructs an object of class `address_v4`.]
-
 [function_postconditions `to_bytes()` yields `{0, 0, 0, 0}` and `to_uint() ==
 0`.]
 
