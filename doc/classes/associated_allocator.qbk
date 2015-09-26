@@ -1,6 +1,11 @@
 [section:associated_allocator Class template [^associated_allocator]]
 [xrefid async.assoc.alloc]
 
+Class template `associated_allocator` is an [link requirements.associator
+associator] for the [link requirements.proto_allocator `ProtoAllocator`] type
+requirements, with default candidate type `allocator<void>` and default
+candidate object `allocator<void>()`.
+
   namespace std {
   namespace experimental {
   __begin_versioned_ns__

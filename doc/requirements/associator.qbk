@@ -1,0 +1,71 @@
+[section:associator Associator requirements]
+[xrefid async.reqmts.associator]
+
+An ['associator] defines a relationship between different types and objects
+where, given:
+
+[mdash] a source object `s` of type `S`,
+
+[mdash] type requirements `R`, and
+
+[mdash] a candidate object `c` of type `C` meeting the type requirements `R`
+
+an ['associated type] `A` meeting the type requirements `R` may be computed,
+and an ['associated object] `a` of type `A` may be obtained.
+
+An associator shall be a class template that takes two template type arguments.
+The first template argument is the source type `S`. The second template
+argument is the candidate type `C`. The second template argument shall be
+defaulted to some default candidate type `D` that satisfies the type
+requirements `R`.
+
+An associator shall additionally satisfy the requirements in the table below.
+In this table, `X` is a class template that meets the associator requirements,
+`S` is the source type, `s` is a (possibly const) value of type `S`, `C` is the
+candidate type, `c` is a (possibly const) value of type `C`, `D` is the default
+candidate type, and `d` is a (possibly const) value of type `D` that is the
+default candidate object.
+
+[table Associator requirements
+  [[expression] [return type] [assertion/note\npre/post-conditions]]
+  [
+    [`X<S>::type`]
+    [`X<S, D>::type`]
+    []
+  ]
+  [
+    [`X<S, C>::type`]
+    []
+    [The associated type.]
+  ]
+  [
+    [`X<S>::get(s)`]
+    [`X<S>::type`]
+    [Returns `X<S>::get(S, d)`.]
+  ]
+  [
+    [`X<S, C>::get(s, c)`]
+    [`X<S, C>::type`]
+    [Returns the associated object.]
+  ]
+]
+
+The associator's primary template shall be defined. A program may partially
+specialize the associator class template for some user-defined type `S`.
+
+Finally, the associator shall provide the following type alias and function
+template in the enclosing namespace:
+
+  template<class S, class C = D> using ``['X]``_t = typename X<S, C>::type;
+
+  template<class S, class C = D>
+  typename X<S, C>::type get_``['X]``(const S& s, const C& c = d)
+  {
+    return X<S, C>::get(s, c);
+  }
+
+where [^['X]] is replaced with the name of the associator class template.
+[inline_note This function template is provided as a convenience, to
+automatically deduce the source and candidate types.]
+
+[endsect]

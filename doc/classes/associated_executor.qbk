@@ -1,6 +1,11 @@
 [section:associated_executor Class template [^associated_executor]]
 [xrefid async.assoc.exec]
 
+Class template `associated_allocator` is an [link requirements.associator
+associator] for the [link requirements.executor `Executor`] type requirements,
+with default candidate type `system_executor` and default candidate object
+`system_executor()`.
+
   namespace std {
   namespace experimental {
   __begin_versioned_ns__

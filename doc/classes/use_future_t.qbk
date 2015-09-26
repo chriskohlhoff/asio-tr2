@@ -88,10 +88,11 @@ Result(Args][^__dotdotdot__)>] such that:\n
 Result(Args][^__dotdotdot__)>] is constructed from `g`, the expression `r1.get()`
 returns a future with the same shared state as `g`.]
 
-[function_block The implementation specializes `associated_executor` for `G`.
-For function objects executed using the associated executor's `dispatch()`,
-`post()` or `defer()` functions, any exception thrown is caught by the executor
-and stored in the associated shared state.]
+[function_block For any executor type `E`, the associated object for the
+associator `associated_executor<G, E>` is an executor where, for function
+objects executed using the executor's `dispatch()`, `post()` or `defer()`
+functions, any exception thrown is caught by the executor and stored in the
+associated shared state.]
 
 [endsect]
 
