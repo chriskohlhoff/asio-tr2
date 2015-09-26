@@ -8,17 +8,17 @@
     class socket_base
     {
     public:
-      class ``[link classes.socket_base__bool_socket_options broadcast]``;
-      class ``[link classes.socket_base__bool_socket_options debug]``;
-      class ``[link classes.socket_base__bool_socket_options do_not_route]``;
-      class ``[link classes.socket_base__bool_socket_options keep_alive]``;
+      class ``[link classes.socket_options broadcast]``;
+      class ``[link classes.socket_options debug]``;
+      class ``[link classes.socket_options do_not_route]``;
+      class ``[link classes.socket_options keep_alive]``;
       class ``[link classes.socket_base__linger linger]``;
-      class ``[link classes.socket_base__bool_socket_options out_of_band_inline]``;
-      class ``[link classes.socket_base__int_socket_options receive_buffer_size]``;
-      class ``[link classes.socket_base__int_socket_options receive_low_watermark]``;
-      class ``[link classes.socket_base__bool_socket_options reuse_address]``;
-      class ``[link classes.socket_base__int_socket_options send_buffer_size]``;
-      class ``[link classes.socket_base__int_socket_options send_low_watermark]``;
+      class ``[link classes.socket_options out_of_band_inline]``;
+      class ``[link classes.socket_options receive_buffer_size]``;
+      class ``[link classes.socket_options receive_low_watermark]``;
+      class ``[link classes.socket_options reuse_address]``;
+      class ``[link classes.socket_options send_buffer_size]``;
+      class ``[link classes.socket_options send_low_watermark]``;
 
       typedef ``['[*T1]]`` shutdown_type;
       static constexpr shutdown_type shutdown_receive;

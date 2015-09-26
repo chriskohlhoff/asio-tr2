@@ -17,7 +17,7 @@ The class `tcp` encapsulates the types and flags necessary for TCP sockets.
       typedef basic_stream_socket<tcp> socket;
       typedef basic_socket_acceptor<tcp> acceptor;
       typedef basic_socket_iostream<tcp> iostream;
-      class ``[link classes.ip__tcp__no_delay no\_delay]``;
+      class ``[link classes.ip__socket_options no\_delay]``;
 
       // static members:
       static constexpr tcp v4() noexcept;

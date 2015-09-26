@@ -1,19 +1,49 @@
-[section:socket_base__bool_socket_options Boolean socket options]
-[xrefid socket.opt.bool]
+[section:bool_socket_option Boolean socket options]
+[xrefid socket.reqmts.opt.bool]
 
-The `socket_base::broadcast`, `socket_base::debug`,
-`socket_base::do_not_route`, `socket_base::keep_alive`,
-`socket_base::out_of_band_inline` and `socket_base::reuse_address` classes are
-boolean socket options.
-
-Boolean socket option classes satisfy the requirements for `Destructible`
-(C++Std [destructible]), `CopyConstructible` (C++Std [copyconstructible]),
-`CopyAssignable` (C++Std [copyassignable]), [link
+A type `X` meets the `BooleanSocketOption` requirements if it satisfies the
+requirements of `Destructible` (C++Std [destructible]), `DefaultConstructible`
+(C++Std [defaultconstructible]), `CopyConstructible` (C++Std
+[copyconstructible]), `CopyAssignable` (C++Std [copyassignable]), [link
 requirements.gettable_socket_option `GettableSocketOption`], and [link
-requirements.settable_socket_option `SettableSocketOption`]. The boolean socket
-option classes are contextually convertible to bool.
+requirements.settable_socket_option `SettableSocketOption`], `X` is
+contextually convertible to bool, and `X` satisfies the additional requirements
+listed below.
 
-Boolean socket option classes are defined as follows:
+In the table below, `a` denotes a (possibly const) value of type `X`, `b`
+denotes a (possibly const) value of type `bool`, and `u` denotes an identifier.
+
+[table BooleanSocketOption requirements
+  [[expression] [type] [assertion/note\npre/post-conditions]]
+  [
+    [`X u;`]
+    []
+    [post: `!u.value()`.]
+  ]
+  [
+    [`X u(b);`]
+    []
+    [post: `u.value() == b`.]
+  ]
+  [
+    [`a.value()`]
+    [`bool`]
+    [Returns the current boolean value of the socket option object.]
+  ]
+  [
+    [`static_cast<bool>(a)`]
+    [`bool`]
+    [Returns `a.value()`.]
+  ]
+  [
+    [`!a`]
+    [`bool`]
+    [Returns `!a.value()`.]
+  ]
+]
+
+In this Technical Specification, types that satisfy the `BooleanSocketOption`
+requirements are defined as follows.
 
   class ``['[*C]]``
   {
@@ -51,66 +81,6 @@ Let [^['L]] and [^['N]] identify the __POSIX__ macros to be passed as the
 /level/ and /option_name/ arguments, respectively, to __POSIX__ __setsockopt__
 and __getsockopt__.
 
-[table Boolean socket options
-  [[['C]][['L]][['N]][Definition or notes]]
-  [
-    [`socket_base::broadcast`]
-    [`SOL_SOCKET`]
-    [`SO_BROADCAST`]
-    [
-      Determines whether a socket permits sending of broadcast messages, if
-      supported by the protocol.
-    ]
-  ]
-  [
-    [`socket_base::debug`]
-    [`SOL_SOCKET`]
-    [`SO_DEBUG`]
-    [
-      Determines whether debugging information is recorded by the underlying
-      protocol.
-    ]
-  ]
-  [
-    [`socket_base::do_not_route`]
-    [`SOL_SOCKET`]
-    [`SO_DONTROUTE`]
-    [
-      Determines whether outgoing messages bypass standard routing facilities.
-    ]
-  ]
-  [
-    [`socket_base::keep_alive`]
-    [`SOL_SOCKET`]
-    [`SO_KEEPALIVE`]
-    [
-      Determines whether a socket permits sending of keep_alive messages, if
-      supported by the protocol.
-    ]
-  ]
-  [
-    [`socket_base::out_of_band_inline`]
-    [`SOL_SOCKET`]
-    [`SO_OOBINLINE`]
-    [
-      Determines whether out-of-band data (also known as urgent data) is
-      received inline.
-    ]
-  ]
-  [
-    [`socket_base::reuse_address`]
-    [`SOL_SOCKET`]
-    [`SO_REUSEADDR`]
-    [
-      Determines whether the validation of endpoints used for binding a socket
-      should allow the reuse of local endpoints, if supported by the protocol.
-    ]
-  ]
-]
-
-[section Boolean socket option constructors]
-[xrefid socket.opt.bool.cons]
-
   ``['[*C]]``() noexcept;
 
 [function_postconditions `!value()`.]
@@ -118,11 +88,6 @@ and __getsockopt__.
   explicit ``['[*C]]``(bool v) noexcept;
 
 [function_postconditions `value() == v`.]
-
-[endsect]
-
-[section Boolean socket option members]
-[xrefid socket.opt.bool.members]
 
   ``['[*C]]``& operator=(bool v) noexcept;
 
@@ -142,11 +107,6 @@ implementations, returns `value_ != 0`.]
   bool operator!() const noexcept;
 
 [function_returns `!value()`.]
-
-[endsect]
-
-[section Boolean socket option members (extensible implementations)]
-[xrefid socket.opt.bool.extensible]
 
   template<class Protocol> int level(const Protocol& p) const noexcept;
 
@@ -173,6 +133,4 @@ implementations, returns `value_ != 0`.]
 [function_throws `length_error` if `s` is not a valid data size for the
 protocol specified by `p`.]
   
-[endsect]
-
 [endsect]

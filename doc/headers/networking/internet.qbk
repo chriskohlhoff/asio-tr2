@@ -225,25 +225,25 @@
     bool operator==(const udp& a, const udp& b);
     bool operator!=(const udp& a, const udp& b);
 
-    class ``[link classes.ip__v6_only v6_only]``;
+    class ``[link classes.ip__socket_options v6_only]``;
 
     namespace unicast {
 
-      class ``[link classes.ip__unicast__hops hops]``;
+      class ``[link classes.ip__socket_options hops]``;
 
     } // namespace unicast
 
     namespace multicast {
 
-      class ``[link classes.ip__multicast__group_socket_options join_group]``;
+      class ``[link classes.ip__socket_options join_group]``;
 
-      class ``[link classes.ip__multicast__group_socket_options leave_group]``;
+      class ``[link classes.ip__socket_options leave_group]``;
 
-      class ``[link classes.ip__multicast__outbound_interface outbound_interface]``;
+      class ``[link classes.ip__socket_options outbound_interface]``;
 
-      class ``[link classes.ip__multicast__hops hops]``;
+      class ``[link classes.ip__socket_options hops]``;
 
-      class ``[link classes.ip__multicast__enable_loopback enable_loopback]``;
+      class ``[link classes.ip__socket_options enable_loopback]``;
 
     } // namespace multicast
   } // namespace ip
