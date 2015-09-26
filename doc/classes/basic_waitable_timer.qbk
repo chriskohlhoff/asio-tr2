@@ -164,7 +164,7 @@ calling `cancel()`. Sets the expiry time associated with the timer. ]
   void wait(error_code& ec);
 
 [function_effects Establishes the postcondition as if by repeatedly blocking
-the calling thread for the relative time produced by
+the calling thread (C++Std [defns.block]) for the relative time produced by
 `WaitTraits::to_wait_duration(expiry())`.]
 
 [function_postconditions `ec || !(clock_type::now() < expiry())`.]
