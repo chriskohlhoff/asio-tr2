@@ -562,8 +562,8 @@ to have error conditions pending, as if by __POSIX__ __poll__.]
 be ready to read, ready to write, or to have error conditions pending, as if by
 __POSIX__ __poll__.]
 
-[function_block When there are multiple simultaneously outstanding asynchronous
-wait operations on this socket with the same `wait_type` value, all of these
+[function_block When there are multiple outstanding asynchronous wait
+operations on this socket with the same `wait_type` value, all of these
 operations complete when this socket enters the corresponding ready state. The
 order of invocation of the completion handlers for these operations is
 unspecified.]

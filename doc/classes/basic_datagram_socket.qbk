@@ -146,23 +146,6 @@ Instances of class template `basic_datagram_socket` meet the requirements of
 `Destructible` (C++Std [destructible]), `MoveConstructible` (C++Std
 [moveconstructible]), and `MoveAssignable` (C++Std [moveassignable]).
 
-For a given socket, a program may initiate asynchronous read or write
-operations such that there are multiple simultaneously outstanding asynchronous
-operations.
-
-When there are multiple outstanding asynchronous read operations with zero
-`flags`, the `buffers` are filled in the order in which the operations were
-issued. The order of invocation of the completion handlers for these operations
-is unspecified. When there are multiple asynchronous read operations, where at
-least one has non-zero `flags`, the behavior is unspecified.
-
-When there are multiple outstanding asynchronous write operations with zero
-`flags`, the `buffers` are transmitted in the order in which the operations
-were issued. The order of invocation of the completion handlers for these
-operations is unspecified. When there are multiple outstanding asynchronous
-write operations, where at least one has non-zero `flags`, the behavior is
-unspecified.
-
 If a program performs a synchronous operation on this socket, other than
 `close`, `cancel`, `shutdown`, `send`, or `send_to`, while there is an
 outstanding asynchronous read operation, the behavior is undefined.
