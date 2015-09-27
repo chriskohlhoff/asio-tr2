@@ -15,7 +15,7 @@ In the table below, `x` denotes a value of type `X`.
     []
   ]
   [
-    [`~x()`]
+    [`x.~X()`]
     []
     [Destroys all unexecuted function objects that were submitted via an
      executor object that is associated with the execution context.]
