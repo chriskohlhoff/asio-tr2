@@ -108,7 +108,7 @@ number of calls to `shutdown` on the `execution_context`.]
   void destroy() noexcept;
 
 [function_effects Destroys each service object in the `execution_context` set,
-and removes it from the set, in reverse order of addition to the set.
+and removes it from the set, in reverse order of addition to the set.]
 
 [endsect]
 

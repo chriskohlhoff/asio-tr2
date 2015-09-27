@@ -185,7 +185,7 @@ socket.]
 
 [function_returns `this` on success, a null pointer otherwise.]
 
-[function_postcondition `is_open() == false`.]
+[function_postconditions `is_open() == false`.]
 
   basic_socket<protocol_type>& socket();
 
