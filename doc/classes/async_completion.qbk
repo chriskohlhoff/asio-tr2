@@ -1,10 +1,8 @@
 [section:async_completion Class template [^async_completion]]
 [xrefid async.async.completion]
 
-Template parameter `CompletionToken` specifies the model used to obtain the
-result of the asynchronous operation. Template parameter `Signature` is the
-call signature (C++Std [func.def]) for the completion handler type invoked on
-completion of the asynchronous operation.
+Class template `async_completion` is provided as a convenience, to simplify the
+implementation of asynchronous operations that use `async_result`.
 
   namespace std {
   namespace experimental {
