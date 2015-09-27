@@ -1,4 +1,4 @@
-[section Header [^<experimental/loop_scheduler>] synopsis]
+[section:loop_scheduler Header [^<experimental/loop_scheduler>] synopsis]
 
   namespace std {
   namespace experimental {

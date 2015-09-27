@@ -1,6 +1,8 @@
 [section:thread_pool Class [^thread_pool]]
 [xrefid thread.pool]
 
+Class `thread_pool` implements a fixed-size pool of threads.
+
   namespace std {
   namespace experimental {
   __begin_versioned_ns__
@@ -33,19 +35,15 @@
   } // namespace experimental
   } // namespace std
 
-Class `thread_pool` implements a fixed-size pool of threads.
-
-An object of type `thread_pool` has an associated executor object, meeting the
-[link requirements.executor Executor type requirements], of type
-`thread_pool::executor_type` and obtainable via the `thread_pool` object's
-`get_executor` member function.
+The class `thread_pool` satisfies the [link requirements.execution_context
+ExecutionContext type requirements].
 
 For an object of type `thread_pool`, ['outstanding work] is defined as the sum
 of:
 
-[mdash] the total number of calls to the `thread_pool` executor's
-`on_work_started` function, less the total number of calls to the
-`on_work_finished` function;
+[mdash] the total number of calls to the `on_work_started` function, less the
+total number of calls to the `on_work_finished` function, to any executor of
+the `thread_pool`.
 
 [mdash] the number of function objects that have been added to the `thread_pool`
 via the `thread_pool` executor, but not yet executed; and
@@ -56,10 +54,10 @@ via the `thread_pool` executor, but not yet executed; and
 The `thread_pool` member functions `get_executor`, `stop`, and `join`, and the
 `thread_pool::executor_type` copy constructors, member functions and comparison
 operators, do not introduce data races as a result of concurrent calls to those
-functions from different threads.
+functions from different threads of execution.
 
-[section [^thread_pool] constructors/destructor]
-[xrefid thread.pool.cons]
+[section [^thread_pool] members]
+[xrefid thread.pool.members]
 
   thread_pool();
   explicit thread_pool(std::size_t num_threads);
@@ -76,11 +74,6 @@ for the implementation-defined number of threads is
 [function_effects Destroys an object of class `thread_pool`. Performs `stop()`
 followed by `join()`.]
 
-[endsect]
-
-[section [^thread_pool] members]
-[xrefid thread.pool.members]
-
   executor_type get_executor() noexcept;
 
 [function_returns An executor that may be used for submitting function objects
@@ -96,15 +89,12 @@ returns without waiting for the threads to complete.]
   void join();
 
 [function_effects If not already stopped, signals the threads in the pool to
-exit once the outstanding work is `0`. Blocks until all threads in the pool
-have completed.]
+exit once the outstanding work is `0`. Blocks the calling thread (C++Std
+\[defns.block\]) until all threads in the pool have completed.]
 
 [function_synchronization The completion of each thread in the pool
 synchronizes with (C++Std \[intro.multithread\]) the corresponding successful
 `join()` return.]
-
-[function_postconditions The threads in the pool represented by `*this` have
-completed.]
 
 [endsect]
 

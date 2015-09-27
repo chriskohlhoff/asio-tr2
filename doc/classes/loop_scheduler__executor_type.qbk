@@ -16,8 +16,6 @@
       executor_type& operator=(const executor_type& other) noexcept;
       executor_type& operator=(executor_type&& other) noexcept;
 
-      ~executor_type();
-
       // executor operations:
 
       bool running_in_this_thread() const noexcept;
@@ -46,25 +44,20 @@
   } // namespace experimental
   } // namespace std
 
-`loop_scheduler::executor_type` is a type satisfying [link requirements.executor
-Executor requirements]. Objects of type `loop_scheduler::executor_type` are
-associated with a `loop_scheduler`, and function objects submitted using the
-`dispatch`, `post` or `defer` member functions will be executed by the
-`loop_scheduler` from within the `run`, `run_for`, `run_until`, `run_one`,
-`run_one_for`, `run_one_until`, `poll` or `poll_one` functions.
+`loop_scheduler::executor_type` is a type satisfying [link
+requirements.executor Executor requirements]. Objects of type
+`loop_scheduler::executor_type` are associated with a `loop_scheduler`, and
+function objects submitted using the `dispatch`, `post`, or `defer` member
+functions will be executed by the `loop_scheduler` from within a run function.]
 
 [section [^loop_scheduler::executor_type] constructors]
 [xrefid loop_scheduler.exec.cons]
 
   executor_type(const executor_type& other) noexcept;
 
-[function_effects Constructs an object of class `loop_scheduler::executor_type`.]
-
 [function_postconditions `*this == other`.]
 
   executor_type(executor_type&& other) noexcept;
-
-[function_effects Constructs an object of class `loop_scheduler::executor_type`.]
 
 [function_postconditions `*this` is equal to the prior value of `other`.]
 
@@ -92,9 +85,9 @@ associated with a `loop_scheduler`, and function objects submitted using the
 
   bool running_in_this_thread() const noexcept;
 
-[function_returns `true` if the current thread of execution is invoking the
-`run`, `run_for`, `run_until`, `run_one`, `run_one_for`, `run_one_until`,
-`poll` or `poll_one` function of the associated `loop_scheduler` object.]
+[function_returns `true` if the current thread of execution is calling a run
+function of the associated `loop_scheduler` object. [inline_note That is, the
+current thread of execution's call chain includes a run function.]]
 
   loop_scheduler& context() noexcept;
 
@@ -102,12 +95,12 @@ associated with a `loop_scheduler`, and function objects submitted using the
 
   void on_work_started() noexcept;
 
-[function_effects Increases the count of outstanding work associated with the
+[function_effects Increment the count of outstanding work associated with the
 `loop_scheduler`.]
 
   void on_work_finished() noexcept;
 
-[function_effects Decreases the count of outstanding work associated with the
+[function_effects Decrement the count of outstanding work associated with the
 `loop_scheduler`.]
 
   template<class Func, class ProtoAllocator>
@@ -115,21 +108,18 @@ associated with a `loop_scheduler`, and function objects submitted using the
 
 [function_effects If `running_in_this_thread()` is `true`, calls
 [^['DECAY_COPY]]`(forward<Func>(f))()` (C++Std \[thread.decaycopy\]).
-Otherwise, requests execution of `f`.]
-
-[function_block If `f` exits via an exception, and the execution of `f` is
-performed in the current thread and before `dispatch` returns, the exception
-propagates to the caller of `dispatch`.]
+[inline_note If `f` exits via an exception, the exception propagates to the
+caller of `dispatch()`.] Otherwise, calls `post(forward<Func>(f), a)`.]
 
   template<class Func, class ProtoAllocator>
     void post(Func&& f, const ProtoAllocator& a);
 
-[function_effects Requests execution of `f`.]
+[function_effects Adds `f` to the `loop_scheduler`.]
 
   template<class Func, class ProtoAllocator>
     void defer(Func&& f, const ProtoAllocator& a);
 
-[function_effects Requests execution of `f`.]
+[function_effects Adds `f` to the `loop_scheduler`.]
 
 [endsect]
 
@@ -139,7 +129,7 @@ propagates to the caller of `dispatch`.]
   bool operator==(const loop_scheduler::executor_type& a,
                   const loop_scheduler::executor_type& b) noexcept;
 
-[function_returns `&a.context() == &b.context()`.]
+[function_returns `addressof(a.context()) == addressof(b.context())`.]
 
   bool operator!=(const loop_scheduler::executor_type& a,
                   const loop_scheduler::executor_type& b) noexcept;

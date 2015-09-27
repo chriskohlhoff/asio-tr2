@@ -1,6 +1,9 @@
 [section:loop_scheduler Class [^loop_scheduler]]
 [xrefid loop_scheduler]
 
+Class `loop_scheduler` implements a pool of threads where existing threads are
+assigned to the pool by the program.
+
   namespace std {
   namespace experimental {
   __begin_versioned_ns__
@@ -11,38 +14,38 @@
       // types:
 
       class ``[link classes.loop_scheduler__executor_type executor_type]``;
+      typedef ``['implementation defined]`` count_type;
 
       // construct / copy / destroy:
 
       loop_scheduler();
-      explicit loop_scheduler(std::size_t concurrency_hint);
+      explicit loop_scheduler(int concurrency_hint);
       loop_scheduler(const loop_scheduler&) = delete;
       loop_scheduler& operator=(const loop_scheduler&) = delete;
-      ~loop_scheduler();
 
       // loop_scheduler operations:
 
       executor_type get_executor() noexcept;
 
-      size_t run();
+      count_type run();
       template<class Rep, class Period>
-        size_t run_for(const chrono::duration<Rep, Period>& rel_time);
+        count_type run_for(const chrono::duration<Rep, Period>& rel_time);
       template<class Clock, class Duration>
-        size_t run_until(const chrono::time_point<Clock, Duration>& abs_time);
+        count_type run_until(const chrono::time_point<Clock, Duration>& abs_time);
 
-      size_t run_one();
+      count_type run_one();
       template<class Rep, class Period>
-        size_t run_one_for(const chrono::duration<Rep, Period>& rel_time);
+        count_type run_one_for(const chrono::duration<Rep, Period>& rel_time);
       template<class Clock, class Duration>
-        size_t run_one_until(const chrono::time_point<Clock, Duration>& abs_time);
+        count_type run_one_until(const chrono::time_point<Clock, Duration>& abs_time);
 
-      size_t poll();
+      count_type poll();
 
-      size_t poll_one();
+      count_type poll_one();
 
       void stop();
 
-      bool stopped() const;
+      bool stopped() const noexcept;
 
       void restart();
     };
@@ -51,20 +54,25 @@
   } // namespace experimental
   } // namespace std
 
-An object of type `loop_scheduler` has an associated executor object, meeting the
-[link requirements.executor Executor type requirements], of type
-`loop_scheduler::executor_type` and obtainable via the `loop_scheduler` object's
-`get_executor` member function.
+The class `loop_scheduler` satisfies the [link requirements.execution_context
+ExecutionContext type requirements].
+
+`count_type` is an implementation-defined unsigned integral type of at least 32
+bits.
+
+The `loop_scheduler` member functions `run`, `run_for`, `run_until`, `run_one`,
+`run_one_for`, `run_one_until`, `poll`, and `poll_one` are collectively
+referred to as the ['run functions].
 
 For an object of type `loop_scheduler`, ['outstanding work] is defined as the sum
 of:
 
-[mdash] the total number of calls to the `loop_scheduler` executor's
-`on_work_started` function, less the total number of calls to the
-`on_work_finished` function;
+[mdash] the total number of calls to the `on_work_started` function, less the
+total number of calls to the `on_work_finished` function, to any executor of
+the `loop_scheduler`.
 
 [mdash] the number of function objects that have been added to the `loop_scheduler`
-via the `loop_scheduler` executor, but not yet executed; and
+via any executor of the `loop_scheduler`, but not yet executed; and
 
 [mdash] the number of function objects that are currently being executed by the
 `loop_scheduler`.
@@ -72,58 +80,46 @@ via the `loop_scheduler` executor, but not yet executed; and
 If at any time the outstanding work falls to `0`, the `loop_scheduler` is stopped
 as if by `stop()`.
 
-The `loop_scheduler` member functions `get_executor`, `run`, `run_for`,
-`run_until`, `run_one`, `run_one_for`, `run_one_until`, `poll`, `poll_one`,
-`stop`, and `stopped`, and the `loop_scheduler::executor_type` copy constructors,
-member functions and comparison operators, do not introduce data races as a
-result of concurrent calls to those functions from different threads.
+The `loop_scheduler` member functions `get_executor`, `stop`, and `stopped`, the
+run functions, and the `loop_scheduler::executor_type` copy constructors, member
+functions and comparison operators, do not introduce data races as a result
+of concurrent calls to those functions from different threads of execution.
 [inline_note The `restart` member function is excluded from these thread safety
 requirements.]
 
-[section [^loop_scheduler] constructors/destructor]
-[xrefid loop_scheduler.cons]
+[section [^loop_scheduler] members]
+[xrefid loop_scheduler.loop_scheduler.members]
 
   loop_scheduler();
-  explicit loop_scheduler(std::size_t concurrency_hint);
+  explicit loop_scheduler(int concurrency_hint);
 
 [function_effects Creates an object of class `loop_scheduler`.]
 
 [function_remarks The `concurrency_hint` parameter is a suggestion to the
-implementation on the number of threads that should process asynchronous
-operations and execute function objects.]
-
-  ~loop_scheduler();
-
-[function_effects Destroys an object of class `loop_scheduler`.]
-
-[endsect]
-
-[section [^loop_scheduler] members]
-[xrefid loop_scheduler.members]
+implementation on the number of threads that should execute function objects.]
 
   executor_type get_executor() noexcept;
 
 [function_returns An executor that may be used for submitting function objects
 to the `loop_scheduler`.]
 
-  size_t run();
+  count_type run();
 
 [function_requires Must not be called from a thread that is currently calling
-one of `run`, `run_for`, `run_until`, `run_one`, `run_one_for`,
-`run_one_until`, `poll`, or `poll_one`.]
+a run function.]
 
 [function_effects Equivalent to:
 ``
-  size_t n = 0;
+  count_type n = 0;
   while (run_one())
-    if (n != numeric_limits<size_t>::max())
+    if (n != numeric_limits<count_type>::max())
       ++n;
 ``]
 
 [function_returns `n`.]
 
   template<class Rep, class Period>
-    size_t run_for(const chrono::duration<Rep, Period>& rel_time);
+    count_type run_for(const chrono::duration<Rep, Period>& rel_time);
 
 [function_effects Equivalent to:
 ``
@@ -131,25 +127,24 @@ one of `run`, `run_for`, `run_until`, `run_one`, `run_one_for`,
 ``]
 
   template<class Clock, class Duration>
-    size_t run_until(const chrono::time_point<Clock, Duration>& abs_time);
+    count_type run_until(const chrono::time_point<Clock, Duration>& abs_time);
 
 [function_effects Equivalent to:
 ``
-  size_t n = 0;
+  count_type n = 0;
   while (run_one_until(abs_time))
-    if (n != numeric_limits<size_t>::max())
+    if (n != numeric_limits<count_type>::max())
       ++n;
 ``]
 
 [function_returns `n`.]
 
-  size_t run_one();
+  count_type run_one();
 
 [function_requires Must not be called from a thread that is currently calling
-one of `run`, `run_for`, `run_until`, `run_one`, `run_one_for`,
-`run_one_until`, `poll`, or `poll_one`.]
+a run function.]
 
-[function_effects If the `loop_scheduler` object has no oustanding work, performs
+[function_effects If the `loop_scheduler` object has no outstanding work, performs
 `stop()`. Otherwise, blocks while the loop_scheduler has outstanding work, or until
 the `loop_scheduler` is stopped, or until one function object has been executed.]
 
@@ -159,85 +154,83 @@ is as if the function object had returned normally.]
 
 [function_returns `1` if a function object was executed, otherwise `0`.]
 
-[function_notes This function may invoke additional handlers through nested
-calls to the `loop_scheduler` executor's `dispatch` member function. These do not
-count towards the return value.]
+[function_notes This function may invoke additional function objects through
+nested calls to the `loop_scheduler` executor's `dispatch` member function.
+These do not count towards the return value.]
 
   template<class Rep, class Period>
-    size_t run_one_for(const chrono::duration<Rep, Period>& rel_time);
+    count_type run_one_for(const chrono::duration<Rep, Period>& rel_time);
 
 [function_effects Equivalent to:
 ``
-  return run_until(chrono::steady_clock::now() + rel_time);
+  return run_one_until(chrono::steady_clock::now() + rel_time);
 ``]
 
-[function_returns `1` if a function object was executed, otherwise `0`.]
-
   template<class Clock, class Duration>
-    size_t run_one_until(const chrono::time_point<Clock, Duration>& abs_time);
+    count_type run_one_until(const chrono::time_point<Clock, Duration>& abs_time);
 
-[function_effects If the `loop_scheduler` object has no oustanding work,
-performs `stop()`. Otherwise, blocks while the `loop_scheduler` has outstanding
-work, or until the expiration of the absolute timeout (C++Std
-\[thread.req.timing\]) specified by `abs_time`, or until the `loop_scheduler`
-is stopped, or until one function object has been executed.]
+[function_effects If the `loop_scheduler` object has no outstanding work, performs
+`stop()`. Otherwise, blocks while the loop_scheduler has outstanding work, or until
+the expiration of the absolute timeout (C++Std \[thread.req.timing\])
+specified by `abs_time`, or until the `loop_scheduler` is stopped, or until one
+function object has been executed.]
 
 [function_block If an executed function object throws an exception, the
-exception propagates to the caller of `run_one_until()`. The `loop_scheduler`
-state is as if the function object had returned normally.]
+exception propagates to the caller of `run_one()`. The `loop_scheduler` state
+is as if the function object had returned normally.]
 
 [function_returns `1` if a function object was executed, otherwise `0`.]
 
-[function_notes This function may invoke additional handlers through nested
-calls to the `loop_scheduler` executor's `dispatch` member function. These do not
-count towards the return value.]
+[function_notes This function may invoke additional function objects through
+nested calls to the `loop_scheduler` executor's `dispatch` member function. These
+do not count towards the return value.]
 
-  size_t poll();
+  count_type poll();
 
 [function_effects Equivalent to:
 ``
-  size_t n = 0;
+  count_type n = 0;
   while (poll_one())
-    if (n != numeric_limits<size_t>::max())
+    if (n != numeric_limits<count_type>::max())
       ++n;
 ``]
 
 [function_returns `n`.]
 
-  size_t poll_one();
+  count_type poll_one();
 
-[function_effects If the `loop_scheduler` object has no oustanding work,
-performs `stop()`. Otherwise, if there is a function object ready for immediate
+[function_effects If the `loop_scheduler` object has no outstanding work, performs
+`stop()`. Otherwise, if there is a function object ready for immediate
 execution, executes it.]
 
 [function_block If an executed function object throws an exception, the
 exception propagates to the caller of `poll_one()`. The `loop_scheduler` state
 is as if the function object had returned normally.]
 
-[function_returns `1` if a handler was executed, otherwise `0`.]
+[function_returns `1` if a function object was invoked, otherwise `0`.]
 
-[function_notes This function may invoke additional handlers through nested
-calls to the `loop_scheduler` executor's `dispatch` member function. These do
-not count towards the return value.]
+[function_notes This function may invoke additional function objects through
+nested calls to the `loop_scheduler` executor's `dispatch` member function. These
+do not count towards the return value.]
 
   void stop();
 
-[function_effects Stops the `loop_scheduler`. Concurrent calls to `run`,
-`run_for`, `run_until`, `run_one`, `run_one_for`, `run_one_until`, `poll` or
-`poll_one` will end as soon as possible. If a call to `run`, `run_for`,
-`run_until`, `run_one`, `run_one_for`, `run_one_until`, `poll` or `poll_one` is
-currently executing a function object, the call will end only after completion
-of that function object. The call to `stop()` returns without waiting for
-concurrent calls to `run`, `run_for`, `run_until`, `run_one`, `run_one_for`,
-`run_one_until`, `poll` or `poll_one` to complete.]
+[function_effects Stops the `loop_scheduler`. Concurrent calls to any run
+function will end as soon as possible. If a call to a run function is currently
+executing a function object, the call will end only after completion of that
+function object. The call to `stop()` returns without waiting for concurrent
+calls to run functions to complete.]
 
 [function_postconditions `stopped() == true`.]
 
-[function_note When `stopped() == true`, subsequent calls to `run`, `run_for`,
-`run_until`, `run_one`, `run_one_for`, `run_one_until`, `poll` or `poll_one`
+[function_note When `stopped() == true`, subsequent calls to a run function
 will exit immediately with a return value of `0`, without executing any
 function objects. A `loop_scheduler` remains in the stopped state until a call
 to `restart()`.]
+
+  bool stopped() const noexcept;
+
+[function_returns `true` if the `loop_scheduler` is stopped.]
 
   void restart();
 

@@ -1,4 +1,4 @@
-[library Executors and Asynchronous Operations, Revision 1
+[library Executors and Asynchronous Operations, Revision 2
     [quickbook 1.1]
     [id executors]
 ]
@@ -82,6 +82,9 @@
 [blurb [text]]
 ]
 
+[template xrefid[text]]
+[template xref[text] [text]]
+
 [template mdash[] '''&mdash; ''']
 [template indent[] '''&nbsp;&nbsp;&nbsp;&nbsp;''']
 [template bullet[] [indent]'''&bull; ''']
@@ -112,17 +115,8 @@
 
 [section Introduction]
 
-N3785 ['Executors and schedulers, revision 3] describes a framework for
-executors. Unfortunately, this framework is built around some deliberate design
-choices that make it unsuited to the execution of fine grained tasks and, in
-particular, asynchronous operations. Primary among these choices is the use of
-abstract base classes and type erasure, but it is not the only such issue. The
-sum effect of these choices is that the framework is unable to exploit the full
-potential of the C++ language.
-
-In this document, we will look at an alternative executors design that uses a
-lightweight, template-based policy approach. To describe the approach in a
-nutshell:
+In this document, we will look at an executors design that uses a lightweight,
+template-based policy approach. To describe the approach in a nutshell:
 
 [:['An executor is to function execution as an allocator is to allocation.]]
 
@@ -145,12 +139,9 @@ more suited to C++14 language facilities.
 
 [section Changes in this revision]
 
-N4046 introduced a comprehensive library that covered included support for
-composition and coordination of chains of operations. In this revision we
-present a minimal subset of the proposal. This includes the facilities required
-to support a model for asynchronous operations, as required by the networking
-proposal. It also includes features that enable the use cases supported by
-N3785.
+This revision has been update to include only the facilities required by
+`P0112` Networking Library, plus the two classes `thread_pool` and
+`loop_scheduler`. Where 
 
 [endsect]
 
@@ -158,14 +149,8 @@ N3785.
 
 [section Reference implementation]
 
-A standalone reference implementation of the proposed library can be found at
-['[@http://github.com/chriskohlhoff/executors]]. This implementation requires a
-C++14 compiler.
-
-To better illustrate how the executors library interacts with asynchronous
-operations, and to allow the facility to be used in production code, the
-library has been backported into the variant of Asio that stands alone from
-Boost. This variant is available at
+An almost complete implementation of the proposal text may be found in a
+variant of Asio that stands alone from Boost. This variant is available at
 ['[@https://github.com/chriskohlhoff/asio/tree/master]].
 
 [endsect]
@@ -210,18 +195,6 @@ result:
       // ...
       return 42;
     }));
-
-  std::cout << f.get() << std::endl;
-
-Run a function in the future and wait for the result:
-
-  std::future<int> f =
-    post_after(
-      std::chrono::seconds(1),
-      use_future([]{
-        // ...
-        return 42;
-      }));
 
   std::cout << f.get() << std::endl;
 
@@ -1159,16 +1132,6 @@ The priority scheduler's executors can then be used like any other:
      order.]
   ]
   [
-    [[^timer]]
-    [Functions [^dispatch_at], [^post_at] and [^defer_at]]
-    [Execute a function object at an absolute time.]
-  ]
-  [
-    [[^timer]]
-    [Functions [^dispatch_after], [^post_after] and [^defer_after]]
-    [Execute a function object after a relative time.]
-  ]
-  [
     [[^future]]
     [Class template [^use_future_t]]
     [Completion token to enable futures with asynchronous operations.]
@@ -1208,12 +1171,12 @@ The priority scheduler's executors can then be used like any other:
 
 [section On the naming of executors]
 
-There has been some confusion due to the reuse of the term ['executor] in N3785
-and this proposal, but with slightly different meanings. In N3785, an
-"executor" refers to a heavyweight, non-copyable object, such as a thread pool.
-In this proposal, an "executor" is a lightweight, copyable policy object. This
-is distinct from a heavyweight object such as a thread pool, which is known as
-an "execution context".
+There has been some confusion due to the reuse of the term ['executor] in N378
+and successors5 and this proposal, but with slightly different meanings. In
+N3785, an "executor" refers to a heavyweight, non-copyable object, such as a
+thread pool. In this proposal, an "executor" is a lightweight, copyable policy
+object. This is distinct from a heavyweight object such as a thread pool, which
+is known as an "execution context".
 
 N3785's API is superficially similar to Java executors, so it is interesting to
 examine the Java prior art in this area. What we find is that N3785 misses a
@@ -1754,169 +1717,72 @@ library implementation and this proposal.
 
 [/-----------------------------------------------------------------------------]
 
-[section Appendix: Design issues in N3785]
-
-[section Use of inheritance and polymorphism]
-
-[:['The interface is based on inheritance and polymorphism, rather than on
-templates, for two reasons. First, executors are often passed as function
-arguments, often to functions that have no other reason to be templates, so
-this makes it possible to change executor type without code restructuring.
-Second, a non-template design makes it possible to pass executors across a
-binary interface: a precompiled library can export a function one of whose
-parameters is an executor.]]
-
-As we will see in this proposal, a template-based design does not preclude the
-inclusion of a runtime polymorphic wrapper. Such a wrapper still allows users
-to write non-template code for use with executors, and makes it possible to
-pass executors across a binary interface. On the other hand, it is not possible
-to undo the performance impact of a type-erased interface.
-
-[:['The cost of an additional virtual dispatch is almost certainly negligible
-compared to the other operations involved.]]
-
-This claim might be true when passing coarse-grained tasks across threads.
-However, use cases for executors are not limited to this. As outlined in N4045,
-composition of asynchronous operations may entail multiple layers of
-abstraction. The ability to leverage function inlining is a key part of
-delivering a low abstraction penalty, but the compiler is unable to see through
-a virtual interface.
-
-[endsect]
-
-[section Use of std::function<void()>]
-
-[:['Most fundamentally, of course, executor is an abstract base class and add()
-is a virtual member function, and function templates can’t be virtual. Another
-reason is that a template parameter would complicate the interface without
-adding any real generality. In the end an executor class is going to need some
-kind of type erasure to handle all the different kinds of function objects with
-void() signature, and that’s exactly what std::function already does.]]
-
-By forcing type erasure at the executor interface, an executor implementer is
-denied the opportunity to choose a more appropriate form of type erasure. For
-example, an implementer may wish to store pending work items in a linked list.
-With a template-based approach, the function object and the “next pointer” can
-be stored in the same object. This is not possible if type erasure has already
-occurred[footnote Unless a small-object optimisation is employed by
-`std::function`, but this is not guaranteed.].
-
-[:['One theoretical advantage of a template-based interface is that the
-executor might sometimes decide to execute the work item inline, rather than
-enqueueing it for asynchronous, in which case it could avoid the expense of
-converting it to a closure. In practice this would be very difficult, however:
-the executor would somehow have to know which work items would execute quickly
-enough for this to be worthwhile.]]
-
-There is a key use case for wanting to execute work items inline: delivering
-the result of an asynchronous operation, possibly across multiple layers of
-abstraction. Rather than relying on the executor to “somehow have to know”, we
-can allow the user to choose. This is the approach taken in this proposal.
-
-Finally, another disadvantage of `std::function` is that it prevents the use of
-move-only function objects.
-
-Of course, as N3785 states, the need for a type-erased function object is
-itself a consequence of the use of inheritance and polymorphism.
-
-[endsect]
-
-[section Scheduled work]
-
-[:['There are several important design decisions involving that time-based
-functionality. First: how do we handle executors that aren’t able to provide
-it? The issue is that add_at and add_after involve significant implementation
-complexity. In Microsoft’s experience it’s important to allow very simple and
-lightweight executor classes that don’t need such complicated functionality.]]
-
-N3785 couples timer-based operations to executors via the `scheduled_executor`
-base class. This proposal avoids this coupling by distinguishing between the
-executor as a lightweight policy object, and an execution context where the
-“implementation complexity” of timers can be housed in a reusable way. Thus,
-timer operations are independent of executor types, and can be used with any
-executor.
-
-[:['Second, how should we specify time? \[__dotdotdot__\] Some standard
-functionality, like sleep_until and sleep_for, is templatized to deal with
-arbitrary duration and time_point specializations. That’s not an option for an
-executor library that uses virtual functions, however, since virtual member
-functions can’t be function templates. There are a number of possible
-options:\n
-\n
-1. Redesign the library to make executor a concept rather than an abstract base
-class. We believe that this would be invention rather than existing practice,
-and that it would make the library more complicated, and less convenient for
-users, for little gain.\n
-\n
-2. Make executor a class template, parameterized on the clock. As discussed
-above, we believe that a template-based design would be less convenient than
-one based on inheritance and runtime polymorphism.\n
-\n
-3. Pick a single clock and use its duration and time_point.\n
-\n
-We chose the last of those options, largely for simplicity.]]
-
-Unfortunately, N3785 chooses `system_clock` as that single clock. As the system
-clock is susceptible to clock changes it may be inappropriate for use cases
-that require a periodic timer. In those instances, `steady_clock` is the better
-choice.
-
-In any case, by decoupling timers from executors, this proposal provides timer
-operations that are indeed templates, and can work with arbitrary clock types.
-
-[endsect]
-
-[section Exception handling]
-
-[:['A more interesting question is what happens if a user closure throws an
-exception. The exception will in general be thrown by a different thread than
-the one that added the closure or the thread that started the executor, and may
-be far separated from it in time and in code location. As such, unhandled
-exceptions are considered a program error because they are difficult to signal
-to the caller. The decision we made is that an exception from a closure is
-ill-formed and the implementation must call std::terminate.]]
-
-Rather than apply a blanket rule, this proposal includes exception handling as
-part of an executor’s policy. While `std::terminate` is likely to be the best
-choice for unhandled exceptions inside a thread pool, users may prefer greater
-control when using something like `loop_executor`. For example, the approach
-taken by Boost.Asio’s `io_service` and this proposal’s `loop_scheduler` is to
-allow exceptions to escape from the “event loop”, where the user can handle
-them as appropriate.
-
-[endsect]
-
-[section Inline executors and the single add function]
-
-[:['\[__dotdotdot__\] Inline executors, which execute inline to the thread
-which calls add(). This has no queuing and behaves like a normal executor, but
-always uses the caller’s thread to execute.]]
-
-Since the executor interface is defined by an abstract base class, code that
-calls the `add()` function has to assume that the underlying executor may
-execute the function object inline. As a consequence, extra care must be taken
-in situations such as:
-
-* If using mutexes, avoiding calls to `add()` while holding the lock.
-* If iterating over a container and calling `add()` for each element, ensuring
-  the added function object cannot invalidate the iterators.
-
-This proposal instead makes an explicit distinction between operations that can
-execute inline, and those that cannot. The library user is then able to choose
-the appropriate operation for their use case.
-
-[endsect]
-
-[endsect]
-
-[/-----------------------------------------------------------------------------]
-
 [section Appendix: Proposed text]
 
 [/commentary Grey-shaded italic text is commentary on the proposal. It is not to
 be added to the TS.]
 
-[include:headers headers/concurrency/type_traits.qbk]
+[section Library summary]
+[xrefid summary]
+
+[table Library summary
+  [[Clause][Header(s)]]
+  [
+    [[link headers.executor Asynchronous model]]
+    [`<experimental/executor>`]
+  ]
+  [
+    [[link headers.thread_pool A fixed-size thread pool]]
+    [`<experimental/thread_pool>`]
+  ]
+  [
+    [[link headers.loop_scheduler A thread pool where existing threads are assigned to the pool]]
+    [`<experimental/loop_scheduler>`]
+  ]
+]
+
+Throughout this Technical Specification, the names of the template parameters
+are used to express type requirements, as listed in the table below.
+
+[table Template parameters and type requirements
+  [[template parameter name][type requirements]]
+  [
+    [`Allocator`]
+    [C++Std, \[allocator.requirements\]]
+  ]
+  [
+    [`Clock`]
+    [C++Std, \[time.clock.req\]]
+  ]
+  [
+    [`CompletionToken`]
+    [[link requirements.completion_token completion token]]
+  ]
+  [
+    [`ExecutionContext`]
+    [[link requirements.execution_context execution context]]
+  ]
+  [
+    [`Executor`]
+    [[link requirements.executor executor]]
+  ]
+  [
+    [`ProtoAllocator`]
+    [[link requirements.proto_allocator proto-allocator]]
+  ]
+  [
+    [`Service`]
+    [[link requirements.service service]]
+  ]
+  [
+    [`Signature`]
+    [[link requirements.signature signature]]
+  ]
+]
+
+[endsect]
+
+[include:headers headers/concurrency/executor.qbk]
 [section:async_requirements Requirements]
 [include:requirements requirements/proto_allocator.qbk]
 [include:requirements requirements/execution_context.qbk]
@@ -1928,10 +1794,8 @@ be added to the TS.]
 [endsect]
 [include:classes classes/async_result.qbk]
 [include:classes classes/async_completion.qbk]
-[include:headers headers/concurrency/memory.qbk]
 [include:classes classes/associated_allocator.qbk]
 [include:functions functions/get_associated_allocator.qbk]
-[include:headers headers/concurrency/executor.qbk]
 [include:classes classes/execution_context.qbk]
 [include:classes classes/execution_context__service.qbk]
 [include:classes classes/is_executor.qbk]
@@ -1950,16 +1814,7 @@ be added to the TS.]
 [include:functions functions/dispatch.qbk]
 [include:functions functions/post.qbk]
 [include:functions functions/defer.qbk]
-[include:headers headers/concurrency/strand.qbk]
 [include:classes classes/strand.qbk]
-[include:headers headers/concurrency/timer.qbk]
-[include:functions functions/dispatch_at.qbk]
-[include:functions functions/post_at.qbk]
-[include:functions functions/defer_at.qbk]
-[include:functions functions/dispatch_after.qbk]
-[include:functions functions/post_after.qbk]
-[include:functions functions/defer_after.qbk]
-[include:headers headers/concurrency/future.qbk]
 [include:classes classes/use_future_t.qbk]
 [include:classes classes/async_result_packaged_task.qbk]
 [include:headers headers/concurrency/thread_pool.qbk]
