@@ -11,7 +11,7 @@ In the table below, `x` denotes a value of type `X`.
   [[expression] [return type] [assertion/note\npre/post-condition]]
   [
     [`X::executor_type`]
-    [type meeting [link requirements.executor executor] requirements]
+    [type meeting [link requirements.executor `Executor`] requirements]
     []
   ]
   [
