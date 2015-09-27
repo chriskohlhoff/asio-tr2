@@ -58,41 +58,45 @@ allocator.]
 
   template <class F> ``['unspecified]`` operator()(F&& f) const;
 
-[function_block Let [^G] be a forwarding call wrapper type (C++Std
-\[func.def\]). Let [^FD] be the type `decay_t<F>` and let [^fd] be an lvalue of
-type [^FD] constructed with `forward<F>(f)`. Let [^N] be
-[^sizeof][^__dotdotdot__(ArgsT)] for the [^ArgsT&&__dotdotdot__] parameter of
-the forwarding call wrapper `G`. Let [^['i]] be in the range [half_open_range
-`0`,`N`] and let [^T[sub ['i]]] be the [^['i]]th deduced type in `ArgsT`. Let
-[^a[sub ['i]]] be the [^['i]]th argument associated with [^T[sub ['i]]].]
+[function_block Let [^T] be a completion token type. Let [^H] be a completion
+handler type and let [^h] be an object of type [^H]. Let [^FD] be the type
+`decay_t<F>` and let [^fd] be an lvalue of type [^FD] constructed with
+`forward<F>(f)`. Let [^Args][^__dotdotdot__] by the completion signature of
+[^H] and let [^N] be [^sizeof][^__dotdotdot__(Args)]. Let [^['i]] be in the
+range [half_open_range `0`,`N`] and let [^A[sub ['i]]] be the [^['i]]th type in
+`Args`. Let [^a[sub ['i]]] be the [^['i]]th argument associated with [^A[sub
+['i]]].]
 
-[function_returns A forwarding call wrapper `g` of type `G`. The object `g` is
-an asynchronous provider with an associated shared state (C++Std
-\[futures.state\]). The effect of [^g([^a[sub ['0]]], __dotdotdot__, [^a[sub
-['N-1]]])] is to atomically store the result of [^INVOKE(fd, forward<[^T[sub
-['0]]]>([^a[sub ['0]]]), __dotdotdot__, forward<[^T[sub ['N-1]]]>([^a[sub
-['N-1]]]))] (C++Std \[func.require\]) in the shared state and make the shared
-state ready. If `fd` exits via an exception then that exception is atomically
-stored in the shared state and the shared state is made ready.]
+[function_returns A completion token `t` of type `T`.]
 
-[function_remarks The return type satisfies the `MoveConstructible` (C++Std
-\[moveconstructible\]) requirements.]
+[function_remarks The return type `T` satisfies the `Destructible` (C++Std
+\[destructible\]) and `MoveConstructible` (C++Std \[moveconstructible\])
+requirements.]
+
+[function_block The object `h` of type `H` is an asynchronous provider with an
+associated shared state (C++Std \[futures.state\]). The effect of [^h([^a[sub
+['0]]], __dotdotdot__, [^a[sub ['N-1]]])] is to atomically store the result of
+[^INVOKE(fd, forward<[^A[sub ['0]]]>([^a[sub ['0]]]), __dotdotdot__,
+forward<[^A[sub ['N-1]]]>([^a[sub ['N-1]]]))] (C++Std \[func.require\]) in the
+shared state and make the shared state ready. If `fd` exits via an exception
+then that exception is atomically stored in the shared state and the shared
+state is made ready.]
 
 [function_block The implementation provides a partial specialization [^template
-<class Result, class][^__dotdotdot__ Args> async_result<G,
+<class Result, class][^__dotdotdot__ Args> async_result<T,
 Result(Args][^__dotdotdot__)>] such that:\n
-[mdash] the nested typedef `completion_handler_type` is the type `G`;\n
+[mdash] the nested typedef `completion_handler_type` is a type `H`;\n
 [mdash] the nested typedef `return_type` is
 [^future<result_of_t<FD(decay_t<Args>][^__dotdotdot__)>>]; and\n
-[mdash] when an object `r1` of type [^async_result<G,
-Result(Args][^__dotdotdot__)>] is constructed from `g`, the expression `r1.get()`
-returns a future with the same shared state as `g`.]
+[mdash] when an object `r1` of type [^async_result<T,
+Result(Args][^__dotdotdot__)>] is constructed from `h`, the expression `r1.get()`
+returns a future with the same shared state as `h`.]
 
 [function_block For any executor type `E`, the associated object for the
-associator `associated_executor<G, E>` is an executor where, for function
+associator `associated_executor<H, E>` is an executor where, for function
 objects executed using the executor's `dispatch()`, `post()` or `defer()`
-functions, any exception thrown is caught by the executor and stored in the
-associated shared state.]
+functions, any exception thrown is caught by a function object and stored in
+the associated shared state.]
 
 [endsect]
 
@@ -123,6 +127,12 @@ The implementation specializes `associated_executor` for `F`. For function
 objects executed using the associated executor's `dispatch()`, `post()` or
 `defer()` functions, any exception thrown is caught by the executor and stored
 in the associated shared state.
+
+For any executor type `E`, the associated object for the associator
+`associated_executor<F, E>` is an executor where, for function objects executed
+using the executor's `dispatch()`, `post()` or `defer()` functions, any
+exception thrown by a function object is caught by the executor and stored in
+the associated shared state.
 
 When an object `r1` of type `R` is constructed from `t1`, the expression
 `r1.get()` returns a future with the same shared state as `t1`.
