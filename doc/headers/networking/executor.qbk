@@ -109,13 +109,9 @@
     bool operator==(const system_executor&, const system_executor&);
     bool operator!=(const system_executor&, const system_executor&);
 
-    template<> struct is_executor<system_executor> : true_type {};
-
     class ``[link classes.bad_executor bad_executor]``;
 
     class ``[link classes.executor executor]``;
-
-    template <> struct is_executor<executor> : true_type {};
 
     bool operator==(const executor& a, const executor& b) noexcept;
     bool operator==(const executor& e, nullptr_t) noexcept;
@@ -158,9 +154,6 @@
       bool operator==(const strand<Executor>& a, const strand<Executor>& b);
     template<class Executor>
       bool operator!=(const strand<Executor>& a, const strand<Executor>& b);
-
-    template<class Executor>
-      struct is_executor<strand<Executor>> : true_type {};
 
     template<class ProtoAllocator = allocator<void>>
       class ``[link classes.use_future_t use_future_t]``;
