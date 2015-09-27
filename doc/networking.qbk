@@ -148,7 +148,7 @@
 
 [template POSIX[] \[[link ref-POSIX POSIX]\]]
 [template N4045[] \[[link ref-N4045 N4045]\]]
-[template N4242[] \[[link ref-N4045 N4242]\]]
+[template P0113[] \[[link ref-P0113 P0113]\]]
 [template N4099[] \[[link ref-N4099 N4099]\]]
 [template ACE[] \[[link ref-ACE ACE]\]]
 [template SYMBIAN[] \[[link ref-SYMBIAN SYMBIAN]\]]
@@ -470,11 +470,11 @@ functions that lie outside the C++14 standard.
 [section Relationship to other proposals]
 
 The asynchronous operations defined in this proposal use the asynchronous model
-described in [N4045]. With the extensible asynchronous model presented in that
-paper, the user has the ability to select an asynchronous approach that is
-appropriate to each use case. With these library foundations, a single
-extensible asynchronous model can support a variety of composition methods,
-including:
+previously described in [N4045]. With the extensible asynchronous model
+presented in that paper, the user has the ability to select an asynchronous
+approach that is appropriate to each use case. With these library foundations,
+a single extensible asynchronous model can support a variety of composition
+methods, including:
 
 * Callbacks, where minimal runtime penalty is desirable.
 * Futures, and not just std::future but also future classes supplied by other
@@ -483,7 +483,7 @@ including:
 
 To facilitate the coordination of asynchronous operations in multithreaded
 programs, the asynchronous model also utilises the executors design described
-in [N4242].
+and specified in [P0113].
 
 As executors and the extensible asynchronous model are a prerequisite for the
 networking library, the proposed text below incorporates a complete
@@ -544,6 +544,7 @@ be added to the TS.]
     [
       [link network.sockets Sockets]\n
       [link network.socket_streams Socket iostreams]\n
+      [link network.socket_algorithms Socket algorithms]\n
     ]
     [`<experimental/socket>`]
   ]
@@ -566,7 +567,7 @@ are used to express type requirements, as listed in the table below.
   ]
   [
     [`Allocator`]
-    [C++Std, \[allocator.requirements\]]
+    [C++Std \[allocator.requirements\]]
   ]
   [
     [`AsyncReadStream`]
@@ -578,7 +579,7 @@ are used to express type requirements, as listed in the table below.
   ]
   [
     [`Clock`]
-    [C++Std, \[time.clock.req\]]
+    [C++Std \[time.clock.req\]]
   ]
   [
     [`CompletionCondition`]
@@ -876,11 +877,11 @@ Jamie Allsop for providing feedback during the drafting process, and Oliver
 Kowalke for contributing towards the design and implementation of the CIDR
 support.
 
-Thanks go to Marshall Clow, Jens Maurer, Arash Partow, Jamie Allsop, Dietmar
-Kühl, Detlef Vollmann, Jonathan Wakely, Mikael Kilpeläinen, Jens Weller,
-Michael Wong, Eric Fisselier, and Jeffrey Yasskin for participating in the
-Cologne wording review, and also to Roger Orr for some pre-Cologne review
-feedback.
+The author would also like to thank Marshall Clow, Jens Maurer, Arash Partow,
+Jamie Allsop, Dietmar Kühl, Detlef Vollmann, Jonathan Wakely, Mikael
+Kilpeläinen, Jens Weller, Michael Wong, Eric Fisselier, and Jeffrey Yasskin for
+participating in the Cologne LWG wording review of the Networking Library TS
+proposal, which contributed significantly to the changes in this revision.
 
 [endsect]
 
@@ -895,8 +896,8 @@ Specification, Version 3].
 [#ref-N4045] \[N4045\] Kohlhoff, Christopher,
 ['Library Foundations for Asynchronous Operations, Revision 2], 2014.
 
-[#ref-N4242] \[N4242\] Kohlhoff, Christopher,
-['Executors and Asynchronous Operations, Revision 1], 2014.
+[#ref-P0113] \[P0113\] Kohlhoff, Christopher,
+['Executors and Asynchronous Operations, Revision 2], 2015.
 
 [#ref-N4099] \[N4099\]
 ['Draft Filesystem Technical Specification], 2014.

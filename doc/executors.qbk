@@ -104,34 +104,25 @@
 [def __unspecified__ '''<emphasis>unspecified</emphasis>''']
 [def __ifr__ '''<emphasis>DEDUCED</emphasis>''']
 [def __ns__ concurrency]
-[def __versioned_ns__ concurrency::v2]
-[def __begin_versioned_ns__ '''<phrase role="keyword">namespace</phrase> <phrase role="identifier">concurrency</phrase> <phrase role="special">{</phrase>
-<phrase role="keyword">inline namespace</phrase> <phrase role="identifier">v2</phrase> <phrase role="special">{</phrase>''']
-[def __end_versioned_ns__ '''<phrase role="special">}</phrase> <phrase role="comment">// inline namespace v2</phrase>
-<phrase role="special">}</phrase> <phrase role="comment">// namespace concurrency</phrase>''']
+[def __versioned_ns__ concurrency_v2]
+[def __begin_versioned_ns__ '''<phrase role="keyword">inline namespace</phrase> <phrase role="identifier">concurrency_v2</phrase> <phrase role="special">{</phrase>''']
+[def __end_versioned_ns__ '''<phrase role="special">}</phrase> <phrase role="comment">// inline namespace concurrency_v2</phrase>''']
 [def __concurrency__]
 
 [/-----------------------------------------------------------------------------]
 
 [section Introduction]
 
-In this document, we will look at an executors design that uses a lightweight,
+This proposal describes an executors design that uses a lightweight,
 template-based policy approach. To describe the approach in a nutshell:
 
 [:['An executor is to function execution as an allocator is to allocation.]]
 
-This proposal builds on the type traits described in N4045 ['Library
-Foundations for Asynchronous Operations, Revision 2] to outline a design that
-unifies the following areas:
-
-* Executors and schedulers.
-* Support for resumable functions or coroutines.
-* A model for asynchronous operations.
-* A flexible alternative to `std::async()`.
-
-In doing so, it takes concepts from Boost.Asio, many of which have been
-unchanged since its inclusion in Boost, and repackages them in a way that is
-more suited to C++14 language facilities.
+This proposal is the asynchronous model that underpins the P0112R0 Networking
+Library proposal, and the proposed wording below is taken from the
+corresponding sections of P0112R0. In doing so, it takes design concepts from
+Boost.Asio, many of which have been unchanged since its inclusion in Boost, and
+repackages them in a way that is more suited to C++14 language facilities.
 
 [endsect]
 
@@ -139,9 +130,11 @@ more suited to C++14 language facilities.
 
 [section Changes in this revision]
 
-This revision has been update to include only the facilities required by
-`P0112` Networking Library, plus the two classes `thread_pool` and
-`loop_scheduler`. Where 
+In this revision, the proposal has been updated to include only those
+facilities required by P0112 Networking Library, plus the two classes
+`thread_pool` and `loop_scheduler`. In particular, this revision incorporates
+design and wording changes resulting from the LWG wording review in Cologne and
+the LEWG design review in Lenexa.
 
 [endsect]
 
@@ -149,8 +142,14 @@ This revision has been update to include only the facilities required by
 
 [section Reference implementation]
 
-An almost complete implementation of the proposal text may be found in a
-variant of Asio that stands alone from Boost. This variant is available at
+A standalone reference implementation of the proposed library can be found at
+['[@http://github.com/chriskohlhoff/executors/tree/v0.2-branch]]. This
+implementation requires a C++14 compiler.
+
+To better illustrate how the executors library interacts with asynchronous
+operations, and to allow the facility to be used in production code, an almost
+complete implementation of the proposal text may be found in the variant of
+Asio that stands alone from Boost. This variant is available at
 ['[@https://github.com/chriskohlhoff/asio/tree/master]].
 
 [endsect]
@@ -205,8 +204,8 @@ result:
 [section Library vocabulary]
 
 The central concept of this library is the ['executor] as a policy. An executor
-embodies a set of rules about where, when and how to run a function object.
-For example:
+embodies a set of rules about where, when and how to run a submitted function
+object. For example:
 
 [table
   [[Executor type][Executor rules]]
@@ -222,7 +221,8 @@ For example:
   [
     [`strand<Executor>`]
     [Run function objects according to the underlying executor's rules, but
-    also run them in FIFO order and not concurrently.]
+    also run them in FIFO order and not concurrently. Do not block the
+    submitter if the FIFO queue is non-empty.]
   ]
 ]
 
@@ -268,7 +268,7 @@ A dispatch operation is the most eager.
 
   dispatch(ex, []{ ... });
 
-It means: ['run the function immediately, in the calling thread, if the rules
+It means: ['block the calling thread until the function completes, if the rules
 allow it; otherwise, submit for later execution].
 
 [table
@@ -289,7 +289,8 @@ allow it; otherwise, submit for later execution].
   [
     [`strand<Executor>`]
     [Run function objects according to the underlying executor's rules, but
-    also run them in FIFO order and not concurrently.]
+    also run them in FIFO order and not concurrently. Do not block the
+    submitter if the FIFO queue is non-empty.]
     [If we are inside the strand, or if the strand queue is empty, runs the
     function object before returning from `dispatch()`. Otherwise, adds to the
     strand's work queue.]
@@ -304,9 +305,9 @@ object itself.
 
   post(ex, []{ ... });
 
-It means: ['submit the function for later execution; never run the function
-object immediately]. A posted function is scheduled for execution as soon as
-possible, according to the rules of the executor.
+It means: ['submit the function for later execution; never block the calling
+thread to wait for the function to complete]. A posted function is scheduled
+for execution as soon as possible, according to the rules of the executor.
 
 [table
   [[Executor type][Executor rules][Behaviour of post]]
@@ -326,7 +327,8 @@ possible, according to the rules of the executor.
   [
     [`strand<Executor>`]
     [Run function objects according to the underlying executor's rules, but
-    also run them in FIFO order and not concurrently.]
+    also run them in FIFO order and not concurrently. Do not block the
+    submitter if the FIFO queue is non-empty.]
     [Adds the function object to the strand's work queue.]
   ]
 ]
@@ -335,11 +337,12 @@ Finally, the defer operation is the least eager of the three.
 
   defer(ex, []{ ... });
 
-A defer operation is similar to a post operation, in that it means: ['submit the
-function for later execution; never run the function object immediately].
-However, a defer operation also ['implies a relationship between the caller and
-the function object being submitted]. It is intended for use when submitting a
-function object that represents a continuation of the caller.
+A defer operation is similar to a post operation, in that it means: ['submit
+the function for later execution; never block the calling thread to wait for
+the function to complete.] However, a defer operation also ['implies a
+relationship between the caller and the function object being submitted]. It is
+intended for use when submitting a function object that represents a
+continuation of the caller.
 
 [table
   [[Executor type][Executor rules][Behaviour of defer]]
@@ -368,7 +371,8 @@ function object that represents a continuation of the caller.
   [
     [`strand<Executor>`]
     [Run function objects according to the underlying executor's rules, but
-    also run them in FIFO order and not concurrently.]
+    also run them in FIFO order and not concurrently. Do not block the
+    submitter if the FIFO queue is non-empty.]
     [Adds the function object to the strand's work queue.]
   ]
 ]
@@ -419,13 +423,14 @@ return type of `F` for us. Finally:
   post(...)
 
 submits the function object for execution on another thread, and then returns
-immediately. When we submit a `std::packaged_task<>`, `post()` automatically
-deduces its return type to be the `std::future<>` type produced by the task.
-This future object is then returned from our version of `async()`. Note that,
-unlike `std::async()`, the returned future object's destructor will not block.
+immediately. When we submit the result of `use_future()` (or if we were to
+submit a `std::packaged_task<>`), `post()` automatically deduces its return
+type to be the `std::future<>` type produced by the task. This future object is
+then returned from our version of `async()`. Note that, unlike `std::async()`,
+the returned future object's destructor will not block.
 
 [commentary See complete example at:\n
-[@https://github.com/chriskohlhoff/executors/blob/master/src/examples/executor/async_1.cpp]]
+[@https://github.com/chriskohlhoff/executors/blob/v0.2-branch/src/examples/executor/async_1.cpp]]
 
 [endsect]
 
@@ -474,14 +479,14 @@ which we then wrap in a lazily created `std::packaged_task<>` equivalent:
   use_future(...)
 
 Finally, we submit the packaged task to the pool and wait for it to complete.
-When we submit a `std::packaged_task<>`, `post()` automatically deduces its
+When we submit the result of `use_future()`, `post()` automatically deduces its
 return type to be the `std::future<>` type produced by the task. We can use
 this future to block until the operation is complete.
 
   post(...).get();
 
 [commentary See complete example at:\n
-[@https://github.com/chriskohlhoff/executors/blob/master/src/examples/executor/bank_account_2.cpp]]
+[@https://github.com/chriskohlhoff/executors/blob/v0.2-branch/src/examples/executor/bank_account_2.cpp]]
 
 [endsect]
 
@@ -528,12 +533,13 @@ Recall that a `system_executor` object embodies this rule:
 while a strand embodies this rule:
 
 [:['Run function objects according to the underlying executor's rules, but also
-run them in FIFO order and not concurrently.]]
+run them in FIFO order and not concurrently. Do not block the submitter if the
+FIFO queue is non-empty.]]
 
 Finally, the call to `dispatch()` means:
 
-[:['Run the function immediately, in the calling thread, if the rules allow it;
-otherwise, submit for later execution.]]
+[:['Block the calling thread until the function completes, if the rules allow
+it; otherwise, submit for later execution.]]
 
 Thus, when we combine `system_executor`, `strand` and `dispatch()`:
 
@@ -546,7 +552,7 @@ runs concurrently with any other function object submitted through the same
 strand.
 
 [commentary See complete example at:\n
-[@https://github.com/chriskohlhoff/executors/blob/master/src/examples/executor/bank_account_3.cpp]]
+[@https://github.com/chriskohlhoff/executors/blob/v0.2-branch/src/examples/executor/bank_account_3.cpp]]
 
 [endsect]
 
@@ -598,7 +604,7 @@ When the function returns, the former leader automatically returns to the pool
 as a follower thread.
 
 [commentary See complete example at:\n
-[@https://github.com/chriskohlhoff/executors/blob/master/src/examples/trading/server/]]
+[@https://github.com/chriskohlhoff/executors/blob/v0.2-branch/src/examples/trading/server/]]
 
 [endsect]
 
@@ -772,7 +778,7 @@ its associated executor.
   }
 
 [commentary See complete example at:\n
-[@https://github.com/chriskohlhoff/executors/blob/master/src/examples/executor/async_op_1.cpp]]
+[@https://github.com/chriskohlhoff/executors/blob/v0.2-branch/src/examples/executor/async_op_1.cpp]]
 
 When composing asynchronous operations, intermediate operations can simply
 reuse the associated executor of the final handler.
@@ -799,7 +805,7 @@ This ensures that all intermediate completion handlers are correctly executed
 according to the caller's executor's rules.
 
 [commentary See complete example at:\n
-[@https://github.com/chriskohlhoff/executors/blob/master/src/examples/executor/async_op_2.cpp]]
+[@https://github.com/chriskohlhoff/executors/blob/v0.2-branch/src/examples/executor/async_op_2.cpp]]
 
 [endsect]
 
@@ -865,7 +871,7 @@ while `reader`, `filter` and `writer` should use the default behaviour of
 launching a new thread.
 
 [commentary See complete example at:\n
-[@https://github.com/chriskohlhoff/executors/blob/master/src/examples/executor/pipeline.cpp]]
+[@https://github.com/chriskohlhoff/executors/blob/v0.2-branch/src/examples/executor/pipeline.cpp]]
 
 [endsect]
 
@@ -932,7 +938,7 @@ of `defer()`.
   };
 
 [commentary See complete example at:\n
-[@https://github.com/chriskohlhoff/executors/blob/master/src/examples/executor/actor.cpp]]
+[@https://github.com/chriskohlhoff/executors/blob/v0.2-branch/src/examples/executor/actor.cpp]]
 
 [endsect]
 
@@ -1043,7 +1049,7 @@ The priority scheduler's executors can then be used like any other:
   dispatch(high, []{ std::cout << "3\n"; });
 
 [commentary See complete example at:\n
-[@https://github.com/chriskohlhoff/executors/blob/master/src/examples/executor/priority_scheduler.cpp]]
+[@https://github.com/chriskohlhoff/executors/blob/v0.2-branch/src/examples/executor/priority_scheduler.cpp]]
 
 [endsect]
 
@@ -1056,22 +1062,22 @@ The priority scheduler's executors can then be used like any other:
 [table
   [[Header][Name][Description]]
   [
-    [[^type_traits]]
+    [[^executor]]
     [Class template [^async_result]]
     [Determines the result of an asynchronous operation’s initiating function.]
   ]
   [
-    [[^type_traits]]
+    [[^executor]]
     [Class template [^async_completion]]
     [Helper to simplify implementation of an asynchronous operation.]
   ]
   [
-    [[^memory]]
+    [[^executor]]
     [Class template [^associated_allocator]]
     [Used to determine a handler’s associated allocator.]
   ]
   [
-    [[^memory]]
+    [[^executor]]
     [Function [^get_associated_allocator]]
     [Obtain a handler’s associated allocator.]
   ]
@@ -1117,6 +1123,11 @@ The priority scheduler's executors can then be used like any other:
   ]
   [
     [[^executor]]
+    [Class [^system_context]]
+    [The execution context underlying [^system_executor] instances.]
+  ]
+  [
+    [[^executor]]
     [Class [^executor]]
     [Polymorphic wrapper for executors.]
   ]
@@ -1126,32 +1137,21 @@ The priority scheduler's executors can then be used like any other:
     [Execute a function object.]
   ]
   [
-    [[^strand]]
+    [[^executor]]
     [Class template [^strand]]
-    [Executor adapter than runs function objects non-concurrently and in FIFO
-     order.]
+    [Executor adapter that runs function objects non-concurrently, in FIFO
+     order, and without blocking the submitter if the FIFO queue is non-empty.]
   ]
   [
-    [[^future]]
+    [[^executor]]
     [Class template [^use_future_t]]
     [Completion token to enable futures with asynchronous operations.]
   ]
   [
-    [[^future]]
+    [[^executor]]
     [Class template specialization of [^async_result] for [^packaged_task]]
     [Supports use of packaged_task with dispatch, post, defer, and asynchronous
      operations.]
-  ]
-  [
-    [[^future]]
-    [Class templates [^packaged_token] and [^packaged_handler]]
-    [Implements lazy creation of a packaged_task.]
-  ]
-  [
-    [[^future]]
-    [Function [^package]]
-    [Return a [^packaged_token] for use with dispatch, post, defer, and
-     asynchronous operations.]
   ]
   [
     [[^thread_pool]]
@@ -1171,18 +1171,18 @@ The priority scheduler's executors can then be used like any other:
 
 [section On the naming of executors]
 
-There has been some confusion due to the reuse of the term ['executor] in N378
-and successors5 and this proposal, but with slightly different meanings. In
+There has been some confusion due to the reuse of the term ['executor] in N3785
+and successors and this proposal, but with slightly different meanings. In
 N3785, an "executor" refers to a heavyweight, non-copyable object, such as a
 thread pool. In this proposal, an "executor" is a lightweight, copyable policy
 object. This is distinct from a heavyweight object such as a thread pool, which
 is known as an "execution context".
 
 N3785's API is superficially similar to Java executors, so it is interesting to
-examine the Java prior art in this area. What we find is that N3785 misses a
-key concept: the separation of `Executor` and `ExecutorService`. On the other
-hand, it turns out that this proposal's "executor" mirrors the concept ['and]
-terminology of Java executors.
+examine the Java prior art in this area. What we find is that this approach
+misses a key concept: the separation of `Executor` and `ExecutorService`. On
+the other hand, it turns out that this proposal's "executor" mirrors the
+concept ['and] terminology of Java executors.
 
 Let us start by reviewing a couple of the core interfaces of the Java executor
 framework:
@@ -1674,50 +1674,15 @@ functions that lie outside the C++14 standard.
 
 [section Relationship to other proposals]
 
-This proposal builds on the type traits defined in N4045 ['Library Foundations
-for Asynchronous Operations]. This paper is intended as an alternative proposal
-to N3785 ['Executors and schedulers].
-
-A substantial subset of the executors library specified below is a prerequisite
-for the networking library. For this reason, the networking library's proposed
-text also incorporates a specification of these facilities.
+This proposal specifies the asynchronous model that underpins the P0112R0
+Networking Library proposal. The proposed wording below is taken from the
+corresponding sections of P0112R0, but under a different namespace.
 
 [endsect]
 
 [/-----------------------------------------------------------------------------]
 
-[section Conclusion]
-
-The type traits introduced in N4045 ['Library Foundations for Asynchronous
-Operations] define an extensible asynchronous model that can support a variety
-of composition methods, including:
-
-* Callbacks, where minimal runtime penalty is desirable.
-* Futures, and not just `std::future` but also future classes supplied by other
-  libraries.
-* Coroutines or resumable functions, without adding new keywords to the
-  language.
-
-The library introduced in this paper applies this asynchronous model, and its
-design philosophy, to executors. Rather than a design that is restricted to
-runtime polymorphism, we can allow users to choose the approach that is
-appropriate to their use case.
-
-[endsect]
-
-[/-----------------------------------------------------------------------------]
-
-[section Acknowledgements]
-
-The author would like to thank Jamie Allsop, Arash Partow and Dietmar
-K'''&uuml;'''hl for providing feedback, corrections and suggestions on both the
-library implementation and this proposal.
-
-[endsect]
-
-[/-----------------------------------------------------------------------------]
-
-[section Appendix: Proposed text]
+[section Proposed text]
 
 [/commentary Grey-shaded italic text is commentary on the proposal. It is not to
 be added to the TS.]
@@ -1748,11 +1713,11 @@ are used to express type requirements, as listed in the table below.
   [[template parameter name][type requirements]]
   [
     [`Allocator`]
-    [C++Std, \[allocator.requirements\]]
+    [C++Std \[allocator.requirements\]]
   ]
   [
     [`Clock`]
-    [C++Std, \[time.clock.req\]]
+    [C++Std \[time.clock.req\]]
   ]
   [
     [`CompletionToken`]
@@ -1825,3 +1790,20 @@ are used to express type requirements, as listed in the table below.
 [include:classes classes/loop_scheduler__executor_type.qbk]
 
 [endsect]
+
+[/-----------------------------------------------------------------------------]
+
+[section Acknowledgements]
+
+The author would like to thank Jamie Allsop, Arash Partow and Dietmar Kühl for
+providing feedback, corrections and suggestions on early iterations of both the
+library implementation and this proposal.
+
+The author would also like to thank Marshall Clow, Jens Maurer, Arash Partow,
+Jamie Allsop, Dietmar Kühl, Detlef Vollmann, Jonathan Wakely, Mikael
+Kilpeläinen, Jens Weller, Michael Wong, Eric Fisselier, and Jeffrey Yasskin for
+participating in the Cologne LWG wording review of the Networking Library TS
+proposal, which contributed significantly to the changes in this revision.
+
+[endsect]
+
