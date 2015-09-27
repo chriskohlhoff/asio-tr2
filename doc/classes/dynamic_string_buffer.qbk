@@ -47,9 +47,6 @@ requirements.dynamic_buffers `DynamicBuffer`].
 
 The `dynamic_string_buffer` class template requires that `sizeof(CharT) == 1`.
 
-[section [^dynamic_string_buffer] constructors]
-[xrefid buffer.dynamic.string.cons]
-
   explicit dynamic_string_buffer(basic_string<CharT, Traits, Allocator>& str) noexcept;
 
 [function_effects Initializes `str_` with `str`, `size_` with `str.size()`, and
@@ -62,11 +59,6 @@ The `dynamic_string_buffer` class template requires that `sizeof(CharT) == 1`.
 
 [function_effects Initializes `str_` with `str`, `size_` with `str.size()`, and
 `max_size_` with `maximum_size`.]
-
-[endsect]
-
-[section [^dynamic_string_buffer] members]
-[xrefid buffer.dynamic.string.members]
 
   size_t size() const noexcept;
 
@@ -108,7 +100,5 @@ The `dynamic_string_buffer` class template requires that `sizeof(CharT) == 1`.
   str_.erase(m);
   size_ -= m;
 ``]
-
-[endsect]
 
 [endsect]

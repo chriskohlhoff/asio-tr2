@@ -30,9 +30,6 @@ requirements.mutable_buffers `MutableBufferSequence`], `DefaultConstructible`
 (C++Std [defaultconstructible]), and `CopyAssignable` (C++Std
 [copyassignable]).
 
-[section [^mutable_buffer] constructors]
-[xrefid buffer.mutable.cons]
-
   mutable_buffer() noexcept;
 
 [function_postconditions `data_ == nullptr` and `size_ == 0`.]
@@ -41,11 +38,6 @@ requirements.mutable_buffers `MutableBufferSequence`], `DefaultConstructible`
 
 [function_postconditions `data_ == p` and `size_ == n`.]
 
-[endsect]
-
-[section [^mutable_buffer] members]
-[xrefid buffer.mutable.members]
-
   void* data() const noexcept;
 
 [function_returns `data_`.]
@@ -53,7 +45,5 @@ requirements.mutable_buffers `MutableBufferSequence`], `DefaultConstructible`
   size_t size() const noexcept;
 
 [function_returns `size_`.]
-
-[endsect]
 
 [endsect]

@@ -32,9 +32,6 @@
   } // namespace experimental
   } // namespace std
 
-[section [^execution_context::service] members]
-[xrefid async.exec.ctx.svc.members]
-
   explicit service(execution_context& owner);
 
 [function_postconditions `std::addressof(context_) == std::addressof(owner)`.]
@@ -42,7 +39,5 @@
   execution_context& context() noexcept;
 
 [function_returns `context_`.]
-
-[endsect]
 
 [endsect]

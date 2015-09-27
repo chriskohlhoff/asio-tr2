@@ -49,9 +49,6 @@ The `dynamic_vector_buffer` class template requires that `T` is a trivially
 copyable or standard-layout type (C++Std [basic.types]) and that `sizeof(T)
 == 1`.
 
-[section [^dynamic_vector_buffer] constructors]
-[xrefid buffer.dynamic.vector.cons]
-
   explicit dynamic_vector_buffer(vector<T, Allocator>& vec) noexcept;
 
 [function_effects Initializes `vec_` with `vec`, `size_` with `vec.size()`, and
@@ -64,11 +61,6 @@ copyable or standard-layout type (C++Std [basic.types]) and that `sizeof(T)
 
 [function_effects Initializes `vec_` with `vec`, `size_` with `vec.size()`, and
 `max_size_` with `maximum_size`.]
-
-[endsect]
-
-[section [^dynamic_vector_buffer] members]
-[xrefid buffer.dynamic.vector.members]
 
   size_t size() const noexcept;
 
@@ -110,7 +102,5 @@ copyable or standard-layout type (C++Std [basic.types]) and that `sizeof(T)
   vec_.erase(vec_.begin(), vec_.begin() + m);
   size_ -= m;
 ``]
-
-[endsect]
 
 [endsect]

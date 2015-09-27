@@ -30,9 +30,6 @@ The `const_buffer` class satisfies requirements of [link
 requirements.const_buffers `ConstBufferSequence`], `DefaultConstructible`
 (C++Std [defaultconstructible]), and `CopyAssignable` (C++Std [copyassignable]).
 
-[section [^const_buffer] constructors]
-[xrefid buffer.const.cons]
-
   const_buffer() noexcept;
 
 [function_postconditions `data_ == nullptr` and `size_ == 0`.]
@@ -45,11 +42,6 @@ requirements.const_buffers `ConstBufferSequence`], `DefaultConstructible`
 
 [function_postconditions `data_ == b.data_` and `size_ == b.size_`.]
 
-[endsect]
-
-[section [^const_buffer] members]
-[xrefid buffer.const.members]
-
   const void* data() const noexcept;
 
 [function_returns `data_`.]
@@ -57,7 +49,5 @@ requirements.const_buffers `ConstBufferSequence`], `DefaultConstructible`
   size_t size() const noexcept;
 
 [function_returns `size_`.]
-
-[endsect]
 
 [endsect]
