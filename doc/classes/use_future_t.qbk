@@ -18,7 +18,7 @@ to be delivered via a future (C++Std [futures.unique_future]).
       typedef ProtoAllocator allocator_type;
 
       // use_future_t members:
-      constexpr use_future_t() noexcept;
+      constexpr use_future_t() noexcept(noexcept(allocator_type()));
       explicit use_future_t(const allocator_type& a) noexcept;
       template<class OtherProtoAllocator> use_future_t<OtherProtoAllocator>
         rebind(const OtherProtoAllocator& a) const noexcept;
@@ -33,7 +33,7 @@ to be delivered via a future (C++Std [futures.unique_future]).
 [section [^use_future_t] constructors]
 [xrefid async.use.future.cons]
 
-  constexpr use_future_t() noexcept;
+  constexpr use_future_t() noexcept(noexcept(allocator_type()));
 
 [function_effects Constructs a `use_future_t` with a default-constructed
 allocator.]
