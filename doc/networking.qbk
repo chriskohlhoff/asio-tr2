@@ -736,7 +736,7 @@ This clause defines components for performing timer operations.
   steady_timer t(c);
   t.expires_after(seconds(5));
   t.async_wait(handler);
-  i.run();
+  c.run();
 ``]
 [include:headers headers/networking/timer.qbk]
 [section:timers_requirements Requirements]
