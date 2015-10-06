@@ -48,7 +48,7 @@
     template<class MutableBufferSequence, class ConstBufferSequence>
       size_t buffer_copy(const MutableBufferSequence& dest,
                          const ConstBufferSequence& source,
-                         max_size) noexcept;
+                         size_t max_size) noexcept;
 
     ``// [link functions.buffer_arithmetic buffer arithmetic]:``
 
