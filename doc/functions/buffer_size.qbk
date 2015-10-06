@@ -12,7 +12,7 @@ as follows:\n
   auto end = std::experimental::__ns__::buffer_sequence_end(buffers);
   for (; i != end; ++i)
   {
-    const_buffer b(v);
+    const_buffer b(*i);
     total_size += b.size();
   }
   return total_size;
