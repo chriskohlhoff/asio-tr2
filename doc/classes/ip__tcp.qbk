@@ -66,14 +66,14 @@ The return values for these member functions are listed in the table below.
   [
     [`tcp::v4()`]
     [`AF_INET`]
-    [`SOCK_DGRAM`]
-    [`IPPROTO_UDP`]
+    [`SOCK_STREAM`]
+    [`IPPROTO_TCP`]
   ]
   [
     [`tcp::v6()`]
     [`AF_INET6`]
-    [`SOCK_DGRAM`]
-    [`IPPROTO_UDP`]
+    [`SOCK_STREAM`]
+    [`IPPROTO_TCP`]
   ]
 ]
 
