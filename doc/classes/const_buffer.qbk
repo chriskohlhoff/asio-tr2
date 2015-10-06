@@ -40,7 +40,7 @@ requirements.const_buffers `ConstBufferSequence`], `DefaultConstructible`
 
   const_buffer(const mutable_buffer& b);
 
-[function_postconditions `data_ == b.data_` and `size_ == b.size_`.]
+[function_postconditions `data_ == b.data()` and `size_ == b.size()`.]
 
   const void* data() const noexcept;
 
