@@ -107,10 +107,10 @@
       const_buffer buffer(basic_string_view<CharT, Traits> data,
                           size_t n) noexcept;
 
-    template<class T, Allocator>
+    template<class T, class Allocator>
       class ``[link classes.dynamic_vector_buffer dynamic_vector_buffer]``;
 
-    template<class CharT, class Traits, Allocator>
+    template<class CharT, class Traits, class Allocator>
       class ``[link classes.dynamic_string_buffer dynamic_string_buffer]``;
 
     ``// [link functions.dynamic_buffer dynamic buffer creation]:``
