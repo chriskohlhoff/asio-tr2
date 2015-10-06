@@ -202,34 +202,34 @@ the [^['i]]th argument to `F::operator()`; and let [^a[sub ['i]]] be the
     [2]
     [all other types]
     [[^future<tuple<U[sub ['0]],U[sub ['1]]>>]]
-    [Atomically stores [^forward_as_tuple<A[sub ['0]],A[sub ['1]]>(a[sub
-     ['0]],a[sub ['1]])] in the shared state.]
+    [Atomically stores [^forward_as_tuple(forward<A[sub ['0]]>(a[sub
+     ['0]]),forward<A[sub ['1]]>(a[sub ['1]]))] in the shared state.]
   ]
   [
     [>2]
     [`error_code`]
     [[^future<tuple<U[sub ['1]],...,U[sub ['N-1]]>>]]
     [If [^a[sub ['0]]] evaluates to `true`, atomically stores the exception
-     pointer produced by [^make_exception_ptr(system_error(a[sub ['0]]))] in the
-     shared state; otherwise, atomically stores [^forward_as_tuple<A[sub
-     ['1]],...,A[sub ['N-1]])>(a[sub ['1]],...,a[sub ['N-1]])] in the shared
-     state.]
+     pointer produced by [^make_exception_ptr(system_error(a[sub ['0]]))] in
+     the shared state; otherwise, atomically stores
+     [^forward_as_tuple(forward<A[sub ['1]]>(a[sub ['1]]),...,forward<A[sub
+     ['N-1]]>(a[sub ['N-1]]))] in the shared state.]
   ]
   [
     [>2]
     [`exception_ptr`]
     [[^future<tuple<U[sub ['1]],...,U[sub ['N-1]]>>]]
     [If [^a[sub ['0]]] is non-null, atomically stores the exception pointer in
-     the shared state; otherwise, atomically stores [^forward_as_tuple<A[sub
-     ['1]],...,A[sub ['N-1]]>(a[sub ['1]],...,a[sub ['N-1]])] in the shared
-     state.]
+     the shared state; otherwise, atomically stores
+     [^forward_as_tuple(forward<A[sub ['1]]>(a[sub ['1]]),...,forward<A[sub
+     ['N-1]]>(a[sub ['N-1]]))] in the shared state.]
   ]
   [
     [>2]
     [all other types]
     [[^future<tuple<U[sub ['0]],...,U[sub ['N-1]]>>]]
-    [Atomically stores [^forward_as_tuple<A[sub ['0]],...,A[sub ['N-1]]>(a[sub
-     ['0]],...,a[sub ['N-1]])] in the shared state.]
+    [Atomically stores [^forward_as_tuple(forward<A[sub ['0]]>(a[sub
+     ['0]]),...,forward<A[sub ['N-1]]>(a[sub ['N-1]]))] in the shared state.]
   ]
 ]
 
