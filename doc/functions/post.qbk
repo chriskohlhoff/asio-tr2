@@ -7,6 +7,8 @@ requirements.asynchronous_operations asynchronous operation].]
   template<class CompletionToken>
     __ifr__ post(CompletionToken&& token);
 
+[function_completion_signature `void()`.]
+
 [function_effects\n
 [mdash] Constructs an object `completion` of type
 `async_completion<CompletionToken, void()>`, initialized with
@@ -20,6 +22,8 @@ result of `get_associated_allocator(completion.completion_handler)`.]
 
   template<class Executor, class CompletionToken>
     __ifr__ post(const Executor& ex, CompletionToken&& token);
+
+[function_completion_signature `void()`.]
 
 [function_effects\n
 [mdash] Constructs an object `completion` of type
@@ -45,6 +49,8 @@ unless `is_executor<Executor>::value` is `true`.]
 
   template<class ExecutionContext, class CompletionToken>
     __ifr__ post(ExecutionContext& ctx, CompletionToken&& token);
+
+[function_completion_signature `void()`.]
 
 [function_returns `std::experimental::__ns__::post(ctx.get_executor(),
 forward<CompletionToken>(token))`.]
