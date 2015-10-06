@@ -5,9 +5,9 @@
   namespace experimental {
   __begin_versioned_ns__
 
-    template<class T> is_mutable_buffer_sequence;
-    template<class T> is_const_buffer_sequence;
-    template<class T> is_dynamic_buffer;
+    template<class T> struct is_mutable_buffer_sequence;
+    template<class T> struct is_const_buffer_sequence;
+    template<class T> struct is_dynamic_buffer;
 
   __end_versioned_ns__
   } // namespace experimental
