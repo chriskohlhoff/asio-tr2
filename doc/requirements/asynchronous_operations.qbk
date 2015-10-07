@@ -18,13 +18,13 @@ The lifecycle of an asynchronous operation is comprised of the following events
 and phases:
 
 [mdash] Event 1: The asynchronous operation is started by a call to the
-['initiating function].
+initiating function.
 
 [mdash] Phase 1: The asynchronous operation is now ['outstanding].
 
 [mdash] Event 2: The externally observable side effects of the asynchronous
-operation, if any, are fully established. The ['completion handler] is
-submitted to an executor.
+operation, if any, are fully established. The completion handler is submitted
+to an executor.
 
 [mdash] Phase 2: The asynchronous operation is now ['completed].
 
