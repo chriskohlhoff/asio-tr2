@@ -48,7 +48,7 @@
                                           const EndpointSequence& endpoints);
     template<class Protocol, class EndpointSequence>
       typename Protocol::endpoint connect(basic_socket<Protocol>& s,
-                                          const EndpointSequence& endpoints);
+                                          const EndpointSequence& endpoints,
                                           error_code& ec);
     template<class Protocol, class EndpointSequence, class ConnectCondition>
       typename Protocol::endpoint connect(basic_socket<Protocol>& s,
