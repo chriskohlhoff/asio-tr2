@@ -463,7 +463,7 @@ function must be used in conjunction with the `socket_base::out_of_band_inline`
 socket option.]]
 
 [function_returns A `bool` indicating whether this socket is at the out-of-band
-data mark.]
+data mark. `false` if an error occurs.]
 
   size_t available() const;
   size_t available(error_code& ec) const;
