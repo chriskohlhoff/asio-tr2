@@ -210,15 +210,14 @@ type `Executor2` obtained by performing
 [section Outstanding work]
 [xrefid async.reqmts.async.work]
 
-The implementation of an asynchronous operation shall maintain an object
-`work1` of type `executor_work_guard<Executor1>`, initialized with `work1(ex1)`
-and with `work1.owns_work() == true`, until the asynchronous operation has
-completed.
+Until the asynchronous operation has completed, the asynchronous operation
+shall maintain:
 
-The implementation of an asynchronous operation shall maintain an object
-`work2` of type `executor_work_guard<Executor2>`, initialized with `work2(ex2)`
-and with `work2.owns_work() == true`, until the asynchronous operation has
-completed and `completion_handler` has been submitted for execution.
+[mdash] an object `work1` of type `executor_work_guard<Executor1>`, initialized
+as `work1(ex1)`, and where `work1.owns_work() == true`; and
+
+[mdash] an object `work2` of type `executor_work_guard<Executor2>`, initialized
+as `work2(ex2)`, and where `work2.owns_work() == true`.
 
 [endsect]
 
