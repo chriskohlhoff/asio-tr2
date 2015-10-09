@@ -318,7 +318,7 @@ in flags.]
     size_t receive_from(const MutableBufferSequence& buffers,
                         endpoint_type& sender, error_code& ec);
 
-[function_returns `receive_from(buffers, endpoint,
+[function_returns `receive_from(buffers, sender,
 socket_base::message_flags(), ec)`.]
 
   template<class MutableBufferSequence>
