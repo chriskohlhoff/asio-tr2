@@ -567,8 +567,8 @@ the acceptor, as if by __POSIX__:
   native_handle_type h = __accept__(native_handle(), nullptr, 0);
 ``]
 
-[function_returns If `h` is an open native socket, `socket_type(ctx, s)`;
-otherwise `socket_type(ctx)`.]
+[function_returns If `h` is an open native socket, `socket_type(ctx, protocol_,
+h)`; otherwise `socket_type(ctx)`.]
 
   template<class CompletionToken>
     __ifr__ async_accept(CompletionToken&& token);
@@ -586,7 +586,8 @@ the queue of pending connections of the acceptor, as if by __POSIX__:
 ``
   native_handle_type h = __accept__(native_handle(), nullptr, 0);
 ``
-On success, `s` is `socket_type(ctx, h). Otherwise, `s` is `socket_type(ctx)`.]
+On success, `s` is `socket_type(ctx, protocol_, h). Otherwise, `s` is
+`socket_type(ctx)`.]
 
   socket_type accept(endpoint_type& endpoint);
   socket_type accept(endpoint_type& endpoint, error_code& ec);
@@ -608,8 +609,8 @@ the acceptor, as if by __POSIX__:
     endpoint.resize(endpoint_len);
 ``]
 
-[function_returns If `h` is an open native socket, `socket_type(ctx, s)`;
-otherwise `socket_type(ctx)`.]
+[function_returns If `h` is an open native socket, `socket_type(ctx, protocol_,
+h)`; otherwise `socket_type(ctx)`.]
 
   template<class CompletionToken>
     __ifr__ async_accept(endpoint_type& endpoint,
@@ -634,7 +635,8 @@ the queue of pending connections of the acceptor, as if by __POSIX__:
   if (h >= 0)
     endpoint.resize(endpoint_len);
 ``
-On success, `s` is `socket_type(ctx, h). Otherwise, `s` is `socket_type(ctx)`.]
+On success, `s` is `socket_type(ctx, protocol_, h). Otherwise, `s` is
+`socket_type(ctx)`.]
 
   void wait(wait_type w);
   void wait(wait_type w, error_code& ec);
