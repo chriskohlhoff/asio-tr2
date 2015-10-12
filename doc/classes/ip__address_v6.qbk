@@ -288,8 +288,8 @@ corresponding to the specified IPv4 address, as if computed by the following
 method:
 ``
   address_v4::bytes_type v4b = a.to_bytes();
-  bytes_type v6b(0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-                 0xFF, 0xFF, v4b[0], v4b[1], v4b[2], v4b[3]);
+  address_v6::bytes_type v6b(0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                             0xFF, 0xFF, v4b[0], v4b[1], v4b[2], v4b[3]);
   return address_v6(v6b);
 ``]
 
