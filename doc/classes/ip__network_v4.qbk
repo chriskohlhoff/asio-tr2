@@ -73,12 +73,12 @@ addresses.
 [function_postconditions `this->address() == addr` and
 `prefix_length() == prefix_len`.]
 
-[function_throws `out_of_range` if `prefix_len < 0' or 'prefix_len > 32`.]
+[function_throws `out_of_range` if `prefix_len < 0` or `prefix_len > 32`.]
 
   constexpr network_v4(const address_v4& addr, const address_v4& mask);
 
 [function_postconditions `this->address() == addr` and `prefix_length()` is equal to
-the number of contiguous non-zero bits.]
+the number of contiguous non-zero bits in `mask`.]
 
 [function_throws `invalid_argument` if `mask` contains non-contiguous non-zero
 bits, or if the most significant bit is zero and any other bits are non-zero.]
@@ -147,7 +147,7 @@ other.canonical()`, otherwise `false`.]
       to_string(const Allocator& a = Allocator()) const;
 
 [function_returns `this->address().to_string(a) + "/" +
-to_string(prefix_length()).c_str()`.]
+std::to_string(prefix_length())`.]
 
 [endsect]
 
