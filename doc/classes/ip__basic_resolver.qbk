@@ -209,7 +209,7 @@ operation to resolve a host name and service name, as if by __POSIX__:
   __getaddrinfo__(H, S, &hints, &result);
 ``
 On success, `r` is a non-empty results object containing the results of the
-resolve opeation. Otherwise, `r` is `results_type()`.]
+resolve operation. Otherwise, `r` is `results_type()`.]
 
   results_type resolve(const protocol_type& protocol,
                        string_view host_name, string_view service_name);
@@ -283,7 +283,7 @@ operation to resolve a host name and service name, as if by __POSIX__:
   __getaddrinfo__(H, S, &hints, &result);
 ``
 On success, `r` is a non-empty results object containing the results of the
-resolve opeation. Otherwise, `r` is `results_type()`.]
+resolve operation. Otherwise, `r` is `results_type()`.]
 
   results_type resolve(const endpoint_type& e);
   results_type resolve(const endpoint_type& e, error_code& ec);
