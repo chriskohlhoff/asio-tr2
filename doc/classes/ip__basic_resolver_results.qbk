@@ -28,7 +28,7 @@ resulting from a single name resolution operation.
       // construct / copy / destroy:
       basic_resolver_results();
       basic_resolver_results(const basic_resolver_results& rhs);
-      basic_resolver_results(basic_resolver_results& rhs) noexcept;
+      basic_resolver_results(basic_resolver_results&& rhs) noexcept;
       basic_resolver_results& operator=(const basic_resolver_results& rhs);
       basic_resolver_results& operator=(basic_resolver_results&& rhs);
       ~basic_resolver_results();
@@ -82,7 +82,7 @@ construction, assignment, or swap from another non-empty results object.
 
 [function_postconditions `*this == rhs`.]
 
-  basic_resolver_results(basic_resolver_results& rhs) noexcept;
+  basic_resolver_results(basic_resolver_results&& rhs) noexcept;
 
 [function_postconditions `*this` is equal to the prior value of `rhs`.]
 
