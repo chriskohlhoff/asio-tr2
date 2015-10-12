@@ -46,7 +46,7 @@ Extensible implementations provide the following member functions:
     {
     public:
       constexpr int family() const noexcept;
-      constpexr int type() const noexcept;
+      constexpr int type() const noexcept;
       constexpr int protocol() const noexcept;
       ``['// remainder unchanged]``
     };
