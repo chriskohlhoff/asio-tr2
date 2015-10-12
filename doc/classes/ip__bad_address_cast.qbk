@@ -8,7 +8,7 @@ An exception of type `bad_address_cast` is thrown by a failed `address_cast`.
   __begin_versioned_ns__
   namespace ip {
 
-    class bad_address_cast : bad_cast
+    class bad_address_cast : public bad_cast
     {
     public:
       // constructor:
