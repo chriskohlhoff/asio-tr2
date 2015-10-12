@@ -147,7 +147,7 @@ other.canonical()`, otherwise `false`.]
       to_string(const Allocator& a = Allocator()) const;
 
 [function_returns `this->address().to_string(a) + "/" +
-to_string(prefix_length()).c_str()`.]
+std::to_string(prefix_length())`.]
 
 [endsect]
 
