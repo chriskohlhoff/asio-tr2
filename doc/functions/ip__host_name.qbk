@@ -5,10 +5,10 @@
   string host_name(error_code& ec);
   template<class Allocator>
     basic_string<char, char_traits<char>, Allocator>
-      host_name(const Allocator& a) const;
+      host_name(const Allocator& a);
   template<class Allocator>
     basic_string<char, char_traits<char>, Allocator>
-      host_name(const Allocator& a, error_code& ec) const;
+      host_name(const Allocator& a, error_code& ec);
 
 [function_returns The standard host name for the current machine, determined as
 if by __POSIX__ __gethostname__.]
