@@ -98,13 +98,13 @@
       basic_ostream<CharT, Traits>& operator<<(
         basic_ostream<CharT, Traits>&, const address_v6&);
 
-    template<class> basic_address_iterator; ``['// not defined]``
+    template<class> class basic_address_iterator; ``['// not defined]``
     template<> class ``[link classes.ip__basic_address_iterator basic_address_iterator<address_v4>]``;
     typedef basic_address_iterator<address_v4> address_v4_iterator;
     template<> class ``[link classes.ip__basic_address_iterator basic_address_iterator<address_v6>]``;
     typedef basic_address_iterator<address_v6> address_v6_iterator;
 
-    template<class> basic_address_range; ``['// not defined]``
+    template<class> class basic_address_range; ``['// not defined]``
     template<> class ``[link classes.ip__basic_address_range basic_address_range<address_v4>]``;
     typedef basic_address_range<address_v4> address_v4_range;
     template<> class ``[link classes.ip__basic_address_range basic_address_range<address_v6>]``;
