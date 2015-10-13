@@ -202,7 +202,7 @@ ip::address_v6()`; otherwise, `this->address() == ip::address_v4()`.\n
 it were implemented as follows:
 ``
   basic_ostringstream<CharT, Traits> ss;
-  if (ep.protocol() == protocol_type::v6())
+  if (ep.protocol() == basic_endpoint<InternetProtocol>::protocol_type::v6())
     ss << "[" << ep.address() << "]";
   else
     ss << ep.address();
