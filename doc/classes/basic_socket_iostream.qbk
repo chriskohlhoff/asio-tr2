@@ -30,7 +30,7 @@ elsewhere.]
       // construct / copy / destroy:
 
       basic_socket_iostream();
-      explicit basic_socket_streambuf(basic_stream_socket<protocol_type> s);
+      explicit basic_socket_iostream(basic_stream_socket<protocol_type> s);
       basic_socket_iostream(const basic_socket_iostream&) = delete;
       basic_socket_iostream(basic_socket_iostream&& rhs);
       template<class... Args>
@@ -75,7 +75,7 @@ Instances of class template `basic_socket_iostream` meet the requirements of
 `sb_` as `basic_socket_streambuf<Protocol, Clock, WaitTraits>()`, and
 performs `setf(std::ios_base::unitbuf)`.]
 
-  explicit basic_socket_streambuf(basic_stream_socket<protocol_type> s);
+  explicit basic_socket_iostream(basic_stream_socket<protocol_type> s);
 
 [function_effects Initializes the base class as `basic_iostream<char>(&sb_)`,
 `sb_` as `basic_socket_streambuf<Protocol, Clock, WaitTraits>(std::move(s))`,
