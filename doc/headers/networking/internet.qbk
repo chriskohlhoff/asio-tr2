@@ -17,8 +17,8 @@
     error_code make_error_code(resolver_errc e) noexcept;
     error_condition make_error_condition(resolver_errc e) noexcept;
 
-    typedef uint16_least_t port_type;
-    typedef uint32_least_t scope_id_type;
+    typedef uint_least16_t port_type;
+    typedef uint_least32_t scope_id_type;
 
     struct v4_mapped_t {};
     constexpr v4_mapped_t v4_mapped;
