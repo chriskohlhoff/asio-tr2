@@ -180,7 +180,7 @@
         const basic_endpoint<InternetProtocol>&);
 
     template<class InternetProtocol>
-      ``[link classes.ip__basic_resolver_entry basic_resolver_entry]``;
+      class ``[link classes.ip__basic_resolver_entry basic_resolver_entry]``;
 
     template<class InternetProtocol>
       bool operator==(const basic_resolver_entry<InternetProtocol>&,
@@ -190,7 +190,7 @@
                       const basic_resolver_entry<InternetProtocol>&);
 
     template<class InternetProtocol>
-      ``[link classes.ip__basic_resolver_results basic_resolver_results]``;
+      class ``[link classes.ip__basic_resolver_results basic_resolver_results]``;
 
     template<class InternetProtocol>
       bool operator==(const basic_resolver_results<InternetProtocol>&,
