@@ -55,12 +55,12 @@ stream.
 
       template<class MutableBufferSequence, class CompletionToken>
         __ifr__ async_receive(const MutableBufferSequence& buffers,
-                           CompletionToken&& token);
+                              CompletionToken&& token);
 
       template<class MutableBufferSequence, class CompletionToken>
         __ifr__ async_receive(const MutableBufferSequence& buffers,
-                           socket_base::message_flags flags,
-                           CompletionToken&& token);
+                              socket_base::message_flags flags,
+                              CompletionToken&& token);
 
       template<class ConstBufferSequence>
         size_t send(const ConstBufferSequence& buffers);
@@ -76,12 +76,12 @@ stream.
 
       template<class ConstBufferSequence, class CompletionToken>
         __ifr__ async_send(const ConstBufferSequence& buffers,
-                        CompletionToken&& token);
+                           CompletionToken&& token);
 
       template<class ConstBufferSequence, class CompletionToken>
         __ifr__ async_send(const ConstBufferSequence& buffers,
-                        socket_base::message_flags flags,
-                        CompletionToken&& token);
+                           socket_base::message_flags flags,
+                           CompletionToken&& token);
 
       template<class MutableBufferSequence>
         size_t read_some(const MutableBufferSequence& buffers);
@@ -91,7 +91,7 @@ stream.
 
       template<class MutableBufferSequence, class CompletionToken>
         __ifr__ async_read_some(const MutableBufferSequence& buffers,
-                             CompletionToken&& token);
+                                CompletionToken&& token);
 
       template<class ConstBufferSequence>
         size_t write_some(const ConstBufferSequence& buffers);
@@ -101,7 +101,7 @@ stream.
 
       template<class ConstBufferSequence, class CompletionToken>
         __ifr__ async_write_some(const ConstBufferSequence& buffers,
-                              CompletionToken&& token);
+                                 CompletionToken&& token);
     };
 
   __end_versioned_ns__
@@ -242,15 +242,15 @@ peer performed an orderly shutdown.]
 
   template<class MutableBufferSequence, class CompletionToken>
     __ifr__ async_receive(const MutableBufferSequence& buffers,
-                       CompletionToken&& token);
+                          CompletionToken&& token);
 
 [function_returns `async_receive(buffers, socket_base::message_flags(),
 forward<CompletionToken>(token))`.]
 
   template<class MutableBufferSequence, class CompletionToken>
     __ifr__ async_receive(const MutableBufferSequence& buffers,
-                       socket_base::message_flags flags,
-                       CompletionToken&& token);
+                          socket_base::message_flags flags,
+                          CompletionToken&& token);
 
 [function_block A [link requirements.read_write_operations read operation].]
 
@@ -324,8 +324,8 @@ forward<CompletionToken>(token))`.]
 
   template<class ConstBufferSequence, class CompletionToken>
     __ifr__ async_send(const ConstBufferSequence& buffers,
-                    socket_base::message_flags flags,
-                    CompletionToken&& token);
+                       socket_base::message_flags flags,
+                       CompletionToken&& token);
 
 [function_block A [link requirements.read_write_operations write operation].]
 
@@ -361,7 +361,7 @@ bytes sent. Otherwise `n` is `0`.]
 
   template<class MutableBufferSequence, class CompletionToken>
     __ifr__ async_read_some(const MutableBufferSequence& buffers,
-                         CompletionToken&& token);
+                            CompletionToken&& token);
 
 [function_returns `async_receive(buffers, forward<CompletionToken>(token))`.]
 
@@ -375,7 +375,7 @@ bytes sent. Otherwise `n` is `0`.]
 
   template<class ConstBufferSequence, class CompletionToken>
     __ifr__ async_write_some(const ConstBufferSequence& buffers,
-                          CompletionToken&& token);
+                             CompletionToken&& token);
 
 [function_returns `async_send(buffers, forward<CompletionToken>(token))`.]
 
