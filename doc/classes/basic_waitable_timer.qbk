@@ -82,7 +82,7 @@ Instances of class template `basic_waitable_timer` meet the requirements of
 represented by `rhs`.]
 
 [function_postconditions\n
-[mdash] `get_executor()` is equal to the prior value of `rhs.get_executor()`.\n
+[mdash] `get_executor() == rhs.get_executor()`.\n
 [mdash] `expiry()` returns the same value as `rhs.expiry()` prior to the
 constructor invocation.\n
 [mdash] `rhs.expiry() == time_point()`.]
@@ -109,7 +109,7 @@ with `*this` as if by calling `cancel()`, then moves into `*this` the state
 originally represented by `rhs`.]
 
 [function_postconditions\n
-[mdash] `get_executor()` is equal to the prior value of `rhs.get_executor()`.\n
+[mdash] `get_executor() == rhs.get_executor()`.\n
 [mdash] `expiry()` returns the same value as `rhs.expiry()` prior to the
 assignment.\n
 [mdash] `rhs.expiry() == time_point()`.]

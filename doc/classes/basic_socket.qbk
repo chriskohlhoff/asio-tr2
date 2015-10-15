@@ -187,7 +187,7 @@ calling `assign(protocol, native_socket)`.]
 that refers to the state originally represented by `rhs`.]
 
 [function_postconditions\n
-[mdash] `get_executor()` is equal to the prior value of `rhs.get_executor()`.\n
+[mdash] `get_executor() == rhs.get_executor()`.\n
 [mdash] `is_open()` returns the same value as `rhs.is_open()` prior to the
 constructor invocation.\n
 [mdash] `non_blocking()` returns the same value as `rhs.non_blocking()` prior
@@ -205,7 +205,7 @@ to the constructor invocation.\n
 that refers to the state originally represented by `rhs`.]
 
 [function_postconditions\n
-[mdash] `get_executor()` is equal to the prior value of `rhs.get_executor()`.\n
+[mdash] `get_executor() == rhs.get_executor()`.\n
 [mdash] `is_open()` returns the same value as `rhs.is_open()` prior to the
 constructor invocation.\n
 [mdash] `non_blocking()` returns the same value as `rhs.non_blocking()` prior
@@ -247,7 +247,7 @@ __POSIX__ `__close__(native_handle())`. Moves into `*this` the state originally
 represented by `rhs`.]
 
 [function_postconditions\n
-[mdash] `get_executor()` is equal to the prior value of `rhs.get_executor()`.\n
+[mdash] `get_executor() == rhs.get_executor()`.\n
 [mdash] `is_open()` returns the same value as `rhs.is_open()` prior to the
 assignment.\n
 [mdash] `non_blocking()` returns the same value as `rhs.non_blocking()` prior
@@ -271,7 +271,7 @@ __POSIX__ `__close__(native_handle())`. Moves into `*this` the state originally
 represented by `rhs`.]
 
 [function_postconditions\n
-[mdash] `get_executor()` is equal to the prior value of `rhs.get_executor()`.\n
+[mdash] `get_executor() == rhs.get_executor()`.\n
 [mdash] `is_open()` returns the same value as `rhs.is_open()` prior to the
 assignment.\n
 [mdash] `non_blocking()` returns the same value as `rhs.non_blocking()` prior
