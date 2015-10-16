@@ -11,8 +11,7 @@ requirements.asynchronous_operations asynchronous operation].]
 
 [function_effects\n
 [mdash] Constructs an object `completion` of type
-`async_completion<CompletionToken, void()>`, initialized with
-`forward<CompletionToken>(token)`.\n
+`async_completion<CompletionToken, void()>`, initialized with `token`.\n
 [mdash] Performs `ex.post(std::move(completion.completion_handler), alloc)`,
 where `ex` is the result of
 `get_associated_executor(completion.completion_handler)`, and `alloc` is the
@@ -27,8 +26,7 @@ result of `get_associated_allocator(completion.completion_handler)`.]
 
 [function_effects\n
 [mdash] Constructs an object `completion` of type
-`async_completion<CompletionToken, void()>`, initialized with
-`forward<CompletionToken>(token)`.\n
+`async_completion<CompletionToken, void()>`, initialized with `token`.\n
 [mdash] Constructs a function object `f` containing as members:\n
   [bullet] a copy of the completion handler `h`, initialized with
   `std::move(completion.completion_handler)`,\n
