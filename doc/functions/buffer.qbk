@@ -54,6 +54,8 @@ to elements of the sequence (C++Std [string.require]).
     const_buffer buffer(const vector<T, Allocator>& data) noexcept;
   template<class CharT, class Traits, class Allocator>
     mutable_buffer buffer(basic_string<CharT, Traits, Allocator>& data) noexcept;
+  template<class CharT, class Traits, class Allocator>
+    const_buffer buffer(const basic_string<CharT, Traits, Allocator>& data) noexcept;
   template<class CharT, class Traits>
     const_buffer buffer(basic_string_view<CharT, Traits> data) noexcept;
 
@@ -81,6 +83,9 @@ to elements of the sequence (C++Std [string.require]).
   template<class CharT, class Traits, class Allocator>
     mutable_buffer buffer(basic_string<CharT, Traits, Allocator>& data,
                           size_t n) noexcept;
+  template<class CharT, class Traits, class Allocator>
+    const_buffer buffer(const basic_string<CharT, Traits, Allocator>& data,
+                        size_t n) noexcept;
   template<class CharT, class Traits>
     const_buffer buffer(basic_string_view<CharT, Traits> data,
                         size_t n) noexcept;
