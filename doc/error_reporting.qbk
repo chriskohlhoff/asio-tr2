@@ -49,7 +49,7 @@ if:
 
   error_code ec;
   ``['[*R]]`` r(``['[*f]]``(a1, a2, ..., aN, ec));
-  if (ec) throw system_error(ec, __func__);
+  if (ec) throw system_error(ec, S);
   return r;
 
 otherwise, when [*['R]] is `void`, the effects of the first overload are
@@ -57,9 +57,11 @@ as if:
 
   error_code ec;
   ``['[*f]]``(a1, a2, ..., aN, ec);
-  if (ec) throw system_error(ec, __func__);
+  if (ec) throw system_error(ec, S);
 
-except that the type thrown may differ as specified above.
+except that the type thrown may differ as specified above. `S` is an NTBS
+indicating where the exception was thrown. [inline_note A possible value for
+`S` is `__func__`.]
 
 For both overloads, failure to allocate storage is reported by throwing an
 exception as described in the C++ standard (C++Std
