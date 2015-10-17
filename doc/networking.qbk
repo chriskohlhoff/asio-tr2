@@ -757,6 +757,7 @@ This clause defines components for performing timer operations.
 [include:requirements requirements/dynamic_buffers.qbk]
 [include:requirements requirements/read_write_operations.qbk]
 [endsect]
+[include:classes classes/stream_errc.qbk]
 [include:classes classes/mutable_buffer.qbk]
 [include:classes classes/const_buffer.qbk]
 [include:classes classes/buffer_type_traits.qbk]
