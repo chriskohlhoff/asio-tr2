@@ -410,6 +410,9 @@ cancel asynchronous operations started from the same thread. Vista provides
 `CancelIoEx` which may be used to cancel all asynchronous operations associated
 with an acceptor.]
 
+[function_remarks Does not block (C++Std \[defns.block\]) the calling thread
+pending completion of the canceled operations.]
+
   template<class SettableSocketOption>
     void set_option(const SettableSocketOption& option);
   template<class SettableSocketOption>

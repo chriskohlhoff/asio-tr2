@@ -133,6 +133,9 @@ complete. Completion handlers for canceled operations are passed an error code
 
 [function_returns The number of operations that were canceled.]
 
+[function_remarks Does not block (C++Std \[defns.block\]) the calling thread
+pending completion of the canceled operations.]
+
   size_t cancel_one();
 
 [function_effects Causes the outstanding asynchronous wait operation that was
@@ -141,6 +144,9 @@ handler for the canceled operation is passed an error code `ec` such that `ec
 == errc::operation_canceled` yields `true`.]
 
 [function_returns `1` if an operation was cancelled, otherwise `0`.]
+
+[function_remarks Does not block (C++Std \[defns.block\]) the calling thread
+pending completion of the canceled operation.]
 
   time_point expiry() const;
 
@@ -164,7 +170,7 @@ calling `cancel()`. Sets the expiry time associated with the timer. ]
   void wait(error_code& ec);
 
 [function_effects Establishes the postcondition as if by repeatedly blocking
-the calling thread (C++Std [defns.block]) for the relative time produced by
+the calling thread (C++Std \[defns.block\]) for the relative time produced by
 `WaitTraits::to_wait_duration(expiry())`.]
 
 [function_postconditions `ec || expiry() <= clock_type::now()`.]

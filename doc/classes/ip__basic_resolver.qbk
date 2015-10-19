@@ -143,6 +143,9 @@ originally represented by `rhs`.]
 associated with `*this`. Completion handlers for canceled operations are passed
 an error code `ec` such that `ec == errc::operation_canceled` yields `true`.]
 
+[function_remarks Does not block (C++Std \[defns.block\]) the calling thread
+pending completion of the canceled operations.]
+
   results_type resolve(string_view host_name, string_view service_name);
   results_type resolve(string_view host_name, string_view service_name,
                        error_code& ec);

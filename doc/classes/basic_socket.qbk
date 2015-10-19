@@ -361,6 +361,9 @@ passed an error code `ec` such that `ec == errc::operation_canceled` yields
 [function_error_conditions\n
 [mdash] `errc::bad_file_descriptor` [mdash] if `is_open()` is `false`.]
 
+[function_remarks Does not block (C++Std \[defns.block\]) the calling thread
+pending completion of the canceled operations.]
+
   template<class SettableSocketOption>
     void set_option(const SettableSocketOption& option);
   template<class SettableSocketOption>
