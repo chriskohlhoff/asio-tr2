@@ -10,7 +10,7 @@ candidate object `allocator<void>()`.
   namespace experimental {
   __begin_versioned_ns__
 
-    template<class T, class ProtoAllocator = allocator<void>>
+    template<class T, class ProtoAllocator = allocator<void>, class = void>
     struct associated_allocator
     {
       typedef ``['see below]`` type;

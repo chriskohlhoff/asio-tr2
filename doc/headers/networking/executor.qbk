@@ -11,7 +11,7 @@
     template<class CompletionToken, class Signature>
       struct ``[link classes.async_completion async_completion]``;
 
-    template<class T, class ProtoAllocator = allocator<void>>
+    template<class T, class ProtoAllocator = allocator<void>, class = void>
       struct ``[link classes.associated_allocator associated_allocator]``;
 
     template<class T, class ProtoAllocator = allocator<void>>
@@ -47,7 +47,7 @@
 
     template<class T, class Executor> struct ``[link classes.uses_executor uses_executor]``;
 
-    template<class T, class Executor = system_executor>
+    template<class T, class Executor = system_executor, class = void>
       struct ``[link classes.associated_executor associated_executor]``;
 
     template<class T, class Executor = system_executor>
