@@ -602,6 +602,10 @@ are used to express type requirements, as listed in the table below.
     [[link requirements.dynamic_buffers dynamic buffer]]
   ]
   [
+    [`EndpointSequence`]
+    [[link requirements.endpoint_sequence endpoint sequence]]
+  ]
+  [
     [`ExecutionContext`]
     [[link requirements.execution_context execution context]]
   ]
@@ -801,6 +805,7 @@ This clause defines components for performing timer operations.
 [include:requirements requirements/asynchronous_socket_operations.qbk]
 [include:requirements requirements/native_handles.qbk]
 [include:requirements requirements/endpoint.qbk]
+[include:requirements requirements/endpoint_sequence.qbk]
 [include:requirements requirements/protocol.qbk]
 [include:requirements requirements/acceptable_protocol.qbk]
 [include:requirements requirements/gettable_socket_option.qbk]
