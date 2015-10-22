@@ -16,6 +16,9 @@
       void* data() const noexcept;
       size_t size() const noexcept;
 
+      // modifiers:
+      mutable_buffer& operator+=(size_t n) noexcept;
+
     private:
       void* data_; // ``['exposition only]``
       size_t size_; // ``['exposition only]``
@@ -45,5 +48,15 @@ requirements.mutable_buffers `MutableBufferSequence`], `DefaultConstructible`
   size_t size() const noexcept;
 
 [function_returns `size_`.]
+
+  mutable_buffer& operator+=(size_t n) noexcept;
+
+[function_effects
+``
+  data_ += static_cast<char*>(data_) + min(n, size_);
+  size_ -= min(n, size_);
+``]
+
+[function_returns `*this`.]
 
 [endsect]
