@@ -131,6 +131,11 @@ caller of `dispatch()`.] Otherwise, calls `post(forward<Func>(f), a)`.]
 
 [function_returns `addressof(a.context()) == addressof(b.context())`.]
 
+[commentary There is an open question with LEWG on whether `context()`
+should be const qualified, in which case the above specification is
+correct. Otherwise, it should be respecified to say that it returns `true`
+if `a` and `b` are associated with the same `io_context`.]
+
   bool operator!=(const io_context::executor_type& a,
                   const io_context::executor_type& b) noexcept;
 
