@@ -15,7 +15,8 @@ with default candidate type `system_executor` and default candidate object
     {
       typedef ``['see below]`` type;
 
-      static type get(const T& t, const Executor& e = Executor()) noexcept;
+      template <class U>
+        static type get(U&& u, const Executor& e = Executor()) noexcept;
     };
 
   __end_versioned_ns__
@@ -24,8 +25,8 @@ with default candidate type `system_executor` and default candidate object
 
 Specializations of `associated_executor` shall satisfy the requirements in the
 table below. In this table, `X` is a specialization of `associated_executor`
-for the template parameters `T` and `Executor`; `t` is a value of
-(possibly const) `T`; and `e` is an object of type `Executor`.
+for the template parameters `T` and `Executor`; `t` is a value of `T`; and `e`
+is an object of type `Executor`.
 
 [table associated_executor specialization requirements
   [[Expression][Return type][Note]]
@@ -55,10 +56,13 @@ for the template parameters `T` and `Executor`; `t` is a value of
 [function_type If `T` has a nested type `executor_type`, `typename
 T::executor_type`. Otherwise `Executor`.]
 
-  type get(const T& t, const Executor& e = Executor()) noexcept;
+  template <class U>
+    type get(U&& u, const Executor& e = Executor()) noexcept;
+
+[function_requires `is_same<T, decay_t<U>>`.]
 
 [function_returns If `T` has a nested type `executor_type`,
-`t.get_executor()`. Otherwise `e`.]
+`u.get_executor()`. Otherwise `e`.]
 
 [endsect]
 

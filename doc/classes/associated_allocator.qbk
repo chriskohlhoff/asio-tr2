@@ -15,7 +15,8 @@ candidate object `allocator<void>()`.
     {
       typedef ``['see below]`` type;
 
-      static type get(const T& t, const ProtoAllocator& a = ProtoAllocator()) noexcept;
+      template <class U>
+        static type get(U&& u, const ProtoAllocator& a = ProtoAllocator()) noexcept;
     };
 
   __end_versioned_ns__
@@ -24,8 +25,8 @@ candidate object `allocator<void>()`.
 
 Specializations of `associated_allocator` shall satisfy the requirements in the
 table below. In this table, `X` is a specialization of `associated_allocator`
-for the template parameters `T` and `ProtoAllocator`; `t` is a value of
-(possibly const) `T`; and `a` is an object of type `ProtoAllocator`.
+for the template parameters `T` and `ProtoAllocator`; `t` is a value of `T`;
+and `a` is an object of type `ProtoAllocator`.
 
 [table associated_allocator specialization requirements
   [[Expression][Return type][Note]]
@@ -56,10 +57,13 @@ for the template parameters `T` and `ProtoAllocator`; `t` is a value of
 [function_type If `T` has a nested type `allocator_type`, `typename
 T::allocator_type`. Otherwise `ProtoAllocator`.]
 
-  type get(const T& t, const ProtoAllocator& a = ProtoAllocator()) noexcept;
+  template <class U>
+    type get(U&& u, const ProtoAllocator& a = ProtoAllocator()) noexcept;
+
+[function_requires `is_same<T, decay_t<U>>`.]
 
 [function_returns If `T` has a nested type `allocator_type`,
-`t.get_allocator()`. Otherwise `a`.]
+`u.get_allocator()`. Otherwise `a`.]
 
 [endsect]
 
