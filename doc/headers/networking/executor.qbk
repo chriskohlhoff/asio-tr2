@@ -63,8 +63,8 @@
       associated_executor_t<decay_t<T>, Executor>
         get_associated_executor(T&& t, const Executor& ex) noexcept;
     template<class T, class ExecutionContext>
-      associated_executor_t<T, typename ExecutionContext::executor_type>
-        get_associated_executor(const T& t, ExecutionContext& ctx) noexcept;
+      associated_executor_t<decay_t<T>, typename ExecutionContext::executor_type>
+        get_associated_executor(T&& t, ExecutionContext& ctx) noexcept;
 
     template<class T, class Executor>
       class ``[link classes.executor_binder executor_binder]``;
