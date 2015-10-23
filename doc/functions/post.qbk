@@ -50,7 +50,7 @@ unless `is_executor<Executor>::value` is `true`.]
 
 [function_completion_signature `void()`.]
 
-[function_returns `std::experimental::__ns__::post(ctx.get_executor(),
+[function_returns `std::experimental::__ns__::post(get_associated_executor(ctx),
 forward<CompletionToken>(token))`.]
 
 [function_remarks This function shall not participate in overload resolution

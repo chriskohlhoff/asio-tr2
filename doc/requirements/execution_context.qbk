@@ -10,7 +10,7 @@ In the table below, `x` denotes a value of type `X`.
 [table ExecutionContext requirements
   [[expression] [return type] [assertion/note\npre/post-condition]]
   [
-    [`X::executor_type`]
+    [`associated_executor_t<X>`]
     [type meeting [link requirements.executor `Executor`] requirements]
     []
   ]
@@ -21,8 +21,8 @@ In the table below, `x` denotes a value of type `X`.
      executor object that is associated with the execution context.]
   ]
   [
-    [`x.get_executor()`]
-    [`X::executor_type`]
+    [`get_associated_executor(x)`]
+    [`associated_executor_t<X>`]
     [Returns an executor object that is associated with the execution context.]
   ]
 ]

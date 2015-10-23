@@ -11,8 +11,13 @@ requirements, and `t` is a completion token.
 [table AsyncReadStream requirements
   [[operation] [type] [semantics, pre/post-conditions]]
   [
-    [`a.get_executor()`]
-    [A type satisfying the [link requirements.executor Executor requirements].]
+    [`associated_executor_t<X>`]
+    [type meeting [link requirements.executor `Executor`] requirements]
+    []
+  ]
+  [
+    [`get_associated_executor(a)`]
+    [`associated_executor_t<X>`]
     [Returns the associated I/O executor.]
   ]
   [

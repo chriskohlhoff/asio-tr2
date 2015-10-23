@@ -10,15 +10,6 @@
 [function_remarks This function shall not participate in overload resolution
 unless `is_executor<Executor>::value` is `true`.]
 
-  template<class ExecutionContext>
-    executor_work_guard<typename ExecutionContext::executor_type>
-      make_work_guard(ExecutionContext& ctx);
-
-[function_returns `make_work_guard(ctx.get_executor())`.]
-
-[function_remarks This function shall not participate in overload resolution
-unless `is_convertible<ExecutionContext&, execution_context&>::value` is `true`.]
-
   template<class T>
     executor_work_guard<associated_executor_t<T>>
       make_work_guard(const T& t);
@@ -26,8 +17,7 @@ unless `is_convertible<ExecutionContext&, execution_context&>::value` is `true`.
 [function_returns `make_work_guard(get_associated_executor(t))`.]
 
 [function_remarks This function shall not participate in overload resolution
-unless `is_executor<T>::value` is `false` and `is_convertible<T&,
-execution_context&>::value` is `false`.]
+unless `is_executor<T>::value` is `false.]
 
   template<class T, class U>
     auto make_work_guard(const T& t, U&& u)

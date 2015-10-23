@@ -182,12 +182,11 @@ All asynchronous operations in this Technical Specification have an associated
 executor object that is determined as follows:
 
 [mdash] If the initiating function is a member function, the associated
-executor is that returned by the `get_executor` member function on the same
-object.
+executor is that returned by `get_associated_executor(*this)`.]
 
 [mdash] If the initiating function is not a member function, the associated
-executor is that returned by the `get_executor` member function of the first
-argument to the initiating function.
+executor is that returned by `get_associated_executor(a)`, where `a` is the
+first argument to the initiating function.
 
 Let `Executor1` be the type of the associated executor. Let `ex1` be a value of
 type `Executor1`, representing the associated executor object obtained as
