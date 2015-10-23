@@ -21,7 +21,7 @@ requirements `R`.
 
 An associator shall additionally satisfy the requirements in the table below.
 In this table, `X` is a class template that meets the associator requirements,
-`S` is the source type, `s` is a (possibly const) value of type `S`, `C` is the
+`S` is the source type, `s` is a value of type `S`, `C` is the
 candidate type, `c` is a (possibly const) value of type `C`, `D` is the default
 candidate type, and `d` is a (possibly const) value of type `D` that is the
 default candidate object.
@@ -59,9 +59,9 @@ template in the enclosing namespace:
   template<class S, class C = D> using ``['X]``_t = typename X<S, C>::type;
 
   template<class S, class C = D>
-  typename X<S, C>::type get_``['X]``(const S& s, const C& c = d)
+  typename X<decay_t<S>, C>::type get_``['X]``(S&& s, const C& c = d)
   {
-    return X<S, C>::get(s, c);
+    return X<decay_t<S>, C>::get(forward<S>(s), c);
   }
 
 where [^['X]] is replaced with the name of the associator class template.
