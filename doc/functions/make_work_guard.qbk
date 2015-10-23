@@ -11,18 +11,19 @@
 unless `is_executor<Executor>::value` is `true`.]
 
   template<class T>
-    executor_work_guard<associated_executor_t<T>>
-      make_work_guard(const T& t);
+    executor_work_guard<associated_executor_t<decay_t<T>>>
+      make_work_guard(T&& t);
 
-[function_returns `make_work_guard(get_associated_executor(t))`.]
+[function_returns `make_work_guard(get_associated_executor(forward<T>(t)))`.]
 
 [function_remarks This function shall not participate in overload resolution
 unless `is_executor<T>::value` is `false.]
 
   template<class T, class U>
-    auto make_work_guard(const T& t, U&& u)
-      -> decltype(make_work_guard(get_associated_executor(t, forward<U>(u))));
+    auto make_work_guard(T&& t, U&& u)
+      -> decltype(make_work_guard(get_associated_executor(forward<T>(t), forward<U>(u))));
 
-[function_returns `make_work_guard(get_associated_executor(t, forward<U>(u)))`.]
+[function_returns `make_work_guard(get_associated_executor(forward<T>(t),
+forward<U>(u)))`.]
 
 [endsect]

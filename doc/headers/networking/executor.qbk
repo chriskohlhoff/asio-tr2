@@ -20,10 +20,11 @@
     ``// [link functions.get_associated_allocator get_associated_allocator]:``
 
     template<class T>
-      associated_allocator_t<T> get_associated_allocator(const T& t) noexcept;
+      associated_allocator_t<decay_t<T>>
+        get_associated_allocator(T&& t) noexcept;
     template<class T, class ProtoAllocator>
-      associated_allocator_t<T, ProtoAllocator>
-        get_associated_allocator(const T& t, const ProtoAllocator& a) noexcept;
+      associated_allocator_t<decay_t<T>, ProtoAllocator>
+        get_associated_allocator(T&& t, const ProtoAllocator& a) noexcept;
 
     enum class fork_event {
       prepare,
@@ -56,10 +57,11 @@
     ``// [link functions.get_associated_executor get_associated_executor]:``
 
     template<class T>
-      associated_executor_t<T> get_associated_executor(const T& t) noexcept;
+      associated_executor_t<decay_t<T>>
+        get_associated_executor(T&& t) noexcept;
     template<class T, class Executor>
-      associated_executor_t<T, Executor>
-        get_associated_executor(const T& t, const Executor& ex) noexcept;
+      associated_executor_t<decay_t<T>, Executor>
+        get_associated_executor(T&& t, const Executor& ex) noexcept;
     template<class T, class ExecutionContext>
       associated_executor_t<T, typename ExecutionContext::executor_type>
         get_associated_executor(const T& t, ExecutionContext& ctx) noexcept;
@@ -93,15 +95,12 @@
     template<class Executor>
       executor_work_guard<Executor>
         make_work_guard(const Executor& ex);
-    template<class ExecutionContext>
-      executor_work_guard<typename ExecutionContext::executor_type>
-        make_work_guard(ExecutionContext& ctx);
     template<class T>
-      executor_work_guard<associated_executor_t<T>>
-        make_work_guard(const T& t);
+      executor_work_guard<associated_executor_t<decay_t<T>>>
+        make_work_guard(T&& t);
     template<class T, class U>
-      auto make_work_guard(const T& t, U&& u)
-        -> decltype(make_work_guard(get_associated_executor(t, forward<U>(u))));
+      auto make_work_guard(T&& t, U&& u)
+        -> decltype(make_work_guard(get_associated_executor(forward<T>(t), forward<U>(u))));
 
     class ``[link classes.system_executor system_executor]``;
     class ``[link classes.system_context system_context]``;
