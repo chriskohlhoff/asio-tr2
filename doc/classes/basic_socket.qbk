@@ -472,7 +472,7 @@ data mark. `false` if an error occurs.]
   size_t available(error_code& ec) const;
 
 [function_returns An indication of the number of bytes that may be read without
-blocking, or 0 if an error occurs.]
+blocking, or `0` if an error occurs.]
 
 [function_error_conditions\n
 [mdash] `errc::bad_file_descriptor` [mdash] if `is_open()` is `false`.]
