@@ -57,10 +57,9 @@ requirements.const_buffers `ConstBufferSequence`], `DefaultConstructible`
 
 [function_effects
 ``
-  data_ += static_cast<const char*>(data_) + min(n, size_);
+  data_ = static_cast<const char*>(data_) + min(n, size_);
   size_ -= min(n, size_);
+  return *this;
 ``]
-
-[function_returns `*this`.]
 
 [endsect]
