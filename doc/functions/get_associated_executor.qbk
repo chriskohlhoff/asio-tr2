@@ -21,7 +21,8 @@ unless `is_executor<Executor>::value` is `true`.]
     associated_executor_t<decay_t<T>, typename ExecutionContext::executor_type>
       get_associated_executor(T&& t, ExecutionContext& ctx) noexcept;
 
-[function_returns `get_associated_executor(forward<T>(t), ctx.get_executor())`.]
+[function_returns `get_associated_executor(forward<T>(t),
+get_associated_executor(ctx))`.]
 
 [function_remarks This function shall not participate in overload resolution
 unless `is_convertible<ExecutionContext&, execution_context&>::value` is `true`.]
