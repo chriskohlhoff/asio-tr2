@@ -6,8 +6,8 @@
   __begin_versioned_ns__
 
     enum class stream_errc {
-      eof = ``['implementation defined]``,
-      not_found = ``['implementation defined]``
+      eof = ``['an implementation defined non-zero value]``,
+      not_found = ``['an implementation defined non-zero value]``
     };
 
     const error_category& stream_category() noexcept;

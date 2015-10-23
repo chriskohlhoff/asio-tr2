@@ -6,8 +6,8 @@
   __begin_versioned_ns__
 
     enum class socket_errc {
-      already_open = ``['implementation defined]``,
-      not_found = ``['implementation defined]``
+      already_open = ``['an implementation defined non-zero value]``,
+      not_found = ``['an implementation defined non-zero value]``
     };
 
     const error_category& socket_category() noexcept;
