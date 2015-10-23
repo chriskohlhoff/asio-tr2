@@ -65,7 +65,7 @@ handler type and let [^h] be an object of type [^H]. Let [^FD] be the type
 an asynchronous operation using [^H] and let [^N] be
 [^sizeof][^__dotdotdot__(Args)]. Let [^['i]] be in the range [half_open_range
 `0`,`N`] and let [^A[sub ['i]]] be the [^['i]]th type in `Args`. Let [^a[sub
-['i]]] be the [^['i]]th argument associated with [^A[sub ['i]]].]
+['i]]] be the argument associated with [^A[sub ['i]]].]
 
 [function_returns A completion token `t` of type `T`.]
 
