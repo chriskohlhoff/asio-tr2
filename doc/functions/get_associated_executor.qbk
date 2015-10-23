@@ -2,24 +2,26 @@
 [xrefid async.assoc.exec.get]
 
   template<class T>
-    associated_executor_t<T> get_associated_executor(const T& t) noexcept;
+    associated_executor_t<decay_t<T>>
+      get_associated_executor(T&& t) noexcept;
 
-[function_returns `associated_executor<T>::get(t)`.]
+[function_returns `associated_executor<decay_t<T>>::get(forward<T>(t))`.]
 
   template<class T, class Executor>
-    associated_executor_t<T, Executor>
-      get_associated_executor(const T& t, const Executor& ex) noexcept;
+    associated_executor_t<decay_t<T>, Executor>
+      get_associated_executor(T&& t, const Executor& ex) noexcept;
 
-[function_returns `associated_executor<T, Executor>::get(t, ex)`.]
+[function_returns `associated_executor<decay_t<T>,
+Executor>::get(forward<T>(t), ex)`.]
 
 [function_remarks This function shall not participate in overload resolution
 unless `is_executor<Executor>::value` is `true`.]
 
   template<class T, class ExecutionContext>
-    associated_executor_t<T, typename ExecutionContext::executor_type>
-      get_associated_executor(const T& t, ExecutionContext& ctx) noexcept;
+    associated_executor_t<decay_t<T>, typename ExecutionContext::executor_type>
+      get_associated_executor(T&& t, ExecutionContext& ctx) noexcept;
 
-[function_returns `get_associated_executor(t, ctx.get_executor())`.]
+[function_returns `get_associated_executor(forward<T>(t), ctx.get_executor())`.]
 
 [function_remarks This function shall not participate in overload resolution
 unless `is_convertible<ExecutionContext&, execution_context&>::value` is `true`.]
