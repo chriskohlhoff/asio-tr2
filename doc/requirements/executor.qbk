@@ -18,10 +18,11 @@ defined in these requirements shall not introduce data races as a result of
 concurrent calls to those functions from different threads.
 
 Let `ctx` be the execution context returned by the executor's `context()`
-member function. An executor is invalidated when the first call to
+member function. An executor becomes ['invalid] when the first call to
 `ctx.shutdown()` returns. The effect of calling `on_work_started`,
 `on_work_finished`, `dispatch`, `post`, or `defer` on an invalid executor is
-undefined.
+undefined. [inline_note The copy constructor, comparison operators, and
+`context()` member function continue to remain valid until `ctx` is destroyed.]
 
 In the table below, `x1` and `x2` denote values of type `X`, `cx1` and `cx2`
 denote (possibly const) values of type `X`, `mx1` denotes an xvalue of type
