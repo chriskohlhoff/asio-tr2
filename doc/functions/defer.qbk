@@ -1,6 +1,10 @@
 [section:defer Function [^defer]]
 [xrefid async.defer]
 
+[std_note The function `defer` satisfies the requirements for an [link
+requirements.asynchronous_operations asynchronous operation], except for the
+requirement that the operation uses `post` if it completes immediately.]
+
   template<class CompletionToken>
     __ifr__ defer(CompletionToken&& token);
 

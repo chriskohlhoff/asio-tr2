@@ -1,6 +1,10 @@
 [section:dispatch Function [^dispatch]]
 [xrefid async.dispatch]
 
+[std_note The function `dispatch` satisfies the requirements for an [link
+requirements.asynchronous_operations asynchronous operation], except for the
+requirement that the operation uses `post` if it completes immediately.]
+
   template<class CompletionToken>
     __ifr__ dispatch(CompletionToken&& token);
 
