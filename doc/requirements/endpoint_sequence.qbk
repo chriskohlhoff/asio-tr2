@@ -6,19 +6,17 @@ requirements of `Destructible` (C++Std [destructible]) and `CopyConstructible`
 (C++Std [copyconstructible]), as well as the additional requirements listed
 below.
 
-In the table below, `x` denotes a (possibly const) value of type `X`, and `E`
-denotes a type satisfying the [link requirements.endpoint `Endpoint`]
-requirements.
+In the table below, `x` denotes a (possibly const) value of type `X`.
 
 [table EndpointSequence requirements
   [[expression] [return type] [assertion/note\npre/post-condition]]
   [
     [`x.begin()`\n
      `x.end()`]
-    [An iterator type meeting the requirements for forward iterators
+    [A type meeting the requirements for forward iterators
      (C++Std \[forward.iterators\]) whose value type is convertible to
-     `E`.]
-    []
+     a type satisfying the [link requirements.endpoint `Endpoint`] requirements.]
+    [[half_open_range `x.begin()`,`x.end()`] is a valid range.]
   ]
 ]
 
