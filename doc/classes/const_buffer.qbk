@@ -55,7 +55,7 @@ requirements.const_buffers `ConstBufferSequence`], `DefaultConstructible`
 
   const_buffer& operator+=(size_t n) noexcept;
 
-[function_effects
+[function_effects Equivalent to:
 ``
   data_ = static_cast<const char*>(data_) + min(n, size_);
   size_ -= min(n, size_);
