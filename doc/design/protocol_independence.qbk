@@ -1,8 +1,0 @@
-[section Protocol Independence]
-
-The library described in this proposal supports TCP and UDP for both IP
-versions 4 and 6. It enables the development of protocol independent
-applications. That is, the decision of whether to use IPv4 or IPv6 can be
-deferred until runtime.
-
-[endsect]

@@ -12,7 +12,6 @@ project asio-tr2-doc
 using quickbook ;
 
 boostbook executors : executors.qbk : <format>onehtml ;
-boostbook networking : networking.qbk : <format>onehtml ;
 
 make sockets.png : sockets.gv : @dot ;
 
@@ -22,11 +21,10 @@ actions dot
 }
 
 make styled/executors.html : executors : @addstyle ;
-make styled/networking.html : networking : @addstyle ;
 
 actions addstyle
 {
   ./addstyle.pl $(>) $(<)
 }
 
-install html : styled/executors.html styled/networking.html ;
+install html : styled/executors.html ;
